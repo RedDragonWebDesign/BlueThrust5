@@ -16,7 +16,7 @@
 
 The original author was nice enough to open source the scripts, [created a GitHub](https://github.com/bluethrust/clanscripts) for them, and released them with a license that allowed modification and redistribution.
 
-However, the original author went inactive in 2014, and these scripts are now abandonware.
+However, the original author went inactive in 2014, and these scripts are now [abandonware](https://en.wikipedia.org/wiki/Abandonware).
 
 I was hired by a client in 2020 to update these scripts and add features. As a result, I became pretty familiar with them.
 
