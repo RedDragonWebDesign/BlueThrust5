@@ -84,7 +84,7 @@ $IP_ADDRESS = $_SERVER['REMOTE_ADDR'];
 
 if($websiteInfo['debugmode'] == 1) {
 	ini_set('display_errors', 1);
-	ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT);
+	ini_set('error_reporting', E_ALL);
 }
 else {
 	ini_set('display_errors', 1);
