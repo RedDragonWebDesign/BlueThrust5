@@ -1,0 +1,364 @@
+html {
+	height: 100%;
+	padding: 0px;
+	margin: 0px;	
+}
+	
+body {
+	background-color: #060e00;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	color: white;
+	font-family: verdana, sans-serif;
+	font-size: 11px;
+}
+
+a {
+	color: #8cb16a;
+	text-decoration: none;	
+}
+
+a:hover {
+	color: #bae890;
+}
+
+.wrapper {
+	width: 100%;
+	min-width: 990px;
+	margin: 0px;
+	padding: 0px;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin-bottom: -70px;
+	position: relative;
+	
+}
+
+.push {
+	height: 70px;
+	position: relative;
+
+}
+
+.footerDiv {
+	height: 30px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	position: relative;
+	width: 100%;
+	text-align: center;
+	color: white;
+	font-family: verdana, sans-serif;
+	font-size: 10px;
+}
+
+
+.patternBG {
+	background-image: url('images/layout/bg.png');
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: -99;
+}
+
+.topLeftCharacter {
+	background-image: url('images/layout/top-left-character.png');
+	width: 617px;
+	height: 446px;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: -100;
+}
+
+
+.topRightCharacter {
+	background-image: url('images/layout/top-right-character.png');
+	width: 432px;
+	height: 471px;
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	z-index: -100;
+}
+
+.bottomLeftCharacter {
+	background-image: url('images/layout/bottom-left-character.png');
+	width: 338px;
+	height: 415px;
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: -100;
+}
+
+.bottomRightCharacter {
+	background-image: url('images/layout/bottom-right-character.png');
+	width: 300px;
+	height: 302px;
+	position: fixed;
+	bottom: 0px;
+	right: 0px;
+	z-index: -100;
+}
+
+
+.headerDiv {
+	position: relative;
+	width: 88%;
+	min-width: 990px;
+	height: 150px;
+	text-align: center;
+	margin: 0px auto;
+}
+
+
+.topMenuDiv {
+	position: relative;
+	width: 88%;
+	min-width: 990px;
+	height: 50px;
+	background-image: url('images/layout/ribbonbg.png');
+	background-repeat: repeat-x;
+	margin: 0px auto;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	border-top: solid #3f4f30 1px;
+	border-bottom: solid #3f4f30 1px;
+	box-shadow: 0px -3px 5px 0px rgba(0,0,0,.8);
+}
+
+.topMenuLeftGradient {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: linear-gradient(to right, rgba(0,0,0,.3), rgba(0,0,0,0));
+}
+
+.topMenuRightGradient {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background: linear-gradient(to left, rgba(0,0,0,.3), rgba(0,0,0,0));
+}
+
+.topMenuLeftLineGradient {
+	width: 3px;
+	height: 1px;
+	position: absolute;
+	bottom: -1px;
+	left: 0px;
+	background: linear-gradient(to right, rgba(54,56,50,1), rgba(64,65,63,.20));
+}
+
+.topMenuRightLineGradient {
+	width: 3px;
+	height: 1px;
+	position: absolute;
+	bottom: -1px;
+	right: 0px;
+	background: linear-gradient(to left, rgba(54,56,50,1), rgba(64,65,63,.20));
+}
+
+.topMenuBottomLeft {
+	width: 9px;
+	height: 9px;
+	position: absolute;
+	bottom: -10px;
+	left: 0px;
+	background: url('images/layout/ribbon-bottom-triangle.png') 0px 0px;
+}
+
+.topMenuBottomRight {
+	width: 9px;
+	height: 9px;
+	position: absolute;
+	bottom: -10px;
+	right: 0px;
+	background: url('images/layout/ribbon-bottom-triangle.png') -9px 0px;
+}
+
+.topMenuTopDashes {
+	position: absolute;
+	top: 2px;
+	width: 100%;
+	height: 1px;
+	background-image: url('images/layout/ribbondash.png');	
+}
+
+.topMenuBottomDashes {
+	position: absolute;
+	bottom: 2px;
+	width: 100%;
+	height: 1px;
+	background-image: url('images/layout/ribbondash.png');	
+}
+
+.topMenuItemsDiv {
+	position: relative;
+	width: 90%;
+	margin: 0px auto;
+	padding-top: 14px;
+	text-align: center;
+}
+
+.topMenuItem {
+	display: inline-block;
+	padding: 0px 30px;
+	font-family: 'Asul', verdana, sans-serif;
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.topMenuItem a {
+	color: white;	
+}
+
+.topMenuItem a:hover {
+	color: #fff4d1;
+	text-shadow: 0px 0px 30px rgba(0,0,0,1);
+}
+
+.bodyDiv {
+	position: relative;
+	margin: 0px auto;
+	width: 88%;
+	min-width: 990px;
+}
+
+.bodyContentDiv {
+	margin: 0px 9px;
+	padding: 8px;
+	padding-top: 15px;
+	min-height: 800px;
+	background-color: rgba(0,0,0,.5);
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom: solid rgba(63,79,48,.3) 1px;
+	box-shadow: 0px 1px 5px 0px rgba(255,255,255,.03);
+}
+
+.leftMenuDiv {
+	float: left;
+	width: 180px;
+	min-height: 200px;
+}
+
+.rightMenuDiv {
+	float: right;
+	width: 180px;
+	min-height: 200px;
+}
+
+.centerContentDiv {
+	margin-left: 185px;
+	margin-right: 185px;
+	min-height: 200px;
+	padding: 10px;
+}
+
+
+.menuTitle {
+	font-family: 'Asul', verdana, sans-serif;
+	color: white;
+	font-weight: bold;
+	font-size: 16px;
+	background-repeat: no-repeat;
+	height: 35px;
+	padding-top: 15px;
+	overflow: hidden;	
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 170px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-image: url('images/layout/menucatbg.png');
+	text-align: center;
+}
+.menuItemsDiv {
+	width: 170px;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+
+.bottomPageGradient {
+	width: 100%;
+	position: fixed;
+	height: 150px;
+	z-index: -98;
+	bottom: 0px;
+	left: 0px;
+	background: linear-gradient(rgba(6,14,0,0), rgba(0,0,0,1));
+}
+
+
+.loginTextbox {
+	border: solid #5d5d5d 1px;
+	font-size: 12px;
+	padding: 3px;
+	font-family: 'Asul', verdana, sans-serif;
+	width: 90%;
+	border-radius: 3px;
+}
+
+.loginSubmitButton {
+	border-radius: 3px;
+	background-color: rgba(36,50,23,.5);
+	color: white;
+	font-family: 'Asul', verdana, sans-serif;
+	padding: 5px 20px;
+	border: solid rgba(63,79,48,.3) 1px;
+	cursor: pointer;
+}
+
+.loginSubmitButton:hover {
+	background-color: rgba(36,50,23,.75);
+	box-shadow: 0px 0px 5px 0px rgba(36,50,23,.75);
+}
+
+
+.loggedInMenuList {
+	padding: 0px;
+	padding-left: 15px;
+	margin: 0px;	
+}
+
+.loggedInSection p {
+	margin: 0px; 
+	padding-left: 2px; 
+	margin-bottom: 5px	
+}
+
+.loginFormSection p {
+	margin: 0px;
+	margin-bottom: 5px;
+}
+
+
+/* Custom BTCS4.css */
+
+.menuItemsDiv .shoutBox {
+	margin-left: -5px;
+}
+
+.menusNewestMembersWrapper, .menusForumActivityWrapper {
+	margin-left: -5px;
+	margin-right: 0px;
+	width: 170px;
+}
+
+.clocksDiv {
+	margin: 0px auto;
+	width: 98%;
+	margin-bottom: 20px;
+}

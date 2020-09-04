@@ -1,0 +1,172 @@
+.donationsLeft {
+	float: left;
+	width: 60%;
+	min-height: 400px;
+}
+
+.donationsRight {
+	float: right;
+	width: 35%;
+	min-height: 400px;
+}
+
+.donationsLeft .bigTextBox {
+	width: 45% !important;	
+}
+
+.donationsLeft .smallTextBox {
+	width: 10% !important;	
+}
+
+
+.donationsRight p {
+	padding: 0px;
+	margin: 0px;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.donationsRight .numberCounts {
+	font-size: 36px;	
+}
+
+.donationMessagesSectionTitle {
+	font-size: 14px;
+	font-weight: bold;
+	width: 96%;
+	margin-left: auto;
+	margin-right: auto;	
+}
+
+.donationMessagesDiv {
+	width: 96%;
+	margin-left: auto;
+	margin-right: auto;	
+}
+
+.donationMessage {
+	position: relative;
+	padding: 10px 5px;	
+}
+
+.donationMessagePic {
+	display: inline-block;
+	vertical-align: top;
+}
+
+
+.donationMessagePic img {
+	width: 40px;
+	height: 53px;
+	border: solid black 1px;	
+}
+
+.donationMessageText {
+	font-size: 12px;
+	display: inline-block;
+	vertical-align: top;
+	padding-left: 5px;
+}
+
+
+.donationProgressContainer {
+	width: 98%;
+	border: solid rgba(0,0,0, .15) 1px;
+	position: relative;
+	height: 10px;
+	border-radius: 5px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.donationProgressContainer div {
+	height: 10px;
+	border-radius: 5px;
+}
+
+.donationGoalText {
+	position: relative;
+	padding-left: 5px;
+	font-size: 14px;
+	font-weight: bold;
+	overflow: auto;
+}
+
+.donationsDaysLeft {
+	float: right;
+	padding-right: 5px;
+}
+
+
+.donatorDiv {
+	position: relative;
+	padding: 10px 5px;
+	overflow: auto;
+}
+
+.donatorPic {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.donatorPic img {
+	width: 45px;
+	height: 60px;
+	border: solid black 1px;	
+}
+
+.donatorInfo {
+	display: inline-block;
+	padding-left: 3px;
+	vertical-align: top;
+}
+
+.donatorAmount {
+	color: green;
+}
+
+.donateMenuItemContainer {
+	position: relative;
+	width: 98%;
+	min-height: 100px;
+	margin-top: 5px;
+}
+
+.donateMenuItemContainer .donatorPic img {
+	width: 34px;
+	height: 45px;
+}
+
+.donateMenuItemContainer .donatorInfo {
+	width: 70%;
+}
+
+.donateMenuItemContainer .donateDate {
+	font-size: 10px;	
+}
+
+.donateMenuItemTitle {
+	font-weight: bold;
+	font-size: 12px;	
+}
+
+.donateMenuItemDesc {
+	margin-bottom: 3px;	
+}
+
+.donateMenuItemStatsDiv {
+	position: relative;
+	margin-top: 5px;	
+}
+
+.donateMenuItemStat {
+	position: relative;
+	margin-right: 3px;
+	padding: 2px;
+}
+
+.donateMenuProgressBarDiv {
+	position: relative;
+	margin-bottom: 3px;
+}
+
