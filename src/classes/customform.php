@@ -32,8 +32,8 @@ class CustomForm extends Basic {
 		$this->strTableName = $this->MySQL->get_tablePrefix()."customform";
 		
 		
-		$this->objComponent = new BasicSort($sqlConnection, "customform_components", "component_id");
-		$this->objSelectValue = new BasicSort($sqlConnection, "customform_selectvalues", "selectvalue_id");
+		$this->objComponent = new Basic($sqlConnection, "customform_components", "component_id");
+		$this->objSelectValue = new Basic($sqlConnection, "customform_selectvalues", "selectvalue_id");
 		$this->objFormValue = new Basic($sqlConnection, "customform_values", "value_id");
 		$this->objSubmission = new Basic($sqlConnection, "customform_submission", "submission_id");
 		
