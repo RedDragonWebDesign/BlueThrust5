@@ -57,6 +57,17 @@ The code in this project is workable. I was able to patch in the things my clien
 - Does not follow MVC ([Model View Controller](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)). MVC is the excellent practice of separating SQL, HTML, and PHP into different files.
 - Many skins, but the skins are not mobile friendly.
 
+## I am available for hire
+
+Do you just want these scripts up and running? Not interested in the technical details? I'm available for hire. I can help with any/all of the following:
+
+- Buying a domain name
+- Buying web hosting
+- Installing and configuring BlueThrust5
+- Making custom modifications to BlueThrust5
+
+[Click here](https://www.reddragonwebdesign.com/contact/) to send me an email.
+
 ## Screenshots
 
 ![](screenshots/index.png)
