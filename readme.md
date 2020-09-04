@@ -1,4 +1,12 @@
-# BlueThrust Clan Scripts v5 ==
+# BlueThrust Clan Scripts v5
+
+## Download Link
+
+[Click here](https://github.com/RedDragonWebDesign/BlueThrust5/releases)
+
+## Setup Guide
+
+[Click here](https://github.com/RedDragonWebDesign/BlueThrust5/wiki/Setup-Guide)
 
 ## What are Clan Scripts?
 
@@ -40,12 +48,6 @@ This repository is a fork of the BlueThrust 4 scripts, and I am going to share s
 Please report all bugs, security issues, and feature requests.
 
 Create a GitHub account, then [create an issue](https://github.com/RedDragonWebDesign/BlueThrust5).
-
-## Setup Guide
-
-[Click here](https://github.com/RedDragonWebDesign/BlueThrust5/wiki/Setup-Guide)
-
-Setup can be complicated. You can hire me to set up and manage your website for you if you'd like. https://www.RedDragonWebDesign.com/contact/
 
 ## Code Quality
 
