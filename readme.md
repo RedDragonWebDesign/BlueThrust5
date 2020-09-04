@@ -66,7 +66,7 @@ Do you just want these scripts up and running? Not interested in the technical d
 
 Would you like a different website skin? There are 29 to choose from. Head on over to the [BlueThrust5-Themes repository](https://github.com/RedDragonWebDesign/BlueThrust5-Themes). I did not create these, they are from the BlueThrust website. But I am maintaining them on GitHub so that I can keep their code up to date.
 
-# Developer Notes
+## Developer Notes
 
 Interested in contributing? Here's some [developer notes](https://github.com/RedDragonWebDesign/BlueThrust5/wiki/Developer-Notes).
 
