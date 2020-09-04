@@ -51,14 +51,6 @@ Please report all bugs, security issues, and feature requests.
 
 Create a GitHub account, then [create an issue](https://github.com/RedDragonWebDesign/BlueThrust5).
 
-## Code Quality
-
-The code in this project is workable. I was able to patch in the things my client wanted. But there are several areas that need modernization:
-
-- Was designed for PHP 5. Huge number of notices and warnings when running on PHP 7.4
-- Does not follow MVC ([Model View Controller](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)). MVC is the excellent practice of separating SQL, HTML, and PHP into different files.
-- Many skins, but the skins are not mobile friendly.
-
 ## I am available for hire
 
 Do you just want these scripts up and running? Not interested in the technical details? I'm available for hire. I can help with any/all of the following:
