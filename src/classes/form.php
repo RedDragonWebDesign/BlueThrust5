@@ -798,7 +798,7 @@
 		 * 
 		 */
 		
-		public function convertAttributes($attr) {
+		static public function convertAttributes($attr) {
 			
 			if(is_array($attr)) {
 				$returnVal = "";
