@@ -77,24 +77,22 @@ if(!isset($arrWebsiteLogoURL['scheme']) || $arrWebsiteLogoURL['scheme'] == "") {
 	$websiteInfo['logourl'] = $MAIN_ROOT."themes/".$THEME."/".$websiteInfo['logourl'];
 }
 
-
 $IP_ADDRESS = $_SERVER['REMOTE_ADDR'];
 
+assert_options(ASSERT_BAIL);
+
 // Check Debug Mode
-
 if($websiteInfo['debugmode'] == 1) {
-	ini_set('display_errors', 1);
-	ini_set('error_reporting', E_ALL);
+	mysqli_report(MYSQLI_REPORT_STRICT);
+	error_reporting(E_ALL);
+	ini_set('display_errors', '1');
+} else {
+	mysqli_report(MYSQLI_REPORT_OFF);
+	error_reporting(0);
+	ini_set('display_errors', '0');
 }
-else {
-	ini_set('display_errors', 1);
-	ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT);
-	//ini_set('error_reporting', E_ALL);
-}
-
 
 // Check for Ban
-
 $ipbanObj = new IPBan($mysqli);
 if($ipbanObj->isBanned($IP_ADDRESS)) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
@@ -114,4 +112,3 @@ $btThemeObj->setClanName($CLAN_NAME);
 $btThemeObj->initHead();
 
 include_once(BASE_DIRECTORY."plugins/mods.php");
-?>
