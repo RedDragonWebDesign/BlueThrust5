@@ -15,19 +15,30 @@
 
 // This setup page should not be changed.  Edit _config.php to configure your website.
 
-ini_set('display_errors', 0);
-ini_set('session.use_only_cookies', 1);
-ini_set('session.gc_maxlifetime', 60*60*24*3);
+// This is a way to manually turn on debug. This will get you error reporting before the database loads. The other way to turn on debug is in My Account -> Administrator Options -> Website Settings -> Debug Mode.
+define('DEBUG', 1);
 
+// Error reporting default = off.
+mysqli_report(MYSQLI_REPORT_OFF);
+error_reporting(0);
+ini_set('display_errors', '0');
+
+function debug() {
+	mysqli_report(MYSQLI_REPORT_STRICT);
+	error_reporting(E_ALL);
+	ini_set('display_errors', '1');
+}
+
+if ( DEBUG ) {
+	debug();
+}
 
 if (version_compare(PHP_VERSION, '7.0', '<')) {
 	die("These scripts need PHP version 7.0 or later to run. Please change this setting in your web host control panel (for example, cPanel).");
 }
 
-if(get_magic_quotes_gpc() == 1) {
-	foreach($_GET as $key=>$value) { $_GET[$key] = stripslashes($value); }
-	foreach($_POST as $key=>$value) { $_POST[$key] = stripslashes($value); }
-}
+ini_set('session.use_only_cookies', 1);
+ini_set('session.gc_maxlifetime', 60*60*24*3);
 
 
 if(isset($_COOKIE['btUsername']) && isset($_COOKIE['btPassword'])) {
@@ -86,13 +97,7 @@ assert_options(ASSERT_BAIL);
 
 // Check Debug Mode
 if($websiteInfo['debugmode'] == 1) {
-	mysqli_report(MYSQLI_REPORT_STRICT);
-	error_reporting(E_ALL);
-	ini_set('display_errors', '1');
-} else {
-	mysqli_report(MYSQLI_REPORT_OFF);
-	error_reporting(0);
-	ini_set('display_errors', '0');
+	debug();
 }
 
 // Check for Ban
