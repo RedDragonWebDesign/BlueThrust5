@@ -96,6 +96,12 @@ if($checkMember) {
 		$counter = 0;
 		$totalConsoleCats = count($arrConsoleCats);
 		
+		$memberAppCID = $consoleObj->findConsoleIDByName("View Member Applications");
+		$diplomacyRequestsCID = $consoleObj->findConsoleIDByName("View Diplomacy Requests");
+		$viewEventInvitationsCID = $consoleObj->findConsoleIDByName("View Event Invitations");
+		$viewInactiveRequestsCID = $consoleObj->findConsoleIDByName("View Inactive Requests");
+		$privateMessagesCID = $consoleObj->findConsoleIDByName("Private Messages");
+		
 		foreach($arrConsoleCats as $key => $categoryID) {
 			
 			$consoleCatObj->select($categoryID);
@@ -150,6 +156,7 @@ if($checkMember) {
 				<div style='padding-left: 5px; padding-bottom: 15px'>
 				<ul style='padding: 0px; padding-left: 15px'>
 				";
+				
 				foreach($arrConsoleOptions as $consoleOptionID) {
 			
 					$consoleObj->select($consoleOptionID);
@@ -160,13 +167,6 @@ if($checkMember) {
 						$dispConsoleOptions .= $dispPageTitle;
 					}
 					elseif($consoleInfo['hide'] == 0) {
-						
-						$memberAppCID = $consoleObj->findConsoleIDByName("View Member Applications");
-						$diplomacyRequestsCID = $consoleObj->findConsoleIDByName("View Diplomacy Requests");
-						$viewEventInvitationsCID = $consoleObj->findConsoleIDByName("View Event Invitations");
-						$viewInactiveRequestsCID = $consoleObj->findConsoleIDByName("View Inactive Requests");
-						$privateMessagesCID = $consoleObj->findConsoleIDByName("Private Messages");
-						
 						if($consoleInfo['console_id'] == $memberAppCID) {
 							$getUnseenApps = $mysqli->query("SELECT memberapp_id FROM ".$dbprefix."memberapps WHERE seenstatus = '0'");
 							$unseenApps = $getUnseenApps->num_rows;
