@@ -20,6 +20,9 @@ ini_set('session.use_only_cookies', 1);
 ini_set('session.gc_maxlifetime', 60*60*24*3);
 
 
+if (version_compare(PHP_VERSION, '7.0', '<')) {
+	die("These scripts need PHP version 7.0 or later to run. Please change this setting in your web host control panel (for example, cPanel).");
+}
 
 if(get_magic_quotes_gpc() == 1) {
 	foreach($_GET as $key=>$value) { $_GET[$key] = stripslashes($value); }
