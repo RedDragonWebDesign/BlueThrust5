@@ -32,7 +32,8 @@ $appComponentObj = $memberAppObj->objAppComponent;
 $appSelectValueObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
 $profileOptionObj = new ProfileOption($mysqli);
 
-
+/*
+// If user is logged in, redirect them to the index page
 if(($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) || $websiteInfo['memberregistration'] == 1) {
 	echo "
 		<script type='text/javascript'>
@@ -41,7 +42,7 @@ if(($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSIO
 	";
 	exit();
 }
-
+*/
 
 $breadcrumbObj->setTitle("Sign Up");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
