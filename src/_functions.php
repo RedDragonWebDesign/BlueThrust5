@@ -12,10 +12,7 @@
  *
  */
 
-
-
-include($prevFolder."include/lib_autolink/lib_autolink.php");
-
+require_once($prevFolder."include/lib_autolink/lib_autolink.php");
 
 // General functions to filter out all <, >, ", and ' symbols
 function filterArray($arrValues) {
@@ -42,14 +39,11 @@ function filterText($strText) {
 	$temp = str_replace("&middot;", "&#38;middot;", $value);
 	$temp = str_replace("&raquo;", "&#38;raquo;", $temp);
 	$temp = str_replace("&laquo;", "&#38;laquo;", $temp);
-	
-	
 
 	return $temp;
 }
 
 function getPreciseTime($intTime, $timeFormat="", $bypassTimeDiff=false) {
-
 	$timeDiff = (!$bypassTimeDiff) ? time() - $intTime : 99999;
 
 	if($timeDiff < 3) {

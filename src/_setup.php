@@ -33,13 +33,17 @@ if ( DEBUG ) {
 	debug();
 }
 
+// DECLARE GLOBAL VARIABLES
+$PAGE_NAME = "";
+$EXTERNAL_JAVASCRIPT = '';
+$SQL_PROFILER = [];
+
 if (version_compare(PHP_VERSION, '7.0', '<')) {
 	die("These scripts need PHP version 7.0 or later to run. Please change this setting in your web host control panel (for example, cPanel).");
 }
 
 ini_set('session.use_only_cookies', 1);
 ini_set('session.gc_maxlifetime', 60*60*24*3);
-
 
 if(isset($_COOKIE['btUsername']) && isset($_COOKIE['btPassword'])) {
 	session_start();
@@ -54,20 +58,21 @@ if(!isset($_SESSION['csrfKey'])) {
 	$_SESSION['csrfKey'] = md5(uniqid());
 }
 
-include($prevFolder."_config.php");
+// CONFIG.PHP INCLUDED HERE *************************
+require_once($prevFolder."_config.php");
+// **************************************************
+
 define("BASE_DIRECTORY", $BASE_DIRECTORY);
 //define("BASE_DIRECTORY", str_replace("//", "/", $_SERVER['DOCUMENT_ROOT'].$MAIN_ROOT));
 define("MAIN_ROOT", $MAIN_ROOT);
 
-
-$PAGE_NAME = "";
-include_once(BASE_DIRECTORY."_functions.php");
+// FUNCTIONS.PHP INCLUDED HERE **********************
+require_once(BASE_DIRECTORY."_functions.php");
+// **************************************************
 
 define("FULL_SITE_URL", getHTTP().$_SERVER['SERVER_NAME'].MAIN_ROOT);
 
-
 $mysqli = new btmysql($dbhost, $dbuser, $dbpass, $dbname);
-
 
 $mysqli->set_tablePrefix($dbprefix);
 $mysqli->set_testingMode(true);
@@ -85,7 +90,6 @@ $THEME = $websiteInfo['theme'];
 define("THEME", $THEME);
 
 $arrWebsiteLogoURL = parse_url($websiteInfo['logourl']);
-
 
 if(!isset($arrWebsiteLogoURL['scheme']) || $arrWebsiteLogoURL['scheme'] == "") {
 	$websiteInfo['logourl'] = $MAIN_ROOT."themes/".$THEME."/".$websiteInfo['logourl'];
@@ -106,11 +110,8 @@ if($ipbanObj->isBanned($IP_ADDRESS)) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 }
 
-
 $websiteInfo['default_timezone'] = (!isset($websiteInfo['default_timezone']) || $websiteInfo['default_timezone'] == "") ? "UTC" : $websiteInfo['default_timezone'];
-
 date_default_timezone_set($websiteInfo['default_timezone']);
-
 
 $hooksObj = new btHooks();
 $btThemeObj = new btTheme();
@@ -119,4 +120,4 @@ $btThemeObj->setThemeDir($THEME);
 $btThemeObj->setClanName($CLAN_NAME);
 $btThemeObj->initHead();
 
-include_once(BASE_DIRECTORY."plugins/mods.php");
+require_once(BASE_DIRECTORY."plugins/mods.php");
