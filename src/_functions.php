@@ -242,14 +242,56 @@ function encryptPassword($password) {
 	return $returnArr;
 }
 
+// Example usage: html_var_export($limit, '$limit');
+function html_var_export($var, $var_name = NULL)
+{
+	$output = '';
+	
+	if ( $var_name )
+	{
+		$output .= $var_name . ' = ';
+	}
+	
+	$output .= nl2br_and_nbsp(var_export($var, TRUE)) . "<br /><br />";
+	
+	echo $output;
+}
+
+function nl2br_and_nbsp($string)
+{
+	$string = nl2br($string);
+	
+	$string = nbsp($string);
+	
+	return $string;
+}
+
+function nbsp($string)
+{
+	$string = preg_replace('/\t/', '&nbsp;&nbsp;&nbsp;&nbsp;', $string);
+	
+	// replace more than 1 space in a row with &nbsp;
+	$string = preg_replace('/  /m', '&nbsp;&nbsp;', $string);
+	$string = preg_replace('/ &nbsp;/m', '&nbsp;&nbsp;', $string);
+	$string = preg_replace('/&nbsp; /m', '&nbsp;&nbsp;', $string);
+	
+	if ( $string == ' ' )
+	{
+		$string = '&nbsp;';
+	}
+	
+	// Convert 2 space tab to 4 space tab
+	$string = preg_replace('/&nbsp;&nbsp;/m', '&nbsp;&nbsp;&nbsp;&nbsp;', $string);
+	
+	return $string;
+}
 
 // Class Loaders
 
 function BTCS4Loader($class_name) {
-	include_once(BASE_DIRECTORY."classes/".strtolower($class_name).".php");
+	require_once(BASE_DIRECTORY."classes/".strtolower($class_name).".php");
 }
 
 spl_autoload_register("BTCS4Loader", true, true);
 
-include_once(BASE_DIRECTORY."include/phpmailer/PHPMailerAutoload.php");
-?>
+require_once(BASE_DIRECTORY."include/phpmailer/PHPMailerAutoload.php");
