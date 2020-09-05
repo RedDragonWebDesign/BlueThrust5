@@ -35,7 +35,7 @@ $breadcrumbObj->addCrumb(parseBBCode($imageSliderInfo['name']));
 $breadcrumbObj->updateBreadcrumb();
 
 define("HPIMAGE_FORM", true);
-include(BASE_DIRECTORY."members/include/news/hpimage_form.php");
+require_once(BASE_DIRECTORY."members/include/news/hpimage_form.php");
 
 $imageOrder = $imageSliderObj->findBeforeAfter();
 

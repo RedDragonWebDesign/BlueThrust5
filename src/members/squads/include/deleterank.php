@@ -12,10 +12,10 @@
  *
  */
 
-include_once("../../../_setup.php");
-include_once("../../../classes/member.php");
-include_once("../../../classes/rank.php");
-include_once("../../../classes/squad.php");
+require_once("../../../_setup.php");
+require_once("../../../classes/member.php");
+require_once("../../../classes/rank.php");
+require_once("../../../classes/squad.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("View Your Squads");
@@ -76,7 +76,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			
 			$squadObj->objSquadRank->delete();
 			
-			include("ranklist.php");
+			require_once("ranklist.php");
 			
 		}
 		else {

@@ -80,7 +80,7 @@ else {
 	<div id='ipBanList'>
 		<?php 
 			define("SHOW_BANLIST", true);
-			include("ipbanning/ipbanlist.php");
+			require_once("ipbanning/ipbanlist.php");
 		?>
 	</div>
 	<br>

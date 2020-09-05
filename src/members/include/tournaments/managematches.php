@@ -25,8 +25,8 @@ else {
 	}
 }
 
-include_once($prevFolder."classes/btupload.php");
-include_once($prevFolder."classes/tournament.php");
+require_once($prevFolder."classes/btupload.php");
+require_once($prevFolder."classes/tournament.php");
 
 
 $tMemberObj = new Member($mysqli);
@@ -41,13 +41,13 @@ $countErrors = 0;
 
 if(isset($_GET['mID']) && $tournamentObj->objMatch->select($_GET['mID'])) {
 	
-	include("include/managematch.php");
+	require_once("include/managematch.php");
 	
 	
 }
 elseif(isset($_GET['pID']) && $tournamentObj->objTournamentPool->objTournamentPoolMatch->select($_GET['pID'])) {
 
-	include("include/managepoolmatch.php");
+	require_once("include/managepoolmatch.php");
 	
 }
 else {

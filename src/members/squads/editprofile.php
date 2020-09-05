@@ -31,7 +31,7 @@ else {
 		exit();
 	}
 }
-include_once("../../classes/btupload.php");
+require_once("../../classes/btupload.php");
 
 echo "
 

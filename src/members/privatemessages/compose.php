@@ -12,12 +12,12 @@
  *
  */
 
-include_once("../../_setup.php");
-include_once("../../classes/member.php");
-include_once("../../classes/rank.php");
-include_once("../../classes/rankcategory.php");
-include_once("../../classes/squad.php");
-include_once("../../classes/tournament.php");
+require_once("../../_setup.php");
+require_once("../../classes/member.php");
+require_once("../../classes/rank.php");
+require_once("../../classes/rankcategory.php");
+require_once("../../classes/squad.php");
+require_once("../../classes/tournament.php");
 
 
 // Delete expired compose list sessions
@@ -73,7 +73,7 @@ $EXTERNAL_JAVASCRIPT .= "
 ";
 
 $prevFolder = "../../";
-include("../../themes/".$THEME."/_header.php");
+require_once("../../themes/".$THEME."/_header.php");
 echo "
 <div class='breadCrumbTitle' id='breadCrumbTitle'>Compose Message</div>
 <div class='breadCrumb' id='breadCrumb' style='padding-top: 0px; margin-top: 0px'>
@@ -574,6 +574,6 @@ else {
 
 
 
-include("../../themes/".$THEME."/_footer.php");
+require_once("../../themes/".$THEME."/_footer.php");
 
 ?>

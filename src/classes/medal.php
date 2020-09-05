@@ -13,7 +13,7 @@
  */
 
 
-include_once("rank.php");
+require_once("rank.php");
 class Medal extends Rank {
 	
 	

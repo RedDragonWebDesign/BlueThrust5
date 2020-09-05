@@ -43,7 +43,7 @@ if($_GET['rID'] == "") {
 		<div id='deleteMessage' style='display: none'></div>
 		<div id='contentDiv'>
 	";
-	include("include/ranklist.php");
+	require_once("include/ranklist.php");
 	echo "
 		</div>
 		

@@ -12,10 +12,10 @@
  *
  */
 
-include_once("../../../../_setup.php");
-include_once("../../../../classes/member.php");
-include_once("../../../../classes/download.php");
-include_once("../../../../classes/downloadcategory.php");
+require_once("../../../../_setup.php");
+require_once("../../../../classes/member.php");
+require_once("../../../../classes/download.php");
+require_once("../../../../classes/downloadcategory.php");
 
 
 // Start Page
@@ -50,7 +50,7 @@ if($downloadObj->select($_POST['dlID']) && isset($_POST['confirm'])) {
 	unlink("../../../../".$downloadInfo['splitfile2']);
 
 	
-	include("downloadlist.php");
+	require_once("downloadlist.php");
 	
 }
 elseif($downloadObj->select($_POST['dlID'])) {

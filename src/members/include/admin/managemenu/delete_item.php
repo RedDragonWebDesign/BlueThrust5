@@ -13,12 +13,12 @@
  */
 
 $prevFolder = "../../../../";
-include_once("../../../../_setup.php");
-include_once("../../../../classes/member.php");
-include_once("../../../../classes/rank.php");
-include_once("../../../../classes/consoleoption.php");
-include_once("../../../../classes/menucategory.php");
-include_once("../../../../classes/menuitem.php");
+require_once("../../../../_setup.php");
+require_once("../../../../classes/member.php");
+require_once("../../../../classes/rank.php");
+require_once("../../../../classes/consoleoption.php");
+require_once("../../../../classes/menucategory.php");
+require_once("../../../../classes/menuitem.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $member = new Member($mysqli);
@@ -48,7 +48,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			
 			$menuItemObj->delete();
 			$menuItemObj->resortOrder();
-			include("include/menuitemlist.php");
+			require_once("include/menuitemlist.php");
 			/*
 			echo "
 			

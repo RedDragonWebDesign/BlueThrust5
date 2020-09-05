@@ -24,8 +24,8 @@ else {
 }
 
 
-include_once($prevFolder."classes/profilecategory.php");
-include_once($prevFolder."classes/profileoption.php");
+require_once($prevFolder."classes/profilecategory.php");
+require_once($prevFolder."classes/profileoption.php");
 
 $cID = $_GET['cID'];
 
@@ -294,7 +294,7 @@ if(!$_POST['submit']) {
 				<div id='selectValueList' style='margin-top: 25px'>
 				";
 	
-				include("include/admin/manageprofileoptions/cache/view.php");
+				require_once("include/admin/manageprofileoptions/cache/view.php");
 	
 			echo "
 				</div>

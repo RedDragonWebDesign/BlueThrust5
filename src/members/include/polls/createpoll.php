@@ -23,8 +23,8 @@ else {
 	}
 }
 
-include_once("../classes/access.php");
-include_once("../classes/poll.php");
+require_once("../classes/access.php");
+require_once("../classes/poll.php");
 
 $cID = $_GET['cID'];
 

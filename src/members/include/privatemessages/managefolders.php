@@ -23,7 +23,7 @@ else {
 	}
 }
 
-include("../classes/pmfolder.php");
+require_once("../classes/pmfolder.php");
 
 $pmFolderObj = new PMFolder($mysqli);
 $cID = $_GET['cID'];
@@ -33,7 +33,7 @@ $cID = $_GET['cID'];
 if(isset($_GET['fID']) && !in_array($_GET['fID'], $arrSpecialFolders) && $pmFolderObj->select($_GET['fID'])) {
 	// Edit Folder page
 	define("EDIT_FOLDER", true);
-	include("include/edit.php");
+	require_once("include/edit.php");
 }
 else {
 	$addFolderCID = $consoleObj->findConsoleIDByName("Add PM Folder");
@@ -57,7 +57,7 @@ else {
 	<div id='folderList'>
 	";
 	define("SHOW_FOLDERLIST", true);
-	include("include/folderlist.php");
+	require_once("include/folderlist.php");
 	echo "</div>
 	
 		<script type='text/javascript'>

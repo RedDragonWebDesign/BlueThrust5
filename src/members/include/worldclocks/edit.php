@@ -21,7 +21,7 @@
 	$breadcrumbObj->updateBreadcrumb();
 	
 	
-	include(BASE_DIRECTORY."members/include/worldclocks/clock_form.php");
+	require_once(BASE_DIRECTORY."members/include/worldclocks/clock_form.php");
 	
 	$clockOrder = $clockObj->findBeforeAfter();
 	$clockObj->select($clockInfo['clock_id']);

@@ -25,7 +25,7 @@ else {
 
 
 
-include_once($prevFolder."classes/profilecategory.php");
+require_once($prevFolder."classes/profilecategory.php");
 $cID = $_GET['cID'];
 
 $profileCatObj = new ProfileCategory($mysqli);

@@ -23,7 +23,7 @@
 		}
 	}
 	
-	include_once("../classes/medal.php");
+	require_once("../classes/medal.php");
 	
 	$rankInfo = $memberRank->get_info_filtered();
 	if($memberInfo['promotepower'] != 0) {

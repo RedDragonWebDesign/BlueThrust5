@@ -11,11 +11,11 @@
  *
  */
 
-include_once("../../../_setup.php");
-include_once("../../../classes/member.php");
-include_once("../../../classes/rank.php");
-include_once("../../../classes/pmfolder.php");
-include_once("../../../classes/privatemessage.php");
+require_once("../../../_setup.php");
+require_once("../../../classes/member.php");
+require_once("../../../classes/rank.php");
+require_once("../../../classes/pmfolder.php");
+require_once("../../../classes/privatemessage.php");
 
 // Start Page
 $consoleObj = new ConsoleOption($mysqli);

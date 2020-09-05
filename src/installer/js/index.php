@@ -1,6 +1,6 @@
 <?php
-	include_once("classes/btmysql.php");
-	include("tablelist.php");
+	require_once("classes/btmysql.php");
+	require_once("tablelist.php");
 	$countErrors = 0;
 	$dispError = "";
 	
@@ -51,13 +51,13 @@
 		
 		
 		if($_GET['step'] == "" || $_GET['step'] == 1) {
-			include("steps/step1.php");			
+			require_once("steps/step1.php");			
 		}
 		elseif($_GET['step'] == 2) {
-			include("steps/step2.php");
+			require_once("steps/step2.php");
 		}
 		elseif($_GET['step'] == 3) {
-			include("steps/step3.php");	
+			require_once("steps/step3.php");	
 		}
 		?>
 		

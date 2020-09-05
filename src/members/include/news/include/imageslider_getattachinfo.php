@@ -13,11 +13,11 @@
  */
 
 
-include_once("../../../../_setup.php");
-include_once("../../../../classes/member.php");
-include_once("../../../../classes/news.php");
-include_once("../../../../classes/tournament.php");
-include_once("../../../../classes/event.php");
+require_once("../../../../_setup.php");
+require_once("../../../../classes/member.php");
+require_once("../../../../classes/news.php");
+require_once("../../../../classes/tournament.php");
+require_once("../../../../classes/event.php");
 
 // Start Page
 

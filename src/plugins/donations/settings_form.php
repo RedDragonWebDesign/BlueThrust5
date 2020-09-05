@@ -14,7 +14,7 @@
 
 
 if(!isset($pluginObj)) { exit(); }
-include_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
+require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
 
 
 $arrPaypalCurrencyCodes = DonationCampaign::getCurrencyCodes();

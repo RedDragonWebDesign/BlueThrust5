@@ -26,7 +26,7 @@ else {
 }
 
 
-include_once("../classes/btplugin.php");
+require_once("../classes/btplugin.php");
 $cID = $_GET['cID'];
 
 $pluginObj = new btPlugin($mysqli);
@@ -53,7 +53,7 @@ echo "
 			
 		<div id='installedDiv'>
 	";
-		include("include/admin/plugins/installed.php");
+		require_once("include/admin/plugins/installed.php");
 	echo "
 		</div>
 		<div id='loadingSpiralInstalled' style='display: none; margin-bottom: 20px'><img src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral.gif'></div>
@@ -75,7 +75,7 @@ echo "
 	echo "
 		<div id='availableDiv'>
 	";
-	include("include/admin/plugins/available.php");
+	require_once("include/admin/plugins/available.php");
 	echo "
 		</div>
 		<div id='loadingSpiralAvailable' style='display: none'><img src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral.gif'></div>

@@ -150,7 +150,7 @@
 		
 		global $mysqli;
 		if(!class_exists("DonationCampaign")) {
-			include(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
+			require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
 		}
 		
 		$campaignObj = new DonationCampaign($mysqli);

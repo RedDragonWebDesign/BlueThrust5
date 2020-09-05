@@ -14,7 +14,7 @@
  */
 
 
-include_once("../classes/basicorder.php");
+require_once("../classes/basicorder.php");
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();

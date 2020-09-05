@@ -35,7 +35,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 </script>
 ";
 
-include_once($prevFolder."classes/downloadcategory.php");
+require_once($prevFolder."classes/downloadcategory.php");
 
 $cID = $_GET['cID'];
 

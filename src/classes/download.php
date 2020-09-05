@@ -12,9 +12,9 @@
  *
  */
 
-include_once("basic.php");
-include_once("downloadcategory.php");
-include_once("btupload.php");
+require_once("basic.php");
+require_once("downloadcategory.php");
+require_once("btupload.php");
 
 class Download extends Basic {
 	

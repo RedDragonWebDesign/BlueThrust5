@@ -12,8 +12,8 @@
  *
  */
  
-include_once("basic.php");
-include_once("tournament.php");
+require_once("basic.php");
+require_once("tournament.php");
 
 
 class TournamentPool extends Basic {

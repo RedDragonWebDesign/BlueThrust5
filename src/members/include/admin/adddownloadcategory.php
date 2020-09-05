@@ -23,7 +23,7 @@ else {
 	}
 }
 
-include_once($prevFolder."classes/downloadcategory.php");
+require_once($prevFolder."classes/downloadcategory.php");
 $cID = $_GET['cID'];
 
 $downloadCatObj = new DownloadCategory($mysqli);

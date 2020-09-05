@@ -1,7 +1,7 @@
 <?php
 
 	if(!defined("MAIN_ROOT")) { exit(); }
-	include_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
+	require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
 
 	$campaignInfo = $campaignObj->get_info_filtered();
 	
@@ -36,7 +36,7 @@
 	$donationInfo = $campaignObj->getDonationInfo();
 	$totalDonations = count($donationInfo);
 	
-	include_once(BASE_DIRECTORY."plugins/donations/console/datefilter_form.php");
+	require_once(BASE_DIRECTORY."plugins/donations/console/datefilter_form.php");
 	
 	$numOfPages = ceil($totalDonations/$donationsPerPage);
 

@@ -53,7 +53,7 @@ if(!isset($_GET['dID'])) {
 		<div id='clanListDiv' style='margin: 0px; padding: 0px'>
 	";
 	
-	include("include/main_manageclans.php");
+	require_once("include/main_manageclans.php");
 	
 	echo "
 		</div>
@@ -106,7 +106,7 @@ if(!isset($_GET['dID'])) {
 }
 elseif(isset($_GET['dID']) && $_GET['action'] == "edit") {
 	
-	include("include/editclan.php");
+	require_once("include/editclan.php");
 	
 }
 

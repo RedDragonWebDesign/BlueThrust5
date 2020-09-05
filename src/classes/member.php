@@ -13,12 +13,12 @@
  */
 
 
-include_once("consoleoption.php");
-include_once("profileoption.php");
-include_once("rank.php");
-include_once("medal.php");
-include_once("forumboard.php");
-include_once("social.php");
+require_once("consoleoption.php");
+require_once("profileoption.php");
+require_once("rank.php");
+require_once("medal.php");
+require_once("forumboard.php");
+require_once("social.php");
 class Member extends Basic {
 
 	protected $objProfileOption;

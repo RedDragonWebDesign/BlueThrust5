@@ -22,7 +22,7 @@ else {
 		exit();
 	}
 }
-include_once($prevFolder."classes/consolecategory.php");
+require_once($prevFolder."classes/consolecategory.php");
 $cID = $_GET['cID'];
 
 $consoleCatObj = new ConsoleCategory($mysqli);

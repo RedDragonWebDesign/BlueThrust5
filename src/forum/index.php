@@ -15,7 +15,7 @@
 // Config File
 $prevFolder = "../";
 
-include($prevFolder."_setup.php");
+require_once($prevFolder."_setup.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $boardObj = new ForumBoard($mysqli);
@@ -45,7 +45,7 @@ if($ipbanObj->select($IP_ADDRESS, false)) {
 
 // Start Page
 $PAGE_NAME = "Forum - ";
-include($prevFolder."themes/".$THEME."/_header.php");
+require_once($prevFolder."themes/".$THEME."/_header.php");
 
 // Check Private Forum
 
@@ -67,7 +67,7 @@ if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION
 $breadcrumbObj->setTitle("Forum");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Forum");
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 
 $boardObj->showSearchForm();
 echo "	
@@ -196,5 +196,5 @@ echo "</table>";
 
 
 
-include($prevFolder."themes/".$THEME."/_footer.php");
+require_once($prevFolder."themes/".$THEME."/_footer.php");
 ?>

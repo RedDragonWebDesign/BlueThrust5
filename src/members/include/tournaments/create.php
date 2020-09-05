@@ -23,8 +23,8 @@ else {
 	}
 }
 
-include_once($prevFolder."classes/game.php");
-include_once($prevFolder."classes/tournament.php");
+require_once($prevFolder."classes/game.php");
+require_once($prevFolder."classes/tournament.php");
 
 $cID = $_GET['cID'];
 $dispError = "";

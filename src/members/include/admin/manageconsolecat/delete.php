@@ -12,11 +12,11 @@
  *
  */
 
-include_once("../../../../_setup.php");
-include_once("../../../../classes/member.php");
-include_once("../../../../classes/rank.php");
-include_once("../../../../classes/consoleoption.php");
-include_once("../../../../classes/consolecategory.php");
+require_once("../../../../_setup.php");
+require_once("../../../../classes/member.php");
+require_once("../../../../classes/rank.php");
+require_once("../../../../classes/consoleoption.php");
+require_once("../../../../classes/consolecategory.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $member = new Member($mysqli);
@@ -72,7 +72,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		elseif($_POST['confirm'] == "1") {
 			
 			$consoleCatObj->delete();
-			include("main.php");
+			require_once("main.php");
 			
 		}
 		else {

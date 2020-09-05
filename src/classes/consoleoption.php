@@ -14,7 +14,7 @@
 
 
 
-include_once("basicsort.php");
+require_once("basicsort.php");
 
 class ConsoleOption extends BasicSort {
 

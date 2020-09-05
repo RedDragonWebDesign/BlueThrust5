@@ -27,7 +27,7 @@ else {
 
 $cID = $_GET['cID'];
 
-include_once($prevFolder."classes/btupload.php");
+require_once($prevFolder."classes/btupload.php");
 
 
 $menuCatObj = new MenuCategory($mysqli);

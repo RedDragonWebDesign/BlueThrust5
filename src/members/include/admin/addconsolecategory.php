@@ -23,7 +23,7 @@ $memberInfo = $member->get_info_filtered();
 	}
 }
 
-include_once($prevFolder."classes/consolecategory.php");
+require_once($prevFolder."classes/consolecategory.php");
 $cID = $_GET['cID'];
 
 $consoleCatObj = new ConsoleCategory($mysqli);

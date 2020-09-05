@@ -23,7 +23,7 @@ else {
 	}
 }
 
-include("../classes/pmfolder.php");
+require_once("../classes/pmfolder.php");
 $cID = $_GET['cID'];
 
 $addFolderCID = $consoleObj->findConsoleIDByName("Add PM Folder");

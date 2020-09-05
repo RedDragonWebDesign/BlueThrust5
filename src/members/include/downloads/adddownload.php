@@ -23,8 +23,8 @@ else {
 	}
 }
 
-include_once($prevFolder."classes/downloadcategory.php");
-include_once($prevFolder."classes/download.php");
+require_once($prevFolder."classes/downloadcategory.php");
+require_once($prevFolder."classes/download.php");
 
 $downloadObj = new Download($mysqli);
 $downloadCatObj = new DownloadCategory($mysqli);

@@ -13,7 +13,7 @@
  */
 
 
-include_once("../classes/event.php");
+require_once("../classes/event.php");
 $_SESSION['btEventID'] = "";
 $_SESSION['btCountMindChanges'] = array();
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
@@ -59,7 +59,7 @@ echo "
 ";
 
 
-include("include/invitelist.php");
+require_once("include/invitelist.php");
 
 echo "</div>";
 ?>

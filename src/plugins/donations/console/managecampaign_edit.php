@@ -36,7 +36,7 @@ $defaultEndDate = $endDate->format("M j, Y");
 $setRecurringBox = ($campaignInfo['recurringunit'] != "") ? 1 : 0;
 
 
-include(BASE_DIRECTORY."plugins/donations/console/campaign_form.php");
+require_once(BASE_DIRECTORY."plugins/donations/console/campaign_form.php");
 
 $arrComponents['submit']['value'] = "Save";
 $arrComponents['rununtil']['value'] = ($campaignInfo['dateend'] == 0) ? "forever" : "choose";

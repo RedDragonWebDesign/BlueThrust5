@@ -13,10 +13,10 @@
  */
 
 
-include("../../../../_setup.php");
-include_once("../../../../classes/member.php");
-include_once("../../../../classes/rank.php");
-include_once("../../../../classes/consoleoption.php");
+require_once("../../../../_setup.php");
+require_once("../../../../classes/member.php");
+require_once("../../../../classes/rank.php");
+require_once("../../../../classes/consoleoption.php");
 
 $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
@@ -40,7 +40,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		$diplomacyStatusObj->move($_POST['sDir']);
 
-		include("main_managestatuses.php");
+		require_once("main_managestatuses.php");
 
 	}
 

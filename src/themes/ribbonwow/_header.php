@@ -1,7 +1,7 @@
 <?php
 
-include($prevFolder."themes/include_header.php");
-include($prevFolder."themes/ribbonwow/ribbonwowmenu.php");
+require_once($prevFolder."themes/include_header.php");
+require_once($prevFolder."themes/ribbonwow/ribbonwowmenu.php");
 $themeMenusObj = new RibbonWoWMenu($mysqli);
 
 $btThemeObj->setThemeName("Ribbon WoW");
@@ -60,4 +60,4 @@ $btThemeObj->addHeadItem("google-font", "<link href='https://fonts.googleapis.co
 					
 				</div>
 				<div class='centerContentDiv'>
-				<?php include(BASE_DIRECTORY."include/clocks.php"); ?>
+				<?php require_once(BASE_DIRECTORY."include/clocks.php"); ?>

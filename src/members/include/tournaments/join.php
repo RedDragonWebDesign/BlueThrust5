@@ -29,7 +29,7 @@ else {
 		exit();
 	}
 }
-include_once("../classes/tournament.php");
+require_once("../classes/tournament.php");
 
 $tMemberObj = new Member($mysqli);
 

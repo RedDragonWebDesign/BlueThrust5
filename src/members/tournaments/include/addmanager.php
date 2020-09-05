@@ -13,10 +13,10 @@
  */
 
 
-include_once("../../../_setup.php");
-include_once("../../../classes/member.php");
-include_once("../../../classes/rank.php");
-include_once("../../../classes/tournament.php");
+require_once("../../../_setup.php");
+require_once("../../../classes/member.php");
+require_once("../../../classes/rank.php");
+require_once("../../../classes/tournament.php");
 
 
 $consoleObj = new ConsoleOption($mysqli);
@@ -43,7 +43,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($_
 		$tournamentObj->addManager($_POST['managerID']);
 		
 		define("SHOW_MANAGERLIST", true);
-		include("managerlist.php");
+		require_once("managerlist.php");
 		
 		
 	}

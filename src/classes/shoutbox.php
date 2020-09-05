@@ -13,7 +13,7 @@
  */
 
 
-include_once("member.php");
+require_once("member.php");
 
 class ShoutBox {
 	

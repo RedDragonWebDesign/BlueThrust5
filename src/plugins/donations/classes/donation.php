@@ -1,6 +1,6 @@
 <?php
 
-	include_once(BASE_DIRECTORY."classes/basic.php");
+	require_once(BASE_DIRECTORY."classes/basic.php");
 
 	class Donation extends Basic {
 		

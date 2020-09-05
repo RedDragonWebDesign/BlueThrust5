@@ -13,10 +13,10 @@
  *
  */
 
-include_once("../../../../_setup.php");
-include_once("../../../../classes/member.php");
-include_once("../../../../classes/basic.php");
-include_once("../../../../classes/rank.php");
+require_once("../../../../_setup.php");
+require_once("../../../../classes/member.php");
+require_once("../../../../classes/basic.php");
+require_once("../../../../classes/rank.php");
 
 
 $consoleObj = new ConsoleOption($mysqli);
@@ -96,6 +96,6 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	
 }
 
-include("memberapplist.php");
+require_once("memberapplist.php");
 
 ?>

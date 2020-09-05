@@ -13,7 +13,7 @@
  */
 
 $prevFolder = "../../../../";
-include_once("../../../../_setup.php");
+require_once("../../../../_setup.php");
 
 
 $consoleObj = new ConsoleOption($mysqli);
@@ -36,7 +36,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		
 		$menuCatObj->move($_POST['cDir']);
 		
-		include("include/menucategorylist.php");
+		require_once("include/menucategorylist.php");
 		/*
 		$menuCatObj->select($_POST['mcID']);
 		echo "

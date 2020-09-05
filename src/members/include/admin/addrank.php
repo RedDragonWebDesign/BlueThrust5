@@ -23,8 +23,8 @@ else {
 	}
 }
 
-include_once($prevFolder."classes/btupload.php");
-include_once($prevFolder."classes/rankcategory.php");
+require_once($prevFolder."classes/btupload.php");
+require_once($prevFolder."classes/rankcategory.php");
 $cID = $_GET['cID'];
 
 

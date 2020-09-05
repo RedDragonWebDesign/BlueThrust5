@@ -13,7 +13,7 @@
  *
  */
 
-include_once("../classes/event.php");
+require_once("../classes/event.php");
 $_SESSION['btEventID'] = "";
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();

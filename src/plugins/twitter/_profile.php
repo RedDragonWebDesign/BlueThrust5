@@ -16,7 +16,7 @@
 		exit();	
 	}
 
-	include_once($prevFolder."plugins/twitter/twitter.php");
+	require_once($prevFolder."plugins/twitter/twitter.php");
 	
 	$twitterObj = new Twitter($mysqli);
 

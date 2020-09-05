@@ -13,8 +13,8 @@
 	 */
 
 	$prevFolder = "../../";
-	include("../../_setup.php");
-	include("youtube.php");
+	require_once("../../_setup.php");
+	require_once("youtube.php");
 	
 	$ytObj = new Youtube($mysqli);
 	$arrReturn = array();

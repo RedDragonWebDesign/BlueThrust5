@@ -24,7 +24,7 @@ else {
 	}
 }
 
-include_once($prevFolder."classes/tournament.php");
+require_once($prevFolder."classes/tournament.php");
 $cID = $_GET['cID'];
 
 

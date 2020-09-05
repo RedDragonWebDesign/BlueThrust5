@@ -23,7 +23,7 @@ else {
 	}
 }
 
-include_once($prevFolder."classes/squad.php");
+require_once($prevFolder."classes/squad.php");
 $cID = $_GET['cID'];
 
 echo "
@@ -36,7 +36,7 @@ echo "
 <div id='contentDiv'>
 ";
 
-include("include/invitelist.php");
+require_once("include/invitelist.php");
 
 echo "</div>
 

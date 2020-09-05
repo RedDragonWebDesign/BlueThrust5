@@ -46,7 +46,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 $dispError = "";
 $countErrors = 0;
 
-include_once("../../classes/game.php");
+require_once("../../classes/game.php");
 
 $gameObj = new Game($mysqli);
 

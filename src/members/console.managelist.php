@@ -51,7 +51,7 @@
 		<div id='".$setupManageListArgs['list_div_name']."'>
 	";
 		
-		include("console.managelist.list.php");
+		require_once("console.managelist.list.php");
 		
 	echo "</div>
 	

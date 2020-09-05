@@ -12,11 +12,11 @@
  *
  */
 
-include_once("../../../../_setup.php");
-include_once("../../../../classes/member.php");
-include_once("../../../../classes/rank.php");
-include_once("../../../../classes/news.php");
-include_once("../../../../classes/shoutbox.php");
+require_once("../../../../_setup.php");
+require_once("../../../../classes/member.php");
+require_once("../../../../classes/rank.php");
+require_once("../../../../classes/news.php");
+require_once("../../../../classes/shoutbox.php");
 
 // Start Page
 

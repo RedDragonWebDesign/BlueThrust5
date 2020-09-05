@@ -1,6 +1,6 @@
 <?php
 
-include_once("basic.php");
+require_once("basic.php");
 
 class WebsiteInfo extends Basic {
 	
@@ -87,7 +87,7 @@ class WebsiteInfo extends Basic {
 	
 	public function displayPage() {
 		global $mysqli, $dbprefix, $hooksObj;
-		include(BASE_DIRECTORY.$this->strPagePath);	
+		require_once(BASE_DIRECTORY.$this->strPagePath);	
 	}
 	
 	

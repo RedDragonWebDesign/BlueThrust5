@@ -1,7 +1,7 @@
 <?php 
 	header("Content-type: text/css");
-	include("../_setup.php");
-	include($THEME."/css.php");
+	require_once("../_setup.php");
+	require_once($THEME."/css.php");
 
 	// Image and Signuature Size Settings
 	$setMaxImageWidthUnit = ($websiteInfo['forum_imagewidthunit'] == "%") ? "%" : "px";

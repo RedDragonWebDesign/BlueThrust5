@@ -35,7 +35,7 @@ $categoryObj->set_assocTableKey("forumboard_id");
 
 if($categoryObj->select($_GET['catID']) && $_GET['action'] == "edit") {
 
-	include("include/edit_category.php");
+	require_once("include/edit_category.php");
 
 }
 else {
@@ -66,7 +66,7 @@ else {
 		<div id='categoryList'>
 	";
 	
-	include("include/main_managecategory.php");
+	require_once("include/main_managecategory.php");
 	
 	echo "
 		</div>
