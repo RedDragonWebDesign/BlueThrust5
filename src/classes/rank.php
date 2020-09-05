@@ -97,40 +97,30 @@ class Rank extends BasicOrder {
 	 * 
 	 */
 	function refreshImageSize() {
-		
 		if($this->intTableKeyValue != "") {
-			
-			
-			if($this->arrObjInfo['imagewidth'] == 0) {
-				$imageURL = $this->getLocalImageURL();
-			
-				$imageSize = getimagesize($imageURL);
-				$this->arrObjInfo['imagewidth'] = $imageSize[0];
-			
+			if ( $this->arrObjInfo['imageurl'] ) {
+				if($this->arrObjInfo['imagewidth'] == 0) {
+					$imageURL = $this->getLocalImageURL();
+				
+					$imageSize = getimagesize($imageURL);
+					$this->arrObjInfo['imagewidth'] = $imageSize[0];
+				}
+				
+				if($this->arrObjInfo['imageheight'] == 0) {
+					$imageURL = $this->getLocalImageURL();
+				
+					$imageSize = getimagesize($imageURL);
+					$this->arrObjInfo['imageheight'] = $imageSize[1];
+				}
 			}
-			
-			if($this->arrObjInfo['imageheight'] == 0) {
-				$imageURL = $this->getLocalImageURL();
-			
-				$imageSize = getimagesize($imageURL);
-				$this->arrObjInfo['imageheight'] = $imageSize[1];
-			
-			}
-		
-		
 		}
-		
-		
 	}
-
-	
 	
 	/*
 	 * - delete Method -
 	 * 
 	 * Special delete method for rank to also delete privilege permissions associated with this rank from the rank_privileges table.
 	 */
-	
 	public function delete() {
 
 		$returnVal = false;
