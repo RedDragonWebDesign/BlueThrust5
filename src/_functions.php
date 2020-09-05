@@ -280,6 +280,25 @@ function nbsp($string)
 	return $string;
 }
 
+function debug_string_backtrace() {
+	ob_start();
+	debug_print_backtrace();
+	$trace = ob_get_contents();
+	ob_end_clean();
+
+	// Remove first item from backtrace as it's this function which
+	// is redundant.
+	$trace = preg_replace ('/^#0\s+' . __FUNCTION__ . "[^\n]*\n/", '', $trace, 1);
+
+	// Put each stack trace on its own line
+	$trace = preg_replace('/\n/', '<br />', $trace);
+	
+	// Delete all but 1st stack trace
+	// $trace = preg_replace('/\n.*/', '', $trace);
+	
+	return $trace;
+}
+
 // Class Loaders
 
 function BTCS4Loader($class_name) {
