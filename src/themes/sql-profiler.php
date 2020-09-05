@@ -1,4 +1,4 @@
-	<?php if ( DEBUG ): ?>	
+	<?php if ( DEBUG ): ?>
 		<div id="sql-profiler" style="margin: 0 15px;">
 			<p style="font-size: 14pt;">
 				PHP Version: <strong><?php echo phpversion(); ?></strong><br />
@@ -10,6 +10,11 @@
 			</h1>
 			
 			<?php
+				foreach ( $SQL_PROFILER as $key => $value ) {
+					$SQL_PROFILER[$key]['query'] = htmlspecialchars($SQL_PROFILER[$key]['query']);
+					$SQL_PROFILER[$key]['stack_trace'] = htmlspecialchars($SQL_PROFILER[$key]['stack_trace']);
+				}
+			
 				$slowQueries = $SQL_PROFILER;
 				usort($slowQueries, function ($b, $a) {
 					return $a['duration'] <=> $b['duration'];
