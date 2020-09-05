@@ -16,9 +16,7 @@
 include_once("basicorder.php");
 
 class Rank extends BasicOrder {
-	
-	
-	
+
 	function __construct($sqlConnection) {
 		$this->MySQL = $sqlConnection;
 		$this->strTableName = $this->MySQL->get_tablePrefix()."ranks";

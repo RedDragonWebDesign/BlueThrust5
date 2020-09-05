@@ -7,7 +7,7 @@
 		
 		public function __construct($sqlConnection) {
 			
-			parent::__construct("ribboncamo", $sqlConnection);	
+			parent::__construct("ribbonwow", $sqlConnection);	
 			
 		}	
 		
