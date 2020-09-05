@@ -131,7 +131,8 @@ if($_POST['submit']) {
 		
 		if($member->update($arrColumns, $arrValues)) {
 			
-			$logMessage = $member->getMemberLink()." ".$actionWord." to rank ".$newRankInfo['name']." from ".$oldRankInfo['name'].".<br><br><b>Reason:</b><br>".filterText($_POST['reason']);
+			$logMessage = $member->getMemberLink()." ".$actionWord." to rank ".$newRankInfo['name']." from ".$oldRankInfo['name'].".";
+			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
 			
 			echo "
 				<div style='display: none' id='successBox'>
