@@ -9,6 +9,11 @@
 				$color = "color: red;";
 			}
 			$rowIDCounter = 0;
+			
+			foreach ( $SQL_PROFILER as $key => $value ) {
+				$SQL_PROFILER[$key]['query'] = htmlspecialchars($SQL_PROFILER[$key]['query']);
+				// stack trace gets sanitized in the function it uses, to prevent sanitizing the <br />s it inserts
+			}
 		?>
 		
 		<div id="sql-profiler-float" style="position: absolute; top: 0; right: 0; border: 3px solid blue; background-color: black; font-size: 12pt; <?php echo $color; ?>">
@@ -115,11 +120,6 @@
 			</h1>
 			
 			<?php
-				foreach ( $SQL_PROFILER as $key => $value ) {
-					$SQL_PROFILER[$key]['query'] = htmlspecialchars($SQL_PROFILER[$key]['query']);
-					// stack trace gets sanitized in the function it uses, to prevent sanitizing the <br />s it inserts
-				}
-			
 				$slowQueries = $SQL_PROFILER;
 				usort($slowQueries, function ($b, $a) {
 					return $a['duration'] <=> $b['duration'];
@@ -179,7 +179,7 @@
 			</table>			
 			
 			<h1>
-				Query List
+				Query List - Order Of Execution
 			</h1>
 			
 			<table style="border: 3px solid blue; border-collapse: collapse; font-size: 11pt; table-layout: fixed; margin: 1em 0; width: 100%;">
@@ -201,6 +201,67 @@
 				</thead>
 				<tbody>
 					<?php $i = 0; foreach ( $SQL_PROFILER as $query ): ?>
+						<?php $i++; ?>
+						<tr>
+							<td style="border: 3px solid blue;">
+								<?php echo $i; ?>
+							</td>
+							<td style="border: 3px solid blue;">
+								<?php echo $query['duration']; ?>
+							</td>
+							<td style="border: 3px solid blue;">
+								<?php echo $query['query']; ?>
+							</td>
+							<td style="border: 3px solid blue;">
+								<?php
+									$rowIDCounter++;
+									$clickToShowID = "click-to-show-id-$rowIDCounter";
+									$contentsToShowID = "contents-to-show-id-$rowIDCounter";
+								?>
+								<a id="<?php echo $clickToShowID; ?>" onclick="
+									document.getElementById('<?php echo $contentsToShowID; ?>').style.display = 'block';
+									document.getElementById('<?php echo $clickToShowID; ?>').style.display = 'none';
+								">
+									[Click To Show]
+								</a>
+								<span id="<?php echo $contentsToShowID; ?>" style="display: none">
+									<?php echo $query['stack_trace']; ?>
+								</span>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+			
+			<?php
+				$alphabetical = $SQL_PROFILER;
+				// sort alphabetically
+				usort($alphabetical, 'compareByName');
+			?>
+			
+			<h1>
+				Query List - Alphabetical
+			</h1>
+			
+			<table style="border: 3px solid blue; border-collapse: collapse; font-size: 11pt; table-layout: fixed; margin: 1em 0; width: 100%;">
+				<thead>
+					<tr>
+						<th style="border: 3px solid blue; width: 4%;">
+							#
+						</th>
+						<th style="border: 3px solid blue; width: 6%;">
+							Seconds
+						</th>
+						<th style="border: 3px solid blue; width: 40%;">
+							Query
+						</th>
+						<th style="border: 3px solid blue; width: 50%;">
+							Stack Trace
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php $i = 0; foreach ( $alphabetical as $query ): ?>
 						<?php $i++; ?>
 						<tr>
 							<td style="border: 3px solid blue;">
