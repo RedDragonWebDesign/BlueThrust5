@@ -19,6 +19,7 @@
 // Turning it on here gets the benefit of earlier PHP warnings. You get all of them, not just the ones that are thrown after the database is loaded.
 // Debug Mode features: all PHP warnings, all SQL warnings, SQL profiler (query count, list of queries)
 $debug = true;
+define('SHOUTBOX_RELOAD_MS', 20000); // 20 seconds
 
 // Error reporting default = off.
 mysqli_report(MYSQLI_REPORT_OFF);
