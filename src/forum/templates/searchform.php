@@ -1,7 +1,7 @@
 <?php
 
 	if(!defined("SHOW_FORUMSEARCH")) {
-		exit();	
+		exit();
 	}
 	
 	$setFilterTopic = ($filterTopic == 0) ? "" : "data-topic='".$filterTopic."'";
@@ -42,4 +42,3 @@
 		
 		</script>
 	";
-?>

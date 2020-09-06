@@ -40,7 +40,7 @@ $categoryObj->set_assocTableName("forum_board");
 $categoryObj->set_assocTableKey("forumboard_id");
 
 
-if($_POST['submit']) {
+if( isset($_POST['submit']) ) {
 	
 	// Check Name
 	if(trim($_POST['catname']) == "") {
@@ -94,7 +94,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if( ! isset($_POST['submit']) ) {
 	
 	$orderoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
@@ -131,7 +131,7 @@ if(!$_POST['submit']) {
 				<table class='formTable'>
 					<tr>
 						<td class='formLabel'>Category Name:</td>
-						<td class='main'><input type='text' value='".$_POST['catname']."' name='catname' class='textBox' style='width: 250px'></td>
+						<td class='main'><input type='text' value='".($_POST['catname'] ?? '')."' name='catname' class='textBox' style='width: 250px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel' valign='top'>Display Order:</td>

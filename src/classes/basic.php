@@ -353,11 +353,10 @@ class Basic {
 	
 	public function get_info($returnSingleValue = "") {
 		$returnVal = "";
-		if($returnSingleValue == "") {
+		if ( $returnSingleValue == "" || ! isset($this->arrObjInfo[$returnSingleValue]) ) {
 			$returnVal = $this->arrObjInfo;
 		}
 		else {
-			
 			$returnVal = $this->arrObjInfo[$returnSingleValue];
 		}
 		

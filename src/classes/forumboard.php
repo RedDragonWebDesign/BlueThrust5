@@ -658,10 +658,11 @@ class ForumBoard extends BasicSort {
 		
 	}
 	
-	
 	public function showSearchForm() {
 		global $MAIN_ROOT;
 		$searchLabel = "Search";
+		$filterBoard = '';
+		$filterTopic = '';
 
 		if($this->intTableKeyValue != "") {
 			$filterBoard = $this->intTableKeyValue;
@@ -675,7 +676,5 @@ class ForumBoard extends BasicSort {
 		
 		define("SHOW_FORUMSEARCH", true);
 		require_once("templates/searchform.php");
-		
 	}
-	
 }

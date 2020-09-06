@@ -70,18 +70,18 @@
 		
 		public function buildForm($args) {
 			
-			$this->formName = $args['name'];
-			$this->components = $args['components'];
-			$this->objSave = $args['saveObject'];
-			$this->attributes = $args['attributes'];
-			$this->saveType = $args['saveType'];
-			$this->description = $args['description'];
-			$this->saveMessage = $args['saveMessage'];
-			$this->saveMessageTitle = $args['saveMessageTitle'];
-			$this->afterSave = $args['afterSave'];
-			$this->saveLink = $args['saveLink'];
-			$this->saveAdditional = $args['saveAdditional'];
-			$this->embedJS = $args['embedJS'];
+			$this->formName = $args['name'] ?? null;
+			$this->components = $args['components'] ?? null;
+			$this->objSave = $args['saveObject'] ?? null;
+			$this->attributes = $args['attributes'] ?? null;
+			$this->saveType = $args['saveType'] ?? null;
+			$this->description = $args['description'] ?? null;
+			$this->saveMessage = $args['saveMessage'] ?? null;
+			$this->saveMessageTitle = $args['saveMessageTitle'] ?? null;
+			$this->afterSave = $args['afterSave'] ?? null;
+			$this->saveLink = $args['saveLink'] ?? null;
+			$this->saveAdditional = $args['saveAdditional'] ?? null;
+			$this->embedJS = $args['embedJS'] ?? null;
 			$this->attachmentForm = false;
 			
 			if(isset($args['wrapper'])) {
@@ -98,7 +98,7 @@
 			}
 			
 			
-			if($args['prefill']) {
+			if( isset($args['prefill']) ) {
 				$this->arrSkipPrefill = $args['skipPrefill'];
 				$this->prefillDBValues();				
 			}
