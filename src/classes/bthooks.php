@@ -27,7 +27,9 @@ class btHooks {
 	}
 	
 	function run($hookName) {
-		html_var_export($this->data);
+		if ( ! isset($this->data[$hookName]) ) {
+			return;
+		}
 		
 		foreach($this->data[$hookName] as $hookInfo) {				
 			if(function_exists($hookInfo['function'])) {

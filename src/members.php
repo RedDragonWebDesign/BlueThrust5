@@ -286,7 +286,7 @@ $totalMembers = array_sum($arrMemberCountCat);
 				$gameObj->select($value);
 				$gameInfo = $gameObj->get_info_filtered();
 				
-				if($arrTotalGamesPlayed[$value] == "") {
+				if( ! isset($arrTotalGamesPlayed[$value]) || $arrTotalGamesPlayed[$value] == "" ) {
 					$arrTotalGamesPlayed[$value] = 0;
 				}
 				

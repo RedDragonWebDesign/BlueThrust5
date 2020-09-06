@@ -410,7 +410,7 @@
 					$this->menuItemObj->objShoutbox->select($this->menuItemInfo['itemtype_id']);
 
 					$this->displayShoutbox();
-					$arrShoutBoxIDs = $theme->data['shoutboxIDs'];
+					// $arrShoutBoxIDs = $theme->data['shoutboxIDs'];
 			
 					break;
 				case "newestmembers":

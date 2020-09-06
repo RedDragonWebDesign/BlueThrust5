@@ -62,7 +62,7 @@
 				
 				$clockArray[] = "<span style='color: ".$info['color']."'>".$info['name'].": <span id='clock_".$row['clock_id']."'></span></span>";
 
-				$clocksJS .= "displayClock(".$clockInfo['offset'].", ".$clockInfo['hour'].", ".$clockInfo['minutes'].", 'clock_".$row['clock_id']."');
+				$clocksJS = "displayClock(".$clockInfo['offset'].", ".$clockInfo['hour'].", ".$clockInfo['minutes'].", 'clock_".$row['clock_id']."');
 				";
 				
 			}

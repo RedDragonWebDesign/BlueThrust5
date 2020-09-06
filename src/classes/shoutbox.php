@@ -48,6 +48,8 @@ class ShoutBox {
 	}
 	
 	public function dispShoutbox($setWidth=0, $setHeight=0, $blnPercentWidth=false, $txtBoxWidth=0, $blnPercentHeight=false) {
+		$shoutBoxInfo = '';
+		
 		global $MAIN_ROOT, $THEME;
 		if($setWidth > 0) {
 			$this->intDispWidth = $setWidth;
@@ -83,7 +85,7 @@ class ShoutBox {
 				}
 				
 				
-				$shoutBoxInfo .= "
+				$shoutBoxInfo = "
 					<b>".$memberLink.":</b><br>
 					<div style='word-wrap: break-word;'>".$dispPost."</div>
 					".$dispTime."

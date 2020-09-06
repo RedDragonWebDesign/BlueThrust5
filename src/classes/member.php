@@ -37,7 +37,7 @@ class Member extends Basic {
 	
 	
 	
-	function select($memberID) {
+	function select($memberID, $numericIDOnly = true) {
 		$returnVal = false;
 		if(is_numeric($memberID)) {
 			
@@ -383,7 +383,7 @@ class Member extends Basic {
 	}
 	
 	
-	function getMemberLink($args=array("color" => true)) {
+	function getMemberLink($args = ["color" => true]) {
 		global $MAIN_ROOT;
 		$returnVal = "";
 		if($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
@@ -407,7 +407,7 @@ class Member extends Basic {
 			}
 			
 			
-			if($args['wrapper'] === false) {
+			if( isset($args['wrapper']) && $args['wrapper'] === false) {
 				$returnVal = MAIN_ROOT."profile.php?mID=".$this->intTableKeyValue;
 			}
 			

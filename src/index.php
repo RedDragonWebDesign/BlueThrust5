@@ -55,7 +55,6 @@ require_once("_setup.php");
 // Start Page
 $dispBreadCrumb = "";
 
-
 require_once("themes/".$THEME."/_header.php");
 
 
