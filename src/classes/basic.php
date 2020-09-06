@@ -44,7 +44,9 @@ class Basic {
 	
 	*/
 	public function select($intIDNum, $numericIDOnly = true) {
-	
+		// Caches for common SQL queries. Need to get the # of SQL queries down.
+		global $sqlCache;
+		
 		$returnVal = false;
 		if(!$numericIDOnly) {
 			$intIDNum = $this->MySQL->real_escape_string($intIDNum);
@@ -53,21 +55,27 @@ class Basic {
 		else {
 			$checkID = is_numeric($intIDNum);
 		}
-		
 
 		if($checkID) {
-			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '$intIDNum'");
-			if($result->num_rows > 0) {
-				$this->arrObjInfo = $result->fetch_assoc();
-				$returnVal = true;
-				$this->intTableKeyValue = $intIDNum;
+			if ( isset($sqlCache[$this->strTableName]) ) {
+				$cache2 = $sqlCache[$this->strTableName];
+				if ( isset($cache2[$intIDNum]) ) {
+					$this->arrObjInfo = $cache2[$intIDNum];
+					$returnVal = true;
+					$this->intTableKeyValue = $intIDNum;
+				}
+			} else {
+				$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '$intIDNum'");
+				if($result->num_rows > 0) {
+					$this->arrObjInfo = $result->fetch_assoc();
+					$returnVal = true;
+					$this->intTableKeyValue = $intIDNum;
+				}
 			}
 		}
-
 		
 		return $returnVal;
 	}
-	
 	
 /*
 	 * Select by multiple arguments.

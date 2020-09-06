@@ -124,3 +124,48 @@ $btThemeObj->setClanName($CLAN_NAME);
 $btThemeObj->initHead();
 
 require_once(BASE_DIRECTORY."plugins/mods.php");
+
+// Caches for commonly queried SQL tables. Need to get the # of SQL queries down.
+// Only cache tables where you are not going to have to read the new data on the same page. Else you may introudce hard to diagnose bugs.
+// Make sure your table has a primary_key, and that the SELECT query is picking by the primary_key.
+$tablesToCache = [
+	'clocks' => 'clock_id',
+	'console' => 'console_id',
+	// 'console_members' => 'privilege_id',
+	'consolecategory' => 'consolecategory_id',
+	'gamesplayed' => 'gamesplayed_id',
+	'menu_category' => 'menucategory_id',
+	'menu_item' => 'menuitem_id',
+	'menuitem_link' => 'menulink_id',
+	// 'rank_privileges' => 'privilege_id',
+	'rankcategory' => 'rankcategory_id',
+	'ranks' => 'rank_id',
+];
+$sqlCache = [];
+foreach ( $tablesToCache as $table => $primaryKey ) {
+	$sqlCache[$table] = [];
+	$result = $mysqli->query("SELECT * FROM ".$dbprefix.$table);
+	if ( $result ) {
+		while ( $row = $result->fetch_assoc() ) {
+			$sqlCache[$table][$row[ $primaryKey ]] = $row;
+		}
+	}
+}
+
+// classes/member.php::hasAccess()
+$sqlCache['console_members'] = [];
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."console_members");
+if ( $result ) {
+	while ( $row = $result->fetch_assoc() ) {
+		$sqlCache['console_members'][] = $row;
+	}
+}
+
+// classes/consoleoptions.php::hasAccess()
+$sqlCache['rank_privileges'] = [];
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."rank_privileges");
+if ( $result ) {
+	while ( $row = $result->fetch_assoc() ) {
+		$sqlCache['rank_privileges'][] = $row;
+	}
+}

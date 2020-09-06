@@ -103,15 +103,12 @@ if($checkMember) {
 		$privateMessagesCID = $consoleObj->findConsoleIDByName("Private Messages");
 		
 		foreach($arrConsoleCats as $key => $categoryID) {
-			
 			$consoleCatObj->select($categoryID);
 			$consoleCatInfo = $consoleCatObj->get_info_filtered();
 			
 			$arrConsoleOptions = $arrFullySortedConsole[$key];
 			$categoryCSS = "consoleCategory_clicked";
 			if(count($arrConsoleOptions)) {
-				
-				
 				$blnShowCategoryList = false;
 				$hideoptions = "";
 				if($counter > 0) {

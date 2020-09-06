@@ -242,56 +242,43 @@ class Member extends Basic {
 					$returnArr[] = $row['tournament_id'];
 					//echo $row['tournament_id']."<br>";
 				}
-				
-				
-				
 			}
-			
-		//print_r($returnArr);
-			
-	
 		}
 	
 		return $returnArr;
-	
 	}
 	
-	
 	function hasAccess($consoleOption) {
+		global $sqlCache;
 		
 		$returnVal = false;
 		$consoleInfo = $consoleOption->get_info_filtered();
-
+		
 		if($this->intTableKeyValue != "") {
-			
-			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."console_members WHERE member_id = '".$this->intTableKeyValue."' AND console_id = '".$consoleInfo['console_id']."'");
-			$num_rows = $result->num_rows;
+			$result = sql_array_select_where(
+				$sqlCache['console_members'],
+				'member_id',
+				$this->intTableKeyValue,
+				'console_id',
+				$consoleInfo['console_id']
+			);
+			$num_rows = count($result);
 			
 			if($num_rows == 1) {
-				$accessInfo = $result->fetch_assoc();
+				$accessInfo = $result;
 				
-
 				if($accessInfo['allowdeny'] == 1) {
-					$returnVal = true;	
+					$returnVal = true;
 				}
-
-			}
-			elseif($num_rows == 0 && $consoleOption->hasAccess($this->arrObjInfo['rank_id'])) {
-				
+			} elseif($num_rows == 0 && $consoleOption->hasAccess($this->arrObjInfo['rank_id'])) {
 				$returnVal = true;
-
 			}
-			
-
 		}
 		
 		return $returnVal;
-		
 	}
 	
-	
 	function getProfileValue($profileOptionID, $skipSelectOption=false) {
-		
 		$returnVal = "";
 		if($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
 			
