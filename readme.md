@@ -2,7 +2,7 @@
 
 ## Download Link
 
-[Stable Release](https://github.com/RedDragonWebDesign/BlueThrust5/releases)
+[Stable Release](https://github.com/RedDragonWebDesign/BlueThrust5/releases) - same as v4, no changes yet
 
 [Development Release - May Contain Bugs](https://github.com/RedDragonWebDesign/BlueThrust5/archive/master.zip)
 
