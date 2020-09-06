@@ -289,7 +289,10 @@ function debug_string_backtrace() {
 	// Remove first item from backtrace as it's this function which
 	// is redundant.
 	$trace = preg_replace ('/^#0\s+' . __FUNCTION__ . "[^\n]*\n/", '', $trace, 1);
-
+	
+	// sanitize HTML
+	$trace = htmlspecialchars($trace);
+	
 	// Put each stack trace on its own line
 	$trace = preg_replace('/\n/', '<br />', $trace);
 	

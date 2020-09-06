@@ -117,7 +117,7 @@
 			<?php
 				foreach ( $SQL_PROFILER as $key => $value ) {
 					$SQL_PROFILER[$key]['query'] = htmlspecialchars($SQL_PROFILER[$key]['query']);
-					$SQL_PROFILER[$key]['stack_trace'] = htmlspecialchars($SQL_PROFILER[$key]['stack_trace']);
+					// stack trace gets sanitized in the function it uses, to prevent sanitizing the <br />s it inserts
 				}
 			
 				$slowQueries = $SQL_PROFILER;
