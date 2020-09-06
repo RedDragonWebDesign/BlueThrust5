@@ -1,4 +1,4 @@
-	<?php if ( DEBUG ): ?>
+	<?php if ( $debug ): ?>
 		<div id="sql-profiler" style="margin: 0 15px;">
 			<p style="font-size: 14pt;">
 				PHP Version: <strong><?php echo phpversion(); ?></strong><br />

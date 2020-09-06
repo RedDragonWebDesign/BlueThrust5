@@ -19,12 +19,12 @@ class btMySQL extends MySQLi {
 	
 	/** In debug mode, this query() override method will enable SQL query profiling. That is, it will keep track of every query made, and it will be printed at the bottom of the page. */
 	function query($query, $resultmode = MYSQLI_STORE_RESULT) {
-		global $SQL_PROFILER;
-		if ( DEBUG ) {
+		global $SQL_PROFILER, $debug;
+		if ( $debug ) {
 			$start = microtime(true);
 		}
 		$result = parent::query($query, $resultmode);
-		if ( DEBUG) {
+		if ( $debug) {
 			$end = microtime(true);
 			$diff = round($end - $start, 3);
 			$SQL_PROFILER[] = [

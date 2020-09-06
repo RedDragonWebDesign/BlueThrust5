@@ -15,8 +15,10 @@
 
 // This setup page should not be changed.  Edit _config.php to configure your website.
 
-// This is a way to manually turn on debug. This will get you error reporting before the database loads. The other way to turn on debug is in My Account -> Administrator Options -> Website Settings -> Debug Mode.
-define('DEBUG', 1);
+// There are two ways to turn on debug mode. You can turn it on here. Or you can turn it on in My Account -> Administrator Options -> Website Settings -> Debug Mode.
+// Turning it on here gets the benefit of earlier PHP warnings. You get all of them, not just the ones that are thrown after the database is loaded.
+// Debug Mode features: all PHP warnings, all SQL warnings, SQL profiler (query count, list of queries)
+$debug = true;
 
 // Error reporting default = off.
 mysqli_report(MYSQLI_REPORT_OFF);
@@ -29,7 +31,7 @@ function debug() {
 	ini_set('display_errors', '1');
 }
 
-if ( DEBUG ) {
+if ( $debug ) {
 	debug();
 }
 
