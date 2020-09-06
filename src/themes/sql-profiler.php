@@ -1,64 +1,25 @@
 	<?php if ( $debug ): ?>
+		<?php
+			$count = count($SQL_PROFILER);
+			$color = "color: limegreen;";
+			if ( $count > 100 ) {
+				$color = "color: yellow;";
+			}
+			if ( $count > 200 ) {
+				$color = "color: red;";
+			}
+			$rowIDCounter = 0;
+		?>
+		
+		<div id="sql-profiler-float" style="position: absolute; top: 0; right: 0; border: 3px solid blue; background-color: black; font-size: 12pt; <?php echo $color; ?>">
+			SQL Queries: <strong><?php echo $count; ?><strong>
+		</div>
+	
 		<div id="sql-profiler" style="margin: 0 15px;">
 			<p style="font-size: 14pt;">
 				PHP Version: <strong><?php echo phpversion(); ?></strong><br />
-				Queries: <strong><?php echo count($SQL_PROFILER); ?><strong>
+				Queries: <strong><?php echo $count; ?><strong>
 			</p>
-			
-			<h1>
-				5 Slowest Queries
-			</h1>
-			
-			<?php
-				foreach ( $SQL_PROFILER as $key => $value ) {
-					$SQL_PROFILER[$key]['query'] = htmlspecialchars($SQL_PROFILER[$key]['query']);
-					$SQL_PROFILER[$key]['stack_trace'] = htmlspecialchars($SQL_PROFILER[$key]['stack_trace']);
-				}
-			
-				$slowQueries = $SQL_PROFILER;
-				usort($slowQueries, function ($b, $a) {
-					return $a['duration'] <=> $b['duration'];
-				});
-				$slowQueries = array_slice($slowQueries, 0, 5);
-			?>
-			
-			<table style="border: 3px solid blue; border-collapse: collapse; font-size: 11pt; table-layout: fixed; margin: 1em 0; width: 100%;">
-				<thead>
-					<tr>
-						<th style="border: 3px solid blue; width: 4%;">
-							#
-						</th>
-						<th style="border: 3px solid blue; width: 6%;">
-							Seconds
-						</th>
-						<th style="border: 3px solid blue; width: 40%;">
-							Query
-						</th>
-						<th style="border: 3px solid blue; width: 50%;">
-							Stack Trace
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php $i = 0; foreach ( $slowQueries as $query ): ?>
-						<?php $i++; ?>
-						<tr>
-							<td style="border: 3px solid blue;">
-								<?php echo $i; ?>
-							</td>
-							<td style="border: 3px solid blue;">
-								<?php echo $query['duration']; ?>
-							</td>
-							<td style="border: 3px solid blue;">
-								<?php echo $query['query']; ?>
-							</td>
-							<td style="border: 3px solid blue;"
-								><?php echo $query['stack_trace']; ?>
-							</td>
-						</tr>
-					<?php endforeach; ?>
-				</tbody>
-			</table>
 			
 			<h1>
 				5 Most Repeated Queries
@@ -129,12 +90,93 @@
 								<?php echo $query['query']; ?>
 							</td>
 							<td style="border: 3px solid blue;">
-								<?php echo $query['stack_trace']; ?>
+								<?php
+									$rowIDCounter++;
+									$clickToShowID = "click-to-show-id-$rowIDCounter";
+									$contentsToShowID = "contents-to-show-id-$rowIDCounter";
+								?>
+								<a id="<?php echo $clickToShowID; ?>" onclick="
+									document.getElementById('<?php echo $contentsToShowID; ?>').style.display = 'block';
+									document.getElementById('<?php echo $clickToShowID; ?>').style.display = 'none';
+								">
+									[Click To Show]
+								</a>
+								<span id="<?php echo $contentsToShowID; ?>" style="display: none">
+									<?php echo $query['stack_trace']; ?>
+								</span>
 							</td>
 						</tr>
 					<?php endforeach; ?>
 				</tbody>
 			</table>
+			
+			<h1>
+				5 Slowest Queries
+			</h1>
+			
+			<?php
+				foreach ( $SQL_PROFILER as $key => $value ) {
+					$SQL_PROFILER[$key]['query'] = htmlspecialchars($SQL_PROFILER[$key]['query']);
+					$SQL_PROFILER[$key]['stack_trace'] = htmlspecialchars($SQL_PROFILER[$key]['stack_trace']);
+				}
+			
+				$slowQueries = $SQL_PROFILER;
+				usort($slowQueries, function ($b, $a) {
+					return $a['duration'] <=> $b['duration'];
+				});
+				$slowQueries = array_slice($slowQueries, 0, 5);
+			?>
+			
+			<table style="border: 3px solid blue; border-collapse: collapse; font-size: 11pt; table-layout: fixed; margin: 1em 0; width: 100%;">
+				<thead>
+					<tr>
+						<th style="border: 3px solid blue; width: 4%;">
+							#
+						</th>
+						<th style="border: 3px solid blue; width: 6%;">
+							Seconds
+						</th>
+						<th style="border: 3px solid blue; width: 40%;">
+							Query
+						</th>
+						<th style="border: 3px solid blue; width: 50%;">
+							Stack Trace
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php $i = 0; foreach ( $slowQueries as $query ): ?>
+						<?php $i++; ?>
+						<tr>
+							<td style="border: 3px solid blue;">
+								<?php echo $i; ?>
+							</td>
+							<td style="border: 3px solid blue;">
+								<?php echo $query['duration']; ?>
+							</td>
+							<td style="border: 3px solid blue;">
+								<?php echo $query['query']; ?>
+							</td>
+							<td style="border: 3px solid blue;">
+								<?php
+									$rowIDCounter++;
+									$clickToShowID = "click-to-show-id-$rowIDCounter";
+									$contentsToShowID = "contents-to-show-id-$rowIDCounter";
+								?>
+								<a id="<?php echo $clickToShowID; ?>" onclick="
+									document.getElementById('<?php echo $contentsToShowID; ?>').style.display = 'block';
+									document.getElementById('<?php echo $clickToShowID; ?>').style.display = 'none';
+								">
+									[Click To Show]
+								</a>
+								<span id="<?php echo $contentsToShowID; ?>" style="display: none">
+									<?php echo $query['stack_trace']; ?>
+								</span>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>			
 			
 			<h1>
 				Query List
@@ -170,8 +212,21 @@
 							<td style="border: 3px solid blue;">
 								<?php echo $query['query']; ?>
 							</td>
-							<td style="border: 3px solid blue;"
-								><?php echo $query['stack_trace']; ?>
+							<td style="border: 3px solid blue;">
+								<?php
+									$rowIDCounter++;
+									$clickToShowID = "click-to-show-id-$rowIDCounter";
+									$contentsToShowID = "contents-to-show-id-$rowIDCounter";
+								?>
+								<a id="<?php echo $clickToShowID; ?>" onclick="
+									document.getElementById('<?php echo $contentsToShowID; ?>').style.display = 'block';
+									document.getElementById('<?php echo $clickToShowID; ?>').style.display = 'none';
+								">
+									[Click To Show]
+								</a>
+								<span id="<?php echo $contentsToShowID; ?>" style="display: none">
+									<?php echo $query['stack_trace']; ?>
+								</span>
 							</td>
 						</tr>
 					<?php endforeach; ?>
