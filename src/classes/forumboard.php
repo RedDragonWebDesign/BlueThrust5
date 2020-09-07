@@ -189,7 +189,10 @@ class ForumBoard extends BasicSort {
 					$checkAccess = $arrRankAccess[$memberInfo['rank_id']] == 0;
 				}
 				else {
-					$checkAccess = ($arrRankAccess[$memberInfo['rank_id']] == 0 || $arrRankAccess[$memberInfo['rank_id']] == 1);	
+					$rank0 = isset($arrRankAccess[$memberInfo['rank_id']]) && $arrRankAccess[$memberInfo['rank_id']] == 0;
+					$rank1 = isset($arrRankAccess[$memberInfo['rank_id']]) && $arrRankAccess[$memberInfo['rank_id']] == 1;
+				
+					$checkAccess = $rank0 || $rank1;
 				}
 				
 				

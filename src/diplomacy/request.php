@@ -12,7 +12,6 @@
  *
  */
 
-
 // Config File
 $prevFolder = "../";
 
@@ -42,8 +41,6 @@ $breadcrumbObj->addCrumb("Diplomacy Request");
 
 $result = $mysqli->query("SELECT ipaddress FROM ".$dbprefix."diplomacy_request WHERE ipaddress = '".$IP_ADDRESS."'");
 if($result->num_rows >= $websiteInfo['maxdiplomacy']) {
-
-	
 	echo "
 		<div id='maxRequestDialog' style='display: none'>
 			<p class='main' align='center'>
@@ -59,7 +56,7 @@ if($result->num_rows >= $websiteInfo['maxdiplomacy']) {
 	$_POST['submit'] = "block";
 }
 
-
+$statusoptions = '';
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status ORDER BY ordernum DESC");
 while($row = $result->fetch_assoc()) {
 
@@ -68,6 +65,7 @@ while($row = $result->fetch_assoc()) {
 }
 
 require_once($prevFolder."include/breadcrumb.php");
+
 ?>
 
 <div style='margin: 25px auto; '>
@@ -77,10 +75,8 @@ require_once($prevFolder."include/breadcrumb.php");
 	
 	$countErrors = 0;
 	$dispError = "";
-	if($_POST['submit'] && $_POST['submit'] != "block") {
-	
+	if( isset($_POST['submit']) && $_POST['submit'] != "block" ) {
 		// Check Required Fields not Blank
-		
 		$arrRequiredFields = array("Your Name"=>"requestername", "Your E-mail"=>"requesteremail", "Clan Name"=>"clanname", "Diplomacy Status"=>"diplomacystatus", "Games Played"=>"gamesplayed", "Clan Leaders"=>"clanleaders");
 		
 		foreach($_POST as $key => $value) {
@@ -93,9 +89,7 @@ require_once($prevFolder."include/breadcrumb.php");
 			}
 		}
 		
-		
 		// Check valid e-mail
-		
 		if(strpos($_POST['requesteremail'], "@") === false || strpos($_POST['requesteremail'], ".") === false) {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You entered an invalid e-mail address.<br>";
 			$countErrors++;			
@@ -109,9 +103,7 @@ require_once($prevFolder."include/breadcrumb.php");
 			}
 		}
 		
-		
 		// Check Diplomacy Status
-		
 		if(!in_array($_POST['diplomacystatus'], $arrStatuses)) {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid diplomacy status.<br>";
 			$countErrors++;
@@ -214,7 +206,7 @@ Thanks,\n
 	}
 	
 	
-	if(!$_POST['submit']) {
+	if ( ! isset($_POST['submit']) ) {
 		echo "
 	
 		<div class='formDiv'>
@@ -238,19 +230,19 @@ Thanks,\n
 				<table class='formTable'>
 					<tr>
 						<td class='formLabel'>Your Name: <span class='failedFont'>*</span></td>
-						<td class='main'><input type='text' name='requestername' value='".$_POST['requestername']."' class='textBox' style='width: 200px'></td>
+						<td class='main'><input type='text' name='requestername' value='".($_POST['requestername'] ?? '')."' class='textBox' style='width: 200px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>E-mail: <span class='failedFont'>*</span></td>
-						<td class='main'><input type='text' name='requesteremail' value='".$_POST['requesteremail']."' class='textBox' style='width: 200px'></td>
+						<td class='main'><input type='text' name='requesteremail' value='".($_POST['requesteremail'] ?? '')."' class='textBox' style='width: 200px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Clan Name: <span class='failedFont'>*</span></td>
-						<td class='main'><input type='text' name='clanname' value='".$_POST['clanname']."' class='textBox' style='width: 200px'></td>
+						<td class='main'><input type='text' name='clanname' value='".($_POST['clanname'] ?? '')."' class='textBox' style='width: 200px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Clan Leader(s): <span class='failedFont'>*</span></td>
-						<td class='main'><input type='text' name='clanleaders' value='".$_POST['clanleaders']."' class='textBox' style='width: 200px'></td>
+						<td class='main'><input type='text' name='clanleaders' value='".($_POST['clanleaders'] ?? '')."' class='textBox' style='width: 200px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Diplomacy Status: <span class='failedFont'>*</span></td>
@@ -262,15 +254,15 @@ Thanks,\n
 					</tr>	
 					<tr>
 						<td class='formLabel'>Clan Tag:</td>
-						<td class='main'><input type='text' name='clantag' value='".$_POST['clantag']."' class='textBox' style='width: 50px'></td>
+						<td class='main'><input type='text' name='clantag' value='".($_POST['clantag'] ?? '')."' class='textBox' style='width: 50px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Games Played: <span class='failedFont'>*</span></td>
-						<td class='main'><input type='text' name='gamesplayed' value='".$_POST['gamesplayed']."' class='textBox' style='width: 200px'></td>
+						<td class='main'><input type='text' name='gamesplayed' value='".($_POST['gamesplayed'] ?? '')."' class='textBox' style='width: 200px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Website:</td>
-						<td class='main'><input type='text' name='website' value='".$_POST['website']."' class='textBox' style='width: 200px'></td>
+						<td class='main'><input type='text' name='website' value='".($_POST['website'] ?? '')."' class='textBox' style='width: 200px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Clan Size:</td>
@@ -283,7 +275,7 @@ Thanks,\n
 					<tr>
 						<td class='formLabel' valign='top'>Message:</td>
 						<td class='main' valign='top'>
-							<textarea rows='5' cols='50' class='textBox' name='message' style='width: 300px; height: 100px'>".$_POST['message']."</textarea>
+							<textarea rows='5' cols='50' class='textBox' name='message' style='width: 300px; height: 100px'>".($_POST['message'] ?? '')."</textarea>
 						</td>
 					</tr>
 					<tr>

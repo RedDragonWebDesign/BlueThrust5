@@ -186,6 +186,7 @@ if( ! isset($_POST['submit']) ) {
 	$result1 = $mysqli->query("SELECT rankcategory_id FROM ".$dbprefix."ranks ORDER BY ordernum DESC");
 	$rankCounter = $result1->num_rows;
 	
+	$catoptions = '';
 	while($row = $result->fetch_assoc()) {
 	
 		$selectCat = "";
@@ -193,7 +194,7 @@ if( ! isset($_POST['submit']) ) {
 			$selectCat = " selected";
 		}
 	
-		$catoptions = "<option value='".$row['forumcategory_id']."'".$selectCat.">".$row['name']."</option>";
+		$catoptions .= "<option value='".$row['forumcategory_id']."'".$selectCat.">".$row['name']."</option>";
 	}
 	
 	echo "

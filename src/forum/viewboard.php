@@ -130,7 +130,7 @@ if(($_GET['pID']-1) > 0) {
 	$blnPageSelect = true;
 }
 
-
+$pageoptions = '';
 for($i=1; $i<=$NUM_OF_PAGES; $i++) {
 	$selectPage = "";
 	if($i == $_GET['pID']) {
