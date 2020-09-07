@@ -308,7 +308,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && $_GET[
 					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,unlink,image,emotions,|,quotebbcode,codebbcode,',
 					theme_advanced_buttons2: 'forecolorpicker,fontselect,fontsizeselect',
 					theme_advanced_resizing: true,
-					content_css: '".$MAIN_ROOT."themes/".$THEME."/btcs4.css',
+					content_css: '".$MAIN_ROOT."themes/btcs4.css.php',
 					theme_advanced_statusbar_location: 'none',
 					style_formats: [
 						{title: 'Quote', inline : 'div', classes: 'forumQuote'}
@@ -349,7 +349,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && $_GET[
 				$('#btnPreview').click(function() {
 				
 					$('#loadingSpiral').show();
-					$.post('".$MAIN_ROOT."members/include/forum/include/previewpost.php', { wysiwygHTML: $('#tinymceTextArea').val(), previewSubject: $('#postSubject').val() }, function(data) {
+					$.post('".$MAIN_ROOT."members/include/forum/include/previewpost.php', { wysiwygHTML: $('#tinymceTextArea').val(), previewSubject: $('[name=\"topicname\"]').val() }, function(data) {
 						$('#previewPost').hide();
 						$('#previewPost').html(data);
 						$('#loadingSpiral').hide();

@@ -12,11 +12,9 @@
  *
  */
 
-
 require_once("basicorder.php");
 
 class Rank extends BasicOrder {
-
 	function __construct($sqlConnection) {
 		$this->MySQL = $sqlConnection;
 		$this->strTableName = $this->MySQL->get_tablePrefix()."ranks";
@@ -24,7 +22,6 @@ class Rank extends BasicOrder {
 		$this->strAssociateTableName = $this->MySQL->get_tablePrefix()."members";
 		$this->strAssociateKeyName = "member_id";
 	}
-
 	
 	function get_privileges() {
 	
@@ -37,12 +34,9 @@ class Rank extends BasicOrder {
 			$result = $this->MySQL->query("SELECT rp.console_id FROM ".$this->MySQL->get_tablePrefix()."rank_privileges rp, ".$this->MySQL->get_tablePrefix()."console c WHERE rank_id = '".$this->intTableKeyValue."' AND c.console_id = rp.console_id ORDER BY c.sortnum");
 		}
 
-		
-		
 		while($row = $result->fetch_assoc()) {
 			$arrPrivileges[] = $row['console_id'];
 		}
-	
 	
 		return $arrPrivileges;
 	}
@@ -72,7 +66,6 @@ class Rank extends BasicOrder {
 	 * Returns the local image address when the image is on the server.
 	 * 
 	 */
-	
 	function getLocalImageURL() {
 		global $MAIN_ROOT;
 		$returnVal = false;
@@ -156,19 +149,17 @@ class Rank extends BasicOrder {
 		global $MAIN_ROOT;
 		$result = parent::get_info($returnSingleValue);
 		
-		if(substr($result['imageurl'],0,4) != "http") {
+		if ( isset($result['imageurl']) && substr($result['imageurl'],0,4) != "http" ) {
 			if($returnSingleValue == "") {
-			
 				$fullImageURL = $MAIN_ROOT.$result['imageurl'];
 				$result['imageurl'] = $fullImageURL;
-			}
-			elseif($returnSingleValue == "imageurl") {
+			} elseif ( $returnSingleValue == "imageurl" ) {
 				$fullImageURL = $MAIN_ROOT.$result;
 				$result = $fullImageURL;
 			}
 		}
-		return $result;
 		
+		return $result;
 	}
 	
 	public function get_info_filtered($returnSingleValue = "") {

@@ -71,10 +71,10 @@
 
 				});
 			});
-			setTimeout("reloadShoutbox()", SHOUTBOX_RELOAD_MS);
+			setTimeout("reloadShoutbox()", <?php echo SHOUTBOX_RELOAD_MS; ?>);
 		}
 		
-		setTimeout("reloadShoutbox()", SHOUTBOX_RELOAD_MS);	
+		setTimeout("reloadShoutbox()", <?php echo SHOUTBOX_RELOAD_MS; ?>);	
 	</script>
 	
 	<?php require_once('sql-profiler.php'); ?>

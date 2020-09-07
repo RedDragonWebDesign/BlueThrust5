@@ -160,12 +160,12 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	/*
 	// Update Global CSS
 	
-	if(!is_writable("../../../themes/".$THEME."/btcs4.css")) {
+	if(!is_writable("../../../themes/btcs4.css.php")) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save global css information.<br>";
 	}
 	else {
-		$themeFile = fopen("../../../btcs4.css", "w");
+		$themeFile = fopen("../../../btcs4.css.php", "w");
 		if(!fwrite($themeFile, htmlspecialchars_decode($_POST['globalCSSCode']))) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save global css information.<br>";

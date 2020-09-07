@@ -2,14 +2,10 @@
 
 	if(!defined("LOGGED_IN") || !LOGGED_IN) { die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."'</script>"); }
 	
-	
-		
 	$hooksObj->run("console_forms");
 	$formObj->buildForm($setupFormArgs);
 	
-	
-	if($_POST['submit']) {
-		
+	if( isset($_POST['submit']) ) {
 		if($formObj->save()) {
 			
 			$formObj->saveMessageTitle = $consoleInfo['pagetitle'];
@@ -17,7 +13,6 @@
 			$formObj->showSuccessDialog();
 			
 		}
-		
 
 		if(count($formObj->errors) > 0) {
 			$_POST = filterArray($_POST);
@@ -26,15 +21,8 @@
 			}
 			$_POST['submit'] = false;		
 		}
-		
-		
 	}
 	
-	
-	if(!$_POST['submit']) {
+	if ( ! isset($_POST['submit']) ) {
 		$formObj->show();	
 	}
-	
-	
-	
-?>
