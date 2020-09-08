@@ -70,7 +70,7 @@ if(($_POST['submit'] ?? '')) {
 	}
 	
 	if($x == "fail") {
-		unset($_POST['submit']);
+		$_POST['submit'] = false;
 	}
 }
 
