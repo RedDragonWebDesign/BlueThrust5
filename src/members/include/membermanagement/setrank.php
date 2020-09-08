@@ -49,7 +49,7 @@ if($memberInfo['rank_id'] == 1) {
 }
 
 $rankObj = new Rank($mysqli);
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 		
 	$rankObj->select($rankInfo['promotepower']);
 	

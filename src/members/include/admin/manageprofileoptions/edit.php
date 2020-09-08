@@ -51,7 +51,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 $dispError = "";
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 	// Check Option Name
 	
@@ -170,7 +170,7 @@ if(isset($_POST['submit'])) {
 	
 }
 
-if(!isset($_POST['submit'])) {
+if(!($_POST['submit'] ?? '')) {
 	$afterSelected = "";
 	$_SESSION['btProfileCache'] = array();
 	$_SESSION['btProfileCacheRefresh'] = false;

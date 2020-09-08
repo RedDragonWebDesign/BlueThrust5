@@ -74,7 +74,7 @@ if(count($arrDownloadCat) == 0) {
 
 
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 	// Check Name
 	if(trim($_POST['title']) == "") {
@@ -154,7 +154,7 @@ if(isset($_POST['submit'])) {
 
 
 
-if(!isset($_POST['submit'])) {
+if(!($_POST['submit'] ?? '')) {
 	
 	echo "
 		<form action='console.php?cID=".$cID."' method='post' enctype='multipart/form-data'>

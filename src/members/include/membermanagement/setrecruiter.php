@@ -32,7 +32,7 @@ $countErrors = 0;
 
 $rankObj = new Rank($mysqli);
 $memberObj = new Member($mysqli);
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 	
 	// Check Member

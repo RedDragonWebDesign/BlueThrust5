@@ -61,7 +61,7 @@ $arrComponents = $customFormObj->getComponents();
 $dispError = "";
 $countErrors = 0;
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 	// Check for multi submissions
 	
@@ -268,7 +268,7 @@ if(isset($_POST['submit'])) {
 	
 }
 
-if(!isset($_POST['submit'])) {
+if(!($_POST['submit'] ?? '')) {
 	echo "<div class='formDiv'>";
 	
 	if($dispError != "") {

@@ -33,7 +33,7 @@ $countErrors = 0;
 
 $arrSelectPosts = array(10, 25, 50, 75, 100);
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 	// Check Topics Per Page
 	if(!in_array($_POST['defaulttopics'], $arrSelectPosts)) {
@@ -185,7 +185,7 @@ if(isset($_POST['submit'])) {
 	
 }
 
-if(!isset($_POST['submit'])) {
+if(!($_POST['submit'] ?? '')) {
 	
 	
 	foreach($arrSelectPosts as $value) {

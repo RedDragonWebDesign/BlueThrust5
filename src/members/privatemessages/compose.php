@@ -101,7 +101,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$countErrors = 0;
 	
 	
-	if(isset($_POST['submit'])) {
+	if(($_POST['submit'] ?? '')) {
 		
 		$pmSessionID = $_POST['pmsessionid'];
 		
@@ -294,7 +294,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 	
 	
-	if(!isset($_POST['submit'])) {
+	if(!($_POST['submit'] ?? '')) {
 		
 		$pmSessionID = uniqid();
 		

@@ -40,7 +40,7 @@ $categoryObj->set_assocTableName("forum_board");
 $categoryObj->set_assocTableKey("forumboard_id");
 
 
-if( isset($_POST['submit']) ) {
+if( ($_POST['submit'] ?? '') ) {
 	
 	// Check Name
 	if(trim($_POST['catname']) == "") {
@@ -94,7 +94,7 @@ if( isset($_POST['submit']) ) {
 }
 
 
-if( ! isset($_POST['submit']) ) {
+if( ! ($_POST['submit'] ?? '') ) {
 	
 	$orderoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");

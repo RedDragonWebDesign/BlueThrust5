@@ -19,7 +19,7 @@ if(!defined("EDIT_FOLDER")) {
 
 $folderInfo = $pmFolderObj->get_info_filtered();
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 // Check Folder Name
 	if(trim($_POST['foldername']) == "") {
@@ -78,7 +78,7 @@ if(isset($_POST['submit'])) {
 }
 
 
-if(!isset($_POST['submit'])) {
+if(!($_POST['submit'] ?? '')) {
 	
 	
 	$findBeforeAfter = $pmFolderObj->findBeforeAfter();

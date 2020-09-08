@@ -42,7 +42,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	if($checkAccess) {
 		
 		
-		if(isset($_POST['submit'])) {
+		if(($_POST['submit'] ?? '')) {
 			
 			$countErrors = 0;
 			
@@ -173,7 +173,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		}
 		
 		
-		if(!isset($_POST['submit'])) {
+		if(!($_POST['submit'] ?? '')) {
 			
 			$statOptions = "<option value='inputnum'>Input (Number)</option><option value='inputtext'>Input (Text)</option>";
 			$onChange = "";

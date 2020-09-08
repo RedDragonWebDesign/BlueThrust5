@@ -175,7 +175,7 @@
 	
 	);
 
-	if(isset($_POST['submit'])) {
+	if(($_POST['submit'] ?? '')) {
 		$member->select($_POST['member']);	
 		$medalObj->select($_POST['medal']);
 	}

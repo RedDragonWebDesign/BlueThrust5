@@ -68,7 +68,7 @@ while($row = $result->fetch_assoc()) {
 }
 
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 	// Check Member
 

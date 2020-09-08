@@ -46,7 +46,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		if(isset($_SESSION['btStatCache'][$_POST['sID']])) {
 			
 			
-			if(isset($_POST['submit'])) {
+			if(($_POST['submit'] ?? '')) {
 				
 				$countErrors = 0;
 				
@@ -173,7 +173,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				
 			}
 			
-			if(!isset($_POST['submit'])) {
+			if(!($_POST['submit'] ?? '')) {
 			
 				$statInfo = filterArray($_SESSION['btStatCache'][$_POST['sID']]);
 				

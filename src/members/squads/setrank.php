@@ -47,7 +47,7 @@ $countErrors = 0;
 
 $arrSquadRanks = $squadObj->getRankList();
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 	// Check Squad Member
 	
@@ -139,7 +139,7 @@ if(isset($_POST['submit'])) {
 
 
 
-if(!isset($_POST['submit'])) {
+if(!($_POST['submit'] ?? '')) {
 	
 	$arrSquadMembers = $squadObj->getMemberListSorted();
 	$squadmemberoptions = "";

@@ -51,7 +51,7 @@ if($checkMember) {
 				";
 				
 				
-				if(isset($_POST['submit']) && $_POST['submit']) {
+				if(($_POST['submit'] ?? '') && $_POST['submit']) {
 					
 					$countErrors = 0;
 					
@@ -279,7 +279,7 @@ if($checkMember) {
 					
 				}
 				
-				if(!isset($_POST['submit']) || !isset($_POST['submit'])) {
+				if(!($_POST['submit'] ?? '') || !($_POST['submit'] ?? '')) {
 				
 					
 					

@@ -41,7 +41,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		
 
 		
-		if(isset($_POST['submit'])) {
+		if(($_POST['submit'] ?? '')) {
 			
 			
 			if(trim($_POST['editValue']) != "") {
@@ -61,7 +61,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			
 		}
 		
-		if(!isset($_POST['submit'])) {
+		if(!($_POST['submit'] ?? '')) {
 			
 			echo "
 			

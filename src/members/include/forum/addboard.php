@@ -65,7 +65,7 @@ $rankCatObj = new RankCategory($mysqli);
 $rankObj = new Rank($mysqli);
 $tempMemObj = new Member($mysqli);
 
-if( isset($_POST['submit']) ) {
+if( ($_POST['submit'] ?? '') ) {
 	
 	// Check Board Name
 	
@@ -165,7 +165,7 @@ if( isset($_POST['submit']) ) {
 }
 
 
-if( ! isset($_POST['submit']) ) {
+if( ! ($_POST['submit'] ?? '') ) {
 	
 	if($dispError != "") {
 		$dispError = "

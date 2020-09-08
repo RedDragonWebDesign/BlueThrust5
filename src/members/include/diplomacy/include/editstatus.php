@@ -23,7 +23,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !$di
 
 $diplomacyStatusInfo = $diplomacyStatusObj->get_info_filtered();
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 	// Check Name
 	
@@ -123,7 +123,7 @@ if(isset($_POST['submit'])) {
 }
 
 
-if(!isset($_POST['submit'])) {
+if(!($_POST['submit'] ?? '')) {
 	
 	
 	$arrBeforeAfter = $diplomacyStatusObj->findBeforeAfter();

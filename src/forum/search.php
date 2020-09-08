@@ -256,7 +256,7 @@ $setupFormArgs = array(
 $formObj = new Form($setupFormArgs);
 
 
-if(isset($_POST['submit']) && $formObj->validate()) {
+if(($_POST['submit'] ?? '') && $formObj->validate()) {
 	$_SESSION['btLastSearch'] = time();
 	
 	define("SHOW_SEARCHRESULTS", true);

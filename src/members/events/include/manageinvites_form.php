@@ -44,7 +44,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 		
 		$countErrors = 0;
 		$dispError = "";
-		if(isset($_POST['submit'])) {
+		if(($_POST['submit'] ?? '')) {
 			
 			$arrColumns = array();
 			$arrValues = array();
@@ -157,7 +157,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 						<input type='button' class='submitButton' onclick='btnSaveClicked()' value='Save' style='width: 100px' id='btnSave'>
 						";
 		
-		if(isset($_POST['submit']) && $countErrors == 0) {
+		if(($_POST['submit'] ?? '') && $countErrors == 0) {
 		
 			echo "
 				<p class='successFont' align='center'>
@@ -202,7 +202,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 		";
 
 		
-		if(isset($_POST['submit']) && $countErrors > 0) {
+		if(($_POST['submit'] ?? '') && $countErrors > 0) {
 		
 			echo "
 				

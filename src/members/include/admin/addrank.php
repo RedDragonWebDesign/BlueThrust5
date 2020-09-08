@@ -28,7 +28,7 @@ require_once($prevFolder."classes/rankcategory.php");
 $cID = $_GET['cID'];
 
 
-if(isset($_POST['submit']) && $_POST['submit']) {
+if(($_POST['submit'] ?? '') && $_POST['submit']) {
 	$countErrors = 0;
 	
 	
@@ -256,7 +256,7 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 
 
 
-if(!isset($_POST['submit']) || !isset($_POST['submit'])) {
+if(!($_POST['submit'] ?? '') || !($_POST['submit'] ?? '')) {
 	$rankCategories = $mysqli->query("SELECT * FROM ".$dbprefix."rankcategory ORDER BY ordernum");
 	
     $rankCatOptions = "";

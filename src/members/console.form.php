@@ -5,7 +5,7 @@
 	$hooksObj->run("console_forms");
 	$formObj->buildForm($setupFormArgs);
 	
-	if( isset($_POST['submit']) ) {
+	if( ($_POST['submit'] ?? '') ) {
 		if($formObj->save()) {
 			
 			$formObj->saveMessageTitle = $consoleInfo['pagetitle'];
@@ -23,6 +23,6 @@
 		}
 	}
 	
-	if ( ! isset($_POST['submit']) ) {
+	if ( ! ($_POST['submit'] ?? '') ) {
 		$formObj->show();	
 	}

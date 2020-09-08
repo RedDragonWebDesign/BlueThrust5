@@ -86,7 +86,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$dispError = "";
 	
 	
-	if(isset($_POST['submit'])) {
+	if(($_POST['submit'] ?? '')) {
 		
 		
 	// Check Display Order (before/after)
@@ -154,7 +154,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	}
 	
 	
-	if(!isset($_POST['submit'])) {
+	if(!($_POST['submit'] ?? '')) {
 		
 		$selectAfter = "";
 		if(count($arrProfileModules) == $pluginPageInfo[0]['sortnum']) {

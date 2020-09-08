@@ -28,7 +28,7 @@ $cID = $_GET['cID'];
 
 $consoleCatObj = new ConsoleCategory($mysqli);
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 	// Check Category Name
 	
@@ -107,7 +107,7 @@ if(isset($_POST['submit'])) {
 }
 
 
-if(!isset($_POST['submit'])) {
+if(!($_POST['submit'] ?? '')) {
 
 	$countCategories = 0;
 	

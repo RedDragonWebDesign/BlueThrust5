@@ -32,7 +32,7 @@ $cID = $_GET['cID'];
 $dispError = "";
 $countErrors = 0;
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 	$delMemberObj = new Member($mysqli);
 	
@@ -93,7 +93,7 @@ if(isset($_POST['submit'])) {
 
 
 
-if(!isset($_POST['submit'])) {
+if(!($_POST['submit'] ?? '')) {
 	
 	$memberoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '1' ORDER BY username");

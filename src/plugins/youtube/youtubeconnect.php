@@ -186,7 +186,7 @@
 		$dispError = "";
 		$dispSuccess = false;
 		
-		if(isset($_POST['submit'])) {
+		if(($_POST['submit'] ?? '')) {
 			
 			// Check Video Display
 			$arrVideoDisplayCheck = array(0,1,2,3,4,5);

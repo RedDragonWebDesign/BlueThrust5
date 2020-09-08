@@ -29,7 +29,7 @@ $breadcrumbObj->addCrumb("Log In");
 
 $x = '';
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	$login_username = $_POST['user'];
 	$login_password = $_POST['pass'];
 	$x = "fail";
@@ -75,7 +75,7 @@ if(isset($_POST['submit'])) {
 }
 
 
-if(!isset($_POST['submit']) && !constant("LOGGED_IN")) {
+if(!($_POST['submit'] ?? '') && !constant("LOGGED_IN")) {
 
 	if($x == "fail") {
 		$errorMessage = "You entered an incorrect username/password combination!";

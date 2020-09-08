@@ -60,7 +60,7 @@ else {
 }
 
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 	$mysqli->query("DELETE FROM ".$dbprefix."tournamentmatches WHERE tournament_id = '".$tournamentInfo['tournament_id']."'");	
 	$tournamentObj->update(array("seedtype"), array(1));
@@ -84,7 +84,7 @@ if(isset($_POST['submit'])) {
 	
 	
 }
-elseif(!isset($_POST['submit'])) {
+elseif(!($_POST['submit'] ?? '')) {
 
 	$arrPools = $tournamentObj->getPoolList();
 	$arrPoolTeams = array();

@@ -40,7 +40,7 @@ $tournamentObj = new Tournament($mysqli);
 
 $arrTournaments = $member->getTournamentList();
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 	if(!$tournamentObj->select($_POST['tournament'])) {
 		$countErrors++;
@@ -122,7 +122,7 @@ if(isset($_POST['submit'])) {
 	
 }
 
-if(!isset($_POST['submit'])) {
+if(!($_POST['submit'] ?? '')) {
 	
 	$tournamentSQL = "('".implode("','", $arrTournaments)."')";
 	

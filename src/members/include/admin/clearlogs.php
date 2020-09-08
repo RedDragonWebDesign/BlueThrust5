@@ -34,7 +34,7 @@ $dispError = "";
 $countErrors = 0;
 
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 	$checkArr = array(1,2,3,4,5,6);
 	
@@ -113,7 +113,7 @@ if(isset($_POST['submit'])) {
 	
 }
 
-if(!isset($_POST['submit'])) {
+if(!($_POST['submit'] ?? '')) {
 	
 	echo "
 		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>

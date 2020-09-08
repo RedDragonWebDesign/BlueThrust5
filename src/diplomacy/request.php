@@ -75,7 +75,7 @@ require_once($prevFolder."include/breadcrumb.php");
 	
 	$countErrors = 0;
 	$dispError = "";
-	if( isset($_POST['submit']) && $_POST['submit'] != "block" ) {
+	if( ($_POST['submit'] ?? '') && $_POST['submit'] != "block" ) {
 		// Check Required Fields not Blank
 		$arrRequiredFields = array("Your Name"=>"requestername", "Your E-mail"=>"requesteremail", "Clan Name"=>"clanname", "Diplomacy Status"=>"diplomacystatus", "Games Played"=>"gamesplayed", "Clan Leaders"=>"clanleaders");
 		
@@ -206,7 +206,7 @@ Thanks,\n
 	}
 	
 	
-	if ( ! isset($_POST['submit']) ) {
+	if ( ! ($_POST['submit'] ?? '') ) {
 		echo "
 	
 		<div class='formDiv'>

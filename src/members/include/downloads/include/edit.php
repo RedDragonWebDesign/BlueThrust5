@@ -29,7 +29,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 $countErrors = 0;
 $dispError = "";
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 	// Check Name
 	if(trim($_POST['title']) == "") {
@@ -87,7 +87,7 @@ if(isset($_POST['submit'])) {
 
 
 
-if(!isset($_POST['submit'])) {
+if(!($_POST['submit'] ?? '')) {
 
 	
 	echo "

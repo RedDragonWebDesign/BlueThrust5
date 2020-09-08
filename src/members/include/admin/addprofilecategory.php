@@ -30,7 +30,7 @@ $cID = $_GET['cID'];
 
 
 
-if(isset($_POST['submit'])) {
+if(($_POST['submit'] ?? '')) {
 	
 	$countErrors = 0;
 	
@@ -96,7 +96,7 @@ if(isset($_POST['submit'])) {
 	
 }
 
-if(!isset($_POST['submit'])) {
+if(!($_POST['submit'] ?? '')) {
 	
 	
 	
