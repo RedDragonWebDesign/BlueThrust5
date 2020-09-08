@@ -72,8 +72,8 @@ class Member extends Basic {
 	
 	function authorizeLogin($check_password, $encryptPW=0) {
 		
-		$checkRealPassword = $this->arrObjInfo['password'];
-		$checkRealPassword2 = $this->arrObjInfo['password2'];
+		$checkRealPassword = ($this->arrObjInfo['password'] ?? '');
+		$checkRealPassword2 = ($this->arrObjInfo['password2'] ?? '');
 		
 		if($encryptPW == 1) {
 			
@@ -86,7 +86,7 @@ class Member extends Basic {
 		
 		$returnVal = false;
 		
-		if($checkRealPassword == $checkPass && $this->arrObjInfo['disabled'] == 0) {
+		if($checkRealPassword == $checkPass && ($this->arrObjInfo['disabled'] ?? '') == 0) {
 			$returnVal = true;
 		}
 		

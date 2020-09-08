@@ -254,7 +254,7 @@ class ForumBoard extends BasicSort {
 			}
 			
 		}
-		$this->memberID = $memberid;
+		$this->memberID = $memberID;
 		return $returnVal;
 		
 	}
@@ -388,7 +388,7 @@ class ForumBoard extends BasicSort {
 			$arrReturn = array_unique(array_merge($arrReturn, $this->getAllSubForums()));
 		}
 		
-		$this->select($intTableKeyValue);
+		$this->select(($intTableKeyValue ?? ''));
 
 		
 		return $arrReturn;

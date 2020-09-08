@@ -153,7 +153,7 @@
 						$afterJS .= $this->richTextboxJS($componentInfo['attributes']['id'], $componentInfo['allowHTML'] ?? '');
 						$displayForm .= "
 							<div class='formInput' style='width: 100%'>
-								<textarea name='".$componentName."' ".$dispAttributes.">".$componentInfo['value']."</textarea>
+								<textarea name='".$componentName."' ".$dispAttributes.">".($componentInfo['value'] ?? '')."</textarea>
 							</div>
 						";
 						$countRichTextbox++;
@@ -195,7 +195,7 @@
 						break;
 					case "checkbox": // Checkbox and radio are basically same thing, so checkbox falls through to radio section
 					case "radio":
-						if(is_array($componentInfo['options'])) {	
+						if(is_array(($componentInfo['options'] ?? ''))) {	
 							$componentCounter = 1;					
 							foreach($componentInfo['options'] as $optionValue => $displayValue) {
 								$dispSelected = "";
@@ -224,7 +224,7 @@
 						else {
 							
 							$dispChecked = "";
-							if($componentInfo['checked']) {
+							if(($componentInfo['checked'] ?? '')) {
 								$dispChecked = " checked";	
 							}
 							
@@ -344,7 +344,7 @@
 			}
 			
 			if(!$this->isContainer) {
-				echo "<form ".$dispFormAttributes.">".$this->wrapper[0].$dispErrors.$this->description."<div class='formTable'>".$displayForm."</div>".$this->wrapper[1]."<input type='hidden' name='checkCSRF' value='".$_SESSION['csrfKey']."'></form>";
+				echo "<form ".$dispFormAttributes.">".($this->wrapper[0] ?? '').$dispErrors.$this->description."<div class='formTable'>".$displayForm."</div>".($this->wrapper[1] ?? '')."<input type='hidden' name='checkCSRF' value='".$_SESSION['csrfKey']."'></form>";
 			}
 
 			

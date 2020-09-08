@@ -110,7 +110,7 @@ if(isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID']) && in_array(
 	";
 	}
 }
-elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && $_GET['action'] == "delete") {
+elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET['action'] ?? '') == "delete") {
 // DELETE POST	
 	
 	$postInfo = $boardObj->objPost->get_info_filtered();
@@ -163,7 +163,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && $_GET[
 	$member->logAction("Deleted post in topic: <a href='".$MAIN_ROOT."forum/viewtopic.php?tID=".$topicInfo['forumtopic_id']."'>".$boardObj->objPost->get_info_filtered("title")."</a>");
 	
 }
-elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && $_GET['action'] != "delete") {
+elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET['action'] ?? '') != "delete") {
 // EDIT POST
 
 	$postInfo = $boardObj->objPost->get_info();
@@ -255,7 +255,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && $_GET[
 		<div class='formDiv'>
 		";
 		
-		if($dispError != "") {
+		if(($dispError ?? '') != "") {
 			echo "
 			<div class='errorDiv'>
 			<strong>Unable to edit post because the following errors occurred:</strong><br><br>

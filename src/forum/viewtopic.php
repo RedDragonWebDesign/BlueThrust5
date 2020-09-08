@@ -418,4 +418,3 @@ if($countManagablePosts > 0) {
 }
 
 require_once($prevFolder."themes/".$THEME."/_footer.php");
-?>

@@ -32,7 +32,7 @@ $consoleInfo = $consoleObj->get_info_filtered();
 
 
 $member = new Member($mysqli);
-$member->select($_SESSION['btUsername']);
+$member->select(($_SESSION['btUsername'] ?? ''));
 
 
 $newsObj = new News($mysqli);
@@ -46,7 +46,7 @@ $shoutboxObj->intDispWidth = 140;
 $shoutboxObj->intDispHeight = 300;
 $shoutboxObj->blnUpdateShoutbox = true;
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if($member->authorizeLogin(($_SESSION['btPassword'] ?? ''))) {
 
 	$manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
 

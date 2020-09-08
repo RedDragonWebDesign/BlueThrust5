@@ -125,64 +125,59 @@
 			<div class='forumPostPosterInfo'></div>
 			<div class='forumPostMessageExtras'>
 				";
-				
-		$arrAttachments = $this->getPostAttachments();
-		
-		if(count($arrAttachments) > 0 && $blnShowAttachments) {
-			echo "
-				<div class='forumAttachmentsContainer'>
-					<b>Attachments:</b><br>
-					";
-				
-				foreach($arrAttachments as $downloadID) {
-					$attachmentObj->select($downloadID);
-					$attachmentInfo = $attachmentObj->get_info_filtered();
-					$addS = ($attachmentInfo['downloadcount'] != 1) ? "s" : "";
-					$dispFileSize = $attachmentInfo['filesize']/1024;
-					
-					if($dispFileSize < 1) {
-						$dispFileSize = $attachmentInfo['filesize']."B";	
-					}
-					elseif(($dispFileSize/1024) < 1) {
-						$dispFileSize = round($dispFileSize, 2)."KB";	
-					}
-					else {
-						$dispFileSize = round(($dispFileSize/1024),2)."MB";
-					}
-					
-					echo "<a href='".$MAIN_ROOT."downloads/file.php?dID=".$downloadID."'>".$attachmentInfo['filename']."</a> - downloaded ".$attachmentInfo['downloadcount']." time".$addS." - ".$dispFileSize."<br>";
-					
-				}
-		
-				echo "
-					</div>
-					";
-		}
-		
-		
-		if($postMemberInfo['forumsignature'] != "" && $websiteInfo['forum_hidesignatures'] == 0) {
-			echo "
-				<div class='forumSignatureContainer'>".parseBBCode($posterMemberObj->get_info("forumsignature"))."</div>
-			";
-		}
-		
-		echo "<div class='forumManageLinks'>";
-		if($this->blnManageable || $postMemberInfo['member_id'] == $memberInfo['member_id']) {
-
-			echo "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&pID=".$postInfo['forumpost_id']."'>EDIT POST</a> &laquo;&nbsp&nbsp;&nbsp;";
-			echo "&raquo; <a href='javascript:void(0)' onclick=\"deletePost('".$postInfo['forumpost_id']."')\">DELETE POST</a> &laquo;&nbsp&nbsp;&nbsp;";
-			$countManagablePosts++;
 			
-		}
-		
-		if(LOGGED_IN && $topicInfo['lockstatus'] == 0) { 
-			echo "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$topicInfo['forumboard_id']."&tID=".$topicInfo['forumtopic_id']."&quote=".$postInfo['forumpost_id']."'>QUOTE</a> &laquo;"; 
-		}
-		
+	$arrAttachments = $this->getPostAttachments();
 	
+	if(count($arrAttachments) > 0 && $blnShowAttachments) {
 		echo "
-			</div>
-			</div>
-		</div>";
+			<div class='forumAttachmentsContainer'>
+				<b>Attachments:</b><br>
+				";
+			
+			foreach($arrAttachments as $downloadID) {
+				$attachmentObj->select($downloadID);
+				$attachmentInfo = $attachmentObj->get_info_filtered();
+				$addS = ($attachmentInfo['downloadcount'] != 1) ? "s" : "";
+				$dispFileSize = $attachmentInfo['filesize']/1024;
+				
+				if($dispFileSize < 1) {
+					$dispFileSize = $attachmentInfo['filesize']."B";	
+				}
+				elseif(($dispFileSize/1024) < 1) {
+					$dispFileSize = round($dispFileSize, 2)."KB";	
+				}
+				else {
+					$dispFileSize = round(($dispFileSize/1024),2)."MB";
+				}
+				
+				echo "<a href='".$MAIN_ROOT."downloads/file.php?dID=".$downloadID."'>".$attachmentInfo['filename']."</a> - downloaded ".$attachmentInfo['downloadcount']." time".$addS." - ".$dispFileSize."<br>";
+				
+			}
+	
+			echo "
+				</div>
+				";
+	}
+	
+	
+	if($postMemberInfo['forumsignature'] != "" && $websiteInfo['forum_hidesignatures'] == 0) {
+		echo "
+			<div class='forumSignatureContainer'>".parseBBCode($posterMemberObj->get_info("forumsignature"))."</div>
+		";
+	}
+	
+	echo "<div class='forumManageLinks'>";
+	if($this->blnManageable || $postMemberInfo['member_id'] == $memberInfo['member_id']) {
 
-?>
+		echo "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&pID=".$postInfo['forumpost_id']."'>EDIT POST</a> &laquo;&nbsp&nbsp;&nbsp;";
+		echo "&raquo; <a href='javascript:void(0)' onclick=\"deletePost('".$postInfo['forumpost_id']."')\">DELETE POST</a> &laquo;&nbsp&nbsp;&nbsp;";
+	}
+	
+	if(LOGGED_IN && ($topicInfo['lockstatus'] ?? '') == 0) { 
+		echo "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$topicInfo['forumboard_id']."&tID=".$topicInfo['forumtopic_id']."&quote=".$postInfo['forumpost_id']."'>QUOTE</a> &laquo;"; 
+	}
+
+	echo "
+		</div>
+		</div>
+	</div>";
