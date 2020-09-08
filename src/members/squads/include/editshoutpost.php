@@ -50,7 +50,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		
 		
 		
-		if($_POST['submit']) {
+		if(isset($_POST['submit'])) {
 			
 			// Check Message
 			
@@ -93,7 +93,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		
 		
 		
-		if(!$_POST['submit'] && !$_POST['cancel']) {
+		if(!isset($_POST['submit']) && !$_POST['cancel']) {
 			$squadNewsInfo = $squadNewsObj->get_info_filtered();
 			
 			if($dispError != "") {

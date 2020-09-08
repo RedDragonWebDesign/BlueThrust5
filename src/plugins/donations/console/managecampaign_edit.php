@@ -56,7 +56,7 @@ $setupFormArgs['attributes']['action'] .= "&campaignID=".$_GET['campaignID']."&a
 $setupFormArgs['saveMessage'] = "Successfully saved donation campaign!";
 $setupFormArgs['saveLink'] = $MAIN_ROOT."members/console.php?cID=".$_GET['cID'];
 
-if(!$_POST['submit']) {
+if(!isset($_POST['submit'])) {
 	$setupFormArgs['prefill'] = true;
 	$setupFormArgs['skipPrefill'] = array("dateend", "currentperiod");
 }

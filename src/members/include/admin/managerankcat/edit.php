@@ -224,7 +224,7 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 }
 	
 	
-if(!isset($_POST['submit']) || !$_POST['submit']) {
+if(!isset($_POST['submit']) || !isset($_POST['submit'])) {
 	
 	$afterSelected = "";
 	$intCatBeforeAfter = "";

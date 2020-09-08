@@ -78,7 +78,7 @@
 	
 	}
 	
-	if($_POST['submit']) {
+	if(isset($_POST['submit'])) {
 		$member->select($_POST['member']);			
 		$arrMedals = $member->getMedalList();
 		$medaloptions = array();

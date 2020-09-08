@@ -52,7 +52,7 @@ if($memberInfo['rank_id'] == 1) {
 
 $rankObj = new Rank($mysqli);
 
-if($_POST['submit']) {
+if(isset($_POST['submit'])) {
 
 	$rankObj->select($rankInfo['promotepower']);
 	$maxRankInfo = $rankObj->get_info_filtered();
@@ -130,7 +130,7 @@ if($_POST['submit']) {
 	
 }
 
-if(!$_POST['submit']) {
+if(!isset($_POST['submit'])) {
 	
 	$rankObj->select($rankInfo['promotepower']);
 	$maxRankInfo = $rankObj->get_info_filtered();

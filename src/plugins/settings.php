@@ -61,7 +61,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 	$formObj->buildForm($setupFormArgs);	
 	
-	if($_POST['submit'] && $formObj->save()) {
+	if(isset($_POST['submit']) && $formObj->save()) {
 		$formObj->saveMessageTitle = $pluginInfo['name']." Plugin Settings";
 		$formObj->showSuccessDialog();
 	}

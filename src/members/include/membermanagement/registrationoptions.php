@@ -30,7 +30,7 @@ $cID = $_GET['cID'];
 
 
 
-if($_POST['submit']) {
+if(isset($_POST['submit'])) {
 	
 	$setRegistration = 1;
 	$setMemberApproval = 0;
@@ -75,7 +75,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if(!isset($_POST['submit'])) {
 	
 	$selectOpen = "";
 	$checkApproval = "";

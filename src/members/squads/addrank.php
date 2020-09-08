@@ -44,7 +44,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 $dispError = "";
 $countErrors = 0;
-if($_POST['submit']) {
+if(isset($_POST['submit'])) {
 	
 	// Check Rank Name
 	
@@ -132,7 +132,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if(!isset($_POST['submit'])) {
 	
 	$countRanks = 0;
 	$rankoptions = "";

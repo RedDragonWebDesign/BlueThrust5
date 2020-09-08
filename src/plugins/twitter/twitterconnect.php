@@ -141,7 +141,7 @@ elseif($twitterObj->hasTwitter($memberInfo['member_id'])) {
 	
 	
 	$dispSuccess = false;
-	if($_POST['submit']) {
+	if(isset($_POST['submit'])) {
 
 		$setShowFeed = ($_POST['showfeed'] == 1) ? 1 : 0;
 		$setEmbedTweet = ($_POST['embedlasttweet'] == 1) ? 1 : 0;

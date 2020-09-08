@@ -48,7 +48,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 ";
 
 $dispError = "";
-if($_POST['submit']) {
+if(isset($_POST['submit'])) {
 	
 	$countErrors = 0;
 	
@@ -128,7 +128,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if(!isset($_POST['submit'])) {
 	
 	$countCategories = 0;
 	

@@ -37,7 +37,7 @@ $dispError = "";
 $countErrors = 0;
 
 $arrCheckType = array("image", "customcode", "customformat");
-if($_POST['submit']) {
+if(isset($_POST['submit'])) {
 	
 	// Check Name
 	if(trim($_POST['categoryname']) == "") {
@@ -139,7 +139,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if(!isset($_POST['submit'])) {
 	
 	$selectSection = array();
 	if(isset($_GET['sectionID'])) {

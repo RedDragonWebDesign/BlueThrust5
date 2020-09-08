@@ -29,7 +29,7 @@ $cID = $_GET['cID'];
 $downloadCatObj = new DownloadCategory($mysqli);
 $downloadExtObj = new Basic($mysqli, "download_extensions", "extension_id");
 
-if($_POST['submit']) {
+if(isset($_POST['submit'])) {
 	
 	// Check Category Name
 	
@@ -124,7 +124,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if(!isset($_POST['submit'])) {
 
 	$countCategories = 0;
 	

@@ -49,7 +49,7 @@ else {
 	$powerRankInfo = $rankObj->get_info();
 }
 
-if($_POST['submit']) {
+if(isset($_POST['submit'])) {
 	
 	
 	if(!$memberObj->select($_POST['member'])) {
@@ -116,7 +116,7 @@ if($_POST['submit']) {
 	
 }
 
-if(!$_POST['submit']) {
+if(!isset($_POST['submit'])) {
 	
 	$result = $mysqli->query("SELECT ".$dbprefix."members.member_id FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."ranks.rank_id = ".$dbprefix."members.rank_id AND ".$dbprefix."ranks.ordernum <= '".$powerRankInfo['ordernum']."' AND ".$dbprefix."members.rank_id != '1' AND ".$dbprefix."members.disabled = '0' ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
 	while($row = $result->fetch_assoc()) {

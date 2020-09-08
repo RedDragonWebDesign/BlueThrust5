@@ -52,7 +52,7 @@ require_once($prevFolder."include/breadcrumb.php");
 require_once(BASE_DIRECTORY."include/signup_form.php");
 
 
-if($_POST['submit']) {
+if(isset($_POST['submit'])) {
 	
 	$additionalSuccessInfo = "<br><br>You must wait to be approved by a member to become a full member on the website.";
 	
@@ -64,7 +64,7 @@ if($_POST['submit']) {
 	}
 	
 	
-	if($_POST['submit']) {
+	if(isset($_POST['submit'])) {
 
 		$signUpForm->saveMessage = "<span class='main'>".$signUpForm->saveMessage.$additionalSuccessInfo."</span>";
 		
@@ -75,7 +75,7 @@ if($_POST['submit']) {
 	
 }
 
-if(!$_POST['submit']) {
+if(!isset($_POST['submit'])) {
 
 	$signUpForm->show();
 	

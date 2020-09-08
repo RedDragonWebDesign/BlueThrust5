@@ -49,7 +49,7 @@ if($memberInfo['rank_id'] == 1) {
 }
  
 $rankObj = new Rank($mysqli);
-if($_POST['submit']) {
+if(isset($_POST['submit'])) {
  
 	if($countErrors == 0) {
 		$time = time();
@@ -127,7 +127,7 @@ if($_POST['submit']) {
 }
  
  
-if(!$_POST['submit']) {
+if(!isset($_POST['submit'])) {
  
  	$memberoptions = "";
 	$result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.name FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."ranks.rank_id = ".$dbprefix."members.rank_id AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id != '1' ORDER BY ".$dbprefix."ranks.ordernum DESC");

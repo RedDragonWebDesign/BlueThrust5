@@ -46,7 +46,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 $dispError = "";
 $countErrors = 0;
 
-if($_POST['submit']) {
+if(isset($_POST['submit'])) {
 	
 	// Check position name
 	if(trim($_POST['positionname']) == "") {
@@ -105,7 +105,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if(!isset($_POST['submit'])) {
 	
 	$arrPositions = $eventObj->getPositions(" ORDER BY sortnum");
 	

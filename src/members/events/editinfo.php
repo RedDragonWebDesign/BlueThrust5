@@ -45,7 +45,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 $arrTimezones = DateTimeZone::listIdentifiers();
 $eventInfo = $eventObj->get_info_filtered();
-if($_POST['submit']) {
+if(isset($_POST['submit'])) {
 	// Check Title
 	if(trim($_POST['eventtitle']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Event title may not be blank.<br>";
@@ -162,7 +162,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if(!isset($_POST['submit'])) {
 	
 	$startHour = date("G", $eventInfo['startdate']);
 	$startMinute = date("i", $eventInfo['startdate']);

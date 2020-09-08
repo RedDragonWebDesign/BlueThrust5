@@ -52,7 +52,7 @@ $gameObj = new Game($mysqli);
 
 $arrTimezones = DateTimeZone::listIdentifiers();
 
-if($_POST['submit']) {
+if(isset($_POST['submit'])) {
 
 	// Check tournament name
 
@@ -208,7 +208,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if(!isset($_POST['submit'])) {
 
 	$gameoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."gamesplayed ORDER BY ordernum DESC");

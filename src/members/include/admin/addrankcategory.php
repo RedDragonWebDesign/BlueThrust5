@@ -189,7 +189,7 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 
 
 
-if(!isset($_POST['submit']) || !$_POST['submit']) {
+if(!isset($_POST['submit']) || !isset($_POST['submit'])) {
 	
 	
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."rankcategory ORDER BY ordernum DESC");

@@ -45,7 +45,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 
 
-if($_POST['submit']) {
+if(isset($_POST['submit'])) {
 	
 	// Check Squad Name
 	if(trim($_POST['squadname']) == "") {
