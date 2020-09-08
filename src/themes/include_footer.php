@@ -2,7 +2,7 @@
 	<div id='notificationContainer'></div>
 	<div id='toolTip'></div>
 	<div id='toolTipWidth'></div>
-	<?php echo $dispMembersOnlyTagger; ?>
+	<?php echo $dispMembersOnlyTagger ?? ''; ?>
 	<div id='refreshMenusDiv' style='display: none'></div>
 	
 	<!-- Script to fill #notificationContainer (and possibly play a sound) if there's a notification -->

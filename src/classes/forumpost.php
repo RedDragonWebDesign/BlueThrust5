@@ -123,7 +123,7 @@ class ForumPost extends Basic {
 			$postRanking = $findDepthResult->num_rows;
 			
 			// Figure out posts per page
-			if($memberInfo['postsperpage'] > 0) {
+			if(($memberInfo['postsperpage'] ?? '') > 0) {
 				$postsPerPage = $memberInfo['postsperpage'];
 			}
 			elseif($websiteInfo['forum_postsperpage'] > 0) {

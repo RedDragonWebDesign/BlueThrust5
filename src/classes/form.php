@@ -181,11 +181,11 @@
 						$displayForm .= "<select name='".$componentName."' ".$dispAttributes.">";
 						foreach($componentInfo['options'] as $optionValue => $displayValue) {
 							$dispSelected = "";
-							if($optionValue == $componentInfo['value']) {
-								$dispSelected = " selected";	
+							if($optionValue == ($componentInfo['value'] ?? '')) {
+								$dispSelected = " selected";
 							}
 							
-							if(in_array($optionValue, $componentInfo['non_selectable_items'])) {
+							if( isset($componentInfo['non_selectable_items']) && in_array($optionValue, $componentInfo['non_selectable_items']) ) {
 								$dispSelected = " disabled class='disabledSelectItem'";
 							}
 							
@@ -286,19 +286,20 @@
 						break;
 					case "beforeafter":
 						$this->beforeAfter = true;
+						$displayOptions = '';
 						foreach($componentInfo['options'] as $optionValue => $displayValue) {
 							$dispSelected = "";	
-							if($optionValue == $componentInfo['before_after_value']) {
+							if($optionValue == ($componentInfo['before_after_value'] ?? '')) {
 								$dispSelected = " selected";
 							}
 							
-							if($optionValue != $componentInfo['value']) {
+							if($optionValue != ($componentInfo['value'] ?? '')) {
 								$displayOptions .= "<option value='".$optionValue."'".$dispSelected.">".$displayValue."</option>";
 							}
 							
 						}
 						
-						$afterSelected = ($componentInfo['after_selected'] == "after") ? " selected" : "";
+						$afterSelected = (($componentInfo['after_selected'] ?? '') == "after") ? " selected" : "";
 						
 						$displayForm .= "<div class='formInput'>
 											<select name='".$componentName."_beforeafter' ".$dispAttributes.">
@@ -311,15 +312,12 @@
 											</select>
 										</div>
 										";
-						
 						break;
 					case "custom":
 						break;
 					case "colorpick":
-						
-						$afterJS .= $this->colorpickerJS($componentInfo['attributes']['id'], $componentInfo['allowHTML']);
-						$displayForm .= "<input type='text' name='".$componentName."' value='".$componentInfo['value']."' ".$dispAttributes.">";
-						
+						$afterJS .= $this->colorpickerJS($componentInfo['attributes']['id']);
+						$displayForm .= "<input type='text' name='".$componentName."' value='".($componentInfo['value'] ?? '')."' ".$dispAttributes.">";
 						break;
 					default:
 						$displayForm .= "<input type='".$componentInfo['type']."' name='".$componentName."' value='".($componentInfo['value'] ?? '')."' ".$dispAttributes.">";					

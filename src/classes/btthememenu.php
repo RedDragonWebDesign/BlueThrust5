@@ -1,9 +1,6 @@
 <?php
 
-
 	class btThemeMenu {
-		
-		
 		protected $name;
 		public $MySQL;
 		public $dir;
@@ -21,8 +18,6 @@
 		public $arrShoutBoxIDs = array();
 		
 		public function __construct($dir, $sqlConnection) {
-			
-
 			$themeName = file_get_contents(BASE_DIRECTORY."themes/".$dir."/THEMENAME.txt");
 			$this->name = ($themeName) ? $themeName : "Unknown";
 			
@@ -31,16 +26,13 @@
 
 			$this->memberObj = new Member($this->MySQL);
 			
-			$this->blnLoggedIn = $this->memberObj->select($_SESSION['btUsername']) && $this->memberObj->authorizeLogin($_SESSION['btPassword']);
+			$this->blnLoggedIn = $this->memberObj->select(($_SESSION['btUsername'] ?? '')) && $this->memberObj->authorizeLogin($_SESSION['btPassword']);
 			
 			$this->menuCatObj = new MenuCategory($this->MySQL);
 			$this->menuItemObj = new MenuItem($this->MySQL);
 			
-			
 			$this->prepareAdditionalMemberInfo();
-			
 		}
-		
 		
 		public function getForumActivity($amountToShow=5) {
 			
@@ -577,8 +569,8 @@
 				"[MAIN_ROOT]" => MAIN_ROOT,
 				"[MEMBER_ID]" => $this->memberObj->get_info("member_id"),
 				"[MEMBERUSERNAME]" => $this->memberObj->get_info_filtered("username"),
-				"[MEMBERRANK]" => $this->data['memberRank'],
-				"[PMLINK]" => $this->data['pmLink']
+				"[MEMBERRANK]" => ($this->data['memberRank'] ?? ''),
+				"[PMLINK]" => ($this->data['pmLink'] ?? '')
 			
 			);
 			
