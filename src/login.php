@@ -27,6 +27,8 @@ $breadcrumbObj->setTitle("Log In");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Log In");
 
+$x = '';
+
 if(isset($_POST['submit'])) {
 	$login_username = $_POST['user'];
 	$login_password = $_POST['pass'];
@@ -37,7 +39,7 @@ if(isset($_POST['submit'])) {
 	$checkMember->select($login_username);
 	$memberInfo = $checkMember->get_info();
 	
-	if($memberInfo['username'] != "") {
+	if (($memberInfo['username'] ?? '') != "") {
 		
 		$checkLogin = $checkMember->authorizeLogin($login_password, 1);
 		
@@ -68,7 +70,7 @@ if(isset($_POST['submit'])) {
 	}
 	
 	if($x == "fail") {
-		$_POST['submit'] = false;
+		unset($_POST['submit']);
 	}
 }
 
@@ -131,5 +133,3 @@ elseif(constant("LOGGED_IN")) {
 }
 
 require_once("themes/".$THEME."/_footer.php");
-
-?>
