@@ -5,7 +5,7 @@
 	<div id='toolTipWidth'></div>
 	
 	
-	<?php echo $dispMembersOnlyTagger; ?>
+	<?php echo $dispMembersOnlyTagger ?? ''; ?>
 	
 	
 	<div id='refreshMenusDiv' style='display: none'></div>

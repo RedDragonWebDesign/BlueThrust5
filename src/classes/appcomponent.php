@@ -61,7 +61,11 @@
 					"attributes" => array("class" => "formInput textBox"),
 					"sortorder" => $i++,
 					"display_name" => "Password",
-					"validate" => array("NOT_BLANK", array("name" => "GREATER_THAN", "value" => 5), array("name" => "EQUALS_VALUE", "value" => $_POST['password2'], "customMessage" => "Your passwords did not match."))
+					"validate" => array(
+						"NOT_BLANK",
+						array("name" => "GREATER_THAN", "value" => 5),
+						array("name" => "EQUALS_VALUE", "value" => $_POST['password2'] ?? '', "customMessage" => "Your passwords did not match.")
+					)
 				),
 				"password2" => array(
 					"type" => "password",

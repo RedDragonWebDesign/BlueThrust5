@@ -44,7 +44,7 @@ if($_POST['submit']) {
 		if($checkLogin) {
 			$_SESSION['btUsername'] = $memberInfo['username'];
 			$_SESSION['btPassword'] = $memberInfo['password'];
-			$_SESSION['btRememberMe'] = $_POST['rememberme'];
+			$_SESSION['btRememberMe'] = $_POST['rememberme'] ?? '';
 			
 			
 			$memberInfo = $checkMember->get_info();

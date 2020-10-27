@@ -583,8 +583,8 @@
 				"[MAIN_ROOT]" => MAIN_ROOT,
 				"[MEMBER_ID]" => $this->memberObj->get_info("member_id"),
 				"[MEMBERUSERNAME]" => $this->memberObj->get_info_filtered("username"),
-				"[MEMBERRANK]" => $this->data['memberRank'],
-				"[PMLINK]" => $this->data['pmLink']
+				"[MEMBERRANK]" => $this->data['memberRank'] ?? '',
+				"[PMLINK]" => $this->data['pmLink'] ?? ''
 			
 			);
 			
