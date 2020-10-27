@@ -76,11 +76,11 @@ class ShoutBox {
 			if($this->memberObj->select($row['member_id'])) {
 				$memberLink = $this->memberObj->getMemberLink();
 				$dispPost = nl2br(parseBBCode(wordwrap(filterText($row['newspost']), $this->intWordWrap)));
-				$dispTime = "<p align='center' style='font-size: 9px'><br>".getPreciseTime($row['dateposted'])."</p>";
+				$dispTime = "<p align='center' style='font-size: 9px'>".getPreciseTime($row['dateposted'])."</p>";
 				
 				$dispManagePost = "";
 				if($this->strEditLink != "" && $this->strDeleteLink != "") {
-					$dispManagePost = "<p align='center'><span class='loadingSpiral' id='".$this->strDivID."_loading_".$row[$this->strTableKey]."'><img src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral2.gif' width='30' height='30'></span><span class='tinyFont' id='".$this->strDivID."_manage_".$row[$this->strTableKey]."'><br><b><a href='".$this->strEditLink.$row[$this->strTableKey]."'>EDIT</a> - <a href='javascript:void(0)' onclick=\"deleteShoutbox('".$row[$this->strTableKey]."', '".$this->strDeleteLink."', '".$this->strDivID."')\">DELETE</a></b></span></p>";
+					$dispManagePost = "<p align='center'><span class='loadingSpiral' id='".$this->strDivID."_loading_".$row[$this->strTableKey]."'><img src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral2.gif' width='30' height='30'></span><span class='tinyFont' id='".$this->strDivID."_manage_".$row[$this->strTableKey]."'><b><a href='".$this->strEditLink.$row[$this->strTableKey]."'>EDIT</a> - <a href='javascript:void(0)' onclick=\"deleteShoutbox('".$row[$this->strTableKey]."', '".$this->strDeleteLink."', '".$this->strDivID."')\">DELETE</a></b></span></p>";
 				}
 				
 				
