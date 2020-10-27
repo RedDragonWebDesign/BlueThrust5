@@ -62,7 +62,7 @@ require_once($prevFolder."include/breadcrumb.php");
 	}
 	
 	
-	if($_GET['sort'] != "up") {
+	if( isset($_GET['sort']) && $_GET['sort'] != "up") {
 		$dispSort = "<a href='".$MAIN_ROOT."top-players/recruiters.php?sort=up'><img src='".$MAIN_ROOT."themes/".$THEME."/images/downarrow.png'></a>";
 		$_GET['sort'] = "down";
 		arsort($arrMembers);

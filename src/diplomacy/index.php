@@ -142,11 +142,11 @@ $breadcrumbObj->addCrumb("Diplomacy");
 			
 			$dispImgWidth = "";
 			$dispImgHeight = "";
-			if($statusInfo['imagewidth'] != 0) {
+			if( isset($statusInfo['imagewidth']) && $statusInfo['imagewidth'] != 0) {
 				$dispImgWidth = " width = '".$statusInfo['imagewidth']."' ";
 			}
 			
-			if($statusInfo['imageheight'] != 0) {
+			if( isset($statusInfo['imageheight']) && $statusInfo['imageheight'] != 0) {
 				$dispImgWidth = " height = '".$statusInfo['imageheight']."' ";
 			}
 			

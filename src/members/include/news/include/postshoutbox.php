@@ -40,7 +40,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	
 	$newsObj->addNew(array("member_id", "newstype", "newspost", "dateposted", "postsubject"), array($member->get_info("member_id"), 3, $_POST['message'], time(), "Shoutbox Post"));
 	
-	$mangeNewsCID = $consoleObj->findConsoleIDByName("Manage News");
+	$manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
 	
 	$consoleObj->select($manageNewsCID);
 	

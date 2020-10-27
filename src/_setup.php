@@ -33,7 +33,7 @@ function debug() {
 // DECLARE GLOBAL VARIABLES
 $SQL_PROFILER = [];
 $SQL_CACHE_ENABLED = true;
-
+$EXTERNAL_JAVASCRIPT = '';
 
 // Check PHP Version
 

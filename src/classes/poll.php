@@ -173,16 +173,13 @@
 			$arrResults = array();
 			
 			if($this->intTableKeyValue != "") {
-			
-				foreach($this->getPollOptions as $pollOptionID) {
-					$arrResults[$pollOptionID] = 0;
-				}
-				
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."poll_votes WHERE poll_id = '".$this->intTableKeyValue."'");
 				while($row = $result->fetch_assoc()) {
-
-					$arrResults[$row['polloption_id']] += $row['votecount'];
+					if ( ! isset($arrResults[$row['polloption_id']]) ) {
+						$arrResults[$row['polloption_id']] = 0;
+					}
 					
+					$arrResults[$row['polloption_id']] += $row['votecount'];
 				}
 			}
 			
