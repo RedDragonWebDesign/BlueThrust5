@@ -1,13 +1,11 @@
 <?php
 
-	// Class to make some things simpler with PHPMailer
-
-
+	/** Class to make some things simpler with PHPMailer */
 	class btMail {
 
 		private $objPHPMailer;
 		
-		// General e-mail function using PHPMailer
+		/** General e-mail function using PHPMailer */
 		public function sendMail($to, $subject="", $message, $additional=array()) {
 				
 			$mail = new PHPMailer();

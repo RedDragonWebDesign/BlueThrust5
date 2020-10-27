@@ -109,9 +109,8 @@
 		}
 		
 		
-		/*
+		/**
 		 * This class doesn't use associate id's so cancelling out these functions
-		 * 
 		 */
 		public function getAssociateIDs($sqlOrderBY = "", $bypassFilter=false) {
 			return false;

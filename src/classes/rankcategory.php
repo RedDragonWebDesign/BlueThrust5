@@ -32,13 +32,12 @@ class RankCategory extends Rank {
 	}
 	
 	
-	/*
+	/**
 	 * - getRanks Function -
 	 * 
 	 * Returns an array of rank ids for all ranks with the selected Rank Category
 	 * 
 	 */
-	
 	function getRanks() {
 		
 		$arrRanks = array();

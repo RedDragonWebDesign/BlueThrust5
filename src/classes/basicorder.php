@@ -27,7 +27,7 @@ class BasicOrder extends Basic {
 	}
 	
 	
-	/*
+	/**
 	 * - selectByOrder Method -
 	 *
 	 *   Way to select a rank by ordernum.  Essentially the same as the normal select method from basic except using the ordernum.
@@ -38,7 +38,6 @@ class BasicOrder extends Basic {
 	 *   Returns false when the table row is not found.
 	 *
 	 */
-	
 	function selectByOrder($intOrderNum) {
 	
 		$returnVal = false;
@@ -59,13 +58,12 @@ class BasicOrder extends Basic {
 	}
 	
 	
-	/*
+	/**
 	 * - getHighestOrder Function -
 	 *
 	 *  Returns the highest ordernum in the rank table
 	 *
 	 */
-	
 	function getHighestOrderNum() {
 		$result = $this->MySQL->query("SELECT MAX(ordernum) FROM ".$this->strTableName);
 		$row = $result->fetch_assoc();
@@ -74,7 +72,7 @@ class BasicOrder extends Basic {
 	}
 	
 	
-	/*
+	/**
 	 * - makeRoom Method -
 	 *
 	 * Method to re-sort rank order numbers just before adding a new rank.  You must first select a rank before using
@@ -88,7 +86,6 @@ class BasicOrder extends Basic {
 	 * Returns the ordernum for the new rank on success or "false" on error
 	 *
 	 */
-	
 	function makeRoom($strBeforeAfter) {
 	
 		$intRankID = $this->intTableKeyValue;
@@ -154,7 +151,7 @@ class BasicOrder extends Basic {
 	
 	}
 	
-	/*
+	/**
 	 * - validateOrder Method -
 	 *
 	 *  Helper method to check if a selected order is valid and "makesRoom" for new order.
@@ -166,7 +163,6 @@ class BasicOrder extends Basic {
 	 *  Returns a number to be used for ordernum
 	 *
 	*/
-	
 	function validateOrder($intOrderNumID, $strBeforeAfter, $blnEdit = false, $intEditOrderNum = "") {
 	
 		$returnVal = false;
@@ -226,7 +222,7 @@ class BasicOrder extends Basic {
 		return $returnVal;
 	}
 	
-	/*
+	/**
 	 * - resortOrder Method -
 	 *
 	 * Mainly used on the edit rank page and after makeRoom is used.
@@ -237,7 +233,6 @@ class BasicOrder extends Basic {
 	 *
 	 *
 	 */
-	
 	function resortOrder() {
 		
 		$counter = 1; // ordernum counter
@@ -266,7 +261,7 @@ class BasicOrder extends Basic {
 	}
 	
 	
-	/*
+	/**
 	 * - Move Method -
 	 *
 	 * Easy way to move a rank either up or down 1 spot.  Used mainly on the manage page.
@@ -276,8 +271,6 @@ class BasicOrder extends Basic {
 	 * Returns false when no move is made
 	 *
 	 */
-	
-	
 	function move($strDir) {
 	
 	
@@ -320,7 +313,7 @@ class BasicOrder extends Basic {
 	
 	
 	
-	/*
+	/**
 	 * - findBeforeAfter Function -
 	 *
 	 *  Easy way to find the ordernum of the rank either before or after.  Finds the id of the rank before the selected rank,
@@ -329,8 +322,6 @@ class BasicOrder extends Basic {
 	 *  Returns an array with 2 items, [0] equals the rank id, [1] equals before, after or first (if no other ranks)
 	 *
 	 */
-	
-	
 	function findBeforeAfter() {
 		$returnArr = "";
 		if($this->intTableKeyValue != "") {
@@ -365,7 +356,7 @@ class BasicOrder extends Basic {
 
 	
 	
-	/*
+	/**
 	 * - getAssociateIDs Function -
 	 *
 	 *  I was unsure of the best way to name what I am calling "Associates" to the rank class and the ones that extend it.  The only way I can
@@ -381,7 +372,6 @@ class BasicOrder extends Basic {
  	 *  Returns an array of IDs for the associated table
 	 *
 	 */
-	
 	function getAssociateIDs($sqlOrderBY = "", $bypassFilter=false) {
 	
 		$arrReturn = array();

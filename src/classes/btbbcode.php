@@ -4,7 +4,10 @@
  * 
  * Author: Leo Rojas
  * E-mail: leorojas22@gmail.com
- * 
+ * /
+ 
+ 
+/**
  * Simple BB Code Parser
  * 
  * 
@@ -22,7 +25,6 @@
  * 
  * 
  */
-
 class btBBCode {
 	
 	
@@ -76,6 +78,3 @@ $arrUnderline = array("bbOpenTag" => "[u]", "bbCloseTag" => "[/u]", "htmlOpenTag
 
 
 $arrLink = array("bbOpenTag" => "[url]", "bbCloseTag" => "[/url]", "htmlOpenTag" => "<a href='", "htmlCloseTag" => "</span>");
-
-
-

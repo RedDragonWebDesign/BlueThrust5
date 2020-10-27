@@ -39,7 +39,7 @@
 		private $richtextboxJSFile;
 		private $colorpickerJSFile;
 		
-		/*
+		/**
 		 * Components Array Example
 		 * 
 		 * $arr = array(
@@ -59,7 +59,6 @@
 		 * $components = $arr;
 		 * 
 		 */
-		
 		public function __construct($args=array()) {
 			
 			$this->buildForm($args);
@@ -105,13 +104,12 @@
 			
 		}
 		
-		/*
+		/**
 		 * - show Method -
 		 * 
 		 * Used to display the actual form
 		 * 
 		 */
-		
 		public function show() {
 			global $MAIN_ROOT, $hooksObj;
 			
@@ -477,7 +475,7 @@
 		}
 		
 		
-		/*
+		/**
 		 * - validate -  
 		 * 
 		 * Used to validate the data entered into the form.
@@ -488,8 +486,6 @@
 		 * RESTRICT_TO_OPTIONS: Used for components with options (i.e. selectboxes, multi-checkboxes and multi-radiobuttons)
 		 * 
 		 */
-		
-		
 		public function validate() {
 			$returnVal = false;
 			foreach($this->components as $componentName => $componentInfo) {
@@ -773,14 +769,12 @@
 		
 		
 		
-		/*
+		/**
 		 * - save -
 		 * 
 		 * Saves the form data to the database
 		 * 
 		 */
-		
-		
 		public function save() {
 			global $hooksObj;
 			$hooksObj->run($this->formName);
@@ -885,11 +879,6 @@
 			return $returnVal;
 		}
 		
-		/*
-		 * 
-		 * 
-		 */
-		
 		public function addComponentSortSpace($spaceAmount=2, $components = array()) {
 			
 			if(count($components) > 0) {
@@ -907,14 +896,13 @@
 			
 		}
 		
-		/*
+		/**
 		 * - convertAttributes Function -
 		 * 
 		 * Converts attributes to string format if it's an array
 		 * example output: name = 'form_name' id='form_id'
 		 * 
 		 */
-		
 		public function convertAttributes($attr) {
 			
 			if(is_array($attr)) {
@@ -966,10 +954,6 @@
 		}
 		
 		
-		/*
-		 * - autocompleteJS -
-		 */
-		
 		private function autocompleteJS($searchList, $idTextbox, $wordTextbox) {
 
 			$returnVal = "
@@ -998,10 +982,6 @@
 			return $returnVal;
 		}
 		
-		/*
-		 * - codeEditorJS-
-		 */
-		
 		private function codeEditorJS($componentID) {
 		
 			$returnVal = "
@@ -1017,10 +997,6 @@
 			
 			return $returnVal;
 		}
-		
-		/*
-		 * - richTextboxJS -
-		 */
 		
 		private function richTextboxJS($componentID, $allowHTML=false) {
 			global $MAIN_ROOT, $THEME, $hooksObj;

@@ -14,12 +14,11 @@
 
 require_once("basic.php");
 
-/*
+/**
  * An extension of the Basic Class. It includes methods which allow you to easily add 
  * things to the database in a set order within different categories.  
  * 
  */
-
 class BasicSort extends Basic {
 	
 	public $strCategoryKey;
@@ -33,7 +32,7 @@ class BasicSort extends Basic {
 	
 	
 	
-	/*
+	/**
 	 * - makeRoom Method -
 	*
 	* A simple way to make room for a new console option.  It adjusts the sortnum's of all the console options within a specific
@@ -44,7 +43,6 @@ class BasicSort extends Basic {
 	* Returns the sortnum of the new console option on success and "false" on failure.
 	*
 	*/
-	
 	function makeRoom($strBeforeAfter) {
 	
 		$strBeforeAfter = strtolower($strBeforeAfter);
@@ -109,7 +107,7 @@ class BasicSort extends Basic {
 	}
 	
 	
-	/*
+	/**
 	 * - resortOrder Method -
 	*
 	* Mainly used on the edit console page and after makeRoom is used.
@@ -120,7 +118,6 @@ class BasicSort extends Basic {
 	*
 	*
 	*/
-	
 	function resortOrder() {
 		$counter = 1; // ordernum counter
 		$consoleInfo = $this->arrObjInfo;
@@ -164,7 +161,7 @@ class BasicSort extends Basic {
 	
 	
 	
-	/*
+	/**
 	 * - validateOrder Method -
 	*
 	*  Helper method to check if a selected order is valid and "makesRoom" for new order.
@@ -176,7 +173,6 @@ class BasicSort extends Basic {
 	*  Returns a number to be used for ordernum
 	*
 	*/
-	
 	function validateOrder($intOrderNumID, $strBeforeAfter, $blnEdit = false, $intEditOrderNum = "") {
 	
 		$returnVal = false;
@@ -238,7 +234,7 @@ class BasicSort extends Basic {
 	
 	
 	
-	/*
+	/**
 	 * - Move Method -
 	*
 	* Easy way to move a rank either up or down 1 spot.  Used mainly on the manage page.
@@ -248,8 +244,6 @@ class BasicSort extends Basic {
 	* Returns false when no move is made
 	*
 	*/
-	
-	
 	function move($strDir) {
 	
 	
@@ -290,7 +284,7 @@ class BasicSort extends Basic {
 	
 	}
 	
-	/*
+	/**
 	 * - selectByOrder Method -
 	*
 	*   Way to select a rank by ordernum.  Essentially the same as the normal select method from basic except using the ordernum.
@@ -301,7 +295,6 @@ class BasicSort extends Basic {
 	*   Returns false when the table row is not found.
 	*
 	*/
-	
 	function selectByOrder($intOrderNum) {
 	
 		$returnVal = false;
@@ -321,7 +314,7 @@ class BasicSort extends Basic {
 	
 	}
 	
-	/*
+	/**
 	 * - findBeforeAfter Function -
 	*
 	*  Easy way to find the ordernum of the rank either before or after.  Finds the id of the rank before the selected rank,
@@ -330,8 +323,6 @@ class BasicSort extends Basic {
 	*  Returns an array with 2 items, [0] equals the rank id, [1] equals before, after or first (if no other ranks)
 	*
 	*/
-	
-	
 	function findBeforeAfter() {
 		$returnArr = "";
 		if($this->intTableKeyValue != "") {
@@ -366,11 +357,10 @@ class BasicSort extends Basic {
 	}
 	
 	
-	/*
+	/**
 	 * A way to set the value of the category key so an object doesn't have to be selected before the
 	 * certain methods/functions can work.
 	 */
-	
 	function setCategoryKeyValue($intCatKeyValue) {
 		if(is_numeric($intCatKeyValue)) {
 			$this->arrObjInfo[$this->strCategoryKey] = $intCatKeyValue;

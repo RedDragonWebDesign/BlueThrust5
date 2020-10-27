@@ -50,13 +50,12 @@ class Rank extends BasicOrder {
 	}
 	
 	
-	/*
+	/**
 	 * - countMembers Function -
 	 * 
 	 * 
 	 * Returns the number of members with the current selected rank
 	 */
-	
 	function countMembers() {
 		$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."members WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 		$num_rows = $result->num_rows;
@@ -65,7 +64,7 @@ class Rank extends BasicOrder {
 		return $num_rows;
 	}
 	
-	/*
+	/**
 	 * - getLocalImageURL Function -
 	 * 
 	 * Used to determine if the image attached to the selected rank is a local image or external image.
@@ -74,7 +73,6 @@ class Rank extends BasicOrder {
 	 * Returns the local image address when the image is on the server.
 	 * 
 	 */
-	
 	function getLocalImageURL() {
 		global $MAIN_ROOT;
 		$returnVal = false;
@@ -91,7 +89,7 @@ class Rank extends BasicOrder {
 		return $returnVal;
 	}
 	
-	/*
+	/**
 	 * - Refresh Image Size Method -
 	 * 
 	 * If imageheight and imagewidth are not set, this will find the actual size of the image and 
@@ -127,12 +125,11 @@ class Rank extends BasicOrder {
 
 	
 	
-	/*
+	/**
 	 * - delete Method -
 	 * 
 	 * Special delete method for rank to also delete privilege permissions associated with this rank from the rank_privileges table.
 	 */
-	
 	public function delete() {
 
 		$returnVal = false;

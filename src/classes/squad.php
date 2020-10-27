@@ -94,8 +94,7 @@ class Squad extends Basic {
 	
 	
 	
-	// Same as getMemberList but sorted in rank order.  Highest Rank to Lowest
-	
+	/** Same as getMemberList but sorted in rank order.  Highest Rank to Lowest */
 	public function getMemberListSorted() {
 		
 		$returnVal = array();
@@ -160,7 +159,7 @@ class Squad extends Basic {
 	
 	}
 	
-	/*
+	/**
 	 * - getRecruiterMembers Function -
 	 * 
 	 * Returns an array of squad member_id's (member table) who can accept/deny applications
@@ -243,14 +242,13 @@ class Squad extends Basic {
 	}
 
 	
-	/*
+	/**
 	 * 
 	 * - getSquadMemberID Function -
 	 * 
 	 * Returns the squadmember_id value for the given $memberID for the selected squad.
 	 * 
 	 */
-	
 	public function getSquadMemberID($memberID) {
 		
 		$returnVal = false;
@@ -269,13 +267,12 @@ class Squad extends Basic {
 		return $returnVal;
 	}
 	
-	
+	/**
+		1 - Public
+		2 - Private
+		3 - Shoutbox
+	*/
 	public function getNewsPostList($newsType) {
-		
-		// 1 - Public
-		// 2 - Private
-		// 3 - Shoutbox
-		
 		$returnArr = array();
 		if($this->intTableKeyValue != "" && is_numeric($newsType) && ($newsType >= 1 && $newsType <= 3)) {
 			

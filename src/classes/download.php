@@ -63,8 +63,7 @@ class Download extends Basic {
 		return $returnVal;
 	}
 
-	// Split File for Downloads
-	
+	/** Split File for Downloads */
 	public function splitFile() {
 		global $websiteInfo;		
 		

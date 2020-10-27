@@ -59,15 +59,13 @@ class BTUpload {
 	}
 		
 	
-	/*
+	/**
 	 * - Extension Check Function - 
 	 * 
 	 * Returns a boolean value of true or false on whether the chosen file, $arrFile, has the correct extension.
 	 * Will always return true if there are no extensions set.
 	 * 
 	 */
-	
-	
 	function checkExtensions() {
 		
 		$returnVal = false;
@@ -105,14 +103,13 @@ class BTUpload {
 	
 	
 	
-	/*
+	/**
 	 * - File Size Check Function -
 	 * 
 	 * Returns true if the uploaded file is equal to or under the file size limit
 	 * Returns false if the uploaded file is over the file size limit
 	 * 
 	 */
-	
 	function checkFileSize() {
 		$returnVal = false;
 		

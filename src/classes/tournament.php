@@ -455,9 +455,7 @@ class Tournament extends Basic {
 		
 	}
 	
-	/*
-	 * - getTeamPlayers -
-	 * 
+	/**
 	 * Returns an array memberIDs of players on the $teamID team
 	 */
 	public function getTeamPlayers($teamID, $returnPlayerID=false) {
@@ -570,15 +568,9 @@ class Tournament extends Basic {
 	
 	
 	
-	/*
-	 * 
-	 * - getNextMatchTeamSpot Function -
-	 * 
+	/**
 	 * Returns either "team1_id" or "team2_id".  Used to figure out which spot to display the winning team in the next match
-	 * 
-	 * 
 	 */
-	
 	public function getNextMatchTeamSpot($intTeamID, $intMatchID=0) {
 		
 		$returnVal = false;
@@ -658,9 +650,7 @@ class Tournament extends Basic {
 	}
 	
 	
-	/*
-	 * - getPlayerName Function -
-	 * 
+	/**
 	 * Returns the text value of a players name for tournaments with 1 player per team.  If there are > 1 player per team,
 	 * this will just return the actual team name.  It returns blank if there is no player for the selected tead and there is only
 	 * 1 player per team.
@@ -705,13 +695,9 @@ class Tournament extends Basic {
 	}
 	
 	
-	/*
-	 * - poolsComplete Function -
-	 * 
+	/**
 	 * Returns true when all pool matches for the tournament have a winner, false otherwise.
-	 * 
 	 */
-	
 	public function poolsComplete() {
 		
 		$returnVal = false;
@@ -735,12 +721,8 @@ class Tournament extends Basic {
 	
 	
 	/*
-	 * - getTeamPoolID Function -
-	 * 
 	 *  Returns the pool_id for a specified team
 	 */
-	
-	
 	public function getTeamPoolID($teamID) {
 		
 		$returnVal = false;
@@ -757,7 +739,7 @@ class Tournament extends Basic {
 	}
 	
 	
-	/*
+	/**
 	 * - checkForPools Function -
 	 * 
 	 * Checks whether the tournament had pools to set up the seeding.  Used because once the pool rounds are over,

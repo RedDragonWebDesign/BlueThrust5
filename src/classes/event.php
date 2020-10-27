@@ -116,7 +116,7 @@ class Event extends Basic {
 				
 	}
 	
-	/*
+	/**
 	 * - getEventMemberID -
 	 * 
 	 * Returns the eventmember_id based off of the member_id (intMemberID).  Will select this member if blnSelectMember is set to true.

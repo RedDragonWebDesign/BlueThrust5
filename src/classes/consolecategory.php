@@ -48,7 +48,7 @@ class ConsoleCategory extends BasicOrder {
 	}
 	
 	
-	/*
+	/**
 	 * - makeRoom Method -
 	*
 	* Method to re-sort rank order numbers just before adding a new rank.  You must first select a rank before using
@@ -64,7 +64,6 @@ class ConsoleCategory extends BasicOrder {
 	* Reason for Override: preventing the editing of admin categories was causing problems
 	*
 	*/
-	
 	function makeRoom($strBeforeAfter) {
 	
 		$intRankID = $this->intTableKeyValue;
@@ -131,7 +130,7 @@ class ConsoleCategory extends BasicOrder {
 	}
 	
 	
-	/*
+	/**
 	 * - resortOrder Method -
 	*
 	* Mainly used on the edit console category page and after makeRoom is used.
@@ -144,7 +143,6 @@ class ConsoleCategory extends BasicOrder {
 	* Reason for Override: preventing the editing of admin categories was causing problems
 	*
 	*/
-	
 	function resortOrder() {
 		$counter = 1; // ordernum counter
 		$x = 0; // array counter

@@ -75,7 +75,7 @@ class CustomForm extends Basic {
 	}
 	
 	
-	/*
+	/**
 	 * - addComponents Function -
 	 * 
 	 * A way to add/update multiple components at a time.  Insert the btFormComponent session array into $arrComponents.
@@ -84,7 +84,6 @@ class CustomForm extends Basic {
 	 * Returns true on success
 	 * 
 	 */
-	
 	function addComponents($arrComponents) {
 		
 		$returnVal = false;

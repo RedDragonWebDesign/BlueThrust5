@@ -30,7 +30,7 @@ class Basic {
 	}
 	
 
-	/*
+	/**
 	
 	-Selector Method-
 	
@@ -69,7 +69,7 @@ class Basic {
 	}
 	
 	
-/*
+	/**
 	 * Select by multiple arguments.
 	 * 
 	 * Format argument array as array[columnName] = value
@@ -117,7 +117,7 @@ class Basic {
 	}
 	
 	
-	/*
+	/**
 	 * Get multi rows, returns an array of get_info_filtered, 
 	 * 
 	 * Format filterArgs array as array[columnName] = value
@@ -196,7 +196,7 @@ class Basic {
 	}
 	
 	
-	/*
+	/**
 	
 	-Easy way to send an INSERT statement-
 	
@@ -258,7 +258,7 @@ class Basic {
 	}
 	
 	
-	/*
+	/**
 	
 	-Easy way to send an UPDATE query-
 	
@@ -323,14 +323,13 @@ class Basic {
 		return $returnVal;
 	}
 	
-	/*
+	/**
 	
 	-Delete Method-
 	
 	Will delete the selected row from the database.  You must first "select" a table row using the select method in order to delete.
 	
 	*/
-	
 	public function delete() {
 		$returnVal = false;
 		if($this->intTableKeyValue != "") {

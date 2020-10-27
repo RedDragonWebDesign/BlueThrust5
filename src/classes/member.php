@@ -112,8 +112,7 @@ class Member extends Basic {
 	}
 	
 	
-	/*
-	 * 
+	/**
 	 * - playsGame Function -
 	 * 
 	 * Checks to see if the selected member plays a particular game identified by the gamesplayed_id
@@ -138,12 +137,11 @@ class Member extends Basic {
 		return $returnVal;
 	}
 	
-	/*
+	/**
 	 *  - gamesPlayed Function -
 	 *  
 	 *  Returns an array of games played ids
 	 */
-	
 	function gamesPlayed() {
 		
 		$returnArr = array();
@@ -161,16 +159,12 @@ class Member extends Basic {
 	}
 	
 	
-	/*
-	 * 
+	/**
 	 * - getSquadList Function -
 	 * 
 	 * Returns an array of squad_id's for the selected member.  If the boolean value $founderOnly is set to true, then it only
 	 * groups squads where the member is the founder.
-	 * 
-	 * 
 	 */
-	
 	function getSquadList($founderOnly=false) {
 		$returnArr = array();
 		
@@ -196,7 +190,7 @@ class Member extends Basic {
 	
 	
 	
-	/*
+	/**
 	 *
 	* - getTournamentList Function -
 	*
@@ -205,7 +199,6 @@ class Member extends Basic {
 	*
 	*
 	*/
-	
 	function getTournamentList($creatorOnly=false) {
 		$returnArr = array();
 	
@@ -589,7 +582,7 @@ class Member extends Basic {
 	}
 	
 	
-	/*
+	/**
 	 * - getMedalList Function -
 	 * 
 	 * Returns an array of the selected member's medals.  
@@ -634,7 +627,7 @@ class Member extends Basic {
 		return $returnArr;
 	}
 	
-	/*
+	/**
 	 * - autoAwardMedals Method -
 	 * 
 	 * Awards the selected member a medal based on number of days in clan.
@@ -696,7 +689,7 @@ class Member extends Basic {
 	}
 	
 	
-	/*
+	/**
 	 * - autoPromote Method -
 	*
 	* Awards the selected member a medal based on number of days in clan.
@@ -760,7 +753,7 @@ class Member extends Basic {
 	}
 	
 	
-	/*
+	/**
 	 * - Log Action Method -
 	 * 
 	 * Adds a new log entry into the logs involving this member's id
@@ -788,13 +781,12 @@ class Member extends Basic {
 	}
 	
 	
-	/*
+	/**
 	 * - Select Admin Function -
 	 * 
 	 * Selects the admin account
 	 * 
 	 */
-	
 	function selectAdmin() {
 		
 		$returnVal= false;
@@ -843,7 +835,7 @@ class Member extends Basic {
 		
 	}
 	
-	/*
+	/**
 	 * - hasSeenTopic Function -
 	 * 
 	 * Returns true if the selected member has seen the forum topic.

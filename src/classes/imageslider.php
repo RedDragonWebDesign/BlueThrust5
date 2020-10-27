@@ -41,7 +41,7 @@ class ImageSlider extends BasicOrder {
 	}
 
 	
-	/*
+	/**
 	 * - getLocalImageURL Function -
 	 * 
 	 * Used to determine if the image attached to the selected rank is a local image or external image.
@@ -50,7 +50,6 @@ class ImageSlider extends BasicOrder {
 	 * Returns the local image address when the image is on the server.
 	 * 
 	 */
-	
 	function getLocalImageURL() {
 		global $MAIN_ROOT;
 		$returnVal = false;

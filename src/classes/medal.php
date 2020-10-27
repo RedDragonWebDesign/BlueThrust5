@@ -32,10 +32,9 @@ class Medal extends Rank {
 
 	
 	
-	/*
+	/**
 	 * Returns the number of members with the selected medal
 	 */
-	
 	function countMembers() {
 		
 		$num_rows = 0;
@@ -51,14 +50,11 @@ class Medal extends Rank {
 	
 	
 	
-	/*
-	
+	/**
 	-Delete Method-
 	
 	Will delete the selected medal from the database.  You must first "select" a table row using the select method in order to delete.
-	
 	*/
-	
 	public function delete() {
 		$returnVal = false;
 		if($this->intTableKeyValue != "") {

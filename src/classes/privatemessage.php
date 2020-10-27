@@ -94,31 +94,31 @@ class PrivateMessage extends BasicOrder {
 		
 	}
 	
-		// Gets folder based on Member ID
-		function getFolder($memberID, $multiPM=false) {
+	/** Gets folder based on Member ID */
+	function getFolder($memberID, $multiPM=false) {
+		
+		$returnVal = "";
+		
+		if($this->intTableKeyValue != "") {
 			
-			$returnVal = "";
+			$arrRecipients = $this->getRecipients();
 			
-			if($this->intTableKeyValue != "") {
-				
-				$arrRecipients = $this->getRecipients();
-				
-				if($this->arrObjInfo['sender_id'] == $memberID && !$multiPM) {
-					$returnVal = $this->arrObjInfo['senderfolder_id'];
-				}
-				elseif($this->arrObjInfo['receiver_id'] == $memberID && !$multiPM) {
-					$returnVal = $this->arrObjInfo['receiverfolder_id'];
-				}
-				elseif($this->arrObjInfo['receiver_id'] == 0 && in_array($memberID, $arrRecipients)) {
-					$tempKey = array_search($memberID, $arrRecipients);
-					$this->multiMemPMObj->select($tempKey);
-					
-					$returnVal = $this->multiMemPMObj->get_info("pmfolder_id");
-				}
-								
+			if($this->arrObjInfo['sender_id'] == $memberID && !$multiPM) {
+				$returnVal = $this->arrObjInfo['senderfolder_id'];
 			}
-			
-			return $returnVal;
+			elseif($this->arrObjInfo['receiver_id'] == $memberID && !$multiPM) {
+				$returnVal = $this->arrObjInfo['receiverfolder_id'];
+			}
+			elseif($this->arrObjInfo['receiver_id'] == 0 && in_array($memberID, $arrRecipients)) {
+				$tempKey = array_search($memberID, $arrRecipients);
+				$this->multiMemPMObj->select($tempKey);
+				
+				$returnVal = $this->multiMemPMObj->get_info("pmfolder_id");
+			}
+							
 		}
+		
+		return $returnVal;
+	}
 	
 }

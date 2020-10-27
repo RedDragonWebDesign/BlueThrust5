@@ -66,7 +66,7 @@
 		}
 		
 		
-		/*
+		/**
 		 * - makeCacheRoom -
 		 * 
 		 * 
@@ -78,7 +78,6 @@
 		 * Returns the value of the display order for a new/modified poll option 
 		 * 
 		 */
-	
 		public function makeCacheRoom($strBeforeAfter, $intSpot) {
 	
 			$tempArr = array();
@@ -111,13 +110,12 @@
 			return $returnVal;
 		}
 		
-		/*
+		/**
 		 * - resortCacheOrder -
 		 * 
 		 * Resorts the cache order
 		 * 
 		 */
-		
 		public function resortCacheOrder() {
 			ksort($_SESSION['btPollOptionCache'][$this->cacheID]);
 
@@ -130,7 +128,7 @@
 		}
 		
 		
-		/*
+		/**
 		 * 
 		 * - moveCache -
 		 * 
@@ -139,7 +137,6 @@
 		 * either up or down based on $strDirection
 		 * 
 		 */
-		
 		public function moveCache($strDirection, $intSpot) {
 			
 			$moveUp = $intSpot-1;

@@ -187,7 +187,7 @@ class ForumPost extends Basic {
 	}
 	
 	
-	// Gets all member_id's of posters in a topic
+	/** Gets all member_id's of posters in a topic */
 	private function getTopicPosters() {
 		
 		$arrReturn = array();

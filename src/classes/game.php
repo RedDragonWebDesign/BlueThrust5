@@ -61,13 +61,12 @@ class Game extends Rank {
 	}
 	
 	
-	/*
+	/**
 	 *  - getGameList Function -
 	 *  
 	 *  Returns an array of IDs of all gamesplayed ordered by ordernum
 	 * 
 	 */
-	
 	function getGameList() {
 		
 		$returnArr = array();
@@ -149,14 +148,12 @@ class Game extends Rank {
 	}
 	
 	
-	/*
-	
+	/**
 	-Delete Method-
 	
 	Will delete the selected game from the database along with all stats associated with the game.  You must first "select" a table row using the select method in order to delete.
 	
 	*/
-	
 	public function delete() {
 		$returnVal = false;
 		if($this->intTableKeyValue != "") {

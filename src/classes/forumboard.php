@@ -91,14 +91,13 @@ class ForumBoard extends BasicSort {
 		
 	}
 	
-	/*
+	/**
 	 * - secureBoard Method -
 	 * 
 	 * Used when adding or editing a board to the forum.  Adds the allowed ranks and members to the database.
 	 * 
 	 * Returns true on success and false on failure
 	 */
-	
 	public function secureBoard($arrRanks, $arrMembers) {
 		
 		$returnVal = false;
@@ -233,13 +232,12 @@ class ForumBoard extends BasicSort {
 	}
 	
 	
-	/*
+	/**
 	 * - memberIsMod Function -
 	 * 
 	 * Checks if a member is a mod of the selected board.
 	 * Returns true if yes, false if no
 	 */
-	
 	public function memberIsMod($memberID, $returnForumModeratorID=false) {
 
 		$returnVal = false;
@@ -260,12 +258,11 @@ class ForumBoard extends BasicSort {
 		
 	}
 	
-	/*
+	/**
 	 * - getForumTopics Function -
 	 * 
 	 * Returns an array of forum topics sorted by the last post's date
 	 */
-	
 	public function getForumTopics($sqlORDERBY = "", $sqlLIMIT = "") {
 		
 		$returnArr = array();
@@ -442,7 +439,7 @@ class ForumBoard extends BasicSort {
 	}
 	
 	
-	/*
+	/**
 	 * Returns all sub-forum IDs not just ones directly under the selected forum 
 	 */
 	public function getAllSubForums($arrIDs=array()) {
@@ -468,11 +465,9 @@ class ForumBoard extends BasicSort {
 	}
 	
 	
-	/*
+	/**
 	 * BasicSort Functions Re-written to filter by 2 categories
-	 * 
 	 */
-	
 	public function getHighestSortNum() {
 		
 		$returnVal = false;

@@ -111,7 +111,7 @@
 		}
 		
 		
-		// Used to select special folders (Inbox, Sent, Trash)
+		/** Used to select special folders (Inbox, Sent, Trash) */
 		function setFolder($folderID) {
 			if(is_numeric($folderID)) {
 				$this->intTableKeyValue = $folderID;

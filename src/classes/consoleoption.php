@@ -26,7 +26,7 @@ class ConsoleOption extends BasicSort {
 	}
 
 
-	/*
+	/**
 	-Console Access Checker-
 	
 	intRankID: Database ID for the rank that you want to check
@@ -34,9 +34,7 @@ class ConsoleOption extends BasicSort {
 	This will check if a certain ranking has the privilege to use the selected console option.  
 	You must first select a console option before using this method.
 	
-	
 	*/
-	
 	function hasAccess($intRankID) {
 		$returnVal = false;
 		if(is_numeric($intRankID) && is_numeric($this->intTableKeyValue)) {
@@ -106,7 +104,7 @@ class ConsoleOption extends BasicSort {
 		
 	}
 	
-	/*
+	/**
 	 * - countMembers -
 	 * 
 	 * Counts the amount of members that have access to the selected console option.
@@ -156,14 +154,13 @@ class ConsoleOption extends BasicSort {
 	}
 	
 	
-	/*
+	/**
 	
 	-Delete Method-
 	
 	Will delete the selected row from the database.  You must first "select" a table row using the select method in order to delete.
 	
 	*/
-	
 	public function delete() {
 		$returnVal = false;
 		if($this->intTableKeyValue != "") {
