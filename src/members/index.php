@@ -101,7 +101,7 @@ if($checkMember) {
 			$consoleCatObj->select($categoryID);
 			$consoleCatInfo = $consoleCatObj->get_info_filtered();
 			
-			$arrConsoleOptions = $arrFullySortedConsole[$key];
+			$arrConsoleOptions = $arrFullySortedConsole[$key] ?? [];
 			$categoryCSS = "consoleCategory_clicked";
 			if(count($arrConsoleOptions)) {
 				
