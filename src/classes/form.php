@@ -113,6 +113,8 @@
 		public function show() {
 			global $MAIN_ROOT, $hooksObj;
 			
+			$displayOptions = '';
+			
 			$hooksObj->run($this->formName);
 			
 			uasort($this->components, array("Form", "sortForm"));
@@ -264,7 +266,7 @@
 						$selectBoxObj->setAttributes($componentInfo['attributes']); 
 						$selectBoxObj->setOptions($componentInfo['options']);
 						$selectBoxObj->setComponentValue($componentInfo['value'] ?? '');
-						$selectBoxObj->setNonSelectableItems($componentInfo['non_selectable_items']);
+						$selectBoxObj->setNonSelectableItems($componentInfo['non_selectable_items'] ?? '');
 						$displayForm .= $selectBoxObj->getHTML();
 						
 						break;
@@ -363,17 +365,17 @@
 						$this->beforeAfter = true;
 						foreach($componentInfo['options'] as $optionValue => $displayValue) {
 							$dispSelected = "";	
-							if($optionValue == $componentInfo['before_after_value']) {
+							if($optionValue == ($componentInfo['before_after_value'] ?? '')) {
 								$dispSelected = " selected";
 							}
 							
-							if($optionValue != $componentInfo['value']) {
+							if($optionValue != ($componentInfo['value'] ?? '')) {
 								$displayOptions .= "<option value='".$optionValue."'".$dispSelected.">".$displayValue."</option>";
 							}
 							
 						}
 						
-						$afterSelected = ($componentInfo['after_selected'] == "after") ? " selected" : "";
+						$afterSelected = (($componentInfo['after_selected'] ?? '') == "after") ? " selected" : "";
 						
 						$displayForm .= "<div class='formInput'>
 											<select name='".$componentName."_beforeafter' ".$dispAttributes.">
@@ -392,8 +394,8 @@
 						break;
 					case "colorpick":
 						
-						$afterJS .= $this->colorpickerJS($componentInfo['attributes']['id'], $componentInfo['allowHTML']);
-						$displayForm .= "<input type='text' name='".$componentName."' value='".$componentInfo['value']."' ".$dispAttributes.">";
+						$afterJS .= $this->colorpickerJS($componentInfo['attributes']['id'], $componentInfo['allowHTML'] ?? '');
+						$displayForm .= "<input type='text' name='".$componentName."' value='".($componentInfo['value'] ?? '')."' ".$dispAttributes.">";
 						
 						break;
 					default:
@@ -633,11 +635,11 @@
 							
 							if($arrValidate['orderObject'] != "") {
 								
-								if($arrValidate['set_category'] != "") {
+								if(($arrValidate['set_category'] ?? '') != "") {
 									$arrValidate['orderObject']->setCategoryKeyValue($arrValidate['set_category']);
 								}
 								
-								$checkOrder = $arrValidate['orderObject']->validateOrder($_POST[$componentName], $_POST[$componentName."_beforeafter"], $arrValidate['edit'], $arrValidate['edit_ordernum']);	
+								$checkOrder = $arrValidate['orderObject']->validateOrder($_POST[$componentName], $_POST[$componentName."_beforeafter"], $arrValidate['edit'] ?? '', $arrValidate['edit_ordernum'] ?? '');	
 								if($checkOrder === false) {
 									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid ".$componentInfo['display_name'].".";							
 								}

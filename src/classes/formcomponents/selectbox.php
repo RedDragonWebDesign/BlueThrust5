@@ -38,7 +38,7 @@
 					$dispSelected = " selected";	
 				}
 				
-				if(in_array($optionValue, $this->nonSelectableItems)) {
+				if( is_array($this->nonSelectableItems) && in_array($optionValue, $this->nonSelectableItems)) {
 					$dispSelected = " disabled class='disabledSelectItem'";
 				}
 				

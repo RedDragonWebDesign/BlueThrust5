@@ -129,7 +129,7 @@ foreach($arrRecruits as $recruitID) {
 	
 }
 
-$dispRecruits = implode(", ", $arrDispRecruits);
+$dispRecruits = implode(", ", $arrDispRecruits ?? []);
 
 
 $dispLastLogin = "Never Logged In";

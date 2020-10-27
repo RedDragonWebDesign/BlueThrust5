@@ -11,6 +11,8 @@
  * License: http://www.bluethrust.com/license.php
  *
  */
+ 
+$x = '';
 
 // Config File
 $prevFolder = "";
@@ -37,7 +39,7 @@ if ( ! empty($_POST['submit']) ) {
 	$checkMember->select($login_username);
 	$memberInfo = $checkMember->get_info();
 	
-	if($memberInfo['username'] != "") {
+	if(($memberInfo['username'] ?? '') != "") {
 		
 		$checkLogin = $checkMember->authorizeLogin($login_password, 1);
 		
@@ -73,7 +75,7 @@ if ( ! empty($_POST['submit']) ) {
 }
 
 
-if(!$_POST['submit'] && !constant("LOGGED_IN")) {
+if( empty($_POST['submit']) && ! constant("LOGGED_IN")) {
 
 	if($x == "fail") {
 		$errorMessage = "You entered an incorrect username/password combination!";
