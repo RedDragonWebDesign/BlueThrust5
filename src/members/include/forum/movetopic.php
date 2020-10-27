@@ -54,7 +54,7 @@ foreach($boardIDs as $id) {
 	if($forumCatObj->get_info_filtered("name") != $catName) {
 		$catName = $forumCatObj->get_info_filtered("name");
 		$catKey = "category_".$forumCatID;
-		$forumBoardOptions[$catKey] = "<b>".$catName."</b>";
+		$forumBoardOptions[$catKey] = $catName;
 		$nonSelectableItems[] = $catKey;
 	}
 	
