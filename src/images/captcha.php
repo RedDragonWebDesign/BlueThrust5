@@ -9,7 +9,19 @@ $appComponentObj = new BasicOrder($mysqli, "app_components", "appcomponent_id");
 $appComponentObj->set_assocTableName("app_selectvalues");
 $appComponentObj->set_assocTableKey("appselectvalue_id");
 
-if(($_GET['appCompID'] != -1 && !$appComponentObj->select($_GET['appCompID'])) || ($_GET['appCompID'] != -1 && ($appComponentObj->get_info("componenttype") != "captcha" && $appComponentObj->get_info("componenttype") != "captchaextra"))) {
+if(
+	(
+		$_GET['appCompID'] != -1 &&
+		! $appComponentObj->select($_GET['appCompID'])
+	) ||
+	(
+		$_GET['appCompID'] != -1 &&
+		(
+			$appComponentObj->get_info("componenttype") != "captcha" &&
+			$appComponentObj->get_info("componenttype") != "captchaextra"
+		)
+	)
+) {
 	exit();	
 }
 
@@ -60,8 +72,8 @@ else {
 	$distortFont = "captcha-fonts/RFX_Splatz.ttf";
 	$arrDistort = range("a", "i");
 	$counter = 0;
-	foreach($arrCaptcha as $value) {
 	
+	foreach($arrCaptcha as $value) {
 		// Font Locations
 		$arrFonts = array();
 		$arrFonts[0] = "captcha-fonts/AnonymousClippings.ttf";
@@ -69,6 +81,12 @@ else {
 		$arrFonts[2] = "captcha-fonts/Staubiges_Verg.ttf";
 		$arrFonts[3] = "captcha-fonts/Woodcutter_Anonymous.ttf";
 		
+		/*
+		$arrFonts[0] = $BASE_DIRECTORY."images/captcha-fonts/AnonymousClippings.ttf";
+		$arrFonts[1] = $BASE_DIRECTORY."images/captcha-fonts/Pulse_virgin.ttf";
+		$arrFonts[2] = $BASE_DIRECTORY."images/captcha-fonts/Staubiges_Verg.ttf";
+		$arrFonts[3] = $BASE_DIRECTORY."images/captcha-fonts/Woodcutter_Anonymous.ttf";
+		*/
 		
 		$char = $value;
 	
@@ -105,6 +123,8 @@ else {
 		
 		$randNum2 = rand(0,8);
 		
+		
+		
 		if($appComponentObj->get_info("componenttype") == "captchaextra") {
 			$xCoord = ($counter == 0) ? 10 : (55*$counter);
 			imagettftext($im, 70, rand(0,20), $xCoord, 80, $blackAlpha, $distortFont, $arrDistort[$randNum2]);
@@ -117,8 +137,12 @@ else {
 		$finalCaptchaText .= $char;
 	}
 	
-	$captchaObj->addNew(array("appcomponent_id", "ipaddress", "captchatext"), array($appCompInfo['appcomponent_id'], $IP_ADDRESS, strtolower($finalCaptchaText)));
+	$captchaObj->addNew(
+		array("appcomponent_id", "ipaddress", "captchatext"),
+		array($appCompInfo['appcomponent_id'],
+		$IP_ADDRESS,
+		strtolower($finalCaptchaText))
+	);
 	imagepng($im);
 	imagedestroy($im);
-
 }

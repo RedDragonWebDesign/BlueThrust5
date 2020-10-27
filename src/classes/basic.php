@@ -363,6 +363,7 @@ class Basic {
 	
 	// Getter and Setter Methods
 	
+	/** Use the get_info method to get the values for the table row with the selected id number. */
 	public function get_info($returnSingleValue = "") {
 		$returnVal = "";
 		if($returnSingleValue == "") {
