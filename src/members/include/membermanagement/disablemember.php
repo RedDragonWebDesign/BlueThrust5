@@ -68,7 +68,7 @@ while($row = $result->fetch_assoc()) {
 }
 
 
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 	
 	// Check Member
 
@@ -126,7 +126,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 	
 	$sqlRanks = "('".implode("','", $arrRanks)."')";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."'  ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");

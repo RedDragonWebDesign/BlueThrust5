@@ -46,7 +46,7 @@ $_SESSION['btAccessCacheTypes'][$accessObj->cacheID] = json_encode($accessObj->a
 
 $arrPostSelected = array();
 
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 	
 	// Check Question
 	if(trim($_POST['pollquestion']) == "") {
@@ -170,7 +170,7 @@ if($_POST['submit']) {
 
 
 $addMenuItemCID = $consoleObj->findConsoleIDByName("Add Menu Item");
-if(!$_POST['submit']) {	
+if ( empty($_POST['submit']) ) {	
 	
 	echo "
 	

@@ -32,7 +32,7 @@ require_once($prevFolder."classes/profileoption.php");
 $profileCatObj = new ProfileCategory($mysqli);
 $profileOptionObj = new ProfileOption($mysqli);
 
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 
 	// Check Option Name
 	
@@ -145,7 +145,7 @@ if($_POST['submit']) {
 
 }
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 	$_SESSION['btProfileCache'] = array();
 	$catoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");

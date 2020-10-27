@@ -27,7 +27,7 @@ $breadcrumbObj->setTitle("Log In");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Log In");
 
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 	$login_username = $_POST['user'];
 	$login_password = $_POST['pass'];
 	$x = "fail";

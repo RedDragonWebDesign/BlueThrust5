@@ -85,7 +85,7 @@ else {
 	$squadMemberList = $squadObj->getMemberList();
 	$intFounderRankID = $squadObj->getFounderRankID();
 	
-	if($_POST['submit']) {
+	if ( ! empty($_POST['submit']) ) {
 		
 		$squadInvitesOutstanding = $squadObj->getOutstandingInvites();
 		
@@ -178,7 +178,7 @@ else {
 	}
 	
 	
-	if(!$_POST['submit']) {
+	if ( empty($_POST['submit']) ) {
 	
 		$sqlMemberList = "('".implode("','", $squadMemberList)."')";
 		

@@ -50,7 +50,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		
 		
 		
-		if($_POST['submit']) {
+		if ( ! empty($_POST['submit']) ) {
 		
 			
 			// Check News Type

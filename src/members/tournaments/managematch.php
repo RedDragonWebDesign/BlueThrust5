@@ -70,7 +70,7 @@ $countErrors = 0;
 
 $matchInfo = $tournamentObj->objMatch->get_info();
 
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 	
 	
 	// Check Player 2
@@ -205,7 +205,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 	
 	if($tournamentInfo['playersperteam'] == 1) {
 		$strPlayerTeam = "Player";

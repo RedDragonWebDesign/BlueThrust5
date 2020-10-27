@@ -67,7 +67,7 @@ $statusSelectBox->setOptions(array("Unconfirmed", "Attended", "Excused Absence",
 		</tr>
 	<?php 
 		
-		if($_POST['submit']) {
+		if ( ! empty($_POST['submit']) ) {
 			
 			$arrColumns = array("attendconfirm_admin");
 			$arrValues = array($_POST['status']);

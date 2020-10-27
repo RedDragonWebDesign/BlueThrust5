@@ -32,7 +32,7 @@ $countErrors = 0;
 
 $rankObj = new Rank($mysqli);
 $memberObj = new Member($mysqli);
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 	
 	
 	// Check Member
@@ -103,7 +103,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 	
 	$result = $mysqli->query("SELECT ".$dbprefix."members.* FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."ranks.rank_id = ".$dbprefix."members.rank_id AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id != '1' ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
 	while($row = $result->fetch_assoc()) {

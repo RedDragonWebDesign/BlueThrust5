@@ -139,7 +139,7 @@ elseif($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $s
 	
 	
 	
-	if($_POST['submit']) {
+	if ( ! empty($_POST['submit']) ) {
 		
 		// Check Rank Name
 		
@@ -232,7 +232,7 @@ elseif($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $s
 	}
 	
 	
-	if(!$_POST['submit']) {
+	if ( empty($_POST['submit']) ) {
 		
 		$countRanks = 0;
 		$rankoptions = "";

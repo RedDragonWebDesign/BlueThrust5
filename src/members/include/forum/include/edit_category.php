@@ -39,7 +39,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 ";
 
 
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 	
 	// Check Name
 	if(trim($_POST['catname']) == "") {
@@ -97,7 +97,7 @@ if($_POST['submit']) {
 
 
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 	
 	$arrDisplayOrder = $categoryObj->findBeforeAfter();
 	$dispSelected = "";

@@ -110,7 +110,7 @@ if($_POST['submit']){
 }
 
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 	
 	echo "
 		<form action='managesquad.php?sID=".$_GET['sID']."&pID=PostNews' method='post'>

@@ -8,7 +8,7 @@
 	$formObj->buildForm($setupFormArgs);
 	
 	
-	if($_POST['submit']) {
+	if ( ! empty($_POST['submit']) ) {
 		
 		if($formObj->save()) {
 			
@@ -31,6 +31,6 @@
 	}
 	
 	
-	if(!$_POST['submit']) {
+	if ( empty($_POST['submit']) ) {
 		$formObj->show();	
 	}

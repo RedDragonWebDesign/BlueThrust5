@@ -61,7 +61,7 @@ while($row = $result->fetch_assoc()) {
 }
 
 
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 	
 	// Check Member
 	
@@ -130,7 +130,7 @@ if($_POST['submit']) {
 
 
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 	
 	$rankObj->select($rankInfo['promotepower']);
 	$maxRankInfo = $rankObj->get_info_filtered();

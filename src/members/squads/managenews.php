@@ -185,7 +185,7 @@ elseif($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
 	
 	
 	
-	if($_POST['submit']) {
+	if ( ! empty($_POST['submit']) ) {
 		
 		// Check News Type
 		//	1 - Public
@@ -248,7 +248,7 @@ elseif($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
 	}
 	
 	
-	if(!$_POST['submit']) {
+	if ( empty($_POST['submit']) ) {
 		
 		$squadNewsInfo = $squadNewsObj->get_info_filtered();
 		

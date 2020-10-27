@@ -28,7 +28,7 @@
 		</script>
 	";
 	
-	if($_POST['submit']) {
+	if ( ! empty($_POST['submit']) ) {
 		
 		// Check Question
 		if(trim($_POST['pollquestion']) == "") {
@@ -132,7 +132,7 @@
 	
 	
 	
-	if(!$_POST['submit']) {
+	if ( empty($_POST['submit']) ) {
 		
 		$arrPostSelected['accesstype']['limited'] = ($pollInfo['accesstype'] == "memberslimited") ? " selected" : "";
 		$arrPostSelected['accesstype']['public'] = ($pollInfo['accesstype'] == "public") ? " selected" : "";

@@ -48,7 +48,7 @@ echo "
 
 
 
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 	
 	// Check Game Name
 	$checkGameName = trim($_POST['gamename']);
@@ -249,7 +249,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 
 
 	$localImageURL = $gameObj->getLocalImageURL();

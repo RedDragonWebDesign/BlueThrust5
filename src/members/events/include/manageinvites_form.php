@@ -132,7 +132,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 		$formObj->buildForm($setupFormArgs);
 		
 		
-		if($_POST['submit']) {
+		if ( ! empty($_POST['submit']) ) {
 			require_once(BASE_DIRECTORY."members/events/include/manageinvites_submit.php");
 		}
 		

@@ -45,7 +45,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 	
 	$pollObj->cacheID = $_POST['cacheID'];
 	
-	if($_POST['submit']) {
+	if ( ! empty($_POST['submit']) ) {
 		
 		$arrOptionInfo = array();
 		$arrErrors = array();
@@ -101,7 +101,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 	}
 	
 	
-	if(!$_POST['submit']) {
+	if ( empty($_POST['submit']) ) {
 		echo "	
 		
 			<script type='text/javascript'>

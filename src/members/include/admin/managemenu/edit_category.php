@@ -43,7 +43,7 @@ echo "
 ";
 
 $arrCheckType = array("image", "customcode", "customformat");
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 	
 	// Check Name
 	if(trim($_POST['categoryname']) == "") {
@@ -156,7 +156,7 @@ if($_POST['submit']) {
 	
 }
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 	
 	for($i=0; $i<$menuXML->info->section->count(); $i++) {
 		$dispSelected = "";

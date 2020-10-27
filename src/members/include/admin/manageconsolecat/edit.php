@@ -44,7 +44,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 </script>
 ";
 
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 	
 	$resortOrder = false;
 	// Check Category Name
@@ -152,7 +152,7 @@ if($_POST['submit']) {
 
 
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 
 	$countCategories = 0;
 	

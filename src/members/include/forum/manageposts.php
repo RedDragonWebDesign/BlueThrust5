@@ -178,7 +178,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && $_GET[
 	
 	
 	
-	if($_POST['submit']) {
+	if ( ! empty($_POST['submit']) ) {
 		
 		$_POST['wysiwygHTML'] = str_replace("<?", "&lt;?", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("?>", "?&gt;", $_POST['wysiwygHTML']);
@@ -238,7 +238,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && $_GET[
 		
 	}
 	
-	if(!$_POST['submit']) {
+	if ( empty($_POST['submit']) ) {
 		
 		if($topicPostInfo['forumpost_id'] == $postInfo['forumpost_id']) {
 			$dispEditTitle = "<input type='text' id='postSubject' name='topicname' value='".$topicPostInfo['title']."' class='textBox' style='width: 250px'>";

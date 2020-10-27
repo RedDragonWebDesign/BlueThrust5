@@ -37,7 +37,7 @@ while($row = $result->fetch_assoc()) {
 
 $diplomacyRequestObj = new Basic($mysqli, "diplomacy_request", "diplomacyrequest_id");
 
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 	$diplomacyStatusObj = new Basic($mysqli, "diplomacy_status", "diplomacystatus_id");
 	// Check for clan name
 	
@@ -133,7 +133,7 @@ Thanks,\n
 }
 
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 	
 	
 	

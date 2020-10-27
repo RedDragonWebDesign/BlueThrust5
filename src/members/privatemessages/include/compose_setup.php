@@ -3,7 +3,7 @@
 if(!defined("MAIN_ROOT")) { exit(); }
 
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 	$pmSessionID = uniqid();
 		
 	$composeListJS = "";

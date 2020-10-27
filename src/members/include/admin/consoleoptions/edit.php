@@ -51,7 +51,7 @@ echo "
 
 
 
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 	
 	
 	$countErrors = 0;
@@ -274,7 +274,7 @@ if($_POST['submit']) {
 
 
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 	$_SESSION['btAccessRules'] = array();
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."console_members WHERE console_id = '".$consoleInfo['console_id']."'");
 	while($row = $result->fetch_assoc()) {

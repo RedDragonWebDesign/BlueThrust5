@@ -74,7 +74,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$fbObj = new Facebook($mysqli);
 	$pluginObj->selectByName("Facebook Login");
 	
-	if($_POST['submit']) {
+	if ( ! empty($_POST['submit']) ) {
 		
 		$arrAPIKey = array(
 			'appID' => $_POST['appid'],
@@ -109,7 +109,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	
 	
 	
-	if(!$_POST['submit']) {
+	if ( empty($_POST['submit']) ) {
 		$dispNote = "";
 			
 		$arrFacebookAPIKeys = array("App ID"=>$fbObj->getAppID(), "App Secret"=>$fbObj->getAppSecret());

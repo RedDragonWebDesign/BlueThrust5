@@ -36,7 +36,7 @@ $countErrors = 0;
 
 
 $arrTimezones = DateTimeZone::listIdentifiers();
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 	
 	// Check Title
 	if(trim($_POST['eventtitle']) == "") {
@@ -163,7 +163,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 	
 	$houroptions = "<option value='0'>12</option>";
 	for($i=1;$i<=11;$i++) {

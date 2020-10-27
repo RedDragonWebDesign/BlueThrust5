@@ -34,7 +34,7 @@ $consoleCatObj = new ConsoleCategory($mysqli);
 $failbanObj = new Basic($mysqli, "failban", "failban_id");
 $intMaxAttempts = 3;
 
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 
 	$countErrors = 0;
 	
@@ -235,7 +235,7 @@ if($_POST['submit']) {
 
 }
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 	$_SESSION['btAccessRules'] = array();
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory WHERE adminoption != '1' ORDER BY ordernum DESC");
 	while($row = $result->fetch_assoc()) {

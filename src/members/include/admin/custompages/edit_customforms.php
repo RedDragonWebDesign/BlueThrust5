@@ -52,7 +52,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 $countErrors = 0;
 $dispError = "";
-if($_POST['submit']) {
+if ( ! empty($_POST['submit']) ) {
 	
 	
 	if(trim($_POST['pagename']) == "") {
@@ -124,7 +124,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if ( empty($_POST['submit']) ) {
 	
 	echo "
 	<form action='console.php?cID=".$cID."&cfID=".$customFormInfo['customform_id']."&action=edit' method='post'>
