@@ -14,12 +14,12 @@
 
 // Config File
 $prevFolder = "../../";
-include($prevFolder."_setup.php");
+require_once($prevFolder."_setup.php");
 
 // Classes needed for login.php
 
-include("youtube.php");
-include_once($prevFolder."classes/member.php");
+require_once("youtube.php");
+require_once($prevFolder."classes/member.php");
 
 
 if(trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
@@ -36,7 +36,7 @@ $countErrors = 0;
 
 // Start Page
 $dispBreadCrumb = "<a href='".$MAIN_ROOT."'>Home</a> > Log In";
-include($prevFolder."themes/".$THEME."/_header.php");
+require_once($prevFolder."themes/".$THEME."/_header.php");
 
 if(constant("LOGGED_IN")) {
 	
@@ -161,4 +161,4 @@ echo "
 	</div>
 ";
 
-include("themes/".$THEME."/_footer.php");
+require_once("themes/".$THEME."/_footer.php");

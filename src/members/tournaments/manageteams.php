@@ -176,7 +176,7 @@ echo "
 	<div id='manageTournamentTeamsUnassignedPlayers'>
 	";
 	define("SHOW_UNASSIGNEDPLAYERS", true);
-	include("include/unassignedplayers.php");
+	require_once("include/unassignedplayers.php");
 	echo "
 	</div>
 	

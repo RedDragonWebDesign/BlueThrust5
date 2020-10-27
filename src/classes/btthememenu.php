@@ -87,7 +87,7 @@
 			
 			if(file_exists(BASE_DIRECTORY."themes/".$this->dir."/menus/forumactivity.php")) {
 				if(!defined("FORUMACTIVITY_MENUITEM")) { define("FORUMACTIVITY_MENUITEM", true); }
-				include(BASE_DIRECTORY."themes/".$this->dir."/menus/forumactivity.php");
+				require_once(BASE_DIRECTORY."themes/".$this->dir."/menus/forumactivity.php");
 			}
 			else {
 				
@@ -162,7 +162,7 @@
 			
 			if(file_exists(BASE_DIRECTORY."themes/".$this->dir."/menus/newmembers.php")) {
 				if(!defined("NEWMEMBERS_MENUITEM")) { define("NEWMEMBERS_MENUITEM", true); }
-				include(BASE_DIRECTORY."themes/".$this->dir."/menus/newmembers.php");
+				require_once(BASE_DIRECTORY."themes/".$this->dir."/menus/newmembers.php");
 			}
 			else {
 				echo "

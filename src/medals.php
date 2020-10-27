@@ -16,9 +16,9 @@
 // Config File
 $prevFolder = "";
 
-include($prevFolder."_setup.php");
-include($prevFolder."classes/member.php");
-include_once($prevFolder."classes/medal.php");
+require_once($prevFolder."_setup.php");
+require_once($prevFolder."classes/member.php");
+require_once($prevFolder."classes/medal.php");
 
 
 
@@ -42,7 +42,7 @@ if($ipbanObj->select($IP_ADDRESS, false)) {
 
 // Start Page
 $PAGE_NAME = "Medals - ";
-include($prevFolder."themes/".$THEME."/_header.php");
+require_once($prevFolder."themes/".$THEME."/_header.php");
 
 $member = new Member($mysqli);
 $medalObj = new Medal($mysqli);
@@ -50,7 +50,7 @@ $medalObj = new Medal($mysqli);
 $breadcrumbObj->setTitle("Medals");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Medals");
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 ?>
 
 
@@ -88,4 +88,4 @@ while($row = $result->fetch_assoc()) {
 
 echo "</table>";
 
-include($prevFolder."themes/".$THEME."/_footer.php");
+require_once($prevFolder."themes/".$THEME."/_footer.php");

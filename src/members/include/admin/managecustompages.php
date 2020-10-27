@@ -43,7 +43,7 @@ if($_GET['cpID'] == "") {
 	<div id='contentDiv'>
 	
 	";
-	include("custompages/main.php");
+	require_once("custompages/main.php");
 	
 	echo "
 	</div>
@@ -98,5 +98,5 @@ if($_GET['cpID'] == "") {
 	
 }
 elseif($_GET['cpID'] != "" AND $_GET['action'] == "edit") {
-	include("custompages/edit.php");	
+	require_once("custompages/edit.php");	
 }

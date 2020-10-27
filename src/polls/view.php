@@ -17,10 +17,10 @@
 // Config File
 $prevFolder = "../";
 
-include($prevFolder."_setup.php");
+require_once($prevFolder."_setup.php");
 
-include_once($prevFolder."classes/member.php");
-include_once($prevFolder."classes/poll.php");
+require_once($prevFolder."classes/member.php");
+require_once($prevFolder."classes/poll.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $pollObj = new Poll($mysqli);
@@ -103,7 +103,7 @@ if($blnShowResults) {
 // Start Page
 $PAGE_NAME = "Poll - ";
 $dispBreadCrumb = "";
-include($prevFolder."themes/".$THEME."/_header.php");
+require_once($prevFolder."themes/".$THEME."/_header.php");
 
 
 $memberInfo = array();
@@ -121,7 +121,7 @@ if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION
 $breadcrumbObj->setTitle("Poll Results");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Poll Results");
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 
 $member->select($pollInfo['member_id']);
 $dispPollCreator = $member->getMemberLink();
@@ -331,4 +331,4 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 		
 	}
 	
-include($prevFolder."themes/".$THEME."/_footer.php");
+require_once($prevFolder."themes/".$THEME."/_footer.php");

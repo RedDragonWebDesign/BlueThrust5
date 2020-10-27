@@ -13,10 +13,10 @@
  */
 
 
-include_once("basic.php");
-include_once("basicorder.php");
-include_once("news.php");
-include_once("member.php");
+require_once("basic.php");
+require_once("basicorder.php");
+require_once("news.php");
+require_once("member.php");
 
 class Event extends Basic {
 	

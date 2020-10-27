@@ -14,7 +14,7 @@
 
 
 
-include($prevFolder."include/lib_autolink/lib_autolink.php");
+require_once($prevFolder."include/lib_autolink/lib_autolink.php");
 
 
 // General functions to filter out all <, >, ", and ' symbols
@@ -291,13 +291,13 @@ function debug_string_backtrace() {
 
 function BTCS4Loader($class_name) {
 	if(file_exists(BASE_DIRECTORY."classes/".strtolower($class_name).".php")) {
-		include_once(BASE_DIRECTORY."classes/".strtolower($class_name).".php");
+		require_once(BASE_DIRECTORY."classes/".strtolower($class_name).".php");
 	}
-	elseif(file_exists(include_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php"))) {
-		include_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php");
+	elseif(file_exists(require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php"))) {
+		require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php");
 	}
 }
 
 spl_autoload_register("BTCS4Loader", true, true);
 
-include_once(BASE_DIRECTORY."include/phpmailer/PHPMailerAutoload.php");
+require_once(BASE_DIRECTORY."include/phpmailer/PHPMailerAutoload.php");

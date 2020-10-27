@@ -16,8 +16,8 @@
 // Config File
 $prevFolder = "../";
 
-include($prevFolder."_setup.php");
-include($prevFolder."classes/member.php");
+require_once($prevFolder."_setup.php");
+require_once($prevFolder."classes/member.php");
 
 if(!isset($_GET['code'])) {
 
@@ -49,7 +49,7 @@ $filterCode = $mysqli->real_escape_string($_GET['code']);
 // Start Page
 $PAGE_NAME = "Diplomacy Request";
 $dispBreadCrumb = "";
-include($prevFolder."themes/".$THEME."/_header.php");
+require_once($prevFolder."themes/".$THEME."/_header.php");
 
 $confirmMessage = "E-mail Code Not Found!";
 $result = $mysqli->query("SELECT diplomacyrequest_id FROM ".$dbprefix."diplomacy_request WHERE confirmemail = '".$filterCode."'");
@@ -84,4 +84,4 @@ echo "
 ";
 
 
-include($prevFolder."themes/".$THEME."/_footer.php");
+require_once($prevFolder."themes/".$THEME."/_footer.php");

@@ -24,8 +24,8 @@ else {
 	}
 }
 
-include_once($prevFolder."classes/btupload.php");
-include_once($prevFolder."classes/squad.php");
+require_once($prevFolder."classes/btupload.php");
+require_once($prevFolder."classes/squad.php");
 $cID = $_GET['cID'];
 $dispError = "";
 $countErrors = 0;

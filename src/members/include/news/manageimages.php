@@ -25,14 +25,14 @@ else {
 	}
 }
 
-include_once($prevFolder."classes/imageslider.php");
+require_once($prevFolder."classes/imageslider.php");
 
 $cID = $_GET['cID'];
 $imageSliderObj = new ImageSlider($mysqli);
 
 if($_GET['action'] == "edit" && $imageSliderObj->select($_GET['imgID'])) {
 	
-	include("include/news/include/editimage.php");
+	require_once("include/news/include/editimage.php");
 	
 }
 else {

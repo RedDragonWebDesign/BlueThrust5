@@ -11,10 +11,10 @@
  *
  */
 
-include("../../../../_setup.php");
-include_once("../../../../classes/member.php");
-include_once("../../../../classes/rank.php");
-include_once("../../../../classes/pmfolder.php");
+require_once("../../../../_setup.php");
+require_once("../../../../classes/member.php");
+require_once("../../../../classes/rank.php");
+require_once("../../../../classes/pmfolder.php");
 
 $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
@@ -69,7 +69,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				
 		
 		define("SHOW_FOLDERLIST", true);
-		include("folderlist.php");
+		require_once("folderlist.php");
 		
 
 	}

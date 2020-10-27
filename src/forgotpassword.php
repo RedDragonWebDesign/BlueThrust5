@@ -15,8 +15,8 @@
  // Config File
 $prevFolder = "";
 
-include($prevFolder."_setup.php");
-include_once("classes/member.php");
+require_once($prevFolder."_setup.php");
+require_once("classes/member.php");
 $siteDomain = $_SERVER['SERVER_NAME'];
 $dispError = "";
 $countErrors = 0;
@@ -44,7 +44,7 @@ if($ipbanObj->select($IP_ADDRESS, false)) {
 // Start Page
 $PAGE_NAME = 'Forgot Password'." - ";
 $dispBreadCrumb = "";
-include($prevFolder."themes/".$THEME."/_header.php");
+require_once($prevFolder."themes/".$THEME."/_header.php");
 
 if(LOGGED_IN) {
 $countErrors++;
@@ -75,7 +75,7 @@ $memberObj = new Member($mysqli);
 $breadcrumbObj->setTitle("Forgot Password");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Forgot Password");
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 ?>
 
 <?php
@@ -294,4 +294,4 @@ if($dispError != "") {
 	}
 ?>
 
-<?php include($prevFolder."themes/".$THEME."/_footer.php");
+<?php require_once($prevFolder."themes/".$THEME."/_footer.php");

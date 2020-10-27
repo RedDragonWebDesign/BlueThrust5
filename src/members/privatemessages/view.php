@@ -12,7 +12,7 @@
  *
  */
 
-include_once("../../_setup.php");
+require_once("../../_setup.php");
 
 
 
@@ -37,7 +37,7 @@ $EXTERNAL_JAVASCRIPT .= "
 <script type='text/javascript' src='".$MAIN_ROOT."members/js/main.js'></script>
 ";
 
-include(BASE_DIRECTORY."themes/".$THEME."/_header.php");
+require_once(BASE_DIRECTORY."themes/".$THEME."/_header.php");
 
 
 $breadcrumbObj->setTitle("View Message");
@@ -45,7 +45,7 @@ $breadcrumbObj->addCrumb("Home", MAIN_ROOT);
 $breadcrumbObj->addCrumb("My Account", MAIN_ROOT."members");
 $breadcrumbObj->addCrumb($consoleTitle, MAIN_ROOT."members/console.php?cID=".$cID);
 $breadcrumbObj->addCrumb("View Message");
-include(BASE_DIRECTORY."include/breadcrumb.php");
+require_once(BASE_DIRECTORY."include/breadcrumb.php");
 
 
 $pmObj = new PrivateMessage($mysqli);
@@ -378,4 +378,4 @@ else {
 
 
 
-include("../../themes/".$THEME."/_footer.php");
+require_once("../../themes/".$THEME."/_footer.php");

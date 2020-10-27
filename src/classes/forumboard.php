@@ -15,10 +15,10 @@
 
 
 
-include_once("basicsort.php");
-include_once("basicorder.php");
+require_once("basicsort.php");
+require_once("basicorder.php");
 
-include_once("forumpost.php");
+require_once("forumpost.php");
 
 class ForumBoard extends BasicSort {
 	
@@ -682,7 +682,7 @@ class ForumBoard extends BasicSort {
 		}
 		
 		define("SHOW_FORUMSEARCH", true);
-		include("templates/searchform.php");
+		require_once("templates/searchform.php");
 		
 	}
 	

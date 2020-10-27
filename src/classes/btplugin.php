@@ -13,8 +13,8 @@
  */
 
 
-	include_once("basic.php");
-	include_once("basicsort.php");
+	require_once("basic.php");
+	require_once("basicsort.php");
 
 	class btPlugin extends Basic {
 		

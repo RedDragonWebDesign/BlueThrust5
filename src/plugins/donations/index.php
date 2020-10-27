@@ -16,9 +16,9 @@
 // Config File
 $prevFolder = "../../";
 
-include_once($prevFolder."_setup.php");
-include_once("classes/campaign.php");
-include("breadcrumb_functions.php");
+require_once($prevFolder."_setup.php");
+require_once("classes/campaign.php");
+require_once("breadcrumb_functions.php");
 
 switch($_GET['p']) {
 	case "history":
@@ -63,15 +63,15 @@ $campaignInfo = $campaignObj->get_info_filtered();
 
 // Start Page
 $PAGE_NAME = $campaignInfo['title']." - ";
-include($prevFolder."themes/".$THEME."/_header.php");
+require_once($prevFolder."themes/".$THEME."/_header.php");
 
 $member = new Member($mysqli);
 
 $breadcrumbObj->setTitle($campaignInfo['title']);
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Donation Campaign: ".$campaignInfo['title']);
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 
 $webInfoObj->displayPage();
 
-include($prevFolder."themes/".$THEME."/_footer.php");
+require_once($prevFolder."themes/".$THEME."/_footer.php");

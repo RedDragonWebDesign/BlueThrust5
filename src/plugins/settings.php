@@ -12,7 +12,7 @@
  */
 
 $prevFolder = "../";
-include("../_setup.php");
+require_once("../_setup.php");
 $pluginObj = new btPlugin($mysqli);
 
 if(!isset($_GET['plugin']) || !$pluginObj->selectByName($_GET['plugin'])) { echo "<script type='text/javascript'>window.location = '".$MAIN_ROOT."';"; exit(); }
@@ -41,11 +41,11 @@ $EXTERNAL_JAVASCRIPT .= "
 ";
 
 $formObj = new Form();
-require(BASE_DIRECTORY."plugins/".$pluginInfo['filepath']."/settings_form.php");	
+require_once(BASE_DIRECTORY."plugins/".$pluginInfo['filepath']."/settings_form.php");	
 $hooksObj->run("pluginsettings-".$pluginInfo['filepath']);	
 
 
-include(BASE_DIRECTORY."themes/".$THEME."/_header.php");
+require_once(BASE_DIRECTORY."themes/".$THEME."/_header.php");
 
 $breadcrumbObj->setTitle($pluginInfo['name']." Plugin Settings");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
@@ -53,7 +53,7 @@ $breadcrumbObj->addCrumb("My Account", $MAIN_ROOT."members");
 $breadcrumbObj->addCrumb($consoleTitle, $MAIN_ROOT."members/console.php?cID=".$cID);
 $breadcrumbObj->addCrumb($pluginInfo['name']." Plugin Settings");
 
-include(BASE_DIRECTORY."include/breadcrumb.php");
+require_once(BASE_DIRECTORY."include/breadcrumb.php");
 
 // Check Login
 $LOGIN_FAIL = true;
@@ -79,4 +79,4 @@ else {
 
 
 
-include(BASE_DIRECTORY."themes/".$THEME."/_footer.php");
+require_once(BASE_DIRECTORY."themes/".$THEME."/_footer.php");

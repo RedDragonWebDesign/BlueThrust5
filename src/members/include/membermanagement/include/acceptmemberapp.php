@@ -13,7 +13,7 @@
  *
  */
 
-include_once("../../../../_setup.php");
+require_once("../../../../_setup.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $member = new Member($mysqli);
@@ -32,7 +32,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$arrMemAppInfo = $memberAppObj->get_info_filtered();
 	
 	
-	include_once(BASE_DIRECTORY."members/include/membermanagement/include/memberapp_setrank.php");
+	require_once(BASE_DIRECTORY."members/include/membermanagement/include/memberapp_setrank.php");
 	
 	$newRankID = 2;
 	$setRankOptions = memberAppSetRank();
@@ -104,4 +104,4 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	
 }
 
-include("memberapplist.php");
+require_once("memberapplist.php");

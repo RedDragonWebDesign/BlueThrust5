@@ -12,11 +12,11 @@
  *
  */
 
-include_once("../../../../_setup.php");
-include_once("../../../../classes/member.php");
-include_once("../../../../classes/rank.php");
-include_once("../../../../classes/consoleoption.php");
-include_once("../../../../classes/rankcategory.php");
+require_once("../../../../_setup.php");
+require_once("../../../../classes/member.php");
+require_once("../../../../classes/rank.php");
+require_once("../../../../classes/consoleoption.php");
+require_once("../../../../classes/rankcategory.php");
 
 
 $member = new Member($mysqli);
@@ -74,7 +74,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		elseif(isset($_POST['confirm']) && $_POST['confirm'] == "1") {
 			
 			$rankCatObj->delete();
-			include("main.php");
+			require_once("main.php");
 			
 		}
 		else {

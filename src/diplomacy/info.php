@@ -16,7 +16,7 @@
 // Config File
 $prevFolder = "../";
 
-include($prevFolder."_setup.php");
+require_once($prevFolder."_setup.php");
 
 $diplomacyObj = new Basic($mysqli, "diplomacy", "diplomacy_id");
 
@@ -85,13 +85,13 @@ else {
 
 // Start Page
 $PAGE_NAME = $diplomacyInfo['clanname']." - Diplomacy - ";
-include($prevFolder."themes/".$THEME."/_header.php");
+require_once($prevFolder."themes/".$THEME."/_header.php");
 
 $breadcrumbObj->setTitle($diplomacyInfo['clanname']);
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Diplomacy", $MAIN_ROOT."diplomacy");
 $breadcrumbObj->addCrumb($diplomacyInfo['clanname']);
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 ?>
 
 <div style='margin: 25px auto; '>
@@ -151,4 +151,4 @@ include($prevFolder."include/breadcrumb.php");
 
 
 <?php
-include($prevFolder."themes/".$THEME."/_footer.php");
+require_once($prevFolder."themes/".$THEME."/_footer.php");

@@ -1,6 +1,6 @@
 <?php
 
-	include_once(BASE_DIRECTORY."plugins/donations/classes/donation.php");
+	require_once(BASE_DIRECTORY."plugins/donations/classes/donation.php");
 
 	class DonationCampaign extends Basic {
 		
@@ -284,7 +284,7 @@
 				$dispDonatorInfo['lastdonation'] = "";
 			}
 			
-			include(BASE_DIRECTORY."plugins/donations/include/donator_template.php");
+			require_once(BASE_DIRECTORY."plugins/donations/include/donator_template.php");
 			
 		}
 		
@@ -341,7 +341,7 @@
 					$dispDonatorName = ($donationInfo['name'] == "") ? "Anonymous" : $donationInfo['name'];
 				}				
 				
-				include(BASE_DIRECTORY."plugins/donations/include/messages_template.php");
+				require_once(BASE_DIRECTORY."plugins/donations/include/messages_template.php");
 				
 			}
 		}
@@ -357,7 +357,7 @@
 
 			$returnVal = array();
 			if($this->intTableKeyValue != "") {
-				include(BASE_DIRECTORY."plugins/donations/include/currency_codes.php");
+				require_once(BASE_DIRECTORY."plugins/donations/include/currency_codes.php");
 				
 				$blnSymbolLeft = $arrPaypalCurrencyInfo[$this->arrObjInfo['currency']]['position'] == "left";
 				$blnSymbolRight = $arrPaypalCurrencyInfo[$this->arrObjInfo['currency']]['position'] == "right";
@@ -439,12 +439,12 @@
 		
 		public function getCurrencyCodes() {
 
-			include(BASE_DIRECTORY."plugins/donations/include/currency_codes.php");
+			require_once(BASE_DIRECTORY."plugins/donations/include/currency_codes.php");
 			return $arrPaypalCurrencyCodes;
 		}
 		
 		public function getCurrencyCodeInfo() {
-			include(BASE_DIRECTORY."plugins/donations/include/currency_codes.php");
+			require_once(BASE_DIRECTORY."plugins/donations/include/currency_codes.php");
 			return $arrPaypalCurrencyInfo;
 		}
 		

@@ -14,14 +14,14 @@
 
 // Config File
 $prevFolder = "";
-include("_setup.php");
+require_once("_setup.php");
 
 // Classes needed for login.php
-include_once("classes/member.php");
+require_once("classes/member.php");
 
 // Start Page
 
-include("themes/".$THEME."/_header.php");
+require_once("themes/".$THEME."/_header.php");
 
 $breadcrumbObj->setTitle("Log In");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
@@ -82,7 +82,7 @@ if(!$_POST['submit'] && !constant("LOGGED_IN")) {
 		$errorMessage = "You must be logged in to view this page!";
 	}
 
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 echo "
 
 
@@ -130,4 +130,4 @@ elseif(constant("LOGGED_IN")) {
 	";
 }
 
-include("themes/".$THEME."/_footer.php");
+require_once("themes/".$THEME."/_footer.php");

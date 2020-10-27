@@ -15,9 +15,9 @@
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
-	include_once("../../../../_setup.php");
-	include_once("../../../../classes/member.php");
-	include_once("../../../../classes/basicorder.php");
+	require_once("../../../../_setup.php");
+	require_once("../../../../classes/member.php");
+	require_once("../../../../classes/basicorder.php");
 
 
 
@@ -42,7 +42,7 @@ $appComponentObj = $memberAppObj->objAppComponent;
 
 $memberAppForm = $memberAppObj->objSignUpForm;
 
-include_once(BASE_DIRECTORY."members/include/membermanagement/include/memberapp_setrank.php");
+require_once(BASE_DIRECTORY."members/include/membermanagement/include/memberapp_setrank.php");
 
 $setupMemberAppForm = array(
 	"name" => "display-member-app",

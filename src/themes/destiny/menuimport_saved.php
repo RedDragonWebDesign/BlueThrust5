@@ -1,7 +1,7 @@
 <?php
 
-include_once("../../_setup.php");
-include_once("../../classes/member.php");
+require_once("../../_setup.php");
+require_once("../../classes/member.php");
 
 $member = new Member($mysqli);
 $consoleObj = new ConsoleOption($mysqli);

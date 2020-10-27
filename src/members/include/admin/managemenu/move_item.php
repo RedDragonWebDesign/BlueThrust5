@@ -12,12 +12,12 @@
  *
  */
 $prevFolder = "../../../../";
-include_once("../../../../_setup.php");
-include_once("../../../../classes/member.php");
-include_once("../../../../classes/rank.php");
-include_once("../../../../classes/consoleoption.php");
-include_once("../../../../classes/menuitem.php");
-include_once("../../../../classes/menucategory.php");
+require_once("../../../../_setup.php");
+require_once("../../../../classes/member.php");
+require_once("../../../../classes/rank.php");
+require_once("../../../../classes/consoleoption.php");
+require_once("../../../../classes/menuitem.php");
+require_once("../../../../classes/menucategory.php");
 
 
 $consoleObj = new ConsoleOption($mysqli);
@@ -41,7 +41,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		
 		$menuItemObj->move($_POST['iDir']);
 		
-		include("include/menuitemlist.php");
+		require_once("include/menuitemlist.php");
 		/*
 		$menuItemObj->select($_POST['itemID']);
 		$menuCatObj->select($menuItemObj->get_info("menucategory_id"));

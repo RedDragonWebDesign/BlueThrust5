@@ -13,7 +13,7 @@
  */
 
 
-include_once("../../../../_setup.php");
+require_once("../../../../_setup.php");
 
 
 // Start Page
@@ -48,6 +48,6 @@ if($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMembe
 		$eventObj->objEventMember->update(array("attendconfirm_member"), array("1"));
 	}
 	
-	include("invitelist.php");
+	require_once("invitelist.php");
 	
 }

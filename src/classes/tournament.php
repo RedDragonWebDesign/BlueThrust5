@@ -12,9 +12,9 @@
  *
  */
 
-include_once("basic.php");
-include_once("member.php");
-include_once("tournamentpool.php");
+require_once("basic.php");
+require_once("member.php");
+require_once("tournamentpool.php");
 
 
 class Tournament extends Basic {

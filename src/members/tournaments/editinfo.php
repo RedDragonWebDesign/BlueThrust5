@@ -42,7 +42,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 </script>
 ";
 
-include(BASE_DIRECTORY."members/include/tournaments/include/create_form.php");
+require_once(BASE_DIRECTORY."members/include/tournaments/include/create_form.php");
 
 $arrComponents['starttime']['options']['selected_timezone'] = $tournamentInfo['timezone'];
 

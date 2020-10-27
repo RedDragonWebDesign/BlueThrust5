@@ -39,6 +39,6 @@
 	</div>
 	<div id='topBarBGImg'></div>
 	
-	<?php include(BASE_DIRECTORY."themes/include_footer.php"); ?>
+	<?php require_once(BASE_DIRECTORY."themes/include_footer.php"); ?>
 </body>
 </html>

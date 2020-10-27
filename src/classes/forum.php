@@ -13,7 +13,7 @@
  *
  */
 
-include_once("basic.php");
+require_once("basic.php");
 
 class Forum extends Basic {
 	

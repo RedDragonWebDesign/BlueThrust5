@@ -13,10 +13,10 @@
  */
 
 
-include_once("../../_setup.php");
-include_once("../../classes/member.php");
-include_once("../../classes/rank.php");
-include_once("../../classes/event.php");
+require_once("../../_setup.php");
+require_once("../../classes/member.php");
+require_once("../../classes/rank.php");
+require_once("../../classes/event.php");
 
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
@@ -88,13 +88,13 @@ $EXTERNAL_JAVASCRIPT .= "
 <script type='text/javascript' src='".$MAIN_ROOT."members/js/main.js'></script>
 ";
 
-include("../../themes/".$THEME."/_header.php");
+require_once("../../themes/".$THEME."/_header.php");
 
 $breadcrumbObj->setTitle($consoleTitle);
 $breadcrumbObj->addCrumb("Home", MAIN_ROOT);
 $breadcrumbObj->addCrumb("My Account", MAIN_ROOT."members");
 $breadcrumbObj->addCrumb($consoleTitle);
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 
 
 if($blnShowPage) {
@@ -112,25 +112,25 @@ if($blnShowPage) {
 	
 	switch($pID) {
 		case "addposition":
-			include("addposition.php");
+			require_once("addposition.php");
 			break;
 		case "managepositions":
-			include("managepositions.php");
+			require_once("managepositions.php");
 			break;
 		case "invitemembers":
-			include("invitemembers.php");
+			require_once("invitemembers.php");
 			break;
 		case "manageinvites":
-			include("manageinvites.php");
+			require_once("manageinvites.php");
 			break;
 		case "editinfo":
-			include("editinfo.php");
+			require_once("editinfo.php");
 			break;
 		case "setattendance":
-			include("setattendance.php");
+			require_once("setattendance.php");
 			break;
 		case "chat":
-			include("chat.php");
+			require_once("chat.php");
 			break;
 	}
 	
@@ -152,4 +152,4 @@ else {
 }
 
 
-include("../../themes/".$THEME."/_footer.php");
+require_once("../../themes/".$THEME."/_footer.php");

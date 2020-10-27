@@ -12,9 +12,9 @@
  *
  */
 
-include_once("../classes/members.php");
-include_once("../classes/ranks.php");
-include_once("../classes/consoleoption.php");
+require_once("../classes/members.php");
+require_once("../classes/ranks.php");
+require_once("../classes/consoleoption.php");
 
 $member = new Member($mysqli);
 

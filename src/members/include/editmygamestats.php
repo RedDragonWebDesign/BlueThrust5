@@ -25,7 +25,7 @@ else {
 }
 
 
-include_once("../classes/game.php");
+require_once("../classes/game.php");
 
 $cID = $_GET['cID'];
 

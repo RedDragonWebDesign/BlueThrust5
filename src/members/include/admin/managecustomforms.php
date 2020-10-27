@@ -51,7 +51,7 @@ if($_GET['cfID'] == "") {
 		<div id='contentDiv'>
 	
 	";
-	include("custompages/main_customforms.php");
+	require_once("custompages/main_customforms.php");
 	
 	echo "
 	</div>
@@ -109,5 +109,5 @@ if($_GET['cfID'] == "") {
 }
 elseif($_GET['cfID'] != "" && $_GET['action'] == "edit") {
 	
-	include("custompages/edit_customforms.php");	
+	require_once("custompages/edit_customforms.php");	
 }

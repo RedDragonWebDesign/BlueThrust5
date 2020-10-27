@@ -17,7 +17,7 @@ if(!defined("CUSTOM_PAGE")) {
 	// Config File
 	$prevFolder = "";
 	
-	include_once($prevFolder."_setup.php");
+	require_once($prevFolder."_setup.php");
 	
 	
 	// Classes needed for index.php
@@ -35,14 +35,14 @@ if(!defined("CUSTOM_PAGE")) {
 
 // Start Page
 $PAGE_NAME = $customPageInfo['pagename']." - ";
-include($prevFolder."themes/".$THEME."/_header.php");
+require_once($prevFolder."themes/".$THEME."/_header.php");
 
 $breadcrumbObj->setTitle($customPageInfo['pagename']);
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb($customPageInfo['pagename']);
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 
 
 echo $customPageInfo['pageinfo'];
 
-include($prevFolder."themes/".$THEME."/_footer.php");
+require_once($prevFolder."themes/".$THEME."/_footer.php");

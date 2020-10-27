@@ -1,7 +1,7 @@
 <?php
 
-include($prevFolder."themes/include_header.php");
-include($prevFolder."themes/destiny/destinymenu.php");
+require_once($prevFolder."themes/include_header.php");
+require_once($prevFolder."themes/destiny/destinymenu.php");
 $themeMenusObj = new DestinyMenu($mysqli);
 
 $btThemeObj->setThemeName("Destiny");
@@ -32,4 +32,4 @@ $btThemeObj->addHeadItem("google-font", "<link href='http://fonts.googleapis.com
 			<div class='leftMenuDiv'><?php $themeMenusObj->displayMenu(0); ?></div>
 			<div class='rightMenuDiv'><?php $themeMenusObj->displayMenu(1); ?></div>
 			<div class='centerContentDiv'>
-			<?php include(BASE_DIRECTORY."include/clocks.php");
+			<?php require_once(BASE_DIRECTORY."include/clocks.php");

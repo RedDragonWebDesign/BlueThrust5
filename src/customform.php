@@ -16,8 +16,8 @@
 // Config File
 $prevFolder = "";
 
-include_once($prevFolder."_setup.php");
-include_once($prevFolder."classes/customform.php");
+require_once($prevFolder."_setup.php");
+require_once($prevFolder."classes/customform.php");
 
 // Classes needed for index.php
 
@@ -49,13 +49,13 @@ if($ipbanObj->select($IP_ADDRESS, false)) {
 // Start Page
 $PAGE_NAME = $customPageInfo['name']." - ";
 $dispBreadCrumb = "";
-include($prevFolder."themes/".$THEME."/_header.php");
+require_once($prevFolder."themes/".$THEME."/_header.php");
 
 $breadcrumbObj->setTitle($customPageInfo['name']);
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb($customPageInfo['name']);
 
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 
 $arrComponents = $customFormObj->getComponents();
 $dispError = "";
@@ -377,4 +377,4 @@ if(!$_POST['submit']) {
 	echo "</div>";
 
 }
-include($prevFolder."themes/".$THEME."/_footer.php");
+require_once($prevFolder."themes/".$THEME."/_footer.php");

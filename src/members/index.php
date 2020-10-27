@@ -15,14 +15,14 @@
 
 // Config File
 $prevFolder = "../";
-include("../_setup.php");
+require_once("../_setup.php");
 
 
 // Classes needed for index.php
-include_once("../classes/member.php");
-include_once("../classes/rank.php");
-include_once("../classes/consoleoption.php");
-include_once("../classes/consolecategory.php");
+require_once("../classes/member.php");
+require_once("../classes/rank.php");
+require_once("../classes/consoleoption.php");
+require_once("../classes/consolecategory.php");
 
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
@@ -43,7 +43,7 @@ if($ipbanObj->select($IP_ADDRESS, false)) {
 $dispBreadCrumb = "<a href='".$MAIN_ROOT."'>Home</a> > My Account";
 $EXTERNAL_JAVASCRIPT = "<script type='text/javascript' src='".$MAIN_ROOT."members/js/main.js'></script>";
 $PAGE_NAME = "My Account - ";
-include("../themes/".$THEME."/_header.php");
+require_once("../themes/".$THEME."/_header.php");
 
 $member = new Member($mysqli);
 
@@ -265,4 +265,4 @@ if($blnShowCategoryList || true) {
 	
 }
 
-include("../themes/".$THEME."/_footer.php");
+require_once("../themes/".$THEME."/_footer.php");

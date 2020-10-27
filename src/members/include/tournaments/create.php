@@ -26,4 +26,4 @@ else {
 
 $cID = $_GET['cID'];
 
-include(BASE_DIRECTORY."members/include/tournaments/include/create_form.php");
+require_once(BASE_DIRECTORY."members/include/tournaments/include/create_form.php");

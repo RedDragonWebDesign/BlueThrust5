@@ -12,9 +12,9 @@
  *
  */
 
-include_once("../../../../_setup.php");
-include_once("../../../../classes/member.php");
-include_once("../../../../classes/basicorder.php");
+require_once("../../../../_setup.php");
+require_once("../../../../classes/member.php");
+require_once("../../../../classes/basicorder.php");
 
 
 
@@ -38,7 +38,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		
 		$appComponentObj->move($_POST['acDir']);
 		
-		include("appcomponentlist.php");
+		require_once("appcomponentlist.php");
 		
 		
 		

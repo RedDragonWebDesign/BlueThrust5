@@ -15,7 +15,7 @@
 // Config File
 $prevFolder = "../";
 
-include($prevFolder."_setup.php");
+require_once($prevFolder."_setup.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $boardObj = new ForumBoard($mysqli);
@@ -29,7 +29,7 @@ $categoryObj->set_assocTableKey("forumboard_id");
 
 // Start Page
 $PAGE_NAME = "Forum - ";
-include(BASE_DIRECTORY."themes/".$THEME."/_header.php");
+require_once(BASE_DIRECTORY."themes/".$THEME."/_header.php");
 
 // Check Private Forum
 
@@ -51,7 +51,7 @@ if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION
 $breadcrumbObj->setTitle("Forum");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Forum");
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 
 $boardObj->showSearchForm();
 echo "	
@@ -184,6 +184,6 @@ if($result->num_rows == 0) {
 
 echo "</table>";
 
-include(BASE_DIRECTORY."forum/forum_stats.php");
+require_once(BASE_DIRECTORY."forum/forum_stats.php");
 
-include(BASE_DIRECTORY."themes/".$THEME."/_footer.php");
+require_once(BASE_DIRECTORY."themes/".$THEME."/_footer.php");

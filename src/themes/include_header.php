@@ -1,6 +1,6 @@
 <?php
 
-include_once(BASE_DIRECTORY."include/emailqueue.php");
+require_once(BASE_DIRECTORY."include/emailqueue.php");
 
 $arrLoginInfo = array();
 

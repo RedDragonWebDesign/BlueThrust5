@@ -15,9 +15,9 @@
 
 if(!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 
-	include_once("../../../_setup.php");
-	include_once("../../../classes/member.php");
-	include_once("../../../classes/event.php");
+	require_once("../../../_setup.php");
+	require_once("../../../classes/member.php");
+	require_once("../../../classes/event.php");
 
 	// Start Page
 

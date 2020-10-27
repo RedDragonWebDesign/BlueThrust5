@@ -23,7 +23,7 @@ else {
 	}
 }
 
-include($prevFolder."classes/profilecategory.php");
+require_once($prevFolder."classes/profilecategory.php");
 
 $profileCatObj = new ProfileCategory($mysqli);
 
@@ -41,7 +41,7 @@ if($_GET['action'] == "") {
 	<div id='contentDiv'>
 	";	
 	
-	include("manageprofilecat/main.php");
+	require_once("manageprofilecat/main.php");
 	echo "
 	</div>
 	<div id='deleteMessage' style='display: none'></div>
@@ -118,5 +118,5 @@ if($_GET['action'] == "") {
 	
 }
 elseif($_GET['catID'] != "" && $_GET['action'] == "edit") {
-	include("manageprofilecat/edit.php");	
+	require_once("manageprofilecat/edit.php");	
 }

@@ -14,7 +14,7 @@
 
 
 
-include_once("../classes/forumboard.php");
+require_once("../classes/forumboard.php");
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
@@ -36,8 +36,8 @@ $blnCheckForumAttachments = $member->hasAccess($consoleObj);
 $consoleObj->select($cID);
 
 if($blnCheckForumAttachments) {
-	include_once($prevFolder."classes/download.php");
-	include_once($prevFolder."classes/downloadcategory.php");
+	require_once($prevFolder."classes/download.php");
+	require_once($prevFolder."classes/downloadcategory.php");
 	$attachmentObj = new Download($mysqli);
 	$downloadCatObj = new DownloadCategory($mysqli);
 	$downloadCatObj->selectBySpecialKey("forumattachments");

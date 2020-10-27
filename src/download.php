@@ -13,11 +13,11 @@
  */
 
 
-include("_setup.php");
+require_once("_setup.php");
 
-include_once("classes/member.php");
-include_once("classes/downloadcategory.php");
-include_once("classes/download.php");
+require_once("classes/member.php");
+require_once("classes/downloadcategory.php");
+require_once("classes/download.php");
 
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
@@ -86,7 +86,7 @@ if(!$blnShowDownload) {
 	// Start Page
 	$PAGE_NAME = "Download - ";
 	$dispBreadCrumb = "";
-	include($prevFolder."themes/".$THEME."/_header.php");
+	require_once($prevFolder."themes/".$THEME."/_header.php");
 
 	echo "
 		<div class='breadCrumbTitle'>Download</div>
@@ -101,6 +101,6 @@ if(!$blnShowDownload) {
 		</div>
 	";
 	
-	include($prevFolder."themes/".$THEME."/_footer.php");
+	require_once($prevFolder."themes/".$THEME."/_footer.php");
 	
 }

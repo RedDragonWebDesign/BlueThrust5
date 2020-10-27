@@ -12,8 +12,8 @@
  *
  */
 
-include_once("basic.php");
-include_once("event.php");
+require_once("basic.php");
+require_once("event.php");
 class ChatRoom extends Basic {
 	
 	protected $objChatMessage;

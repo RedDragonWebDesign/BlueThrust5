@@ -12,7 +12,7 @@
  *
  */
 
-include_once("../../_setup.php");
+require_once("../../_setup.php");
 
 
 // Delete expired compose list sessions
@@ -52,7 +52,7 @@ $EXTERNAL_JAVASCRIPT .= "
 ";
 
 $prevFolder = "../../";
-include(BASE_DIRECTORY."themes/".$THEME."/_header.php");
+require_once(BASE_DIRECTORY."themes/".$THEME."/_header.php");
 
 
 $breadcrumbObj->setTitle("Compose Message");
@@ -60,7 +60,7 @@ $breadcrumbObj->addCrumb("Home", MAIN_ROOT);
 $breadcrumbObj->addCrumb("My Account", MAIN_ROOT."members");
 $breadcrumbObj->addCrumb($consoleTitle, MAIN_ROOT."members/console.php?cID=".$cID);
 $breadcrumbObj->addCrumb("Compose Message");
-include(BASE_DIRECTORY."include/breadcrumb.php");
+require_once(BASE_DIRECTORY."include/breadcrumb.php");
 
 $pmObj = new BasicOrder($mysqli, "privatemessages", "pm_id");
 $rankCatObj = new RankCategory($mysqli);
@@ -79,8 +79,8 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$formObj = new Form();
 	
 	
-	include(BASE_DIRECTORY."members/privatemessages/include/compose_submit.php");
-	include(BASE_DIRECTORY."members/privatemessages/include/compose_setup.php");
+	require_once(BASE_DIRECTORY."members/privatemessages/include/compose_submit.php");
+	require_once(BASE_DIRECTORY."members/privatemessages/include/compose_setup.php");
 	
 	$i = 1;
 	$arrComponents = array(
@@ -173,7 +173,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	
 	
 	
-	include_once(BASE_DIRECTORY."members/console.form.php");
+	require_once(BASE_DIRECTORY."members/console.form.php");
 	
 	
 }
@@ -185,4 +185,4 @@ else {
 
 
 
-include(BASE_DIRECTORY."themes/".$THEME."/_footer.php");
+require_once(BASE_DIRECTORY."themes/".$THEME."/_footer.php");

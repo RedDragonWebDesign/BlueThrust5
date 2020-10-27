@@ -13,7 +13,7 @@
  */
 
 
-include_once("basic.php");
+require_once("basic.php");
 
 
 class ForumPost extends Basic {
@@ -79,11 +79,11 @@ class ForumPost extends Basic {
 		
 		if($template == "") {
 			
-			include(BASE_DIRECTORY."forum/templates/post.php");
+			require_once(BASE_DIRECTORY."forum/templates/post.php");
 			
 		}
 		else {
-			include(BASE_DIRECTORY."forum/templates/".$template);
+			require_once(BASE_DIRECTORY."forum/templates/".$template);
 		}
 		
 	}

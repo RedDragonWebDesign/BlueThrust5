@@ -6,7 +6,7 @@
 	$arrPlugins = $modPluginsObj->getPluginPage("mods");
 	
 	foreach($arrPlugins as $pluginInfo) {
-		include_once(BASE_DIRECTORY.$pluginInfo['pagepath']);
+		require_once(BASE_DIRECTORY.$pluginInfo['pagepath']);
 	}
 	
 	

@@ -12,10 +12,10 @@
  *
  */
 
-include_once("../../_setup.php");
-include_once("../../classes/member.php");
-include_once("../../classes/rank.php");
-include_once("../../classes/squad.php");
+require_once("../../_setup.php");
+require_once("../../classes/member.php");
+require_once("../../classes/rank.php");
+require_once("../../classes/squad.php");
 
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
@@ -112,7 +112,7 @@ $EXTERNAL_JAVASCRIPT .= "
 <script type='text/javascript' src='".$MAIN_ROOT."members/js/main.js'></script>
 ";
 
-include("../../themes/".$THEME."/_header.php");
+require_once("../../themes/".$THEME."/_header.php");
 echo "
 <div class='breadCrumbTitle' id='breadCrumbTitle'>$consoleTitle</div>
 <div class='breadCrumb' id='breadCrumb' style='padding-top: 0px; margin-top: 0px'>
@@ -141,40 +141,40 @@ if($blnShowPage) {
 	$squadInfo = $squadObj->get_info_filtered();
 	switch($pID) {
 		case "postnews":
-			include("postnews.php");
+			require_once("postnews.php");
 			break;
 		case "managenews":
-			include("managenews.php");
+			require_once("managenews.php");
 			break;
 		case "addrank":
-			include("addrank.php");
+			require_once("addrank.php");
 			break;
 		case "manageranks":
-			include("manageranks.php");
+			require_once("manageranks.php");
 			break;
 		case "sendinvites":
-			include("sendinvites.php");
+			require_once("sendinvites.php");
 			break;
 		case "acceptapps":
-			include("viewapps.php");
+			require_once("viewapps.php");
 			break;
 		case "manageshoutbox":
-			include("manageshoutbox.php");
+			require_once("manageshoutbox.php");
 			break;
 		case "setrank":
-			include("setrank.php");
+			require_once("setrank.php");
 			break;
 		case "removemember":
-			include("removemember.php");
+			require_once("removemember.php");
 			break;
 		case "closesquad":
-			include("closesquad.php");
+			require_once("closesquad.php");
 			break;
 		case "editprofile":
-			include("editprofile.php");
+			require_once("editprofile.php");
 			break;
 		case "leavesquad":
-			include("leavesquad.php");
+			require_once("leavesquad.php");
 			break;
 		default:
 			echo "
@@ -216,4 +216,4 @@ else {
 		
 }
 
-include("../../themes/".$THEME."/_footer.php");
+require_once("../../themes/".$THEME."/_footer.php");

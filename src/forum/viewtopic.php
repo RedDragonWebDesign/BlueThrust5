@@ -16,7 +16,7 @@
 // Config File
 $prevFolder = "../";
 
-include($prevFolder."_setup.php");
+require_once($prevFolder."_setup.php");
 $btThemeObj->addHeadItem("richtexteditor1", "<script type='text/javascript' src='".$MAIN_ROOT."js/ckeditor/ckeditor.js'></script>");
 
 $consoleObj = new ConsoleOption($mysqli);
@@ -60,7 +60,7 @@ $lastPostInfo = $boardObj->objPost->get_info_filtered();
 $EXTERNAL_JAVASCRIPT .= "<script type='text/javascript' src='".$MAIN_ROOT."js/ace/src-min-noconflict/ace.js' charset='utf-8'></script>";
 
 define("RESIZE_FORUM_IMAGES", true);
-include("forum_image_resize.php");
+require_once("forum_image_resize.php");
 
 
 // Start Page
@@ -72,7 +72,7 @@ $PAGE_NAME = $postInfo['title']." - ".$boardInfo['name']." - ";
 $quickReplyForm = new Form();
 $btThemeObj->addHeadItem("richtext-js", $quickReplyForm->getRichtextboxJSFile());
 
-include($prevFolder."themes/".$THEME."/_header.php");
+require_once($prevFolder."themes/".$THEME."/_header.php");
 
 // Check Private Forum
 
@@ -173,7 +173,7 @@ if($boardInfo['subforum_id'] != 0) {
 }
 $breadcrumbObj->addCrumb($boardInfo['name'], $MAIN_ROOT."forum/viewboard.php?bID=".$boardInfo['forumboard_id']);
 $breadcrumbObj->addCrumb($postInfo['title']);
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 
 
 $blnManagePosts = false;
@@ -403,4 +403,4 @@ if($countManagablePosts > 0) {
 	
 }
 
-include($prevFolder."themes/".$THEME."/_footer.php");
+require_once($prevFolder."themes/".$THEME."/_footer.php");

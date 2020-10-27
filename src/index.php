@@ -50,13 +50,13 @@ elseif (((!file_exists("_config.php")) && (!file_exists("installer/lock.txt"))) 
 // Config File
 $prevFolder = "";
 
-include("_setup.php");
+require_once("_setup.php");
 
 // Start Page
 $dispBreadCrumb = "";
 
 
-include("themes/".$THEME."/_header.php");
+require_once("themes/".$THEME."/_header.php");
 
 
 $member = new Member($mysqli);
@@ -403,4 +403,4 @@ echo "<p>".$dispRankCatCount."</p>
 
 echo "<!-- ".phpversion()." -->";
 
-include("themes/".$THEME."/_footer.php");
+require_once("themes/".$THEME."/_footer.php");

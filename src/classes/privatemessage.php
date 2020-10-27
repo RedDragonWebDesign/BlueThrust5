@@ -1,10 +1,10 @@
 <?php
 
-include_once("basicorder.php");
-include_once("member.php");
-include_once("rankcategory.php");
-include_once("squad.php");
-include_once("tournament.php");
+require_once("basicorder.php");
+require_once("member.php");
+require_once("rankcategory.php");
+require_once("squad.php");
+require_once("tournament.php");
 
 class PrivateMessage extends BasicOrder {
 	

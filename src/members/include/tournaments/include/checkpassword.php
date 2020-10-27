@@ -13,7 +13,7 @@
  */
 
 
-include_once("../../../../_setup.php");
+require_once("../../../../_setup.php");
 
 
 // Start Page

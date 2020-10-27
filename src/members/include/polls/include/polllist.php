@@ -2,9 +2,9 @@
 
 if(!defined("SHOW_POLLLIST")) {
 	
-	include_once("../../../../_setup.php");
-	include_once("../../../../classes/member.php");
-	include_once("../../../../classes/poll.php");
+	require_once("../../../../_setup.php");
+	require_once("../../../../classes/member.php");
+	require_once("../../../../classes/poll.php");
 	
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);

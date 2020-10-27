@@ -16,8 +16,8 @@
 // Config File
 $prevFolder = "../../";
 
-include_once($prevFolder."_setup.php");
-include_once(BASE_DIRECTORY."plugins/twitch/twitch.php");
+require_once($prevFolder."_setup.php");
+require_once(BASE_DIRECTORY."plugins/twitch/twitch.php");
 
 if(isset($_GET['user']) && setupStreamPage()) {
 	$webInfoObj->setPage("plugins/twitch/include/stream.php");
@@ -32,14 +32,14 @@ $pluginObj->verifyPlugin("Twitch", array("twitchsocial_id"));
 
 // Start Page
 $PAGE_NAME = "Twitch Streams - ";
-include(BASE_DIRECTORY."themes/".$THEME."/_header.php");
+require_once(BASE_DIRECTORY."themes/".$THEME."/_header.php");
 
 
 $breadcrumbObj->setTitle("Twitch Streams");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Twitch Streams");
-include(BASE_DIRECTORY."include/breadcrumb.php");
+require_once(BASE_DIRECTORY."include/breadcrumb.php");
 
 $webInfoObj->displayPage();
 
-include(BASE_DIRECTORY."themes/".$THEME."/_footer.php");
+require_once(BASE_DIRECTORY."themes/".$THEME."/_footer.php");

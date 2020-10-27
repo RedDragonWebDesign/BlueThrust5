@@ -16,7 +16,7 @@
 		
 		$setupManageListArgs = json_decode($_POST['listArgs'], true);
 
-		include("../_setup.php");
+		require_once("../_setup.php");
 
 		
 		$member = new Member($mysqli);

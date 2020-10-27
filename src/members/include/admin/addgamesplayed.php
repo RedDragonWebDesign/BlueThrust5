@@ -23,8 +23,8 @@ else {
 	}
 }
 
-include_once($prevFolder."classes/btupload.php");
-include_once($prevFolder."classes/game.php");
+require_once($prevFolder."classes/btupload.php");
+require_once($prevFolder."classes/game.php");
 $cID = $_GET['cID'];
 
 $gameObj = new Game($mysqli);

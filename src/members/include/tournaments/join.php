@@ -29,7 +29,7 @@
 			exit();
 		}
 	}
-	include_once("../classes/tournament.php");
+	require_once("../classes/tournament.php");
 
 	$tMemberObj = new Member($mysqli);
 	
@@ -147,4 +147,4 @@
 	}
 	
 
-	include_once(BASE_DIRECTORY."members/include/tournaments/include/jointournamentfunctions.php");
+	require_once(BASE_DIRECTORY."members/include/tournaments/include/jointournamentfunctions.php");

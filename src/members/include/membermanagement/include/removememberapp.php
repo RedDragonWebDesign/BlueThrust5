@@ -13,7 +13,7 @@
  */
 
 
-include_once("../../../../_setup.php");
+require_once("../../../../_setup.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $member = new Member($mysqli);
@@ -71,6 +71,6 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		$member->logAction("Removed the member application for ".$memberAppUser.".");	
 	}
 	
-	include("memberapplist.php");
+	require_once("memberapplist.php");
 
 }

@@ -14,7 +14,7 @@
 
 
 
-include_once("../classes/forumboard.php");
+require_once("../classes/forumboard.php");
 $boardObj = new ForumBoard($mysqli);
 
 if(isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {

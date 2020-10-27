@@ -21,7 +21,7 @@ $member = new Member($mysqli);
 $postMemberObj = new Member($mysqli);
 // Start Page
 
-include(BASE_DIRECTORY."themes/".$THEME."/_header.php");
+require_once(BASE_DIRECTORY."themes/".$THEME."/_header.php");
 
 $memberInfo = array();
 
@@ -32,4 +32,4 @@ if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION
 }
 
 
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");

@@ -12,7 +12,7 @@
  *
  */
 
-include_once("basicorder.php");
+require_once("basicorder.php");
 
 
 class ConsoleCategory extends BasicOrder {

@@ -13,8 +13,8 @@
 	 */
 
 
-	include_once($prevFolder."classes/basic.php");
-	include_once($prevFolder."classes/btplugin.php");
+	require_once($prevFolder."classes/basic.php");
+	require_once($prevFolder."classes/btplugin.php");
 
 	class Twitter extends Basic {
 		

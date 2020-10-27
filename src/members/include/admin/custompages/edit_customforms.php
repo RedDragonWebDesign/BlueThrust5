@@ -14,7 +14,7 @@
 
 
 
-include_once("../classes/customform.php");
+require_once("../classes/customform.php");
 $customFormPageObj = new CustomForm($mysqli, "custompages", "custompage_id");
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {

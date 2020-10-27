@@ -51,7 +51,7 @@ echo "
 
 define("SHOW_SHOUTBOXLIST", true);
 
-include("include/manageshoutbox_list.php");
+require_once("include/manageshoutbox_list.php");
 
 
 echo "

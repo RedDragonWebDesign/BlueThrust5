@@ -16,8 +16,8 @@
 		exit();	
 	}
 
-	include_once($prevFolder."plugins/youtube/youtube.php");
-	include_once($prevFolder."plugins/youtube/ytbuttoncss.php");
+	require_once($prevFolder."plugins/youtube/youtube.php");
+	require_once($prevFolder."plugins/youtube/ytbuttoncss.php");
 	$ytObj = new Youtube($mysqli);
 
 	

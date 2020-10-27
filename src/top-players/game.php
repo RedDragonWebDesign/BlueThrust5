@@ -15,10 +15,10 @@
 // Config File
 $prevFolder = "../";
 
-include($prevFolder."_setup.php");
-include($prevFolder."classes/member.php");
-include_once($prevFolder."classes/rank.php");
-include_once($prevFolder."classes/game.php");
+require_once($prevFolder."_setup.php");
+require_once($prevFolder."classes/member.php");
+require_once($prevFolder."classes/rank.php");
+require_once($prevFolder."classes/game.php");
 
 
 // Classes needed for index.php
@@ -53,7 +53,7 @@ else {
 // Start Page
 $PAGE_NAME = $gameInfo['name']." - Top Players - ";
 $dispBreadCrumb = "";
-include($prevFolder."themes/".$THEME."/_header.php");
+require_once($prevFolder."themes/".$THEME."/_header.php");
 
 $member = new Member($mysqli);
 
@@ -61,7 +61,7 @@ $breadcrumbObj->setTitle("Top Players: ".$gameInfo['name']);
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Top Players: ".$gameInfo['name']);
 
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 
 	$gameStatObj = new Basic($mysqli, "gamestats", "gamestats_id");
 	$arrGameStats = $gameObj->getAssociateIDs("ORDER BY ordernum");
@@ -219,4 +219,4 @@ include($prevFolder."include/breadcrumb.php");
 
 
 
-include($prevFolder."themes/".$THEME."/_footer.php");
+require_once($prevFolder."themes/".$THEME."/_footer.php");

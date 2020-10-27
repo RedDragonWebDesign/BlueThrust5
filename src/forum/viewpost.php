@@ -14,7 +14,7 @@
 
 $prevFolder = "../";
 
-include($prevFolder."_setup.php");
+require_once($prevFolder."_setup.php");
 
 $breadcrumbObj->setTitle("View Post");
 $breadcrumbObj->addCrumb("Home", MAIN_ROOT);
@@ -23,7 +23,7 @@ $breadcrumbObj->addCrumb("View Post");
 
 $PAGE_NAME = "View Post - ";
 
-include(BASE_DIRECTORY."forum/templates/_header.php");
+require_once(BASE_DIRECTORY."forum/templates/_header.php");
 
 
 if($boardObj->objPost->select($_GET['post'])) {
@@ -48,4 +48,4 @@ else {
 	";
 }
 
-include(BASE_DIRECTORY."forum/templates/_footer.php");
+require_once(BASE_DIRECTORY."forum/templates/_footer.php");

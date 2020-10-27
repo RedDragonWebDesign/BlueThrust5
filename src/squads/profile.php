@@ -15,14 +15,14 @@
 // Config File
 $prevFolder = "../";
 
-include($prevFolder."_setup.php");
+require_once($prevFolder."_setup.php");
 
 // Classes needed for profile.php
 
-include_once($prevFolder."classes/squad.php");
-include_once($prevFolder."classes/member.php");
-include_once($prevFolder."classes/shoutbox.php");
-include_once($prevFolder."classes/consoleoption.php");
+require_once($prevFolder."classes/squad.php");
+require_once($prevFolder."classes/member.php");
+require_once($prevFolder."classes/shoutbox.php");
+require_once($prevFolder."classes/consoleoption.php");
 
 
 $squadObj = new Squad($mysqli);
@@ -62,7 +62,7 @@ if($ipbanObj->select($IP_ADDRESS, false)) {
 
 // Start Page
 $PAGE_NAME = $squadInfo['name']." - ";
-include($prevFolder."themes/".$THEME."/_header.php");
+require_once($prevFolder."themes/".$THEME."/_header.php");
 
 $member->select($squadInfo['member_id']);
 $dispFounderLink = $member->getMemberLink();
@@ -271,7 +271,7 @@ $breadcrumbObj->setTitle($squadInfo['name']);
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Squads", $MAIN_ROOT."squads");
 $breadcrumbObj->addCrumb($squadInfo['name']);
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 
 echo "	
 		<div class='squadContainer'>
@@ -404,4 +404,4 @@ echo "
 		</script>
 ";
 
-include($prevFolder."themes/".$THEME."/_footer.php");
+require_once($prevFolder."themes/".$THEME."/_footer.php");

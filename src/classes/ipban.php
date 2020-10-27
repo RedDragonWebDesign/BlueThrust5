@@ -1,6 +1,6 @@
 <?php
 
-	include_once("basic.php");
+	require_once("basic.php");
 	
 	class IPBan extends Basic {
 		

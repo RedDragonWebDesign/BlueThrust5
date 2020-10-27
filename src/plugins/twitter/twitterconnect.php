@@ -31,7 +31,7 @@ else {
 }
 
 
-include_once("../plugins/twitter/twitter.php");
+require_once("../plugins/twitter/twitter.php");
 
 
 $twitterObj = new Twitter($mysqli);

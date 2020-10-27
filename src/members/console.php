@@ -15,7 +15,7 @@
 
 // Config File
 $prevFolder = "../";
-include("../_setup.php");
+require_once("../_setup.php");
 
 // Check for valid Console Option
 
@@ -38,7 +38,7 @@ $consolePluginObj = new btPlugin($mysqli);
 $arrPlugins = $consolePluginObj->getPluginPage("console");
 
 foreach($arrPlugins as $pluginPageInfo) {
-	include_once($pluginPageInfo['pagepath']);
+	require_once($pluginPageInfo['pagepath']);
 }
 
 
@@ -71,7 +71,7 @@ if(in_array($consoleInfo['pagetitle'], $arrAceEditorPages)) {
 
 $hooksObj->run("init_console");
 
-include("../themes/".$THEME."/_header.php");
+require_once("../themes/".$THEME."/_header.php");
 
 $breadcrumbObj->setTitle($consoleTitle);
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
@@ -129,7 +129,7 @@ if($checkMember) {
 
 			define("PREVENT_HACK", $arrClanInfo['preventhack']);
 			
-			include($prevFolder."include/breadcrumb.php");
+			require_once($prevFolder."include/breadcrumb.php");
 			
 			if(isset($_GET['action']) && $_GET['action'] == "edit") {
 				echo "
@@ -151,12 +151,12 @@ if($checkMember) {
 			}
 						
 			$formObj = new Form();
-			require($include_file);
+			require_once($include_file);
 			if(isset($setupFormArgs)) {
-				include("console.form.php");
+				require_once("console.form.php");
 			}
 			elseif(isset($setupManageListArgs)) {
-				include("console.managelist.php");	
+				require_once("console.managelist.php");	
 			}
 			
 			
@@ -186,4 +186,4 @@ die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';
 }
 
 
-include("../themes/".$THEME."/_footer.php");
+require_once("../themes/".$THEME."/_footer.php");

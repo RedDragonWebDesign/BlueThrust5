@@ -119,5 +119,5 @@
 	
 	if(!$_POST['step1submit']) {
 		
-		include("step1.php");	
+		require_once("step1.php");	
 	}

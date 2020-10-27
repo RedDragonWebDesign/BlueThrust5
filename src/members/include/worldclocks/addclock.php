@@ -25,4 +25,4 @@
 	}
 
 	
-	include(BASE_DIRECTORY."members/include/worldclocks/clock_form.php");
+	require_once(BASE_DIRECTORY."members/include/worldclocks/clock_form.php");

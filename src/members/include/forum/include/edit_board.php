@@ -24,7 +24,7 @@ else {
 	}
 }
 
-include_once("../classes/rankcategory.php");
+require_once("../classes/rankcategory.php");
 
 $cID = $_GET['cID'];
 

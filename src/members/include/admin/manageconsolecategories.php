@@ -24,7 +24,7 @@ else {
 	}
 }
 
-include_once($prevFolder."classes/consolecategory.php");
+require_once($prevFolder."classes/consolecategory.php");
 
 
 $consoleCatObj = new ConsoleCategory($mysqli);
@@ -42,7 +42,7 @@ if($_GET['catID'] == "") {
 		</div>
 	
 		<div id='contentDiv'>";
-	include("manageconsolecat/main.php");
+	require_once("manageconsolecat/main.php");
 	echo "
 		</div>
 		<div id='deleteMessage' style='display: none'></div>
@@ -116,6 +116,6 @@ if($_GET['catID'] == "") {
 }
 elseif($_GET['catID'] != "" AND $_GET['action'] == "edit") {
 	
-	include("manageconsolecat/edit.php");
+	require_once("manageconsolecat/edit.php");
 	
 }

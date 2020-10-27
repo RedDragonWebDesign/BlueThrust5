@@ -16,7 +16,7 @@
 // Config File
 $prevFolder = "../";
 
-include($prevFolder."_setup.php");
+require_once($prevFolder."_setup.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $eventObj = new Event($mysqli);
@@ -25,7 +25,7 @@ $member = new Member($mysqli);
 
 // Start Page
 $PAGE_NAME = "Events - ";
-include($prevFolder."themes/".$THEME."/_header.php");
+require_once($prevFolder."themes/".$THEME."/_header.php");
 
 
 $memberInfo = array();
@@ -43,7 +43,7 @@ if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION
 $breadcrumbObj->setTitle("Events");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Events");
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 ?>
 
 
@@ -146,4 +146,4 @@ include($prevFolder."include/breadcrumb.php");
 </div>
 
 <?php
-include($prevFolder."themes/".$THEME."/_footer.php");
+require_once($prevFolder."themes/".$THEME."/_footer.php");

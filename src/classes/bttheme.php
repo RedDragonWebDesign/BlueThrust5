@@ -111,7 +111,7 @@
 		}
 		
 		public function requiredFooterFile() {
-			include(BASE_DIRECTORY."themes/include_footer.php");
+			require_once(BASE_DIRECTORY."themes/include_footer.php");
 		}
 		
 		public function setTitle($title) {

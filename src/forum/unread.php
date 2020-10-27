@@ -17,7 +17,7 @@
 
 $prevFolder = "../";
 
-include($prevFolder."_setup.php");
+require_once($prevFolder."_setup.php");
 
 $breadcrumbObj->setTitle("Unread Posts");
 $breadcrumbObj->addCrumb("Home", MAIN_ROOT);
@@ -26,7 +26,7 @@ $breadcrumbObj->addCrumb("Unread Posts");
 
 $PAGE_NAME = "Recent Forum Posts - ";
 
-include(BASE_DIRECTORY."forum/templates/_header.php");
+require_once(BASE_DIRECTORY."forum/templates/_header.php");
 
 $memberInfo = array("member_id" => 0);
 $NUM_PER_PAGE = $websiteInfo['forum_postsperpage'];
@@ -124,4 +124,4 @@ if($result->num_rows == 0) {
 }
 
 
-include(BASE_DIRECTORY."forum/templates/_footer.php");
+require_once(BASE_DIRECTORY."forum/templates/_footer.php");

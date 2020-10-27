@@ -23,7 +23,7 @@ else {
 	}
 }
 
-include_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
+require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
 
 $cID = $_GET['cID'];
 $campaignObj = new DonationCampaign($mysqli);
@@ -40,6 +40,6 @@ $defaultEndDate = $endDate->format("M j, Y");
 
 $setRecurringBox = 0;
 
-include(BASE_DIRECTORY."plugins/donations/console/campaign_form.php");
+require_once(BASE_DIRECTORY."plugins/donations/console/campaign_form.php");
 
 $setupFormArgs['components']['enddate']['options']['defaultDate'] = $defaultEndDate;

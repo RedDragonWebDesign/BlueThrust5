@@ -29,4 +29,4 @@ $cID = $_GET['cID'];
 $imageSliderObj = new ImageSlider($mysqli);
 
 define("HPIMAGE_FORM", true);
-include(BASE_DIRECTORY."members/include/news/hpimage_form.php");
+require_once(BASE_DIRECTORY."members/include/news/hpimage_form.php");

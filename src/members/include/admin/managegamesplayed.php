@@ -24,8 +24,8 @@ else {
 }
 
 
-include_once($prevFolder."classes/btupload.php");
-include_once($prevFolder."classes/game.php");
+require_once($prevFolder."classes/btupload.php");
+require_once($prevFolder."classes/game.php");
 $cID = $_GET['cID'];
 $gameObj = new Game($mysqli);
 $gameStatsObj = new Basic($mysqli, "gamestats", "gamestats_id");
@@ -41,7 +41,7 @@ if($_GET['gID'] == "") {
 		<div id='contentDiv'>
 	";
 	
-	include("gamesplayed/main.php");
+	require_once("gamesplayed/main.php");
 	
 	echo "
 		</div>
@@ -113,5 +113,5 @@ if($_GET['gID'] == "") {
 	
 }
 elseif($_GET['gID'] != "" AND $_GET['action'] == "edit") {
-	include("gamesplayed/edit.php");
+	require_once("gamesplayed/edit.php");
 }

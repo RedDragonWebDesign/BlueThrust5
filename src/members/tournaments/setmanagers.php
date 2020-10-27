@@ -59,7 +59,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 			<?php 
 				
 				define("SHOW_MANAGERLIST", true);
-				include("include/managerlist.php");
+				require_once("include/managerlist.php");
 			
 			?>
 			</div>

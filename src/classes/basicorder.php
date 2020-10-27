@@ -12,7 +12,7 @@
  *
  */
 
-include_once("basic.php");
+require_once("basic.php");
 
 class BasicOrder extends Basic {
 

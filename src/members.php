@@ -16,7 +16,7 @@
 // Config File
 $prevFolder = "";
 
-include($prevFolder."_setup.php");
+require_once($prevFolder."_setup.php");
 
 // Classes needed for index.php
 
@@ -39,7 +39,7 @@ if($ipbanObj->select($IP_ADDRESS, false)) {
 // Start Page
 $PAGE_NAME = "Members - ";
 $dispBreadCrumb = "";
-include($prevFolder."themes/".$THEME."/_header.php");
+require_once($prevFolder."themes/".$THEME."/_header.php");
 
 $member = new Member($mysqli);
 $rankObj = new Rank($mysqli);
@@ -89,7 +89,7 @@ $gameObj = new Game($mysqli);
 $breadcrumbObj->setTitle("Members");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Members");
-include($prevFolder."include/breadcrumb.php");
+require_once($prevFolder."include/breadcrumb.php");
 
 ?>
 <div id='tiltPhoneImg' style='display: none'><img src='<?php echo $MAIN_ROOT; ?>images/tiltphone.png'><p align='center'>need more space<br>tilt your phone!</p></div>
@@ -371,4 +371,4 @@ if($websiteInfo['maxdsl'] != 0) {
 ?>
 
 </div>
-<?php include($prevFolder."themes/".$THEME."/_footer.php");
+<?php require_once($prevFolder."themes/".$THEME."/_footer.php");

@@ -65,14 +65,14 @@ if(!isset($_SESSION['csrfKey'])) {
 	$_SESSION['csrfKey'] = md5(uniqid());
 }
 
-include($prevFolder."_config.php");
+require_once($prevFolder."_config.php");
 define("BASE_DIRECTORY", $BASE_DIRECTORY);
 //define("BASE_DIRECTORY", str_replace("//", "/", $_SERVER['DOCUMENT_ROOT'].$MAIN_ROOT));
 define("MAIN_ROOT", $MAIN_ROOT);
 
 
 $PAGE_NAME = "";
-include_once(BASE_DIRECTORY."_functions.php");
+require_once(BASE_DIRECTORY."_functions.php");
 
 define("FULL_SITE_URL", getHTTP().$_SERVER['SERVER_NAME'].MAIN_ROOT);
 
@@ -101,7 +101,7 @@ if(!isset($arrWebsiteLogoURL['scheme']) || $arrWebsiteLogoURL['scheme'] == "") {
 }
 
 // Default websiteinfo values
-include_once(BASE_DIRECTORY."include/websiteinfo_defaults.php");
+require_once(BASE_DIRECTORY."include/websiteinfo_defaults.php");
 
 
 if(!isset($_SESSION['appendIP'])) {
@@ -132,4 +132,4 @@ $btThemeObj->setClanName($CLAN_NAME);
 $btThemeObj->initHead();
 $breadcrumbObj = new BreadCrumb();
 
-include_once(BASE_DIRECTORY."plugins/mods.php");
+require_once(BASE_DIRECTORY."plugins/mods.php");

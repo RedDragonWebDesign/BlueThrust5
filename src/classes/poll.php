@@ -1,7 +1,7 @@
 <?php
 
-	include_once("basicsort.php");
-	include_once("access.php");
+	require_once("basicsort.php");
+	require_once("access.php");
 	
 	class Poll extends Basic {
 		

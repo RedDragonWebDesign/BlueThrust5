@@ -12,10 +12,10 @@
  *
  */
 
-include_once("../../_setup.php");
-include_once("../../classes/member.php");
-include_once("../../classes/rank.php");
-include_once("../../classes/tournament.php");
+require_once("../../_setup.php");
+require_once("../../classes/member.php");
+require_once("../../classes/rank.php");
+require_once("../../classes/tournament.php");
 
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
@@ -62,7 +62,7 @@ $EXTERNAL_JAVASCRIPT .= "
 <script type='text/javascript' src='".$MAIN_ROOT."members/js/main.js'></script>
 ";
 
-include("../../themes/".$THEME."/_header.php");
+require_once("../../themes/".$THEME."/_header.php");
 echo "
 <div class='breadCrumbTitle' id='breadCrumbTitle'>$consoleTitle</div>
 <div class='breadCrumb' id='breadCrumb' style='padding-top: 0px; margin-top: 0px'>
@@ -100,17 +100,17 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 		$formObj = new Form();
 		switch($pID) {
 			case "manageplayers":
-				include("manageplayers.php");
+				require_once("manageplayers.php");
 				break;
 			case "manageteams":
-				include("manageteams.php");
+				require_once("manageteams.php");
 				break;
 			case "managepools":
-				include("managepools.php");
+				require_once("managepools.php");
 				break;
 			case "deletetournament":
 				if($memberInfo['member_id'] == $tournamentInfo['member_id']) {
-					include("deletetournament.php");
+					require_once("deletetournament.php");
 				}
 				else {
 					echo "
@@ -120,25 +120,25 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 				
 				break;
 			case "startmatches";
-				include("startmatches.php");
+				require_once("startmatches.php");
 				break;
 			case "managematches":
 				
 				
 				if(!isset($_GET['match'])) {
-					include("managematches.php");
+					require_once("managematches.php");
 				}
 				else {
-					include("managematch.php");
+					require_once("managematch.php");
 				}
 				
 				break;
 			case "edittournamentinfo":
-				include("editinfo.php");
+				require_once("editinfo.php");
 				break;
 			case "setmanagers":
 				if($memberInfo['member_id'] == $tournamentInfo['member_id']) {
-					include("setmanagers.php");
+					require_once("setmanagers.php");
 				}
 				else {
 					echo "
@@ -154,7 +154,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 		
 		
 		if(isset($setupFormArgs)) {
-			include(BASE_DIRECTORY."members/console.form.php");
+			require_once(BASE_DIRECTORY."members/console.form.php");
 		}
 		
 	
@@ -197,4 +197,4 @@ else {
 
 
 
-include("../../themes/".$THEME."/_footer.php");
+require_once("../../themes/".$THEME."/_footer.php");

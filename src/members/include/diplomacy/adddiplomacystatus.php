@@ -27,7 +27,7 @@ else {
 
 
 $cID = $_GET['cID'];
-include_once("../classes/btupload.php");
+require_once("../classes/btupload.php");
 
 if($_POST['submit']) {
 	

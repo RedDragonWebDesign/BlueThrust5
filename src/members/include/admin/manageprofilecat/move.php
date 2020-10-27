@@ -12,11 +12,11 @@
  *
  */
 
-include_once("../../../../_setup.php");
-include_once("../../../../classes/member.php");
-include_once("../../../../classes/rank.php");
-include_once("../../../../classes/consoleoption.php");
-include_once("../../../../classes/profilecategory.php");
+require_once("../../../../_setup.php");
+require_once("../../../../classes/member.php");
+require_once("../../../../classes/rank.php");
+require_once("../../../../classes/consoleoption.php");
+require_once("../../../../classes/profilecategory.php");
 
 
 $consoleObj = new ConsoleOption($mysqli);
@@ -41,7 +41,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		
 		$profileCatObj->move($_POST['cDir']);
 		
-		include("main.php");
+		require_once("main.php");
 		
 		
 		

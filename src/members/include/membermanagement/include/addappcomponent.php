@@ -13,7 +13,7 @@
  */
 
 $prevFolder = "../../../../";
-include_once($prevFolder."_setup.php");
+require_once($prevFolder."_setup.php");
 
 
 $consoleObj = new ConsoleOption($mysqli);
@@ -28,7 +28,7 @@ $appComponentObj = new BasicOrder($mysqli, "app_components", "appcomponent_id");
 
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
-	include(BASE_DIRECTORY."members/include/membermanagement/include/appcomponent_form.php");
+	require_once(BASE_DIRECTORY."members/include/membermanagement/include/appcomponent_form.php");
 	
 	if($_POST['saveComponent']) {
 		

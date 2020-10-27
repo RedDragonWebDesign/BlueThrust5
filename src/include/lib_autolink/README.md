@@ -7,7 +7,7 @@ Find URLs in HTML that are not already links, and make them into links.
 
 ## Usage
 
-    include('lib_autolink.php');
+    require_once('lib_autolink.php');
 
 
     # simple mode

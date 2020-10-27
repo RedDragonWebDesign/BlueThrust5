@@ -23,8 +23,8 @@ else {
 	}
 }
 
-include_once($prevFolder."classes/downloadcategory.php");
-include_once($prevFolder."classes/download.php");
+require_once($prevFolder."classes/downloadcategory.php");
+require_once($prevFolder."classes/download.php");
 
 $downloadObj = new Download($mysqli);
 $downloadCatObj = new DownloadCategory($mysqli);
@@ -35,7 +35,7 @@ if(isset($_GET['dlID']) && $downloadObj->select($_GET['dlID'])) {
 	$downloadInfo = $downloadObj->get_info_filtered();
 	$downloadCatObj->select($downloadInfo['downloadcategory_id']);
 	$downloadCatInfo = $downloadCatObj->get_info_filtered();
-	include("include/edit.php");
+	require_once("include/edit.php");
 	
 }
 else {
@@ -63,7 +63,7 @@ else {
 			
 				";
 	
-	include("include/downloadlist.php");
+	require_once("include/downloadlist.php");
 	
 	echo "
 			

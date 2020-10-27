@@ -33,7 +33,7 @@
 	
 	if($_GET['clockID'] != "" && $clockObj->select($_GET['clockID']) && $_GET['action'] == "edit") {
 		$clockInfo = $clockObj->get_info_filtered();
-		include(BASE_DIRECTORY."members/include/worldclocks/edit.php");
+		require_once(BASE_DIRECTORY."members/include/worldclocks/edit.php");
 	}
 	elseif($_GET['action'] == "delete" && $clockObj->select($_POST['itemID'])) {
 		$info = $clockObj->get_info_filtered();
@@ -41,5 +41,5 @@
 		$objManageList->strDeletePostVarID = "clockID";	
 	}
 	elseif($_GET['action'] != "move") {
-		include($objManageList->strMainListLink);	
+		require_once($objManageList->strMainListLink);	
 	}

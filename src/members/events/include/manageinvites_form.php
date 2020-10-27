@@ -13,7 +13,7 @@
  */
 
 
-include("../../../_setup.php");
+require_once("../../../_setup.php");
 
 $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
@@ -133,7 +133,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 		
 		
 		if($_POST['submit']) {
-			include(BASE_DIRECTORY."members/events/include/manageinvites_submit.php");
+			require_once(BASE_DIRECTORY."members/events/include/manageinvites_submit.php");
 		}
 		
 		

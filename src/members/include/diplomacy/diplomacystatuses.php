@@ -12,7 +12,7 @@
  *
  */
 
-include_once("../../../classes/basicorder.php");
+require_once("../../../classes/basicorder.php");
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
@@ -57,7 +57,7 @@ if(!isset($_GET['sID'])) {
 	
 	";
 	
-	include("include/main_managestatuses.php");
+	require_once("include/main_managestatuses.php");
 	
 	
 	echo "
@@ -100,5 +100,5 @@ if(!isset($_GET['sID'])) {
 
 }
 elseif($_GET['action'] == "edit" && isset($_GET['sID'])) {
-	include("include/editstatus.php");	
+	require_once("include/editstatus.php");	
 }

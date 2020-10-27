@@ -1,6 +1,6 @@
 <?php
 
-	include_once("basicsort.php");
+	require_once("basicsort.php");
 	
 	
 	class PMFolder extends BasicSort {

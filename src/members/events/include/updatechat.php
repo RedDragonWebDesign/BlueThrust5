@@ -13,12 +13,12 @@
  */
 
 
-include("../../../_setup.php");
-include_once("../../../classes/member.php");
-include_once("../../../classes/rank.php");
-include_once("../../../classes/consoleoption.php");
-include_once("../../../classes/event.php");
-include_once("../../../classes/chatroom.php");
+require_once("../../../_setup.php");
+require_once("../../../classes/member.php");
+require_once("../../../classes/rank.php");
+require_once("../../../classes/consoleoption.php");
+require_once("../../../classes/event.php");
+require_once("../../../classes/chatroom.php");
 
 
 $member = new Member($mysqli);

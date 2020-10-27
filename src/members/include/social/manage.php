@@ -32,7 +32,7 @@ $objManageList = new btOrderManageList($socialObj);
 $objManageList->strMainListLink = BASE_DIRECTORY."members/include/social/include/main.php";
 
 if($_GET['sID'] != "" && $socialObj->select($_GET['sID']) && $_GET['action'] == "edit") {
-	include("include/edit.php");
+	require_once("include/edit.php");
 }
 elseif($_GET['action'] == "delete" && $socialObj->select($_POST['itemID'])) {
 	$socialInfo = $socialObj->get_info_filtered();
@@ -42,5 +42,5 @@ elseif($_GET['action'] == "delete" && $socialObj->select($_POST['itemID'])) {
 	
 }
 elseif($_GET['action'] != "move") {	
-	include($objManageList->strMainListLink);
+	require_once($objManageList->strMainListLink);
 }

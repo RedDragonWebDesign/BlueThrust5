@@ -69,7 +69,7 @@ if(!isset($_GET['posID']) || (isset($_GET['posID']) && !$eventObj->objEventPosit
 		<div id='positionListDiv' style='margin: 0px; padding: 0px'>
 	";
 	
-	include("include/manageposition_main.php");
+	require_once("include/manageposition_main.php");
 	
 	echo "
 		</div>
@@ -103,5 +103,5 @@ if(!isset($_GET['posID']) || (isset($_GET['posID']) && !$eventObj->objEventPosit
 	
 }
 elseif(isset($_GET['posID']) && $_GET['action'] == "edit") {
-	include("include/manageposition_edit.php");
+	require_once("include/manageposition_edit.php");
 }

@@ -13,7 +13,7 @@
  */
 
 
-include_once("basicorder.php");
+require_once("basicorder.php");
 
 class Rank extends BasicOrder {
 	

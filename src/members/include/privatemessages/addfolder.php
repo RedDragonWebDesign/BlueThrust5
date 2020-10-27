@@ -23,7 +23,7 @@ else {
 	}
 }
 
-include("../classes/pmfolder.php");
+require_once("../classes/pmfolder.php");
 
 $pmFolderObj = new PMFolder($mysqli);
 $cID = $_GET['cID'];

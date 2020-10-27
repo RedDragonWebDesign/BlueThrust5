@@ -15,15 +15,15 @@
 	}
 	
 	
-	include_once("../classes/btmysql.php");
-	include_once("../classes/btmail.php");
-	include_once("../classes/member.php");
-	include_once("../classes/consolecategory.php");
-	include_once("../classes/consoleoption.php");
-	include_once("../classes/websiteinfo.php");
-	include("tablelist.php");
-	include("tablecolumns.php");
-	include("consoleinfo.php");
+	require_once("../classes/btmysql.php");
+	require_once("../classes/btmail.php");
+	require_once("../classes/member.php");
+	require_once("../classes/consolecategory.php");
+	require_once("../classes/consoleoption.php");
+	require_once("../classes/websiteinfo.php");
+	require_once("tablelist.php");
+	require_once("tablecolumns.php");
+	require_once("consoleinfo.php");
 	$countErrors = 0;
 	$dispError = "";
 	
@@ -85,13 +85,13 @@
 		
 		
 		if($_GET['step'] == "" || $_GET['step'] == 1) {
-			include("steps/step1.php");			
+			require_once("steps/step1.php");			
 		}
 		elseif($_GET['step'] == 2) {
-			include("steps/step2.php");
+			require_once("steps/step2.php");
 		}
 		elseif($_GET['step'] == 3) {
-			include("steps/step3.php");	
+			require_once("steps/step3.php");	
 		}
 		?>
 		
