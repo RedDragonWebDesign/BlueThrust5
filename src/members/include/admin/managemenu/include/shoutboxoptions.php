@@ -25,5 +25,3 @@ $shoutboxOptionComponents = array(
 	)
 
 );
-
-?>

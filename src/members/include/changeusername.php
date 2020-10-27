@@ -78,5 +78,3 @@ function setMemberSessions() {
 
 	$_SESSION['btUsername'] = $member->get_info_filtered("username");
 }
-
-?>

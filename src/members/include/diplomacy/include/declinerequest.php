@@ -102,6 +102,3 @@ Your diplomacy request has been declined.\n\n
 	}
 	
 }
-
-
-?>

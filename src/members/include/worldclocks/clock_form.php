@@ -80,5 +80,3 @@
 		"description" => "Use the form below to add a new clock to your website.",
 		"beforeAfter" => true
 	);
-	
-?>

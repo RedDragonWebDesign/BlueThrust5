@@ -96,6 +96,3 @@
 		"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
 		"beforeAfter" => true
 	);
-	
-	
-?>

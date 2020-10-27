@@ -394,6 +394,3 @@ elseif($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $s
 	
 	
 }
-
-
-?>

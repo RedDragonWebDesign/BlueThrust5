@@ -794,7 +794,3 @@ $arrTableColumns['tournamentteams'][3] = "seed";
 $arrTableColumns['websiteinfo'][0] = "websiteinfo_id";
 $arrTableColumns['websiteinfo'][1] = "name";
 $arrTableColumns['websiteinfo'][2] = "value";
-
-
-
-?>

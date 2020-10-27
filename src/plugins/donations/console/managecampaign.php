@@ -50,7 +50,3 @@ elseif(isset($_GET['donationID']) && $campaignObj->donationObj->select($_GET['do
 else {
 	include($objManageList->strMainListLink);	
 }
-
-
-
-?>

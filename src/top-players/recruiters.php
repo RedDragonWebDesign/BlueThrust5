@@ -129,5 +129,3 @@ include($prevFolder."include/breadcrumb.php");
 	
 	echo "</table>";
 	include($prevFolder."themes/".$THEME."/_footer.php");
-	
-	?>

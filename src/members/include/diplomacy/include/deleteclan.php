@@ -44,7 +44,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $diplomacyClanObj->select
 	}
 	
 }
-
-
-
-?>

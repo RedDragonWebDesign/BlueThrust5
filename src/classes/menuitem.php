@@ -104,5 +104,3 @@ class MenuItem extends BasicSort {
 	}
 	
 }
-
-?>

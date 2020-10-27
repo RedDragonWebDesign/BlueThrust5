@@ -47,5 +47,3 @@ CREATE TABLE IF NOT EXISTS `".$dbprefix."donations_errorlog` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 ";
-
-?>

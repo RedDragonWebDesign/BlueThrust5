@@ -33,5 +33,3 @@ if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION
 
 
 include($prevFolder."include/breadcrumb.php");
-
-?>

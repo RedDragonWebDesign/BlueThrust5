@@ -48,5 +48,3 @@ class ProfileCategory extends BasicOrder {
 	}
 	
 }
-
-?>

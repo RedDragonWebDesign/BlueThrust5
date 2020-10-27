@@ -44,7 +44,3 @@ elseif($_GET['action'] == "delete" && $socialObj->select($_POST['itemID'])) {
 elseif($_GET['action'] != "move") {	
 	include($objManageList->strMainListLink);
 }
-
-
-
-?>

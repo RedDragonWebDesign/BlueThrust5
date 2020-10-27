@@ -61,5 +61,3 @@
 		"name" => "console-".$cID."-donationdetails-".$donationInfo['donation_id'],
 		"components" => $arrComponents
 	);
-
-?>

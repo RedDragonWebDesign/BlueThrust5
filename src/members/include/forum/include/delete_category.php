@@ -136,5 +136,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $categoryObj->select($_PO
 	
 	
 }
-
-?>

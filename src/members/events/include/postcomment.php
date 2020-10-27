@@ -87,6 +87,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMessag
 		
 	}
 }
-
-
-?>

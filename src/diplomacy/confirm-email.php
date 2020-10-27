@@ -85,7 +85,3 @@ echo "
 
 
 include($prevFolder."themes/".$THEME."/_footer.php");
-
-
-
-?>

@@ -170,6 +170,3 @@ function saveTwitchSettings() {
 	$pluginObj->addConfigValue("autoplay", $_POST['autoplay']);
 	$pluginObj->addConfigValue("autohidechat", $_POST['autohidechat']);
 }
-
-?>
-

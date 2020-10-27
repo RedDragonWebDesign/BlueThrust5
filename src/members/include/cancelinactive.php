@@ -43,5 +43,3 @@ if($member->update(array("onia"), array(0))) {
 	";
 
 }
- 
-?>

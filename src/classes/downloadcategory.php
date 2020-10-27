@@ -103,6 +103,3 @@ class DownloadCategory extends Rank {
 	
 	
 }
-
-
-?>

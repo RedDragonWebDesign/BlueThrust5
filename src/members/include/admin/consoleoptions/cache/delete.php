@@ -51,7 +51,3 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	include("view.php");
 	
 }
-
-
-
-?>

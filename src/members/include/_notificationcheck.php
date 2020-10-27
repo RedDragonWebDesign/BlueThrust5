@@ -141,8 +141,3 @@ if(isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 
 	
 }
-
-
-
-
-?>

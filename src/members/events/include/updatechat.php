@@ -55,5 +55,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventChatObj->select($_P
 	}
 	
 }
-
-?>

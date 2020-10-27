@@ -109,5 +109,3 @@ class Medal extends Rank {
 	}
 
 }
-
-?>

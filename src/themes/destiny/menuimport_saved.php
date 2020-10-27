@@ -52,6 +52,3 @@ if($menuSQL !== false) {
 else {
 	echo "2";
 }
-
-?>
-

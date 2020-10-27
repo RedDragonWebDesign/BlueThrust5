@@ -178,4 +178,3 @@ class Download extends Basic {
 	}
 	
 }
-?>

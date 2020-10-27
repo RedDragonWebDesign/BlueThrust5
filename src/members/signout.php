@@ -37,6 +37,3 @@ echo "
 window.location = '".$MAIN_ROOT."';
 </script>
 ";
-
-
-?>

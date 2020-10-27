@@ -28,5 +28,3 @@ if($countTableMatches > 0) {
 	";
 
 }
-
-?>

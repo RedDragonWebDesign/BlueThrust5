@@ -160,5 +160,3 @@ if($countErrors > 0) {
 
 
 include("loadpoolform.php");
-
-?>

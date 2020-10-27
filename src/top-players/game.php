@@ -220,6 +220,3 @@ include($prevFolder."include/breadcrumb.php");
 
 
 include($prevFolder."themes/".$THEME."/_footer.php");
-
-
-?>

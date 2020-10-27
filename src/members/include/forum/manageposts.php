@@ -375,6 +375,3 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && $_GET[
 	
 	
 }
-
-
-?>

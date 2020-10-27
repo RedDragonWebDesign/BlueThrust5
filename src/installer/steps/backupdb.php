@@ -135,5 +135,3 @@ if($_POST['checkBackup']) {
 	";
 
 }
-
-?>

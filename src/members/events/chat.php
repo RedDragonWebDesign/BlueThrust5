@@ -138,10 +138,3 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 </script>
 ";
-
-
-
-
-
-
-?>

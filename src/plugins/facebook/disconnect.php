@@ -44,6 +44,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $fbObj->hasFacebook($memb
 	";
 	
 }
-
-
-?>

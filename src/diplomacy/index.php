@@ -179,6 +179,3 @@ $breadcrumbObj->addCrumb("Diplomacy");
 <?php
 
 include($prevFolder."themes/".$THEME."/_footer.php");
-
-
-?>

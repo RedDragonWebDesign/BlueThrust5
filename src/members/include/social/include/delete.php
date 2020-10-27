@@ -11,8 +11,3 @@
  * License: http://www.bluethrust.com/license.php
  *
  */
-
-
-
-
-?>

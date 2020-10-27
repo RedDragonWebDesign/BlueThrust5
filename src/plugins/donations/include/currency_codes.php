@@ -62,5 +62,3 @@
 		"TRY" => array("symbol" => "&#8378;", "position" => "left"),
 		"USD" => array("symbol" => "$", "position" => "left")
 	);
-
-?>

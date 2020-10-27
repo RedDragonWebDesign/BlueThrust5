@@ -61,6 +61,3 @@
 		define("SHOW_ACCESSCACHE", true);
 		include("viewcache.php");
 	}
-
-
-?>

@@ -187,6 +187,3 @@ die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';
 
 
 include("../themes/".$THEME."/_footer.php");
-
-
-?>

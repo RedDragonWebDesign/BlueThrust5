@@ -66,5 +66,3 @@
 	}
 
 	echo json_encode($arrReturn);
-
-?>

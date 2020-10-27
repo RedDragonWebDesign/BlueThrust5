@@ -84,6 +84,3 @@ if($blnShowShoutBox) {
 else {
 	echo "no";	
 }
-
-
-?>

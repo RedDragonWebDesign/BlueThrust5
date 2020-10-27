@@ -109,5 +109,3 @@ if(count($arrDownloads) == 0) {
 }
 
 include($prevFolder."themes/".$THEME."/_footer.php");
-
-?>

@@ -103,6 +103,3 @@
 			return $this->intSelectedID;
 		}
 	}
-
-
-?>

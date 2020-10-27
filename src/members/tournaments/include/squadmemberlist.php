@@ -110,7 +110,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $squadObj->select($_POST[
 	}
 	
 }
-
-
-
-?>

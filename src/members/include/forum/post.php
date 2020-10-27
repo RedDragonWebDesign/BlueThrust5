@@ -416,6 +416,3 @@ function checkForAttachments() {
 
 	return $returnVal;
 }
-
-
-?>

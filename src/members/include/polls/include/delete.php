@@ -42,5 +42,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $pollObj->select($_POST['
 	define("SHOW_POLLLIST", true);
 	include("polllist.php");
 }
-
-?>

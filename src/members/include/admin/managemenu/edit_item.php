@@ -532,5 +532,3 @@ $setupFormArgs = array(
 $_POST['itemtype'] = $menuItemInfo['itemtype'];
 define("MANAGEMENU_FUNCTIONS", true);
 include("_functions.php");
-
-?>

@@ -60,6 +60,3 @@ if(count($arrComments) == 0) {
 
 
 echo "</div>";
-
-
-?>

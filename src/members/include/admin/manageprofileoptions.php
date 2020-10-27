@@ -119,6 +119,3 @@ if($_GET['oID'] == "") {
 elseif($_GET['oID'] != "" && $_GET['action'] == "edit") {
 	include("manageprofileoptions/edit.php");	
 }
-
-
-?>

@@ -100,7 +100,3 @@ if($_GET['cpID'] == "") {
 elseif($_GET['cpID'] != "" AND $_GET['action'] == "edit") {
 	include("custompages/edit.php");	
 }
-
-
-
-?>

@@ -120,6 +120,3 @@ function savePassword() {
 	$member->set_password($_POST['newpassword']);
 	$_SESSION['btPassword'] = $member->get_info("password");
 }
-
-	
-?>

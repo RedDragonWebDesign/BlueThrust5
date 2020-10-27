@@ -48,7 +48,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 	$pollObj->moveCache($_POST['direction'], $_POST['optionOrder']);
 	
 }
-
-
-
-?>

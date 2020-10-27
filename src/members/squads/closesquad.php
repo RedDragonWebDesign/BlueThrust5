@@ -152,7 +152,3 @@ if(!$_POST['submitted']) {
 		</script>
 	";
 }
-
-
-
-?>

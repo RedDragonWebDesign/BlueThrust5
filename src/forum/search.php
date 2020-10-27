@@ -291,4 +291,3 @@ function search_checks() {
 
 
 include($prevFolder."themes/".$THEME."/_footer.php");
-?>

@@ -286,5 +286,3 @@ elseif(!$_POST['submit']) {
 
 
 }
-
-?>

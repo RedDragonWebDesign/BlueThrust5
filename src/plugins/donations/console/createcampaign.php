@@ -43,5 +43,3 @@ $setRecurringBox = 0;
 include(BASE_DIRECTORY."plugins/donations/console/campaign_form.php");
 
 $setupFormArgs['components']['enddate']['options']['defaultDate'] = $defaultEndDate;
-
-?>

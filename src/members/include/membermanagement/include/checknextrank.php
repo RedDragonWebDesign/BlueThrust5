@@ -53,6 +53,3 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 else {
 	echo "Error";	
 }
-
-
-?>

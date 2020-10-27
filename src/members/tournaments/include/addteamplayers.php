@@ -190,5 +190,3 @@ if($blnErrorFullTeam) {
 ";
 
 }
-
-?>

@@ -92,7 +92,3 @@ if(!isset($_GET['rID']) || $_GET['rID'] == "") {
 elseif($_GET['rID'] != "" && $_GET['action'] == "edit") {
 	include("manageranks/edit.php");
 }
-
-
-
-?>

@@ -105,6 +105,3 @@ if(!isset($_GET['posID']) || (isset($_GET['posID']) && !$eventObj->objEventPosit
 elseif(isset($_GET['posID']) && $_GET['action'] == "edit") {
 	include("include/manageposition_edit.php");
 }
-
-
-?>

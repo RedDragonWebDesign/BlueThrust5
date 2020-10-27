@@ -178,6 +178,3 @@ $setupFormArgs = array(
 	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID."&mID=".$medalInfo['medal_id']."&action=edit", "method" => "post"),
 	"beforeAfter" => true
 );
-
-
-?>

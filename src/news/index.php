@@ -73,6 +73,4 @@ else {
 }
 
 
-include($prevFolder."themes/".$THEME."/_footer.php"); 
-
-?>
+include($prevFolder."themes/".$THEME."/_footer.php");

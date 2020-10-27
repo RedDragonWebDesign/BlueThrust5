@@ -107,6 +107,3 @@
 	$hooksObj->run("donate_form-".$_GET['campaign_id']);
 	
 	$donationForm->buildForm($setupFormArgs);
-
-	
-?>

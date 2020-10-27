@@ -130,5 +130,3 @@
 	$donationLogForm->buildForm($setupDonationFormArgs);
 	
 	$donationLogForm->show();
-
-?>

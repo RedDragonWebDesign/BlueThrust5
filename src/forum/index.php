@@ -187,4 +187,3 @@ echo "</table>";
 include(BASE_DIRECTORY."forum/forum_stats.php");
 
 include(BASE_DIRECTORY."themes/".$THEME."/_footer.php");
-?>

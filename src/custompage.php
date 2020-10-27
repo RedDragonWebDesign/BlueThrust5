@@ -45,4 +45,4 @@ include($prevFolder."include/breadcrumb.php");
 
 echo $customPageInfo['pageinfo'];
 
-include($prevFolder."themes/".$THEME."/_footer.php"); ?>
+include($prevFolder."themes/".$THEME."/_footer.php");

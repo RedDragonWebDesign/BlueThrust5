@@ -56,7 +56,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESSI
 
 
 }
-
-
-
-?>

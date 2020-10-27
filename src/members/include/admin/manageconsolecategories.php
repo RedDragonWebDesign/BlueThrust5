@@ -119,6 +119,3 @@ elseif($_GET['catID'] != "" AND $_GET['action'] == "edit") {
 	include("manageconsolecat/edit.php");
 	
 }
-
-
-?>

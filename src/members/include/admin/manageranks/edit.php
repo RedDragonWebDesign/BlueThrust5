@@ -631,6 +631,3 @@ if($checkMember) {
 	} else { echo "no1"; }
 }
 else { echo "no2"; }
-
-
-?>

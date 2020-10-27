@@ -43,6 +43,3 @@
 	elseif($_GET['action'] != "move") {
 		include($objManageList->strMainListLink);	
 	}
-		
-
-?>

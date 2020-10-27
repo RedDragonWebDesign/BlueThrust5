@@ -110,5 +110,3 @@ function saveNewsTicker() {
 	
 	$webInfoObj->multiUpdate($arrColumns, $arrValues);
 }
-
-?>

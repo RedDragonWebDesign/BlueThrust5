@@ -153,6 +153,3 @@ $setupFormArgs = array(
 	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
 	"description" => "Use the form below to edit your game stats.".$additionalNote
 );
-
-
-?>

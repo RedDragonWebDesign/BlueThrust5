@@ -171,6 +171,3 @@ class ConsoleCategory extends BasicOrder {
 	
 	
 }
-
-
-?>

@@ -266,6 +266,3 @@ if($blnShowCategoryList || true) {
 }
 
 include("../themes/".$THEME."/_footer.php");
-
-
-?>

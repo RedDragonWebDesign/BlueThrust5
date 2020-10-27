@@ -208,5 +208,3 @@ function prepareItemTypeChangeJS($arr) {
 	
 	return $returnVal;
 }
-
-?>

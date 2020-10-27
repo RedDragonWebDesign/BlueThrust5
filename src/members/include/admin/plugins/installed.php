@@ -200,4 +200,3 @@ echo "<table class='formTable' style='margin-top: 0px; border-spacing: 0px'>";
 	
 	</script>
 	";
-?>

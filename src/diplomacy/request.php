@@ -327,4 +327,3 @@ Thanks,\n
 
 <?php
 	include($prevFolder."themes/".$THEME."/_footer.php");
-?>

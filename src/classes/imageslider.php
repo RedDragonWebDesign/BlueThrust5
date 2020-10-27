@@ -278,5 +278,3 @@ class ImageSlider extends BasicOrder {
 	
 	
 }
-
-?>

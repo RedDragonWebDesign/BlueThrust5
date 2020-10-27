@@ -284,7 +284,3 @@ elseif($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
 	
 	
 }
-
-
-
-?>

@@ -208,6 +208,3 @@ if(!$_POST['submitted']) {
 	
 	
 }
-
-
-?>

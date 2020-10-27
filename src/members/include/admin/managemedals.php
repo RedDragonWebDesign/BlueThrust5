@@ -36,7 +36,3 @@ if($_GET['mID'] != "" && $medalObj->select($_GET['mID']) && $_GET['action'] == "
 elseif($_GET['action'] != "move") {	
 	include($objManageList->strMainListLink);
 }
-
-
-
-?>

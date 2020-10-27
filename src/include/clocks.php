@@ -23,5 +23,3 @@
 	if($websiteInfo['display_date'] == 1) {
 		$hooksObj->run("worldclock-display");
 	}
-	
-?>

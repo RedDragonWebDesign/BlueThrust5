@@ -56,6 +56,3 @@ if(count($arrManagers) == 0) {
 }
 
 $member->select($memberInfo['member_id']);
-
-?>
-

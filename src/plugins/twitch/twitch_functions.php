@@ -28,5 +28,3 @@
 		$breadcrumbObj->addCrumb($breadcrumbTitle);
 		
 	}
-	
-?>

@@ -1024,6 +1024,3 @@ class Member extends Basic {
 	
 	
 }
-
-
-?>

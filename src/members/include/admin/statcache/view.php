@@ -130,8 +130,3 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	}
 	
 }
-
-
-
-
-?>

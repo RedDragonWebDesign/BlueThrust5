@@ -125,4 +125,3 @@ if($result->num_rows == 0) {
 
 
 include(BASE_DIRECTORY."forum/templates/_footer.php");
-?>

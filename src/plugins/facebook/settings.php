@@ -186,6 +186,3 @@ else {
 
 
 include("../../themes/".$THEME."/_footer.php");
-
-
-?>

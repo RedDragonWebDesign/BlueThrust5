@@ -202,6 +202,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	}
 	
 }
-
-
-?>

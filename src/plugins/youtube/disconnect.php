@@ -41,6 +41,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $ytObj->hasYoutube($membe
 	";
 	
 }
-
-
-?>

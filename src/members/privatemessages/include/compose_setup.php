@@ -196,6 +196,3 @@ $(document).ready(function() {
 
 
 ";
-
-
-?>

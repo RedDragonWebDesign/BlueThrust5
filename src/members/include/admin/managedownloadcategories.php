@@ -120,6 +120,3 @@ elseif($_GET['catID'] != "" AND $_GET['action'] == "edit") {
 	include("managedownloadcat/edit.php");
 	
 }
-
-
-?>

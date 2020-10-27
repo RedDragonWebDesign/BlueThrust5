@@ -139,5 +139,3 @@ if(count($arrPM) == 0) {
 echo "</table>";
 
 }
-
-?>

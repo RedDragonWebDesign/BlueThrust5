@@ -122,5 +122,3 @@ elseif(!isset($_GET['action']) || (isset($_GET['action']) && !$menuCatObj->selec
 	
 	
 }
-
-?>

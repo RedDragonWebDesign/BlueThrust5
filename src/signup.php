@@ -106,4 +106,4 @@ if(!$_POST['submit']) {
 
 } ?>
 
-<?php include($prevFolder."themes/".$THEME."/_footer.php"); ?>
+<?php include($prevFolder."themes/".$THEME."/_footer.php");

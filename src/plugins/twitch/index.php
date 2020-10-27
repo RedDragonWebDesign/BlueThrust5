@@ -42,7 +42,4 @@ include(BASE_DIRECTORY."include/breadcrumb.php");
 
 $webInfoObj->displayPage();
 
-include(BASE_DIRECTORY."themes/".$THEME."/_footer.php"); 
-
-
-?>
+include(BASE_DIRECTORY."themes/".$THEME."/_footer.php");

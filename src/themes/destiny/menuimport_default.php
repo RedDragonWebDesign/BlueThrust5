@@ -98,6 +98,3 @@ if($mysqli->multi_query($fullSQL)) {
 	
 	
 }
-
-?>
-

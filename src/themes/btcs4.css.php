@@ -1623,4 +1623,3 @@ input[type=file] {
 	font-size: ".$arrCSSInfo['default-font-size'].";
 }
 ";
-?>

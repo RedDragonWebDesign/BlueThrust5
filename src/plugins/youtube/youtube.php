@@ -349,6 +349,3 @@
 			return $this->clientSecret;	
 		}
 	}
-		
-
-?>

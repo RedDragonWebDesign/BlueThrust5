@@ -424,6 +424,3 @@ if($blnPageSelect) {
 }
 
 include($prevFolder."themes/".$THEME."/_footer.php");
-
-
-?>

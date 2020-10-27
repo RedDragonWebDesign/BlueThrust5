@@ -63,5 +63,3 @@
 			return $returnVal;
 		}
 	}
-	
-?>

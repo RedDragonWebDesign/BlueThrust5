@@ -10,5 +10,3 @@ $linkOptionComponents = array(
 		"attributes" => array("class" => "textBox formInput", "style" => "width: 30%")
 	)
 );
-
-?>

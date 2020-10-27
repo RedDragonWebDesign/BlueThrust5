@@ -78,6 +78,3 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 if($counter == 0) {
 	echo "<option value='first'>(no other options in category)</option>";
 }
-
-
-?>

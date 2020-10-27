@@ -87,9 +87,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->
 	
 	
 }
-
-
-
-
-
-?>

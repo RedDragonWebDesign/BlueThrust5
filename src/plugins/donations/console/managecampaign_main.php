@@ -30,5 +30,3 @@
 		return "<a href='".MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&campaignID=".$campaignID."&p=log' title='View Donation Log'><img src='".MAIN_ROOT."plugins/donations/money.png' class='manageListActionButton'></a>";
 		
 	}
-	
-?>

@@ -467,5 +467,3 @@ if(!$_POST['submit']) {
 		</script>
 	";
 }
-
-?>

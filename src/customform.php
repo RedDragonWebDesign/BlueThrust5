@@ -377,8 +377,4 @@ if(!$_POST['submit']) {
 	echo "</div>";
 
 }
-include($prevFolder."themes/".$THEME."/_footer.php"); 
-
-
-
-?>
+include($prevFolder."themes/".$THEME."/_footer.php");

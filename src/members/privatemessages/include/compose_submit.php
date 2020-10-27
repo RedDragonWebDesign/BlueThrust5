@@ -160,5 +160,3 @@
 		unset($_SESSION['btComposeList'][$pmSessionID]);
 		
 	}
-	
-?>

@@ -11,5 +11,3 @@ $customWYSIWYGOptionComponents = array(
 
 
 );
-
-?>

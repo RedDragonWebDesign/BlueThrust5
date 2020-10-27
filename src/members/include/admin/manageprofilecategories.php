@@ -120,6 +120,3 @@ if($_GET['action'] == "") {
 elseif($_GET['catID'] != "" && $_GET['action'] == "edit") {
 	include("manageprofilecat/edit.php");	
 }
-
-?>
-

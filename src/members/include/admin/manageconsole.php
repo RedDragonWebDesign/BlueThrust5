@@ -133,8 +133,3 @@ if($_GET['cnID'] == "") {
 elseif($_GET['cnID'] != "" AND $_GET['action'] == "edit") {
 	include("consoleoptions/edit.php");
 }
-
-
-?>
-
-

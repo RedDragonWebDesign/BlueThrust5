@@ -74,6 +74,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	include("memberapplist.php");
 
 }
-
-
-?>

@@ -33,6 +33,3 @@ $socialObj = new Social($mysqli);
 
 define("SOCIALMEDIA_FORM", true);
 include(BASE_DIRECTORY."members/include/social/socialmedia_form.php");
-
-
-?>

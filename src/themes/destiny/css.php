@@ -115,5 +115,3 @@
 		"poll-profilepic-height" => "120px",
 		"page-selector-current-page-bg" => "rgba(0,63,116,.35) !important"
 	);
-	
-?>

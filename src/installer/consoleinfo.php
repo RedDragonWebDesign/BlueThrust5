@@ -825,6 +825,3 @@ $arrConsoleOptionInfo[112]['filename'] = "worldclocks/settings.php";
 $arrConsoleOptionInfo[112]['sortnum'] = "3";
 $arrConsoleOptionInfo[112]['hide'] = "0";
 $arrConsoleOptionInfo[112]['addsep'] = "0";
-
-
-?>

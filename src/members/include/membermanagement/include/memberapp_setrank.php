@@ -69,5 +69,3 @@ function memberAppSetRank() {
 
 	return $setRankOptions;
 }
-
-?>

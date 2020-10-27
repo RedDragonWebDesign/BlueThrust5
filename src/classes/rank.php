@@ -206,6 +206,3 @@ class Rank extends BasicOrder {
 	
 	
 }
-
-
-?>

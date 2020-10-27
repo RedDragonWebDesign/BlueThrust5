@@ -116,5 +116,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 	
 	
 }
-
-?>

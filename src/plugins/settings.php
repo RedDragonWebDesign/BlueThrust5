@@ -80,6 +80,3 @@ else {
 
 
 include(BASE_DIRECTORY."themes/".$THEME."/_footer.php");
-
-
-?>

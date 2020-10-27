@@ -112,4 +112,3 @@ function resetTournamentPassword() {
 		$formObj->saveAdditional['password'] = md5($_POST['tournamentpw']);
 	}
 }
-?>

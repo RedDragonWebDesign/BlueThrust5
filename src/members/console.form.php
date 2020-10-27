@@ -34,7 +34,3 @@
 	if(!$_POST['submit']) {
 		$formObj->show();	
 	}
-	
-	
-	
-?>

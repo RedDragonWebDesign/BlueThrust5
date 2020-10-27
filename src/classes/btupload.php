@@ -236,5 +236,3 @@ class BTUpload {
 		return $this->strUploadedFileName;
 	}
 }
-
-?>

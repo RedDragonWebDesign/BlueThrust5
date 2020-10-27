@@ -115,6 +115,3 @@ class btMySQL extends MySQLi {
 	}
 
 }
-
-
-?>

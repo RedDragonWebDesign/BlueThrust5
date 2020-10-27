@@ -81,5 +81,3 @@ if($blnShowShoutBox) {
 	
 	echo $shoutboxObj->dispShoutbox();
 }
-
-?>

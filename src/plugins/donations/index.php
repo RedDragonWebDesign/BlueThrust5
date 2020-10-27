@@ -74,6 +74,4 @@ include($prevFolder."include/breadcrumb.php");
 
 $webInfoObj->displayPage();
 
-include($prevFolder."themes/".$THEME."/_footer.php"); 
-
-?>
+include($prevFolder."themes/".$THEME."/_footer.php");

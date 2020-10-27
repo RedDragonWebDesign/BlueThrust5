@@ -319,7 +319,3 @@ class Event extends Basic {
 	}
 	
 }
-
-
-
-?>

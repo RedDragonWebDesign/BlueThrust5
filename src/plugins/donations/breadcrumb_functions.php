@@ -10,5 +10,3 @@ function setThankYouPageBreadcrumb() {
 	$breadcrumbObj->addCrumb($campaignInfo['title'], MAIN_ROOT."plugins/donations/?campaign_id=".$campaignInfo['donationcampaign_id']);
 	$breadcrumbObj->addCrumb("Thank You!");
 }
-
-?>

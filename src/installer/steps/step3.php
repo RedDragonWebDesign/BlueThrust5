@@ -442,7 +442,3 @@
 		include("step2.php");
 
 	}
-
-
-
-?>

@@ -11,7 +11,3 @@
 			"pagepath" => "plugins/twitch/twitch_functions.php"
 		)
 	);
-	
-	
-
-?>

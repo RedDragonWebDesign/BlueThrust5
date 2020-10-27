@@ -121,8 +121,3 @@ if(!isset($_GET['rID']) || $_GET['rID'] == "") {
 elseif($_GET['rID'] != "" AND $_GET['action'] == "edit") {
 	include("managerankcat/edit.php");
 }
-
-
-
-?>
-

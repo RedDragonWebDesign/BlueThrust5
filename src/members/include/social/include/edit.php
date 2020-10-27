@@ -53,6 +53,3 @@ $setupFormArgs['prefill'] = true;
 $setupFormArgs['attributes']['action'] .= "&sID=".$socialInfo['social_id']."&action=edit";
 $setupFormArgs['saveMessage'] = "Successfully saved social media icon!";
 $setupFormArgs['skipPrefill'] = array("ordernum");
-
-
-?>

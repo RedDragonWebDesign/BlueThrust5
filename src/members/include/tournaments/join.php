@@ -148,5 +148,3 @@
 	
 
 	include_once(BASE_DIRECTORY."members/include/tournaments/include/jointournamentfunctions.php");
-
-?>

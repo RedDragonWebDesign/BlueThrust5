@@ -215,5 +215,3 @@ if(!$_POST['submit']) {
 		</form>
 	";
 }
-
-?>

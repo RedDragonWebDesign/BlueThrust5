@@ -268,7 +268,3 @@ class CustomForm extends Basic {
 	
 	
 }
-
-
-
-?>

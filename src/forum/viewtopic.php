@@ -404,4 +404,3 @@ if($countManagablePosts > 0) {
 }
 
 include($prevFolder."themes/".$THEME."/_footer.php");
-?>

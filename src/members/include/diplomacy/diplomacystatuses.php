@@ -102,7 +102,3 @@ if(!isset($_GET['sID'])) {
 elseif($_GET['action'] == "edit" && isset($_GET['sID'])) {
 	include("include/editstatus.php");	
 }
-
-
-
-?>

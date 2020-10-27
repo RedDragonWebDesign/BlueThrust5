@@ -441,5 +441,3 @@ class BasicOrder extends Basic {
 	
 
 }
-
-?>

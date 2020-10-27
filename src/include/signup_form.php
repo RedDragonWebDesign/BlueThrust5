@@ -61,7 +61,3 @@
 
 	
 	$signUpForm->buildForm($setupSignupForm);
-	
-
-	
-?>

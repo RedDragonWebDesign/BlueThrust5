@@ -171,6 +171,3 @@ include("comments.php");
 	echo "</div>";
 
 include($prevFolder."themes/".$THEME."/_footer.php");
-
-
-?>

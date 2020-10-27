@@ -10,6 +10,3 @@
 	
 	
 	echo $pageInfo['html'];
-?>
-	
-	

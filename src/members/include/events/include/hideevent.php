@@ -53,6 +53,3 @@ if($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMembe
 	include("invitelist.php");
 	
 }
-
-
-?>

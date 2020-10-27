@@ -66,6 +66,3 @@ else {
 		<p align='center' class='main'>Download not found</p>
 	";
 }
-
-
-?>

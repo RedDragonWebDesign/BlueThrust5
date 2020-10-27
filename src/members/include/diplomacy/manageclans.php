@@ -109,7 +109,3 @@ elseif(isset($_GET['dID']) && $_GET['action'] == "edit") {
 	include("include/editclan.php");
 	
 }
-
-
-
-?>

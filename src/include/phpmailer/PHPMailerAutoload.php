@@ -31,6 +31,3 @@ function PHPMailerAutoload($classname)
 }
 
 spl_autoload_register('PHPMailerAutoload', true, true);
-
-
-?>

@@ -332,4 +332,3 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 	}
 	
 include($prevFolder."themes/".$THEME."/_footer.php");
-?>

@@ -89,5 +89,3 @@ if($checkMember) {
 if($LOGIN_FAIL) {
 die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."index.php?p=Login';</script>");
 }
-
-?>

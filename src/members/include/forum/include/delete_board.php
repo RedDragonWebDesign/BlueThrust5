@@ -60,6 +60,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $boardObj->select($_POST[
 
 	
 }
-
-
-?>

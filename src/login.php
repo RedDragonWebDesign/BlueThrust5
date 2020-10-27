@@ -131,5 +131,3 @@ elseif(constant("LOGGED_IN")) {
 }
 
 include("themes/".$THEME."/_footer.php");
-
-?>

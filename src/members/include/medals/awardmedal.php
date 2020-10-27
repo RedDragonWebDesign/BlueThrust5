@@ -204,5 +204,3 @@
 		$member->select($memberInfo['member_id']);
 		$member->logAction($logMessage);
 	}
-
-?>

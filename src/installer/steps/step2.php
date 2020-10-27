@@ -121,7 +121,3 @@
 		
 		include("step1.php");	
 	}
-
-
-
-?>

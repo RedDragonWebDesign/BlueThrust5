@@ -371,4 +371,4 @@ if($websiteInfo['maxdsl'] != 0) {
 ?>
 
 </div>
-<?php include($prevFolder."themes/".$THEME."/_footer.php"); ?>
+<?php include($prevFolder."themes/".$THEME."/_footer.php");

@@ -348,7 +348,3 @@ if($dispError != "") {
 		</script>
 		
 	";
-
-
-
-?>

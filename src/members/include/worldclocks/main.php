@@ -35,7 +35,3 @@
 
 	
 	$setupManageListArgs = $objManageList->getListArray();
-	
-	
-	
-?>

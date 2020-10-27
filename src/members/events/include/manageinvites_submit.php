@@ -35,5 +35,3 @@
 			$formObj->errors[] = "Unable to save information to the database.  Please contact the website administrator.";
 		}
 	}
-	
-?>

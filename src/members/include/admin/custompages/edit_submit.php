@@ -105,7 +105,3 @@ if($countErrors > 0) {
 	</script>
 	";
 }
-
-
-
-?>

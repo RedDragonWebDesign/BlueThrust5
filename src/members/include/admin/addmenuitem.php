@@ -523,5 +523,3 @@ $setupFormArgs = array(
 		"savePoll"
 	)
 );
-
-?>

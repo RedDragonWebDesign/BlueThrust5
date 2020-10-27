@@ -79,5 +79,3 @@ if($result->num_rows > 0) {
 		$_SESSION[$checkNewsUpdates] = $row['updatetime'];
 	}
 }
-
-?>

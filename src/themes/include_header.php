@@ -198,4 +198,3 @@ $blnDisplayNewsTicker = false;
 
 
 $hooksObj->addHook("worldclock-display", "displayDefaultWorldClock");
-?>

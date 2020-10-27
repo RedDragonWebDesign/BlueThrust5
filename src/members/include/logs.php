@@ -171,4 +171,3 @@ echo "</table>
 </script>
 
 ";
-?>

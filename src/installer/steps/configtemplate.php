@@ -36,5 +36,3 @@ $configInput = "<?php
 
 ?>
 ";
-
-?>

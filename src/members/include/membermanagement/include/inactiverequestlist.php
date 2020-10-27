@@ -265,5 +265,3 @@ $result = $mysqli->query("SELECT * FROM ".$dbprefix."iarequest ORDER BY requestd
 		";
 		
 	}
-	
-?>

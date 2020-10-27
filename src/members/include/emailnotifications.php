@@ -155,5 +155,3 @@ $setupFormArgs = array(
 	"description" => "Use the form below to set your e-mail notification settings.",
 	"saveAdditional" => array("tournament_unit" => $_POST['tournament_unitbefore'], "event_unit" => "event_unitbefore")
 );
-
-?>

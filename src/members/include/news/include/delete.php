@@ -64,6 +64,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 else {
 	echo $_POST['nID'];	
 }
-
-
-?>

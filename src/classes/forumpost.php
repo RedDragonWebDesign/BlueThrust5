@@ -244,7 +244,3 @@ class ForumPost extends Basic {
 	
 	
 }
-
-
-
-?>

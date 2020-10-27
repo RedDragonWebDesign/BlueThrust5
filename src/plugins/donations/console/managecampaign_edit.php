@@ -62,5 +62,3 @@ if(!$_POST['submit']) {
 }
 
 unset($setupFormArgs['saveAdditional']['datestarted']);
-
-?>

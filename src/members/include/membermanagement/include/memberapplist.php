@@ -170,6 +170,3 @@ if($result->num_rows == 0) {
 else {
 	$mysqli->query("UPDATE ".$dbprefix."memberapps SET seenstatus = '1' WHERE seenstatus = '0'");	
 }
-
-	
-?>

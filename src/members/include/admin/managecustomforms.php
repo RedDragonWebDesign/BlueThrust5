@@ -111,7 +111,3 @@ elseif($_GET['cfID'] != "" && $_GET['action'] == "edit") {
 	
 	include("custompages/edit_customforms.php");	
 }
-
-
-
-?>

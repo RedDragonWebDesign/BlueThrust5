@@ -97,6 +97,4 @@
 		$arrReturn = array("result"=>"fail", "errors"=>$arrErrors);		
 	}
 	
-	echo json_encode($arrReturn);	
-	
-?>
+	echo json_encode($arrReturn);

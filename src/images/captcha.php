@@ -122,6 +122,3 @@ else {
 	imagedestroy($im);
 
 }
-
-
-?>

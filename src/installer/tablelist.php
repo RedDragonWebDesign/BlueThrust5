@@ -104,6 +104,3 @@ $arrTableNames[100] = "tournamentpools_teams";
 $arrTableNames[101] = "tournaments";
 $arrTableNames[102] = "tournamentteams";
 $arrTableNames[103] = "websiteinfo";
-
-
-?>

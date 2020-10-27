@@ -79,5 +79,3 @@ class RankCategory extends Rank {
 	
 	
 }
-
-?>

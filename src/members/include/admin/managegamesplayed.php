@@ -115,8 +115,3 @@ if($_GET['gID'] == "") {
 elseif($_GET['gID'] != "" AND $_GET['action'] == "edit") {
 	include("gamesplayed/edit.php");
 }
-
-
-
-
-?>

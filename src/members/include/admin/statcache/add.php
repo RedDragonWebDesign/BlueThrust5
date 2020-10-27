@@ -341,10 +341,3 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 else {
 	header("HTTP/1.0 404 Not Found");
 }
-
-
-
-
-
-
-?>

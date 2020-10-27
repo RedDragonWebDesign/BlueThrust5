@@ -49,5 +49,3 @@ else {
 }
 
 include(BASE_DIRECTORY."forum/templates/_footer.php");
-
-?>

@@ -82,5 +82,3 @@ echo "</div>
 </script>
 
 ";
-
-?>

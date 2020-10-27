@@ -227,5 +227,3 @@ elseif(!$blnCheckForFacebook) {
 	";
 	
 }
-
-?>

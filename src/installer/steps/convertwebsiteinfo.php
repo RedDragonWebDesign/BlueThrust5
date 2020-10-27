@@ -29,4 +29,3 @@
 	}
 	
 	$websiteInfoObj->addNew(array("name", "value"), array("news_postsperpage", 10));
-?>

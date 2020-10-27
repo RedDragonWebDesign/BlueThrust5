@@ -149,6 +149,3 @@ if(count($arrSubmissions) == 0) {
 	";
 	
 }
-
-
-?>

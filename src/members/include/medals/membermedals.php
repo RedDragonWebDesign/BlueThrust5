@@ -45,6 +45,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $memberObj->select($_POST
 }
 
 echo $medalOptions;
-
-
-?>

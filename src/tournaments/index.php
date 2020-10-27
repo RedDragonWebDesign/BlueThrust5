@@ -148,7 +148,3 @@ include($prevFolder."include/breadcrumb.php");
 <?php
 
 include($prevFolder."themes/".$THEME."/_footer.php");
-
-
-?>
-			

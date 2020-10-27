@@ -60,5 +60,3 @@
 		$webInfoObj->multiUpdate($arrSettings, $arrValues);
 		
 	}
-
-?>

@@ -47,5 +47,3 @@
 	$setupFormArgs['attributes']['action'] .= "&clockID=".$clockInfo['clock_id']."&action=edit";
 	$setupFormArgs['saveMessage'] = "Successfully saved world clock!";
 	$setupFormArgs['saveLink'] = MAIN_ROOT."members/console.php?cID=".$_GET['cID'];
-	
-?>

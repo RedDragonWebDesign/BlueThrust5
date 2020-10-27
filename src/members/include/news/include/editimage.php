@@ -51,5 +51,3 @@ $setupFormArgs['saveType'] = "update";
 $setupFormArgs['prefill'] = true;
 $setupFormArgs['attributes']['action'] .= "&imgID=".$imageSliderInfo['imageslider_id']."&action=edit";
 $setupFormArgs['saveMessage'] = "Successfully saved home page image!";
-
-?>

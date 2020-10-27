@@ -50,6 +50,3 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($_
 	
 	
 }
-
-
-?>

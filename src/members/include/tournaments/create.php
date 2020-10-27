@@ -27,5 +27,3 @@ else {
 $cID = $_GET['cID'];
 
 include(BASE_DIRECTORY."members/include/tournaments/include/create_form.php");
-
-?>

@@ -123,6 +123,3 @@ if($totalDownloads == 0) {
 	";
 	
 }
-
-
-?>

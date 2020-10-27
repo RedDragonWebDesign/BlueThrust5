@@ -121,4 +121,3 @@ $btThemeObj->initHead();
 $breadcrumbObj = new BreadCrumb();
 
 include_once(BASE_DIRECTORY."plugins/mods.php");
-?>

@@ -21,5 +21,3 @@
 	$objManageList->strItemTitle = "Name:";
 	
 	$setupManageListArgs = $objManageList->getListArray();
-	
-?>

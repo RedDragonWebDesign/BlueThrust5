@@ -143,4 +143,4 @@ while($row = $result->fetch_assoc()) {
 }
 echo "</table>";
 
-include($prevFolder."themes/".$THEME."/_footer.php"); ?>
+include($prevFolder."themes/".$THEME."/_footer.php");

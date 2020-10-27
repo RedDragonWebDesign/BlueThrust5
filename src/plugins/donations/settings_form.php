@@ -113,5 +113,3 @@ function saveDonationSettings() {
 
 $EXTERNAL_JAVASCRIPT .= $formObj->getRichtextboxJSFile();
 $EXTERNAL_JAVASCRIPT .= $formObj->getColorpickerJSFile();
-
-?>

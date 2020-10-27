@@ -115,13 +115,3 @@ foreach($arrMatches as $matchID) {
 	echo "</div><div style='clear:both'></div>";	
 	
 }
-		
-	
-	
-	
-	
-
-
-
-
-?>

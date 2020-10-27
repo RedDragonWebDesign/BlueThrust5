@@ -114,5 +114,3 @@ if($checkMember) {
 		}
 	}
 }
-
-?>

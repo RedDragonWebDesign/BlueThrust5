@@ -162,6 +162,3 @@ echo "
 ";
 
 include("themes/".$THEME."/_footer.php");
-
-
-?>

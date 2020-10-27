@@ -19,5 +19,3 @@ if(!isset($websiteInfo['default_timezone']) || $websiteInfo['default_timezone'] 
 if(!isset($websiteInfo['allow_multiple_ips'])) {
 	$websiteInfo['allow_multiple_ips'] = true;
 }
-
-?>

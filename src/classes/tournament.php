@@ -962,6 +962,3 @@ class Tournament extends Basic {
 	}
 	
 }
-
-
-?>

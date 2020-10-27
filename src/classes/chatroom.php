@@ -133,6 +133,3 @@ class ChatRoom extends Basic {
 	
 	
 }
-
-
-?>

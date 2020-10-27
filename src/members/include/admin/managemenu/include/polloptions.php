@@ -21,6 +21,3 @@ $pollOptionComponents = array(
 		"options" => $pollOptions
 	)
 );
-
-
-?>

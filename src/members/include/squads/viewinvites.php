@@ -65,5 +65,3 @@ echo "</div>
 </script>
 
 ";
-
-?>

@@ -404,6 +404,3 @@ echo "<p>".$dispRankCatCount."</p>
 echo "<!-- ".phpversion()." -->";
 
 include("themes/".$THEME."/_footer.php");
-
-
-?>

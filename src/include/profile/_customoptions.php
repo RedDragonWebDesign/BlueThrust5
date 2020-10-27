@@ -40,5 +40,3 @@ while($row = $result->fetch_assoc()) {
 	
 	echo "</table>";
 }
-
-?>

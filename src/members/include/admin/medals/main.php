@@ -22,5 +22,3 @@
 	$objManageList->strItemTitle = "Medal Name:";
 
 	$setupManageListArgs = $objManageList->getListArray();
-	
-?>

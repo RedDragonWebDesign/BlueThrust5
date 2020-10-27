@@ -279,4 +279,3 @@ function BTCS4Loader($class_name) {
 spl_autoload_register("BTCS4Loader", true, true);
 
 include_once(BASE_DIRECTORY."include/phpmailer/PHPMailerAutoload.php");
-?>

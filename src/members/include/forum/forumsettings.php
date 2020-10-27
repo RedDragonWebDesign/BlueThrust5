@@ -327,6 +327,3 @@ $setupFormArgs = array(
 	"beforeAfter" => true,
 	"embedJS" => $embedJS
 );
-
-
-?>
