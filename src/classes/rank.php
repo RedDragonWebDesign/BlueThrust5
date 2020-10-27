@@ -185,7 +185,7 @@ class Rank extends BasicOrder {
 		global $MAIN_ROOT;
 		$result = parent::get_info_filtered($returnSingleValue);
 		
-		if(substr($result['imageurl'],0,4) != "http") {
+		if( isset($result['imageurl']) && substr($result['imageurl'],0,4) != "http") {
 			if($returnSingleValue == "") {
 			
 				$fullImageURL = $MAIN_ROOT.$result['imageurl'];

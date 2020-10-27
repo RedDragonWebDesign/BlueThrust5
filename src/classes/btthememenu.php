@@ -22,9 +22,11 @@
 		
 		public function __construct($dir, $sqlConnection) {
 			
-
-			$themeName = file_get_contents(BASE_DIRECTORY."themes/".$dir."/THEMENAME.txt");
-			$this->name = ($themeName) ? $themeName : "Unknown";
+			$this->name = "Unknown";
+			$fileToTry = BASE_DIRECTORY."themes/".$dir."/THEMENAME.txt";
+			if ( file_exists($fileToTry) ) {
+				$this->name = file_get_contents($fileToTry);
+			}
 			
 			$this->dir = $dir;
 			$this->MySQL = $sqlConnection;
@@ -374,8 +376,11 @@
 		
 		public function displayMenuItem() {
 			global $hooksObj;
-			$this->menuItemInfo['itemtype'] = ($this->menuItemInfo['itemtype'] == "customcode" || $this->menuItemInfo['itemtype'] == "customformat") ? "customblock" : $this->menuItemInfo['itemtype'];
-		
+			$this->menuItemInfo['itemtype'] = 
+				($this->menuItemInfo['itemtype'] == "customcode" ||
+				$this->menuItemInfo['itemtype'] == "customformat") ?
+				"customblock" :
+				$this->menuItemInfo['itemtype'];
 			
 			switch($this->menuItemInfo['itemtype']) {
 				case "link":
@@ -410,7 +415,7 @@
 					$this->menuItemObj->objShoutbox->select($this->menuItemInfo['itemtype_id']);
 
 					$this->displayShoutbox();
-					$arrShoutBoxIDs = $theme->data['shoutboxIDs'];
+					// $arrShoutBoxIDs = $theme->data['shoutboxIDs'];
 			
 					break;
 				case "newestmembers":

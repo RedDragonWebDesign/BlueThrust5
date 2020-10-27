@@ -37,7 +37,7 @@ class Member extends Basic {
 	
 	
 	
-	function select($memberID) {
+	function select($memberID, $numericIDOnly = true) {
 		$returnVal = false;
 		if(is_numeric($memberID)) {
 			
@@ -392,7 +392,7 @@ class Member extends Basic {
 			$memberRankCat->select($rankInfo['rankcategory_id']);
 			$memberColor = $memberRankCat->get_info_filtered("color");
 			
-			if($args['color']) {
+			if($args['color'] ?? '') {
 				$returnVal = "<span style='color: ".$rankInfo['color']."'><a href='".$MAIN_ROOT."profile.php?mID=".$memberInfo['member_id']."' style='color: ".$memberColor."' title='".$memberInfo['username']."'>".$memberInfo['username']."</a></span>";
 			}
 			else {

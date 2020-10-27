@@ -367,6 +367,9 @@ class Basic {
 	}
 	
 	public function get_info_filtered($returnSingleValue = "") {
+		if ( ! $this->arrObjInfo ) {
+			return $this->arrObjInfo;
+		}
 		
 		$arrFilteredInfo = array();
 		foreach($this->arrObjInfo as $key => $value) {

@@ -69,6 +69,7 @@ class ShoutBox {
 		}
 		
 		$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE newstype = '3'".$this->strSQLSort." ORDER BY dateposted");
+		$shoutBoxInfo = '';
 		while($row = $result->fetch_assoc()) {
 			
 			

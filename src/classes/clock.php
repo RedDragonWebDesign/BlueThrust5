@@ -53,7 +53,7 @@
 		public function displayClocks($return=false) {
 			
 			$clockArray = array();
-			$clockJS = "";
+			$clocksJS = "";
 			$result = $this->MySQL->query("SELECT clock_id FROM ".$this->strTableName." ORDER BY ordernum DESC");	
 			while($row = $result->fetch_assoc()) {
 				$this->select($row['clock_id']);	
