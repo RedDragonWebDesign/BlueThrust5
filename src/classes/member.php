@@ -405,7 +405,7 @@ class Member extends Basic {
 			}
 			
 			
-			if($args['wrapper'] === false) {
+			if( isset($args['wrapper']) && $args['wrapper'] === false ) {
 				$returnVal = MAIN_ROOT."profile.php?mID=".$this->intTableKeyValue;
 			}
 			

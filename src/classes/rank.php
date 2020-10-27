@@ -97,33 +97,24 @@ class Rank extends BasicOrder {
 	 * 
 	 */
 	function refreshImageSize() {
-		
 		if($this->intTableKeyValue != "") {
-			
-			
-			if($this->arrObjInfo['imagewidth'] == 0) {
-				$imageURL = $this->getLocalImageURL();
-			
-				$imageSize = getimagesize($imageURL);
-				$this->arrObjInfo['imagewidth'] = $imageSize[0];
-			
+			if ( $this->arrObjInfo['imageurl'] ) {
+				if($this->arrObjInfo['imagewidth'] == 0) {
+					$imageURL = $this->getLocalImageURL();
+					
+					$imageSize = getimagesize($imageURL);
+					$this->arrObjInfo['imagewidth'] = $imageSize[0];
+				}
+				
+				if($this->arrObjInfo['imageheight'] == 0) {
+					$imageURL = $this->getLocalImageURL();
+				
+					$imageSize = getimagesize($imageURL);
+					$this->arrObjInfo['imageheight'] = $imageSize[1];
+				}
 			}
-			
-			if($this->arrObjInfo['imageheight'] == 0) {
-				$imageURL = $this->getLocalImageURL();
-			
-				$imageSize = getimagesize($imageURL);
-				$this->arrObjInfo['imageheight'] = $imageSize[1];
-			
-			}
-		
-		
 		}
-		
-		
 	}
-
-	
 	
 	/**
 	 * - delete Method -

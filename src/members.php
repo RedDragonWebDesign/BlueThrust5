@@ -253,14 +253,14 @@ $totalMembers = array_sum($arrMemberCountCat);
 				$rankCatObj->select($key);
 				$rankCatInfo = $rankCatObj->get_info_filtered();
 				
-				$totalBars = round(($value/$totalMembers)*100);
+				$totalBars = $totalMembers ? round(($value/$totalMembers)*100) : 0;
 				//$dispBars = "|".str_repeat("|", $totalBars);
 				$dispBars = "<div class='solidBox' style='position: reltaive; padding: 0px; margin: 0px; width: 90%'><div class='tinyFont' style='width: ".$totalBars."%; background-color: ".$rankCatInfo['color']."'>&nbsp;</div></div>";
 				
 				echo "
 					<tr>
 						<td class='main' style='font-weight: bold; width: 40%'>Total ".$rankCatInfo['name'].":</td>
-						<td class='main' style='font-weight: bold; width: 20%'>".$value." - ".(round($value/$totalMembers,2)*100)."%</td>
+						<td class='main' style='font-weight: bold; width: 20%'>".$value." - ".($totalMembers ? (round($value/$totalMembers,2)*100) : 0)."%</td>
 						<td class='main' style='width: 40%'>".$dispBars."</td>
 					</tr>
 				
@@ -286,17 +286,17 @@ $totalMembers = array_sum($arrMemberCountCat);
 				$gameObj->select($value);
 				$gameInfo = $gameObj->get_info_filtered();
 				
-				if($arrTotalGamesPlayed[$value] == "") {
+				if( $arrTotalGamesPlayed[$value] ?? "" == "") {
 					$arrTotalGamesPlayed[$value] = 0;
 				}
 				
-				$totalBars = round(($arrTotalGamesPlayed[$value]/$totalMembers))*100;
+				$totalBars = $arrTotalGamesPlayed[$value] ? round(($arrTotalGamesPlayed[$value]/$totalMembers))*100 : 0;
 				$dispBars = "<div class='solidBox' style='position: reltaive; padding: 0px; margin: 0px; width: 90%'><div class='tinyFont alternateBGColor' style='width: ".$totalBars."%'>&nbsp;</div></div>";
 				
 				echo "
 					<tr>
 						<td class='main' style='font-weight: bold; width: 40%'>Total ".$gameInfo['name']." Players:</td>
-						<td class='main' style='font-weight: bold; width: 20%'>".$arrTotalGamesPlayed[$value]." - ".(round($arrTotalGamesPlayed[$value]/$totalMembers,2)*100)."%</td>
+						<td class='main' style='font-weight: bold; width: 20%'>".$arrTotalGamesPlayed[$value]." - ".($arrTotalGamesPlayed[$value] ? round($arrTotalGamesPlayed[$value]/$totalMembers,2)*100 : 0)."%</td>
 						<td class='main' style='letter-spacing: -4px; width: 40%'>".$dispBars."</td>
 					</tr>
 				
