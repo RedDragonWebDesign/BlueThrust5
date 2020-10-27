@@ -68,14 +68,27 @@ class ConsoleOption extends BasicSort {
 	}
 	
 	function findConsoleIDByName($strConsolePageTitle) {
+		global $sqlCache;
 		
 		$returnVal = false;
 		$strConsoleName = $this->MySQL->real_escape_string($strConsolePageTitle);
-		$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE pagetitle = '".$strConsoleName."'");
-		if($result->num_rows == 1) {
-			$row = $result->fetch_assoc();
-			if($this->select($row[$this->strTableKey])) {
-				$returnVal = $row[$this->strTableKey];
+		
+		if ( isset($sqlCache['console-pagetitle']) ) {
+			$result = sql_array_select_where(
+				$sqlCache['console-pagetitle'],
+				'pagetitle',
+				$strConsoleName
+			);
+			if ( count($result) === 1 ) {
+				$returnVal = $result[0][$this->strTableKey];
+			}
+		} else {
+			$result = $this->MySQL->query("SELECT console_id FROM ".$this->strTableName." WHERE pagetitle = '".$strConsoleName."'");
+			if($result->num_rows == 1) {
+				$row = $result->fetch_assoc();
+				if($this->select($row[$this->strTableKey])) {
+					$returnVal = $row[$this->strTableKey];
+				}
 			}
 		}
 		

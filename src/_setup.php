@@ -183,4 +183,13 @@ if ( $SQL_CACHE_ENABLED ) {
 			$sqlCache['rank_privileges'][] = $row;
 		}
 	}
+	
+	// classes/consoleoptions.php::findConsoleIDByName()
+	$sqlCache['console-pagetitle'] = [];
+	$result = $mysqli->query("SELECT * FROM ".$dbprefix."console");
+	if ( $result ) {
+		while ( $row = $result->fetch_assoc() ) {
+			$sqlCache['console-pagetitle'][ $row['pagetitle'] ] = $row;
+		}
+	}
 }
