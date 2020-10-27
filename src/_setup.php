@@ -15,7 +15,7 @@
 
 // Check PHP Version
 
-if(version_compare(phpversion(), "5.3") < 0) {
+if(version_compare(phpversion(), "7.0") < 0) {
 	die("You must be using at least PHP version 5.3 in order to run Bluethrust Clan Scripts v4.  Your current PHP Version: ".phpversion());	
 }
 
@@ -28,11 +28,6 @@ ini_set('session.gc_maxlifetime', 60*60*24*3);
 
 if(!isset($prevFolder)) {
 	$prevFolder = "";	
-}
-
-if(get_magic_quotes_gpc() == 1) {
-	foreach($_GET as $key=>$value) { $_GET[$key] = stripslashes($value); }
-	foreach($_POST as $key=>$value) { $_POST[$key] = stripslashes($value); }
 }
 
 
