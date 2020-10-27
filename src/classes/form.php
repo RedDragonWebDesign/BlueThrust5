@@ -126,15 +126,15 @@
 			
 			foreach($this->components as $componentName => $componentInfo) {
 				
-				$dispAttributes = $this->convertAttributes($componentInfo['attributes']);
+				$dispAttributes = $this->convertAttributes($componentInfo['attributes'] ?? '');
 				
-				$displayForm .= $componentInfo['before_html'];
+				$displayForm .= $componentInfo['before_html'] ?? '';
 				
 				// Output Component Name
-				if($componentInfo['display_name'] != "") {
+				if(($componentInfo['display_name'] ?? '') != "") {
 					$addValignComponents = array("file", "textarea", "beforeafter", "checkbox");
 					$addVAlign = in_array($componentInfo['type'], $addValignComponents) ? " formVAlignTop" : "";					
-					$dispToolTip = ($componentInfo['tooltip'] != "") ? " <a href='javascript:void(0)' onmouseover=\"showToolTip('".addslashes($componentInfo['tooltip'])."')\" onmouseout='hideToolTip()'>(?)</a>" : "";					
+					$dispToolTip = (($componentInfo['tooltip'] ?? '') != "") ? " <a href='javascript:void(0)' onmouseover=\"showToolTip('".addslashes($componentInfo['tooltip'])."')\" onmouseout='hideToolTip()'>(?)</a>" : "";					
 					$displayForm .= "
 						<label class='formLabel".$addVAlign."' style='display: inline-block'>".$componentInfo['display_name'].":".$dispToolTip."</label>		
 					";
@@ -344,11 +344,11 @@
 							$displayForm .= "<p class='dottedLine' style='margin: 0px; margin-top: 25px; padding-bottom: 2px'><b>".$componentInfo['options']['section_title']."</b></p>";
 						}
 						
-						if($componentInfo['options']['section_description'] != "") {
+						if(($componentInfo['options']['section_description'] ?? '') != "") {
 							$displayForm .= "<p>".$componentInfo['options']['section_description']."</p>";
 						}
 						
-						if($componentInfo['components'] != "" && is_array($componentInfo['components'])) {
+						if(isset($componentInfo['components']) && $componentInfo['components'] != "" && is_array($componentInfo['components'])) {
 							
 							$sectionFormObj = new Form();
 							$sectionFormObj->isContainer = true;
@@ -397,10 +397,10 @@
 						
 						break;
 					default:
-						$displayForm .= "<input type='".$componentInfo['type']."' name='".$componentName."' value='".$componentInfo['value']."' ".$dispAttributes.">";					
+						$displayForm .= "<input type='".$componentInfo['type']."' name='".$componentName."' value='".($componentInfo['value'] ?? '')."' ".$dispAttributes.">";					
 				}
 				
-				$displayForm .= $componentInfo['html'];
+				$displayForm .= $componentInfo['html'] ?? '';
 				
 				if($componentInfo['type'] != "section" && !isset($componentInfo['hidden'])) {
 					$displayForm .= "<br>";

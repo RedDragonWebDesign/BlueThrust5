@@ -12,6 +12,7 @@
  *
  */
 
+$pageoptions = '';
 
 // Config File
 $prevFolder = "../";
