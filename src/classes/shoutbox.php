@@ -137,7 +137,7 @@ class ShoutBox {
 	
 	public function prepareLinks($memberObj) {
 		
-		$this->memberObj->select($_SESSION['btUsername']);
+		$this->memberObj->select($_SESSION['btUsername'] ?? '');
 		$consoleObj = new ConsoleOption($this->MySQL);
 		$manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
 		$consoleObj->select($manageNewsCID);

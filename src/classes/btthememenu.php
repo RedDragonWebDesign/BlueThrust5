@@ -33,7 +33,7 @@
 
 			$this->memberObj = new Member($this->MySQL);
 			
-			$this->blnLoggedIn = $this->memberObj->select($_SESSION['btUsername']) && $this->memberObj->authorizeLogin($_SESSION['btPassword']);
+			$this->blnLoggedIn = $this->memberObj->select($_SESSION['btUsername'] ?? '') && $this->memberObj->authorizeLogin($_SESSION['btPassword']);
 			
 			$this->menuCatObj = new MenuCategory($this->MySQL);
 			$this->menuItemObj = new MenuItem($this->MySQL);
