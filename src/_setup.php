@@ -38,7 +38,7 @@ $SQL_PROFILER = [];
 // Check PHP Version
 
 if(version_compare(phpversion(), "7.0") < 0) {
-	die("You must be using at least PHP version 5.3 in order to run Bluethrust Clan Scripts v4.  Your current PHP Version: ".phpversion());	
+	die("You must be using at least PHP version 7.0 in order to run Bluethrust Clan Scripts v4.  Your current PHP Version: ".phpversion());	
 }
 
 
