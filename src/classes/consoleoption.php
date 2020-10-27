@@ -36,11 +36,24 @@ class ConsoleOption extends BasicSort {
 	
 	*/
 	function hasAccess($intRankID) {
+		global $sqlCache;
+		
 		$returnVal = false;
 		if(is_numeric($intRankID) && is_numeric($this->intTableKeyValue)) {
 			
-			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."rank_privileges WHERE rank_id = '$intRankID' AND console_id = '".$this->intTableKeyValue."'");
-			$countRows = $result->num_rows;
+			if ( isset($sqlCache['rank_privileges']) ) {
+				$result = sql_array_select_where(
+					$sqlCache['rank_privileges'],
+					'rank_id',
+					$intRankID,
+					'console_id',
+					$this->intTableKeyValue
+				);
+				$countRows = count($result);
+			} else {
+				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."rank_privileges WHERE rank_id = '$intRankID' AND console_id = '".$this->intTableKeyValue."'");
+				$countRows = $result->num_rows;
+			}
 			
 			if($countRows > 0) {
 				$returnVal = true;

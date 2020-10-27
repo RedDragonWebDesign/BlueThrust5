@@ -44,7 +44,8 @@ class Basic {
 	
 	*/
 	public function select($intIDNum, $numericIDOnly = true) {
-	
+		global $sqlCache;
+		
 		$returnVal = false;
 		if(!$numericIDOnly) {
 			$intIDNum = $this->MySQL->real_escape_string($intIDNum);
@@ -56,11 +57,20 @@ class Basic {
 		
 
 		if($checkID) {
-			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '$intIDNum'");
-			if($result->num_rows > 0) {
-				$this->arrObjInfo = $result->fetch_assoc();
-				$returnVal = true;
-				$this->intTableKeyValue = $intIDNum;
+			if ( isset($sqlCache[$this->strTableName]) ) {
+				$cache2 = $sqlCache[$this->strTableName];
+				if ( isset($cache2[$intIDNum]) ) {
+					$this->arrObjInfo = $cache2[$intIDNum];
+					$returnVal = true;
+					$this->intTableKeyValue = $intIDNum;
+				}
+			} else {
+				$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '$intIDNum'");
+				if($result->num_rows > 0) {
+					$this->arrObjInfo = $result->fetch_assoc();
+					$returnVal = true;
+					$this->intTableKeyValue = $intIDNum;
+				}
 			}
 		}
 

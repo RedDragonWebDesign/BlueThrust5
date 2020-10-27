@@ -286,6 +286,22 @@ function debug_string_backtrace() {
 	return $trace;
 }
 
+/** Dump your entire SQL table into an array. You can use this function to do a `WHERE $condition1Field = $condition1Value AND $condition2Field = $condition2Value` type query. */
+function sql_array_select_where($sqlTableAsArray, $condition1Field, $condition1Value, $condition2Field, $condition2Value) {
+	$result = [];
+	foreach ( $sqlTableAsArray as $row ) {
+		if (
+			isset($row[$condition1Field]) &&
+			$row[$condition1Field] == $condition1Value &&
+			isset($row[$condition2Field]) &&
+			$row[$condition1Field] == $condition2Value
+		) {
+			$result[] = $row;
+		}
+	}
+	return $result;
+}
+
 // Example usage: html_var_export($limit, '$limit');
 function html_var_export($var, $var_name = NULL)
 {
