@@ -385,7 +385,7 @@ function checkForAttachments() {
 
 		$arrDownloadID = array();
 		$arrDLColumns = array("downloadcategory_id", "member_id", "dateuploaded", "filename", "mimetype", "filesize", "splitfile1", "splitfile2");
-		for($i=1;$i<=$_POST['numofattachments'];$i++) {
+		for ( $i = 1; $i <= ($_POST['numofattachments'] ?? 0); $i++ ) {
 			
 			$tempPostName = "forumattachment_".$i;
 

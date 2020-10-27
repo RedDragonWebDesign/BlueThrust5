@@ -111,7 +111,7 @@ class ForumPost extends Basic {
 	
 	
 	public function getLink($fullLink=false, $individualPost=false) {
-		global $websiteInfo, $memberInfo;
+		global $websiteInfo, $memberInfo, $setPostsPerPage;
 				
 		$returnVal = "";
 		if($this->intTableKeyValue != "" && !$individualPost) {
@@ -222,7 +222,7 @@ class ForumPost extends Basic {
 			}
 						
 			
-			foreach($this->getTopicPosters() as $memberID) {
+			foreach($this->getTopicPosters() ?? [] as $memberID) {
 				
 				if($member->select($memberID) && $member->getEmailNotificationSetting("forum_post") == 1 && $member->get_info("email") != "") {					
 					

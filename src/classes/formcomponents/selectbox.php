@@ -14,6 +14,7 @@
 		}
 		
 		public function getHTML($componentName="", $componentValue="", $attributes=array()) {
+			$displayForm = '';
 			
 			if($componentName != "") {
 				$this->setComponentName($componentName);	
@@ -27,7 +28,8 @@
 				$this->setAttributes($attributes);	
 			}
 			
-			$dispAttributes = Form::convertAttributes($this->arrAttributes);
+			$form = new Form();
+			$dispAttributes = $form->convertAttributes($this->arrAttributes);
 			
 			$displayForm .= "<select name='".$this->componentName."' ".$dispAttributes.">";
 			foreach($this->arrOptions as $optionValue => $displayValue) {

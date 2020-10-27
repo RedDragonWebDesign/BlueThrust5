@@ -58,7 +58,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	}
 	
 	echo "
-		<div class='breadCrumbTitle'>Preview - ".filterText($_POST['previewSubject'])."</div>
+		<div class='breadCrumbTitle'>Preview - ".filterText($_POST['previewSubject'] ?? '')."</div>
 		<table class='forumTable'>
 			<tr>
 				<td class='boardPosterInfo' valign='top'>

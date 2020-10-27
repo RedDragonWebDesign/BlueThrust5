@@ -12,7 +12,8 @@
  *
  */
 
-
+$dispError = '';
+$countErrors = 0;
 
 require_once("../classes/forumboard.php");
 $boardObj = new ForumBoard($mysqli);
@@ -110,7 +111,7 @@ if(isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID']) && in_array(
 	";
 	}
 }
-elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && $_GET['action'] == "delete") {
+elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET['action'] ?? '') == "delete") {
 // DELETE POST	
 	
 	$postInfo = $boardObj->objPost->get_info_filtered();
@@ -163,7 +164,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && $_GET[
 	$member->logAction("Deleted post in topic: <a href='".$MAIN_ROOT."forum/viewtopic.php?tID=".$topicInfo['forumtopic_id']."'>".$boardObj->objPost->get_info_filtered("title")."</a>");
 	
 }
-elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && $_GET['action'] != "delete") {
+elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET['action'] ?? '') != "delete") {
 // EDIT POST
 
 	$postInfo = $boardObj->objPost->get_info();

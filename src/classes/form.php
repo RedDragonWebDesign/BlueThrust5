@@ -151,10 +151,10 @@
 						$displayForm .= "<textarea name='".$componentName."' ".$dispAttributes.">".$componentInfo['value']."</textarea>";
 						break;
 					case "richtextbox":
-						$afterJS .= $this->richTextboxJS($componentInfo['attributes']['id'], $componentInfo['allowHTML']);
+						$afterJS .= $this->richTextboxJS($componentInfo['attributes']['id'], $componentInfo['allowHTML'] ?? '');
 						$displayForm .= "
 							<div class='formInput' style='width: 100%'>
-								<textarea name='".$componentName."' ".$dispAttributes.">".$componentInfo['value']."</textarea>
+								<textarea name='".$componentName."' ".$dispAttributes.">".($componentInfo['value'] ?? '')."</textarea>
 							</div>
 						";
 						$countRichTextbox++;
@@ -263,14 +263,14 @@
 						$selectBoxObj->setComponentName($componentName);
 						$selectBoxObj->setAttributes($componentInfo['attributes']); 
 						$selectBoxObj->setOptions($componentInfo['options']);
-						$selectBoxObj->setComponentValue($componentInfo['value']);
+						$selectBoxObj->setComponentValue($componentInfo['value'] ?? '');
 						$selectBoxObj->setNonSelectableItems($componentInfo['non_selectable_items']);
 						$displayForm .= $selectBoxObj->getHTML();
 						
 						break;
 					case "checkbox": // Checkbox and radio are basically same thing, so checkbox falls through to radio section
 					case "radio":
-						if(is_array($componentInfo['options'])) {	
+						if(is_array($componentInfo['options'] ?? '')) {	
 							$componentCounter = 1;					
 							foreach($componentInfo['options'] as $optionValue => $displayValue) {
 								$dispSelected = "";
@@ -299,7 +299,7 @@
 						else {
 							
 							$dispChecked = "";
-							if($componentInfo['checked']) {
+							if($componentInfo['checked'] ?? '') {
 								$dispChecked = " checked";	
 							}
 							
@@ -421,7 +421,7 @@
 			}
 			
 			if(!$this->isContainer) {
-				echo "<form ".$dispFormAttributes.">".$this->wrapper[0].$dispErrors.$this->description."<div class='formTable'>".$displayForm."</div>".$this->wrapper[1]."<input type='hidden' name='checkCSRF' value='".$_SESSION['csrfKey']."'></form>";
+				echo "<form ".$dispFormAttributes.">".($this->wrapper[0] ?? '').$dispErrors.$this->description."<div class='formTable'>".$displayForm."</div>".($this->wrapper[1] ?? '')."<input type='hidden' name='checkCSRF' value='".$_SESSION['csrfKey']."'></form>";
 			}
 
 			
@@ -490,7 +490,7 @@
 			$returnVal = false;
 			foreach($this->components as $componentName => $componentInfo) {
 			
-				foreach($componentInfo['validate'] as $validateMethod) {
+				foreach(($componentInfo['validate'] ?? []) as $validateMethod) {
 					
 					$arrValidate = array();
 					if(is_array($validateMethod)) {
@@ -521,7 +521,7 @@
 								
 							}
 							elseif($componentInfo['type'] != "file" && trim($_POST[$componentName]) == "") {
-								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." may not be blank.";
+								$this->errors[] = (($arrValidate['customMessage'] ?? '') != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." may not be blank.";
 							}
 							break;
 						case "NUMBER_ONLY":
@@ -800,9 +800,11 @@
 					
 				}
 				
-				foreach($this->saveAdditional as $dbName => $dbValue) {
-					$arrColumns[] = $dbName;
-					$arrValues[] = $dbValue;	
+				if ( is_array($this->saveAdditional) ) {
+					foreach($this->saveAdditional as $dbName => $dbValue) {
+						$arrColumns[] = $dbName;
+						$arrValues[] = $dbValue;
+					}
 				}
 				
 				

@@ -189,7 +189,7 @@ class ForumBoard extends BasicSort {
 				
 				$arrRankAccess = $this->getRankAccessRules();
 				if($fullAccessOnly) {
-					$checkAccess = $arrRankAccess[$memberInfo['rank_id']] == 0;
+					$checkAccess = $arrRankAccess[$memberInfo['rank_id']] ?? '' == 0;
 				}
 				else {
 					$checkAccess = (($arrRankAccess[$memberInfo['rank_id'] ?? ''] ?? '') == 0 || ($arrRankAccess[$memberInfo['rank_id'] ?? ''] ?? '') == 1);
@@ -253,7 +253,7 @@ class ForumBoard extends BasicSort {
 			}
 			
 		}
-		$this->memberID = $memberid;
+		$this->memberID = $memberID;
 		return $returnVal;
 		
 	}
@@ -380,7 +380,6 @@ class ForumBoard extends BasicSort {
 	public function getAllBoards() {
 		
 		$arrReturn = array();
-		$temp = $this->intTableKeyValue;
 		$dbprefix = $this->MySQL->get_tablePrefix();
 		$result = $this->MySQL->query("SELECT ".$dbprefix."forum_board.forumboard_id FROM ".$dbprefix."forum_board, ".$dbprefix."forum_category WHERE ".$dbprefix."forum_board.forumcategory_id = ".$dbprefix."forum_category.forumcategory_id AND ".$dbprefix."forum_board.subforum_id = '0' ORDER BY ".$dbprefix."forum_category.ordernum DESC, ".$dbprefix."forum_board.sortnum");
 		while($row = $result->fetch_assoc()) {
@@ -390,9 +389,8 @@ class ForumBoard extends BasicSort {
 			$arrReturn = array_unique(array_merge($arrReturn, $this->getAllSubForums()));
 		}
 		
-		$this->select($intTableKeyValue);
+		$this->select($this->intTableKeyValue);
 
-		
 		return $arrReturn;
 	}
 	
