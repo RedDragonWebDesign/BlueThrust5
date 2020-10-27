@@ -13,6 +13,28 @@
  */
 
 
+
+// Error reporting default = off.
+$debug = false;
+mysqli_report(MYSQLI_REPORT_OFF);
+error_reporting(0);
+ini_set('display_errors', '0');
+
+function debug() {
+	global $debug;
+	$debug = true;
+	mysqli_report(MYSQLI_REPORT_STRICT);
+	error_reporting(E_ALL);
+	ini_set('display_errors', '1');
+}
+
+
+
+// DECLARE GLOBAL VARIABLES
+$SQL_PROFILER = [];
+
+
+
 // Check PHP Version
 
 if(version_compare(phpversion(), "7.0") < 0) {
@@ -22,7 +44,6 @@ if(version_compare(phpversion(), "7.0") < 0) {
 
 // This setup page should not be changed.  Edit _config.php to configure your website.
 
-ini_set('display_errors', 1);
 ini_set('session.use_only_cookies', 1);
 ini_set('session.gc_maxlifetime', 60*60*24*3);
 
@@ -90,20 +111,11 @@ if(!isset($_SESSION['appendIP'])) {
 $IP_ADDRESS = $_SERVER['REMOTE_ADDR'];
 
 // Check Debug Mode
-
 if($websiteInfo['debugmode'] == 1) {
-	ini_set('display_errors', 1);
-	ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT);
+	debug();
 }
-else {
-	ini_set('display_errors', 0);
-	ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT);
-	//ini_set('error_reporting', E_ALL);
-}
-
 
 // Check for Ban
-
 $ipbanObj = new IPBan($mysqli);
 if($ipbanObj->isBanned($IP_ADDRESS)) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");

@@ -89,3 +89,5 @@
 			setTimeout("reloadShoutbox()", 20000);
 		
 		</script>
+		
+		<?php require_once('sql-profiler.php'); ?>
