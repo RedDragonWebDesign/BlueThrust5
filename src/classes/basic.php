@@ -371,7 +371,7 @@ class Basic {
 		}
 		else {
 			
-			$returnVal = $this->arrObjInfo[$returnSingleValue];
+			$returnVal = $this->arrObjInfo[$returnSingleValue] ?? '';
 		}
 		
 		return $returnVal;

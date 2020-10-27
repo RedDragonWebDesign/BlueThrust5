@@ -12,6 +12,8 @@
  *
  */
 
+$catoptions = '';
+
 require_once("../classes/forumboard.php");
 require_once("../classes/rankcategory.php");
 
@@ -65,7 +67,7 @@ $rankCatObj = new RankCategory($mysqli);
 $rankObj = new Rank($mysqli);
 $tempMemObj = new Member($mysqli);
 
-if($_POST['submit']) {
+if( ! empty($_POST['submit']) ) {
 	
 	// Check Board Name
 	
@@ -83,7 +85,7 @@ if($_POST['submit']) {
 	
 	// Check Subforum
 	
-	if($_POST['subforum'] == 1 && $boardObj->select($_POST['subforumboard'])) {
+	if(($_POST['subforum'] ?? '') == 1 && $boardObj->select($_POST['subforumboard'])) {
 		$setSubForum = $_POST['subforumboard'];
 	}
 	else {
@@ -116,10 +118,10 @@ if($_POST['submit']) {
 		while($row = $result->fetch_assoc()) {
 
 			$checkboxName = "rankaccess_".$row['rank_id'];
-			if($_SESSION['btRankAccessCache'][$checkboxName] == "1") {
+			if(($_SESSION['btRankAccessCache'][$checkboxName] ?? '') == "1") {
 				$arrRanks[$row['rank_id']] = 1;
 			}
-			elseif($_SESSION['btRankAccessCache'][$checkboxName] == "2") {
+			elseif(($_SESSION['btRankAccessCache'][$checkboxName] ?? '') == "2") {
 				$arrRanks[$row['rank_id']] = 0;
 			}
 			
@@ -141,7 +143,7 @@ if($_POST['submit']) {
 		$arrColumns = array("forumcategory_id", "name", "description", "sortnum", "accesstype", "subforum_id");
 		$arrValues = array($_POST['forumcat'], $_POST['boardname'], $_POST['boarddesc'], $intNewOrderSpot, $_POST['accesstype'], $setSubForum);
 		
-		if($boardObj->addNew($arrColumns, $arrValues) && $boardObj->secureBoard($arrRanks, $arrMembers)) {
+		if($boardObj->addNew($arrColumns, $arrValues) && $boardObj->secureBoard($arrRanks, ($arrMembers ?? []))) {
 			$boardInfo = $boardObj->get_info_filtered();
 			echo "
 				<div style='display: none' id='successBox'>
@@ -175,7 +177,7 @@ if($_POST['submit']) {
 }
 
 
-if(!$_POST['submit']) {
+if( empty($_POST['submit']) ) {
 	
 	if($dispError != "") {
 		$dispError = "
@@ -223,11 +225,11 @@ if(!$_POST['submit']) {
 				</tr>
 				<tr>
 					<td class='formLabel'>Board Name:</td>
-					<td class='main'><input type='text' value='".$_POST['boardname']."' name='boardname' class='textBox' style='width: 250px'></td>
+					<td class='main'><input type='text' value='".($_POST['boardname'] ?? '')."' name='boardname' class='textBox' style='width: 250px'></td>
 				</tr>
 				<tr>
 					<td class='formLabel' valign='top'>Description:</td>
-					<td class='main'><textarea name='boarddesc' class='textBox' style='width: 250px; height: 85px'>".$_POST['boarddesc']."</textarea></td>
+					<td class='main'><textarea name='boarddesc' class='textBox' style='width: 250px; height: 85px'>".($_POST['boarddesc'] ?? '')."</textarea></td>
 				</tr>
 				<tr>
 					<td class='formLabel'>Category:</td>

@@ -4,8 +4,8 @@
 		exit();	
 	}
 	
-	$setFilterTopic = ($filterTopic == 0) ? "" : "data-topic='".$filterTopic."'";
-	$setFilterBoard = ($filterBoard == 0) ? "" : "data-board='".$filterBoard."'";
+	$setFilterTopic = empty($filterTopic) ? "" : "data-topic='".$filterTopic."'";
+	$setFilterBoard = empty($filterBoard) ? "" : "data-board='".$filterBoard."'";
 	
 	$arrSearchFilterURL = array();
 	if($setFilterTopic != "") {

@@ -192,16 +192,16 @@ class ForumBoard extends BasicSort {
 					$checkAccess = $arrRankAccess[$memberInfo['rank_id']] == 0;
 				}
 				else {
-					$checkAccess = ($arrRankAccess[$memberInfo['rank_id']] == 0 || $arrRankAccess[$memberInfo['rank_id']] == 1);	
+					$checkAccess = (($arrRankAccess[$memberInfo['rank_id'] ?? ''] ?? '') == 0 || ($arrRankAccess[$memberInfo['rank_id'] ?? ''] ?? '') == 1);
 				}
 				
 				
-				if((isset($arrRankAccess[$memberInfo['rank_id']]) && $checkAccess) || $memberInfo['rank_id'] == 1) {
+				if((isset($arrRankAccess[$memberInfo['rank_id'] ?? '']) && $checkAccess) || ($memberInfo['rank_id'] ?? '') == 1) {
 					$checkCount++;
 				}
 				
 				$arrMembers = $this->getMemberAccessRules();
-				$memberAccessIsSet = isset($arrMembers[$memberInfo['member_id']]);
+				$memberAccessIsSet = isset($arrMembers[$memberInfo['member_id'] ?? '']);
 				
 				if($memberAccessIsSet && !$fullAccessOnly && $arrMembers[$memberInfo['member_id']] != 0) {
 					$checkCount++;

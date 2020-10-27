@@ -10,6 +10,8 @@
  * License: http://www.bluethrust.com/license.php
  *
  */
+ 
+$rankCounter = 0;
 
 require_once("../../../../_setup.php");
 require_once("../../../../classes/member.php");
@@ -84,10 +86,10 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 			foreach($arrRanks as $rankID) {
 				
 				$dispRankAccess = "";
-				if($_SESSION['btRankAccessCache']["rankaccess_".$rankID] == 1) {
+				if(($_SESSION['btRankAccessCache']["rankaccess_".$rankID] ?? '') == 1) {
 					$dispRankAccess = " - <span class='allowText' style='font-style: italic'>Read-Only</span>";
 				}
-				elseif($_SESSION['btRankAccessCache']["rankaccess_".$rankID] == 2) {
+				elseif(($_SESSION['btRankAccessCache']["rankaccess_".$rankID] ?? '') == 2) {
 					$dispRankAccess = " - <span class='pendingFont' style='font-style: italic'>Full Access</span>";
 				}
 				
