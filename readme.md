@@ -18,7 +18,7 @@
 
 The original author was nice enough to open source the scripts, [created a GitHub](https://github.com/bluethrust/clanscripts) for them, and released them with a license that allowed modification and redistribution.
 
-However, the original author went inactive in 2014, and these scripts are now [abandonware](https://en.wikipedia.org/wiki/Abandonware).
+I attempted to contact him via a couple of different email addresses. I didn't get a response. The original GitHub hasn't been updated since 2014. The BlueThrust.com website has a version of the scripts that haven't been updated since 2016.
 
 I was hired by a client in 2020 to update these scripts and add features. As a result, I became pretty familiar with them.
 
@@ -51,14 +51,14 @@ Please report all bugs, security issues, and feature requests.
 
 Create a GitHub account, then [create an issue](https://github.com/RedDragonWebDesign/BlueThrust5).
 
-## I am available for hire
+## Need help?
 
 Do you just want these scripts up and running? Not interested in the technical details? I'm available for hire. I can help with any/all of the following:
 
 - Buying a domain name
 - Buying web hosting
-- Installing and configuring BlueThrust5
-- Making custom modifications to BlueThrust5
+- Installing and configuring BlueThrust
+- Making custom modifications to BlueThrust
 
 [Click here](https://www.reddragonwebdesign.com/contact/) to send me an email.
 
@@ -69,6 +69,10 @@ Would you like a different website skin? There are 29 to choose from. Head on ov
 ## Developer Notes
 
 Interested in contributing? Here's some [developer notes](https://github.com/RedDragonWebDesign/BlueThrust5/wiki/Developer-Notes).
+
+## Leave A Star
+
+If you like this fork or found it useful, please consider leaving us a star.
 
 ## Screenshots
 
