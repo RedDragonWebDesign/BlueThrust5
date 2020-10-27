@@ -23,9 +23,9 @@ else {
 	}
 }
 
-require_once($prevFolder."classes/btupload.php");
-require_once($prevFolder."classes/consolecategory.php");
-require_once($prevFolder."classes/rankcategory.php");
+include_once($prevFolder."classes/btupload.php");
+include_once($prevFolder."classes/consolecategory.php");
+include_once($prevFolder."classes/rankcategory.php");
 
 $cID = $_GET['cID'];
 $rankCatObj = new RankCategory($mysqli);
@@ -34,7 +34,7 @@ $consoleCatObj = new ConsoleCategory($mysqli);
 $failbanObj = new Basic($mysqli, "failban", "failban_id");
 $intMaxAttempts = 3;
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 
 	$countErrors = 0;
 	
@@ -235,7 +235,7 @@ if(($_POST['submit'] ?? '')) {
 
 }
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	$_SESSION['btAccessRules'] = array();
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory WHERE adminoption != '1' ORDER BY ordernum DESC");
 	while($row = $result->fetch_assoc()) {

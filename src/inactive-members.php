@@ -16,11 +16,11 @@
 // Config File
 $prevFolder = "";
 
-require_once($prevFolder."_setup.php");
-require_once($prevFolder."classes/member.php");
-require_once($prevFolder."classes/rank.php");
-require_once($prevFolder."classes/rankcategory.php");
-require_once($prevFolder."classes/game.php");
+include($prevFolder."_setup.php");
+include($prevFolder."classes/member.php");
+include_once($prevFolder."classes/rank.php");
+include_once($prevFolder."classes/rankcategory.php");
+include_once($prevFolder."classes/game.php");
 
 // Classes needed for index.php
 
@@ -43,7 +43,7 @@ if($ipbanObj->select($IP_ADDRESS, false)) {
 // Start Page
 $PAGE_NAME = "Inactive Members - ";
 $dispBreadCrumb = "";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 $member = new Member($mysqli);
 $rankObj = new Rank($mysqli);
@@ -120,4 +120,4 @@ else {
 	
 }
 
-require_once($prevFolder."themes/".$THEME."/_footer.php"); ?>
+include($prevFolder."themes/".$THEME."/_footer.php"); ?>

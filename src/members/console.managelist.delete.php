@@ -12,7 +12,7 @@
  *
  */
 
-require_once("../_setup.php");
+include("../_setup.php");
 
 $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
@@ -32,7 +32,7 @@ else {
 	$requireFile = $consoleInfo['filename'];	
 }
 
-require_once($requireFile);
+require($requireFile);
 if(!isset($objManageList)) {
 	exit();	
 }
@@ -51,8 +51,8 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			
 			$objManageList->delete();
 			
-			require_once($objManageList->strMainListLink);
-			require_once(BASE_DIRECTORY."members/console.managelist.list.php");
+			include($objManageList->strMainListLink);
+			include(BASE_DIRECTORY."members/console.managelist.list.php");
 			
 		}
 		else {

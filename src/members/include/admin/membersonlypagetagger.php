@@ -14,8 +14,8 @@
 
 
 
-require_once("../../../_setup.php");
-require_once("../../../classes/member.php");
+include_once("../../../_setup.php");
+include_once("../../../classes/member.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 
@@ -109,7 +109,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		if($taggerObj->select($_POST['pageID'])) {
 			
 			$taggerObj->delete();	
-			require_once("membersonlypageslist.php");
+			include("membersonlypageslist.php");
 			
 		}		
 	}

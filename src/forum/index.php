@@ -15,7 +15,7 @@
 // Config File
 $prevFolder = "../";
 
-require_once($prevFolder."_setup.php");
+include($prevFolder."_setup.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $boardObj = new ForumBoard($mysqli);
@@ -27,25 +27,9 @@ $categoryObj = new BasicOrder($mysqli, "forum_category", "forumcategory_id");
 $categoryObj->set_assocTableName("forum_board");
 $categoryObj->set_assocTableKey("forumboard_id");
 
-
-$ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
-
-if($ipbanObj->select($IP_ADDRESS, false)) {
-	$ipbanInfo = $ipbanObj->get_info();
-
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
-		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
-		$ipbanObj->delete();
-	}
-
-}
-
-
 // Start Page
 $PAGE_NAME = "Forum - ";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include(BASE_DIRECTORY."themes/".$THEME."/_header.php");
 
 // Check Private Forum
 
@@ -67,13 +51,15 @@ if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION
 $breadcrumbObj->setTitle("Forum");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Forum");
-require_once($prevFolder."include/breadcrumb.php");
+include($prevFolder."include/breadcrumb.php");
 
 $boardObj->showSearchForm();
 echo "	
 	<table class='forumTable'>
 ";
 
+// Latest Post
+$arrLatestPostInfo = array("time" => 0, "id" => 0);
 
 $result = $mysqli->query("SELECT forumcategory_id FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
 while($row = $result->fetch_assoc()) {
@@ -109,6 +95,12 @@ while($row = $result->fetch_assoc()) {
 				
 				$boardObj->objPost->select($lastPostID);
 				$lastPostInfo = $boardObj->objPost->get_info_filtered();
+				
+				if($lastPostInfo['dateposted'] > $arrLatestPostInfo['time']) {
+					$arrLatestPostInfo['time'] = $lastPostInfo['dateposted'];
+					$arrLatestPostInfo['id'] = $lastPostInfo['forumpost_id'];
+				}
+				
 				
 				$postMemberObj->select($lastPostInfo['member_id']);
 				
@@ -178,7 +170,6 @@ while($row = $result->fetch_assoc()) {
 }
 
 if($result->num_rows == 0) {
-
 	echo "
 		
 		<div class='shadedBox' style='width: 40%; margin: 20px auto'>
@@ -188,13 +179,12 @@ if($result->num_rows == 0) {
 		</div>
 	
 	";
-	
 }
 
 
 echo "</table>";
 
+include(BASE_DIRECTORY."forum/forum_stats.php");
 
-
-require_once($prevFolder."themes/".$THEME."/_footer.php");
+include(BASE_DIRECTORY."themes/".$THEME."/_footer.php");
 ?>

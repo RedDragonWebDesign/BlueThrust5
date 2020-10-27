@@ -16,7 +16,7 @@
 		
 		$setupManageListArgs = json_decode($_POST['listArgs'], true);
 
-		require_once("../_setup.php");
+		include("../_setup.php");
 
 		
 		$member = new Member($mysqli);
@@ -39,6 +39,7 @@
 	echo "
 	
 		<table class='formTable' style='border-spacing: 0px; margin-top: 0px'>
+
 	";
 
 		$counter = 0;

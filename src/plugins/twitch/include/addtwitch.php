@@ -1,7 +1,7 @@
 <?php
 
 	$prevFolder = "../../../";
-	require_once($prevFolder."_setup.php");
+	include_once($prevFolder."_setup.php");
 	
 	// Start Page
 	$consoleObj = new ConsoleOption($mysqli);

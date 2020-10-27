@@ -11,11 +11,11 @@
  *
  */
 $prevFolder = "../../";
-require_once("../../_setup.php");
-require_once("../../classes/member.php");
-require_once("../../classes/rank.php");
-require_once("../../classes/btplugin.php");
-require_once("../../classes/consolecategory.php");
+include_once("../../_setup.php");
+include_once("../../classes/member.php");
+include_once("../../classes/rank.php");
+include_once("../../classes/btplugin.php");
+include_once("../../classes/consolecategory.php");
 
 // Plugin Info
 

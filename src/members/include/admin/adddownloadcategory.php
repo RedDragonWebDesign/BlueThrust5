@@ -23,13 +23,13 @@ else {
 	}
 }
 
-require_once($prevFolder."classes/downloadcategory.php");
+include_once($prevFolder."classes/downloadcategory.php");
 $cID = $_GET['cID'];
 
 $downloadCatObj = new DownloadCategory($mysqli);
 $downloadExtObj = new Basic($mysqli, "download_extensions", "extension_id");
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	// Check Category Name
 	
@@ -124,7 +124,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 
 	$countCategories = 0;
 	

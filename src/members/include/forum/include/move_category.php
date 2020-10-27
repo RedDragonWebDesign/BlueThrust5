@@ -14,8 +14,8 @@
  */
 
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
+include("../../../../_setup.php");
+include_once("../../../../classes/member.php");
 
 
 $member = new Member($mysqli);
@@ -42,7 +42,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		$categoryObj->move($_POST['cDir']);
 
-		require_once("main_managecategory.php");
+		include("main_managecategory.php");
 
 	}
 

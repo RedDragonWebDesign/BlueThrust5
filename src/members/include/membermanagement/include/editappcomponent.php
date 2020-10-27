@@ -13,7 +13,7 @@
  */
 
 $prevFolder = "../../../../";
-require_once($prevFolder."_setup.php");
+include_once($prevFolder."_setup.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $member = new Member($mysqli);
@@ -35,7 +35,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		$appComponentObj->set_assocTableName("app_selectvalues");
 		$appComponentObj->set_assocTableKey("appselectvalue_id");
 
-		require_once(BASE_DIRECTORY."members/include/membermanagement/include/appcomponent_form.php");
+		include(BASE_DIRECTORY."members/include/membermanagement/include/appcomponent_form.php");
 		if($_POST['saveComponent']) {
 			
 			

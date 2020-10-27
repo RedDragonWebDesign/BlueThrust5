@@ -14,7 +14,7 @@
 
 
 
-require_once("../classes/forumboard.php");
+include_once("../classes/forumboard.php");
 $boardObj = new ForumBoard($mysqli);
 
 if(isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {
@@ -110,7 +110,7 @@ if(isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID']) && in_array(
 	";
 	}
 }
-elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET['action'] ?? '') == "delete") {
+elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && $_GET['action'] == "delete") {
 // DELETE POST	
 	
 	$postInfo = $boardObj->objPost->get_info_filtered();
@@ -163,7 +163,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 	$member->logAction("Deleted post in topic: <a href='".$MAIN_ROOT."forum/viewtopic.php?tID=".$topicInfo['forumtopic_id']."'>".$boardObj->objPost->get_info_filtered("title")."</a>");
 	
 }
-elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET['action'] ?? '') != "delete") {
+elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && $_GET['action'] != "delete") {
 // EDIT POST
 
 	$postInfo = $boardObj->objPost->get_info();
@@ -178,7 +178,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 	
 	
 	
-	if(($_POST['submit'] ?? '')) {
+	if($_POST['submit']) {
 		
 		$_POST['wysiwygHTML'] = str_replace("<?", "&lt;?", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("?>", "?&gt;", $_POST['wysiwygHTML']);
@@ -238,7 +238,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 		
 	}
 	
-	if(!($_POST['submit'] ?? '')) {
+	if(!$_POST['submit']) {
 		
 		if($topicPostInfo['forumpost_id'] == $postInfo['forumpost_id']) {
 			$dispEditTitle = "<input type='text' id='postSubject' name='topicname' value='".$topicPostInfo['title']."' class='textBox' style='width: 250px'>";
@@ -255,7 +255,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 		<div class='formDiv'>
 		";
 		
-		if(($dispError ?? '') != "") {
+		if($dispError != "") {
 			echo "
 			<div class='errorDiv'>
 			<strong>Unable to edit post because the following errors occurred:</strong><br><br>
@@ -308,7 +308,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,unlink,image,emotions,|,quotebbcode,codebbcode,',
 					theme_advanced_buttons2: 'forecolorpicker,fontselect,fontsizeselect',
 					theme_advanced_resizing: true,
-					content_css: '".$MAIN_ROOT."themes/btcs4.css.php',
+					content_css: '".$MAIN_ROOT."themes/".$THEME."/btcs4.css',
 					theme_advanced_statusbar_location: 'none',
 					style_formats: [
 						{title: 'Quote', inline : 'div', classes: 'forumQuote'}
@@ -349,7 +349,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 				$('#btnPreview').click(function() {
 				
 					$('#loadingSpiral').show();
-					$.post('".$MAIN_ROOT."members/include/forum/include/previewpost.php', { wysiwygHTML: $('#tinymceTextArea').val(), previewSubject: $('[name=\"topicname\"]').val() }, function(data) {
+					$.post('".$MAIN_ROOT."members/include/forum/include/previewpost.php', { wysiwygHTML: $('#tinymceTextArea').val(), previewSubject: $('#postSubject').val() }, function(data) {
 						$('#previewPost').hide();
 						$('#previewPost').html(data);
 						$('#loadingSpiral').hide();

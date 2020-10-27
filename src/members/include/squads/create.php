@@ -24,12 +24,12 @@ else {
 	}
 }
 
-require_once($prevFolder."classes/btupload.php");
-require_once($prevFolder."classes/squad.php");
+include_once($prevFolder."classes/btupload.php");
+include_once($prevFolder."classes/squad.php");
 $cID = $_GET['cID'];
 $dispError = "";
 $countErrors = 0;
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	
 	// Check Squad Name
@@ -125,7 +125,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	echo "
 		<form action='console.php?cID=".$cID."' method='post' enctype='multipart/form-data'>

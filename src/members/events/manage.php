@@ -13,10 +13,10 @@
  */
 
 
-require_once("../../_setup.php");
-require_once("../../classes/member.php");
-require_once("../../classes/rank.php");
-require_once("../../classes/event.php");
+include_once("../../_setup.php");
+include_once("../../classes/member.php");
+include_once("../../classes/rank.php");
+include_once("../../classes/event.php");
 
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
@@ -82,19 +82,20 @@ if($LOGIN_FAIL) {
 $_SESSION['btEventID'] = "";
 $prevFolder = "../../";
 $PAGE_NAME = $consoleTitle." - ";
-$dispBreadCrumb = "<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROOT."members'>My Account</a> > ".$consoleTitle;
+
 $EXTERNAL_JAVASCRIPT .= "
 <script type='text/javascript' src='".$MAIN_ROOT."members/js/console.js'></script>
 <script type='text/javascript' src='".$MAIN_ROOT."members/js/main.js'></script>
 ";
 
-require_once("../../themes/".$THEME."/_header.php");
-echo "
-<div class='breadCrumbTitle' id='breadCrumbTitle'>$consoleTitle</div>
-<div class='breadCrumb' id='breadCrumb' style='padding-top: 0px; margin-top: 0px'>
-$dispBreadCrumb
-</div>
-";
+include("../../themes/".$THEME."/_header.php");
+
+$breadcrumbObj->setTitle($consoleTitle);
+$breadcrumbObj->addCrumb("Home", MAIN_ROOT);
+$breadcrumbObj->addCrumb("My Account", MAIN_ROOT."members");
+$breadcrumbObj->addCrumb($consoleTitle);
+include($prevFolder."include/breadcrumb.php");
+
 
 if($blnShowPage) {
 	
@@ -111,22 +112,25 @@ if($blnShowPage) {
 	
 	switch($pID) {
 		case "addposition":
-			require_once("addposition.php");
+			include("addposition.php");
 			break;
 		case "managepositions":
-			require_once("managepositions.php");
+			include("managepositions.php");
 			break;
 		case "invitemembers":
-			require_once("invitemembers.php");
+			include("invitemembers.php");
 			break;
 		case "manageinvites":
-			require_once("manageinvites.php");
+			include("manageinvites.php");
 			break;
 		case "editinfo":
-			require_once("editinfo.php");
+			include("editinfo.php");
+			break;
+		case "setattendance":
+			include("setattendance.php");
 			break;
 		case "chat":
-			require_once("chat.php");
+			include("chat.php");
 			break;
 	}
 	
@@ -148,6 +152,6 @@ else {
 }
 
 
-require_once("../../themes/".$THEME."/_footer.php");
+include("../../themes/".$THEME."/_footer.php");
 
 ?>

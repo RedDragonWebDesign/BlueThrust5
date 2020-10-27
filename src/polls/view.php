@@ -17,10 +17,10 @@
 // Config File
 $prevFolder = "../";
 
-require_once($prevFolder."_setup.php");
+include($prevFolder."_setup.php");
 
-require_once($prevFolder."classes/member.php");
-require_once($prevFolder."classes/poll.php");
+include_once($prevFolder."classes/member.php");
+include_once($prevFolder."classes/poll.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $pollObj = new Poll($mysqli);
@@ -103,7 +103,7 @@ if($blnShowResults) {
 // Start Page
 $PAGE_NAME = "Poll - ";
 $dispBreadCrumb = "";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 
 $memberInfo = array();
@@ -121,7 +121,7 @@ if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION
 $breadcrumbObj->setTitle("Poll Results");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Poll Results");
-require_once($prevFolder."include/breadcrumb.php");
+include($prevFolder."include/breadcrumb.php");
 
 $member->select($pollInfo['member_id']);
 $dispPollCreator = $member->getMemberLink();
@@ -148,6 +148,7 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 
 <div class='pollContainer'>
 	<div id='pollPieChart' class='pollChart'></div>
+
 	<div class='pollLegend'>
 		<b>Legend:</b><br><br>
 		<?php 
@@ -162,7 +163,7 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 			
 		?>	
 	</div>
-	<div style='clear: both'></div>
+
 </div>
 
 <div class='pollInfoWrapper'>
@@ -330,5 +331,5 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 		
 	}
 	
-require_once($prevFolder."themes/".$THEME."/_footer.php");
+include($prevFolder."themes/".$THEME."/_footer.php");
 ?>

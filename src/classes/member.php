@@ -13,12 +13,12 @@
  */
 
 
-require_once("consoleoption.php");
-require_once("profileoption.php");
-require_once("rank.php");
-require_once("medal.php");
-require_once("forumboard.php");
-require_once("social.php");
+include_once("consoleoption.php");
+include_once("profileoption.php");
+include_once("rank.php");
+include_once("medal.php");
+include_once("forumboard.php");
+include_once("social.php");
 class Member extends Basic {
 
 	protected $objProfileOption;
@@ -37,7 +37,7 @@ class Member extends Basic {
 	
 	
 	
-	function select($memberID, $numericIDOnly = true) {
+	function select($memberID) {
 		$returnVal = false;
 		if(is_numeric($memberID)) {
 			
@@ -72,8 +72,8 @@ class Member extends Basic {
 	
 	function authorizeLogin($check_password, $encryptPW=0) {
 		
-		$checkRealPassword = ($this->arrObjInfo['password'] ?? '');
-		$checkRealPassword2 = ($this->arrObjInfo['password2'] ?? '');
+		$checkRealPassword = $this->arrObjInfo['password'];
+		$checkRealPassword2 = $this->arrObjInfo['password2'];
 		
 		if($encryptPW == 1) {
 			
@@ -86,7 +86,7 @@ class Member extends Basic {
 		
 		$returnVal = false;
 		
-		if($checkRealPassword == $checkPass && ($this->arrObjInfo['disabled'] ?? '') == 0) {
+		if($checkRealPassword == $checkPass && $this->arrObjInfo['disabled'] == 0) {
 			$returnVal = true;
 		}
 		
@@ -242,43 +242,56 @@ class Member extends Basic {
 					$returnArr[] = $row['tournament_id'];
 					//echo $row['tournament_id']."<br>";
 				}
+				
+				
+				
 			}
+			
+		//print_r($returnArr);
+			
+	
 		}
 	
 		return $returnArr;
+	
 	}
 	
+	
 	function hasAccess($consoleOption) {
-		global $sqlCache;
 		
 		$returnVal = false;
 		$consoleInfo = $consoleOption->get_info_filtered();
-		
+
 		if($this->intTableKeyValue != "") {
-			$result = sql_array_select_where(
-				$sqlCache['console_members'],
-				'member_id',
-				$this->intTableKeyValue,
-				'console_id',
-				$consoleInfo['console_id']
-			);
-			$num_rows = count($result);
+			
+			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."console_members WHERE member_id = '".$this->intTableKeyValue."' AND console_id = '".$consoleInfo['console_id']."'");
+			$num_rows = $result->num_rows;
 			
 			if($num_rows == 1) {
-				$accessInfo = $result;
+				$accessInfo = $result->fetch_assoc();
 				
+
 				if($accessInfo['allowdeny'] == 1) {
-					$returnVal = true;
+					$returnVal = true;	
 				}
-			} elseif($num_rows == 0 && $consoleOption->hasAccess($this->arrObjInfo['rank_id'])) {
-				$returnVal = true;
+
 			}
+			elseif($num_rows == 0 && $consoleOption->hasAccess($this->arrObjInfo['rank_id'])) {
+				
+				$returnVal = true;
+
+			}
+			
+
 		}
 		
 		return $returnVal;
+		
 	}
 	
+	
 	function getProfileValue($profileOptionID, $skipSelectOption=false) {
+		
 		$returnVal = "";
 		if($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
 			
@@ -370,7 +383,7 @@ class Member extends Basic {
 	}
 	
 	
-	function getMemberLink($args = ["color" => true]) {
+	function getMemberLink($args=array("color" => true)) {
 		global $MAIN_ROOT;
 		$returnVal = "";
 		if($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
@@ -394,7 +407,7 @@ class Member extends Basic {
 			}
 			
 			
-			if( isset($args['wrapper']) && $args['wrapper'] === false) {
+			if($args['wrapper'] === false) {
 				$returnVal = MAIN_ROOT."profile.php?mID=".$this->intTableKeyValue;
 			}
 			
@@ -425,14 +438,15 @@ class Member extends Basic {
 		
 	}
 	
-	function sendPM($to, $subject, $message, $replypmID=0, $arrGroups=array()) {
+	function sendPM($to, $subject, $message, $replypmID=0, $arrGroups=array(), $email=false) {
 
 		$returnVal = false;
 		
 		if($this->intTableKeyValue != "") {
 			$pmObj = new Basic($this->MySQL, "privatemessages", "pm_id");
-	
+			$toMemberObj = new Member($this->MySQL);
 			if(is_array($to)) {
+				// Multi Member PM
 				
 				$multiMemPMObj = new Basic($this->MySQL, "privatemessage_members", "pmmember_id");
 				
@@ -442,7 +456,7 @@ class Member extends Basic {
 				if($pmObj->addNew($arrColumns, $arrValues)) {
 					
 					$pmInfo = $pmObj->get_info();
-					
+					$arrBCC = array();
 					$arrColumns = array("pm_id", "member_id", "grouptype", "group_id");
 					foreach($to as $memberID) {
 						
@@ -452,11 +466,25 @@ class Member extends Basic {
 						$arrValues = array($pmInfo['pm_id'], $memberID, $groupType, $groupID);
 						
 						$multiMemPMObj->addNew($arrColumns, $arrValues);
+						$toMemberObj->select($memberID);
+						$emailNotificationPM = $toMemberObj->getEmailNotificationSetting("privatemessage") == 1;
+						$blockedEmailPM = $toMemberObj->getEmailNotificationSetting("email_privatemessage") == 1;
+						if($toMemberObj->get_info("email") != "" && ($emailNotificationPM || ($email && !$blockedEmailPM))) {
+							$arrBCC[] = $toMemberObj->get_info("email");
+						}
 						
 					}
+					
+					if(count(arrBCC) > 0) {
+												
+						$objMail = new btMail();
+						$objMail->sendMail("", $subject, $message, array("from" => $this->arrObjInfo['email'], "bcc" => $arrBCC));
+						
+					}
+					
 					$returnVal = true;
 				}
-
+				
 			}
 			else {
 			
@@ -464,7 +492,11 @@ class Member extends Basic {
 				$arrValues = array($this->intTableKeyValue, $to, time(), $subject, $message, $replypmID);
 				
 				if($pmObj->addNew($arrColumns, $arrValues)) {
-		
+					$toMemberObj->select($to);
+					if($toMemberObj->getEmailNotificationSetting("privatemessage") == 1 || ($email && $toMemberObj->getEmailNotificationSetting("email_privatemessage") == 0)) {
+						$toMemberObj->email($subject, $message, $this->arrObjInfo['email']);
+					}
+					
 					$returnVal = true;
 					
 				}
@@ -818,7 +850,7 @@ class Member extends Basic {
 	 */
 	
 	public function hasSeenTopic($topicID) {
-	
+
 		$returnVal = false;
 
 		if($this->intTableKeyValue != "" && $topicID != "" && is_numeric($topicID)) {
@@ -934,6 +966,15 @@ class Member extends Basic {
 		return $this->getMemberPicture($setWidth, $setHeight, "profilepic", "defaultprofile.png");
 	}
 	
+	public function getEmailNotificationSetting($notificationName) {
+
+		$emailNotificationSetting = new Basic($this->MySQL, "emailnotifications_settings", "emailnotificationsetting_id");
+		
+		$emailNotificationSetting->selectByMulti(array("member_id" => $this->intTableKeyValue));
+		
+		return $emailNotificationSetting->get_info($notificationName);
+		
+	}
 	
 	public function delete() {
 		$returnVal = false;
@@ -954,6 +995,33 @@ class Member extends Basic {
 		}
 		return $returnVal;
 	}
+	
+	
+	public function setEmailReminder($sendDate, $subject, $message, $updateID=0) {
+
+		$emailReminder = new Basic($this->MySQL, "emailnotifications_queue", "emailnotificationsqueue_id");
+		
+		if($updateID == 0) {
+			$emailReminder->addNew(array("member_id", "senddate", "subject", "message"), array($this->intTableKeyValue, $sendDate, $subject, $message));
+		}
+		else {
+			$emailReminder->select($updateID);
+			$emailReminder->update(array("member_id", "senddate", "subject", "message"), array($this->intTableKeyValue, $sendDate, $subject, $message));
+		}
+		
+		return $emailReminder->get_info("emailnotificationsqueue_id");
+	}
+	
+	public function email($subject, $message, $from="") {
+
+		if($this->arrObjInfo['email'] != "") {
+			$objMail = new btMail();
+			$objMail->sendMail($this->arrObjInfo['email'], $subject, $message, array("from" => $from));
+						
+		}
+		
+	}
+	
 	
 }
 

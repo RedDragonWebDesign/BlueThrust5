@@ -15,9 +15,9 @@
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
 	
-	require_once("../../../../_setup.php");
-	require_once("../../../../classes/member.php");
-	require_once("../../../../classes/event.php");
+	include_once("../../../../_setup.php");
+	include_once("../../../../classes/member.php");
+	include_once("../../../../classes/event.php");
 	
 	// Start Page
 	
@@ -89,10 +89,10 @@ if($result->num_rows > 0) {
 			$dispActions = "You are going - <a href='javascript:void(0)' onclick=\"rsvpEvent('".$row['eventmember_id']."', '2')\" title='Decline Invitation'>Change your mind?</a>";
 		}
 		elseif($row['status'] == 1 && time() >= $eventInfo['startdate'] && ($row['attendconfirm_member'] == 0 && $row['attendconfirm_admin'] == 0)) {
-			$dispActions = "Attended - <a href='javascript:void(0)' onclick=\"confirmAttendence('".$row['eventmember_id']."')\">Confirm Attendence</a> - <a href='javascript:void(0)' onclick=\"hideEvent('".$row['eventmember_id']."')\" onmouseover=\"showToolTip('Hide this event if you didn\'t attend.')\" onmouseout='hideToolTip()'>Hide</a>";	
+			$dispActions = "Attended - <a href='javascript:void(0)' onclick=\"confirmAttendence('".$row['eventmember_id']."')\">Confirm Attendance</a> - <a href='javascript:void(0)' onclick=\"hideEvent('".$row['eventmember_id']."')\" onmouseover=\"showToolTip('Hide this event if you didn\'t attend.')\" onmouseout='hideToolTip()'>Hide</a>";	
 		}
 		elseif($row['status'] == 1 && time() >= $eventInfo['startdate'] && $row['attendconfirm_member'] == 1) {
-			$dispActions = "Attendence Confirmed - <a href='javascript:void(0)' onclick=\"hideEvent('".$row['eventmember_id']."')\">Hide</a>";
+			$dispActions = "Attendance Confirmed - <a href='javascript:void(0)' onclick=\"hideEvent('".$row['eventmember_id']."')\">Hide</a>";
 		}
 		elseif($row['status'] == 2 && time() < $eventInfo['startdate']) {
 			$dispActions = "You are not going - <a href='javascript:void(0)' onclick=\"rsvpEvent('".$row['eventmember_id']."', '1')\" title='Accept Invitation'>Change your mind?</a>";

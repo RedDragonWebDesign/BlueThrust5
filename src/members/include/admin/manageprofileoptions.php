@@ -25,8 +25,8 @@ else {
 
 $cID = $_GET['cID'];
 
-require_once($prevFolder."classes/profilecategory.php");
-require_once($prevFolder."classes/profileoption.php");
+include_once($prevFolder."classes/profilecategory.php");
+include_once($prevFolder."classes/profileoption.php");
 
 
 $profileCatObj = new ProfileCategory($mysqli);
@@ -41,7 +41,7 @@ if($_GET['oID'] == "") {
 		</p>
 	</div>
 	<div id='contentDiv'>";
-	require_once("manageprofileoptions/main.php");
+	include("manageprofileoptions/main.php");
 	
 	
 	echo "
@@ -117,7 +117,7 @@ if($_GET['oID'] == "") {
 	
 }
 elseif($_GET['oID'] != "" && $_GET['action'] == "edit") {
-	require_once("manageprofileoptions/edit.php");	
+	include("manageprofileoptions/edit.php");	
 }
 
 

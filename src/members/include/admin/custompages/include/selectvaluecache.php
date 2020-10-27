@@ -14,9 +14,9 @@
  */
 
 
-require_once("../../../../../_setup.php");
-require_once("../../../../../classes/member.php");
-require_once("../../../../../classes/customform.php");
+include_once("../../../../../_setup.php");
+include_once("../../../../../classes/member.php");
+include_once("../../../../../classes/customform.php");
 
 
 

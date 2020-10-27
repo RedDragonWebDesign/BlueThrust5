@@ -24,9 +24,9 @@ else {
 	}
 }
 
-require_once($prevFolder."classes/btupload.php");
-require_once($prevFolder."classes/consolecategory.php");
-require_once($prevFolder."classes/rankcategory.php");
+include_once($prevFolder."classes/btupload.php");
+include_once($prevFolder."classes/consolecategory.php");
+include_once($prevFolder."classes/rankcategory.php");
 
 $cID = $_GET['cID'];
 $rankCatObj = new RankCategory($mysqli);
@@ -44,7 +44,7 @@ if($_GET['cnID'] == "") {
 	</div>
 	<div id='contentDiv'>
 	";
-	require_once("consoleoptions/main.php");	
+	include("consoleoptions/main.php");	
 	
 	echo "	
 	</div>
@@ -131,7 +131,7 @@ if($_GET['cnID'] == "") {
 	
 }
 elseif($_GET['cnID'] != "" AND $_GET['action'] == "edit") {
-	require_once("consoleoptions/edit.php");
+	include("consoleoptions/edit.php");
 }
 
 

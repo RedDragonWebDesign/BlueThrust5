@@ -15,14 +15,14 @@
 // Config File
 $prevFolder = "../";
 
-require_once($prevFolder."_setup.php");
+include($prevFolder."_setup.php");
 
 // Classes needed for view.php
 
-require_once($prevFolder."classes/tournament.php");
-require_once($prevFolder."classes/member.php");
-require_once($prevFolder."classes/consoleoption.php");
-require_once($prevFolder."classes/game.php");
+include_once($prevFolder."classes/tournament.php");
+include_once($prevFolder."classes/member.php");
+include_once($prevFolder."classes/consoleoption.php");
+include_once($prevFolder."classes/game.php");
 
 
 $tournamentObj = new Tournament($mysqli);
@@ -65,7 +65,7 @@ if($ipbanObj->select($IP_ADDRESS, false)) {
 // Start Page
 $PAGE_NAME = $tournamentInfo['name']." - ";
 $dispBreadCrumb = "";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 echo "
 <script type='text/javascript'>
@@ -169,7 +169,7 @@ $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Tournaments", $MAIN_ROOT."tournaments");
 $breadcrumbObj->addCrumb($tournamentInfo['name']);
 
-require_once($prevFolder."include/breadcrumb.php");
+include($prevFolder."include/breadcrumb.php");
 
 echo "
 	
@@ -211,7 +211,9 @@ echo "
 		</div>
 	
 		<div class='tournamentProfileRight'>
-	
+			<p align='center'>
+				picture
+			</p>
 		";
 
 		
@@ -297,7 +299,7 @@ echo "
 				
 					";
 
-			require_once("include/listmatches.php");
+			include("include/listmatches.php");
 			echo "
 				</div>
 			</div>
@@ -363,6 +365,6 @@ echo "
 
 
 
-require_once($prevFolder."themes/".$THEME."/_footer.php");
+include($prevFolder."themes/".$THEME."/_footer.php");
 
 ?>

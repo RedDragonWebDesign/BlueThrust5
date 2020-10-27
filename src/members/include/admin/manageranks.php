@@ -69,7 +69,7 @@ function deleteRank(intRankID) {
 </script>
 ";
 
-require_once($prevFolder."classes/btupload.php");
+include_once($prevFolder."classes/btupload.php");
 $cID = $_GET['cID'];
 
 echo "
@@ -87,10 +87,10 @@ echo "
 ";
 
 if(!isset($_GET['rID']) || $_GET['rID'] == "") {
-	require_once("manageranks/main.php");
+	include("manageranks/main.php");
 }
 elseif($_GET['rID'] != "" && $_GET['action'] == "edit") {
-	require_once("manageranks/edit.php");
+	include("manageranks/edit.php");
 }
 
 

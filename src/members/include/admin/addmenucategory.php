@@ -27,7 +27,7 @@ else {
 
 $cID = $_GET['cID'];
 
-require_once($prevFolder."classes/btupload.php");
+include_once($prevFolder."classes/btupload.php");
 
 
 $menuCatObj = new MenuCategory($mysqli);
@@ -37,7 +37,7 @@ $dispError = "";
 $countErrors = 0;
 
 $arrCheckType = array("image", "customcode", "customformat");
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	// Check Name
 	if(trim($_POST['categoryname']) == "") {
@@ -139,7 +139,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	$selectSection = array();
 	if(isset($_GET['sectionID'])) {

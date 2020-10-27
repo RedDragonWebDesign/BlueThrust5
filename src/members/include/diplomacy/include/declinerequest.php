@@ -14,8 +14,8 @@
 
 
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
+include_once("../../../../_setup.php");
+include_once("../../../../classes/member.php");
 
 
 $member = new Member($mysqli);
@@ -46,7 +46,7 @@ Your diplomacy request has been declined.\n\n
 		
 		$diplomacyRequestObj->delete();
 		
-		require_once("diplomacyrequests.php");
+		include("diplomacyrequests.php");
 		
 		
 		$member->logAction("Declined ".$diplomacyRequestInfo['clanname']."'s diplomacy request.");

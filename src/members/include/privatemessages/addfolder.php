@@ -23,7 +23,7 @@ else {
 	}
 }
 
-require_once("../classes/pmfolder.php");
+include("../classes/pmfolder.php");
 
 $pmFolderObj = new PMFolder($mysqli);
 $cID = $_GET['cID'];
@@ -31,7 +31,7 @@ $cID = $_GET['cID'];
 $dispError = "";
 $countErrors = 0;
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	// Check Folder Name
 	if(trim($_POST['foldername']) == "") {
@@ -87,7 +87,7 @@ if(($_POST['submit'] ?? '')) {
 	
 }
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 
 	$arrFolders = $pmFolderObj->listFolders($memberInfo['member_id']);
 	$folderOptions = "";

@@ -12,9 +12,12 @@
  *
  */
 
-require_once("basicsort.php");
+include_once("basicsort.php");
+
+
 
 class MenuItem extends BasicSort {
+	
 	public $objLink;
 	public $objImage;
 	public $objShoutbox;
@@ -22,6 +25,7 @@ class MenuItem extends BasicSort {
 	public $objCustomBlock;
 	
 	public function __construct($sqlConnection) {
+		
 		$this->MySQL = $sqlConnection;
 		$this->strTableName = $this->MySQL->get_tablePrefix()."menu_item";
 		$this->strTableKey = "menuitem_id";
@@ -32,6 +36,8 @@ class MenuItem extends BasicSort {
 		$this->objShoutbox = new Basic($this->MySQL, "menuitem_shoutbox", "menushoutbox_id");
 		$this->objCustomPage = new Basic($this->MySQL, "menuitem_custompage", "menucustompage_id");
 		$this->objCustomBlock = new Basic($this->MySQL, "menuitem_customblock", "menucustomblock_id");
+		
+		
 	}
 	
 	public function getItems($intCategory, $intAccessType=1, $intHide=0) {
@@ -52,7 +58,9 @@ class MenuItem extends BasicSort {
 		return $returnArr;
 	}
 	
+	
 	public function delete() {
+		
 		if($this->intTableKeyValue != "") {
 			switch($this->arrObjInfo['itemtype']) {
 				case "link":
@@ -88,7 +96,13 @@ class MenuItem extends BasicSort {
 					
 			}
 			
+			
 			return parent::delete();
 		}	
+		
+		
 	}
+	
 }
+
+?>

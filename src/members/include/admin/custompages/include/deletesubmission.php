@@ -15,9 +15,9 @@
 
 
 
-require_once("../../../../../_setup.php");
-require_once("../../../../../classes/member.php");
-require_once("../../../../../classes/customform.php");
+include_once("../../../../../_setup.php");
+include_once("../../../../../classes/member.php");
+include_once("../../../../../classes/customform.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $member = new Member($mysqli);
@@ -40,6 +40,6 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 
 
-require_once("../submissiondetail.php");
+include("../submissiondetail.php");
 
 ?>

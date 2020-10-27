@@ -13,7 +13,7 @@
  */
 
 $prevFolder = "../../";
-require_once("../../_setup.php");
+include_once("../../_setup.php");
 
 
 // Plugin Info
@@ -70,7 +70,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	
 	if($countErrors == 0) {
 		// $sql variable
-		require_once(BASE_DIRECTORY."plugins/donations/sql.php");
+		include(BASE_DIRECTORY."plugins/donations/sql.php");
 		
 		if($mysqli->multi_query($sql)) {
 			

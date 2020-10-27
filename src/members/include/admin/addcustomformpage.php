@@ -14,7 +14,7 @@
 
 
 
-require_once("../classes/customform.php");
+include_once("../classes/customform.php");
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
@@ -32,7 +32,7 @@ $cID = $_GET['cID'];
 $customFormPageObj = new CustomForm($mysqli, "custompages", "custompage_id");
 $countErrors = 0;
 $dispError = "";
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	
 	if(trim($_POST['pagename']) == "") {
@@ -93,7 +93,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	$addMenuItemCID = $consoleObj->findConsoleIDByName("Add Menu Item");
 	
 	echo "

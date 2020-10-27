@@ -20,10 +20,11 @@
 			$this->arrHeadOrder = array();
 			
 			$this->setTitle($PAGE_NAME.$this->clanName);
+			$this->addHeadItem("ie-edge", "<meta http-equiv='X-UA-Compatible' content='IE=edge'>");
+			$this->addHeadItem("btcs4css", "<link rel='stylesheet' type='text/css' href='".MAIN_ROOT."themes/btcs4.css.php'>");
 			$this->addHeadItem("jquery-ui-css", "<link rel='stylesheet' type='text/css' href='".MAIN_ROOT."themes/".$this->themeDir."/jqueryui/jquery-ui-1.8.17.custom.css'>");
 			$this->addHeadItem("jquery", "<script type='text/javascript' src='".MAIN_ROOT."js/jquery-1.6.4.min.js'></script>");
 			$this->addHeadItem("jquery-ui", "<script type='text/javascript' src='".MAIN_ROOT."js/jquery-ui-1.8.17.custom.min.js'></script>");
-			$this->addHeadItem("btcs4css", "<link rel='stylesheet' type='text/css' href='".MAIN_ROOT."themes/btcs4.css.php'>");
 			$this->addHeadItem("mainstyle", "<link rel='stylesheet' type='text/css' href='".MAIN_ROOT."themes/".$this->themeDir."/style.css'>");
 			$this->addHeadItem("mainjs", "<script type='text/javascript' src='".MAIN_ROOT."js/main.js'></script>");
 			$this->addHeadItem("imageslider", "<script type='text/javascript' src='".MAIN_ROOT."js/imageslider.js'></script>");
@@ -110,7 +111,7 @@
 		}
 		
 		public function requiredFooterFile() {
-			require_once(BASE_DIRECTORY."themes/include_footer.php");
+			include(BASE_DIRECTORY."themes/include_footer.php");
 		}
 		
 		public function setTitle($title) {

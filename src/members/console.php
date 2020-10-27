@@ -15,7 +15,7 @@
 
 // Config File
 $prevFolder = "../";
-require_once("../_setup.php");
+include("../_setup.php");
 
 // Check for valid Console Option
 
@@ -38,7 +38,7 @@ $consolePluginObj = new btPlugin($mysqli);
 $arrPlugins = $consolePluginObj->getPluginPage("console");
 
 foreach($arrPlugins as $pluginPageInfo) {
-	require_once($pluginPageInfo['pagepath']);
+	include_once($pluginPageInfo['pagepath']);
 }
 
 
@@ -61,6 +61,8 @@ $arrAceEditorPages = array("Modify Current Theme", "Add Menu Category", "Add Men
 
 if(in_array($consoleInfo['pagetitle'], $arrTinyMCEPages)) {
 	$btThemeObj->addHeadItem("richtexteditor", "<script type='text/javascript' src='".$MAIN_ROOT."js/tiny_mce/jquery.tinymce.js'></script>");
+	$btThemeObj->addHeadItem("richtexteditor1", "<script type='text/javascript' src='".$MAIN_ROOT."js/ckeditor/ckeditor.js'></script>");
+
 }
 
 if(in_array($consoleInfo['pagetitle'], $arrAceEditorPages)) {
@@ -69,7 +71,7 @@ if(in_array($consoleInfo['pagetitle'], $arrAceEditorPages)) {
 
 $hooksObj->run("init_console");
 
-require_once("../themes/".$THEME."/_header.php");
+include("../themes/".$THEME."/_header.php");
 
 $breadcrumbObj->setTitle($consoleTitle);
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
@@ -127,7 +129,7 @@ if($checkMember) {
 
 			define("PREVENT_HACK", $arrClanInfo['preventhack']);
 			
-			require_once($prevFolder."include/breadcrumb.php");
+			include($prevFolder."include/breadcrumb.php");
 			
 			if(isset($_GET['action']) && $_GET['action'] == "edit") {
 				echo "
@@ -149,12 +151,12 @@ if($checkMember) {
 			}
 						
 			$formObj = new Form();
-			require_once($include_file);
+			require($include_file);
 			if(isset($setupFormArgs)) {
-				require_once("console.form.php");
+				include("console.form.php");
 			}
 			elseif(isset($setupManageListArgs)) {
-				require_once("console.managelist.php");	
+				include("console.managelist.php");	
 			}
 			
 			
@@ -184,7 +186,7 @@ die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';
 }
 
 
-require_once("../themes/".$THEME."/_footer.php");
+include("../themes/".$THEME."/_footer.php");
 
 
 ?>

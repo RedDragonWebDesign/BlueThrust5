@@ -1,7 +1,7 @@
 <?php 
 	header("Content-type: text/css");
-	require_once("../../_setup.php");
-	require_once(BASE_DIRECTORY."themes/".$THEME."/css.php");
+	include("../../_setup.php");
+	include(BASE_DIRECTORY."themes/".$THEME."/css.php");
 	
 	if($arrCSSInfo['box-bg-image'] != "none") {
 		

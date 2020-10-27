@@ -1,7 +1,7 @@
 <?php 
 	header("Content-type: text/css");
-	require_once("../_setup.php");
-	require_once($THEME."/css.php");
+	include("../_setup.php");
+	include($THEME."/css.php");
 
 	// Image and Signuature Size Settings
 	$setMaxImageWidthUnit = ($websiteInfo['forum_imagewidthunit'] == "%") ? "%" : "px";
@@ -16,7 +16,10 @@
 	$setMaxSigHeightUnit = ($websiteInfo['forum_sigheightunit'] == "%") ? "%" : "px";
 	$setMaxSigHeight = ($websiteInfo['forum_sigheight'] > 0) ? "max-height: ".$websiteInfo['forum_sigheight'].$setMaxSigHeightUnit.";" : "";
 	
-
+	if(!isset($arrCSSInfo['forum-code-max-width'])) {
+		$arrCSSInfo['forum-code-max-width'] = "550px";	
+	}
+	
 echo "/*
 THE CSS CLASSES BELOW MUST BE IN ALL THEMES!  MODIFY THESE TO SUIT YOUR NEEDS
 */
@@ -227,21 +230,27 @@ input[type=file] {
 	font-family: ".$arrCSSInfo['font-family'].";
 	font-size: ".$arrCSSInfo['default-font-size'].";
 	font-weight: bold;
-	vertical-align: top;
 	margin-top: 10px;
 }
 
 .formInput {
 	display: inline-block;
-	vertical-align: top;
 	margin-top: 10px;
 	width: auto;
+}
+
+.formVAlignTop {
+	vertical-align: top;
 }
 
 .formInputSideText {
 	vertical-align: middle !important; 
 	padding-left: 3px; 
 	padding-top: 3px	
+}
+
+.formInputSideComponent {
+	padding-left: 5px; 
 }
 
 .formSubmitButton {
@@ -266,7 +275,7 @@ input[type=file] {
 	background-image: ".$arrCSSInfo['table-title-bg-image'].";
 	font-weight: ".$arrCSSInfo['table-title-font-weight'].";
 	color: ".$arrCSSInfo['table-title-font-color'].";
-	font-family: ".$arrCSSInfo['default-font-family'].";
+	font-family: ".$arrCSSInfo['font-family'].";
 	padding: 3px;
 	border: solid ".$arrCSSInfo['default-border-color']." 1px;
 	font-size: ".$arrCSSInfo['table-title-font-size'].";
@@ -279,7 +288,7 @@ input[type=file] {
 
 /* Box to surround forms */
 .formDiv {
-	font-family: ".$arrCSSInfo['default-font-family'].";
+	font-family: ".$arrCSSInfo['font-family'].";
 	width: 95%;
 	padding: 5px; 
 	margin: 20px auto;
@@ -290,7 +299,7 @@ input[type=file] {
 }
 
 .errorDiv {
-	font-family: ".$arrCSSInfo['default-font-family'].";
+	font-family: ".$arrCSSInfo['font-family'].";
 	width: 90%;
 	margin: 15px auto;
 	padding: 10px;
@@ -304,7 +313,7 @@ input[type=file] {
 }
 
 .newsDiv {
-	font-family: ".$arrCSSInfo['default-font-family'].";
+	font-family: ".$arrCSSInfo['font-family'].";
 	width: 95%;
 	padding: 5px;
 	position: relative;
@@ -353,7 +362,7 @@ input[type=file] {
 #toolTip {
 	position: absolute;
 	display: none;
-	font-family: ".$arrCSSInfo['default-font-family'].";
+	font-family: ".$arrCSSInfo['font-family'].";
 	color: ".$arrCSSInfo['tooltip-font-color'].";
 	font-size: ".$arrCSSInfo['small-font-size'].";
 	z-Index: 99999;
@@ -372,7 +381,7 @@ input[type=file] {
 #toolTipWidth {
 	position: absolute;
 	display: none;
-	font-family: ".$arrCSSInfo['default-font-family'].";
+	font-family: ".$arrCSSInfo['font-family'].";
 	color: white;
 	font-size: ".$arrCSSInfo['small-font-size'].";
 	z-Index: 99999;
@@ -1146,6 +1155,8 @@ input[type=file] {
 	overflow: auto;
 	position: relative;
 	display: table-cell;
+	".$setMaxForumImageWidth."
+	word-wrap: break-word;
 }
 
 .forumPostMessageInfo img {
@@ -1199,8 +1210,8 @@ input[type=file] {
 	padding: 5px;
 	background-color: white;
 	border: solid black 1px;
-	width: 90%;
-	position: relative;
+	width: 60%;
+	display: inline-block;
 }
 
 .pmComposeTextBox input[type=text] {
@@ -1504,7 +1515,7 @@ input[type=file] {
 	margin: 0px auto;
 	width: 95%;
 	border: 0px;
-	overflow: auto;
+	overflow: hidden;
 	margin-top: 30px;
 }
 

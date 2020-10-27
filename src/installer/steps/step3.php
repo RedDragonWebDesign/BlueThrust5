@@ -88,7 +88,7 @@
 				$url = $_SERVER['REQUEST_URI']; //returns the current URL
 				$setMainRoot = str_replace("installer/index.php?step=3", "", $url);
 				$setDocumentRoot = str_replace("installer/index.php", "", $_SERVER['SCRIPT_FILENAME']);
-				require_once("steps/configtemplate.php");
+				include("steps/configtemplate.php");
 
 				
 				
@@ -128,7 +128,7 @@
 
 
 				if($_POST['installType'] == 2) {
-					require_once("steps/backupinserts.php");	
+					include("steps/backupinserts.php");	
 				}
 				
 				$blnConvertWebsiteInfo = false;
@@ -140,7 +140,7 @@
 						$blnConvertWebsiteInfo = true;
 					}
 				
-					require_once("steps/backupdb.php");
+					include("steps/backupdb.php");
 
 				}
 				
@@ -208,7 +208,7 @@
 						if($blnConvertWebsiteInfo) {
 							// Convert websiteinfo table for people updating
 							define("CONVERT_WEBSITEINFO", true);
-							require_once("steps/convertwebsiteinfo.php");
+							include("steps/convertwebsiteinfo.php");
 						}
 						
 						// Updating --> Check for all console options and categories
@@ -439,7 +439,7 @@
 
 		$_POST['step1submit'] = true;
 
-		require_once("step2.php");
+		include("step2.php");
 
 	}
 

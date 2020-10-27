@@ -1,6 +1,6 @@
 <?php
 
-	require_once(BASE_DIRECTORY."plugins/donations/classes/donation.php");
+	include_once(BASE_DIRECTORY."plugins/donations/classes/donation.php");
 
 	class DonationCampaign extends Basic {
 		
@@ -88,8 +88,7 @@
 			elseif($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] == 0) {
 				// Default Prior 30 days range
 				$x30Days = 60*60*24*30;
-				
-				$returnVal = (!$returnTimestamps) ? array() : array("current" => (time()-$x30Days), "next" => time());
+				$returnVal = (!$returnTimestamps) ? array() : array("current" => 0, "next" => time());
 				
 			}
 			
@@ -153,7 +152,7 @@
 				
 				$addSQL = (count($arrPeriod) == 0 || $total) ? "" : " AND datesent >= '".$sqlCurrentPeriod."' AND datesent < '".$sqlNextPeriod."'";
 				
-				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."donations WHERE donationcampaign_id = '".$this->intTableKeyValue."' ".$addSQL."ORDER BY datesent DESC");
+				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."donations WHERE donationcampaign_id = '".$this->intTableKeyValue."' ".$addSQL." GROUP BY transaction_id ORDER BY datesent DESC");
 				while($row = $result->fetch_assoc()) {
 					$donationInfo[] = filterArray($row);
 					$totalDonationAmount += $row['amount'];	
@@ -190,7 +189,7 @@
 					
 				}
 				
-				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."donations WHERE donationcampaign_id = '".$this->intTableKeyValue."'".$addSQL." ORDER BY datesent DESC");
+				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."donations WHERE donationcampaign_id = '".$this->intTableKeyValue."'".$addSQL." GROUP BY transaction_id ORDER BY datesent DESC");
 				while($row = $result->fetch_assoc()) {
 					$returnVal[] = $row;	
 				}
@@ -285,7 +284,7 @@
 				$dispDonatorInfo['lastdonation'] = "";
 			}
 			
-			require_once(BASE_DIRECTORY."plugins/donations/include/donator_template.php");
+			include(BASE_DIRECTORY."plugins/donations/include/donator_template.php");
 			
 		}
 		
@@ -342,7 +341,7 @@
 					$dispDonatorName = ($donationInfo['name'] == "") ? "Anonymous" : $donationInfo['name'];
 				}				
 				
-				require_once(BASE_DIRECTORY."plugins/donations/include/messages_template.php");
+				include(BASE_DIRECTORY."plugins/donations/include/messages_template.php");
 				
 			}
 		}
@@ -358,7 +357,7 @@
 
 			$returnVal = array();
 			if($this->intTableKeyValue != "") {
-				require_once(BASE_DIRECTORY."plugins/donations/include/currency_codes.php");
+				include(BASE_DIRECTORY."plugins/donations/include/currency_codes.php");
 				
 				$blnSymbolLeft = $arrPaypalCurrencyInfo[$this->arrObjInfo['currency']]['position'] == "left";
 				$blnSymbolRight = $arrPaypalCurrencyInfo[$this->arrObjInfo['currency']]['position'] == "right";
@@ -440,12 +439,12 @@
 		
 		public function getCurrencyCodes() {
 
-			require_once(BASE_DIRECTORY."plugins/donations/include/currency_codes.php");
+			include(BASE_DIRECTORY."plugins/donations/include/currency_codes.php");
 			return $arrPaypalCurrencyCodes;
 		}
 		
 		public function getCurrencyCodeInfo() {
-			require_once(BASE_DIRECTORY."plugins/donations/include/currency_codes.php");
+			include(BASE_DIRECTORY."plugins/donations/include/currency_codes.php");
 			return $arrPaypalCurrencyInfo;
 		}
 		

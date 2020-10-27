@@ -70,7 +70,7 @@ echo "
 						";
 
 
-						require_once("include/appcomponentlist.php");
+						include("include/appcomponentlist.php");
 
 
 					echo "

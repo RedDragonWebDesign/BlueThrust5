@@ -13,7 +13,7 @@
  *
  */
 
-require_once("../classes/event.php");
+include_once("../classes/event.php");
 $_SESSION['btEventID'] = "";
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
@@ -105,7 +105,11 @@ while($row = $result->fetch_assoc()) {
 		
 		";
 		
-		
+		if($row['startdate'] < time()) {
+			
+			$dispEventOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=SetAttendance'>Set Attendance</a><br>";	
+			
+		}
 		
 	}
 	else {
@@ -128,19 +132,22 @@ while($row = $result->fetch_assoc()) {
 						$dispEventOptions .= $value;
 					}
 					elseif($eventPositionInfo[$key] == 1 && $key == "attendenceconfirm" && $eventPositionInfo['manageinvites'] == 0) {
-						$dispEventOptions .= $value;					
+						$dispEventOptions .= $value;						
 					}
-					
 					
 					
 				}
 				
+				// Member has access to the attendenceconfirm privilege
+				if($row['startdate'] < time() && $eventPositionInfo['attendenceconfirm'] == 1) {
+					$dispEventOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=SetAttendance'>Set Attendance</a><br>";	
+				}
 				
 			}
 		}
 		
 		
-		$dispEventOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/console.php?cID=".$intViewInvitesCID."&note=1'>Confirm Your Attendence</a><br>";
+		$dispEventOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/console.php?cID=".$intViewInvitesCID."&note=1'>Confirm Your Attendance</a><br>";
 	}
 	
 	$dispEventOptions .= "

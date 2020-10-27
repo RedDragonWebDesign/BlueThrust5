@@ -36,7 +36,7 @@
 		public function setSQL($strSQL) {
 			
 			if(is_file($strSQL)) {
-				require_once($strSQL);
+				include($strSQL);
 			}
 			else {
 				$this->sql = $strSQL;	

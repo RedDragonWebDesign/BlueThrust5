@@ -12,13 +12,13 @@
  *
  */
 
-require_once($prevFolder."_setup.php");
+include_once($prevFolder."_setup.php");
 
 // Classes needed for console.php
-require_once($prevFolder."classes/member.php");
-require_once($prevFolder."classes/rank.php");
-require_once($prevFolder."classes/rankcategory.php");
-require_once($prevFolder."classes/consoleoption.php");
+include_once($prevFolder."classes/member.php");
+include_once($prevFolder."classes/rank.php");
+include_once($prevFolder."classes/rankcategory.php");
+include_once($prevFolder."classes/consoleoption.php");
 
 $cOptObj = new ConsoleOption($mysqli);
 $cID = $cOptObj->findConsoleIDByName("Manage Ranks");
@@ -51,7 +51,7 @@ if($checkMember) {
 				";
 				
 				
-				if(($_POST['submit'] ?? '') && $_POST['submit']) {
+				if(isset($_POST['submit']) && $_POST['submit']) {
 					
 					$countErrors = 0;
 					
@@ -279,7 +279,7 @@ if($checkMember) {
 					
 				}
 				
-				if(!($_POST['submit'] ?? '') || !($_POST['submit'] ?? '')) {
+				if(!isset($_POST['submit']) || !$_POST['submit']) {
 				
 					
 					

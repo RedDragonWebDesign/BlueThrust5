@@ -8,7 +8,7 @@
 		global $websiteInfo, $clockObj;
 		echo "
 			<div class='clocksDiv main'>
-				<div class='formTitle'>".date($websiteInfo['date_format'])."</div>
+				<div class='formTitle'>".getPreciseTime(time(), $websiteInfo['date_format'], true)."</div>
 				<p align='center'>
 					";
 		

@@ -13,9 +13,9 @@
  */
 
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/forumboard.php");
+include("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/forumboard.php");
 
 
 $member = new Member($mysqli);
@@ -39,7 +39,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		$boardObj->move($_POST['bDir']);
 
-		require_once("main_manageboards.php");
+		include("main_manageboards.php");
 
 	}
 

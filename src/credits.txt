@@ -1,0 +1,9 @@
+TinyMCE WYSIWYG Text Editor - http://www.tinymce.com
+
+Color Picker - Cory LaViska for A Beautiful Site, LLC. (http://abeautifulsite.net/)
+
+Ace Text Editor - http://ace.c9.io
+
+jQuery - http://www.jquery.com
+
+lib_autolink - https://github.com/iamcal/lib_autolink

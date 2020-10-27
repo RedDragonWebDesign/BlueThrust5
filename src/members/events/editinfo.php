@@ -45,7 +45,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 $arrTimezones = DateTimeZone::listIdentifiers();
 $eventInfo = $eventObj->get_info_filtered();
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	// Check Title
 	if(trim($_POST['eventtitle']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Event title may not be blank.<br>";
@@ -69,23 +69,21 @@ if(($_POST['submit'] ?? '')) {
 		$countErrors++;
 	}
 	
+	$startHour = $_POST['starthour'];
+	if($_POST['ampm'] == "pm") {
+		$startHour = $_POST['starthour']+12;	
+	}
 	
 	// Calc Start Date
 	$tempTimezone = date_default_timezone_get();
+	
+	$startDate = explode("-", $_POST['startdate']);
+
 	date_default_timezone_set("UTC");
-	$startMonth = date("n", ($_POST['startdate']/1000));
-	$startDay = date("j", ($_POST['startdate']/1000));
-	$startYear = date("Y", ($_POST['startdate']/1000));
-	
-	if($_POST['ampm'] == "pm") {
-		$startHour = $_POST['starthour']+12;
-	}
-	else {
-		$startHour = $_POST['starthour'];
-	}
-	
+	$setStartTime = mktime($startHour, $_POST['startminute'], 0, $startDate[0], $startDate[1], $startDate[2]);
 	date_default_timezone_set($tempTimezone);
-	$setStartTime = mktime($startHour, $_POST['startminute'], 0, $startMonth, $startDay, $startYear);
+	
+	
 	
 	if($setStartTime < time()) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid start date.<br>";
@@ -162,8 +160,10 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
+	$tempTimezone = date_default_timezone_get();
+	date_default_timezone_set("UTC");
 	$startHour = date("G", $eventInfo['startdate']);
 	$startMinute = date("i", $eventInfo['startdate']);
 	
@@ -198,13 +198,20 @@ if(!($_POST['submit'] ?? '')) {
 		$dispSelected = "";
 	}
 	
+	// Get start date
 	
 	$showStartDate = date("M", $eventInfo['startdate'])." ".date("j", $eventInfo['startdate']).", ".date("Y", $eventInfo['startdate']);
+	$realStartDate = date("n", $eventInfo['startdate'])."-".date("j", $eventInfo['startdate'])."-".date("Y", $eventInfo['startdate']);
 	
 	$dispPMSelected = "";
 	if(date("a", $eventInfo['startdate']) == "pm") {
 		$dispPMSelected = " selected";	
 	}
+	
+	date_default_timezone_set($tempTimezone);
+	
+	
+	
 	
 	
 	if($eventInfo['messages'] == 1) {
@@ -315,7 +322,7 @@ if(!($_POST['submit'] ?? '')) {
 			</table>				
 		
 		</div>
-		<input type='hidden' id='realStartDate' value='".time()."' name='startdate'>
+		<input type='hidden' id='realStartDate' value='".$realStartDate."' name='startdate'>
 		</form>
 		<script type='text/javascript'>	
 		
@@ -339,14 +346,10 @@ if(!($_POST['submit'] ?? '')) {
 					dateFormat: 'M d, yy',
 					minDate: new Date(".$minYear.", ".$minMonth.", ".$minDay."),
 					altField: '#realStartDate',
-					altFormat: '@',
+					altFormat: 'm-dd-yy',
 			
 					
 				});
-				
-
-				var currentDate = $('#jqStartDate').datepicker('getDate');
-				$('#realStartDate').val(currentDate.valueOf());
 				
 			});
 		

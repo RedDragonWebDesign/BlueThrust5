@@ -12,9 +12,9 @@
  *
  */
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/rank.php");
+include_once("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/rank.php");
 
 
 
@@ -42,7 +42,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	if($checkAccess) {
 		
 		
-		if(($_POST['submit'] ?? '')) {
+		if($_POST['submit']) {
 			
 			$countErrors = 0;
 			
@@ -173,7 +173,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		}
 		
 		
-		if(!($_POST['submit'] ?? '')) {
+		if(!$_POST['submit']) {
 			
 			$statOptions = "<option value='inputnum'>Input (Number)</option><option value='inputtext'>Input (Text)</option>";
 			$onChange = "";

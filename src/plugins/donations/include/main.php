@@ -7,7 +7,7 @@
 	$member = new Member($mysqli);
 	$donationForm = new Form();
 
-	require_once("include/donate_form.php");
+	include("include/donate_form.php");
 
 	if($donationPlugin->getConfigInfo("mode") != "live") {
 

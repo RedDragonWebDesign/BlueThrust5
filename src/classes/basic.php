@@ -44,9 +44,7 @@ class Basic {
 	
 	*/
 	public function select($intIDNum, $numericIDOnly = true) {
-		// Caches for common SQL queries. Need to get the # of SQL queries down.
-		global $sqlCache;
-		
+	
 		$returnVal = false;
 		if(!$numericIDOnly) {
 			$intIDNum = $this->MySQL->real_escape_string($intIDNum);
@@ -55,27 +53,21 @@ class Basic {
 		else {
 			$checkID = is_numeric($intIDNum);
 		}
+		
 
 		if($checkID) {
-			if ( isset($sqlCache[$this->strTableName]) ) {
-				$cache2 = $sqlCache[$this->strTableName];
-				if ( isset($cache2[$intIDNum]) ) {
-					$this->arrObjInfo = $cache2[$intIDNum];
-					$returnVal = true;
-					$this->intTableKeyValue = $intIDNum;
-				}
-			} else {
-				$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '$intIDNum'");
-				if($result->num_rows > 0) {
-					$this->arrObjInfo = $result->fetch_assoc();
-					$returnVal = true;
-					$this->intTableKeyValue = $intIDNum;
-				}
+			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '$intIDNum'");
+			if($result->num_rows > 0) {
+				$this->arrObjInfo = $result->fetch_assoc();
+				$returnVal = true;
+				$this->intTableKeyValue = $intIDNum;
 			}
 		}
+
 		
 		return $returnVal;
 	}
+	
 	
 /*
 	 * Select by multiple arguments.
@@ -85,7 +77,7 @@ class Basic {
 	 */
 	
 	public function selectByMulti($arrWhats) {
-		
+
 		$returnVal = false;
 		if(is_array($arrWhats)) {
 			
@@ -97,6 +89,7 @@ class Basic {
 			$setSQL = implode(" AND ", $arrSQL);
 
 			$query = "SELECT ".$this->strTableKey." FROM ".$this->strTableName." WHERE ".$setSQL;
+
 			$stmt = $this->MySQL->prepare($query);
 			$returnID = "";
 
@@ -109,10 +102,12 @@ class Basic {
 				$returnID = $result;			
 				$stmt->close();
 
+				
 			}
 		
 			
 
+			
 			$returnVal = $this->select($returnID);	
 			
 			
@@ -361,10 +356,11 @@ class Basic {
 	
 	public function get_info($returnSingleValue = "") {
 		$returnVal = "";
-		if ( $returnSingleValue == "" || ! isset($this->arrObjInfo[$returnSingleValue]) ) {
+		if($returnSingleValue == "") {
 			$returnVal = $this->arrObjInfo;
 		}
 		else {
+			
 			$returnVal = $this->arrObjInfo[$returnSingleValue];
 		}
 		
@@ -372,9 +368,6 @@ class Basic {
 	}
 	
 	public function get_info_filtered($returnSingleValue = "") {
-		if ( ! $this->arrObjInfo ) {
-			return $this->arrObjInfo;
-		}
 		
 		$arrFilteredInfo = array();
 		foreach($this->arrObjInfo as $key => $value) {

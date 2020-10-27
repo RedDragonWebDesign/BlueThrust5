@@ -27,14 +27,14 @@ else {
 
 $cID = $_GET['cID'];
 
-require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
+include_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
 
 $campaignObj = new DonationCampaign($mysqli);
 $objManageList = new btOrderManageList($campaignObj);
 $objManageList->strMainListLink = BASE_DIRECTORY."plugins/donations/console/managecampaign_main.php";
 
 if($_GET['campaignID'] != "" && $campaignObj->select($_GET['campaignID']) && $_GET['action'] == "edit") {
-	require_once("managecampaign_edit.php");
+	include("managecampaign_edit.php");
 }
 elseif($_GET['action'] == "delete" && $campaignObj->select($_POST['itemID'])) {
 	$info = $campaignObj->get_info_filtered();
@@ -42,13 +42,13 @@ elseif($_GET['action'] == "delete" && $campaignObj->select($_POST['itemID'])) {
 	$objManageList->strDeletePostVarID = "campaignID";	
 }
 elseif($_GET['p'] == "log" && $campaignObj->select($_GET['campaignID'])) {
-	require_once(BASE_DIRECTORY."plugins/donations/console/donationlog.php");	
+	include(BASE_DIRECTORY."plugins/donations/console/donationlog.php");	
 }
 elseif(isset($_GET['donationID']) && $campaignObj->donationObj->select($_GET['donationID'])) {
-	require_once(BASE_DIRECTORY."plugins/donations/console/donationdetails.php");	
+	include(BASE_DIRECTORY."plugins/donations/console/donationdetails.php");	
 }
 else {
-	require_once($objManageList->strMainListLink);	
+	include($objManageList->strMainListLink);	
 }
 
 

@@ -33,7 +33,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 </script>
 ";
 
-require_once($prevFolder."classes/consolecategory.php");
+include_once($prevFolder."classes/consolecategory.php");
 
 $cID = $_GET['cID'];
 

@@ -12,10 +12,10 @@
  *
  */
 
-require_once("../../../_setup.php");
-require_once("../../../classes/member.php");
-require_once("../../../classes/rank.php");
-require_once("../../../classes/squad.php");
+include_once("../../../_setup.php");
+include_once("../../../classes/member.php");
+include_once("../../../classes/rank.php");
+include_once("../../../classes/squad.php");
 
 
 // Start Page
@@ -50,7 +50,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		
 		
 		
-		if(($_POST['submit'] ?? '')) {
+		if($_POST['submit']) {
 		
 			
 			// Check News Type
@@ -111,7 +111,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		
 		
 		
-		if(!($_POST['submit'] ?? '') && !$_POST['cancel']) {
+		if(!$_POST['submit'] && !$_POST['cancel']) {
 			$squadNewsInfo = $squadNewsObj->get_info_filtered();
 			
 			if($dispError != "") {

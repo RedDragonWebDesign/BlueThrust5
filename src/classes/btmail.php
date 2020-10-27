@@ -24,7 +24,6 @@
 				$mail->setFrom($from);
 			}
 			
-			
 			$this->addEmail(array("to" => $to));
 			
 			$mail->Subject = $subject;
@@ -34,15 +33,14 @@
 			
 			$this->addEmail($additional, "bcc");
 			$this->addEmail($additional, "cc");
-	
-			
+
 			return $mail->send();
 			
 		}
 		
 		private function getFrom($args) {
 			
-			if(!isset($args['from'])) {			
+			if(!isset($args['from']) || trim($from) == "") {			
 				$siteDomain = $_SERVER['SERVER_NAME'];
 				if(substr($siteDomain,0,strlen("www.")) == "www.") {
 					$siteDomain = substr($siteDomain, strlen("www."));

@@ -12,9 +12,6 @@
  *
  */
 
-require_once("basic.php");
-require_once("downloadcategory.php");
-require_once("btupload.php");
 
 class Download extends Basic {
 	
@@ -23,6 +20,8 @@ class Download extends Basic {
 	protected $strMIMEType;
 	protected $arrSplitFileNames;
 	protected $intFileSize;
+	protected $filterExtensions = array("php", "js");
+	
 	
 	function __construct($sqlConnection) {
 				
@@ -47,21 +46,18 @@ class Download extends Basic {
 		$returnVal = false;
 		if($this->setCategory($downloadCatID)) {
 			$this->intFileSize = 0;
-		
-			$allowableExt = $this->objDownloadCategory->getExtensions();
-			
+
+			$allowableExt = $this->objDownloadCategory->getExtensions(false);
+
 			if($uploadfile != "") {
 				$this->objUpload = new BTUpload($uploadfile, "", $fileloc, $allowableExt, 4, $outsidelink);
 			}
 			
 			if($this->objUpload->uploadFile() && $this->splitFile()) {
-				
 				$returnVal = true;
 				
 			}
-			else {
-				echo "NO UPLOAD";	
-			}
+
 		}
 		
 		return $returnVal;
@@ -69,57 +65,71 @@ class Download extends Basic {
 
 	// Split File for Downloads
 	
-	function splitFile()
-	{
-
+	public function splitFile() {
+		global $websiteInfo;		
+		
 		$returnVal = false;
 		$countErrors = 0;
 		$fullFileName = $this->objUpload->getFileLoc().$this->objUpload->getUploadedFileName();
 
-		$finfo = finfo_open(FILEINFO_MIME_TYPE);
-		$this->strMIMEType = finfo_file($finfo, $fullFileName);
 		
-		$this->arrSplitFileNames = array();
-		$handle = fopen($fullFileName, 'rb');
-		if($handle) {
-			$file_size = filesize($fullFileName);
-			$this->intFileSize = $file_size;
-			$parts_size = floor($file_size/2);
-			$modulus=$file_size % 2;
-			for($i=0;$i<2;$i++) {
-				if($modulus!=0 && $i==1) {
-					$parts[$i] = fread($handle,$parts_size+$modulus);
-				}
-				else {
-					$parts[$i] = fread($handle,$parts_size);
-				}
-				
-				if($parts[$i] === false) {
-					$countErrors++;
-				}
-	
-			}
-	
-			if(fclose($handle) && $countErrors == 0) {
-	
+		if($websiteInfo['split_downloads']) {
+			$finfo = finfo_open(FILEINFO_MIME_TYPE);
+			$this->strMIMEType = finfo_file($finfo, $fullFileName);
+			
+			$this->arrSplitFileNames = array();
+			$handle = fopen($fullFileName, 'rb');
+			if($handle) {
+				$file_size = filesize($fullFileName);
+				$this->intFileSize = $file_size;
+				$parts_size = floor($file_size/2);
+				$modulus=$file_size % 2;
 				for($i=0;$i<2;$i++) {
-					$filePrefix[$i] = uniqid(time());
-					$this->arrSplitFileNames[] = "split_".$filePrefix[$i];
-					$tempFileName = $this->objUpload->getFileLoc()."split_".$filePrefix[$i];
-					$handle = fopen($tempFileName, 'wb');
+					if($modulus!=0 && $i==1) {
+						$parts[$i] = fread($handle,$parts_size+$modulus);
+					}
+					else {
+						$parts[$i] = fread($handle,$parts_size);
+					}
 					
-					if(!$handle || fwrite($handle,$parts[$i]) === false) {
+					if($parts[$i] === false) {
 						$countErrors++;
 					}
+		
 				}
-	
-				if(fclose($handle) && $countErrors == 0 && unlink($fullFileName)) {
-					$returnVal = true;
+		
+				if(fclose($handle) && $countErrors == 0) {
+		
+					for($i=0;$i<2;$i++) {
+						$filePrefix[$i] = uniqid(time());
+						$this->arrSplitFileNames[] = "split_".$filePrefix[$i];
+						$tempFileName = $this->objUpload->getFileLoc()."split_".$filePrefix[$i];
+						$handle = fopen($tempFileName, 'wb');
+						
+						if(!$handle || fwrite($handle,$parts[$i]) === false) {
+							$countErrors++;
+						}
+					}
+		
+					if(fclose($handle) && $countErrors == 0 && unlink($fullFileName)) {
+						$returnVal = true;
+					}
+		
 				}
-	
 			}
 		}
-	
+		else {
+			// Do not split downloads
+			$newName = $this->objUpload->getUploadedFileName().".download";
+			if($this->renameFile($newName)) {
+				$this->intFileSize = filesize($this->objUpload->getFileLoc().$newName);
+				$this->arrSplitFileNames[0] = $newName;
+				$this->arrSplitFileNames[1] = "";
+				$returnVal = true;
+			}
+
+		}
+
 		return $returnVal;
 	}
 		
@@ -158,6 +168,14 @@ class Download extends Basic {
 		
 		return $returnVal;
 	}
-    
+
+	private function renameFile($newName) {
+		
+		$fullFileName = $this->objUpload->getFileLoc().$this->objUpload->getUploadedFileName();
+		$newFileName = $this->objUpload->getFileLoc().$newName;
+
+		return rename($fullFileName, $newFileName);
+	}
+	
 }
 ?>

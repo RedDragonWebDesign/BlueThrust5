@@ -13,7 +13,7 @@
  */
 
 
-require_once("basic.php");
+include_once("basic.php");
 
 
 class ForumPost extends Basic {
@@ -45,8 +45,7 @@ class ForumPost extends Basic {
 			$this->MySQL->query("OPTIMIZE TABLE `".$this->MySQL->get_tablePrefix()."forum_topicseen`");
 			$returnVal = true;
 		}
-		
-		
+				
 		return $returnVal;
 		
 	}
@@ -75,15 +74,16 @@ class ForumPost extends Basic {
 		
 	}
 	
-	public function show($template="") {
+	public function show($showReplyLink=false, $template="") {
 		global $websiteInfo, $MAIN_ROOT, $dbprefix, $mysqli, $member;
+		
 		if($template == "") {
 			
-			require_once("templates/post.php");
+			include(BASE_DIRECTORY."forum/templates/post.php");
 			
 		}
 		else {
-			require_once("templates/".$template);
+			include(BASE_DIRECTORY."forum/templates/".$template);
 		}
 		
 	}
@@ -99,19 +99,22 @@ class ForumPost extends Basic {
 			
 			$returnArr = $filtered ? $this->get_info_filtered() : $this->get_info();
 			
+			$returnArr['forumboard_id'] = $this->objTopic->get_info("forumboard_id");
+			
 			$this->select($temp);
 			$this->blnManageable = $tempManage;
+			
 		}
 		
 		return $returnArr;
 	}
 	
 	
-	public function getLink() {
-		global $websiteInfo, $MAIN_ROOT, $memberInfo;
-		
+	public function getLink($fullLink=false, $individualPost=false) {
+		global $websiteInfo, $memberInfo;
+				
 		$returnVal = "";
-		if($this->intTableKeyValue != "") {
+		if($this->intTableKeyValue != "" && !$individualPost) {
 			
 			// Figure out num of posts
 			$query = "SELECT * FROM ".$this->strTableName." WHERE forumtopic_id = '".$this->arrObjInfo['forumtopic_id']."' ORDER BY dateposted";
@@ -123,8 +126,8 @@ class ForumPost extends Basic {
 			$postRanking = $findDepthResult->num_rows;
 			
 			// Figure out posts per page
-			if(($memberInfo['postsperpage'] ?? '') > 0) {
-				$postsPerPage = $memberInfo['postsperpage'];
+			if($setPostsPerPage > 0) {
+				$postsPerPage = $setPostsPerPage;
 			}
 			elseif($websiteInfo['forum_postsperpage'] > 0) {
 				$postsPerPage = $websiteInfo['forum_postsperpage'];
@@ -137,7 +140,7 @@ class ForumPost extends Basic {
 			$totalPages = ceil($totalPosts/$postsPerPage);
 		
 			
-			$returnVal = $MAIN_ROOT."forum/viewtopic.php?tID=".$this->arrObjInfo['forumtopic_id'];
+			$returnVal = FULL_SITE_URL."forum/viewtopic.php?tID=".$this->arrObjInfo['forumtopic_id'];
 			
 			if($totalPages > 1) {
 				$pageNumber = ceil($postRanking/$postsPerPage);
@@ -146,8 +149,23 @@ class ForumPost extends Basic {
 			
 			$returnVal .= "#".$this->intTableKeyValue;
 			
+			if($fullLink) {
+				$topicInfo = $this->getTopicInfo(true);
+				$returnVal = "<a href='".$returnVal."'>".$topicInfo['title']."</a>";	
+			}
+			
+			
 		}
+		elseif($this->intTableKeyValue != "" && $individualPost) {
 
+			$returnVal = FULL_SITE_URL."forum/viewpost.php?post=".$this->intTableKeyValue;
+			
+			if($fullLink) {
+				$topicInfo = $this->getTopicInfo(true);
+				$returnVal = "<a href='".$returnVal."'>".$topicInfo['title']."</a>";	
+			}
+		}
+		
 		
 		return $returnVal;
 	}
@@ -166,6 +184,62 @@ class ForumPost extends Basic {
 			}
 			
 		}
+	}
+	
+	
+	// Gets all member_id's of posters in a topic
+	private function getTopicPosters() {
+		
+		$arrReturn = array();
+		$query = "SELECT DISTINCT member_id FROM ".$this->strTableName." WHERE forumtopic_id = '".$this->arrObjInfo['forumtopic_id']."'";
+		$result = $this->MySQL->query($query);
+		
+		while($row = $result->fetch_assoc()) {	
+			$arrReturn[] = $row['member_id'];
+		}
+				
+	}
+	
+	public function sendNotifications() {
+
+		if($this->intTableKeyValue != "") {
+
+			$mailObj = new btMail();
+			$member = new Member($this->MySQL);
+			$arrBCC = array();
+			
+			// Check if need to send notification to topic starter
+			$topicInfo = $this->getTopicInfo();
+			$sentTopicMember = false;
+			
+			$subject = "New Post: ".$topicInfo['title'];
+			$message = "A new post has been made in the topic: ".$topicInfo['title']."<br><br><a href='".$this->getLink(false, true)."'>View Post</a>";
+				
+			
+			if($member->select($topicInfo['member_id']) && $member->getEmailNotificationSetting("forum_topic") == 1) {
+				$member->email($subject, $message);
+				$sentTopicMember = true;	
+			}
+						
+			
+			foreach($this->getTopicPosters() as $memberID) {
+				
+				if($member->select($memberID) && $member->getEmailNotificationSetting("forum_post") == 1 && $member->get_info("email") != "") {					
+					
+					if(($topicInfo['member_id'] == $memberID && !$sentTopicMember) || $topicInfo['member_id'] != $memberID) {
+						$arrBCC[] = $member->get_info("email");
+					}
+					
+				}
+				
+			}
+			
+			if(count($arrBCC) > 0) {
+				$mailObj->sendMail("", $subject, $message, array("bcc" => $arrBCC));
+			}
+			
+		}
+		
 	}
 	
 	

@@ -12,7 +12,7 @@
  *
  */
 
-require_once("basicorder.php");
+include_once("basicorder.php");
 
 class ProfileCategory extends BasicOrder {
 	

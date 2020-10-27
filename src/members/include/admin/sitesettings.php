@@ -111,8 +111,7 @@ else {
 	
 }
 
-$webInfoObj->select(1);
-$websiteInfo = $webInfoObj->get_info_filtered();
+$websiteLogoInfo = $webInfoObj->get_info_filtered("logourl");
 $selectNewsPostsPerPage = array();
 foreach(array(10,25,50,100) as $value) {
 	if($value == $websiteInfo['news_postsperpage']) {
@@ -156,7 +155,7 @@ foreach(array(10,25,50,100) as $value) {
 		</tr>
 		<tr>
 			<td class='formLabel'>Logo URL: <a href='javascript:void(0)' onmouseover="showToolTip('Depending on the theme you are using, you may have to edit the actual theme files to change the logo.')" onmouseout='hideToolTip()'>(?)</a></td>
-			<td class='main'><input type='text' id='logourl' value='<?php echo $websiteInfo['logourl']; ?>' class='textBox' style='width: 250px'></td>
+			<td class='main'><input type='text' id='logourl' value='<?php echo $websiteLogoInfo; ?>' class='textBox' style='width: 250px'></td>
 		</tr>
 		<!-- 
 		<tr>
@@ -166,6 +165,10 @@ foreach(array(10,25,50,100) as $value) {
 		<tr>
 			<td class='formLabel'>Theme:</td>
 			<td class='main'><select id='theme' class='textBox'><?php echo $themeOptions; ?></select></td>
+		</tr>
+		<tr>
+			<td class='formLabel' style='width: 200px'>E-mail Queue Delay: <a href='javascript:void(0)' onmouseover="showToolTip('Sets how frequently to check the e-mail queue to send e-mail notifications.  Minimum is 5 minutes, the default is 30 minutes.')" onmouseout='hideToolTip()'>(?)</a></td>
+			<td class='main'><input type='text' id='emailqueue_delay' value='<?php echo $websiteInfo['emailqueue_delay']; ?>' class='textBox' style='width: 30px'> minutes</td>
 		</tr>
 		<tr>
 			<td class='formLabel' style='width: 200px'>Max Diplomacy Requests: <a href='javascript:void(0)' onmouseover="showToolTip('Sets the number of times someone can send a diplomacy request.')" onmouseout='hideToolTip()'>(?)</a></td>
@@ -493,7 +496,7 @@ foreach(array(10,25,50,100) as $value) {
 
 			$('#loadingspiral').show();
 
-			$.post("<?php echo $MAIN_ROOT; ?>members/include/admin/sitesettings_submit.php", { clanName: $('#clanname').val(), clanTag: $('#clantag').val(), logoURL: $('#logourl').val(), forumURL: $('#forumurl').val(), themeName: $('#theme').val(), maxDiplomacy: $('#maxdiplomacy').val(), failedLogins: $('#failedlogins').val(), maxDSL: $('#maxdsl').val(), lowDSL: $('#lowdsl').val(), medDSL: $('#meddsl').val(), highDSL: $('#highdsl').val(), medalOrder: $('#medalorder').val(), debugMode: $('#debugmode').val(), hideInactive: $('#showinactive').val(), showHPNews: $('#showNewsPosts').val(), numOfNewsPosts: $('#numOfNewsPosts').val(), customNewsAmount: $('#customNewsAmount').val(), newsPostsPerPage: $('#newsPostsPerPage').val() }, function(data) {
+			$.post("<?php echo $MAIN_ROOT; ?>members/include/admin/sitesettings_submit.php", { clanName: $('#clanname').val(), clanTag: $('#clantag').val(), logoURL: $('#logourl').val(), forumURL: $('#forumurl').val(), themeName: $('#theme').val(), maxDiplomacy: $('#maxdiplomacy').val(), failedLogins: $('#failedlogins').val(), maxDSL: $('#maxdsl').val(), lowDSL: $('#lowdsl').val(), medDSL: $('#meddsl').val(), highDSL: $('#highdsl').val(), medalOrder: $('#medalorder').val(), debugMode: $('#debugmode').val(), hideInactive: $('#showinactive').val(), showHPNews: $('#showNewsPosts').val(), numOfNewsPosts: $('#numOfNewsPosts').val(), customNewsAmount: $('#customNewsAmount').val(), newsPostsPerPage: $('#newsPostsPerPage').val(), emailqueue_delay: $('#emailqueue_delay').val() }, function(data) {
 				$('#postResponse').html(data);
 				$('#loadingspiral').hide();
 			});

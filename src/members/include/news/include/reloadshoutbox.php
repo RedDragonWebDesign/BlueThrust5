@@ -13,13 +13,11 @@
  *
  */
 
-$prevFolder = '../../../../';
-
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/rank.php");
-require_once("../../../../classes/news.php");
-require_once("../../../../classes/shoutbox.php");
+include_once("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/rank.php");
+include_once("../../../../classes/news.php");
+include_once("../../../../classes/shoutbox.php");
 
 // Start Page
 
@@ -32,7 +30,7 @@ $consoleInfo = $consoleObj->get_info_filtered();
 
 
 $member = new Member($mysqli);
-$member->select(($_SESSION['btUsername'] ?? ''));
+$member->select($_SESSION['btUsername']);
 
 
 $newsObj = new News($mysqli);
@@ -41,12 +39,12 @@ $newsObj = new News($mysqli);
 $LOGIN_FAIL = true;
 
 $shoutboxObj = new Shoutbox($mysqli, "news", "news_id");
-$shoutboxObj->strDivID = $_POST['divID'] ?? '';
+$shoutboxObj->strDivID = $_POST['divID'];
 $shoutboxObj->intDispWidth = 140;
 $shoutboxObj->intDispHeight = 300;
 $shoutboxObj->blnUpdateShoutbox = true;
 
-if($member->authorizeLogin(($_SESSION['btPassword'] ?? ''))) {
+if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 	$manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
 
@@ -81,3 +79,5 @@ if($result->num_rows > 0) {
 		$_SESSION[$checkNewsUpdates] = $row['updatetime'];
 	}
 }
+
+?>

@@ -27,7 +27,7 @@ else {
 
 $cID = $_GET['cID'];
 
-require_once($prevFolder."classes/btupload.php");
+include_once($prevFolder."classes/btupload.php");
 
 $menuCatObj = new MenuCategory($mysqli);
 $menuItemObj = new MenuItem($mysqli);
@@ -36,7 +36,7 @@ $intAddNewMenuItemID = $consoleObj->findConsoleIDByName("Add Menu Item");
 
 if(isset($_GET['menuID']) && $menuItemObj->select($_GET['menuID']) && $_GET['action'] == "edit") {
 	$menuItemInfo = $menuItemObj->get_info();
-	require_once("include/admin/managemenu/edit_item.php");
+	include("include/admin/managemenu/edit_item.php");
 }
 else {
 	
@@ -57,7 +57,7 @@ else {
 		<div id='menuItemDiv'>
 	";
 	
-	require_once("include/admin/managemenu/include/menuitemlist.php");
+	include("include/admin/managemenu/include/menuitemlist.php");
 	
 	echo "
 		</div>

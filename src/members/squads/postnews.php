@@ -43,7 +43,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 $countErrors = 0;
 $dispError = "";
-if(($_POST['submit'] ?? '')){
+if($_POST['submit']){
 	
 	// Check News Type
 	//	1 - Public
@@ -110,7 +110,7 @@ if(($_POST['submit'] ?? '')){
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	echo "
 		<form action='managesquad.php?sID=".$_GET['sID']."&pID=PostNews' method='post'>

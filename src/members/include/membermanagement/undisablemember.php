@@ -61,7 +61,7 @@ while($row = $result->fetch_assoc()) {
 }
 
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	// Check Member
 
@@ -78,8 +78,7 @@ if(($_POST['submit'] ?? '')) {
 	if($countErrors == 0) {
 		
 		if($member->update(array("disabled", "lastlogin"), array(0, time()))) {
-			$logMessage = "Undisabled ".$member->getMemberLink().".";
-			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
+			$logMessage = "Undisabled ".$member->getMemberLink().".<br><br><b>Reason:</b><br>".filterText($_POST['reason']);
 			
 			echo "
 			
@@ -120,7 +119,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	$sqlRanks = "('".implode("','", $arrRanks)."')";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '1' ORDER BY ".$dbprefix."ranks.ordernum DESC");

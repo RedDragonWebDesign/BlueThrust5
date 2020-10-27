@@ -32,7 +32,7 @@ else {
 }
 
 
-require_once("../plugins/facebook/facebook.php");
+include_once("../plugins/facebook/facebook.php");
 
 $fbObj = new Facebook($mysqli);
 $blnCheckForFacebook = $fbObj->hasFacebook($memberInfo['member_id']);

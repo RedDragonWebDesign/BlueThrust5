@@ -15,7 +15,7 @@
 // Config File
 $prevFolder = "../";
 
-require_once($prevFolder."_setup.php");
+include($prevFolder."_setup.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $boardObj = new ForumBoard($mysqli);
@@ -27,11 +27,11 @@ $categoryObj->set_assocTableName("forum_board");
 $categoryObj->set_assocTableKey("forumboard_id");
 
 define("RESIZE_FORUM_IMAGES", true);
-require_once("forum_image_resize.php");
+include("forum_image_resize.php");
 
 // Start Page
 $PAGE_NAME = "Search Forum - ";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 // Check Private Forum
 
@@ -80,7 +80,7 @@ if(count($_POST) > 0) {
 }
 
 
-require_once($prevFolder."include/breadcrumb.php");
+include($prevFolder."include/breadcrumb.php");
 
 
 $arrMemberList = array();
@@ -256,11 +256,11 @@ $setupFormArgs = array(
 $formObj = new Form($setupFormArgs);
 
 
-if(($_POST['submit'] ?? '') && $formObj->validate()) {
+if($_POST['submit'] && $formObj->validate()) {
 	$_SESSION['btLastSearch'] = time();
 	
 	define("SHOW_SEARCHRESULTS", true);
-	require_once("search_results.php");
+	include("search_results.php");
 
 	
 }
@@ -290,5 +290,5 @@ function search_checks() {
 }
 
 
-require_once($prevFolder."themes/".$THEME."/_footer.php");
+include($prevFolder."themes/".$THEME."/_footer.php");
 ?>

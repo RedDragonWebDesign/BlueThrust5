@@ -13,7 +13,7 @@
  */
 
 
-require_once("../classes/event.php");
+include_once("../classes/event.php");
 $_SESSION['btEventID'] = "";
 $_SESSION['btCountMindChanges'] = array();
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
@@ -35,7 +35,7 @@ $eventObj = new Event($mysqli);
 if(isset($_GET['note'])) {
 	echo "
 		<div class='formDiv'>
-			<b><u>NOTE:</u></b> If you are here after clicking the confirm your attendence link, you must wait for the event to start before confirming your attendence at the event.  You can however, RSVP to an event from this page.
+			<b><u>NOTE:</u></b> If you are here after clicking the confirm your attendance link, you must wait for the event to start before confirming your attendance at the event.  You can however, RSVP to an event from this page.
 		</div>
 	";
 }
@@ -59,7 +59,7 @@ echo "
 ";
 
 
-require_once("include/invitelist.php");
+include("include/invitelist.php");
 
 echo "</div>";
 ?>

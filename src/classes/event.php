@@ -13,10 +13,10 @@
  */
 
 
-require_once("basic.php");
-require_once("basicorder.php");
-require_once("news.php");
-require_once("member.php");
+include_once("basic.php");
+include_once("basicorder.php");
+include_once("news.php");
+include_once("member.php");
 
 class Event extends Basic {
 	
@@ -34,7 +34,7 @@ class Event extends Basic {
 		$this->strTableKey = "event_id";
 		$this->strTableName = $this->MySQL->get_tablePrefix()."events";
 		
-		$this->objEventMember = new Basic($sqlConnection, "events_members", "eventmember_id");
+		$this->objEventMember = new EventMember($sqlConnection, $this);//Basic($sqlConnection, "events_members", "eventmember_id");
 		$this->objEventPosition = new BasicSort($sqlConnection, "eventpositions", "position_id", "event_id");
 		$this->objEventMessage = new News($sqlConnection, "eventmessages", "eventmessage_id", "eventmessage_comment", "comment_id");
 		$this->objEventMessageComment = $this->objEventMessage->objComment;
@@ -282,7 +282,41 @@ class Event extends Basic {
 		
 	}
 
+
+	public function getLink() {
+
+		return FULL_SITE_URL."events/info.php?eID=".$this->intTableKeyValue;
+		
+	}
 	
+	public function update($arrColumns, $arrValues) {
+		
+		$arrOriginalInfo = $this->arrObjInfo;
+		
+		$result = parent::update($arrColumns, $arrValues);
+
+		if($result) {
+		
+			$arrNewInfo = $this->arrObjInfo;
+			
+			// Check for time change
+			if($arrOriginalInfo['startdate'] != $arrNewInfo['startdate']) {
+	
+				//Update reminders
+				foreach($this->getInvitedMembers() as $eventMemberID) {
+					$this->objEventMember->select($eventMemberID);
+					$this->objEventMember->setReminder();					
+				}
+				
+			}	
+			
+			
+		}
+		
+		
+		return $result;
+		
+	}
 	
 }
 

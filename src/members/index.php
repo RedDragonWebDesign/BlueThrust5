@@ -15,14 +15,14 @@
 
 // Config File
 $prevFolder = "../";
-require_once("../_setup.php");
+include("../_setup.php");
 
 
 // Classes needed for index.php
-require_once("../classes/member.php");
-require_once("../classes/rank.php");
-require_once("../classes/consoleoption.php");
-require_once("../classes/consolecategory.php");
+include_once("../classes/member.php");
+include_once("../classes/rank.php");
+include_once("../classes/consoleoption.php");
+include_once("../classes/consolecategory.php");
 
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
@@ -43,7 +43,7 @@ if($ipbanObj->select($IP_ADDRESS, false)) {
 $dispBreadCrumb = "<a href='".$MAIN_ROOT."'>Home</a> > My Account";
 $EXTERNAL_JAVASCRIPT = "<script type='text/javascript' src='".$MAIN_ROOT."members/js/main.js'></script>";
 $PAGE_NAME = "My Account - ";
-require_once("../themes/".$THEME."/_header.php");
+include("../themes/".$THEME."/_header.php");
 
 $member = new Member($mysqli);
 
@@ -96,19 +96,16 @@ if($checkMember) {
 		$counter = 0;
 		$totalConsoleCats = count($arrConsoleCats);
 		
-		$memberAppCID = $consoleObj->findConsoleIDByName("View Member Applications");
-		$diplomacyRequestsCID = $consoleObj->findConsoleIDByName("View Diplomacy Requests");
-		$viewEventInvitationsCID = $consoleObj->findConsoleIDByName("View Event Invitations");
-		$viewInactiveRequestsCID = $consoleObj->findConsoleIDByName("View Inactive Requests");
-		$privateMessagesCID = $consoleObj->findConsoleIDByName("Private Messages");
-		
 		foreach($arrConsoleCats as $key => $categoryID) {
+			
 			$consoleCatObj->select($categoryID);
 			$consoleCatInfo = $consoleCatObj->get_info_filtered();
 			
 			$arrConsoleOptions = $arrFullySortedConsole[$key];
 			$categoryCSS = "consoleCategory_clicked";
 			if(count($arrConsoleOptions)) {
+				
+				
 				$blnShowCategoryList = false;
 				$hideoptions = "";
 				if($counter > 0) {
@@ -153,7 +150,6 @@ if($checkMember) {
 				<div style='padding-left: 5px; padding-bottom: 15px'>
 				<ul style='padding: 0px; padding-left: 15px'>
 				";
-				
 				foreach($arrConsoleOptions as $consoleOptionID) {
 			
 					$consoleObj->select($consoleOptionID);
@@ -164,6 +160,13 @@ if($checkMember) {
 						$dispConsoleOptions .= $dispPageTitle;
 					}
 					elseif($consoleInfo['hide'] == 0) {
+						
+						$memberAppCID = $consoleObj->findConsoleIDByName("View Member Applications");
+						$diplomacyRequestsCID = $consoleObj->findConsoleIDByName("View Diplomacy Requests");
+						$viewEventInvitationsCID = $consoleObj->findConsoleIDByName("View Event Invitations");
+						$viewInactiveRequestsCID = $consoleObj->findConsoleIDByName("View Inactive Requests");
+						$privateMessagesCID = $consoleObj->findConsoleIDByName("Private Messages");
+						
 						if($consoleInfo['console_id'] == $memberAppCID) {
 							$getUnseenApps = $mysqli->query("SELECT memberapp_id FROM ".$dbprefix."memberapps WHERE seenstatus = '0'");
 							$unseenApps = $getUnseenApps->num_rows;
@@ -262,7 +265,7 @@ if($blnShowCategoryList || true) {
 	
 }
 
-require_once("../themes/".$THEME."/_footer.php");
+include("../themes/".$THEME."/_footer.php");
 
 
 ?>

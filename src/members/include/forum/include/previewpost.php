@@ -12,11 +12,11 @@
  *
  */
 
-$prevFolder = '../../../../';
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/forumboard.php");
+include("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/forumboard.php");
+
 
 $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
@@ -58,7 +58,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	}
 	
 	echo "
-		<div class='breadCrumbTitle'>Preview - ".filterText($_POST['previewSubject'] ?? '')."</div>
+		<div class='breadCrumbTitle'>Preview - ".filterText($_POST['previewSubject'])."</div>
 		<table class='forumTable'>
 			<tr>
 				<td class='boardPosterInfo' valign='top'>
@@ -81,4 +81,8 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		</table>
 	";
 	
+	
 }
+
+
+?>

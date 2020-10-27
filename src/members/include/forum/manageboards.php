@@ -12,7 +12,7 @@
  *
  */
 
-require_once("../classes/forumboard.php");
+include_once("../classes/forumboard.php");
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
@@ -40,7 +40,7 @@ $categoryObj->set_assocTableKey("forumboard_id");
 
 if($boardObj->select($_GET['bID']) && $_GET['action'] == "edit") {
 
-	require_once("include/edit_board.php");
+	include("include/edit_board.php");
 
 }
 else {
@@ -71,7 +71,7 @@ else {
 	
 	";
 	
-	require_once("include/main_manageboards.php");
+	include("include/main_manageboards.php");
 	
 	echo "
 		</div>

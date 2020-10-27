@@ -73,7 +73,7 @@ if($memberoptions == "") {
 
 
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	// Check Member
 	if(!$member->select($_POST['member'])) {
@@ -138,7 +138,7 @@ if(($_POST['submit'] ?? '')) {
 
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	$rankoptions = "<option value='0' id='defaultPower'>Default</option><option value='-1'>(Can't Promote)</option>";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1' ORDER BY ordernum DESC");

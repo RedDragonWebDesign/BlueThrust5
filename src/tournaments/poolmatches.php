@@ -15,10 +15,10 @@
 // Config File
 $prevFolder = "../";
 
-require_once($prevFolder."_setup.php");
-require_once($prevFolder."classes/member.php");
-require_once($prevFolder."classes/rank.php");
-require_once($prevFolder."classes/tournament.php");
+include($prevFolder."_setup.php");
+include($prevFolder."classes/member.php");
+include_once($prevFolder."classes/rank.php");
+include_once($prevFolder."classes/tournament.php");
 
 
 
@@ -63,7 +63,7 @@ if($tournamentInfo['seedtype'] != 3 && !$tournamentObj->checkForPools()) {
 	<head>
 		<title><?php echo $PAGE_NAME.$CLAN_NAME; ?></title>
 		<link rel='stylesheet' type='text/css' href='<?php echo $MAIN_ROOT; ?>themes/<?php echo $THEME; ?>/style.css'>
-		<link rel='stylesheet' type='text/css' href='<?php echo $MAIN_ROOT; ?>themes/btcs4.css.php'>
+		<link rel='stylesheet' type='text/css' href='<?php echo $MAIN_ROOT; ?>themes/<?php echo $THEME; ?>/btcs4.css'>
 		<link rel='stylesheet' type='text/css' href='<?php echo $MAIN_ROOT; ?>js/css/jquery-ui-1.8.17.custom.css'>
 		<script type='text/javascript' src='<?php echo $MAIN_ROOT; ?>js/jquery-1.6.4.min.js'></script>
 		<script type='text/javascript' src='<?php echo $MAIN_ROOT; ?>js/jquery-ui-1.8.17.custom.min.js'></script>

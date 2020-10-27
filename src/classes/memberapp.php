@@ -98,10 +98,14 @@
 		
 		
 		
-		public function addMember() {
+		public function addMember($rankID=2) {
+			
+			if(!is_numeric($rankID) || $rankID < 2 || $rankID == "") {
+				$rankID = 2;	
+			}
 			
 			$rankObj = new Rank($this->MySQL);
-			$rankObj->selectByOrder(2);
+			$rankObj->selectByOrder($rankID);
 
 			$newMemRank = $rankObj->get_info("rank_id");
 			

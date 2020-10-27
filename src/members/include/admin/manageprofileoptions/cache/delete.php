@@ -12,9 +12,9 @@
  *
  */
 
-require_once("../../../../../_setup.php");
-require_once("../../../../../classes/member.php");
-require_once("../../../../../classes/rank.php");
+include_once("../../../../../_setup.php");
+include_once("../../../../../classes/member.php");
+include_once("../../../../../classes/rank.php");
 
 $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
@@ -60,7 +60,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		}
 		$_SESSION['btProfileCacheRefresh'] = true;
 		
-		require_once("view.php");
+		include("view.php");
 		
 	}
 	

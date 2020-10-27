@@ -15,10 +15,10 @@
 // Config File
 $prevFolder = "../";
 
-require_once($prevFolder."_setup.php");
-require_once($prevFolder."classes/member.php");
-require_once($prevFolder."classes/rank.php");
-require_once($prevFolder."classes/news.php");
+include($prevFolder."_setup.php");
+include($prevFolder."classes/member.php");
+include_once($prevFolder."classes/rank.php");
+include_once($prevFolder."classes/news.php");
 
 // Classes needed for index.php
 
@@ -74,7 +74,7 @@ else {
 // Start Page
 $PAGE_NAME = $newsInfo['postsubject']." - News - ";
 $dispBreadCrumb = "";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 $memberInfo = "";
 if(!$LOGIN_FAIL) {
@@ -85,7 +85,7 @@ $breadcrumbObj->setTitle("News");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("News", $MAIN_ROOT."news");
 $breadcrumbObj->addCrumb($newsInfo['postsubject']);
-require_once($prevFolder."include/breadcrumb.php");
+include($prevFolder."include/breadcrumb.php");
 
 $newsObj->show();
 
@@ -167,10 +167,10 @@ echo "
 		</div>
 		";
 $arrComments = $newsObj->getComments();
-require_once("comments.php");
+include("comments.php");
 	echo "</div>";
 
-require_once($prevFolder."themes/".$THEME."/_footer.php");
+include($prevFolder."themes/".$THEME."/_footer.php");
 
 
 ?>

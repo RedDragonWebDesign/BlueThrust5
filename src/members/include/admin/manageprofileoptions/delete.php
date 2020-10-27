@@ -12,12 +12,12 @@
  *
  */
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/rank.php");
-require_once("../../../../classes/consoleoption.php");
-require_once("../../../../classes/profileoption.php");
-require_once("../../../../classes/profilecategory.php");
+include_once("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/rank.php");
+include_once("../../../../classes/consoleoption.php");
+include_once("../../../../classes/profileoption.php");
+include_once("../../../../classes/profilecategory.php");
 
 
 $consoleObj = new ConsoleOption($mysqli);
@@ -44,7 +44,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		
 		if($_POST['confirm'] == 1) {
 			$profileOptionObj->delete();
-			require_once("main.php");
+			include("main.php");
 		}
 		else {
 			$profileOptionName = $profileOptionObj->get_info_filtered("name");

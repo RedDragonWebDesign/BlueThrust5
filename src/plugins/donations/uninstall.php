@@ -13,7 +13,7 @@
  */
 
 $prevFolder = "../../";
-require_once("../../_setup.php");
+include_once("../../_setup.php");
 
 
 // Plugin Info

@@ -12,13 +12,11 @@
  *
  */
 
-$prevFolder = '../../../../';
-
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/rank.php");
-require_once("../../../../classes/news.php");
-require_once("../../../../classes/shoutbox.php");
+include_once("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/rank.php");
+include_once("../../../../classes/news.php");
+include_once("../../../../classes/shoutbox.php");
 
 // Start Page
 
@@ -42,7 +40,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	
 	$newsObj->addNew(array("member_id", "newstype", "newspost", "dateposted", "postsubject"), array($member->get_info("member_id"), 3, $_POST['message'], time(), "Shoutbox Post"));
 	
-	$manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
+	$mangeNewsCID = $consoleObj->findConsoleIDByName("Manage News");
 	
 	$consoleObj->select($manageNewsCID);
 	

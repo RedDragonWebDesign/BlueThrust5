@@ -15,8 +15,8 @@
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
 
-	require_once("../../../../_setup.php");
-	require_once("../../../../classes/member.php");
+	include_once("../../../../_setup.php");
+	include_once("../../../../classes/member.php");
 
 	// Start Page
 

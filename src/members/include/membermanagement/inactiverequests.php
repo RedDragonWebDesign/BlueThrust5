@@ -43,7 +43,7 @@ echo "
 		<div id='iaRequestList'>
 		";		
 
-require_once("include/inactiverequestlist.php");
+include("include/inactiverequestlist.php");
 
 echo "
 		</div>

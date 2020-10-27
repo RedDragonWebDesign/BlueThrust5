@@ -11,11 +11,11 @@
  *
  */
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/rank.php");
-require_once("../../../../classes/news.php");
-require_once("../../../../classes/shoutbox.php");
+include_once("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/rank.php");
+include_once("../../../../classes/news.php");
+include_once("../../../../classes/shoutbox.php");
 
 // Start Page
 
@@ -53,7 +53,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$member->logAction("Deleted ".$countPosts." shoutbox post".$addS.".");
 	
 	define("SHOW_SHOUTBOXLIST", true);
-	require_once("manageshoutbox_list.php");
+	include("manageshoutbox_list.php");
 	
 }
 

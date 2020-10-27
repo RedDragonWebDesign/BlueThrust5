@@ -31,10 +31,10 @@ $objManageList = new btOrderManageList($medalObj);
 $objManageList->strMainListLink = BASE_DIRECTORY."members/include/admin/medals/main.php";
 
 if($_GET['mID'] != "" && $medalObj->select($_GET['mID']) && $_GET['action'] == "edit") {
-	require_once("medals/edit.php");
+	include("medals/edit.php");
 }
 elseif($_GET['action'] != "move") {	
-	require_once($objManageList->strMainListLink);
+	include($objManageList->strMainListLink);
 }
 
 

@@ -1,0 +1,343 @@
+html {
+	height: 100%;
+}
+
+body {
+	background-color: #f0f0f0;
+	margin: 0px;
+	padding: 0px;
+	color: white;
+	font-family: verdana, sans-serif;
+	height: 100%;
+	color: black;
+	font-size: 12px;
+}
+
+a {
+	color: #003f74;
+	text-decoration: none;	
+}
+
+a:hover {
+	color: #0086f8;
+	text-decoration: underline;
+}
+
+.wrapper {
+	height: 100%;
+	min-height: 100%;
+	height: auto !important;
+	margin-bottom: -75px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.push {
+	height: 75px;
+	position: relative;
+}
+
+.footerDiv {
+	position: relative;
+	height: 50px;
+	padding: 0px;
+	padding-top: 25px;
+	margin: 0px;
+	min-width: 100%;
+	position: relative;
+	text-align: center;
+	font-size: 11px;
+	color: black;
+}
+
+#destinyBG {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 587px;
+	background-image: url('images/layout/destinybg.jpg');
+	background-color: #010715;
+	background-position: center top;
+	border-bottom: solid #8f8f8f 2px;
+	background-repeat: no-repeat;
+	z-index: -100;
+}
+
+
+.destinyBGBottomLeft {
+	position: absolute;
+	left: 0px;
+	bottom: -2px;
+	height: 53px;
+	width: 25%;
+	background-color: #f0f0f0;
+	border-top: solid #8f8f8f 2px;
+}
+
+
+.destinyBGBottomLeftIndent {
+	position: absolute;
+	width: 52px;
+	height: 55px;
+	right: -52px;
+	bottom: 0px;
+	background: url('images/layout/destinybg-indent.png') 0px 0px;	
+}
+
+.destinyBGBottomRight {
+	position: absolute;
+	right: 0px;
+	bottom: -2px;
+	height: 53px;
+	width: 25%;
+	background-color: #f0f0f0;
+	border-top: solid #8f8f8f 2px;
+}
+
+.destinyBGBottomRightIndent {
+	position: absolute;
+	width: 52px;
+	height: 55px;
+	left: -52px;
+	bottom: 0px;
+	background: url('images/layout/destinybg-indent.png') -52px 0px;	
+}
+
+#topBarBGImg {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	height: 80px;
+	min-width: 100%;
+	background-image: url('images/layout/destinybg.jpg');
+	background-position: center top;
+	background-repeat: no-repeat;
+	background-color: #010715;
+	z-index: 0;
+}
+
+
+.topBarBG {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	height: 80px;
+	min-width: 100%;
+	background: linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.1));
+	background-color: rgba(0,138,255, .25);
+	background-position: center top;
+	background-repeat: no-repeat;
+	box-shadow: 0px 4px 4px 0px rgba(0,0,0,.35);
+	border-bottom: solid rgba(0,86,160,.45) 1px;
+	z-index: 10;
+	overflow: hidden;
+}
+
+.destinyLogo {
+	position: absolute;
+	top: 10px;
+	left: 0px;
+	background-image: url('images/layout/destinylogo.png');
+	width: 67px;
+	height: 64px;	
+}
+
+.topBar {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	width: 85%;
+	min-width: 990px;
+	height: 80px;
+	overflow: hidden;
+	color: white;
+}
+
+.loginFormGroup {
+	display: inline-block;
+	margin: 5px 10px;
+	font-family: 'PT Sans', verdana, sans-serif;
+	font-size: 20px;
+	text-shadow: 0px 0px 3px black;
+}
+
+.loginTextbox {
+	width: 190px;
+	height: 20px;
+	background-image: url('images/layout/logintextbox.png');
+	border: 0px;
+	padding: 5px;
+	background-color: rgba(0,0,0,0);
+	color: white;
+	font-family: 'PT Sans', verdana, sans-serif;
+	font-size: 14px;
+	box-shadow: 0px 0px 5px 0px rgba(255,255,255,.7);
+}
+
+.loginButton {
+	background: linear-gradient(rgba(0,0,0,0), rgba(255,255,255,.2));
+	background-color: rgba(0,138,255,.5);
+	width: 90px;
+	height: 50px;
+	border: 0px;
+	font-family: 'PT Sans', verdana, sans-serif;
+	color: white;
+	font-weight: bold;
+	font-size: 22px;
+	cursor: pointer;
+}
+
+.loginButton:hover {
+	background-color: rgba(0,138,255,.6);
+}
+
+.loginDiv {
+	float: right;
+}
+
+.loggedInAvatar {
+	padding-top: 8px;
+	display: inline-block;
+	width: 50px;
+	height: 67px;	
+}
+
+.loggedInAvatar img {
+	width: 50px;
+	height: 67px;
+	border: solid black 1px;
+}
+
+.loggedInInfo {
+	display: inline-block;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 20px;
+	vertical-align: top;
+}
+
+.loggedInInfo a {
+	color: #a8d7ff;	
+}
+
+.headerDiv {
+	position: relative;
+	height: 250px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 85%;
+	min-width: 990px;
+}
+
+.logoDiv {
+	position: absolute;
+	left: 50%;
+	margin-left: -332px;
+	width: 664px;
+	height: 374px;
+	top: 0px;
+}
+
+#logoSmall {
+	position: absolute;
+	top: 81px;
+	left: 75px;
+	width: 344px;
+	height: 50px;	
+}
+
+.bodyDiv {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 50px;
+	width: 85%;
+	min-width: 990px;
+	background-color: rgba(255,255,255,.65);
+	min-height: 500px;
+	box-shadow: 0px 0px 4px 0px rgba(0,0,0,.3);
+	border: solid rgba(0,0,0,.2) 1px;
+}
+
+.leftMenuDiv {
+	float: left;
+	width: 175px;
+	padding: 10px;
+	min-height: 200px;
+}
+
+.rightMenuDiv {
+	float: right;
+	width: 175px;
+	padding: 10px;
+	min-height: 200px;
+}
+
+.centerContentDiv {
+	margin-left: 197px;
+	margin-right: 197px;
+	min-height: 200px;
+	padding: 10px;
+}
+
+.menuCatTitle {
+	background-image: url('images/layout/menubg.png');
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	width: 177px;
+	height: 35px;
+	font-family: 'PT Sans', verdana, sans-serif;
+	font-size: 18px;
+	color: white;
+	text-align: center;
+	padding-top: 7px;
+}
+
+.menuItems {
+	padding: 0px 10px;
+	padding-top: 5px;
+	margin-bottom: 20px;
+}
+
+
+.bottomLeftCharacter {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	background-repeat: no-repeat;
+	background-image: url('images/layout/bottom-left-character.png');
+	width: 425px;
+	height: 327px;
+	z-index: -19;
+}
+
+.bottomRightCharacter {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	background-repeat: no-repeat;
+	background-image: url('images/layout/bottom-right-character.png');
+	width: 340px;
+	height: 431px;
+	z-index: -19;
+}
+
+.bottomBG {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	background-repeat: repeat-x;
+	background-image: url('images/layout/footerbg.jpg');
+	background-position: center top;
+	height: 231px;
+	min-width: 100%;
+	z-index: -20;
+}
+
+
+/* Custom BTCS4.CSS */
+
+#notificationDiv a {
+	color: #a8d7ff;
+}

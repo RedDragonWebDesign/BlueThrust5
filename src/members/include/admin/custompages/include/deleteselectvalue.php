@@ -12,9 +12,9 @@
  *
  */
 
-require_once("../../../../../_setup.php");
-require_once("../../../../../classes/member.php");
-require_once("../../../../../classes/customform.php");
+include_once("../../../../../_setup.php");
+include_once("../../../../../classes/member.php");
+include_once("../../../../../classes/customform.php");
 
 
 
@@ -58,7 +58,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 	}
 	
 	
-	require_once("selectvaluecache.php");
+	include("selectvaluecache.php");
 	
 }
 

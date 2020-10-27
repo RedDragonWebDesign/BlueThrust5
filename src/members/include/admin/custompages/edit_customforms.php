@@ -14,7 +14,7 @@
 
 
 
-require_once("../classes/customform.php");
+include_once("../classes/customform.php");
 $customFormPageObj = new CustomForm($mysqli, "custompages", "custompage_id");
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
@@ -52,7 +52,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 $countErrors = 0;
 $dispError = "";
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	
 	if(trim($_POST['pagename']) == "") {
@@ -124,7 +124,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	echo "
 	<form action='console.php?cID=".$cID."&cfID=".$customFormInfo['customform_id']."&action=edit' method='post'>

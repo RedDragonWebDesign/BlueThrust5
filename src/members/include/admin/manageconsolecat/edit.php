@@ -22,7 +22,7 @@ else {
 		exit();
 	}
 }
-require_once($prevFolder."classes/consolecategory.php");
+include_once($prevFolder."classes/consolecategory.php");
 $cID = $_GET['cID'];
 
 $consoleCatObj = new ConsoleCategory($mysqli);
@@ -44,7 +44,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 </script>
 ";
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	$resortOrder = false;
 	// Check Category Name
@@ -152,7 +152,7 @@ if(($_POST['submit'] ?? '')) {
 
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 
 	$countCategories = 0;
 	

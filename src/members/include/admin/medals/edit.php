@@ -24,8 +24,8 @@ else {
 }
 
 
-require_once($prevFolder."classes/btupload.php");
-require_once($prevFolder."classes/medal.php");
+include_once($prevFolder."classes/btupload.php");
+include_once($prevFolder."classes/medal.php");
 $cID = $_GET['cID'];
 
 $medalObj = new Medal($mysqli);
@@ -51,6 +51,7 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 ";
 
 	
+	$medalValidateObj = new Medal($mysqli);
 	$arrMedals = $medalObj->get_entries(array(), "ordernum DESC");
 	$medalOptions = array();
 	foreach($arrMedals as $eachMedalInfo) {
@@ -65,7 +66,7 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 	}
 	
 	
-	$medalOrder = $medalObj->findBeforeAfter();
+	$medalOrder = $medalValidateObj->findBeforeAfter();
 	
 	$medalInfo['imageurl'] = substr($medalInfo['imageurl'], strlen($MAIN_ROOT));
 	$i = 1;
@@ -130,7 +131,7 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 			"options" => $medalOptions,
 			"db_name" => "ordernum",
 			"sortorder" => $i++,
-			"validate" => array(array("name" => "VALIDATE_ORDER", "orderObject" => $medalObj, "select_back" => $medalInfo['medal_id'])),
+			"validate" => array(array("name" => "VALIDATE_ORDER", "orderObject" => $medalValidateObj, "select_back" => $medalInfo['medal_id'])),
 			"value" => $medalInfo['medal_id'],
 			"before_after_value" => $medalOrder[0],
 			"after_selected" => $medalOrder[1]

@@ -33,6 +33,8 @@ $configInput = "<?php
 	\$ADMIN_KEY = \"".$filterConfigKey."\"; // KEY FOR EXTRA SECURITY WHEN ADDING CONSOLE OPTION
 	
 	define(\"ADMIN_KEY\", \$ADMIN_KEY);
+
+?>
 ";
 
 ?>

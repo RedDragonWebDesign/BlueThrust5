@@ -26,18 +26,23 @@
 		
 	}
 	
+	
 	$objManageList = new btOrderManageList($clockObj);
 	$objManageList->strMainListLink = BASE_DIRECTORY."members/include/worldclocks/main.php";
+
 	
-	if(($_GET['clockID'] ?? '') != "" && $clockObj->select($_GET['clockID']) && $_GET['action'] == "edit") {
+	if($_GET['clockID'] != "" && $clockObj->select($_GET['clockID']) && $_GET['action'] == "edit") {
 		$clockInfo = $clockObj->get_info_filtered();
-		require_once(BASE_DIRECTORY."members/include/worldclocks/edit.php");
+		include(BASE_DIRECTORY."members/include/worldclocks/edit.php");
 	}
-	elseif(($_GET['action'] ?? '') == "delete" && $clockObj->select($_POST['itemID'])) {
+	elseif($_GET['action'] == "delete" && $clockObj->select($_POST['itemID'])) {
 		$info = $clockObj->get_info_filtered();
 		$objManageList->strDeleteName = $info['name'];
 		$objManageList->strDeletePostVarID = "clockID";	
 	}
-	elseif(($_GET['action'] ?? '') != "move") {
-		require_once($objManageList->strMainListLink);	
+	elseif($_GET['action'] != "move") {
+		include($objManageList->strMainListLink);	
 	}
+		
+
+?>

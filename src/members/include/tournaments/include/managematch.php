@@ -68,7 +68,7 @@ elseif($checkMyApprove == 1) {
 
 
 
-if(($_POST['submit'] ?? '') && !$_POST['approve']) {
+if($_POST['submit'] && !$_POST['approve']) {
 	$arrColumns = array();
 	$arrValues = array();
 
@@ -149,7 +149,7 @@ if(($_POST['submit'] ?? '') && !$_POST['approve']) {
 
 
 }
-elseif(!($_POST['submit'] ?? '') && $_POST['approve'] && $checkApprove == 1) {
+elseif(!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
 	
 	// Upload Replay
 	

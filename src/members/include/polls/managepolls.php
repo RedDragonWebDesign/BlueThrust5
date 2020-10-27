@@ -23,8 +23,8 @@ else {
 	}
 }
 
-require_once("../classes/access.php");
-require_once("../classes/poll.php");
+include_once("../classes/access.php");
+include_once("../classes/poll.php");
 
 $cID = $_GET['cID'];
 
@@ -33,7 +33,7 @@ $pollObj = new Poll($mysqli);
 if(isset($_GET['pID']) && $pollObj->select($_GET['pID'])) {
 	define("SHOW_EDITPOLL", true);
 	$pollInfo = $pollObj->get_info_filtered();
-	require_once("include/edit.php");
+	include("include/edit.php");
 }
 else {
 	$createPollCID = $consoleObj->findConsoleIDByName("Create a Poll");
@@ -57,7 +57,7 @@ else {
 	";
 	
 	define("SHOW_POLLLIST", true);
-	require_once("include/polllist.php");
+	include("include/polllist.php");
 	
 	echo "
 		</div>

@@ -13,10 +13,10 @@
  *
  */
 
-	require_once("btmysql.php");
-	require_once("rank.php");
-	require_once("rankcategory.php");
-	require_once("member.php");
+	include_once("btmysql.php");
+	include_once("rank.php");
+	include_once("rankcategory.php");
+	include_once("member.php");
 	
 	
 	class Access {

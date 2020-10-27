@@ -16,7 +16,7 @@
 // Config File
 $prevFolder = "../";
 
-require_once($prevFolder."_setup.php");
+include($prevFolder."_setup.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $boardObj = new ForumBoard($mysqli);
@@ -58,7 +58,7 @@ $boardInfo = $boardObj->get_info_filtered();
 
 // Start Page
 $PAGE_NAME = $boardInfo['name']." - Forum - ";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 // Check Private Forum
 
@@ -130,7 +130,7 @@ if(($_GET['pID']-1) > 0) {
 	$blnPageSelect = true;
 }
 
-$pageoptions = '';
+
 for($i=1; $i<=$NUM_OF_PAGES; $i++) {
 	$selectPage = "";
 	if($i == $_GET['pID']) {
@@ -251,7 +251,7 @@ if($boardInfo['subforum_id'] != 0) {
 
 }
 $breadcrumbObj->addCrumb($boardInfo['name']);
-require_once($prevFolder."include/breadcrumb.php");
+include($prevFolder."include/breadcrumb.php");
 
 $boardObj->showSearchForm();
 echo "
@@ -332,7 +332,13 @@ foreach($arrPageTopics as $postID) {
 	
 	$dispTopicIconsIMG = "";
 	$newTopicBG = "";
-	if($LOGGED_IN && !$member->hasSeenTopic($topicInfo['forumtopic_id']) && ($lastPostInfo['dateposted']+(60*60*24*7)) > time()) {
+	
+	$showNewTopic = true;
+	if($websiteInfo['forum_newindicator'] != 0) {
+		$showNewTopic = ($lastPostInfo['dateposted']+(60*60*24*$websiteInfo['forum_newindicator'])) > time();
+	}
+	
+	if($LOGGED_IN && !$member->hasSeenTopic($topicInfo['forumtopic_id']) && $showNewTopic) {
 		$newTopicBG = " boardNewPostBG";
 		$dispTopicIconsIMG = " <img style='margin-left: 5px' src='".$MAIN_ROOT."themes/".$THEME."/images/forum-new.png' title='New Posts!'>";
 	}
@@ -417,7 +423,7 @@ if($blnPageSelect) {
 	";
 }
 
-require_once($prevFolder."themes/".$THEME."/_footer.php");
+include($prevFolder."themes/".$THEME."/_footer.php");
 
 
 ?>

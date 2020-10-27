@@ -23,12 +23,12 @@ $memberInfo = $member->get_info_filtered();
 	}
 }
 
-require_once($prevFolder."classes/consolecategory.php");
+include_once($prevFolder."classes/consolecategory.php");
 $cID = $_GET['cID'];
 
 $consoleCatObj = new ConsoleCategory($mysqli);
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	// Check Category Name
 	
@@ -107,7 +107,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 
 	$countCategories = 0;
 	

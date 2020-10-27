@@ -12,7 +12,7 @@
  *
  */
 
-require_once("../../classes/chatroom.php");
+include_once("../../classes/chatroom.php");
 
 if(!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 

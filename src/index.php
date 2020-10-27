@@ -50,12 +50,13 @@ elseif (((!file_exists("_config.php")) && (!file_exists("installer/lock.txt"))) 
 // Config File
 $prevFolder = "";
 
-require_once("_setup.php");
+include("_setup.php");
 
 // Start Page
 $dispBreadCrumb = "";
 
-require_once("themes/".$THEME."/_header.php");
+
+include("themes/".$THEME."/_header.php");
 
 
 $member = new Member($mysqli);
@@ -131,8 +132,8 @@ if($websiteInfo['newsticker'] != "") {
 	}
 	$setMarqueeTickerStyle = "";
 	if($websiteInfo['newstickersize'] != 0) {
-		$setNewsTickerStyle .= "; font-size: ".$websiteInfo['newstickersize']."px; height: ".$websiteInfo['newstickersize']."px;";
-		$setMarqueeTickerStyle = " style ='height: ".($websiteInfo['newstickersize']+5)."px;'";
+		$setNewsTickerStyle .= "; font-size: ".$websiteInfo['newstickersize']."px; height: ".($websiteInfo['newstickersize']+15)."px;";
+		$setMarqueeTickerStyle = " style ='height: ".($websiteInfo['newstickersize']+15)."px;'";
 	}
 	
 	if($websiteInfo['newstickerbold'] == 1) {
@@ -147,7 +148,7 @@ if($websiteInfo['newsticker'] != "") {
 	echo "
 	
 
-			<div id='hpNewsTicker'>
+			<div id='hpNewsTicker'".$setMarqueeTickerStyle.">
 			
 				<marquee scrollamount='3'".$setMarqueeTickerStyle."><div id='tickerSpan' style='".$setNewsTickerStyle." position: relative; margin-left: auto; margin-right: auto;'>".$websiteInfo['newsticker']."</div></marquee>
 			
@@ -397,4 +398,12 @@ echo "<p>".$dispRankCatCount."</p>
 
 	";
 
-require_once("themes/".$THEME."/_footer.php");
+
+
+
+echo "<!-- ".phpversion()." -->";
+
+include("themes/".$THEME."/_footer.php");
+
+
+?>

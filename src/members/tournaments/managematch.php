@@ -12,7 +12,7 @@
  *
  */
 
-require_once("../../classes/btupload.php");
+include_once("../../classes/btupload.php");
 if(!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
 
 	exit();
@@ -70,7 +70,7 @@ $countErrors = 0;
 
 $matchInfo = $tournamentObj->objMatch->get_info();
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	
 	// Check Player 2
@@ -205,7 +205,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	if($tournamentInfo['playersperteam'] == 1) {
 		$strPlayerTeam = "Player";

@@ -106,7 +106,7 @@ echo "
 		<div id='membersOnlyPageList'>
 		";
 		
-		require_once("membersonlypageslist.php");
+		include("membersonlypageslist.php");
 		
 		echo "
 		</div>

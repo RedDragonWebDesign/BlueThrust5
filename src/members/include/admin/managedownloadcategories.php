@@ -25,7 +25,7 @@ else {
 
 
 
-require_once($prevFolder."classes/downloadcategory.php");
+include_once($prevFolder."classes/downloadcategory.php");
 $cID = $_GET['cID'];
 
 $downloadCatObj = new DownloadCategory($mysqli);
@@ -43,7 +43,7 @@ if($_GET['catID'] == "") {
 		</div>
 	
 		<div id='contentDiv'>";
-	require_once("managedownloadcat/main.php");
+	include("managedownloadcat/main.php");
 	echo "
 		</div>
 		<div id='deleteMessage' style='display: none'></div>
@@ -117,7 +117,7 @@ if($_GET['catID'] == "") {
 }
 elseif($_GET['catID'] != "" AND $_GET['action'] == "edit") {
 	
-	require_once("managedownloadcat/edit.php");
+	include("managedownloadcat/edit.php");
 	
 }
 

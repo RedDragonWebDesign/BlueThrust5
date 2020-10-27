@@ -12,9 +12,9 @@
  *
  */
 
-require_once("../../../../../_setup.php");
-require_once("../../../../../classes/member.php");
-require_once("../../../../../classes/rank.php");
+include_once("../../../../../_setup.php");
+include_once("../../../../../classes/member.php");
+include_once("../../../../../classes/rank.php");
 
 $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
@@ -41,7 +41,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		
 
 		
-		if(($_POST['submit'] ?? '')) {
+		if($_POST['submit']) {
 			
 			
 			if(trim($_POST['editValue']) != "") {
@@ -53,7 +53,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				$_SESSION['btProfileCache'][$_POST['editKey']] = $_POST['editValue'];
 				
 				
-				require_once("view.php");
+				include("view.php");
 				
 			
 			}
@@ -61,7 +61,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			
 		}
 		
-		if(!($_POST['submit'] ?? '')) {
+		if(!$_POST['submit']) {
 			
 			echo "
 			

@@ -12,10 +12,10 @@
  *
  */
 
-require_once("../../../_setup.php");
-require_once("../../../classes/member.php");
-require_once("../../../classes/rank.php");
-require_once("../../../classes/tournament.php");
+include_once("../../../_setup.php");
+include_once("../../../classes/member.php");
+include_once("../../../classes/rank.php");
+include_once("../../../classes/tournament.php");
 
 if(!isset($consoleObj)) {
 $consoleObj = new ConsoleOption($mysqli);

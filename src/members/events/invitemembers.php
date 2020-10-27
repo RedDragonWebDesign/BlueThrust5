@@ -46,7 +46,7 @@ $dispError = "";
 $countErrors = 0;
 $objInviteMember = new Member($mysqli);
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	
 	foreach($_SESSION['btInviteList'] as $value) {
@@ -99,7 +99,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	$_SESSION['btEventID'] = $eventInfo['event_id'];
 	

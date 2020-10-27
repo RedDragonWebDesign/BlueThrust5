@@ -16,10 +16,10 @@
 	if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 		
 		$prevFolder = "../../";
-		require_once("../../_setup.php");
-		require_once("../../classes/member.php");
-		require_once("../../classes/rank.php");
-		require_once("../../classes/consolecategory.php");
+		include_once("../../_setup.php");
+		include_once("../../classes/member.php");
+		include_once("../../classes/rank.php");
+		include_once("../../classes/consolecategory.php");
 		
 		// Plugin Info
 		
@@ -48,21 +48,21 @@
 			die($MAIN_ROOT."members");	
 		}
 		
-		require_once("youtube.php");
+		include("youtube.php");
 		
 	}
 	else {
 		$memberInfo = $member->get_info_filtered();
 		$consoleObj->select($_GET['cID']);
 		
-		require_once("../plugins/youtube/youtube.php");
+		include_once("../plugins/youtube/youtube.php");
 		
 		if(!$member->hasAccess($consoleObj)) {
 			exit();
 		}
 		
 		$accessedByConsole = true;
-		require_once("../plugins/youtube/ytbuttoncss.php");
+		include("../plugins/youtube/ytbuttoncss.php");
 	}
 	
 	
@@ -186,7 +186,7 @@
 		$dispError = "";
 		$dispSuccess = false;
 		
-		if(($_POST['submit'] ?? '')) {
+		if($_POST['submit']) {
 			
 			// Check Video Display
 			$arrVideoDisplayCheck = array(0,1,2,3,4,5);

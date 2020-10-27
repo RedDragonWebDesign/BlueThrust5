@@ -28,7 +28,7 @@ else {
 $headerCode = file_get_contents("../themes/".$THEME."/_header.php");
 $footerCode = file_get_contents("../themes/".$THEME."/_footer.php");
 $themeCSSCode = htmlspecialchars(file_get_contents("../themes/".$THEME."/style.css"));
-//$globalCSSCode = htmlspecialchars(file_get_contents("../themes/btcs4.css.php"));
+//$globalCSSCode = htmlspecialchars(file_get_contents("../themes/".$THEME."/btcs4.css"));
 
 
 $headerCode = str_replace("&", "&#38;", $headerCode);

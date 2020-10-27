@@ -24,7 +24,7 @@ else {
 	}
 }
 
-require_once("../classes/rankcategory.php");
+include_once("../classes/rankcategory.php");
 
 $cID = $_GET['cID'];
 
@@ -44,7 +44,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 ";
 
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	// Check Board Name
 	
@@ -161,7 +161,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	$_SESSION['btMemberAccessCache'] = $boardObj->getMemberAccessRules();
 	$rankAccessRules = $boardObj->getRankAccessRules();

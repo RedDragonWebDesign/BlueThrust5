@@ -26,7 +26,6 @@
 		public $saveMessageTitle;
 		public $afterSave;
 		public $saveLink;
-		public $prefillValues = true;
 		public $blnSaveResult;
 		public $beforeAfter = false;
 		public $isContainer = false;
@@ -70,19 +69,20 @@
 		
 		public function buildForm($args) {
 			
-			$this->formName = $args['name'] ?? null;
-			$this->components = $args['components'] ?? null;
-			$this->objSave = $args['saveObject'] ?? null;
-			$this->attributes = $args['attributes'] ?? null;
-			$this->saveType = $args['saveType'] ?? null;
-			$this->description = $args['description'] ?? null;
-			$this->saveMessage = $args['saveMessage'] ?? null;
-			$this->saveMessageTitle = $args['saveMessageTitle'] ?? null;
-			$this->afterSave = $args['afterSave'] ?? null;
-			$this->saveLink = $args['saveLink'] ?? null;
-			$this->saveAdditional = $args['saveAdditional'] ?? null;
-			$this->embedJS = $args['embedJS'] ?? null;
+			$this->formName = $args['name'];
+			$this->components = $args['components'];
+			$this->objSave = $args['saveObject'];
+			$this->attributes = $args['attributes'];
+			$this->saveType = $args['saveType'];
+			$this->description = $args['description'];
+			$this->saveMessage = $args['saveMessage'];
+			$this->saveMessageTitle = $args['saveMessageTitle'];
+			$this->afterSave = $args['afterSave'];
+			$this->saveLink = $args['saveLink'];
+			$this->saveAdditional = $args['saveAdditional'];
+			$this->embedJS = $args['embedJS'];
 			$this->attachmentForm = false;
+			$this->prefillValues = isset($args['prefillValues']) ? $args['prefillValues'] : false;
 			
 			if(isset($args['wrapper'])) {
 				$this->wrapper = $args['wrapper'];	
@@ -98,7 +98,7 @@
 			}
 			
 			
-			if( isset($args['prefill']) ) {
+			if($args['prefill']) {
 				$this->arrSkipPrefill = $args['skipPrefill'];
 				$this->prefillDBValues();				
 			}
@@ -127,15 +127,18 @@
 			$afterJS = $this->embedJS;
 			
 			foreach($this->components as $componentName => $componentInfo) {
-				$dispAttributes = $this->convertAttributes($componentInfo['attributes'] ?? '');
 				
-				$displayForm .= $componentInfo['before_html'] ?? '';
+				$dispAttributes = $this->convertAttributes($componentInfo['attributes']);
+				
+				$displayForm .= $componentInfo['before_html'];
 				
 				// Output Component Name
-				if(($componentInfo['display_name'] ?? '') != "") {
-					$dispToolTip = (($componentInfo['tooltip'] ?? '')!= "") ? " <a href='javascript:void(0)' onmouseover=\"showToolTip('".addslashes($componentInfo['tooltip'] ?? '')."')\" onmouseout='hideToolTip()'>(?)</a>" : "";					
+				if($componentInfo['display_name'] != "") {
+					$addValignComponents = array("file", "textarea", "beforeafter", "checkbox");
+					$addVAlign = in_array($componentInfo['type'], $addValignComponents) ? " formVAlignTop" : "";					
+					$dispToolTip = ($componentInfo['tooltip'] != "") ? " <a href='javascript:void(0)' onmouseover=\"showToolTip('".addslashes($componentInfo['tooltip'])."')\" onmouseout='hideToolTip()'>(?)</a>" : "";					
 					$displayForm .= "
-						<label class='formLabel' style='display: inline-block'>".$componentInfo['display_name'].":".$dispToolTip."</label>
+						<label class='formLabel".$addVAlign."' style='display: inline-block'>".$componentInfo['display_name'].":".$dispToolTip."</label>		
 					";
 				}
 				
@@ -150,10 +153,10 @@
 						$displayForm .= "<textarea name='".$componentName."' ".$dispAttributes.">".$componentInfo['value']."</textarea>";
 						break;
 					case "richtextbox":
-						$afterJS .= $this->richTextboxJS($componentInfo['attributes']['id'], $componentInfo['allowHTML'] ?? '');
+						$afterJS .= $this->richTextboxJS($componentInfo['attributes']['id'], $componentInfo['allowHTML']);
 						$displayForm .= "
 							<div class='formInput' style='width: 100%'>
-								<textarea name='".$componentName."' ".$dispAttributes.">".($componentInfo['value'] ?? '')."</textarea>
+								<textarea name='".$componentName."' ".$dispAttributes.">".$componentInfo['value']."</textarea>
 							</div>
 						";
 						$countRichTextbox++;
@@ -177,25 +180,99 @@
 						$afterJS .= $this->datepickerJS($componentInfo['attributes']['id'], $componentInfo['options']);
 						$displayForm .= "<input type='text' value='".$componentInfo['options']['defaultDate']."' ".$dispAttributes." readonly='readonly'><input type='hidden' id='".$componentInfo['options']['altField']."' name='".$componentName."' value='".$formatDatePick."'>";
 						break;
-					case "select":
-						$displayForm .= "<select name='".$componentName."' ".$dispAttributes.">";
-						foreach($componentInfo['options'] as $optionValue => $displayValue) {
-							$dispSelected = "";
-							if($optionValue == ($componentInfo['value'] ?? '')) {
-								$dispSelected = " selected";
+					case "timepicker":
+						
+						$arrTimezones = DateTimeZone::listIdentifiers();
+						
+						$datePick = new DateTime();
+						$datePick->setTimestamp($componentInfo['value']/1000);
+						$datePick->setTimezone(new DateTimeZone("UTC"));
+
+						$selectedHour = $datePick->format("g");
+						$selectedMinute = $datePick->format("i");
+						$selectedAMPM = $datePick->format("A");
+						
+						
+						$selectPM = ($selectedAMPM == "PM") ? " selected" : "";
+						
+						$displayForm .= "
+							<div class='formInput'>
+								<select name='".$componentName."_hour' ".$dispAttributes.">
+									<option value='0'>12</option>
+								";
+									
+						for($i=1; $i<12; $i++) {
+							$selected = "";
+							if($selectedHour == $i) {
+								$selected = " selected";
 							}
-							
-							if( isset($componentInfo['non_selectable_items']) && in_array($optionValue, $componentInfo['non_selectable_items']) ) {
-								$dispSelected = " disabled class='disabledSelectItem'";
-							}
-							
-							$displayForm .= "<option value='".$optionValue."'".$dispSelected.">".$displayValue."</option>";	
+							$displayForm .= "<option value='".$i."'".$selected.">".$i."</option>";
 						}
-						$displayForm .= "</select>";
+								
+						$displayForm .= "
+								</select>
+								<select name='".$componentName."_minute' ".$dispAttributes.">
+								";
+						
+						for($i=0; $i<=59; $i++) {
+							$selected = "";
+							
+							$dispMinute = ($i<10) ? "0".$i : $i;
+							if($selectedMinute == $i) {
+								$selected = " selected";
+							}
+							$displayForm .= "<option value='".$i."'".$selected.">".$dispMinute."</option>";
+						}
+						
+						
+						$displayForm .= "
+								</select>
+								<select name='".$componentName."_AMPM' ".$dispAttributes.">
+									<option value='AM'>AM</option><option value='PM'".$selectPM.">PM</option>
+								</select>
+						";		
+						
+						if($componentInfo['options']['show_timezone'] == 1) {
+							$displayForm .= "
+								<select name='".$componentName."_timezone' ".$dispAttributes.">
+									<option value=''>[Use Default]</option>
+								";
+							foreach($arrTimezones as $timeZone) {
+								$tz = new DateTimeZone($timeZone);
+								$dispOffset = ((($tz->getOffset(new DateTime("now", $tz)))/60)/60);
+								$dispSign = ($dispOffset < 0) ? "" : "+";
+								
+								$selected = "";
+								if($componentInfo['options']['selected_timezone'] == $timeZone) {
+									$selected = " selected";
+								}
+								
+								$displayForm .= "<option value='".$timeZone."'".$selected.">".str_replace("_", " ", $timeZone)." (UTC".$dispSign.$dispOffset.")</option>";
+							}
+							
+							$displayForm .= "</select>";
+						}
+						
+						$displayForm .= "
+								
+							</div>
+						";
+						
+						break;
+					case "select":
+						
+						$selectBoxObj = new SelectBox();
+						$selectBoxObj->setComponentName($componentName);
+						$selectBoxObj->setAttributes($componentInfo['attributes']); 
+						$selectBoxObj->setOptions($componentInfo['options']);
+						$selectBoxObj->setComponentValue($componentInfo['value']);
+						$selectBoxObj->setNonSelectableItems($componentInfo['non_selectable_items']);
+						$displayForm .= $selectBoxObj->getHTML();
+						
 						break;
 					case "checkbox": // Checkbox and radio are basically same thing, so checkbox falls through to radio section
 					case "radio":
-						if(is_array(($componentInfo['options'] ?? ''))) {	
+						if(is_array($componentInfo['options'])) {	
 							$componentCounter = 1;					
 							foreach($componentInfo['options'] as $optionValue => $displayValue) {
 								$dispSelected = "";
@@ -224,7 +301,7 @@
 						else {
 							
 							$dispChecked = "";
-							if(($componentInfo['checked'] ?? '')) {
+							if($componentInfo['checked']) {
 								$dispChecked = " checked";	
 							}
 							
@@ -286,20 +363,19 @@
 						break;
 					case "beforeafter":
 						$this->beforeAfter = true;
-						$displayOptions = '';
 						foreach($componentInfo['options'] as $optionValue => $displayValue) {
 							$dispSelected = "";	
-							if($optionValue == ($componentInfo['before_after_value'] ?? '')) {
+							if($optionValue == $componentInfo['before_after_value']) {
 								$dispSelected = " selected";
 							}
 							
-							if($optionValue != ($componentInfo['value'] ?? '')) {
+							if($optionValue != $componentInfo['value']) {
 								$displayOptions .= "<option value='".$optionValue."'".$dispSelected.">".$displayValue."</option>";
 							}
 							
 						}
 						
-						$afterSelected = (($componentInfo['after_selected'] ?? '') == "after") ? " selected" : "";
+						$afterSelected = ($componentInfo['after_selected'] == "after") ? " selected" : "";
 						
 						$displayForm .= "<div class='formInput'>
 											<select name='".$componentName."_beforeafter' ".$dispAttributes.">
@@ -312,20 +388,23 @@
 											</select>
 										</div>
 										";
+						
 						break;
 					case "custom":
 						break;
 					case "colorpick":
-						$afterJS .= $this->colorpickerJS($componentInfo['attributes']['id']);
-						$displayForm .= "<input type='text' name='".$componentName."' value='".($componentInfo['value'] ?? '')."' ".$dispAttributes.">";
+						
+						$afterJS .= $this->colorpickerJS($componentInfo['attributes']['id'], $componentInfo['allowHTML']);
+						$displayForm .= "<input type='text' name='".$componentName."' value='".$componentInfo['value']."' ".$dispAttributes.">";
+						
 						break;
 					default:
-						$displayForm .= "<input type='".$componentInfo['type']."' name='".$componentName."' value='".($componentInfo['value'] ?? '')."' ".$dispAttributes.">";					
+						$displayForm .= "<input type='".$componentInfo['type']."' name='".$componentName."' value='".$componentInfo['value']."' ".$dispAttributes.">";					
 				}
 				
-				$displayForm .= ($componentInfo['html'] ?? '');
+				$displayForm .= $componentInfo['html'];
 				
-				if($componentInfo['type'] != "section") {
+				if($componentInfo['type'] != "section" && !isset($componentInfo['hidden'])) {
 					$displayForm .= "<br>";
 				}
 				
@@ -344,7 +423,7 @@
 			}
 			
 			if(!$this->isContainer) {
-				echo "<form ".$dispFormAttributes.">".($this->wrapper[0] ?? '').$dispErrors.$this->description."<div class='formTable'>".$displayForm."</div>".($this->wrapper[1] ?? '')."<input type='hidden' name='checkCSRF' value='".$_SESSION['csrfKey']."'></form>";
+				echo "<form ".$dispFormAttributes.">".$this->wrapper[0].$dispErrors.$this->description."<div class='formTable'>".$displayForm."</div>".$this->wrapper[1]."<input type='hidden' name='checkCSRF' value='".$_SESSION['csrfKey']."'></form>";
 			}
 
 			
@@ -414,180 +493,182 @@
 		public function validate() {
 			$returnVal = false;
 			foreach($this->components as $componentName => $componentInfo) {
-				if ( isset($componentInfo['validate']) ) {
-					foreach($componentInfo['validate'] as $validateMethod) {
-						
-						$arrValidate = array();
-						if(is_array($validateMethod)) {
-							$arrValidate = $validateMethod;
-							$validateMethod = $arrValidate['name'];
-						}
-						
+			
+				foreach($componentInfo['validate'] as $validateMethod) {
 					
-						
-						switch($validateMethod) {
-							case "NOT_BLANK":
+					$arrValidate = array();
+					if(is_array($validateMethod)) {
+						$arrValidate = $validateMethod;
+						$validateMethod = $arrValidate['name'];
+					}
+					
+				
+					
+					switch($validateMethod) {
+						case "NOT_BLANK":
+							if(($componentInfo['type'] == "checkbox" || $componentInfo['type'] == "radio") && count($componentInfo['options']) > 1) {
+								$componentCounter = 1;
+								$countBlanks = 0;
+								foreach($componentInfo['options'] as $optionName => $optionValue) {
+									
+									$fullComponentName = $componentName."_".$componentCounter;
+									if(trim($_POST[$fullComponentName]) == "") {
+										$countBlanks++;							
+									}
+																		
+									$componentCounter++;
+								}
+
+								if($countBlanks == count($componentInfo['options'])) {
+									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You must select at least one value for ".$componentInfo['display_name'].".";
+								}
+								
+							}
+							elseif($componentInfo['type'] != "file" && trim($_POST[$componentName]) == "") {
+								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." may not be blank.";
+							}
+							break;
+						case "NUMBER_ONLY":
+							if(!is_numeric($_POST[$componentName]) && $componentInfo['type'] != "datepicker") {
+								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." may only be a numeric value.";	
+							}
+							elseif($componentInfo['type'] == "datepicker") {
+								$checkDate = explode("-", $_POST[$componentName]);
+								if(!is_numeric($checkDate[0]) || !is_numeric($checkDate[1]) || !is_numeric($checkDate[2])) {
+									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." may only be a date value.";	
+								}
+								
+							}
+							break;
+						case "POSITIVE_NUMBER":
+							if($_POST[$componentName] < 0) {
+								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." must be a positive number.";
+							}
+							break;
+						case "RESTRICT_TO_OPTIONS":
+							
+							if(is_array($componentInfo['options'])) {
+								$arrPostNames = array();
+								$arrPossibleValues = array();
+								$postCounter = 1;
+								foreach($componentInfo['options'] as $optionValue => $displayValue) {	
+									$arrPossibleValues[] = $optionValue;
+									$arrPostNames[] = $componentName."_".$postCounter;
+									$postCounter++;
+								}
+								
 								if(($componentInfo['type'] == "checkbox" || $componentInfo['type'] == "radio") && count($componentInfo['options']) > 1) {
-									$componentCounter = 1;
-									$countBlanks = 0;
-									foreach($componentInfo['options'] as $optionName => $optionValue) {
-										
-										$fullComponentName = $componentName."_".$componentCounter;
-										if(trim($_POST[$fullComponentName]) == "") {
-											$countBlanks++;							
-										}
-																			
-										$componentCounter++;
-									}
+									$countErrors = 0;
+									foreach($arrPostNames as $postName) {
 
-									if($countBlanks == count($componentInfo['options'])) {
-										$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You must select at least one value for ".$componentInfo['display_name'].".";
-									}
-									
-								}
-								elseif($componentInfo['type'] != "file" && trim($_POST[$componentName]) == "") {
-									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." may not be blank.";
-								}
-								break;
-							case "NUMBER_ONLY":
-								if(!is_numeric($_POST[$componentName]) && $componentInfo['type'] != "datepicker") {
-									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." may only be a numeric value.";	
-								}
-								elseif($componentInfo['type'] == "datepicker") {
-
-									$checkDate = explode("-", $_POST[$componentName]);
-									
-								}
-								break;
-							case "POSITIVE_NUMBER":
-								if($_POST[$componentName] < 0) {
-									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." must be a positive number.";
-								}
-								break;
-							case "RESTRICT_TO_OPTIONS":
-								
-								if(is_array($componentInfo['options'])) {
-									$arrPostNames = array();
-									$arrPossibleValues = array();
-									$postCounter = 1;
-									foreach($componentInfo['options'] as $optionValue => $displayValue) {	
-										$arrPossibleValues[] = $optionValue;
-										$arrPostNames[] = $componentName."_".$postCounter;
-										$postCounter++;
-									}
-									
-									if(($componentInfo['type'] == "checkbox" || $componentInfo['type'] == "radio") && count($componentInfo['options']) > 1) {
-										$countErrors = 0;
-										foreach($arrPostNames as $postName) {
-
-											if(isset($_POST[$postName]) && !in_array($_POST[$postName], $arrPossibleValues)) {
-												$countErrors++;
-											}
-											
-										}
-										
-										if($countErrors > 0) {
-											$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid value for ".$componentInfo['display_name'].".";										
+										if(isset($_POST[$postName]) && !in_array($_POST[$postName], $arrPossibleValues)) {
+											$countErrors++;
 										}
 										
 									}
-									elseif(!in_array($_POST[$componentName], $arrPossibleValues)) {
-										$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid value for ".$componentInfo['display_name'].".";									
+									
+									if($countErrors > 0) {
+										$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid value for ".$componentInfo['display_name'].".";										
 									}
 									
 								}
-								
-								break;
-							case "IS_SELECTABLE":
-								
-								$selectBackID = isset($arrValidate['select_back']) ? $arrValidate['selectObj']->get_info($arrValidate['select_back']) : "";
-								
-								if(!$arrValidate['selectObj']->select($_POST[$componentName])) {
-									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid value for ".$componentInfo['display_name'].".";
+								elseif(!in_array($_POST[$componentName], $arrPossibleValues)) {
+									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid value for ".$componentInfo['display_name'].".";									
 								}
 								
-								$arrValidate['selectObj']->select($selectBackID);
+							}
+							
+							break;
+						case "IS_SELECTABLE":
+							
+							$selectBackID = isset($arrValidate['select_back']) ? $arrValidate['selectObj']->get_info($arrValidate['select_back']) : "";
+							
+							if(!$arrValidate['selectObj']->select($_POST[$componentName])) {
+								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid value for ".$componentInfo['display_name'].".";
+							}
+							
+							$arrValidate['selectObj']->select($selectBackID);
+							
+							break;
+						case "IS_NOT_SELECTABLE":
+							$selectBackID = isset($arrValidate['select_back']) ? $arrValidate['selectObj']->get_info($arrValidate['select_back']) : "";
+							
+							if($arrValidate['selectObj']->select($_POST[$componentName])) {
+								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "The value selected for ".$componentInfo['display_name']." is already in use.";
+							}
+							
+							$arrValidate['selectObj']->select($selectBackID);
+							
+							break;
+						case "CHECK_LENGTH":
+							
+							if($arrValidate['min_length'] != "" && strlen(trim($_POST[$componentName])) < $arrValidate['min_length']) {
+								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "The value for ".$componentInfo['display_name']." must be at least ".$arrValidate['min_length']." characters long.";
+							}
+							
+							if($arrValidate['max_length'] != "" && strlen(trim($_POST[$componentName])) > $arrValidate['max_length']) {
+								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] :  "The value for ".$componentInfo['display_name']." can be a max of ".$arrValidate['min_length']." characters long.";							
+							}
+														
+							break;
+						case "EQUALS_VALUE":
+							
+							if($arrValidate['value'] != $_POST[$componentName]) {
+								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You entered an incorrect value for ".$componentInfo['display_name'].".";
+							}
+							
+							break;
+						case "NOT_EQUALS_VALUE":
+							if($arrValidate['value'] == $_POST[$componentName]) {
+								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You entered an incorrect value for ".$componentInfo['display_name'].".";
+							}
+							break;
+						case "GREATER_THAN":
+							if($arrValidate['value'] > strlen(trim($_POST[$componentName]))) {
+								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." must be a value greater than ".$arrValidate['value'].".";
+							}
+							break;
+						case "LESS_THAN":
+							if($arrValidate['value'] < strlen(trim($_POST[$componentName]))) {
+								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." must be a value less than ".$arrValidate['value'].".";
+							}
+							break;
+						case "VALIDATE_ORDER":
+							
+							if($arrValidate['orderObject'] != "") {
 								
-								break;
-							case "IS_NOT_SELECTABLE":
-								$selectBackID = isset($arrValidate['select_back']) ? $arrValidate['selectObj']->get_info($arrValidate['select_back']) : "";
-								
-								if($arrValidate['selectObj']->select($_POST[$componentName])) {
-									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "The value selected for ".$componentInfo['display_name']." is already in use.";
+								if($arrValidate['set_category'] != "") {
+									$arrValidate['orderObject']->setCategoryKeyValue($arrValidate['set_category']);
 								}
 								
-								$arrValidate['selectObj']->select($selectBackID);
-								
-								break;
-							case "CHECK_LENGTH":
-								
-								if($arrValidate['min_length'] != "" && strlen(trim($_POST[$componentName])) < $arrValidate['min_length']) {
-									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "The value for ".$componentInfo['display_name']." must be at least ".$arrValidate['min_length']." characters long.";
-								}
-								
-								if($arrValidate['max_length'] != "" && strlen(trim($_POST[$componentName])) > $arrValidate['max_length']) {
-									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] :  "The value for ".$componentInfo['display_name']." can be a max of ".$arrValidate['min_length']." characters long.";							
-								}
-															
-								break;
-							case "EQUALS_VALUE":
-								
-								if($arrValidate['value'] != $_POST[$componentName]) {
-									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You entered an incorrect value for ".$componentInfo['display_name'].".";
-								}
-								
-								break;
-							case "NOT_EQUALS_VALUE":
-								if($arrValidate['value'] == $_POST[$componentName]) {
-									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You entered an incorrect value for ".$componentInfo['display_name'].".";
-								}
-								break;
-							case "GREATER_THAN":
-								if($arrValidate['value'] > strlen(trim($_POST[$componentName]))) {
-									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." must be a value greater than ".$arrValidate['value'].".";
-								}
-								break;
-							case "LESS_THAN":
-								if($arrValidate['value'] < strlen(trim($_POST[$componentName]))) {
-									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." must be a value less than ".$arrValidate['value'].".";
-								}
-								break;
-							case "VALIDATE_ORDER":
-								
-								if($arrValidate['orderObject'] != "") {
-									
-									if($arrValidate['set_category'] != "") {
-										$arrValidate['orderObject']->setCategoryKeyValue($arrValidate['set_category']);
-									}
-									
-									$checkOrder = $arrValidate['orderObject']->validateOrder($_POST[$componentName], $_POST[$componentName."_beforeafter"], $arrValidate['edit'], $arrValidate['edit_ordernum']);	
-									if($checkOrder === false) {
-										$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid ".$componentInfo['display_name'].".";							
-									}
-									else {
-										$_POST[$componentName] = $checkOrder;
-										$this->components[$componentName]['resortOrderObject'] = $arrValidate['orderObject'];
-										
-									}
-
-									if(isset($arrValidate['select_back'])) {
-										$arrValidate['orderObject']->select($arrValidate['select_back']);
-									}
-									
-								}
-								
-								break;
-							default:
-								if(!is_array($validateMethod)) {
-									call_user_func($validateMethod);
+								$checkOrder = $arrValidate['orderObject']->validateOrder($_POST[$componentName], $_POST[$componentName."_beforeafter"], $arrValidate['edit'], $arrValidate['edit_ordernum']);	
+								if($checkOrder === false) {
+									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid ".$componentInfo['display_name'].".";							
 								}
 								else {
-									call_user_func_array($validateMethod['function'], $validateMethod['args']);	
+									$_POST[$componentName] = $checkOrder;
+									$this->components[$componentName]['resortOrderObject'] = $arrValidate['orderObject'];
+									
 								}
-						}
-						
+
+								if(isset($arrValidate['select_back'])) {
+									$arrValidate['orderObject']->select($arrValidate['select_back']);
+								}
+								
+							}
+							
+							break;
+						default:
+							if(!is_array($validateMethod)) {
+								call_user_func($validateMethod);
+							}
+							else {
+								call_user_func_array($validateMethod['function'], $validateMethod['args']);	
+							}
 					}
+					
 				}
+				
 				
 								
 				if($componentInfo['type'] == "file" && $_POST[$componentName] == "") {
@@ -655,6 +736,19 @@
 					$datePick = new DateTime();
 					$datePick->setTimezone(new DateTimeZone("UTC"));
 					$datePick->setDate($formatDate[2], $formatDate[0], $formatDate[1]);
+					
+					if(isset($componentInfo['usetime'])) {
+						$useTimeComponent = $componentInfo['usetime'];	
+						$hour = $useTimeComponent."_hour";
+						$minute = $useTimeComponent."_minute";
+						$amPM = $useTimeComponent."_AMPM";
+						
+						$setHour = ($_POST[$amPM] == "PM") ? $_POST[$hour]+12 : $_POST[$hour];
+						$setMinute = $_POST[$minute];
+												
+						$datePick->setTime($setHour, $setMinute);
+					}
+					
 					$dateTimestamp = $datePick->format("U");
 					
 					$_POST[$componentName] = $dateTimestamp;	
@@ -693,6 +787,7 @@
 			
 			$this->blnSaveResult = false;
 			
+						
 			$arrResortOrder = array();
 			if($this->validate()) {
 
@@ -711,7 +806,6 @@
 					
 				}
 				
-				
 				foreach($this->saveAdditional as $dbName => $dbValue) {
 					$arrColumns[] = $dbName;
 					$arrValues[] = $dbValue;	
@@ -721,7 +815,7 @@
 				if($this->objSave != "" && $this->saveType == "add") {
 					$this->blnSaveResult = $this->objSave->addNew($arrColumns, $arrValues);
 				}
-				elseif($this->objSave != "") {
+				elseif($this->objSave != "" && $this->saveType == "update") {
 					$this->blnSaveResult = $this->objSave->update($arrColumns, $arrValues);
 					
 					
@@ -730,7 +824,11 @@
 							unlink(BASE_DIRECTORY.$file);
 						}
 					}
-					
+						
+				}
+				elseif($this->objSave != "" && $this->saveType != "") {
+					//echo $this->saveType; 
+					$this->blnSaveResult = $this->objSave->{$this->saveType}($arrColumns, $arrValues);
 					
 				}
 				else {
@@ -788,13 +886,36 @@
 		}
 		
 		/*
+		 * 
+		 * 
+		 */
+		
+		public function addComponentSortSpace($spaceAmount=2, $components = array()) {
+			
+			if(count($components) > 0) {
+				$this->components = $components;
+			}
+			
+			uasort($this->components, array("Form", "sortForm"));
+			
+			$nextSpot = 1;
+			
+			foreach($this->components as $componentName => $componentInfo) {
+				$this->components[$componentName]['sortorder'] = $nextSpot;
+				$nextSpot += $nextSpot+$spaceAmount;
+			}
+			
+		}
+		
+		/*
 		 * - convertAttributes Function -
 		 * 
 		 * Converts attributes to string format if it's an array
 		 * example output: name = 'form_name' id='form_id'
 		 * 
 		 */
-		static public function convertAttributes($attr) {
+		
+		public function convertAttributes($attr) {
 			
 			if(is_array($attr)) {
 				$returnVal = "";
@@ -925,7 +1046,7 @@
 							theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,unlink,image,emotions,|,quotebbcode,codebbcode".$addHTML.",',
 							theme_advanced_buttons2: 'forecolorpicker,fontselect,fontsizeselect',
 							theme_advanced_resizing: true,
-							content_css: '".MAIN_ROOT."themes/btcs4.css.php',
+							content_css: '".MAIN_ROOT."themes/".THEME."/btcs4.css',
 							theme_advanced_statusbar_location: 'none',
 							style_formats: [
 								{title: 'Quote', inline : 'div', classes: 'forumQuote'}
@@ -974,11 +1095,12 @@
 		
 		private function datepickerJS($componentID, $componentOptions) {
 			
+			
 			$returnVal = "	
 				$('#".$componentID."').datepicker({
 					changeMonth: ".$componentOptions['changeMonth'].",
 					changeYear: ".$componentOptions['changeYear'].",
-					dateFormat: '".$componentOptions['dateFormate']."',
+					dateFormat: '".$componentOptions['dateFormat']."',
 					minDate: ".$componentOptions['minDate'].",
 					maxDate: ".$componentOptions['maxDate'].",
 					yearRange: '".$componentOptions['yearRange']."',

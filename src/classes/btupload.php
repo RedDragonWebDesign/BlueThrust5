@@ -27,7 +27,7 @@ class BTUpload {
 	protected $strOutsideFileURL;
 	protected $blnOutsideLink;
 	public $arrErrors = array();
-	
+		
 	const ONE_MEGABYTE = 1048576;
 	
 	function __construct($uploadfile, $prefix, $fileloc = "", $allowableExt=array(), $extlength = 4, $outsideLink = false) {
@@ -80,15 +80,21 @@ class BTUpload {
 		}
 		
 		$checkExt = 0;
-
+		
 		foreach($this->arrFileExtensions as $fileExt) {
+					
 			if(strtolower(substr($strFileName,(strlen($fileExt))*-1)) == $fileExt) {
 				$checkExt++;
 				$this->strFileExt = $fileExt;
 			}
+			elseif($fileExt == "") {
+				$this->strFileExt = strtolower(substr($strFileName,strpos($strFileName, ".")));
+				$checkExt++;	
+			}
+			
 		}
 		
-		if($checkExt > 0 || count($his->arrFileExtensions) == 0) {
+		if($checkExt > 0 || count($this->arrFileExtensions) == 0) {
 			$returnVal = true;
 		}
 		
@@ -139,11 +145,9 @@ class BTUpload {
 		}
 		
 		if($this->checkExtensions() && $this->checkFileSize()) {
+			
 			$this->strUploadedFileName = uniqid($this->strFilePrefix).$this->strFileExt;
-			
 
-			//print_r($this->arrFile);
-			
 			if(!$this->blnOutsideLink) {
 				$blnUploadFile = move_uploaded_file($this->arrFile['tmp_name'], $this->strNewFileLoc.$this->strUploadedFileName);
 			}
@@ -170,7 +174,7 @@ class BTUpload {
 			$this->arrErrors[] = "File Size and Extension";	
 		}
 
-		
+
 		return $blnUploadFile;
 	}
 	

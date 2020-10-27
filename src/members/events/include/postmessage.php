@@ -15,11 +15,11 @@
 
 
 
-require_once("../../../_setup.php");
-require_once("../../../classes/member.php");
-require_once("../../../classes/rank.php");
-require_once("../../../classes/consoleoption.php");
-require_once("../../../classes/event.php");
+include("../../../_setup.php");
+include_once("../../../classes/member.php");
+include_once("../../../classes/rank.php");
+include_once("../../../classes/consoleoption.php");
+include_once("../../../classes/event.php");
 
 $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
@@ -49,7 +49,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_POST[
 	
 	if(in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true)) || $memberInfo['member_id'] == $eventInfo['member_id'] || $memberInfo['rank_id'] == 1) {
 		
-		require_once("eventmessages.php");
+		include("eventmessages.php");
 		
 	}
 	

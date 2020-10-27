@@ -19,14 +19,15 @@ function displayClock(intOffset, intHours, intMinutes, strDivID) {
 	var intSeconds = dateObj.getSeconds();
 	var strAMPM = "AM";
 	var intSaveHours = intHours;
-	
+	var dispHours = intHours;
+
 	if(intHours > 12) {
-		intHours = intHours-12;
+		dispHours = intHours-12;
 		strAMPM = "PM";
 	}
 	
 	if(intHours == 0) {
-		intHours = 12;
+		dispHours = 12;
 	}
 	
 	dispMinutes = intMinutes;
@@ -37,7 +38,7 @@ function displayClock(intOffset, intHours, intMinutes, strDivID) {
 	strJQDivID = "#"+strDivID;
 	
       
-	var strFullTime = intHours+":"+dispMinutes+" "+strAMPM;
+	var strFullTime = dispHours+":"+dispMinutes+" "+strAMPM;
 
 	if(!isNaN(intOffset) && intOffset != "") {
         currentTimestamp = dateObj.getTime()+(dateObj.getTimezoneOffset()*60*1000);
@@ -64,7 +65,7 @@ function displayClock(intOffset, intHours, intMinutes, strDivID) {
 		}
 	}
 	
-	setTimeout(function(){ displayClock(intOffset,intSaveHours,intMinutes,strDivID) }, 1000);
+	setTimeout(function(){ displayClock(intOffset,intHours,intMinutes,strDivID) }, 1000);
 }
 
 /*

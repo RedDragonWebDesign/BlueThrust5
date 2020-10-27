@@ -32,7 +32,7 @@ while($row = $result->fetch_assoc()) {
 }
 
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 
 	$diplomacyStatusObj = new Basic($mysqli, "diplomacy_status", "diplomacystatus_id");
 	// Check for clan name
@@ -100,7 +100,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	echo "<div class='formDiv'>";
 	

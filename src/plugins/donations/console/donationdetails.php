@@ -15,7 +15,7 @@
 	
 	$breadcrumbObj->updateBreadcrumb();
 
-	require_once("donationdetails_form.php");
+	include("donationdetails_form.php");
 	
 	
 ?>

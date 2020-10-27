@@ -16,7 +16,8 @@
 // Config File
 $prevFolder = "../";
 
-require_once($prevFolder."_setup.php");
+include($prevFolder."_setup.php");
+$btThemeObj->addHeadItem("richtexteditor1", "<script type='text/javascript' src='".$MAIN_ROOT."js/ckeditor/ckeditor.js'></script>");
 
 $consoleObj = new ConsoleOption($mysqli);
 $boardObj = new ForumBoard($mysqli);
@@ -39,21 +40,6 @@ $downloadCatObj->selectBySpecialKey("forumattachments");
 
 $moveTopicCID = $consoleObj->findConsoleIDByName("Move Topic");
 
-$ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
-
-if($ipbanObj->select($IP_ADDRESS, false)) {
-	$ipbanInfo = $ipbanObj->get_info();
-
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
-		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
-		$ipbanObj->delete();
-	}
-
-}
-
-
 if(!$boardObj->objTopic->select($_GET['tID'])) {
 	echo "
 	<script type='text/javascript'>window.location = 'index.php';</script>
@@ -74,7 +60,7 @@ $lastPostInfo = $boardObj->objPost->get_info_filtered();
 $EXTERNAL_JAVASCRIPT .= "<script type='text/javascript' src='".$MAIN_ROOT."js/ace/src-min-noconflict/ace.js' charset='utf-8'></script>";
 
 define("RESIZE_FORUM_IMAGES", true);
-require_once("forum_image_resize.php");
+include("forum_image_resize.php");
 
 
 // Start Page
@@ -86,7 +72,7 @@ $PAGE_NAME = $postInfo['title']." - ".$boardInfo['name']." - ";
 $quickReplyForm = new Form();
 $btThemeObj->addHeadItem("richtext-js", $quickReplyForm->getRichtextboxJSFile());
 
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 // Check Private Forum
 
@@ -110,7 +96,7 @@ if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION
 	$LOGGED_IN = true;
 	$NUM_PER_PAGE = $memberInfo['postsperpage'];
 	
-	if(!$member->hasSeenTopic($topicInfo['forumtopic_id']) && ($lastPostInfo['dateposted']+(60*60*24*7)) > time()) {
+	if(!$member->hasSeenTopic($topicInfo['forumtopic_id'])) {
 		$mysqli->query("INSERT INTO ".$dbprefix."forum_topicseen (member_id, forumtopic_id) VALUES ('".$memberInfo['member_id']."', '".$topicInfo['forumtopic_id']."')");
 	}
 
@@ -187,7 +173,7 @@ if($boardInfo['subforum_id'] != 0) {
 }
 $breadcrumbObj->addCrumb($boardInfo['name'], $MAIN_ROOT."forum/viewboard.php?bID=".$boardInfo['forumboard_id']);
 $breadcrumbObj->addCrumb($postInfo['title']);
-require_once($prevFolder."include/breadcrumb.php");
+include($prevFolder."include/breadcrumb.php");
 
 
 $blnManagePosts = false;
@@ -417,4 +403,5 @@ if($countManagablePosts > 0) {
 	
 }
 
-require_once($prevFolder."themes/".$THEME."/_footer.php");
+include($prevFolder."themes/".$THEME."/_footer.php");
+?>

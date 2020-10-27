@@ -15,8 +15,8 @@
 
 
 
-require_once("../../_setup.php");
-require_once("../../classes/member.php");
+include_once("../../_setup.php");
+include_once("../../classes/member.php");
 
 
 $memberObj = new Member($mysqli);
@@ -53,7 +53,7 @@ if(isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 					<div id='displayNotification_".$counter."' style='display: none'>
 						<table class='notificationTable'>
 							<tr>
-								<td clas='notificationIcon' valign='top'><img src='".$MAIN_ROOT."themes/".$THEME."/images/".$imgName."' class='notificationIMG'></td>
+								<td class='notificationIcon' valign='top'><img src='".$MAIN_ROOT."themes/".$THEME."/images/".$imgName."' class='notificationIMG'></td>
 								<td class='main' valign='top' style='padding-left: 5px'>".$row['message']."</td>
 								<td class='notificationClose' valign='top' align='right'><b><a href='javascript:void(0)' onclick=\"$('#notificationDiv').fadeOut(150)\">X</a></b></td>
 							</tr>

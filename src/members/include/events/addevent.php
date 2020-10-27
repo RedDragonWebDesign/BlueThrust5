@@ -12,7 +12,7 @@
  *
  */
 
-require_once("../classes/event.php");
+include_once("../classes/event.php");
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
@@ -36,7 +36,7 @@ $countErrors = 0;
 
 
 $arrTimezones = DateTimeZone::listIdentifiers();
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	// Check Title
 	if(trim($_POST['eventtitle']) == "") {
@@ -68,10 +68,10 @@ if(($_POST['submit'] ?? '')) {
 	// Calc Start Date
 	$tempTimezone = date_default_timezone_get();
 	
-	date_default_timezone_set("UTC");
-	$startMonth = date("n", ($_POST['startdate']/1000));
-	$startDay = date("j", ($_POST['startdate']/1000));
-	$startYear = date("Y", ($_POST['startdate']/1000));
+	//date_default_timezone_set("UTC");
+	//$startMonth = date("n", ($_POST['startdate']/1000));
+	//$startDay = date("j", ($_POST['startdate']/1000));
+	//$startYear = date("Y", ($_POST['startdate']/1000));
 	
 	if($_POST['ampm'] == "pm") {
 		$startHour = $_POST['starthour']+12;
@@ -79,13 +79,19 @@ if(($_POST['submit'] ?? '')) {
 	else {
 		$startHour = $_POST['starthour'];
 	}
-	date_default_timezone_set($tempTimezone);
-	$setStartTime = mktime($startHour, $_POST['startminute'], 0, $startMonth, $startDay, $startYear);
+	//date_default_timezone_set($tempTimezone);
 	
+	$startDate = explode("-", $_POST['startdate']);
+	date_default_timezone_set("UTC");
+	$setStartTime = mktime($startHour, $_POST['startminute'], 0, $startDate[0], $startDate[1], $startDate[2]);
+	date_default_timezone_set($tempTimezone);
+	
+	/*
 	if($setStartTime < time()) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid start date.<br>";
 		$countErrors++;
 	}
+	*/
 	
 	if($_POST['invitetype'] != 1) {
 		$inviteType = 0;	
@@ -157,7 +163,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	$houroptions = "<option value='0'>12</option>";
 	for($i=1;$i<=11;$i++) {
@@ -283,14 +289,19 @@ if(!($_POST['submit'] ?? '')) {
 					dateFormat: 'M d, yy',
 					minDate: new Date(".$minYear.", ".$minMonth.", ".$minDay."),
 					altField: '#realStartDate',
-					altFormat: '@',
+					altFormat: 'm-dd-yy',
 			
 					
 				});
 				
 
 				var currentDate = $('#jqStartDate').datepicker('getDate');
-				$('#realStartDate').val(currentDate.valueOf());
+				var currentMonth = currentDate.getMonth()+1;
+				var currentDay = currentDate.getDate();
+				var currentYear = currentDate.getFullYear();
+				
+				
+				$('#realStartDate').val(currentMonth+'-'+currentDay+'-'+currentYear);
 				
 			});
 		

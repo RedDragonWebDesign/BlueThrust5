@@ -24,13 +24,13 @@ else {
 }
 
 
-require_once($prevFolder."classes/profilecategory.php");
+include($prevFolder."classes/profilecategory.php");
 $profileCatObj = new ProfileCategory($mysqli);
 $cID = $_GET['cID'];
 
 
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	$countErrors = 0;
 	
@@ -96,7 +96,7 @@ if(($_POST['submit'] ?? '')) {
 	
 }
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	
 	

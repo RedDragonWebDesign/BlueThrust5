@@ -12,11 +12,11 @@
  *
  */
 
-require_once("../../_setup.php");
-require_once("../../classes/member.php");
-require_once("../../classes/rank.php");
-require_once("../../classes/btplugin.php");
-require_once("twitter.php");
+include_once("../../_setup.php");
+include_once("../../classes/member.php");
+include_once("../../classes/rank.php");
+include_once("../../classes/btplugin.php");
+include_once("twitter.php");
 
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
@@ -56,7 +56,7 @@ $EXTERNAL_JAVASCRIPT .= "
 <script type='text/javascript' src='".$MAIN_ROOT."members/js/main.js'></script>
 ";
 
-require_once("../../themes/".$THEME."/_header.php");
+include("../../themes/".$THEME."/_header.php");
 echo "
 <div class='breadCrumbTitle' id='breadCrumbTitle'>Twitter Connect Settings</div>
 <div class='breadCrumb' id='breadCrumb' style='padding-top: 0px; margin-top: 0px'>
@@ -86,7 +86,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$countErrors = 0;
 	$dispError = "";
 	
-	if(($_POST['submit'] ?? '')) {
+	if($_POST['submit']) {
 			
 		
 		// Check Display Order (before/after)
@@ -155,7 +155,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		
 	}
 	
-	if(!($_POST['submit'] ?? '')) {
+	if(!$_POST['submit']) {
 		
 		$selectAfter = "";
 		if(count($arrProfileModules) == $pluginPageInfo[0]['sortnum']) {
@@ -290,6 +290,6 @@ else {
 
 
 
-require_once("../../themes/".$THEME."/_footer.php");
+include("../../themes/".$THEME."/_footer.php");
 
 ?>

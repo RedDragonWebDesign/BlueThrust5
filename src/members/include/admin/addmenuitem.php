@@ -28,7 +28,7 @@ else {
 $cID = $_GET['cID'];
 
 define("MANAGEMENU_FUNCTIONS", true);
-require_once(BASE_DIRECTORY."members/include/admin/managemenu/_functions.php");
+include(BASE_DIRECTORY."members/include/admin/managemenu/_functions.php");
 
 $menuCatObj = new MenuCategory($mysqli);
 $menuItemObj = new MenuItem($mysqli);
@@ -95,38 +95,38 @@ if(isset($_POST['menucategory'])) {
 
 $i = 1;
 // Link Options
-require_once("managemenu/include/linkoptions.php");
+include("managemenu/include/linkoptions.php");
 
 
 // Image Options
-require_once("managemenu/include/imageoptions.php");
+include("managemenu/include/imageoptions.php");
 
 
 // Custom Page Options
-require_once("managemenu/include/custompageoptions.php");
+include("managemenu/include/custompageoptions.php");
 
 
 // Custom Form Page Options
-require_once("managemenu/include/customformoptions.php");
+include("managemenu/include/customformoptions.php");
 
 
 // Download Page Options
-require_once("managemenu/include/downloadoptions.php");
+include("managemenu/include/downloadoptions.php");
 
 
 // Shoutbox Options
-require_once("managemenu/include/shoutboxoptions.php");
+include("managemenu/include/shoutboxoptions.php");
 
 // Poll Options
-require_once("managemenu/include/polloptions.php");
+include("managemenu/include/polloptions.php");
 
 
 // Custom Code Editor
-require_once("managemenu/include/customcodeoptions.php");
+include("managemenu/include/customcodeoptions.php");
 
 
 // Custom Code Editor - WYSIWYG
-require_once("managemenu/include/customcodeformatoptions.php");
+include("managemenu/include/customcodeformatoptions.php");
 
 
 // Global Link Options - Target Window, Text Align and Prefix
@@ -213,7 +213,7 @@ $arrComponents = array(
 		"sortorder" => $i++,
 		"validate" => array("RESTRICT_TO_OPTIONS"),
 		"db_name" => "accesstype",
-		"options" => array("Always", "Logged In"),
+		"options" => array("Always", "Logged In", "Logged Out"),
 		"attributes" => array("class" => "textBox formInput")
 	),
 	"hide" => array(

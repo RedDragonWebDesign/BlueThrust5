@@ -85,7 +85,7 @@ foreach($arrRounds as $roundNum) {
 	<div id='matchDiv'>
 	<?php
 	
-		require_once("include/listmatches.php");
+		include("include/listmatches.php");
 	
 	?>
 	</div>

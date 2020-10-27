@@ -25,7 +25,7 @@ else {
 
 
 
-require_once($prevFolder."classes/profilecategory.php");
+include_once($prevFolder."classes/profilecategory.php");
 $cID = $_GET['cID'];
 
 $profileCatObj = new ProfileCategory($mysqli);
@@ -48,7 +48,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 ";
 
 $dispError = "";
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	$countErrors = 0;
 	
@@ -128,7 +128,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	$countCategories = 0;
 	

@@ -12,10 +12,10 @@
  *
  */
 
-require_once("../../../_setup.php");
-require_once("../../../classes/member.php");
-require_once("../../../classes/rank.php");
-require_once("../../../classes/consoleoption.php");
+include("../../../_setup.php");
+include_once("../../../classes/member.php");
+include_once("../../../classes/rank.php");
+include_once("../../../classes/consoleoption.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $member = new Member($mysqli);
@@ -112,17 +112,21 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			$numOfNewsPosts = $_POST['numOfNewsPosts'];
 		}
 		
-		if(!is_numeric($_POST['newsPostsPerPage']) && $_POST['newsPostsPerPage'] > 0) {
+		if(!is_numeric($_POST['newsPostsPerPage']) || $_POST['newsPostsPerPage'] < 0) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> News Posts Per Page must be a positive numeric value.";	
 		}
 		
+		if(!is_numeric($_POST['emailqueue_delay']) || $_POST['emailqueue_delay'] < 5) {
+			$countErrors++;
+			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> E-mail queue delay must be a at least 5 minutes.";
+		}
 		
 		
 		if($countErrors == 0) {
 			
-			$updateSettings = array("clanname", "clantag", "logourl", "theme", "maxdiplomacy", "failedlogins", "maxdsl", "lowdsl", "meddsl", "highdsl", "medalorder", "debugmode", "hideinactive", "hpnews", "news_postsperpage");
-			$updateSettingVals = array($_POST['clanName'], $_POST['clanTag'], $_POST['logoURL'], $_POST['themeName'], $_POST['maxDiplomacy'], $_POST['failedLogins'], $_POST['maxDSL'], $_POST['lowDSL'], $_POST['medDSL'], $_POST['highDSL'], $_POST['medalOrder'], $_POST['debugMode'], $_POST['hideInactive'], $numOfNewsPosts, $_POST['newsPostsPerPage']);
+			$updateSettings = array("clanname", "clantag", "logourl", "theme", "maxdiplomacy", "failedlogins", "maxdsl", "lowdsl", "meddsl", "highdsl", "medalorder", "debugmode", "hideinactive", "hpnews", "news_postsperpage", "emailqueue_delay");
+			$updateSettingVals = array($_POST['clanName'], $_POST['clanTag'], $_POST['logoURL'], $_POST['themeName'], $_POST['maxDiplomacy'], $_POST['failedLogins'], $_POST['maxDSL'], $_POST['lowDSL'], $_POST['medDSL'], $_POST['highDSL'], $_POST['medalOrder'], $_POST['debugMode'], $_POST['hideInactive'], $numOfNewsPosts, $_POST['newsPostsPerPage'], $_POST['emailqueue_delay']);
 			
 			
 			if(!$webInfoObj->multiUpdate($updateSettings, $updateSettingVals)) {

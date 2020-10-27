@@ -14,22 +14,20 @@
 
 // Config File
 $prevFolder = "";
-require_once("_setup.php");
+include("_setup.php");
 
 // Classes needed for login.php
-require_once("classes/member.php");
+include_once("classes/member.php");
 
 // Start Page
 
-require_once("themes/".$THEME."/_header.php");
+include("themes/".$THEME."/_header.php");
 
 $breadcrumbObj->setTitle("Log In");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Log In");
 
-$x = '';
-
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	$login_username = $_POST['user'];
 	$login_password = $_POST['pass'];
 	$x = "fail";
@@ -39,7 +37,7 @@ if(($_POST['submit'] ?? '')) {
 	$checkMember->select($login_username);
 	$memberInfo = $checkMember->get_info();
 	
-	if (($memberInfo['username'] ?? '') != "") {
+	if($memberInfo['username'] != "") {
 		
 		$checkLogin = $checkMember->authorizeLogin($login_password, 1);
 		
@@ -75,7 +73,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '') && !constant("LOGGED_IN")) {
+if(!$_POST['submit'] && !constant("LOGGED_IN")) {
 
 	if($x == "fail") {
 		$errorMessage = "You entered an incorrect username/password combination!";
@@ -84,7 +82,7 @@ if(!($_POST['submit'] ?? '') && !constant("LOGGED_IN")) {
 		$errorMessage = "You must be logged in to view this page!";
 	}
 
-require_once($prevFolder."include/breadcrumb.php");
+include($prevFolder."include/breadcrumb.php");
 echo "
 
 
@@ -132,4 +130,6 @@ elseif(constant("LOGGED_IN")) {
 	";
 }
 
-require_once("themes/".$THEME."/_footer.php");
+include("themes/".$THEME."/_footer.php");
+
+?>

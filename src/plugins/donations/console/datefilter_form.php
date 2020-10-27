@@ -8,12 +8,33 @@
 	$maxDate = "new Date(".$maxYear.",12,31)";
 	
 	$dateObj = new DateTime();
-	$dateObj->setTimestamp($_GET['start']);
 	$dateObj->setTimezone(new DateTimeZone("UTC"));
+	
+	$setStartValue = $_GET['start'];
+	$setEndValue = $_GET['end'];
+	
+	if(is_numeric($_GET['start'])) {
+
+		$dateObj->setTimestamp($_GET['start']);
+				
+	}
+	else {
+		$startDate = explode("-", $_GET['start']);
+		$dateObj->setDate($startDate[2], $startDate[0], $startDate[1]);
+		$setStartValue = $dateObj->getTimestamp();
+	}
 	
 	$defaultStartDate = $dateObj->format("M j, Y");
 
-	$dateObj->setTimestamp($_GET['end']);
+	if(is_numeric($_GET['end'])) {
+		$dateObj->setTimestamp($_GET['end']);
+	}
+	else {
+		$endDate = explode("-", $_GET['end']);
+		$dateObj->setDate($endDate[2], $endDate[0], $endDate[1]);
+		$setEndValue = $dateObj->getTimestamp();
+	}
+
 	$defaultEndDate = $dateObj->format("M j, Y");
 	
 	
@@ -51,13 +72,13 @@
 					"sortorder" => $i++,
 					"options" => array("changeMonth" => "true", 
 							   "changeYear" => "true", 
-							   "dateFormate" => "M d, yy", 
+							   "dateFormat" => "M d, yy", 
 							   "minDate" => "new Date(50, 1, 1)", 
 							   "maxDate" => $maxDate, 
 							   "yearRange" => "1950:".$maxYear, 
 							   "altField" => "realStartDate",
 							   "defaultDate" => $defaultStartDate),
-					"value" => $_GET['start']*1000
+					"value" => $setStartValue*1000
 				),
 				"enddate" => array(
 					"type" => "datepicker",
@@ -66,13 +87,13 @@
 					"sortorder" => $i++,
 					"options" => array("changeMonth" => "true", 
 							   "changeYear" => "true", 
-							   "dateFormate" => "M d, yy", 
+							   "dateFormat" => "M d, yy", 
 							   "minDate" => "new Date(50, 1, 1)", 
 							   "maxDate" => $maxDate, 
 							   "yearRange" => "1950:".$maxYear, 
 							   "altField" => "realEndDate",
 							   "defaultDate" => $defaultEndDate),
-					"value" => $_GET['end']*1000
+					"value" => $setEndValue*1000
 				),
 				"filter" => array(
 					"type" => "custom",
@@ -88,7 +109,7 @@
 		$(document).ready(function() {
 			$('#filterButton').click(function() {
 				
-				window.location = '".MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&campaignID=".$_GET['campaignID']."&p=log&start='+($('#realStartDate').val()/1000)+'&end='+($('#realEndDate').val()/1000);				
+				window.location = '".MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&campaignID=".$_GET['campaignID']."&p=log&start='+($('#realStartDate').val())+'&end='+($('#realEndDate').val());				
 			
 			});
 		});

@@ -13,9 +13,9 @@
  */
 
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/event.php");
+include_once("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/event.php");
 
 // Start Page
 
@@ -50,7 +50,7 @@ if($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMembe
 		$eventObj->objEventMember->update(array("hide"), array("1"));	
 	}
 	
-	require_once("invitelist.php");
+	include("invitelist.php");
 	
 }
 

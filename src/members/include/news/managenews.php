@@ -32,7 +32,7 @@ if(isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
 	$newsInfo = $newsObj->get_info_filtered();
 	
 	define("POSTNEWS_FORM", true);
-	require_once(BASE_DIRECTORY."members/include/news/postnews_form.php");
+	include(BASE_DIRECTORY."members/include/news/postnews_form.php");
 	
 	$breadcrumbObj->popCrumb();
 

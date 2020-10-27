@@ -13,7 +13,7 @@
  */
 
 
-require_once("../classes/customform.php");
+include_once("../classes/customform.php");
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
@@ -46,7 +46,7 @@ if(isset($_GET['cfID']) && $customFormPageObj->select($_GET['cfID'])) {
 		<div id='submissionsDiv'>
 	
 	";
-	require_once("custompages/submissiondetail.php");
+	include("custompages/submissiondetail.php");
 	echo "</div>";
 	
 	echo "
@@ -81,7 +81,7 @@ if(isset($_GET['cfID']) && $customFormPageObj->select($_GET['cfID'])) {
 else {
 	
 	
-	require_once("custompages/main_submissions.php");
+	include("custompages/main_submissions.php");
 	
 	
 }

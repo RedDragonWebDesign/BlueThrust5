@@ -15,9 +15,9 @@
 
 
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/forumboard.php");
+include("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/forumboard.php");
 
 
 $member = new Member($mysqli);
@@ -38,7 +38,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $boardObj->select($_POST[
 		$boardObj->delete();
 		$member->logAction("Deleted Forum Board: ".$boardInfo['name']);
 		
-		require_once("main_manageboards.php");
+		include("main_manageboards.php");
 		
 	}
 	else {

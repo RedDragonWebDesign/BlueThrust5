@@ -31,7 +31,7 @@ else {
 		exit();
 	}
 }
-require_once("../../classes/btupload.php");
+include_once("../../classes/btupload.php");
 
 echo "
 
@@ -45,7 +45,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	// Check Squad Name
 	if(trim($_POST['squadname']) == "") {

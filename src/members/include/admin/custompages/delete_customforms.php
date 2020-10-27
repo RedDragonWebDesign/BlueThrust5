@@ -12,9 +12,9 @@
  *
  */
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/customform.php");
+include_once("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/customform.php");
 
 $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
@@ -39,7 +39,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		if($_POST['confirm'] == "1") {
 			
 			$customPageObj->delete();
-			require_once("main_customforms.php");
+			include("main_customforms.php");
 			
 		}
 		else {

@@ -12,10 +12,10 @@
  *
  */
 
-require_once("../../_setup.php");
-require_once("../../classes/member.php");
+include_once("../../_setup.php");
+include_once("../../classes/member.php");
 $prevFolder = "../../";
-require_once("facebook.php");
+include("facebook.php");
 
 
 $member = new Member($mysqli);

@@ -13,9 +13,9 @@
  */
 
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/poll.php");
+include_once("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/poll.php");
 
 // Start Page
 
@@ -45,7 +45,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 	
 	$pollObj->cacheID = $_POST['cacheID'];
 	
-	if(($_POST['submit'] ?? '')) {
+	if($_POST['submit']) {
 		
 		$arrOptionInfo = array();
 		$arrErrors = array();
@@ -101,7 +101,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 	}
 	
 	
-	if(!($_POST['submit'] ?? '')) {
+	if(!$_POST['submit']) {
 		echo "	
 		
 			<script type='text/javascript'>

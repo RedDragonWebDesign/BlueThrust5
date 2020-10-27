@@ -16,7 +16,7 @@
 // Config File
 $prevFolder = "../";
 
-require_once($prevFolder."_setup.php");
+include($prevFolder."_setup.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $eventObj = new Event($mysqli);
@@ -25,7 +25,7 @@ $member = new Member($mysqli);
 
 // Start Page
 $PAGE_NAME = "Events - ";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 
 $memberInfo = array();
@@ -43,7 +43,7 @@ if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION
 $breadcrumbObj->setTitle("Events");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Events");
-require_once($prevFolder."include/breadcrumb.php");
+include($prevFolder."include/breadcrumb.php");
 ?>
 
 
@@ -94,15 +94,17 @@ require_once($prevFolder."include/breadcrumb.php");
 					$objMember->select($eventInfo['member_id']);
 					
 					$dateTimeObj = new DateTime();
+					$dateTimeObj->setTimezone(new DateTimeZone("UTC"));
 					$dateTimeObj->setTimestamp($eventInfo['startdate']);
 					$includeTimezone = "";
 					
-					if($eventInfo['timezone'] != "") { 
+					$dispStartDate = $dateTimeObj->format("M j, Y g:i A");
+					if($eventInfo['timezone'] != "") {
 						$dateTimeObj->setTimezone(new DateTimeZone($eventInfo['timezone']));
 						$dispTimezone = $dateTimeObj->format(" T"); 
 					}
-					$dateTimeObj->setTimezone("UTC");
-					$dispStartDate = $dateTimeObj->format("M j, Y g:i A").$dispTimezone;
+					
+					$dispStartDate .= $dispTimezone;
 					
 					echo "
 					<tr>
@@ -144,5 +146,5 @@ require_once($prevFolder."include/breadcrumb.php");
 </div>
 
 <?php
-require_once($prevFolder."themes/".$THEME."/_footer.php");
+include($prevFolder."themes/".$THEME."/_footer.php");
 ?>

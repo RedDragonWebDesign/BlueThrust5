@@ -12,7 +12,7 @@
  *
  */
 
-require_once("basic.php");
+include_once("basic.php");
 
 /*
  * An extension of the Basic Class. It includes methods which allow you to easily add 

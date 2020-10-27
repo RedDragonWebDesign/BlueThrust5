@@ -27,13 +27,13 @@ else {
 
 $cID = $_GET['cID'];
 
-require_once($prevFolder."classes/btupload.php");
+include_once($prevFolder."classes/btupload.php");
 
 $menuCatObj = new MenuCategory($mysqli);
 $intAddNewMenuCatID = $consoleObj->findConsoleIDByName("Add Menu Category");
 
 if(isset($_GET['action']) && $_GET['action'] == "edit" && $menuCatObj->select($_GET['mcID'])) {	
-	require_once("managemenu/edit_category.php");	
+	include("managemenu/edit_category.php");	
 }
 elseif(!isset($_GET['action']) || (isset($_GET['action']) && !$menuCatObj->select($_GET['mcID']))) {
 	
@@ -60,7 +60,7 @@ elseif(!isset($_GET['action']) || (isset($_GET['action']) && !$menuCatObj->selec
 		";
 	
 	$_POST['manage'] = 1;
-	require_once("include/admin/managemenu/include/menucategorylist.php");
+	include("include/admin/managemenu/include/menucategorylist.php");
 	echo "
 		</div>
 		

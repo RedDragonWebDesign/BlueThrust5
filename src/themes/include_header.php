@@ -1,24 +1,26 @@
 <?php
 
+include_once(BASE_DIRECTORY."include/emailqueue.php");
+
 $arrLoginInfo = array();
 
 $taggerObj = new Basic($mysqli, "membersonlypage", "pageurl");
 $siteDomain = $_SERVER['SERVER_NAME'];
 
-$https = $_SERVER['HTTPS'] ?? "";
-
-if(trim($https) == "" || $https == "off") {
+if(trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
 }
 else {
 	$dispHTTP = "https://";
 }
 
+
 if((!isset($_COOKIE['btUsername']) || !isset($_COOKIE['btPassword'])) && isset($_SESSION['btRememberMe']) && $_SESSION['btRememberMe'] == 1 && isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 	$cookieExpTime = time()+((60*60*24)*3);
 	setcookie("btUsername", $_SESSION['btUsername'], $cookieExpTime, $MAIN_ROOT);
 	setcookie("btPassword", $_SESSION['btPassword'], $cookieExpTime, $MAIN_ROOT);
 }
+
 
 $menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", NULL, true);
 if(isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
@@ -167,6 +169,7 @@ if($taggerObj->select($_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'], false) &&
 	
 }
 
+
 $hitCountObj = new Basic($mysqli, "hitcounter", "hit_id");
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."hitcounter WHERE ipaddress = '".$IP_ADDRESS."'");
 if($result->num_rows > 0) {
@@ -193,5 +196,6 @@ else {
 
 $blnDisplayNewsTicker = false;
 
-$breadcrumbObj = new BreadCrumb();
+
 $hooksObj->addHook("worldclock-display", "displayDefaultWorldClock");
+?>

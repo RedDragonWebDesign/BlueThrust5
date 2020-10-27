@@ -12,8 +12,8 @@
  *
  */
 
-require_once("../classes/forumboard.php");
-require_once("../classes/rankcategory.php");
+include_once("../classes/forumboard.php");
+include_once("../classes/rankcategory.php");
 
 
 
@@ -65,7 +65,7 @@ $rankCatObj = new RankCategory($mysqli);
 $rankObj = new Rank($mysqli);
 $tempMemObj = new Member($mysqli);
 
-if( ($_POST['submit'] ?? '') ) {
+if($_POST['submit']) {
 	
 	// Check Board Name
 	
@@ -83,7 +83,7 @@ if( ($_POST['submit'] ?? '') ) {
 	
 	// Check Subforum
 	
-	if( isset($_POST['subforum']) && $_POST['subforum'] == 1 && $boardObj->select($_POST['subforumboard'])) {
+	if($_POST['subforum'] == 1 && $boardObj->select($_POST['subforumboard'])) {
 		$setSubForum = $_POST['subforumboard'];
 	}
 	else {
@@ -101,13 +101,17 @@ if( ($_POST['submit'] ?? '') ) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
 		$countErrors++;
 	}
+		
 	
 	// Forum Access
-	$arrMembers = [];
-	if ( $_POST['accesstype'] != 1 ) {
+	
+	if($_POST['accesstype'] != 1) {
 		$_POST['accesstype'] = 0;
 		$arrRanks = array();
-	} else {
+		$arrMembers = array();
+	}
+	else {
+		
 		$result = $mysqli->query("SELECT rank_id FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 		while($row = $result->fetch_assoc()) {
 
@@ -118,16 +122,22 @@ if( ($_POST['submit'] ?? '') ) {
 			elseif($_SESSION['btRankAccessCache'][$checkboxName] == "2") {
 				$arrRanks[$row['rank_id']] = 0;
 			}
+			
 		}
 		
 		foreach($_SESSION['btMemberAccessCache'] as $memID => $accessRule) {
+
 			if($accessRule != "" && $tempMemObj->select($memID)) {
 				$arrMembers[$memID] = $accessRule;	
 			}
+			
 		}
+		
+		
 	}
 	
 	if($countErrors == 0) {
+		
 		$arrColumns = array("forumcategory_id", "name", "description", "sortnum", "accesstype", "subforum_id");
 		$arrValues = array($_POST['forumcat'], $_POST['boardname'], $_POST['boarddesc'], $intNewOrderSpot, $_POST['accesstype'], $setSubForum);
 		
@@ -165,7 +175,7 @@ if( ($_POST['submit'] ?? '') ) {
 }
 
 
-if( ! ($_POST['submit'] ?? '') ) {
+if(!$_POST['submit']) {
 	
 	if($dispError != "") {
 		$dispError = "
@@ -186,7 +196,6 @@ if( ! ($_POST['submit'] ?? '') ) {
 	$result1 = $mysqli->query("SELECT rankcategory_id FROM ".$dbprefix."ranks ORDER BY ordernum DESC");
 	$rankCounter = $result1->num_rows;
 	
-	$catoptions = '';
 	while($row = $result->fetch_assoc()) {
 	
 		$selectCat = "";
@@ -214,11 +223,11 @@ if( ! ($_POST['submit'] ?? '') ) {
 				</tr>
 				<tr>
 					<td class='formLabel'>Board Name:</td>
-					<td class='main'><input type='text' value='".($_POST['boardname'] ?? '')."' name='boardname' class='textBox' style='width: 250px'></td>
+					<td class='main'><input type='text' value='".$_POST['boardname']."' name='boardname' class='textBox' style='width: 250px'></td>
 				</tr>
 				<tr>
 					<td class='formLabel' valign='top'>Description:</td>
-					<td class='main'><textarea name='boarddesc' class='textBox' style='width: 250px; height: 85px'>".($_POST['boarddesc'] ?? '')."</textarea></td>
+					<td class='main'><textarea name='boarddesc' class='textBox' style='width: 250px; height: 85px'>".$_POST['boarddesc']."</textarea></td>
 				</tr>
 				<tr>
 					<td class='formLabel'>Category:</td>

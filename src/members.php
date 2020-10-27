@@ -16,7 +16,7 @@
 // Config File
 $prevFolder = "";
 
-require_once($prevFolder."_setup.php");
+include($prevFolder."_setup.php");
 
 // Classes needed for index.php
 
@@ -39,7 +39,7 @@ if($ipbanObj->select($IP_ADDRESS, false)) {
 // Start Page
 $PAGE_NAME = "Members - ";
 $dispBreadCrumb = "";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 $member = new Member($mysqli);
 $rankObj = new Rank($mysqli);
@@ -89,7 +89,7 @@ $gameObj = new Game($mysqli);
 $breadcrumbObj->setTitle("Members");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Members");
-require_once($prevFolder."include/breadcrumb.php");
+include($prevFolder."include/breadcrumb.php");
 
 ?>
 <div id='tiltPhoneImg' style='display: none'><img src='<?php echo $MAIN_ROOT; ?>images/tiltphone.png'><p align='center'>need more space<br>tilt your phone!</p></div>
@@ -286,7 +286,7 @@ $totalMembers = array_sum($arrMemberCountCat);
 				$gameObj->select($value);
 				$gameInfo = $gameObj->get_info_filtered();
 				
-				if( ! isset($arrTotalGamesPlayed[$value]) || $arrTotalGamesPlayed[$value] == "" ) {
+				if($arrTotalGamesPlayed[$value] == "") {
 					$arrTotalGamesPlayed[$value] = 0;
 				}
 				
@@ -371,4 +371,4 @@ if($websiteInfo['maxdsl'] != 0) {
 ?>
 
 </div>
-<?php require_once($prevFolder."themes/".$THEME."/_footer.php"); ?>
+<?php include($prevFolder."themes/".$THEME."/_footer.php"); ?>

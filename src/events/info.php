@@ -15,7 +15,7 @@
 // Config File
 $prevFolder = "../";
 
-require_once($prevFolder."_setup.php");
+include($prevFolder."_setup.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $eventObj = new Event($mysqli);
@@ -70,7 +70,7 @@ $arrInviteList[] = $eventInfo['member_id'];
 // Start Page
 $PAGE_NAME = $eventInfo['title']." - ";
 $dispBreadCrumb = "";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 $memberInfo = array();
 if(constant("LOGGED_IN") && $member->select($_SESSION['btUsername'])) {
@@ -101,12 +101,13 @@ $breadcrumbObj->setTitle($eventInfo['title']);
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Events", $MAIN_ROOT."events");
 $breadcrumbObj->addCrumb($eventInfo['title']);
-require_once($prevFolder."include/breadcrumb.php");
+include($prevFolder."include/breadcrumb.php");
 echo "
 
 	<div class='eventPageContainer'>
 		<div class='eventLeftContainer'>
 			<div class='eventTitle'>Invite List:</div>
+			<div class='main'><br><b>Event Manager(s):</b></div>
 			<div class='dashedBox'>
 				<table class='formTable'>
 					<tr>
@@ -139,10 +140,18 @@ echo "
 	$query[0] = "SELECT m.rank_id, ep.sortnum, r.ordernum, m.member_id FROM ".$dbprefix."members m, ".$dbprefix."eventpositions ep, ".$dbprefix."events_members em, ".$dbprefix."ranks r WHERE r.rank_id = m.rank_id AND m.member_id = em.member_id AND em.event_id = '".$eventInfo['event_id']."' AND em.position_id = ep.position_id AND em.member_id IN ".$sqlInviteList[0]." ORDER BY ep.sortnum ASC, r.ordernum DESC";
 
 	$sqlInviteList[1] = "('".implode("','", $arrInviteListNoPosition)."')";
-	$query[1] = "SELECT m.rank_id, r.ordernum, m.member_id FROM ".$dbprefix."members m, ".$dbprefix."events_members em, ".$dbprefix."ranks r WHERE r.rank_id = m.rank_id AND m.member_id = em.member_id AND em.event_id = '".$eventInfo['event_id']."' AND em.member_id IN ".$sqlInviteList[1]." ORDER BY r.ordernum DESC";
+	if($eventInfo['startdate'] > time()) {
+		$query[1] = "SELECT m.rank_id, r.ordernum, m.member_id FROM ".$dbprefix."members m, ".$dbprefix."events_members em, ".$dbprefix."ranks r WHERE r.rank_id = m.rank_id AND m.member_id = em.member_id AND em.event_id = '".$eventInfo['event_id']."' AND em.member_id IN ".$sqlInviteList[1]." ORDER BY em.status DESC, r.ordernum DESC";
+	}
+	else {
+		$query[1] = "SELECT m.rank_id, r.ordernum, m.member_id FROM ".$dbprefix."members m, ".$dbprefix."events_members em, ".$dbprefix."ranks r WHERE r.rank_id = m.rank_id AND m.member_id = em.member_id AND em.event_id = '".$eventInfo['event_id']."' AND em.member_id IN ".$sqlInviteList[1]." ORDER BY em.attendconfirm_admin, r.ordernum DESC";		
+	}
+	
 	
 	$counter = 1;
+	$currentAttendStatus = "";
 	for($x=0;$x<=1;$x++) {
+				
 		$result = $mysqli->query($query[$x]);
 		while($row = $result->fetch_assoc()) {
 			if($eventPgMemberObj->select($row['member_id'])) {
@@ -166,6 +175,51 @@ echo "
 					$eventMemberProfilePic = $MAIN_ROOT.$eventMemberProfilePic;	
 				}
 				
+				
+				date_default_timezone_set("UTC");
+				if($eventInfo['startdate'] > time()) {
+					switch($eventMemInfo['status']) {
+						case 2:
+							$dispAttendStatus = "Not Attending";
+							break;
+						case 1:
+							$dispAttendStatus = "Attending";
+							break;
+						default:
+							$dispAttendStatus = "Invited";				
+					}
+				}
+				else {
+
+					$dispAttendStatus = "";
+					switch($eventMemInfo['attendconfirm_admin']) {
+						case 1:
+							$dispAttendStatus = "Attended";
+							break;
+						case 2:
+							$dispAttendStatus = "Excused Absence";
+							break;
+						case 3:
+							$dispAttendStatus = "Unexcused Absense";
+							break;
+						default:
+							$dispAttendStatus = "Pending Confirmation";					
+					}
+								
+				}
+				
+				if($x == 1 && $currentAttendStatus != $dispAttendStatus) {
+					$currentAttendStatus = $dispAttendStatus;
+					$counter = 0;
+					echo "
+						</table>
+						</div>
+						<div class='main'><br><b>".$dispAttendStatus.":</b></div>
+						<div class='dashedBox'>
+						<table class='formTable'>
+					";
+				}
+				
 				if($counter == 1) {
 					$addCSS = " alternateBGColor";
 					$counter = 0;
@@ -175,17 +229,8 @@ echo "
 					$counter = 1;
 				}
 				
-				switch($eventMemInfo['status']) {
-					case 2:
-						$dispAttendStatus = "Not Attending";
-						break;
-					case 1:
-						$dispAttendStatus = "Attending";
-						break;
-					default:
-						$dispAttendStatus = "Invited";				
-				}
 				
+				date_default_timezone_set($websiteInfo['default_timezone']);
 				echo "
 					<tr>
 						<td valign='top' class='profilePic".$addCSS."'>
@@ -193,9 +238,12 @@ echo "
 						</td>
 						<td class='main".$addCSS."' valign='top'>
 							<span class='largeFont'>".$eventPgMemberObj->getMemberLink()."</span><br>
-							<b>Position:</b> ".$dispPositionName."<br>
-							<i>".$dispAttendStatus."</i>
-						</td>
+							";
+				
+				if($x == 0) { echo "<b>Position:</b> ".$dispPositionName."<br><i>".$dispAttendStatus."</i>"; }
+				
+				echo "
+					</td>
 					</tr>
 				";
 				
@@ -221,9 +269,11 @@ echo "
 	}
 	
 	$dateTimeObj = new DateTime();
+	$dateTimeObj->setTimezone(new DateTimeZone("UTC"));
 	$dateTimeObj->setTimestamp($eventInfo['startdate']);
 	$includeTimezone = "";
 	$dispTimezone = "";
+	$dispStartDate = $dateTimeObj->format("M j, Y g:i A");
 	
 	if($eventInfo['timezone'] != "") { 
 		$timeZoneObj = new DateTimeZone($eventInfo['timezone']);
@@ -235,7 +285,7 @@ echo "
 		$dispTimezone = $dateTimeObj->format(" T")."<br>".str_replace("_", " ", $eventInfo['timezone'])." (UTC".$dispSign.$dispOffset.")";
 	}
 	$dateTimeObj->setTimezone("UTC");
-	$dispStartDate = $dateTimeObj->format("M j, Y g:i A").$dispTimezone;
+	$dispStartDate .= $dispTimezone;
 	
 echo "
 			</table>
@@ -551,5 +601,5 @@ echo "
 ";
 
 
-require_once($prevFolder."themes/".$THEME."/_footer.php");
+include($prevFolder."themes/".$THEME."/_footer.php");
 ?>

@@ -23,8 +23,8 @@ else {
 	}
 }
 
-require_once($prevFolder."classes/btupload.php");
-require_once($prevFolder."classes/rankcategory.php");
+include_once($prevFolder."classes/btupload.php");
+include_once($prevFolder."classes/rankcategory.php");
 $cID = $_GET['cID'];
 $rankCatObj = new RankCategory($mysqli);
 
@@ -41,7 +41,7 @@ if(!isset($_GET['rID']) || $_GET['rID'] == "") {
 		<div id='contentDiv'>
 	";
 	
-	require_once("managerankcat/main.php");
+	include("managerankcat/main.php");
 	
 	
 	echo "
@@ -119,7 +119,7 @@ if(!isset($_GET['rID']) || $_GET['rID'] == "") {
 	
 }
 elseif($_GET['rID'] != "" AND $_GET['action'] == "edit") {
-	require_once("managerankcat/edit.php");
+	include("managerankcat/edit.php");
 }
 
 

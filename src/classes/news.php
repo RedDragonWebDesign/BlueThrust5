@@ -13,7 +13,7 @@
  */
 
 
-require_once("basic.php");
+include_once("basic.php");
 
 
 class News extends Basic {
@@ -283,13 +283,13 @@ class News extends Basic {
 	
 	private function determinePrivateNewsStatus() {
 		$member = new Member($this->MySQL);
-		$member->select(($_SESSION['btUsername'] ?? ''));
+		$member->select($_SESSION['btUsername']);
 		$consoleObj = new ConsoleOption($this->MySQL);
 		
 		$privateNewsCID = $consoleObj->findConsoleIDByName("View Private News");
 		$consoleObj->select($privateNewsCID);
 		
-		$this->blnViewPrivateNews = ($member->authorizeLogin(($_SESSION['btPassword'] ?? '')) && $member->hasAccess($consoleObj));
+		$this->blnViewPrivateNews = ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj));
 	}
 	
 	public function getHTMLNewsConsole() {

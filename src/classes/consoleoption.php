@@ -14,7 +14,7 @@
 
 
 
-require_once("basicsort.php");
+include_once("basicsort.php");
 
 class ConsoleOption extends BasicSort {
 
@@ -36,19 +36,13 @@ class ConsoleOption extends BasicSort {
 	
 	
 	*/
+	
 	function hasAccess($intRankID) {
-		global $sqlCache;
-		
 		$returnVal = false;
 		if(is_numeric($intRankID) && is_numeric($this->intTableKeyValue)) {
-			$result = sql_array_select_where(
-				$sqlCache['rank_privileges'],
-				'rank_id',
-				$intRankID,
-				'console_id',
-				$this->intTableKeyValue
-			);
-			$countRows = count($result);
+			
+			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."rank_privileges WHERE rank_id = '$intRankID' AND console_id = '".$this->intTableKeyValue."'");
+			$countRows = $result->num_rows;
 			
 			if($countRows > 0) {
 				$returnVal = true;
@@ -56,12 +50,14 @@ class ConsoleOption extends BasicSort {
 			elseif($intRankID == 1) {
 				$returnVal = true;	
 			}
+			
 		}
 	
 		return $returnVal;
 	}
 	
 	function findConsoleIDByName($strConsolePageTitle) {
+		
 		$returnVal = false;
 		$strConsoleName = $this->MySQL->real_escape_string($strConsolePageTitle);
 		$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE pagetitle = '".$strConsoleName."'");

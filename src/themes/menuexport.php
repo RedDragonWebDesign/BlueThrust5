@@ -1,8 +1,8 @@
 <?php
 
-	require_once("../_setup.php");
+	include("../_setup.php");
 	
-	require_once("../classes/member.php");
+	include("../classes/member.php");
 	
 	$member = new Member($mysqli);
 	$consoleObj = new ConsoleOption($mysqli);

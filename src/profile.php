@@ -16,7 +16,7 @@
 // Config File
 $prevFolder = "";
 
-require_once($prevFolder."_setup.php");
+include($prevFolder."_setup.php");
 
 $member = new Member($mysqli);
 
@@ -37,7 +37,7 @@ else {
 // Start Page
 $PAGE_NAME = $memberInfo['username']."'s Profile - ";
 $dispBreadCrumb = "";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 // Check Private Profiles
 
@@ -214,7 +214,7 @@ $breadcrumbObj->setTitle("<div style='display: inline-block'>".$memberInfo['user
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Members", $MAIN_ROOT."members.php");
 $breadcrumbObj->addCrumb($memberInfo['username']."'s Profile");
-require_once($prevFolder."include/breadcrumb.php");
+include($prevFolder."include/breadcrumb.php");
 ?>
 
 <div style='position: relative; margin-left: auto; margin-right: auto; width: 95%; margin-top: 15px'>
@@ -273,13 +273,13 @@ require_once($prevFolder."include/breadcrumb.php");
 				foreach($arrPlugins as $pluginInfo) {
 
 					if($pluginInfo['sortnum'] == $x) {
-						require_once($pluginInfo['pagepath']);	
+						include($pluginInfo['pagepath']);	
 					}
 					
 				}
 
 				if($section != "") {
-					require_once($section);
+					include($section);
 				}
 								
 				$x++;
@@ -297,7 +297,7 @@ require_once($prevFolder."include/breadcrumb.php");
 
 <?php
 
-require_once($prevFolder."themes/".$THEME."/_footer.php");
+include($prevFolder."themes/".$THEME."/_footer.php");
 
 
 ?>

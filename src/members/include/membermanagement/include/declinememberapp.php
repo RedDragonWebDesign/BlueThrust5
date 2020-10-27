@@ -13,7 +13,7 @@
  */
 
 
-require_once("../../../../_setup.php");
+include_once("../../../../_setup.php");
 
 
 $consoleObj = new ConsoleOption($mysqli);

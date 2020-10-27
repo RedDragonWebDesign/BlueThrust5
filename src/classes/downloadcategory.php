@@ -12,7 +12,7 @@
  *
  */
 
-require_once("rank.php");
+include_once("rank.php");
 
 
 class DownloadCategory extends Rank {
@@ -77,7 +77,7 @@ class DownloadCategory extends Rank {
 	}
 	
 	
-	public function getExtensions() {
+	public function getExtensions($returnIDs=true) {
 		
 		$arrExtensions = array();
 		if($this->intTableKeyValue != "") {
@@ -85,7 +85,7 @@ class DownloadCategory extends Rank {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."download_extensions WHERE downloadcategory_id = '".$this->intTableKeyValue."' ORDER BY extension_id");
 			while($row = $result->fetch_assoc()) {
 				
-				$arrExtensions[] = $row['extension_id'];
+				$arrExtensions[] = ($returnIDs) ? $row['extension_id'] : $row['extension'];
 				
 			}
 			

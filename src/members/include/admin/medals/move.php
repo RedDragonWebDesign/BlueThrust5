@@ -12,7 +12,7 @@
  *
  */
 
-require_once("../../../../_setup.php");
+include_once("../../../../_setup.php");
 
 $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
@@ -35,8 +35,8 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		
 		$medalObj->move($_POST['moveDir']);
 		
-		require_once("main.php");
-		require_once("../../../console.managelist.list.php");
+		include("main.php");
+		include("../../../console.managelist.list.php");
 		
 	}
 	

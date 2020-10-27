@@ -14,7 +14,7 @@
 
 if(!isset($menuXML)) {
 	$prevFolder = "../../../../../";
-	require_once($prevFolder."_setup.php");
+	include_once($prevFolder."_setup.php");
 
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);

@@ -1,5 +1,6 @@
 <?php
 
+
 	class Clock extends BasicOrder {
 		
 		public $clockSeparator = "||";
@@ -11,6 +12,7 @@
 			$this->strTableKey = "clock_id";
 
 		}
+		
 		
 		public function getUTCTime() {
 			$currentTimezone = date_default_timezone_get();
@@ -51,7 +53,7 @@
 		public function displayClocks($return=false) {
 			
 			$clockArray = array();
-			$clocksJS = "";
+			$clockJS = "";
 			$result = $this->MySQL->query("SELECT clock_id FROM ".$this->strTableName." ORDER BY ordernum DESC");	
 			while($row = $result->fetch_assoc()) {
 				$this->select($row['clock_id']);	
@@ -91,6 +93,7 @@
 		}
 		
 		public function getTimezones() {
+			
 			$arrTimezoneOptions = array();
 			$arrTimezones = DateTimeZone::listIdentifiers();
 			foreach($arrTimezones as $timeZone) {
@@ -101,9 +104,10 @@
 				
 				$arrTimezoneOptions[$timeZone] = str_replace("_", " ", $timeZone)." (UTC".$dispSign.$dispOffset.")";
 			}	
-			
+
 			return $arrTimezoneOptions;
 		}
+		
 		
 		/*
 		 * This class doesn't use associate id's so cancelling out these functions

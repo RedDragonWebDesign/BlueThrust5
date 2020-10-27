@@ -15,9 +15,9 @@
 
 
 
-require_once("../../../../../_setup.php");
-require_once("../../../../../classes/member.php");
-require_once("../../../../../classes/customform.php");
+include_once("../../../../../_setup.php");
+include_once("../../../../../classes/member.php");
+include_once("../../../../../classes/customform.php");
 
 
 
@@ -49,7 +49,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 	
 	unset($_SESSION['btFormComponent'][$componentIndex]);
 	
-	require_once("componentcache.php");
+	include("componentcache.php");
 	
 }
 

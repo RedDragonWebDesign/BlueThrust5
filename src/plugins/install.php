@@ -13,7 +13,7 @@
  */
 
 $prevFolder = "../";
-require_once("../_setup.php");
+include_once("../_setup.php");
 
 
 // Start Page
@@ -36,7 +36,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	
 	$pluginInstaller = new PluginInstaller($mysqli);
 
-	require_once(BASE_DIRECTORY."plugins/".$_GET['plugin']."/install_setup.php");	
+	require(BASE_DIRECTORY."plugins/".$_GET['plugin']."/install_setup.php");	
 	
 	$pluginInstaller->install();
 	

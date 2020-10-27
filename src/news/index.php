@@ -14,7 +14,7 @@
 
 
 $prevFolder = "../";
-require_once($prevFolder."_setup.php");
+include($prevFolder."_setup.php");
 
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
@@ -35,13 +35,13 @@ $newsObj = new News($mysqli);
 
 // Start Page
 $PAGE_NAME = "News - ";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 
 $breadcrumbObj->setTitle("News");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("News");
-require_once($prevFolder."include/breadcrumb.php");
+include($prevFolder."include/breadcrumb.php");
 
 
 $totalPages = $newsObj->calcPages();
@@ -73,6 +73,6 @@ else {
 }
 
 
-require_once($prevFolder."themes/".$THEME."/_footer.php"); 
+include($prevFolder."themes/".$THEME."/_footer.php"); 
 
 ?>

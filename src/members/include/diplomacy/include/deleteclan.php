@@ -12,8 +12,8 @@
  *
  */
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
+include_once("../../../../_setup.php");
+include_once("../../../../classes/member.php");
 
 
 $member = new Member($mysqli);
@@ -35,7 +35,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $diplomacyClanObj->select
 		$member->logAction("Deleted ".$dClanName." from the diplomacy page.");
 		
 		
-		require_once("main_manageclans.php");
+		include("main_manageclans.php");
 	}
 	else {
 		

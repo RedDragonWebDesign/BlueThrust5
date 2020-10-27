@@ -23,7 +23,7 @@
 		}
 	}
 	
-	require_once("../classes/medal.php");
+	include_once("../classes/medal.php");
 	
 	$rankInfo = $memberRank->get_info_filtered();
 	if($memberInfo['promotepower'] != 0) {
@@ -78,7 +78,7 @@
 	
 	}
 	
-	if(($_POST['submit'] ?? '')) {
+	if($_POST['submit']) {
 		$member->select($_POST['member']);			
 		$arrMedals = $member->getMedalList();
 		$medaloptions = array();
@@ -252,8 +252,7 @@
 				$frozenMessage = "  The medal will not be awarded again for ".$_POST['freezetime']." ".$dispDays.".";
 			}
 			
-			$logMessage = $member->getMemberLink()." was stripped of the ".$medalObj->get_info_filtered("name")." medal.".$frozenMessage;
-			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
+			$logMessage = $member->getMemberLink()." was stripped of the ".$medalObj->get_info_filtered("name")." medal.".$frozenMessage."<br><br><b>Reason:</b><br>".filterText($_POST['reason']);
 			
 			$member->postNotification("You were stripped of the medal: <b>".$medalObj->get_info_filtered("name")."</b>");
 			

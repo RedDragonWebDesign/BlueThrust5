@@ -15,11 +15,11 @@
 // Config File
 $prevFolder = "";
 
-require_once($prevFolder."_setup.php");
+include($prevFolder."_setup.php");
 
 // Start Page
 $PAGE_NAME = "Sign Up - ";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 $member = new Member($mysqli);
 $rankObj = new Rank($mysqli);
@@ -32,8 +32,7 @@ $appComponentObj = $memberAppObj->objAppComponent;
 $appSelectValueObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
 $profileOptionObj = new ProfileOption($mysqli);
 
-/*
-// If user is logged in, redirect them to the index page
+
 if(($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) || $websiteInfo['memberregistration'] == 1) {
 	echo "
 		<script type='text/javascript'>
@@ -42,17 +41,17 @@ if(($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSIO
 	";
 	exit();
 }
-*/
+
 
 $breadcrumbObj->setTitle("Sign Up");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Sign Up");
-require_once($prevFolder."include/breadcrumb.php");
+include($prevFolder."include/breadcrumb.php");
 
-require_once(BASE_DIRECTORY."include/signup_form.php");
+include(BASE_DIRECTORY."include/signup_form.php");
 
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	$additionalSuccessInfo = "<br><br>You must wait to be approved by a member to become a full member on the website.";
 	
@@ -64,7 +63,7 @@ if(($_POST['submit'] ?? '')) {
 	}
 	
 	
-	if(($_POST['submit'] ?? '')) {
+	if($_POST['submit']) {
 
 		$signUpForm->saveMessage = "<span class='main'>".$signUpForm->saveMessage.$additionalSuccessInfo."</span>";
 		
@@ -75,7 +74,7 @@ if(($_POST['submit'] ?? '')) {
 	
 }
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 
 	$signUpForm->show();
 	
@@ -107,4 +106,4 @@ if(!($_POST['submit'] ?? '')) {
 
 } ?>
 
-<?php require_once($prevFolder."themes/".$THEME."/_footer.php"); ?>
+<?php include($prevFolder."themes/".$THEME."/_footer.php"); ?>

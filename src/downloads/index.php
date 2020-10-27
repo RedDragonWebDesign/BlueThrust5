@@ -15,7 +15,7 @@
 // Config File
 $prevFolder = "../";
 
-require_once($prevFolder."_setup.php");
+include_once($prevFolder."_setup.php");
 
 $downloadCatObj = new DownloadCategory($mysqli);
 $downloadObj = new Download($mysqli);
@@ -44,12 +44,12 @@ $downloadCatInfo = $downloadCatObj->get_info_filtered();
 // Start Page
 $PAGE_NAME = $downloadCatInfo['name']." - Downloads - ";
 $dispBreadCrumb = "";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 $breadcrumbObj->setTitle($downloadCatInfo['name']);
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Downloads: ".$downloadCatInfo['name']);
-require_once($prevFolder."include/breadcrumb.php");
+include($prevFolder."include/breadcrumb.php");
 
 $posterMemberObj = new Member($mysqli);
 $arrDownloads = $downloadCatObj->getAssociateIDs("ORDER BY dateuploaded DESC");
@@ -108,6 +108,6 @@ if(count($arrDownloads) == 0) {
 	
 }
 
-require_once($prevFolder."themes/".$THEME."/_footer.php");
+include($prevFolder."themes/".$THEME."/_footer.php");
 
 ?>

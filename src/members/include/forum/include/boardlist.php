@@ -12,11 +12,11 @@
  *
  */
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/basicorder.php");
-require_once("../../../../classes/basicsort.php");
-require_once("../../../../classes/forumboard.php");
+include_once("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/basicorder.php");
+include_once("../../../../classes/basicsort.php");
+include_once("../../../../classes/forumboard.php");
 
 // List all subforums function
 

@@ -12,10 +12,10 @@
  *
  */
 
-require_once("../../../_setup.php");
-require_once("../../../classes/member.php");
-require_once("../../../classes/rank.php");
-require_once("../../../classes/consoleoption.php");
+include("../../../_setup.php");
+include_once("../../../classes/member.php");
+include_once("../../../classes/rank.php");
+include_once("../../../classes/consoleoption.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $member = new Member($mysqli);
@@ -98,74 +98,74 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		
 	}
 	
-	
-	// Update Header
-	
-	if(!is_writable("../../../themes/".$THEME."/_header.php")) {
-		$countErrors++;
-		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save header information.<br>";
-	}
-	else {
+	if($countErrors == 0) {
+		// Update Header
 		
-		$headerCode = $_POST['headerCode'];
-		$headerCode = str_replace("&lt;", "<", $headerCode);
-		$headerCode = str_replace("&gt;", ">", $headerCode);
-		$headerCode = str_replace("&#38;", "&", $headerCode);
-		
-		
-		$themeFile = fopen("../../../themes/".$THEME."/_header.php", "w");
-		if(!fwrite($themeFile, $headerCode)) {
+		if(!is_writable("../../../themes/".$THEME."/_header.php")) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save header information.<br>";
 		}
+		else {
+			
+			$headerCode = $_POST['headerCode'];
+			$headerCode = str_replace("&lt;", "<", $headerCode);
+			$headerCode = str_replace("&gt;", ">", $headerCode);
+			$headerCode = str_replace("&#38;", "&", $headerCode);
+			
+			
+			$themeFile = fopen("../../../themes/".$THEME."/_header.php", "w");
+			if(!fwrite($themeFile, $headerCode)) {
+				$countErrors++;
+				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save header information.<br>";
+			}
+			
+		}
 		
-	}
-	
-	// Update Footer
-	
-	if(!is_writable("../../../themes/".$THEME."/_footer.php")) {
-		$countErrors++;
-		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save footer information.<br>";
-	}
-	else {
+		// Update Footer
 		
-		$footerCode = $_POST['footerCode'];
-		$footerCode = str_replace("&lt;", "<", $footerCode);
-		$footerCode = str_replace("&gt;", ">", $footerCode);
-		$footerCode = str_replace("&38#;", ">", $footerCode);
-		
-		$themeFile = fopen("../../../themes/".$THEME."/_footer.php", "w");
-		if(!fwrite($themeFile, $footerCode)) {
+		if(!is_writable("../../../themes/".$THEME."/_footer.php")) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save footer information.<br>";
 		}
+		else {
+			
+			$footerCode = $_POST['footerCode'];
+			$footerCode = str_replace("&lt;", "<", $footerCode);
+			$footerCode = str_replace("&gt;", ">", $footerCode);
+			$footerCode = str_replace("&38#;", ">", $footerCode);
+			
+			$themeFile = fopen("../../../themes/".$THEME."/_footer.php", "w");
+			if(!fwrite($themeFile, $footerCode)) {
+				$countErrors++;
+				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save footer information.<br>";
+			}
+			
+		}
 		
-	}
-	
-	// Update Theme CSS
-	
-	if(!is_writable("../../../themes/".$THEME."/style.css")) {
-		$countErrors++;
-		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save theme css information.<br>";
-	}
-	else {
-		$themeFile = fopen("../../../themes/".$THEME."/style.css", "w");
-		if(!fwrite($themeFile, htmlspecialchars_decode($_POST['themeCSSCode']))) {
+		// Update Theme CSS
+		
+		if(!is_writable("../../../themes/".$THEME."/style.css")) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save theme css information.<br>";
 		}
-		
+		else {
+			$themeFile = fopen("../../../themes/".$THEME."/style.css", "w");
+			if(!fwrite($themeFile, htmlspecialchars_decode($_POST['themeCSSCode']))) {
+				$countErrors++;
+				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save theme css information.<br>";
+			}
+			
+		}
 	}
-	
 	/*
 	// Update Global CSS
 	
-	if(!is_writable("../../../themes/btcs4.css.php")) {
+	if(!is_writable("../../../themes/".$THEME."/btcs4.css")) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save global css information.<br>";
 	}
 	else {
-		$themeFile = fopen("../../../btcs4.css.php", "w");
+		$themeFile = fopen("../../../btcs4.css", "w");
 		if(!fwrite($themeFile, htmlspecialchars_decode($_POST['globalCSSCode']))) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save global css information.<br>";

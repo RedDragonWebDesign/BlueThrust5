@@ -14,7 +14,7 @@
 
 
 
-require_once("../classes/forumboard.php");
+include_once("../classes/forumboard.php");
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();

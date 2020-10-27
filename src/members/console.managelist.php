@@ -13,20 +13,25 @@
 	 */
 
 	if(!defined("LOGGED_IN") || !LOGGED_IN) { die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."'</script>"); }
-		
+	
+	
 	$actionsWidth = count($setupManageListArgs['actions'])*6;
 	$titleWidth = 100-($actionsWidth);
-		
+	
+	
 	// Setup default values if not given
-	$actionsTitleName = (($setupManageListArgs['action_title'] ?? '') == "") ? "Actions:" : $setupManageListArgs['action_title'];
+	$actionsTitleName = ($setupManageListArgs['action_title'] == "") ? "Actions:" : $setupManageListArgs['action_title'];
 	$itemTitleName = ($setupManageListArgs['item_title'] == "") ? "Item:" : $setupManageListArgs['item_title'];
 	
 	$dispAddNewLink = (!isset($setupManageListArgs['add_new_link']['url']) || $setupManageListArgs['add_new_link']['url'] == "") ? "" : "&raquo; <a href='".$setupManageListArgs['add_new_link']['url']."'>".$setupManageListArgs['add_new_link']['name']."</a> &laquo;";
 	
-	$setupManageListArgs['list_div_name'] = (($setupManageListArgs['list_div_name'] ?? '') == "") ? "manageListDiv" : $setupManageListArgs['list_div_name'];
+	$setupManageListArgs['list_div_name'] = ($setupManageListArgs['list_div_name'] == "") ? "manageListDiv" : $setupManageListArgs['list_div_name'];
 	
-	$setupManageListArgs['loading_spiral'] = (($setupManageListArgs['loading_spiral'] ?? '') == "") ? "manageListLoadingSpiral" : $setupManageListArgs['loading_spiral'];
-		
+	$setupManageListArgs['loading_spiral'] = ($setupManageListArgs['loading_spiral'] == "") ? "manageListLoadingSpiral" : $setupManageListArgs['loading_spiral'];
+	
+	
+	
+	
 	// Display Manage List
 	
 	echo "
@@ -46,7 +51,7 @@
 		<div id='".$setupManageListArgs['list_div_name']."'>
 	";
 		
-		require_once("console.managelist.list.php");
+		include("console.managelist.list.php");
 		
 	echo "</div>
 	
@@ -60,7 +65,7 @@
 				
 					$('#".$setupManageListArgs['loading_spiral']."').show();
 					$('#".$setupManageListArgs['list_div_name']."').fadeOut(250);
-					//".($setupManageListArgs['move_link'] ?? '')."
+					//".$setupManageListArgs['move_link']."
 					$.post('".$MAIN_ROOT."members/console.managelist.move.php?cID=".filterText($_GET['cID'])."', { itemID: item_id, moveDir: move_dir }, function(data) {
 					
 						$('#".$setupManageListArgs['loading_spiral']."').hide();
@@ -149,3 +154,8 @@
 		</script>
 	
 	";
+	
+	
+	
+	
+?>

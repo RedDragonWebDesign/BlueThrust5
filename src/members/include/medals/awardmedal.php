@@ -23,7 +23,7 @@
 		}
 	}
 	
-	require_once("../classes/medal.php");
+	include_once("../classes/medal.php");
 	
 	$rankInfo = $memberRank->get_info_filtered();
 	
@@ -175,7 +175,7 @@
 	
 	);
 
-	if(($_POST['submit'] ?? '')) {
+	if($_POST['submit']) {
 		$member->select($_POST['member']);	
 		$medalObj->select($_POST['medal']);
 	}
@@ -197,9 +197,7 @@
 	function awardMedalSave() {
 		global $member, $medalObj, $memberInfo;
 		$member->select($_POST['member_id']);
-		$logMessage = $member->getMemberLink()." was awarded the ".$medalObj->get_info_filtered("name")." medal.";
-		$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
-
+		$logMessage = $member->getMemberLink()." was awarded the ".$medalObj->get_info_filtered("name")." medal.<br><br><b>Reason:</b><br>".filterText($_POST['reason']);
 			
 		$member->postNotification("You were awarded the medal: <b>".$medalObj->get_info_filtered("name")."</b>");
 			

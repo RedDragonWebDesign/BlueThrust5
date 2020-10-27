@@ -13,7 +13,7 @@
  *
  */
 
-require_once("../classes/event.php");
+include_once("../classes/event.php");
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
@@ -32,7 +32,7 @@ $cID = $_GET['cID'];
 $socialObj = new Social($mysqli);
 
 define("SOCIALMEDIA_FORM", true);
-require_once(BASE_DIRECTORY."members/include/social/socialmedia_form.php");
+include(BASE_DIRECTORY."members/include/social/socialmedia_form.php");
 
 
 ?>

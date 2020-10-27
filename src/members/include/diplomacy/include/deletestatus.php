@@ -14,8 +14,8 @@
 
 
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
+include_once("../../../../_setup.php");
+include_once("../../../../classes/member.php");
 
 
 $member = new Member($mysqli);
@@ -133,7 +133,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $diplomacyStatusObj->sele
 		
 		$member->logAction("Deleted the ".$statusName." diplomacy status.");
 		
-		require_once("main_managestatuses.php");
+		include("main_managestatuses.php");
 		
 	}
 	

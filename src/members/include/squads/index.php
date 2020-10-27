@@ -23,7 +23,7 @@ else {
 	}
 }
 
-require_once($prevFolder."classes/squad.php");
+include_once($prevFolder."classes/squad.php");
 $cID = $_GET['cID'];
 
 

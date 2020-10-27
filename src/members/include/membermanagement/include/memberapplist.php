@@ -15,9 +15,9 @@
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
-	require_once("../../../../_setup.php");
-	require_once("../../../../classes/member.php");
-	require_once("../../../../classes/basicorder.php");
+	include_once("../../../../_setup.php");
+	include_once("../../../../classes/member.php");
+	include_once("../../../../classes/basicorder.php");
 
 
 
@@ -41,6 +41,8 @@ $memberAppObj = new MemberApp($mysqli);
 $appComponentObj = $memberAppObj->objAppComponent;
 
 $memberAppForm = $memberAppObj->objSignUpForm;
+
+include_once(BASE_DIRECTORY."members/include/membermanagement/include/memberapp_setrank.php");
 
 $setupMemberAppForm = array(
 	"name" => "display-member-app",
@@ -119,8 +121,16 @@ while($row = $result->fetch_assoc()) {
 		
 	}
 	
+	$setRankOptions = memberAppSetRank();
+	
 	if($memberAppInfo['memberadded'] == 0) {
-		$memberAppOptions = "<a href='javascript:void(0)' onclick=\"acceptApp('".$memberAppInfo['memberapp_id']."')\"><b>Accept</b></a> - <a href='javascript:void(0)' onclick=\"declineApp('".$memberAppInfo['memberapp_id']."')\"><b>Decline</b></a>";
+		
+		$addJS = "";
+		if(count($setRankOptions) > 0) {
+			$addJS = ", $('#newRankID_".$memberAppInfo['memberapp_id']."').val()";	
+		}
+		
+		$memberAppOptions = "<a href='javascript:void(0)' onclick=\"acceptApp('".$memberAppInfo['memberapp_id']."'".$addJS.")\"><b>Accept</b></a> - <a href='javascript:void(0)' onclick=\"declineApp('".$memberAppInfo['memberapp_id']."')\"><b>Decline</b></a>";
 	}
 	else {
 		$memberAppOptions = "<span class='successFont' style='font-weight: bold'>Member Added!</span> - <a href='javascript:void(0)' onclick=\"removeApp('".$memberAppInfo['memberapp_id']."')\"><b>Remove</b></a>";
@@ -134,7 +144,7 @@ while($row = $result->fetch_assoc()) {
 	
 	);
 	
-	$arrComponents = array_merge($arrDefaultInfo, $arrCompInfo);
+	$arrComponents = array_merge($arrDefaultInfo, $arrCompInfo, $setRankOptions);
 	
 	$setupMemberAppForm['components'] = $arrComponents;
 	

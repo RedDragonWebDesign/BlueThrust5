@@ -1,6 +1,9 @@
 <?php
 
+
 	class btThemeMenu {
+		
+		
 		protected $name;
 		public $MySQL;
 		public $dir;
@@ -18,6 +21,8 @@
 		public $arrShoutBoxIDs = array();
 		
 		public function __construct($dir, $sqlConnection) {
+			
+
 			$themeName = file_get_contents(BASE_DIRECTORY."themes/".$dir."/THEMENAME.txt");
 			$this->name = ($themeName) ? $themeName : "Unknown";
 			
@@ -26,13 +31,16 @@
 
 			$this->memberObj = new Member($this->MySQL);
 			
-			$this->blnLoggedIn = $this->memberObj->select(($_SESSION['btUsername'] ?? '')) && $this->memberObj->authorizeLogin($_SESSION['btPassword']);
+			$this->blnLoggedIn = $this->memberObj->select($_SESSION['btUsername']) && $this->memberObj->authorizeLogin($_SESSION['btPassword']);
 			
 			$this->menuCatObj = new MenuCategory($this->MySQL);
 			$this->menuItemObj = new MenuItem($this->MySQL);
 			
+			
 			$this->prepareAdditionalMemberInfo();
+			
 		}
+		
 		
 		public function getForumActivity($amountToShow=5) {
 			
@@ -79,7 +87,7 @@
 			
 			if(file_exists(BASE_DIRECTORY."themes/".$this->dir."/menus/forumactivity.php")) {
 				if(!defined("FORUMACTIVITY_MENUITEM")) { define("FORUMACTIVITY_MENUITEM", true); }
-				require_once(BASE_DIRECTORY."themes/".$this->dir."/menus/forumactivity.php");
+				include(BASE_DIRECTORY."themes/".$this->dir."/menus/forumactivity.php");
 			}
 			else {
 				
@@ -154,7 +162,7 @@
 			
 			if(file_exists(BASE_DIRECTORY."themes/".$this->dir."/menus/newmembers.php")) {
 				if(!defined("NEWMEMBERS_MENUITEM")) { define("NEWMEMBERS_MENUITEM", true); }
-				require_once(BASE_DIRECTORY."themes/".$this->dir."/menus/newmembers.php");
+				include(BASE_DIRECTORY."themes/".$this->dir."/menus/newmembers.php");
 			}
 			else {
 				echo "
@@ -163,7 +171,7 @@
 				
 				$altColorSwitch = 0;
 				
-				$result = $this->MySQL->query("SELECT member_id FROM ".$this->MySQL->get_tablePrefix()."members WHERE rank_id != '1' AND disabled = '0' ORDER BY datejoined DESC LIMIT ".$amountToShow);
+				$result = $this->MySQL->query("SELECT member_id FROM ".$this->MySQL->get_tablePrefix()."members WHERE rank_id != '1' ORDER BY datejoined DESC LIMIT ".$amountToShow);
 				while($row = $result->fetch_assoc()) {
 					$member->select($row['member_id']);
 					$rank->select($member->get_info("rank_id"));
@@ -355,18 +363,19 @@
 				";
 			}
 			
+			
 			echo "
 				</div>
 			";
+			
+			
 		}
+		
 		
 		public function displayMenuItem() {
 			global $hooksObj;
-			$this->menuItemInfo['itemtype'] =
-				($this->menuItemInfo['itemtype'] == "customcode" ||
-				$this->menuItemInfo['itemtype'] == "customformat") ?
-				"customblock" :
-				$this->menuItemInfo['itemtype'];
+			$this->menuItemInfo['itemtype'] = ($this->menuItemInfo['itemtype'] == "customcode" || $this->menuItemInfo['itemtype'] == "customformat") ? "customblock" : $this->menuItemInfo['itemtype'];
+		
 			
 			switch($this->menuItemInfo['itemtype']) {
 				case "link":
@@ -401,7 +410,7 @@
 					$this->menuItemObj->objShoutbox->select($this->menuItemInfo['itemtype_id']);
 
 					$this->displayShoutbox();
-					// $arrShoutBoxIDs = $theme->data['shoutboxIDs'];
+					$arrShoutBoxIDs = $theme->data['shoutboxIDs'];
 			
 					break;
 				case "newestmembers":
@@ -569,8 +578,8 @@
 				"[MAIN_ROOT]" => MAIN_ROOT,
 				"[MEMBER_ID]" => $this->memberObj->get_info("member_id"),
 				"[MEMBERUSERNAME]" => $this->memberObj->get_info_filtered("username"),
-				"[MEMBERRANK]" => ($this->data['memberRank'] ?? ''),
-				"[PMLINK]" => ($this->data['pmLink'] ?? '')
+				"[MEMBERRANK]" => $this->data['memberRank'],
+				"[PMLINK]" => $this->data['pmLink']
 			
 			);
 			

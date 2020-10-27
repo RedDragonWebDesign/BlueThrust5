@@ -29,8 +29,8 @@ else {
 
 $cID = $_GET['cID'];
 
-require_once($prevFolder."classes/btupload.php");
-require_once($prevFolder."classes/downloadcategory.php");
+include_once($prevFolder."classes/btupload.php");
+include_once($prevFolder."classes/downloadcategory.php");
 
 $dispError = "";
 $countErrors = 0;
@@ -154,7 +154,7 @@ $arrComponents = array(
 		"sortorder" => $i++,
 		"validate" => array("RESTRICT_TO_OPTIONS"),
 		"db_name" => "accesstype",
-		"options" => array("Always", "Logged In"),
+		"options" => array("Always", "Logged In", "Logged Out"),
 		"attributes" => array("class" => "textBox formInput"),
 		"value" => $menuItemInfo['accesstype']
 	),
@@ -175,7 +175,7 @@ $arrExtraComponents = "";
 
 foreach($itemTypeInclude as $key => $itemTypeInfo) {
 	if($key == $menuItemInfo['itemtype']) {
-		require_once("include/".$itemTypeInfo['file']);
+		include("include/".$itemTypeInfo['file']);
 		
 		$arrExtraComponentSection['extra_info'] = array(
 			"type" => "section",
@@ -352,7 +352,7 @@ switch($menuItemInfo['itemtype']) {
 		$shoutboxWidthPercentSelected = ($menuItemExtraInfo['percentwidth'] == 1) ? " selected" : "";
 		$shoutboxHeightPercentSelected = ($menuItemExtraInfo['percentheight'] == 1) ? " selected" : "";
 		
-		require_once("include/shoutboxoptions.php");
+		include("include/shoutboxoptions.php");
 		
 		$arrExtraComponentSection['extra_info'] = array(
 			"type" => "section",
@@ -531,6 +531,6 @@ $setupFormArgs = array(
 
 $_POST['itemtype'] = $menuItemInfo['itemtype'];
 define("MANAGEMENU_FUNCTIONS", true);
-require_once("_functions.php");
+include("_functions.php");
 
 ?>

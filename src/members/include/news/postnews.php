@@ -28,6 +28,6 @@ $cID = $_GET['cID'];
 $newsObj = new News($mysqli);
 
 define("POSTNEWS_FORM", true);
-require_once(BASE_DIRECTORY."members/include/news/postnews_form.php");
+include(BASE_DIRECTORY."members/include/news/postnews_form.php");
 	
 ?>

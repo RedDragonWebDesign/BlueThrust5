@@ -16,8 +16,8 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	
 	// Posted Message?
 	
-	require_once("../../_setup.php");
-	require_once("../../classes/member.php");
+	include_once("../../_setup.php");
+	include_once("../../classes/member.php");
 
 	$consoleObj = new ConsoleOption($mysqli);
 	$member = new Member($mysqli);

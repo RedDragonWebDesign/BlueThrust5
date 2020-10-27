@@ -27,9 +27,9 @@ else {
 
 
 $cID = $_GET['cID'];
-require_once("../classes/btupload.php");
+include_once("../classes/btupload.php");
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	$diplomacyStatusObj = new BasicOrder($mysqli, "diplomacy_status", "diplomacystatus_id");
 	
@@ -127,7 +127,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	$orderoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status ORDER BY ordernum DESC");

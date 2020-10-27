@@ -1,10 +1,7 @@
 <?php
-
-$prevFolder = '../';
-
-require_once("../_setup.php");
-require_once("../classes/member.php");
-require_once("../classes/basicorder.php");
+include("../_setup.php");
+include_once("../classes/member.php");
+include_once("../classes/basicorder.php");
 
 $member = new Member($mysqli);
 
@@ -15,6 +12,7 @@ $appComponentObj->set_assocTableKey("appselectvalue_id");
 if(($_GET['appCompID'] != -1 && !$appComponentObj->select($_GET['appCompID'])) || ($_GET['appCompID'] != -1 && ($appComponentObj->get_info("componenttype") != "captcha" && $appComponentObj->get_info("componenttype") != "captchaextra"))) {
 	exit();	
 }
+
 
 if(isset($_GET['display'])) {
 	echo "<img src='".$MAIN_ROOT."images/captcha.php?appCompID=".$_GET['appCompID']."&new=".time()."' width='440' height='90'>";
@@ -29,12 +27,14 @@ else {
 		$appCompInfo = $appComponentObj->get_info_filtered();
 	}
 	
+	
 	$captchaObj = new Basic($mysqli, "app_captcha", "appcaptcha_id");
 	$filterIP = $mysqli->real_escape_string($IP_ADDRESS);
 	$mysqli->query("DELETE FROM ".$dbprefix."app_captcha WHERE appcomponent_id = '".$appCompInfo['appcomponent_id']."' AND ipaddress = '".$filterIP."'");
 	
 	// Create the image
 	$im = imagecreatetruecolor(440, 90);
+	
 	
 	// Colors
 	$black = imagecolorallocate($im, 9, 9, 9);
@@ -43,6 +43,7 @@ else {
 	$white = imagecolorallocate($im, 255, 255, 255);
 	
 	imagefilledrectangle($im, 0, 0, 439, 89, $white);
+	
 	
 	// Generate Captcha Text
 	
@@ -59,8 +60,8 @@ else {
 	$distortFont = "captcha-fonts/RFX_Splatz.ttf";
 	$arrDistort = range("a", "i");
 	$counter = 0;
-	
 	foreach($arrCaptcha as $value) {
+	
 		// Font Locations
 		$arrFonts = array();
 		$arrFonts[0] = "captcha-fonts/AnonymousClippings.ttf";
@@ -121,3 +122,6 @@ else {
 	imagedestroy($im);
 
 }
+
+
+?>

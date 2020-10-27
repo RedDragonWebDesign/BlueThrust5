@@ -12,10 +12,10 @@
  *
  */
 
-require_once("../../../_setup.php");
-require_once("../../../classes/member.php");
-require_once("../../../classes/rank.php");
-require_once("../../../classes/squad.php");
+include_once("../../../_setup.php");
+include_once("../../../classes/member.php");
+include_once("../../../classes/rank.php");
+include_once("../../../classes/squad.php");
 
 
 // Start Page
@@ -133,7 +133,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		
 		
 		
-		require_once("applist.php");
+		include("applist.php");
 	}
 	else {
 		echo "

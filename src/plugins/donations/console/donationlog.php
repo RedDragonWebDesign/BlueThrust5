@@ -1,7 +1,7 @@
 <?php
 
 	if(!defined("MAIN_ROOT")) { exit(); }
-	require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
+	include_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
 
 	$campaignInfo = $campaignObj->get_info_filtered();
 	
@@ -14,12 +14,12 @@
 
 	
 	$addToPageSelectorLink = "";
-	if(!isset($_GET['start']) || !isset($_GET['end']) || !is_numeric($_GET['start']) || !is_numeric($_GET['end'])) {
+	if(!isset($_GET['start']) || !isset($_GET['end'])) {
 		$period = $campaignObj->getCurrentPeriodRange(true);
 		$_GET['start'] = $period['current'];
 		$_GET['end'] = $period['next']-(60*60*24);
 	}
-	elseif($_GET['start'] > $_GET['end']) {
+	elseif(is_numeric($_GET['start']) && is_numeric($_GET['end']) && $_GET['start'] > $_GET['end']) {
 		$temp = $_GET['start'];
 		$_GET['start'] = $_GET['end'];
 		$_GET['end'] = $temp;
@@ -36,7 +36,7 @@
 	$donationInfo = $campaignObj->getDonationInfo();
 	$totalDonations = count($donationInfo);
 	
-	require_once(BASE_DIRECTORY."plugins/donations/console/datefilter_form.php");
+	include_once(BASE_DIRECTORY."plugins/donations/console/datefilter_form.php");
 	
 	$numOfPages = ceil($totalDonations/$donationsPerPage);
 

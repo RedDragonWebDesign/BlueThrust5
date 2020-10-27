@@ -13,11 +13,11 @@
  */
 
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/rank.php");
-require_once("../../../../classes/news.php");
-require_once("../../../../classes/shoutbox.php");
+include_once("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/rank.php");
+include_once("../../../../classes/news.php");
+include_once("../../../../classes/shoutbox.php");
 
 // Start Page
 
@@ -40,7 +40,7 @@ $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 	
-	if(($_POST['submit'] ?? '')) {
+	if($_POST['submit']) {
 		
 		// Check Image
 		if($_FILES['menuimagefile']['name'] != "") {
@@ -57,7 +57,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	
 	
 	
-	if(!($_POST['submit'] ?? '')) {
+	if(!$_POST['submit']) {
 		
 		
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."imageslider ORDER BY ordernum DESC");

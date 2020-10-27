@@ -36,7 +36,7 @@ $defaultEndDate = $endDate->format("M j, Y");
 $setRecurringBox = ($campaignInfo['recurringunit'] != "") ? 1 : 0;
 
 
-require_once(BASE_DIRECTORY."plugins/donations/console/campaign_form.php");
+include(BASE_DIRECTORY."plugins/donations/console/campaign_form.php");
 
 $arrComponents['submit']['value'] = "Save";
 $arrComponents['rununtil']['value'] = ($campaignInfo['dateend'] == 0) ? "forever" : "choose";
@@ -56,7 +56,7 @@ $setupFormArgs['attributes']['action'] .= "&campaignID=".$_GET['campaignID']."&a
 $setupFormArgs['saveMessage'] = "Successfully saved donation campaign!";
 $setupFormArgs['saveLink'] = $MAIN_ROOT."members/console.php?cID=".$_GET['cID'];
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	$setupFormArgs['prefill'] = true;
 	$setupFormArgs['skipPrefill'] = array("dateend", "currentperiod");
 }

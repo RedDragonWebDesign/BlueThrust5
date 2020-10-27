@@ -13,12 +13,12 @@
  */
 
 $prevFolder = "../../../../";
-require_once($prevFolder."_setup.php");
+include_once($prevFolder."_setup.php");
 
 // Classes needed for console.php
-require_once($prevFolder."classes/member.php");
-require_once($prevFolder."classes/rank.php");
-require_once($prevFolder."classes/consoleoption.php");
+include_once($prevFolder."classes/member.php");
+include_once($prevFolder."classes/rank.php");
+include_once($prevFolder."classes/consoleoption.php");
 
 $cOptObj = new ConsoleOption($mysqli);
 $cID = $cOptObj->findConsoleIDByName("Manage Ranks");

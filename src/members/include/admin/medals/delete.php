@@ -12,7 +12,7 @@
  *
  */
 
-require_once("../../../../_setup.php");
+include_once("../../../../_setup.php");
 
 
 $member = new Member($mysqli);
@@ -42,8 +42,8 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			$objManageList = new btOrderManageList($medalObj);
 			$objManageList->strMainListLink = BASE_DIRECTORY."members/include/admin/medals/main.php";
 
-			require_once($objManageList->strMainListLink);
-			require_once(BASE_DIRECTORY."members/console.managelist.list.php");
+			include($objManageList->strMainListLink);
+			include(BASE_DIRECTORY."members/console.managelist.list.php");
 			
 		}
 		else {

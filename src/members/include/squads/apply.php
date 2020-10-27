@@ -23,13 +23,13 @@ else {
 	}
 }
 
-require_once($prevFolder."classes/squad.php");
+include_once($prevFolder."classes/squad.php");
 $cID = $_GET['cID'];
 
 $squadObj = new Squad($mysqli);
 $dispError = "";
 $countErrors = 0;
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	// Check Squad
 	if(!$squadObj->select($_POST['squad'])) {
@@ -95,7 +95,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	$arrMemberSquads= $member->getSquadList();
 	$sqlSquadList = "('".implode("','", $arrMemberSquads)."')";

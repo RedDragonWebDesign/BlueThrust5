@@ -23,8 +23,8 @@ else {
 	}
 }
 
-require_once($prevFolder."classes/downloadcategory.php");
-require_once($prevFolder."classes/download.php");
+include_once($prevFolder."classes/downloadcategory.php");
+include_once($prevFolder."classes/download.php");
 
 $downloadObj = new Download($mysqli);
 $downloadCatObj = new DownloadCategory($mysqli);
@@ -74,7 +74,7 @@ if(count($arrDownloadCat) == 0) {
 
 
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	// Check Name
 	if(trim($_POST['title']) == "") {
@@ -154,7 +154,7 @@ if(($_POST['submit'] ?? '')) {
 
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	echo "
 		<form action='console.php?cID=".$cID."' method='post' enctype='multipart/form-data'>

@@ -15,10 +15,10 @@
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 	$prevFolder = "../../../../";
-	require_once($prevFolder."_setup.php");
-	require_once($prevFolder."classes/member.php");
-	require_once($prevFolder."classes/rank.php");
-	require_once($prevFolder."classes/btplugin.php");
+	include_once($prevFolder."_setup.php");
+	include_once($prevFolder."classes/member.php");
+	include_once($prevFolder."classes/rank.php");
+	include_once($prevFolder."classes/btplugin.php");
 	
 	$consoleObj = new ConsoleOption($mysqli);
 	

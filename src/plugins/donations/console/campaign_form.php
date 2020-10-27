@@ -86,7 +86,7 @@
 			",
 			"options" => array("changeMonth" => "true", 
 							   "changeYear" => "true", 
-							   "dateFormate" => "M d, yy", 
+							   "dateFormat" => "M d, yy", 
 							   "minDate" => "new Date(50, 1, 1)", 
 							   "maxDate" => $maxDate, 
 							   "yearRange" => "1950:".$maxYear, 

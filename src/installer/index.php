@@ -15,19 +15,20 @@
 	}
 	
 	
-	require_once("../classes/btmysql.php");
-	require_once("../classes/member.php");
-	require_once("../classes/consolecategory.php");
-	require_once("../classes/consoleoption.php");
-	require_once("../classes/websiteinfo.php");
-	require_once("tablelist.php");
-	require_once("tablecolumns.php");
-	require_once("consoleinfo.php");
+	include_once("../classes/btmysql.php");
+	include_once("../classes/btmail.php");
+	include_once("../classes/member.php");
+	include_once("../classes/consolecategory.php");
+	include_once("../classes/consoleoption.php");
+	include_once("../classes/websiteinfo.php");
+	include("tablelist.php");
+	include("tablecolumns.php");
+	include("consoleinfo.php");
 	$countErrors = 0;
 	$dispError = "";
 	
-	ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
-	ini_set('display_errors', 0);
+	ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT);
+	ini_set('display_errors', 1);
 	
 ?>
 
@@ -84,13 +85,13 @@
 		
 		
 		if($_GET['step'] == "" || $_GET['step'] == 1) {
-			require_once("steps/step1.php");			
+			include("steps/step1.php");			
 		}
 		elseif($_GET['step'] == 2) {
-			require_once("steps/step2.php");
+			include("steps/step2.php");
 		}
 		elseif($_GET['step'] == 3) {
-			require_once("steps/step3.php");	
+			include("steps/step3.php");	
 		}
 		?>
 		
@@ -98,7 +99,8 @@
 			</div>
 			<div class='contentContainerBottom'></div>
 			<div class='footerContainer'>
-				Powered By: <a href='http://www.bluethrust.com' target='_blank'>Bluethrust Clan Scripts v4</a>
+				Powered By: <a href='http://www.bluethrust.com' target='_blank'>Bluethrust Clan Scripts v4</a><br>
+				Installer for BTCSv4 R17
 			</div>
 		</div>
 		

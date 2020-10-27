@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `app_captcha` (
   `ipaddress` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `captchatext` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`appcaptcha_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `app_components` (
   `appcomponent_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -14,14 +14,14 @@ CREATE TABLE IF NOT EXISTS `app_components` (
   `tooltip` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `ordernum` int(11) NOT NULL,
   PRIMARY KEY (`appcomponent_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=241 ;
 
 CREATE TABLE IF NOT EXISTS `app_selectvalues` (
   `appselectvalue_id` int(11) NOT NULL AUTO_INCREMENT,
   `appcomponent_id` int(11) NOT NULL,
   `componentvalue` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`appselectvalue_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `app_values` (
   `appvalue_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `app_values` (
   `memberapp_id` int(11) NOT NULL,
   `appvalue` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`appvalue_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `clocks` (
   `clock_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `clocks` (
   `timezone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ordernum` int(11) NOT NULL,
   PRIMARY KEY (`clock_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 CREATE TABLE IF NOT EXISTS `comments` (
   `comment_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `dateposted` int(11) NOT NULL,
   `message` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`comment_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `console` (
   `console_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `console` (
   `defaultconsole` int(11) NOT NULL,
   `hide` int(1) NOT NULL,
   PRIMARY KEY (`console_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=222 ;
 
 CREATE TABLE IF NOT EXISTS `consolecategory` (
   `consolecategory_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `consolecategory` (
   `ordernum` int(11) NOT NULL,
   `adminoption` int(1) NOT NULL,
   PRIMARY KEY (`consolecategory_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
 
 CREATE TABLE IF NOT EXISTS `console_members` (
   `privilege_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `console_members` (
   `member_id` int(11) NOT NULL,
   `allowdeny` int(1) NOT NULL,
   PRIMARY KEY (`privilege_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `customform` (
   `customform_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `customform` (
   `submitlink` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `specialform` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`customform_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `customform_components` (
   `component_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `customform_components` (
   `tooltip` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `sortnum` int(11) NOT NULL,
   PRIMARY KEY (`component_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `customform_selectvalues` (
   `selectvalue_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `customform_selectvalues` (
   `componentvalue` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `sortnum` int(11) NOT NULL,
   PRIMARY KEY (`selectvalue_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `customform_submission` (
   `submission_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `customform_submission` (
   `ipaddress` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `seenstatus` int(11) NOT NULL,
   PRIMARY KEY (`submission_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `customform_values` (
   `value_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -122,14 +122,14 @@ CREATE TABLE IF NOT EXISTS `customform_values` (
   `component_id` int(11) NOT NULL,
   `formvalue` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`value_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `custompages` (
   `custompage_id` int(11) NOT NULL AUTO_INCREMENT,
   `pagename` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `pageinfo` longtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`custompage_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=16 ;
 
 CREATE TABLE IF NOT EXISTS `diplomacy` (
   `diplomacy_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `diplomacy` (
   `gamesplayed` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `extrainfo` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`diplomacy_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `diplomacy_request` (
   `diplomacyrequest_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `diplomacy_request` (
   `message` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `confirmemail` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`diplomacyrequest_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `diplomacy_status` (
   `diplomacystatus_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `diplomacy_status` (
   `imageheight` int(11) NOT NULL,
   `ordernum` int(11) NOT NULL,
   PRIMARY KEY (`diplomacystatus_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 CREATE TABLE IF NOT EXISTS `downloadcategory` (
   `downloadcategory_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -182,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `downloadcategory` (
   `accesstype` int(11) NOT NULL,
   `specialkey` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`downloadcategory_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 CREATE TABLE IF NOT EXISTS `downloads` (
   `download_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -198,14 +198,39 @@ CREATE TABLE IF NOT EXISTS `downloads` (
   `description` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `downloadcount` int(11) NOT NULL,
   PRIMARY KEY (`download_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=44 ;
 
 CREATE TABLE IF NOT EXISTS `download_extensions` (
   `extension_id` int(11) NOT NULL AUTO_INCREMENT,
   `downloadcategory_id` int(11) NOT NULL,
   `extension` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`extension_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=25 ;
+
+CREATE TABLE IF NOT EXISTS `emailnotifications_queue` (
+  `emailnotificationsqueue_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` int(11) NOT NULL,
+  `senddate` int(11) NOT NULL,
+  `sent` int(11) NOT NULL,
+  `subject` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `message` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`emailnotificationsqueue_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `emailnotifications_settings` (
+  `emailnotificationsetting_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` int(11) NOT NULL,
+  `tournament_time` int(11) NOT NULL,
+  `tournament_unit` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `event_time` int(11) NOT NULL,
+  `event_unit` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `privatemessage` int(11) NOT NULL,
+  `email_privatemessage` int(11) NOT NULL,
+  `forum_topic` int(11) NOT NULL,
+  `forum_post` int(11) NOT NULL,
+  PRIMARY KEY (`emailnotificationsetting_id`),
+  UNIQUE KEY `member_id` (`member_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `eventchat` (
   `eventchat_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -213,7 +238,7 @@ CREATE TABLE IF NOT EXISTS `eventchat` (
   `datestarted` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`eventchat_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `eventchat_messages` (
   `eventchatmessage_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -222,7 +247,7 @@ CREATE TABLE IF NOT EXISTS `eventchat_messages` (
   `dateposted` int(11) NOT NULL,
   `message` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`eventchatmessage_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `eventchat_roomlist` (
   `eventchatlist_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -231,7 +256,7 @@ CREATE TABLE IF NOT EXISTS `eventchat_roomlist` (
   `inactive` int(11) NOT NULL,
   `lastseen` int(11) NOT NULL,
   PRIMARY KEY (`eventchatlist_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `eventmessages` (
   `eventmessage_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -240,7 +265,7 @@ CREATE TABLE IF NOT EXISTS `eventmessages` (
   `dateposted` int(11) NOT NULL,
   `message` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`eventmessage_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `eventmessage_comment` (
   `comment_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -249,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `eventmessage_comment` (
   `dateposted` int(11) NOT NULL,
   `comment` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`comment_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `eventpositions` (
   `position_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -266,7 +291,7 @@ CREATE TABLE IF NOT EXISTS `eventpositions` (
   `editinfo` int(11) NOT NULL,
   `eventpositions` int(11) NOT NULL,
   PRIMARY KEY (`position_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `events` (
   `event_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -282,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `messages` int(11) NOT NULL,
   `invitepermission` int(11) NOT NULL,
   PRIMARY KEY (`event_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `events_members` (
   `eventmember_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -295,14 +320,21 @@ CREATE TABLE IF NOT EXISTS `events_members` (
   `attendconfirm_member` int(11) NOT NULL,
   `hide` int(11) NOT NULL,
   PRIMARY KEY (`eventmember_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `event_reminder` (
+  `eventreminder_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emailnotificationsqueue_id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL,
+  PRIMARY KEY (`eventreminder_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `failban` (
   `failban_id` int(11) NOT NULL AUTO_INCREMENT,
   `pagename` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ipaddress` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`failban_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `forgotpass` (
   `rqid` int(11) NOT NULL AUTO_INCREMENT,
@@ -311,14 +343,14 @@ CREATE TABLE IF NOT EXISTS `forgotpass` (
   `changekey` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `timeofrq` int(11) NOT NULL,
   PRIMARY KEY (`rqid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `forum_attachments` (
   `forumattachment_id` int(11) NOT NULL AUTO_INCREMENT,
   `forumpost_id` int(11) NOT NULL,
   `download_id` int(11) NOT NULL,
   PRIMARY KEY (`forumattachment_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `forum_board` (
   `forumboard_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -330,14 +362,14 @@ CREATE TABLE IF NOT EXISTS `forum_board` (
   `accesstype` int(11) NOT NULL,
   `sortnum` int(11) NOT NULL,
   PRIMARY KEY (`forumboard_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `forum_category` (
   `forumcategory_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ordernum` int(11) NOT NULL,
   PRIMARY KEY (`forumcategory_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `forum_memberaccess` (
   `forummemberaccess_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -345,7 +377,7 @@ CREATE TABLE IF NOT EXISTS `forum_memberaccess` (
   `member_id` int(11) NOT NULL,
   `accessrule` int(11) NOT NULL,
   PRIMARY KEY (`forummemberaccess_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `forum_moderator` (
   `forummoderator_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -353,7 +385,7 @@ CREATE TABLE IF NOT EXISTS `forum_moderator` (
   `member_id` int(11) NOT NULL,
   `dateadded` int(11) NOT NULL,
   PRIMARY KEY (`forummoderator_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `forum_post` (
   `forumpost_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -365,7 +397,7 @@ CREATE TABLE IF NOT EXISTS `forum_post` (
   `lastedit_date` int(11) NOT NULL,
   `lastedit_member_id` int(11) NOT NULL,
   PRIMARY KEY (`forumpost_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `forum_rankaccess` (
   `forumrankaccess_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -373,7 +405,7 @@ CREATE TABLE IF NOT EXISTS `forum_rankaccess` (
   `rank_id` int(11) NOT NULL,
   `accesstype` int(11) NOT NULL,
   PRIMARY KEY (`forumrankaccess_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `forum_topic` (
   `forumtopic_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -385,14 +417,14 @@ CREATE TABLE IF NOT EXISTS `forum_topic` (
   `lockstatus` int(11) NOT NULL,
   `stickystatus` int(11) NOT NULL,
   PRIMARY KEY (`forumtopic_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `forum_topicseen` (
   `forumtopicseen_id` int(11) NOT NULL AUTO_INCREMENT,
   `forumtopic_id` int(11) NOT NULL,
   `member_id` int(11) NOT NULL,
   PRIMARY KEY (`forumtopicseen_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `freezemedals_members` (
   `freezemedal_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -400,7 +432,7 @@ CREATE TABLE IF NOT EXISTS `freezemedals_members` (
   `member_id` int(11) NOT NULL,
   `freezetime` int(11) NOT NULL,
   PRIMARY KEY (`freezemedal_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `gamesplayed` (
   `gamesplayed_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -410,14 +442,14 @@ CREATE TABLE IF NOT EXISTS `gamesplayed` (
   `imageheight` int(11) NOT NULL,
   `ordernum` int(11) NOT NULL,
   PRIMARY KEY (`gamesplayed_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=18 ;
 
 CREATE TABLE IF NOT EXISTS `gamesplayed_members` (
   `gamemember_id` int(11) NOT NULL AUTO_INCREMENT,
   `gamesplayed_id` int(11) NOT NULL,
   `member_id` int(11) NOT NULL,
   PRIMARY KEY (`gamemember_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=334 ;
 
 CREATE TABLE IF NOT EXISTS `gamestats` (
   `gamestats_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -432,7 +464,7 @@ CREATE TABLE IF NOT EXISTS `gamestats` (
   `hidestat` int(11) NOT NULL,
   `textinput` int(11) NOT NULL,
   PRIMARY KEY (`gamestats_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=22 ;
 
 CREATE TABLE IF NOT EXISTS `gamestats_members` (
   `gamestatmember_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -442,7 +474,7 @@ CREATE TABLE IF NOT EXISTS `gamestats_members` (
   `stattext` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `dateupdated` int(11) NOT NULL,
   PRIMARY KEY (`gamestatmember_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `hitcounter` (
   `hit_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -451,7 +483,7 @@ CREATE TABLE IF NOT EXISTS `hitcounter` (
   `pagename` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `totalhits` int(11) NOT NULL,
   PRIMARY KEY (`hit_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `iarequest` (
   `iarequest_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -462,7 +494,7 @@ CREATE TABLE IF NOT EXISTS `iarequest` (
   `reviewer_id` int(11) NOT NULL,
   `reviewdate` int(11) NOT NULL,
   PRIMARY KEY (`iarequest_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `iarequest_messages` (
   `iamessage_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -471,7 +503,7 @@ CREATE TABLE IF NOT EXISTS `iarequest_messages` (
   `messagedate` int(11) NOT NULL,
   `message` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`iamessage_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `imageslider` (
   `imageslider_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -485,7 +517,7 @@ CREATE TABLE IF NOT EXISTS `imageslider` (
   `linktarget` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `membersonly` int(11) NOT NULL,
   PRIMARY KEY (`imageslider_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `ipban` (
   `ipban_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -493,7 +525,7 @@ CREATE TABLE IF NOT EXISTS `ipban` (
   `exptime` int(11) NOT NULL,
   `dateadded` int(11) NOT NULL,
   PRIMARY KEY (`ipban_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `logs` (
   `log_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -502,7 +534,7 @@ CREATE TABLE IF NOT EXISTS `logs` (
   `ipaddress` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `message` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `medals` (
   `medal_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -515,7 +547,7 @@ CREATE TABLE IF NOT EXISTS `medals` (
   `autorecruits` int(11) NOT NULL,
   `ordernum` int(11) NOT NULL,
   PRIMARY KEY (`medal_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=41 ;
 
 CREATE TABLE IF NOT EXISTS `medals_members` (
   `medalmember_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -524,7 +556,7 @@ CREATE TABLE IF NOT EXISTS `medals_members` (
   `dateawarded` int(11) NOT NULL,
   `reason` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`medalmember_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `memberapps` (
   `memberapp_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -537,7 +569,7 @@ CREATE TABLE IF NOT EXISTS `memberapps` (
   `memberadded` int(11) NOT NULL,
   `seenstatus` int(11) NOT NULL,
   PRIMARY KEY (`memberapp_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `members` (
   `member_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -574,7 +606,7 @@ CREATE TABLE IF NOT EXISTS `members` (
   `inactivedate` int(11) NOT NULL,
   PRIMARY KEY (`member_id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `membersonlypage` (
   `page_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -582,7 +614,7 @@ CREATE TABLE IF NOT EXISTS `membersonlypage` (
   `pageurl` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `dateadded` int(11) NOT NULL,
   PRIMARY KEY (`page_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
 
 CREATE TABLE IF NOT EXISTS `menuitem_customblock` (
   `menucustomblock_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -590,7 +622,7 @@ CREATE TABLE IF NOT EXISTS `menuitem_customblock` (
   `blocktype` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `code` longtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`menucustomblock_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `menuitem_custompage` (
   `menucustompage_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -600,7 +632,7 @@ CREATE TABLE IF NOT EXISTS `menuitem_custompage` (
   `linktarget` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `textalign` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`menucustompage_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
 
 CREATE TABLE IF NOT EXISTS `menuitem_image` (
   `menuimage_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -612,7 +644,7 @@ CREATE TABLE IF NOT EXISTS `menuitem_image` (
   `linktarget` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `imagealign` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`menuimage_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `menuitem_link` (
   `menulink_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -622,7 +654,7 @@ CREATE TABLE IF NOT EXISTS `menuitem_link` (
   `prefix` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `textalign` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`menulink_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=50 ;
 
 CREATE TABLE IF NOT EXISTS `menuitem_shoutbox` (
   `menushoutbox_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -633,7 +665,7 @@ CREATE TABLE IF NOT EXISTS `menuitem_shoutbox` (
   `percentheight` int(1) NOT NULL,
   `textboxwidth` int(11) NOT NULL,
   PRIMARY KEY (`menushoutbox_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 CREATE TABLE IF NOT EXISTS `menu_category` (
   `menucategory_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -645,7 +677,7 @@ CREATE TABLE IF NOT EXISTS `menu_category` (
   `accesstype` int(11) NOT NULL,
   `hide` int(11) NOT NULL,
   PRIMARY KEY (`menucategory_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=30 ;
 
 CREATE TABLE IF NOT EXISTS `menu_item` (
   `menuitem_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -657,7 +689,7 @@ CREATE TABLE IF NOT EXISTS `menu_item` (
   `hide` int(1) NOT NULL,
   `sortnum` int(11) NOT NULL,
   PRIMARY KEY (`menuitem_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=93 ;
 
 CREATE TABLE IF NOT EXISTS `news` (
   `news_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -670,7 +702,7 @@ CREATE TABLE IF NOT EXISTS `news` (
   `lasteditdate` int(11) NOT NULL,
   `hpsticky` int(11) NOT NULL,
   PRIMARY KEY (`news_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `notifications` (
   `notification_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -680,7 +712,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   `status` int(11) NOT NULL,
   `icontype` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`notification_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `plugins` (
   `plugin_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -689,7 +721,7 @@ CREATE TABLE IF NOT EXISTS `plugins` (
   `apikey` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `dateinstalled` int(11) NOT NULL,
   PRIMARY KEY (`plugin_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 CREATE TABLE IF NOT EXISTS `plugin_config` (
   `pluginconfig_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -697,7 +729,7 @@ CREATE TABLE IF NOT EXISTS `plugin_config` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `value` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`pluginconfig_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `plugin_pages` (
   `pluginpage_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -706,7 +738,7 @@ CREATE TABLE IF NOT EXISTS `plugin_pages` (
   `pagepath` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `sortnum` int(11) NOT NULL,
   PRIMARY KEY (`pluginpage_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 CREATE TABLE IF NOT EXISTS `polls` (
   `poll_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -722,7 +754,7 @@ CREATE TABLE IF NOT EXISTS `polls` (
   `lastedit_date` int(11) NOT NULL,
   `lastedit_memberid` int(11) NOT NULL,
   PRIMARY KEY (`poll_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 CREATE TABLE IF NOT EXISTS `poll_memberaccess` (
   `pollmemberaccess_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -730,7 +762,7 @@ CREATE TABLE IF NOT EXISTS `poll_memberaccess` (
   `member_id` int(11) NOT NULL,
   `accesstype` int(11) NOT NULL,
   PRIMARY KEY (`pollmemberaccess_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `poll_options` (
   `polloption_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -739,7 +771,7 @@ CREATE TABLE IF NOT EXISTS `poll_options` (
   `color` varchar(7) COLLATE utf8_unicode_ci NOT NULL,
   `sortnum` int(11) NOT NULL,
   PRIMARY KEY (`polloption_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 CREATE TABLE IF NOT EXISTS `poll_rankaccess` (
   `pollrankaccess_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -747,7 +779,7 @@ CREATE TABLE IF NOT EXISTS `poll_rankaccess` (
   `rank_id` int(11) NOT NULL,
   `accesstype` int(11) NOT NULL,
   PRIMARY KEY (`pollrankaccess_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `poll_votes` (
   `pollvote_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -758,7 +790,7 @@ CREATE TABLE IF NOT EXISTS `poll_votes` (
   `datevoted` int(11) NOT NULL,
   `votecount` int(11) NOT NULL,
   PRIMARY KEY (`pollvote_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `privatemessages` (
   `pm_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -774,7 +806,7 @@ CREATE TABLE IF NOT EXISTS `privatemessages` (
   `senderfolder_id` int(11) NOT NULL DEFAULT '-1',
   `receiverfolder_id` int(11) NOT NULL,
   PRIMARY KEY (`pm_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `privatemessage_folders` (
   `pmfolder_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -783,7 +815,7 @@ CREATE TABLE IF NOT EXISTS `privatemessage_folders` (
   `ordernum` int(11) NOT NULL,
   `sortnum` int(11) NOT NULL,
   PRIMARY KEY (`pmfolder_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `privatemessage_members` (
   `pmmember_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -795,14 +827,14 @@ CREATE TABLE IF NOT EXISTS `privatemessage_members` (
   `deletestatus` int(11) NOT NULL,
   `pmfolder_id` int(11) NOT NULL,
   PRIMARY KEY (`pmmember_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `profilecategory` (
   `profilecategory_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ordernum` int(11) NOT NULL,
   PRIMARY KEY (`profilecategory_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 CREATE TABLE IF NOT EXISTS `profileoptions` (
   `profileoption_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -811,7 +843,7 @@ CREATE TABLE IF NOT EXISTS `profileoptions` (
   `optiontype` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `sortnum` int(11) NOT NULL,
   PRIMARY KEY (`profileoption_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 CREATE TABLE IF NOT EXISTS `profileoptions_select` (
   `selectopt_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -819,7 +851,7 @@ CREATE TABLE IF NOT EXISTS `profileoptions_select` (
   `selectvalue` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `sortnum` int(11) NOT NULL,
   PRIMARY KEY (`selectopt_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=16 ;
 
 CREATE TABLE IF NOT EXISTS `profileoptions_values` (
   `values_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -827,7 +859,7 @@ CREATE TABLE IF NOT EXISTS `profileoptions_values` (
   `member_id` int(11) NOT NULL,
   `inputvalue` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`values_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `rankcategory` (
   `rankcategory_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -841,7 +873,7 @@ CREATE TABLE IF NOT EXISTS `rankcategory` (
   `imageheight` int(11) NOT NULL,
   `color` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`rankcategory_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=22 ;
 
 CREATE TABLE IF NOT EXISTS `ranks` (
   `rank_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -858,14 +890,14 @@ CREATE TABLE IF NOT EXISTS `ranks` (
   `autodisable` int(11) NOT NULL,
   `color` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`rank_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=71 ;
 
 CREATE TABLE IF NOT EXISTS `rank_privileges` (
   `privilege_id` int(11) NOT NULL AUTO_INCREMENT,
   `rank_id` int(11) NOT NULL,
   `console_id` int(11) NOT NULL,
   PRIMARY KEY (`privilege_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2779 ;
 
 CREATE TABLE IF NOT EXISTS `social` (
   `social_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -878,7 +910,7 @@ CREATE TABLE IF NOT EXISTS `social` (
   `ordernum` int(11) NOT NULL,
   PRIMARY KEY (`social_id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=20 ;
 
 CREATE TABLE IF NOT EXISTS `social_members` (
   `socialmember_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -886,7 +918,7 @@ CREATE TABLE IF NOT EXISTS `social_members` (
   `member_id` int(11) NOT NULL,
   `value` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`socialmember_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `squadapps` (
   `squadapp_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -898,7 +930,7 @@ CREATE TABLE IF NOT EXISTS `squadapps` (
   `status` int(11) NOT NULL,
   `squadmember_id` int(11) NOT NULL,
   PRIMARY KEY (`squadapp_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `squadinvites` (
   `squadinvite_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -911,7 +943,7 @@ CREATE TABLE IF NOT EXISTS `squadinvites` (
   `message` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `startingrank_id` int(11) NOT NULL,
   PRIMARY KEY (`squadinvite_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 CREATE TABLE IF NOT EXISTS `squadnews` (
   `squadnews_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -924,7 +956,7 @@ CREATE TABLE IF NOT EXISTS `squadnews` (
   `lasteditmember_id` int(11) NOT NULL,
   `lasteditdate` int(11) NOT NULL,
   PRIMARY KEY (`squadnews_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `squadranks` (
   `squadrank_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -943,7 +975,7 @@ CREATE TABLE IF NOT EXISTS `squadranks` (
   `setrank` int(11) NOT NULL,
   `removemember` int(11) NOT NULL,
   PRIMARY KEY (`squadrank_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `squads` (
   `squad_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -956,7 +988,7 @@ CREATE TABLE IF NOT EXISTS `squads` (
   `privateshoutbox` int(11) NOT NULL,
   `website` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`squad_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `squads_members` (
   `squadmember_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -967,14 +999,14 @@ CREATE TABLE IF NOT EXISTS `squads_members` (
   `lastpromotion` int(11) NOT NULL,
   `lastdemotion` int(11) NOT NULL,
   PRIMARY KEY (`squadmember_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `tableupdates` (
   `tableupdate_id` int(11) NOT NULL AUTO_INCREMENT,
   `tablename` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `updatetime` int(11) NOT NULL,
   PRIMARY KEY (`tableupdate_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `tournamentmatch` (
   `tournamentmatch_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -993,7 +1025,7 @@ CREATE TABLE IF NOT EXISTS `tournamentmatch` (
   `nextmatch_id` int(11) NOT NULL,
   `sortnum` int(11) NOT NULL,
   PRIMARY KEY (`tournamentmatch_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `tournamentplayers` (
   `tournamentplayer_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1002,14 +1034,14 @@ CREATE TABLE IF NOT EXISTS `tournamentplayers` (
   `member_id` int(11) NOT NULL,
   `displayname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`tournamentplayer_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `tournamentpools` (
   `tournamentpool_id` int(11) NOT NULL AUTO_INCREMENT,
   `tournament_id` int(11) NOT NULL,
   `finished` int(11) NOT NULL,
   PRIMARY KEY (`tournamentpool_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `tournamentpools_teams` (
   `poolteam_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1025,7 +1057,7 @@ CREATE TABLE IF NOT EXISTS `tournamentpools_teams` (
   `replayteam2url` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `winner` int(11) NOT NULL,
   PRIMARY KEY (`poolteam_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `tournaments` (
   `tournament_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1043,8 +1075,9 @@ CREATE TABLE IF NOT EXISTS `tournaments` (
   `password` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `requirereplay` int(10) NOT NULL,
   `access` int(11) NOT NULL,
+  `imageurl` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`tournament_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `tournamentteams` (
   `tournamentteam_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1052,23 +1085,21 @@ CREATE TABLE IF NOT EXISTS `tournamentteams` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `seed` int(11) NOT NULL,
   PRIMARY KEY (`tournamentteam_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-CREATE TABLE IF NOT EXISTS `tournament_connect` (
-  `tournamentconnect_id` int(11) NOT NULL AUTO_INCREMENT,
-  `tournament_id` int(11) NOT NULL,
-  `clanname` varchar(255) NOT NULL,
-  `clanurl` text NOT NULL,
-  `connected` int(11) NOT NULL,
-  PRIMARY KEY (`tournamentconnect_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `tournament_managers` (
   `tournamentmanager_id` int(11) NOT NULL AUTO_INCREMENT,
   `tournament_id` int(11) NOT NULL,
   `member_id` int(11) NOT NULL,
   PRIMARY KEY (`tournamentmanager_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `tournament_reminder` (
+  `tournamentreminder_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emailnotificationqueue_id` int(11) NOT NULL,
+  `tournament_id` int(11) NOT NULL,
+  PRIMARY KEY (`tournamentreminder_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `websiteinfo` (
   `websiteinfo_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1076,4 +1107,4 @@ CREATE TABLE IF NOT EXISTS `websiteinfo` (
   `value` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`websiteinfo_id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=69 ;

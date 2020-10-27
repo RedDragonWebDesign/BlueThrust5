@@ -12,7 +12,10 @@
  *
  */
 
-require_once($prevFolder."include/lib_autolink/lib_autolink.php");
+
+
+include($prevFolder."include/lib_autolink/lib_autolink.php");
+
 
 // General functions to filter out all <, >, ", and ' symbols
 function filterArray($arrValues) {
@@ -39,11 +42,14 @@ function filterText($strText) {
 	$temp = str_replace("&middot;", "&#38;middot;", $value);
 	$temp = str_replace("&raquo;", "&#38;raquo;", $temp);
 	$temp = str_replace("&laquo;", "&#38;laquo;", $temp);
+	
+	
 
 	return $temp;
 }
 
 function getPreciseTime($intTime, $timeFormat="", $bypassTimeDiff=false) {
+
 	$timeDiff = (!$bypassTimeDiff) ? time() - $intTime : 99999;
 
 	if($timeDiff < 3) {
@@ -78,11 +84,23 @@ function getPreciseTime($intTime, $timeFormat="", $bypassTimeDiff=false) {
 
 
 		$dispLastDate = date($timeFormat, $intTime);
+		
 	}
 
 	return $dispLastDate;
 
 }
+
+function getDateUTC($time, $timeFormat = "D M j, Y g:i a") {
+	
+	$date = new DateTime();
+	$date->setTimezone(new DateTimeZone("UTC"));
+	$date->setTimestamp($time);
+	
+	return $date->format($timeFormat);
+	
+}
+
 
 function parseBBCode($strText) {
 global $MAIN_ROOT;
@@ -152,9 +170,10 @@ global $MAIN_ROOT;
 function autoLinkImage($strText) {
 
 	$strText = preg_replace("/<img src=(\"|\')(.*)(\"|\')>/", "<a href='$2' target='_blank'><img src='$2'></a>", $strText);
+	$strText = preg_replace("/<img src=(\"|\')(.*)(\"|\') alt=(\"|\')(.*)(\"|\') width=(\"|\')(.*)(\"|\') height=(\"|\')(.*)(\"|\') \/>/", "<a href='$2' target='_blank'><img src='$2' width='$8' height='$11'></a>", $strText);
 	$strText = preg_replace("/<img src=(\"|\')(.*)(\"|\') alt=(\"|\')(.*)(\"|\') \/>/", "<a href='$2' target='_blank'><img src='$2'></a>", $strText);
 	
-	
+	 
 	return $strText;
 }
 
@@ -170,7 +189,8 @@ function deleteFile($filename) {
 
 
 function getHTTP() {
-	if(isset($_SERVER['HTTPS']) && (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off")) {
+
+	if(!isset($_SERVER['HTTPS']) || (isset($_SERVER['HTTPS']) && (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off"))) {
 		$dispHTTP = "http://";
 	}
 	else {
@@ -236,94 +256,27 @@ function encryptPassword($password) {
 	return $returnArr;
 }
 
-// Example usage: html_var_export($limit, '$limit');
-function html_var_export($var, $var_name = NULL)
-{
-	$output = '';
-	
-	if ( $var_name )
-	{
-		$output .= $var_name . ' = ';
+function getSelected($arrValues, $selectedValue) {
+	$returnArr = array();
+	foreach($arrValues as $value) {
+		$returnArr[$value] = ($value == $selectedValue) ? " selected" : "";
 	}
-	
-	$output .= nl2br_and_nbsp(var_export($var, TRUE)) . "<br /><br />";
-	
-	echo $output;
+	return $returnArr;
 }
 
-function nl2br_and_nbsp($string)
-{
-	$string = nl2br($string);
-	
-	$string = nbsp($string);
-	
-	return $string;
-}
-
-function nbsp($string)
-{
-	$string = preg_replace('/\t/', '&nbsp;&nbsp;&nbsp;&nbsp;', $string);
-	
-	// replace more than 1 space in a row with &nbsp;
-	$string = preg_replace('/  /m', '&nbsp;&nbsp;', $string);
-	$string = preg_replace('/ &nbsp;/m', '&nbsp;&nbsp;', $string);
-	$string = preg_replace('/&nbsp; /m', '&nbsp;&nbsp;', $string);
-	
-	if ( $string == ' ' )
-	{
-		$string = '&nbsp;';
-	}
-	
-	// Convert 2 space tab to 4 space tab
-	$string = preg_replace('/&nbsp;&nbsp;/m', '&nbsp;&nbsp;&nbsp;&nbsp;', $string);
-	
-	return $string;
-}
-
-function debug_string_backtrace() {
-	ob_start();
-	debug_print_backtrace();
-	$trace = ob_get_contents();
-	ob_end_clean();
-
-	// Remove first item from backtrace as it's this function which
-	// is redundant.
-	$trace = preg_replace ('/^#0\s+' . __FUNCTION__ . "[^\n]*\n/", '', $trace, 1);
-	
-	// sanitize HTML
-	$trace = htmlspecialchars($trace);
-	
-	// Put each stack trace on its own line
-	$trace = preg_replace('/\n/', '<br />', $trace);
-	
-	// Delete all but 1st stack trace
-	// $trace = preg_replace('/\n.*/', '', $trace);
-	
-	return $trace;
-}
-
-/** Dump your entire SQL table into an array. You can use this function to do a `WHERE $condition1Field = $condition1Value AND $condition2Field = $condition2Value` type query. */
-function sql_array_select_where($sqlTableAsArray, $condition1Field, $condition1Value, $condition2Field, $condition2Value) {
-	$result = [];
-	foreach ( $sqlTableAsArray as $key => $row ) {
-		if (
-			isset($row[$condition1Field]) &&
-			$row[$condition1Field] == $condition1Value &&
-			isset($row[$condition2Field]) &&
-			$row[$condition1Field] == $condition2Value
-		) {
-			$result[] = $row;
-		}
-	}
-	return $result;
-}
 
 // Class Loaders
 
 function BTCS4Loader($class_name) {
-	require_once(BASE_DIRECTORY."classes/".strtolower($class_name).".php");
+	if(file_exists(BASE_DIRECTORY."classes/".strtolower($class_name).".php")) {
+		include_once(BASE_DIRECTORY."classes/".strtolower($class_name).".php");
+	}
+	elseif(file_exists(include_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php"))) {
+		include_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php");
+	}
 }
 
 spl_autoload_register("BTCS4Loader", true, true);
 
-require_once(BASE_DIRECTORY."include/phpmailer/PHPMailerAutoload.php");
+include_once(BASE_DIRECTORY."include/phpmailer/PHPMailerAutoload.php");
+?>

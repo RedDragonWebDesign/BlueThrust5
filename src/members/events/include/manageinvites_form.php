@@ -13,9 +13,7 @@
  */
 
 
-require_once("../../../_setup.php");
-require_once("../../../classes/member.php");
-require_once("../../../classes/event.php");
+include("../../../_setup.php");
 
 $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
@@ -36,73 +34,32 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 
 	if($eventObj->select($eventID) && $member->hasAccess($consoleObj) && (($eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites") || $eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm")) || $memberInfo['rank_id'] == 1)) {
 		
+		$formObj = new Form();
 		$eventInfo = $eventObj->get_info_filtered();
 		$eventMemberInfo = $eventObj->objEventMember->get_info_filtered();
 		$objInviteMember = new Member($mysqli);
 		$objInviteMember->select($eventMemberInfo['member_id']);
 		$inviteMemberInfo = $objInviteMember->get_info_filtered();
-		
-		$countErrors = 0;
-		$dispError = "";
-		if(($_POST['submit'] ?? '')) {
-			
-			$arrColumns = array();
-			$arrValues = array();
-			
-			
-			if($eventObj->memberHasAccess($memberInfo['member_id'], "mangeinvites")) {
-				$arrColumns[] ="position_id";
-				$arrValues[] = $_POST['updatePositionID'];
-				$checkSelectPosition = $eventObj->objEventPosition->select($_POST['updatePositionID']);
-				// Check Position ID
-				if($_POST['updatePositionID'] != 0 && (!$checkSelectPosition || ($checkSelectPosition && $eventObj->objEventPosition->get_info("event_id") != $eventID))) {
-					$countErrors++;
-					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid position.<br>";
-				}			
 				
-			}
-			
-			
-			if($eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm")) {
-				
-				if($eventInfo['startdate'] <= time() && ($_POST['updateConfirm'] == 1 || $_POST['updateConfirm'] == 0)) {
-					$arrColumns[] = "attendconfirm_admin";
-					$arrValues[] = 1;
-				}	
-				
-			}
-			
-
-			
-			if($countErrors == 0) {
-				if(!$eventObj->objEventMember->update($arrColumns, $arrValues)) {
-					$countErrors++;
-					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
-				}
-				else {
-					$eventMemberInfo = $eventObj->objEventMember->get_info_filtered();
-				}
-			}
-
-		}
-		
 		$dispAttendenceStatus = $eventObj->arrInviteStatus[$eventMemberInfo['status']];
-		$positionoptions = "<option value='0'>None</option>";
+		$positionOptions = array("None");
 		foreach($eventObj->getPositions() as $value) {
-			
-			$dispSelected = "";
-			if($eventMemberInfo['position_id'] == $value) {
-				$dispSelected = " selected";				
-			}
 			
 			$eventObj->objEventPosition->select($value);
 			$dispPositionName = $eventObj->objEventPosition->get_info_filtered("name");
 			
-			$positionoptions .= "<option value='".$value."'".$dispSelected.">".$dispPositionName."</option>";
+			$positionOptions[$value] = $dispPositionName;
 			
 		}
 		
-		$dispConfirmAttendence = "<input type='hidden' id='confirmAttendence'>";
+		$dispConfirmAttendence = array(
+			"type" => "hidden",
+			"hidden" => true,
+			"attributes" => array("id" => "confirmAttendence")
+		);
+		
+		
+
 		if($eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm")) {
 			
 			$dispSelected = "";
@@ -114,50 +71,76 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 			$dispDisabledInfo = "";
 			$dispDisableForm = "";
 			if($eventInfo['startdate'] > time()) {
-				$dispDisabledInfo = "<a href='javascript:void(0)' onmouseover=\"showToolTip('You must wait for the event to start before you can confirm a member\'s attendence.')\" onmouseout='hideToolTip()'>(?)</a>";
-				$dispDisableForm = " disabled = 'disabled'";
+				$dispDisabledInfo = "You must wait for the event to start before you can confirm a member's attendence.";
+				$dispDisableForm = "disabled";
 			}
+
+			$dispConfirmAttendence = array(
+				"type" => "select",
+				"display_name" => "Confirm Attendance",
+				"attributes" => array("class" => "formInput textBox", "id" => "confirmAttendence", "disable" => $dispDisableForm),
+				"tooltip" => $dispDisabledInfo,
+				"options" => array("Not Confirmed", "Confirmed", "Excused", "Unexcused"),
+				"value" => $eventMemberInfo['attendconfirm_admin']
+			);
 			
-			$dispConfirmAttendence = "
 			
-				<tr>
-					<td class='formLabel'>Confirm Attendence: ".$dispDisabledInfo."</td>
-					<td class='main'><select id='confirmAttendence' class='textBox'".$dispDisableForm."><option value='0'>Not Confirmed</option><option value='1'".$dispSelected.">Confirmed</option></select></td>
-				</tr>
+		}
+		
+		$i = 1;
+		$arrComponents = array(
+			"attendancestatus" => array(
+				"display_name" => "Attendance Status",
+				"type" => "custom",
+				"html" => "<div class='formInput'>".$dispAttendenceStatus."</div>",
+				"sortorder" => $i++
+			)		
+		);
+		
+		if($eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites")) {
 			
-			";
+			$arrComponents['selectposition'] = array(
+				"display_name" => "Set Position",
+				"type" => "select",
+				"sortorder" => $i++,
+				"options" => $positionOptions,
+				"attributes" => array("class" => "formInput textBox", "id" => "selectPositionID"),
+				"value" => $eventMemberInfo['position_id']
+			);
 			
 		}
 		
 		
-		echo "
-			<div id='dispErrorDiv' style='display: none'>".$dispError."</div>	
-			<table class='formTable'>
-				<tr>
-					<td class='formLabel'>Attendence Status:</td>
-					<td class='main'>".$dispAttendenceStatus."</td>
-				</tr>
-				
-				";
+		$arrComponents['confirmattendance'] = $dispConfirmAttendence;
+		$arrComponents['confirmattendance']['sortorder'] = $i++;
 		
-				if($eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites")) {
-					echo "
-						<tr>
-							<td class='formLabel'>Set Position:</td>
-							<td class='main'><select id='selectPositionID' class='textBox'>".$positionoptions."</select></td>
-						</tr>
-					";
-				}
-				
-				echo "
-				".$dispConfirmAttendence."
-				<tr>
-					<td colspan='2' class='main' align='center'>
-						<br><br>
-						<input type='button' class='submitButton' onclick='btnSaveClicked()' value='Save' style='width: 100px' id='btnSave'>
-						";
+		$arrComponents['submit'] = array(
+			"type" => "button",
+			"sortorder" => $i++,
+			"attributes" => array("class" => "formSubmitButton submitButton", "onclick" => "btnSaveClicked()"),
+			"value" => "Save"
 		
-		if(($_POST['submit'] ?? '') && $countErrors == 0) {
+		);
+		
+		
+		$setupFormArgs = array(
+			"name" => "console-".$cID."-manageinvites",
+			"components" => $arrComponents,
+			"wrapper" => array("<div>", "</div>")
+		);
+		
+		$formObj->buildForm($setupFormArgs);
+		
+		
+		if($_POST['submit']) {
+			include(BASE_DIRECTORY."members/events/include/manageinvites_submit.php");
+		}
+		
+		
+		
+		$formObj->show();
+
+		if(isset($_POST['submit']) && $countErrors == 0) {
 		
 			echo "
 				<p class='successFont' align='center'>
@@ -168,10 +151,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 		}
 		
 		echo "
-					</td>
-				</tr>
-			</table>
-		
+
 			
 			<div id='uninviteMessageDiv' style='display: none'>
 				<p class='main' align='center'>
@@ -202,7 +182,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 		";
 
 		
-		if(($_POST['submit'] ?? '') && $countErrors > 0) {
+		if(isset($_POST['submit']) && $countErrors > 0) {
 		
 			echo "
 				

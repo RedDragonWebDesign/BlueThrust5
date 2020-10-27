@@ -11,13 +11,11 @@
  *
  */
 
-$prevFolder = '../../../../';
-
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/basicsort.php");
-require_once("../../../../classes/forumboard.php");
-require_once("../../../../classes/rankcategory.php");
+include_once("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/basicsort.php");
+include_once("../../../../classes/forumboard.php");
+include_once("../../../../classes/rankcategory.php");
 
 
 
@@ -86,16 +84,17 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 			foreach($arrRanks as $rankID) {
 				
 				$dispRankAccess = "";
-				if( isset($_SESSION['btRankAccessCache']["rankaccess_".$rankID]) && $_SESSION['btRankAccessCache']["rankaccess_".$rankID] == 1) {
+				if($_SESSION['btRankAccessCache']["rankaccess_".$rankID] == 1) {
 					$dispRankAccess = " - <span class='allowText' style='font-style: italic'>Read-Only</span>";
 				}
-				elseif( isset($_SESSION['btRankAccessCache']["rankaccess_".$rankID]) && $_SESSION['btRankAccessCache']["rankaccess_".$rankID] == 2) {
+				elseif($_SESSION['btRankAccessCache']["rankaccess_".$rankID] == 2) {
 					$dispRankAccess = " - <span class='pendingFont' style='font-style: italic'>Full Access</span>";
 				}
 				
 				$rankObj->select($rankID);
 				$rankName = $rankObj->get_info_filtered("name");
 				$rankoptions .= "<input type='checkbox' name='rankaccess_".$rankID."' value='1' data-rankaccess='1'> ".$rankName.$dispRankAccess."<br>";
+				$rankCounter++;
 			}
 			
 			$rankoptions .= "</div><br>";
@@ -106,3 +105,6 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 	echo $rankoptions;
 	
 }
+
+
+?>

@@ -17,10 +17,10 @@
 	// Config File
 	$prevFolder = "../";
 	
-	require_once($prevFolder."_setup.php");
+	include($prevFolder."_setup.php");
 	
-	require_once($prevFolder."classes/member.php");
-	require_once($prevFolder."classes/poll.php");
+	include_once($prevFolder."classes/member.php");
+	include_once($prevFolder."classes/poll.php");
 
 	
 	$consoleObj = new ConsoleOption($mysqli);

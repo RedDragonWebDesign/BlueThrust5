@@ -1,7 +1,7 @@
 <?php
-	require_once("../../_config.php");
-	require_once("../../classes/btmysql.php");
-	require_once("../../classes/member.php");
+	include_once("../../_config.php");
+	include_once("../../classes/btmysql.php");
+	include_once("../../classes/member.php");
 	
 	$mysqli = new btmysql($dbhost, $dbuser, $dbpass, $dbname);
 	$mysqli->set_tablePrefix($dbprefix);

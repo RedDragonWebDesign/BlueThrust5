@@ -13,7 +13,7 @@
  */
 
 
-require_once("member.php");
+include_once("member.php");
 
 class ShoutBox {
 	
@@ -48,8 +48,6 @@ class ShoutBox {
 	}
 	
 	public function dispShoutbox($setWidth=0, $setHeight=0, $blnPercentWidth=false, $txtBoxWidth=0, $blnPercentHeight=false) {
-		$shoutBoxInfo = '';
-		
 		global $MAIN_ROOT, $THEME;
 		if($setWidth > 0) {
 			$this->intDispWidth = $setWidth;
@@ -71,7 +69,6 @@ class ShoutBox {
 		}
 		
 		$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE newstype = '3'".$this->strSQLSort." ORDER BY dateposted");
-		$shoutBoxInfo = '';
 		while($row = $result->fetch_assoc()) {
 			
 			
@@ -136,9 +133,10 @@ class ShoutBox {
 		
 	}
 	
+	
 	public function prepareLinks($memberObj) {
 		
-		$this->memberObj->select(($_SESSION['btUsername'] ?? ''));
+		$this->memberObj->select($_SESSION['btUsername']);
 		$consoleObj = new ConsoleOption($this->MySQL);
 		$manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
 		$consoleObj->select($manageNewsCID);
@@ -158,6 +156,8 @@ class ShoutBox {
 	}
 	
 	public function getShoutboxJS() {
+		
+		
 		$returnVal = "
 		
 			<script type='text/javascript'>
@@ -187,6 +187,11 @@ class ShoutBox {
 		
 		";
 		
+		
 		return $returnVal;
 	}
+	
 }
+
+
+?>

@@ -24,8 +24,8 @@ else {
 }
 
 
-require_once($prevFolder."classes/btupload.php");
-require_once($prevFolder."classes/medal.php");
+include_once($prevFolder."classes/btupload.php");
+include_once($prevFolder."classes/medal.php");
 $cID = $_GET['cID'];
 $medalObj = new Medal($mysqli);
 

@@ -12,9 +12,9 @@
  *
  */
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/imageslider.php");
+include("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/imageslider.php");
 
 
 $member = new Member($mysqli);
@@ -37,7 +37,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		$imageSliderObj->move($_POST['iDir']);
 		
 		$_GET['cID'] = $cID;
-		require_once("imagelist.php");
+		include("imagelist.php");
 	}
 	else {
 		echo $_POST['imgID'];

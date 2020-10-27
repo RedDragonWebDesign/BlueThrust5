@@ -24,8 +24,8 @@ else {
 }
 
 
-require_once($prevFolder."classes/profilecategory.php");
-require_once($prevFolder."classes/profileoption.php");
+include_once($prevFolder."classes/profilecategory.php");
+include_once($prevFolder."classes/profileoption.php");
 
 $cID = $_GET['cID'];
 
@@ -51,7 +51,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 $dispError = "";
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	// Check Option Name
 	
@@ -170,7 +170,7 @@ if(($_POST['submit'] ?? '')) {
 	
 }
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	$afterSelected = "";
 	$_SESSION['btProfileCache'] = array();
 	$_SESSION['btProfileCacheRefresh'] = false;
@@ -294,7 +294,7 @@ if(!($_POST['submit'] ?? '')) {
 				<div id='selectValueList' style='margin-top: 25px'>
 				";
 	
-				require_once("include/admin/manageprofileoptions/cache/view.php");
+				include("include/admin/manageprofileoptions/cache/view.php");
 	
 			echo "
 				</div>

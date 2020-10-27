@@ -13,7 +13,7 @@
  */
 
 $prevFolder = "../";
-require_once("../_setup.php");
+include("../_setup.php");
 
 $memberObj = new Member($mysqli);
 

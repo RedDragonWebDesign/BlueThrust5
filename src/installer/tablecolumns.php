@@ -146,6 +146,28 @@ $arrTableColumns['downloads'][9] = "splitfile2";
 $arrTableColumns['downloads'][10] = "description";
 $arrTableColumns['downloads'][11] = "downloadcount";
 
+$arrTableColumns['emailnotifications_queue'][0] = "emailnotificationsqueue_id";
+$arrTableColumns['emailnotifications_queue'][1] = "member_id";
+$arrTableColumns['emailnotifications_queue'][2] = "senddate";
+$arrTableColumns['emailnotifications_queue'][3] = "sent";
+$arrTableColumns['emailnotifications_queue'][4] = "subject";
+$arrTableColumns['emailnotifications_queue'][5] = "message";
+
+$arrTableColumns['emailnotifications_settings'][0] = "emailnotificationsetting_id";
+$arrTableColumns['emailnotifications_settings'][1] = "member_id";
+$arrTableColumns['emailnotifications_settings'][2] = "tournament_time";
+$arrTableColumns['emailnotifications_settings'][3] = "tournament_unit";
+$arrTableColumns['emailnotifications_settings'][4] = "event_time";
+$arrTableColumns['emailnotifications_settings'][5] = "event_unit";
+$arrTableColumns['emailnotifications_settings'][6] = "privatemessage";
+$arrTableColumns['emailnotifications_settings'][7] = "email_privatemessage";
+$arrTableColumns['emailnotifications_settings'][8] = "forum_topic";
+$arrTableColumns['emailnotifications_settings'][9] = "forum_post";
+
+$arrTableColumns['event_reminder'][0] = "eventreminder_id";
+$arrTableColumns['event_reminder'][1] = "emailnotificationsqueue_id";
+$arrTableColumns['event_reminder'][2] = "event_id";
+
 $arrTableColumns['eventchat'][0] = "eventchat_id";
 $arrTableColumns['eventchat'][1] = "event_id";
 $arrTableColumns['eventchat'][2] = "datestarted";
@@ -704,6 +726,10 @@ $arrTableColumns['tournament_managers'][0] = "tournamentmanager_id";
 $arrTableColumns['tournament_managers'][1] = "tournament_id";
 $arrTableColumns['tournament_managers'][2] = "member_id";
 
+$arrTableColumns['tournament_reminder'][0] = "tournamentreminder_id";
+$arrTableColumns['tournament_reminder'][1] = "emailnotificationqueue_id";
+$arrTableColumns['tournament_reminder'][2] = "tournament_id";
+
 $arrTableColumns['tournamentmatch'][0] = "tournamentmatch_id";
 $arrTableColumns['tournamentmatch'][1] = "tournament_id";
 $arrTableColumns['tournamentmatch'][2] = "round";
@@ -758,6 +784,7 @@ $arrTableColumns['tournaments'][11] = "description";
 $arrTableColumns['tournaments'][12] = "password";
 $arrTableColumns['tournaments'][13] = "requirereplay";
 $arrTableColumns['tournaments'][14] = "access";
+$arrTableColumns['tournaments'][15] = "imageurl";
 
 $arrTableColumns['tournamentteams'][0] = "tournamentteam_id";
 $arrTableColumns['tournamentteams'][1] = "tournament_id";
@@ -767,5 +794,7 @@ $arrTableColumns['tournamentteams'][3] = "seed";
 $arrTableColumns['websiteinfo'][0] = "websiteinfo_id";
 $arrTableColumns['websiteinfo'][1] = "name";
 $arrTableColumns['websiteinfo'][2] = "value";
+
+
 
 ?>

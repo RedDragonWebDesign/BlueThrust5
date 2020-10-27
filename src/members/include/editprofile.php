@@ -303,7 +303,7 @@ $arrBirthdayComponents = array(
 		"value" => ($memberInfo['birthday']*1000),
 		"options" => array("changeMonth" => "true", 
 						   "changeYear" => "true", 
-						   "dateFormate" => "M d, yy", 
+						   "dateFormat" => "M d, yy", 
 						   "minDate" => "new Date(50, 1, 1)", 
 						   "maxDate" => $maxBirthdayDate, 
 						   "yearRange" => "1950:".$maxBirthdayYear, 

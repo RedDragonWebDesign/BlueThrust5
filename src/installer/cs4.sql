@@ -14,21 +14,16 @@ CREATE TABLE IF NOT EXISTS `app_components` (
   `tooltip` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `ordernum` int(11) NOT NULL,
   PRIMARY KEY (`appcomponent_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=227 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=241 ;
 
-INSERT INTO `app_components` (`appcomponent_id`, `name`, `componenttype`, `required`, `tooltip`, `ordernum`) VALUES(225, 'Captcha', 'captcha', 0, '', 1);
+INSERT INTO `app_components` (`appcomponent_id`, `name`, `componenttype`, `required`, `tooltip`, `ordernum`) VALUES(225, 'Captcha', 'captcha', 0, '', 11);
 
 CREATE TABLE IF NOT EXISTS `app_selectvalues` (
   `appselectvalue_id` int(11) NOT NULL AUTO_INCREMENT,
   `appcomponent_id` int(11) NOT NULL,
   `componentvalue` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`appselectvalue_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=25 ;
-
-INSERT INTO `app_selectvalues` (`appselectvalue_id`, `appcomponent_id`, `componentvalue`) VALUES(1, 4, 'Haha');
-INSERT INTO `app_selectvalues` (`appselectvalue_id`, `appcomponent_id`, `componentvalue`) VALUES(2, 4, 'No');
-INSERT INTO `app_selectvalues` (`appselectvalue_id`, `appcomponent_id`, `componentvalue`) VALUES(3, 4, 'Yes');
-INSERT INTO `app_selectvalues` (`appselectvalue_id`, `appcomponent_id`, `componentvalue`) VALUES(4, 0, 'test');
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `app_values` (
   `appvalue_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -45,12 +40,12 @@ CREATE TABLE IF NOT EXISTS `clocks` (
   `timezone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ordernum` int(11) NOT NULL,
   PRIMARY KEY (`clock_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
-INSERT INTO `clocks` (`clock_id`, `name`, `color`, `timezone`, `ordernum`) VALUES(1, 'Eastern Time', '#1fdd00', 'America/New_York', 4);
-INSERT INTO `clocks` (`clock_id`, `name`, `color`, `timezone`, `ordernum`) VALUES(2, 'Central Time', '#ff8400', 'America/Chicago', 3);
-INSERT INTO `clocks` (`clock_id`, `name`, `color`, `timezone`, `ordernum`) VALUES(3, 'Mountain Time', '#5400ff', 'America/Denver', 2);
-INSERT INTO `clocks` (`clock_id`, `name`, `color`, `timezone`, `ordernum`) VALUES(4, 'Pacific Time', '#0072ff', 'America/Los_Angeles', 1);
+INSERT INTO `clocks` (`clock_id`, `name`, `color`, `timezone`, `ordernum`) VALUES(1, 'Eastern Time', '#16A800', 'America/New_York', 4);
+INSERT INTO `clocks` (`clock_id`, `name`, `color`, `timezone`, `ordernum`) VALUES(6, 'Central Time', '#C99000', 'America/Chicago', 3);
+INSERT INTO `clocks` (`clock_id`, `name`, `color`, `timezone`, `ordernum`) VALUES(7, 'Moutain Time', '#5E00FF', 'America/Denver', 2);
+INSERT INTO `clocks` (`clock_id`, `name`, `color`, `timezone`, `ordernum`) VALUES(8, 'Pacific Time', '#006FFF', 'America/Los_Angeles', 1);
 
 CREATE TABLE IF NOT EXISTS `comments` (
   `comment_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -72,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `console` (
   `defaultconsole` int(11) NOT NULL,
   `hide` int(1) NOT NULL,
   PRIMARY KEY (`console_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=215 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=222 ;
 
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(1, 1, 'Add New Rank', 'admin/addrank.php', 1, 1, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(2, 1, 'Manage Ranks', 'admin/manageranks.php', 2, 1, 0, 1, 0);
@@ -82,7 +77,7 @@ INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filenam
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(8, 2, 'Set Member''s Rank', 'membermanagement/setrank.php', 9, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(9, 10, 'Add New Medal', 'admin/addmedal.php', 2, 1, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(10, 10, 'Manage Medals', 'admin/managemedals.php', 3, 1, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(11, 3, 'Edit Profile', 'editprofile.php', 3, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(11, 3, 'Edit Profile', 'editprofile.php', 4, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(12, 1, '-separator-', '', 28, 1, 1, 0, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(20, 2, 'Disable a Member', 'membermanagement/disablemember.php', 1, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(14, 1, 'Add Games Played', 'admin/addgamesplayed.php', 6, 1, 0, 1, 0);
@@ -101,9 +96,9 @@ INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filenam
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(65, 1, 'Add Profile Option', 'admin/addprofileoption.php', 24, 1, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(51, 1, '-separator-', '', 8, 1, 1, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(52, 1, '-separator-', '', 14, 1, 1, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(54, 14, '-separator-', '', 3, 1, 1, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(55, 14, 'Add Download Category', 'admin/adddownloadcategory.php', 1, 1, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(56, 14, 'Manage Download Categories', 'admin/managedownloadcategories.php', 2, 1, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(54, 14, '-separator-', '', 4, 1, 1, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(55, 14, 'Add Download Category', 'admin/adddownloadcategory.php', 2, 1, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(56, 14, 'Manage Download Categories', 'admin/managedownloadcategories.php', 3, 1, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(62, 1, 'Website Settings', 'admin/sitesettings.php', 30, 1, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(61, 1, 'Modify Current Theme', 'admin/edittheme.php', 29, 1, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(60, 1, '-separator-', '', 23, 1, 1, 1, 0);
@@ -113,24 +108,24 @@ INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filenam
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(83, 9, 'Manage News', 'news/managenews.php', 5, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(82, 9, 'Post News', 'news/postnews.php', 2, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(70, 2, '-separator-', '', 7, 0, 1, 0, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(71, 7, 'Create a Squad', 'squads/create.php', 1, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(72, 7, 'View Your Squads', 'squads/index.php', 4, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(73, 7, 'Apply to a Squad', 'squads/apply.php', 2, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(74, 7, 'View Squad Invitations', 'squads/viewinvites.php', 3, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(71, 7, 'Create a Squad', 'squads/create.php', 2, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(72, 7, 'View Your Squads', 'squads/index.php', 5, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(73, 7, 'Apply to a Squad', 'squads/apply.php', 3, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(74, 7, 'View Squad Invitations', 'squads/viewinvites.php', 4, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(75, 8, 'Create a Tournament', 'tournaments/create.php', 1, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(76, 8, 'Manage Tournaments', 'tournaments/manage.php', 3, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(77, 8, 'Manage My Matches', 'tournaments/managematches.php', 4, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(78, 17, 'Private Messages', 'privatemessages/index.php', 1, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(78, 17, 'Private Messages', 'privatemessages/index.php', 2, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(84, 9, 'View Private News', 'news/privatenews.php', 6, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(80, 3, 'Edit My Game Stats', 'editmygamestats.php', 2, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(80, 3, 'Edit My Game Stats', 'editmygamestats.php', 3, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(85, 9, 'Post Comment', 'news/postcomment.php', 3, 0, 0, 1, 1);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(86, 2, 'Undisable Member', 'membermanagement/undisablemember.php', 4, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(87, 10, 'Award Medal', 'medals/awardmedal.php', 1, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(88, 10, 'Revoke Medal', 'medals/revokemedal.php', 5, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(89, 3, 'Change Password', 'changepassword.php', 6, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(89, 3, 'Change Password', 'changepassword.php', 5, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(90, 2, '-separator-', '', 11, 0, 1, 0, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(91, 2, 'Reset Member Password', 'membermanagement/resetpassword.php', 16, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(92, 3, 'View Logs', 'logs.php', 8, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(92, 3, 'View Logs', 'logs.php', 7, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(93, 9, 'Post in Shoutbox', 'news/postshoutbox.php', 4, 0, 0, 1, 1);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(96, 2, 'Registration Options', 'membermanagement/registrationoptions.php', 12, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(97, 2, 'Member Application', 'membermanagement/memberapplication.php', 13, 0, 0, 1, 0);
@@ -141,24 +136,24 @@ INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filenam
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(102, 11, 'Manage Diplomacy Statuses', 'diplomacy/diplomacystatuses.php', 6, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(103, 11, '-seperator-', '', 4, 0, 1, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(104, 11, 'Add Diplomacy Status', 'diplomacy/adddiplomacystatus.php', 5, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(105, 12, 'Add Event', 'events/addevent.php', 1, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(106, 12, 'Manage My Events', 'events/manage.php', 2, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(107, 12, 'View Event Invitations', 'events/viewinvites.php', 3, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(105, 12, 'Add Event', 'events/addevent.php', 2, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(106, 12, 'Manage My Events', 'events/manage.php', 3, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(107, 12, 'View Event Invitations', 'events/viewinvites.php', 4, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(108, 1, 'Add Custom Form Page', 'admin/addcustomformpage.php', 11, 1, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(109, 1, 'Manage Custom Form Pages', 'admin/managecustomforms.php', 12, 1, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(110, 1, 'View Custom Form Submissions', 'admin/customformsubmissions.php', 13, 1, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(111, 9, 'Modify News Ticker', 'news/newsticker.php', 8, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(113, 8, 'Join a Tournament', 'tournaments/join.php', 2, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(114, 1, 'Member''s Only Pages', 'admin/membersonlypages.php', 31, 1, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(118, 13, 'Add Forum Category', 'forum/addcategory.php', 4, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(122, 13, 'Manage Boards', 'forum/manageboards.php', 8, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(119, 13, 'Manage Forum Categories', 'forum/managecategories.php', 5, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(120, 13, '-seperator-', '', 6, 0, 1, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(121, 13, 'Add Board', 'forum/addboard.php', 7, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(123, 13, 'Post Topic', 'forum/post.php', 2, 0, 0, 1, 1);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(124, 13, 'Manage Moderators', 'forum/managemoderators.php', 9, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(125, 13, 'Manage Forum Posts', 'forum/manageposts.php', 3, 0, 0, 1, 1);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(126, 3, 'Change Username', 'changeusername.php', 7, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(118, 13, 'Add Forum Category', 'forum/addcategory.php', 5, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(122, 13, 'Manage Boards', 'forum/manageboards.php', 9, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(119, 13, 'Manage Forum Categories', 'forum/managecategories.php', 6, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(120, 13, '-seperator-', '', 7, 0, 1, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(121, 13, 'Add Board', 'forum/addboard.php', 8, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(123, 13, 'Post Topic', 'forum/post.php', 3, 0, 0, 1, 1);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(124, 13, 'Manage Moderators', 'forum/managemoderators.php', 10, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(125, 13, 'Manage Forum Posts', 'forum/manageposts.php', 4, 0, 0, 1, 1);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(126, 3, 'Change Username', 'changeusername.php', 6, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(127, 2, 'Set Member''s Recruiter', 'membermanagement/setrecruiter.php', 17, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(128, 2, 'Set Member''s Recruit Date', 'membermanagement/setrecruitdate.php', 18, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(129, 2, '-seperator-', '', 15, 0, 1, 1, 0);
@@ -171,37 +166,39 @@ INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filenam
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(141, 9, 'Manage Home Page Images', 'news/manageimages.php', 11, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(142, 9, 'Add Home Page Image', 'news/addimage.php', 10, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(143, 9, '-seperator-', '', 9, 0, 1, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(144, 13, 'Post Forum Attachments', 'forum/postattachments.php', 1, 0, 0, 1, 1);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(145, 14, 'Add Download', 'downloads/adddownload.php', 4, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(146, 14, 'Manage Downloads', 'downloads/managedownloads.php', 4, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(147, 13, '-seperator-', '', 10, 0, 1, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(148, 13, 'Forum Settings', 'forum/forumsettings.php', 11, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(188, 17, 'Add PM Folder', 'privatemessages/addfolder.php', 3, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(144, 13, 'Post Forum Attachments', 'forum/postattachments.php', 2, 0, 0, 1, 1);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(145, 14, 'Add Download', 'downloads/adddownload.php', 1, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(146, 14, 'Manage Downloads', 'downloads/managedownloads.php', 5, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(147, 13, '-seperator-', '', 11, 0, 1, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(148, 13, 'Forum Settings', 'forum/forumsettings.php', 12, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(188, 17, 'Add PM Folder', 'privatemessages/addfolder.php', 4, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(150, 1, '-seperator-', '', 38, 0, 1, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(187, 17, '-separator-', '', 2, 0, 1, 0, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(187, 17, '-separator-', '', 3, 0, 1, 0, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(165, 1, 'Plugin Manager', 'admin/pluginmanager.php', 39, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(171, 2, 'Set Promotion Power', 'membermanagement/setpromotionpower.php', 10, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(172, 2, '-seperator-', '', 19, 0, 1, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(173, 2, 'Set Member Inactive Status', 'membermanagement/iaoptions.php', 20, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(174, 2, 'View Inactive Requests', 'membermanagement/inactiverequests.php', 21, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(175, 3, 'Inactive Request', 'requestinactive.php', 9, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(175, 3, 'Inactive Request', 'requestinactive.php', 8, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(176, 3, 'Cancel IA', 'cancelinactive.php', 1, 0, 0, 1, 1);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(189, 17, 'Manage PM Folders', 'privatemessages/managefolders.php', 4, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(189, 17, 'Manage PM Folders', 'privatemessages/managefolders.php', 5, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(190, 9, 'HTML in News Posts', '', 1, 0, 0, 1, 1);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(191, 9, 'Manage Shoutbox Posts', 'news/manageshoutbox.php', 7, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(192, 2, 'Change Member Username', 'membermanagement/changememberusername.php', 6, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(193, 1, 'IP Banning', 'admin/ipbanning.php', 40, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(194, 18, 'Create a Poll', 'polls/createpoll.php', 3, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(195, 18, 'Manage Polls', 'polls/managepolls.php', 4, 0, 0, 1, 0);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(196, 18, 'View Poll Results', '', 2, 0, 0, 1, 1);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(200, 13, 'Move Topic', 'forum/movetopic.php', 0, 0, 0, 1, 1);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(201, 7, 'Manage All Squads', '', 0, 1, 0, 1, 1);
-INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(202, 12, 'Manage All Events', '', 0, 1, 0, 1, 1);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(194, 18, 'Create a Poll', 'polls/createpoll.php', 2, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(195, 18, 'Manage Polls', 'polls/managepolls.php', 3, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(196, 18, 'View Poll Results', '', 1, 0, 0, 1, 1);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(200, 13, 'Move Topic', 'forum/movetopic.php', 1, 0, 0, 1, 1);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(201, 7, 'Manage All Squads', '', 1, 1, 0, 1, 1);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(202, 12, 'Manage All Events', '', 1, 1, 0, 1, 1);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(203, 16, 'Add Social Media Icon', 'social/add.php', 1, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(204, 16, 'Manage Social Media Icons', 'social/manage.php', 2, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(211, 20, 'World Clock Settings', 'worldclocks/settings.php', 3, 0, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(209, 20, 'Add World Clock', 'worldclocks/addclock.php', 1, 1, 0, 1, 0);
 INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(210, 20, 'Manage World Clocks', 'worldclocks/manageclocks.php', 2, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(219, 3, 'E-mail Notification Settings', 'emailnotifications.php', 2, 0, 0, 1, 0);
+INSERT INTO `console` (`console_id`, `consolecategory_id`, `pagetitle`, `filename`, `sortnum`, `adminoption`, `sep`, `defaultconsole`, `hide`) VALUES(220, 17, 'E-mail Private Messages', '', 1, 1, 0, 1, 1);
 
 CREATE TABLE IF NOT EXISTS `consolecategory` (
   `consolecategory_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -225,6 +222,7 @@ INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `admino
 INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(16, 'Social Media Connect', 12, 0);
 INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(17, 'Private Messages', 13, 0);
 INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(18, 'Polls', 14, 0);
+INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(19, 'Donations', 15, 0);
 INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(20, 'World Clocks', 16, 0);
 
 CREATE TABLE IF NOT EXISTS `console_members` (
@@ -366,22 +364,74 @@ CREATE TABLE IF NOT EXISTS `downloads` (
   `description` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `downloadcount` int(11) NOT NULL,
   PRIMARY KEY (`download_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=44 ;
+
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(15, 5, 13, 1378008075, '', '218d8d91a9620cebcc6e3f695433c0dd.jpg', 'image/jpeg', 16527, 'downloads/files/forumattachment/split_13780080755222bc0bdd010', 'downloads/files/forumattachment/split_13780080755222bc0bdd2ef', '', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(16, 5, 13, 1378008075, '', '1323032613_trophy.png', 'image/png', 15325, 'downloads/files/forumattachment/split_13780080755222bc0bdf090', 'downloads/files/forumattachment/split_13780080755222bc0bdf36d', '', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(17, 5, 13, 1378008153, '', 'phpinfo.php', 'text/x-php', 62, 'downloads/files/forumattachment/split_13780081535222bc59dd1ac', 'downloads/files/forumattachment/split_13780081535222bc59dd4e3', '', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(19, 5, 13, 1378064028, '', 'iframe.html', 'text/html', 533, 'downloads/files/forumattachment/split_13780640275223969bf3c19', 'downloads/files/forumattachment/split_13780640275223969bf3e57', '', 3);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(20, 6, 13, 1378273105, 'Test Download 2', 'SplatterSocialIcons.zip', 'application/zip', 75393, 'downloads/split_13782731055226c7515288f', 'downloads/split_13782731055226c75152b34', 'sdfasdf', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(21, 6, 13, 1378273133, 'Test 2', 'php_filesplit2.zip', 'application/zip', 1588, 'downloads/split_13782731335226c76de5c3d', 'downloads/split_13782731335226c76de971a', 'asdfs', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(22, 6, 13, 1378273157, 'lol', 'CamStudioCodec-1.4-w32.zip', 'application/zip', 34510, 'downloads/split_13782731575226c7854346f', 'downloads/split_13782731575226c785436fc', 'wut', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(23, 7, 13, 1378273371, 'Flow', 'flowplayer-3.2.7.swf', 'application/x-shockwave-flash', 120221, 'downloads/split_13782733715226c85bceb21', 'downloads/split_13782733715226c85bd333e', 'yo', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(24, 7, 13, 1378276276, 'test final', 'flowplayer-3.2.7.swf', 'application/x-shockwave-flash', 120221, 'downloads/files/split_13782762765226d3b47718a', 'downloads/files/split_13782762765226d3b47750d', 'asdfs', 2);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(25, 6, 13, 1394083893, 'test', 'filters-2.0.zip', 'application/zip', 11870, 'downloads/files/split_139408389353180835dd0c7', 'downloads/files/split_139408389353180835dd528', 'asdf', 1);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(26, 5, 0, 1401776295, '', '1287666826226.png', 'image/png', 130930, 'downloads/files/forumattachment/split_1401776295538d68a7df419', 'downloads/files/forumattachment/split_1401776295538d68a7dfbe9', '', 1);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(27, 5, 0, 1401776368, '', '1287666826226.png', 'image/png', 130930, 'downloads/files/forumattachment/split_1401776368538d68f050f4f', 'downloads/files/forumattachment/split_1401776368538d68f051337', '', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(28, 5, 0, 1401776368, '', 'avatar_52de4d9a0c0c2.jpg', 'image/jpeg', 42069, 'downloads/files/forumattachment/split_1401776368538d68f059039', 'downloads/files/forumattachment/split_1401776368538d68f059809', '', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(31, 5, 0, 1412037813, '', 'testfile.zip', 'application/zip', 129, 'downloads/files/forumattachment/split_14120378135429fcb52e8ce', 'downloads/files/forumattachment/split_14120378135429fcb52ecb6', '', 5);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(32, 5, 0, 1412720198, '', 'testfile.txt', 'text/plain', 7, 'downloads/files/forumattachment/split_141272019854346646cb2ff', 'downloads/files/forumattachment/split_141272019854346646cbacf', '', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(33, 6, 13, 1419924685, 'test', 'Torch.png', '', 0, 'downloads/files/54a254cd12a35', 'downloads/files/', 'asdf', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(34, 6, 13, 1419924721, 'dsd', 'Torch.png', '', 0, 'downloads/files/54a254f17b730', 'downloads/files/', 'sd', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(35, 6, 13, 1419924831, 'dsd', 'Torch.png', '', 0, 'downloads/files/54a2555fec585', 'downloads/files/', 'sd', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(36, 6, 13, 1419924850, 'dsd', 'Torch.png', '', 0, 'downloads/files/54a25572f0697', 'downloads/files/', 'sd', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(37, 6, 13, 1419924936, 'dsd', 'Torch.png', '', 0, 'downloads/files/54a255c8750a4', 'downloads/files/', 'sd', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(38, 6, 13, 1419924975, 'dsd', 'Torch.png', '', 0, 'downloads/files/54a255ef2eba5', 'downloads/files/', 'sd', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(39, 6, 13, 1419925039, 'dsd', 'stripe-php-latest.zip', '', 0, 'downloads/files/54a2562f8cd92.zip', 'downloads/files/', 'sd', 2);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(40, 6, 13, 1419928345, 'sdfgsdfgs', 'chromecast-master.zip', '', 0, 'downloads/files/54a26319a7e4d.zip.download', 'downloads/files/', '', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(41, 5, 0, 1419928402, '', 'chromecast-master.zip', '', 0, 'downloads/files/forumattachment/54a26352a8e14zip.download', '', '', 0);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(42, 5, 0, 1419928500, '', 'chromecast-master.zip', '', 0, 'downloads/files/forumattachment/54a263b42a10c.zip.download', '', '', 1);
+INSERT INTO `downloads` (`download_id`, `downloadcategory_id`, `member_id`, `dateuploaded`, `name`, `filename`, `mimetype`, `filesize`, `splitfile1`, `splitfile2`, `description`, `downloadcount`) VALUES(43, 5, 0, 1419928700, '', 'chromecast-master.zip', '', 0, 'downloads/files/forumattachment/54a2647c3f6db.zip.download', '', '', 0);
 
 CREATE TABLE IF NOT EXISTS `download_extensions` (
   `extension_id` int(11) NOT NULL AUTO_INCREMENT,
   `downloadcategory_id` int(11) NOT NULL,
   `extension` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`extension_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=20 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=25 ;
 
 INSERT INTO `download_extensions` (`extension_id`, `downloadcategory_id`, `extension`) VALUES(10, 6, '.zip');
-INSERT INTO `download_extensions` (`extension_id`, `downloadcategory_id`, `extension`) VALUES(9, 5, '');
 INSERT INTO `download_extensions` (`extension_id`, `downloadcategory_id`, `extension`) VALUES(11, 6, '.rep');
 INSERT INTO `download_extensions` (`extension_id`, `downloadcategory_id`, `extension`) VALUES(17, 7, '.avi');
 INSERT INTO `download_extensions` (`extension_id`, `downloadcategory_id`, `extension`) VALUES(16, 7, '.wmv');
 INSERT INTO `download_extensions` (`extension_id`, `downloadcategory_id`, `extension`) VALUES(15, 7, '.mov');
 INSERT INTO `download_extensions` (`extension_id`, `downloadcategory_id`, `extension`) VALUES(18, 7, '.swf');
+INSERT INTO `download_extensions` (`extension_id`, `downloadcategory_id`, `extension`) VALUES(24, 5, '');
+
+CREATE TABLE IF NOT EXISTS `emailnotifications_queue` (
+  `emailnotificationsqueue_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` int(11) NOT NULL,
+  `senddate` int(11) NOT NULL,
+  `sent` int(11) NOT NULL,
+  `subject` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `message` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`emailnotificationsqueue_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `emailnotifications_settings` (
+  `emailnotificationsetting_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` int(11) NOT NULL,
+  `tournament_time` int(11) NOT NULL,
+  `tournament_unit` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `event_time` int(11) NOT NULL,
+  `event_unit` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `privatemessage` int(11) NOT NULL,
+  `email_privatemessage` int(11) NOT NULL,
+  `forum_topic` int(11) NOT NULL,
+  `forum_post` int(11) NOT NULL,
+  PRIMARY KEY (`emailnotificationsetting_id`),
+  UNIQUE KEY `member_id` (`member_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `eventchat` (
   `eventchat_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -442,7 +492,7 @@ CREATE TABLE IF NOT EXISTS `eventpositions` (
   `editinfo` int(11) NOT NULL,
   `eventpositions` int(11) NOT NULL,
   PRIMARY KEY (`position_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `events` (
   `event_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -471,7 +521,14 @@ CREATE TABLE IF NOT EXISTS `events_members` (
   `attendconfirm_member` int(11) NOT NULL,
   `hide` int(11) NOT NULL,
   PRIMARY KEY (`eventmember_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `event_reminder` (
+  `eventreminder_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emailnotificationsqueue_id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL,
+  PRIMARY KEY (`eventreminder_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `failban` (
   `failban_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -521,7 +578,7 @@ CREATE TABLE IF NOT EXISTS `forum_memberaccess` (
   `member_id` int(11) NOT NULL,
   `accessrule` int(11) NOT NULL,
   PRIMARY KEY (`forummemberaccess_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `forum_moderator` (
   `forummoderator_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -600,7 +657,34 @@ CREATE TABLE IF NOT EXISTS `gamesplayed_members` (
   `gamesplayed_id` int(11) NOT NULL,
   `member_id` int(11) NOT NULL,
   PRIMARY KEY (`gamemember_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=334 ;
+
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(326, 7, 13);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(325, 8, 13);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(328, 7, 48);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(324, 5, 13);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(327, 2, 48);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(323, 9, 13);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(322, 2, 13);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(321, 12, 13);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(218, 12, 65);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(219, 5, 69);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(220, 8, 69);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(221, 7, 69);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(222, 5, 70);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(223, 8, 70);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(224, 7, 70);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(225, 5, 71);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(226, 8, 71);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(227, 7, 71);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(228, 2, 72);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(229, 8, 72);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(230, 7, 72);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(329, 9, 75);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(330, 9, 76);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(331, 9, 77);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(332, 9, 78);
+INSERT INTO `gamesplayed_members` (`gamemember_id`, `gamesplayed_id`, `member_id`) VALUES(333, 9, 79);
 
 CREATE TABLE IF NOT EXISTS `gamestats` (
   `gamestats_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -628,6 +712,8 @@ INSERT INTO `gamestats` (`gamestats_id`, `gamesplayed_id`, `name`, `stattype`, `
 INSERT INTO `gamestats` (`gamestats_id`, `gamesplayed_id`, `name`, `stattype`, `calcop`, `firststat_id`, `secondstat_id`, `decimalspots`, `ordernum`, `hidestat`, `textinput`) VALUES(1, 8, 'K/D Ratio', 'calculate', 'div', 2, 3, 2, 0, 0, 0);
 INSERT INTO `gamestats` (`gamestats_id`, `gamesplayed_id`, `name`, `stattype`, `calcop`, `firststat_id`, `secondstat_id`, `decimalspots`, `ordernum`, `hidestat`, `textinput`) VALUES(2, 8, 'Kills', 'input', '', 0, 0, 0, 1, 0, 0);
 INSERT INTO `gamestats` (`gamestats_id`, `gamesplayed_id`, `name`, `stattype`, `calcop`, `firststat_id`, `secondstat_id`, `decimalspots`, `ordernum`, `hidestat`, `textinput`) VALUES(3, 8, 'Deaths', 'input', '', 0, 0, 0, 2, 0, 0);
+INSERT INTO `gamestats` (`gamestats_id`, `gamesplayed_id`, `name`, `stattype`, `calcop`, `firststat_id`, `secondstat_id`, `decimalspots`, `ordernum`, `hidestat`, `textinput`) VALUES(18, 12, 'New Stat', 'input', '', 0, 0, 1, 3, 0, 0);
+INSERT INTO `gamestats` (`gamestats_id`, `gamesplayed_id`, `name`, `stattype`, `calcop`, `firststat_id`, `secondstat_id`, `decimalspots`, `ordernum`, `hidestat`, `textinput`) VALUES(21, 7, 'Minecraft Username', 'input', '', 0, 0, 2, 0, 1, 1);
 
 CREATE TABLE IF NOT EXISTS `gamestats_members` (
   `gamestatmember_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -710,18 +796,16 @@ CREATE TABLE IF NOT EXISTS `medals` (
   `autorecruits` int(11) NOT NULL,
   `ordernum` int(11) NOT NULL,
   PRIMARY KEY (`medal_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=41 ;
 
+INSERT INTO `medals` (`medal_id`, `name`, `description`, `imageurl`, `imagewidth`, `imageheight`, `autodays`, `autorecruits`, `ordernum`) VALUES(10, 'Established Member Medal', 'Awarded after being in the clan for 30 days.', 'images/medals/medal_50d535cada75a.gif', 105, 30, 0, 0, 8);
 INSERT INTO `medals` (`medal_id`, `name`, `description`, `imageurl`, `imagewidth`, `imageheight`, `autodays`, `autorecruits`, `ordernum`) VALUES(2, 'Active Member Medal', 'Awarded for being an active clan member.', 'images/medals/medal_50d53660e7533.gif', 105, 30, 0, 0, 1);
 INSERT INTO `medals` (`medal_id`, `name`, `description`, `imageurl`, `imagewidth`, `imageheight`, `autodays`, `autorecruits`, `ordernum`) VALUES(3, 'Forum Hero', 'Awarded for being active on the forums.', 'images/medals/medal_50d536249845b.gif', 105, 30, 0, 0, 3);
 INSERT INTO `medals` (`medal_id`, `name`, `description`, `imageurl`, `imagewidth`, `imageheight`, `autodays`, `autorecruits`, `ordernum`) VALUES(4, 'Epic Medal', 'Awarded for being epic.', 'images/medals/medal_50d5361482940.gif', 105, 30, 0, 0, 4);
-INSERT INTO `medals` (`medal_id`, `name`, `description`, `imageurl`, `imagewidth`, `imageheight`, `autodays`, `autorecruits`, `ordernum`) VALUES(5, 'test medal55', 'test', '', 75, 100, 0, 0, 9);
 INSERT INTO `medals` (`medal_id`, `name`, `description`, `imageurl`, `imagewidth`, `imageheight`, `autodays`, `autorecruits`, `ordernum`) VALUES(6, 'Veteran Medal', 'Awarded after being in the clan for 90 days.', 'images/medals/medal_50d535a2dc0f8.gif', 105, 30, 90, 0, 7);
 INSERT INTO `medals` (`medal_id`, `name`, `description`, `imageurl`, `imagewidth`, `imageheight`, `autodays`, `autorecruits`, `ordernum`) VALUES(7, 'Old Timer Medal', 'Awarded for being in the clan for 120 days.', 'images/medals/medal_50d535ef43360.gif', 105, 30, 0, 0, 6);
 INSERT INTO `medals` (`medal_id`, `name`, `description`, `imageurl`, `imagewidth`, `imageheight`, `autodays`, `autorecruits`, `ordernum`) VALUES(8, 'Shooting Star Medal', 'Awarded for being in the clan 150 days.', 'images/medals/medal_50d536049e104.gif', 105, 30, 150, 0, 5);
 INSERT INTO `medals` (`medal_id`, `name`, `description`, `imageurl`, `imagewidth`, `imageheight`, `autodays`, `autorecruits`, `ordernum`) VALUES(9, 'Silver Shield Medal', 'Awarded to members who help the clan with Web Design/Graphics, etc...', 'images/medals/medal_50d53640a63e9.gif', 105, 30, 0, 0, 2);
-INSERT INTO `medals` (`medal_id`, `name`, `description`, `imageurl`, `imagewidth`, `imageheight`, `autodays`, `autorecruits`, `ordernum`) VALUES(10, 'Established Member Medal', 'Awarded after being in the clan for 30 days.', 'images/medals/medal_50d535cada75a.gif', 105, 30, 0, 0, 8);
-INSERT INTO `medals` (`medal_id`, `name`, `description`, `imageurl`, `imagewidth`, `imageheight`, `autodays`, `autorecruits`, `ordernum`) VALUES(22, 'test medal', 'test', 'images/medals/medal_534d83276e1ff.gif', 75, 100, 0, 0, 10);
 
 CREATE TABLE IF NOT EXISTS `medals_members` (
   `medalmember_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -811,7 +895,6 @@ CREATE TABLE IF NOT EXISTS `menuitem_custompage` (
 INSERT INTO `menuitem_custompage` (`menucustompage_id`, `menuitem_id`, `custompage_id`, `prefix`, `linktarget`, `textalign`) VALUES(11, 90, 12, '<b>&middot;</b> ', '', 'left');
 INSERT INTO `menuitem_custompage` (`menucustompage_id`, `menuitem_id`, `custompage_id`, `prefix`, `linktarget`, `textalign`) VALUES(10, 89, 11, '<b>&middot;</b> ', '', 'left');
 
-
 CREATE TABLE IF NOT EXISTS `menuitem_image` (
   `menuimage_id` int(11) NOT NULL AUTO_INCREMENT,
   `menuitem_id` int(11) NOT NULL,
@@ -832,7 +915,7 @@ CREATE TABLE IF NOT EXISTS `menuitem_link` (
   `prefix` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `textalign` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`menulink_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=48 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=50 ;
 
 INSERT INTO `menuitem_link` (`menulink_id`, `menuitem_id`, `link`, `linktarget`, `prefix`, `textalign`) VALUES(30, 54, 'ranks.php', '', '<b>&middot;</b> ', 'left');
 INSERT INTO `menuitem_link` (`menulink_id`, `menuitem_id`, `link`, `linktarget`, `prefix`, `textalign`) VALUES(31, 55, 'medals.php', '', '<b>&middot;</b> ', 'left');
@@ -845,13 +928,8 @@ INSERT INTO `menuitem_link` (`menulink_id`, `menuitem_id`, `link`, `linktarget`,
 INSERT INTO `menuitem_link` (`menulink_id`, `menuitem_id`, `link`, `linktarget`, `prefix`, `textalign`) VALUES(39, 78, 'tournaments', '', '<b>&middot;</b> ', 'left');
 INSERT INTO `menuitem_link` (`menulink_id`, `menuitem_id`, `link`, `linktarget`, `prefix`, `textalign`) VALUES(40, 79, 'events', '', '<b>&middot;</b> ', 'left');
 INSERT INTO `menuitem_link` (`menulink_id`, `menuitem_id`, `link`, `linktarget`, `prefix`, `textalign`) VALUES(41, 80, 'forum', '', '<b>&middot;</b> ', 'left');
-INSERT INTO `menuitem_link` (`menulink_id`, `menuitem_id`, `link`, `linktarget`, `prefix`, `textalign`) VALUES(42, 82, 'news', '', '', 'left');
-INSERT INTO `menuitem_link` (`menulink_id`, `menuitem_id`, `link`, `linktarget`, `prefix`, `textalign`) VALUES(43, 83, 'members.php', '', '', 'left');
-INSERT INTO `menuitem_link` (`menulink_id`, `menuitem_id`, `link`, `linktarget`, `prefix`, `textalign`) VALUES(44, 84, 'tournaments', '', '', 'left');
-INSERT INTO `menuitem_link` (`menulink_id`, `menuitem_id`, `link`, `linktarget`, `prefix`, `textalign`) VALUES(45, 85, 'squads', '', '', 'left');
-INSERT INTO `menuitem_link` (`menulink_id`, `menuitem_id`, `link`, `linktarget`, `prefix`, `textalign`) VALUES(46, 86, 'events', '', '', 'left');
-INSERT INTO `menuitem_link` (`menulink_id`, `menuitem_id`, `link`, `linktarget`, `prefix`, `textalign`) VALUES(47, 87, 'forum', '', '', 'left');
-
+INSERT INTO `menuitem_link` (`menulink_id`, `menuitem_id`, `link`, `linktarget`, `prefix`, `textalign`) VALUES(48, 91, 'signup.php', '', '<b>&middot;</b> ', 'left');
+INSERT INTO `menuitem_link` (`menulink_id`, `menuitem_id`, `link`, `linktarget`, `prefix`, `textalign`) VALUES(49, 92, 'forgotpassword.php', '', '<b>&middot;</b> ', 'left');
 
 CREATE TABLE IF NOT EXISTS `menuitem_shoutbox` (
   `menushoutbox_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -866,7 +944,6 @@ CREATE TABLE IF NOT EXISTS `menuitem_shoutbox` (
 
 INSERT INTO `menuitem_shoutbox` (`menushoutbox_id`, `menuitem_id`, `width`, `height`, `percentwidth`, `percentheight`, `textboxwidth`) VALUES(1, 2, 0, 0, 0, 0, 0);
 
-
 CREATE TABLE IF NOT EXISTS `menu_category` (
   `menucategory_id` int(11) NOT NULL AUTO_INCREMENT,
   `section` int(11) NOT NULL,
@@ -880,15 +957,13 @@ CREATE TABLE IF NOT EXISTS `menu_category` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=30 ;
 
 INSERT INTO `menu_category` (`menucategory_id`, `section`, `name`, `sortnum`, `headertype`, `headercode`, `accesstype`, `hide`) VALUES(5, 0, 'Forum Activity', 4, 'customcode', 'FORUM ACTIVITY', 0, 0);
-INSERT INTO `menu_category` (`menucategory_id`, `section`, `name`, `sortnum`, `headertype`, `headercode`, `accesstype`, `hide`) VALUES(1, 1, 'Shoutbox', 3, 'customcode', 'SHOUTBOX', 0, 0);
-INSERT INTO `menu_category` (`menucategory_id`, `section`, `name`, `sortnum`, `headertype`, `headercode`, `accesstype`, `hide`) VALUES(4, 1, 'Newest Members', 4, 'customcode', 'NEWEST MEMBERS', 0, 0);
-INSERT INTO `menu_category` (`menucategory_id`, `section`, `name`, `sortnum`, `headertype`, `headercode`, `accesstype`, `hide`) VALUES(24, 1, 'Log In', 1, 'customcode', 'LOG IN', 2, 0);
-INSERT INTO `menu_category` (`menucategory_id`, `section`, `name`, `sortnum`, `headertype`, `headercode`, `accesstype`, `hide`) VALUES(25, 1, 'Logged In', 2, 'customcode', 'LOGGED IN', 1, 0);
+INSERT INTO `menu_category` (`menucategory_id`, `section`, `name`, `sortnum`, `headertype`, `headercode`, `accesstype`, `hide`) VALUES(1, 1, 'Shoutbox', 1, 'customcode', 'SHOUTBOX', 0, 0);
+INSERT INTO `menu_category` (`menucategory_id`, `section`, `name`, `sortnum`, `headertype`, `headercode`, `accesstype`, `hide`) VALUES(4, 1, 'Newest Members', 3, 'customcode', 'NEWEST MEMBERS', 0, 0);
+INSERT INTO `menu_category` (`menucategory_id`, `section`, `name`, `sortnum`, `headertype`, `headercode`, `accesstype`, `hide`) VALUES(24, 2, 'Log In', 1, 'customcode', '', 2, 0);
+INSERT INTO `menu_category` (`menucategory_id`, `section`, `name`, `sortnum`, `headertype`, `headercode`, `accesstype`, `hide`) VALUES(25, 2, 'Logged In', 2, 'customcode', '', 1, 0);
 INSERT INTO `menu_category` (`menucategory_id`, `section`, `name`, `sortnum`, `headertype`, `headercode`, `accesstype`, `hide`) VALUES(16, 0, 'Poll', 3, 'customcode', 'POLL', 0, 0);
 INSERT INTO `menu_category` (`menucategory_id`, `section`, `name`, `sortnum`, `headertype`, `headercode`, `accesstype`, `hide`) VALUES(17, 0, 'Main Menu', 1, 'customcode', 'MAIN MENU', 0, 0);
-INSERT INTO `menu_category` (`menucategory_id`, `section`, `name`, `sortnum`, `headertype`, `headercode`, `accesstype`, `hide`) VALUES(28, 2, 'Top Menu', 1, 'customcode', '', 0, 0);
 INSERT INTO `menu_category` (`menucategory_id`, `section`, `name`, `sortnum`, `headertype`, `headercode`, `accesstype`, `hide`) VALUES(29, 0, 'Top Players', 2, 'customcode', 'TOP PLAYERS', 0, 0);
-
 
 CREATE TABLE IF NOT EXISTS `menu_item` (
   `menuitem_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -900,7 +975,7 @@ CREATE TABLE IF NOT EXISTS `menu_item` (
   `hide` int(1) NOT NULL,
   `sortnum` int(11) NOT NULL,
   PRIMARY KEY (`menuitem_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=91 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=93 ;
 
 INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES(2, 1, 'Shoutbox', 'shoutbox', 1, 0, 0, 1);
 INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES(4, 4, 'Newest Members', 'newestmembers', 0, 0, 0, 1);
@@ -920,14 +995,10 @@ INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `
 INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES(79, 17, 'Events', 'link', 40, 0, 0, 7);
 INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES(80, 17, 'Forum', 'link', 41, 0, 0, 13);
 INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES(81, 29, 'Top Player Links', 'top-players', 0, 0, 0, 1);
-INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES(82, 28, 'News', 'link', 42, 0, 0, 1);
-INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES(83, 28, 'Members', 'link', 43, 0, 0, 2);
-INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES(84, 28, 'Tournaments', 'link', 44, 0, 0, 3);
-INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES(85, 28, 'Squads', 'link', 45, 0, 0, 4);
-INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES(86, 28, 'Events', 'link', 46, 0, 0, 5);
-INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES(87, 28, 'Forum', 'link', 47, 0, 0, 6);
 INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES(89, 17, 'History', 'custompage', 10, 0, 0, 11);
 INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES(90, 17, 'Rules', 'custompage', 11, 0, 0, 12);
+INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES(91, 17, 'Sign Up', 'link', 48, 2, 0, 14);
+INSERT INTO `menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES(92, 17, 'Forgot Password', 'link', 49, 2, 0, 15);
 
 CREATE TABLE IF NOT EXISTS `news` (
   `news_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -959,7 +1030,7 @@ CREATE TABLE IF NOT EXISTS `plugins` (
   `apikey` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `dateinstalled` int(11) NOT NULL,
   PRIMARY KEY (`plugin_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 CREATE TABLE IF NOT EXISTS `plugin_config` (
   `pluginconfig_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -976,7 +1047,7 @@ CREATE TABLE IF NOT EXISTS `plugin_pages` (
   `pagepath` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `sortnum` int(11) NOT NULL,
   PRIMARY KEY (`pluginpage_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 CREATE TABLE IF NOT EXISTS `polls` (
   `poll_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1131,12 +1202,12 @@ CREATE TABLE IF NOT EXISTS `rankcategory` (
   PRIMARY KEY (`rankcategory_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=22 ;
 
-INSERT INTO `rankcategory` (`rankcategory_id`, `name`, `imageurl`, `ordernum`, `hidecat`, `useimage`, `description`, `imagewidth`, `imageheight`, `color`) VALUES(1, 'Commanders', '', 6, 0, 0, 'The leaders of the clan', 0, 0, '#8A1212');
+INSERT INTO `rankcategory` (`rankcategory_id`, `name`, `imageurl`, `ordernum`, `hidecat`, `useimage`, `description`, `imagewidth`, `imageheight`, `color`) VALUES(1, 'Commanders', '', 6, 0, 0, '', 0, 0, '#8A1212');
 INSERT INTO `rankcategory` (`rankcategory_id`, `name`, `imageurl`, `ordernum`, `hidecat`, `useimage`, `description`, `imagewidth`, `imageheight`, `color`) VALUES(2, 'Generals', '', 4, 0, 0, '', 0, 0, '#6C7273');
 INSERT INTO `rankcategory` (`rankcategory_id`, `name`, `imageurl`, `ordernum`, `hidecat`, `useimage`, `description`, `imagewidth`, `imageheight`, `color`) VALUES(7, 'Warrant Officers', '', 2, 0, 0, '', 0, 0, '#67A300');
 INSERT INTO `rankcategory` (`rankcategory_id`, `name`, `imageurl`, `ordernum`, `hidecat`, `useimage`, `description`, `imagewidth`, `imageheight`, `color`) VALUES(6, 'Officers', '', 3, 0, 0, '', 0, 0, '#048500');
 INSERT INTO `rankcategory` (`rankcategory_id`, `name`, `imageurl`, `ordernum`, `hidecat`, `useimage`, `description`, `imagewidth`, `imageheight`, `color`) VALUES(8, 'Enlisted', '', 1, 0, 0, '', 0, 0, '#4A2000');
-INSERT INTO `rankcategory` (`rankcategory_id`, `name`, `imageurl`, `ordernum`, `hidecat`, `useimage`, `description`, `imagewidth`, `imageheight`, `color`) VALUES(16, 'Co-Commanders', '', 5, 0, 0, 'asdfsadfff', 0, 0, '#B35A1E');
+INSERT INTO `rankcategory` (`rankcategory_id`, `name`, `imageurl`, `ordernum`, `hidecat`, `useimage`, `description`, `imagewidth`, `imageheight`, `color`) VALUES(16, 'Co-Commanders', '', 5, 0, 0, '', 0, 0, '#B35A1E');
 
 CREATE TABLE IF NOT EXISTS `ranks` (
   `rank_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1189,7 +1260,7 @@ CREATE TABLE IF NOT EXISTS `rank_privileges` (
   `rank_id` int(11) NOT NULL,
   `console_id` int(11) NOT NULL,
   PRIMARY KEY (`privilege_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2683 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2779 ;
 
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2, 1, 2);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(3, 1, 3);
@@ -1571,7 +1642,6 @@ INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1522, 43, 74);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1048, 50, 80);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1049, 49, 80);
-INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1839, 1, 135);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2088, 42, 93);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1520, 43, 73);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1264, 44, 85);
@@ -1609,8 +1679,6 @@ INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2665, 41, 91);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2664, 41, 31);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2663, 41, 25);
-INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1106, 1, 96);
-INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1107, 1, 97);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1138, 1, 99);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1139, 1, 100);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1140, 1, 101);
@@ -1783,7 +1851,6 @@ INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1711, 1, 123);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2649, 41, 8);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1715, 1, 1);
-INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2648, 41, 111);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2647, 41, 92);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2646, 41, 51);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2645, 41, 7);
@@ -1818,7 +1885,6 @@ INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1822, 65, 125);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1823, 66, 125);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1824, 1, 125);
-INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1829, 1, 121);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(1831, 1, 9);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2619, 41, 74);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2148, 31, 71);
@@ -2094,6 +2160,102 @@ INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2587, 65, 98);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2588, 66, 98);
 INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2589, 1, 98);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2683, 50, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2684, 49, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2685, 41, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2686, 42, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2687, 43, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2688, 44, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2689, 45, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2690, 46, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2691, 47, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2692, 48, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2693, 31, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2694, 51, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2695, 52, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2696, 53, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2697, 54, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2698, 55, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2699, 56, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2700, 57, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2701, 58, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2702, 59, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2703, 60, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2704, 61, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2705, 62, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2706, 63, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2707, 64, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2708, 65, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2709, 66, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2710, 1, 219);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2711, 41, 209);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2712, 1, 209);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2713, 41, 210);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2714, 1, 210);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2715, 41, 211);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2716, 1, 211);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2717, 41, 196);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2718, 1, 196);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2719, 41, 194);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2720, 1, 194);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2721, 41, 195);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2722, 1, 195);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2723, 41, 220);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2724, 1, 220);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2725, 41, 203);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2726, 1, 203);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2727, 41, 204);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2728, 1, 204);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2729, 41, 145);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2730, 1, 145);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2731, 41, 146);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2732, 1, 146);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2733, 41, 200);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2734, 1, 200);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2735, 41, 118);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2736, 1, 118);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2737, 41, 119);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2738, 1, 119);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2739, 41, 121);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2740, 1, 121);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2741, 41, 122);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2742, 1, 122);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2743, 41, 124);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2744, 1, 124);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2745, 41, 147);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2746, 1, 147);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2747, 41, 120);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2748, 1, 120);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2749, 41, 148);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2750, 1, 148);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2751, 41, 202);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2752, 1, 202);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2753, 41, 126);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2754, 1, 126);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2755, 41, 191);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2756, 1, 191);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2757, 41, 111);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2758, 1, 111);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2759, 41, 96);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2760, 1, 96);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2761, 41, 97);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2762, 1, 97);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2763, 41, 129);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2764, 1, 129);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2765, 41, 127);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2766, 1, 127);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2767, 41, 128);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2768, 1, 128);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2769, 41, 172);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2770, 1, 172);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2771, 41, 173);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2772, 1, 173);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2773, 41, 174);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2774, 1, 174);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2775, 41, 135);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2776, 1, 135);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2777, 41, 201);
+INSERT INTO `rank_privileges` (`privilege_id`, `rank_id`, `console_id`) VALUES(2778, 1, 201);
 
 CREATE TABLE IF NOT EXISTS `social` (
   `social_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -2106,13 +2268,13 @@ CREATE TABLE IF NOT EXISTS `social` (
   `ordernum` int(11) NOT NULL,
   PRIMARY KEY (`social_id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=20 ;
 
-INSERT INTO `social` (`social_id`, `name`, `icon`, `iconwidth`, `iconheight`, `url`, `tooltip`, `ordernum`) VALUES(1, 'Facebook', 'images/socialmedia/facebook.png', 24, 24, '', 'Entire entire Facebook URL.', 5);
-INSERT INTO `social` (`social_id`, `name`, `icon`, `iconwidth`, `iconheight`, `url`, `tooltip`, `ordernum`) VALUES(2, 'Twitter', 'images/socialmedia/twitter.png', 24, 24, 'http://www.twitter.com/', 'Enter your Twitter username.', 4);
-INSERT INTO `social` (`social_id`, `name`, `icon`, `iconwidth`, `iconheight`, `url`, `tooltip`, `ordernum`) VALUES(3, 'Youtube', 'images/socialmedia/youtube.png', 24, 24, 'http://youtube.com/', 'Enter your Youtube username.', 3);
-INSERT INTO `social` (`social_id`, `name`, `icon`, `iconwidth`, `iconheight`, `url`, `tooltip`, `ordernum`) VALUES(4, 'Google Plus', 'images/socialmedia/googleplus.png', 24, 24, '', 'Enter entire Google Plus URL.', 2);
-INSERT INTO `social` (`social_id`, `name`, `icon`, `iconwidth`, `iconheight`, `url`, `tooltip`, `ordernum`) VALUES(5, 'Twitch', 'images/socialmedia/twitch.png', 24, 24, 'http://twitch.tv/', 'Enter your Twitch username.', 1);
+INSERT INTO `social` (`social_id`, `name`, `icon`, `iconwidth`, `iconheight`, `url`, `tooltip`, `ordernum`) VALUES(1, 'Facebook', 'images/socialmedia/facebook.png', 24, 24, '', 'Entire entire Facebook URL.', 4);
+INSERT INTO `social` (`social_id`, `name`, `icon`, `iconwidth`, `iconheight`, `url`, `tooltip`, `ordernum`) VALUES(2, 'Twitter', 'images/socialmedia/twitter.png', 24, 24, 'http://www.twitter.com/', 'Enter your Twitter username.', 3);
+INSERT INTO `social` (`social_id`, `name`, `icon`, `iconwidth`, `iconheight`, `url`, `tooltip`, `ordernum`) VALUES(3, 'Youtube', 'images/socialmedia/youtube.png', 24, 24, 'http://youtube.com/', 'Enter your Youtube username.', 2);
+INSERT INTO `social` (`social_id`, `name`, `icon`, `iconwidth`, `iconheight`, `url`, `tooltip`, `ordernum`) VALUES(4, 'Google Plus', 'images/socialmedia/googleplus.png', 24, 24, '', 'Enter entire Google Plus URL.', 1);
+INSERT INTO `social` (`social_id`, `name`, `icon`, `iconwidth`, `iconheight`, `url`, `tooltip`, `ordernum`) VALUES(19, 'Twitch', 'plugins/twitch/images/twitch.png', 24, 24, 'http://twitch.tv/', 'Enter your Twitch username', 5);
 
 CREATE TABLE IF NOT EXISTS `social_members` (
   `socialmember_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -2145,7 +2307,7 @@ CREATE TABLE IF NOT EXISTS `squadinvites` (
   `message` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `startingrank_id` int(11) NOT NULL,
   PRIMARY KEY (`squadinvite_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 CREATE TABLE IF NOT EXISTS `squadnews` (
   `squadnews_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -2277,6 +2439,7 @@ CREATE TABLE IF NOT EXISTS `tournaments` (
   `password` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `requirereplay` int(10) NOT NULL,
   `access` int(11) NOT NULL,
+  `imageurl` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`tournament_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -2288,20 +2451,18 @@ CREATE TABLE IF NOT EXISTS `tournamentteams` (
   PRIMARY KEY (`tournamentteam_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `tournament_connect` (
-  `tournamentconnect_id` int(11) NOT NULL AUTO_INCREMENT,
-  `tournament_id` int(11) NOT NULL,
-  `clanname` varchar(255) NOT NULL,
-  `clanurl` text NOT NULL,
-  `connected` int(11) NOT NULL,
-  PRIMARY KEY (`tournamentconnect_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `tournament_managers` (
   `tournamentmanager_id` int(11) NOT NULL AUTO_INCREMENT,
   `tournament_id` int(11) NOT NULL,
   `member_id` int(11) NOT NULL,
   PRIMARY KEY (`tournamentmanager_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `tournament_reminder` (
+  `tournamentreminder_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emailnotificationqueue_id` int(11) NOT NULL,
+  `tournament_id` int(11) NOT NULL,
+  PRIMARY KEY (`tournamentreminder_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `websiteinfo` (
@@ -2310,13 +2471,13 @@ CREATE TABLE IF NOT EXISTS `websiteinfo` (
   `value` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`websiteinfo_id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=66 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=69 ;
 
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(1, 'clanname', 'Bluethrust Clan Website Manager: Clan Scripts v4');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(2, 'clantag', '[bT]');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(3, 'preventhack', '5555');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(4, 'maxdsl', '0');
-INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(5, 'theme', 'ribbonwow');
+INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(5, 'theme', 'destiny');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(6, 'lowdsl', '#00FF00');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(7, 'meddsl', '#FFFF52');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(8, 'highdsl', '#F75B5B');
@@ -2327,10 +2488,10 @@ INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(12, 'maxdip
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(13, 'mostonline', '2');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(14, 'mostonlinedate', '1362280462');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(15, 'memberregistration', '0');
-INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(16, 'memberapproval', '1');
+INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(16, 'memberapproval', '0');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(17, 'medalorder', '1');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(18, 'newsticker', 'Welcome to the Site!');
-INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(19, 'newstickercolor', '#FFFFFF');
+INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(19, 'newstickercolor', '#000000');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(20, 'newstickersize', '14');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(21, 'newstickerbold', '');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(22, 'newstickeritalic', '');
@@ -2354,8 +2515,8 @@ INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(39, 'forum_
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(40, 'forum_rankheight', '75');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(41, 'forum_rankwidthunit', 'px');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(42, 'forum_rankheightunit', 'px');
-INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(43, 'forum_postsperpage', '10');
-INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(44, 'forum_topicsperpage', '');
+INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(43, 'forum_postsperpage', '0');
+INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(44, 'forum_topicsperpage', '0');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(45, 'forum_imagewidth', '500');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(46, 'forum_imageheight', '500');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(47, 'forum_sigwidth', '500');
@@ -2365,7 +2526,7 @@ INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(50, 'forum_
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(51, 'forum_sigwidthunit', 'px');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(52, 'forum_sigheightunit', 'px');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(53, 'forum_linkimages', '1');
-INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(54, 'forum_hidesignatures', '0');
+INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(54, 'forum_hidesignatures', '');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(55, 'forum_avatarwidth', '50');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(56, 'forum_avatarheight', '50');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(57, 'forum_avatarwidthunit', 'px');
@@ -2377,3 +2538,6 @@ INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(62, 'news_p
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(63, 'default_timezone', 'America/New_York');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(64, 'date_format', 'l, F j, Y');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(65, 'display_date', '1');
+INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(66, 'emailqueue_lastsent', '1420017816');
+INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(67, 'forum_newindicator', '5');
+INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(68, 'emailqueue_delay', '30');

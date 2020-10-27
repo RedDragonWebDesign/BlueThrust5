@@ -43,7 +43,7 @@ if($_GET['rID'] == "") {
 		<div id='deleteMessage' style='display: none'></div>
 		<div id='contentDiv'>
 	";
-	require_once("include/ranklist.php");
+	include("include/ranklist.php");
 	echo "
 		</div>
 		
@@ -139,7 +139,7 @@ elseif($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $s
 	
 	
 	
-	if(($_POST['submit'] ?? '')) {
+	if($_POST['submit']) {
 		
 		// Check Rank Name
 		
@@ -232,7 +232,7 @@ elseif($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $s
 	}
 	
 	
-	if(!($_POST['submit'] ?? '')) {
+	if(!$_POST['submit']) {
 		
 		$countRanks = 0;
 		$rankoptions = "";

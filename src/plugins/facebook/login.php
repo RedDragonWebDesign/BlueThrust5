@@ -14,12 +14,12 @@
 
 // Config File
 $prevFolder = "../../";
-require_once($prevFolder."_setup.php");
+include($prevFolder."_setup.php");
 
 // Classes needed for login.php
 
-require_once("facebook.php");
-require_once($prevFolder."classes/member.php");
+include("facebook.php");
+include_once($prevFolder."classes/member.php");
 
 
 if(trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
@@ -36,7 +36,7 @@ $countErrors = 0;
 
 // Start Page
 $dispBreadCrumb = "<a href='".$MAIN_ROOT."'>Home</a> > Log In";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 if(constant("LOGGED_IN")) {
 	
@@ -177,7 +177,7 @@ echo "
 	</div>
 ";
 
-require_once("themes/".$THEME."/_footer.php");
+include("themes/".$THEME."/_footer.php");
 
 
 ?>

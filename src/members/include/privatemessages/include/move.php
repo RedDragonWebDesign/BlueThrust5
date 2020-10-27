@@ -12,10 +12,10 @@
  *
  */
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/rank.php");
-require_once("../../../../classes/pmfolder.php");
+include("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/rank.php");
+include_once("../../../../classes/pmfolder.php");
 
 $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
@@ -37,7 +37,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		$pmFolderObj->move($_POST['folderDir']);
 		$pmFolderObj->resortOrder();
 		$_GET['cID'] = $cID;
-		require_once("folderlist.php");
+		include("folderlist.php");
 	}
 
 }

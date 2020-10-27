@@ -26,7 +26,7 @@ else {
 
 $cID = $_GET['cID'];
 
-	require_once("../classes/news.php");
+	include_once("../classes/news.php");
 	$manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
 	$postNewsCID = $consoleObj->findConsoleIDByName("Post News");
 

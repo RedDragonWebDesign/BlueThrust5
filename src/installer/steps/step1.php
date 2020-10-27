@@ -12,7 +12,7 @@
 ?>
 
 <div id='newThemeNeeded' class='errorDiv' style='display: none'>
-	<b>NOTE:</b> A major update to themes has been made in R15.  Please download a new copy of the theme you were using here: <a href='http://bluethrust.com/themes' target='_blank'>http://bluethrust.com/themes</a>.  
+	<b>NOTE:</b> A major update to themes has been made in R15.  If you haven't done so already, please download a new copy of the theme you were using here: <a href='http://bluethrust.com/themes' target='_blank'>http://bluethrust.com/themes</a>.  
 </div>
 
 <form action='index.php?step=2' method='post'>

@@ -12,11 +12,11 @@
  *
  */
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-require_once("../../../../classes/rank.php");
-require_once("../../../../classes/consoleoption.php");
-require_once("../../../../classes/consolecategory.php");
+include_once("../../../../_setup.php");
+include_once("../../../../classes/member.php");
+include_once("../../../../classes/rank.php");
+include_once("../../../../classes/consoleoption.php");
+include_once("../../../../classes/consolecategory.php");
 
 $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
@@ -42,7 +42,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			$consoleObj->delete();
 			$consoleObj->resortOrder();
 			$_GET['cID'] = $cID;
-			require_once("main.php");
+			include("main.php");
 	
 
 		}

@@ -12,12 +12,16 @@
  *
  */
 
+
+
+
 // Config File
 $prevFolder = "../";
 
-require_once($prevFolder."_setup.php");
+include($prevFolder."_setup.php");
 
 // Classes needed for index.php
+
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
@@ -33,16 +37,16 @@ if($ipbanObj->select($IP_ADDRESS, false)) {
 
 }
 
+
 // Start Page
 $PAGE_NAME = "Diplomacy - ";
-require_once($prevFolder."themes/".$THEME."/_header.php");
+include($prevFolder."themes/".$THEME."/_header.php");
 
 $diplomacyStatusObj = new BasicOrder($mysqli, "diplomacy_status", "diplomacystatus_id");
 
 $breadcrumbObj->setTitle("Diplomacy");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Diplomacy");
-
 ?>
 
 <div class='breadCrumbTitle'>Diplomacy</div>
@@ -130,19 +134,22 @@ $breadcrumbObj->addCrumb("Diplomacy");
 			";
 		
 		while($row = $result->fetch_assoc()) {
+			
+			
 			if(strpos($row['imageurl'], "http://") === false) {
 				$row['imageurl'] = "../".$row['imageurl'];
 			}
 			
 			$dispImgWidth = "";
 			$dispImgHeight = "";
-			if( isset($statusInfo['imagewidth']) && $statusInfo['imagewidth'] != 0 ) {
+			if($statusInfo['imagewidth'] != 0) {
 				$dispImgWidth = " width = '".$statusInfo['imagewidth']."' ";
 			}
 			
-			if( isset($statusInfo['imageheight']) && $statusInfo['imageheight'] != 0 ) {
-				$dispImgHeight = " height = '".$statusInfo['imageheight']."' ";
+			if($statusInfo['imageheight'] != 0) {
+				$dispImgWidth = " height = '".$statusInfo['imageheight']."' ";
 			}
+			
 			
 			$addCSS = "";
 			if($counter%2 == 0) {
@@ -161,6 +168,7 @@ $breadcrumbObj->addCrumb("Diplomacy");
 		echo "
 			</table>
 			</div>
+		
 		";
 	}
 		
@@ -170,6 +178,7 @@ $breadcrumbObj->addCrumb("Diplomacy");
 
 <?php
 
-require_once($prevFolder."themes/".$THEME."/_footer.php");
+include($prevFolder."themes/".$THEME."/_footer.php");
+
 
 ?>

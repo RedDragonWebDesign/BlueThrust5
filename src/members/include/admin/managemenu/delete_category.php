@@ -12,7 +12,7 @@
  *
  */
 $prevFolder = "../../../../";
-require_once("../../../../_setup.php");
+include_once("../../../../_setup.php");
 
 
 $consoleObj = new ConsoleOption($mysqli);
@@ -72,7 +72,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			
 			$menuCatObj->delete();
 			$menuCatObj->resortOrder();
-			require_once("include/menucategorylist.php");
+			include("include/menucategorylist.php");
 			/*
 			echo "
 			

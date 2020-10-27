@@ -23,13 +23,13 @@ else {
 	}
 }
 
-require_once($prevFolder."classes/btupload.php");
-require_once($prevFolder."classes/game.php");
+include_once($prevFolder."classes/btupload.php");
+include_once($prevFolder."classes/game.php");
 $cID = $_GET['cID'];
 
 $gameObj = new Game($mysqli);
 
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	// Check Game Name
 	$checkGameName = trim($_POST['gamename']);
@@ -245,7 +245,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	$_SESSION['btStatCache'] = array();
 	echo "
 	<form action='console.php?cID=$cID' method='post' enctype='multipart/form-data'>

@@ -53,7 +53,7 @@ echo "
 <div id='contentDiv'>
 ";
 
-require_once("include/applist.php");
+include("include/applist.php");
 
 echo "</div>
 

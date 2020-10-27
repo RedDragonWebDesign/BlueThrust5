@@ -12,7 +12,7 @@
  *
  */
 
-require_once("basic.php");
+include_once("basic.php");
 
 class BasicOrder extends Basic {
 
@@ -173,11 +173,13 @@ class BasicOrder extends Basic {
 	
 		if($intOrderNumID == "first") {
 			// "(no other categories)" selected, check to see if there are actually no other categories
-			
+
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName);
 			$num_rows = $result->num_rows;
 	
+	
 			if($num_rows == 0 || ($num_rows == 1 && $blnEdit)) {
+
 				$returnVal = 1;
 			}
 	

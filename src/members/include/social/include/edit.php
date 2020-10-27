@@ -36,7 +36,7 @@ $breadcrumbObj->addCrumb($socialInfo['name']);
 $breadcrumbObj->updateBreadcrumb();
 
 define("SOCIALMEDIA_FORM", true);
-require_once(BASE_DIRECTORY."members/include/social/socialmedia_form.php");
+include(BASE_DIRECTORY."members/include/social/socialmedia_form.php");
 
 $socialOrder = $socialObj->findBeforeAfter();
 

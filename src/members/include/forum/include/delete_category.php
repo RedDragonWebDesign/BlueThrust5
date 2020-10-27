@@ -13,9 +13,7 @@
  */
 
 
-require_once("../../../../_setup.php");
-require_once("../../../../classes/member.php");
-
+include("../../../../_setup.php");
 
 $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
@@ -132,7 +130,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $categoryObj->select($_PO
 		
 		$categoryObj->delete();
 		$categoryObj->resortOrder();
-		require_once("main_managecategory.php");
+		include("main_managecategory.php");
 		
 	}
 	

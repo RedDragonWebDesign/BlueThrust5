@@ -1,8 +1,8 @@
 <?php
 
-	require_once("../../_setup.php");
-	require_once("classes/donate-paypalclass.php");
-	require_once("classes/campaign.php");
+	include("../../_setup.php");
+	include("classes/donate-paypalclass.php");
+	include_once("classes/campaign.php");
 	
 	$donationPlugin = new btPlugin($mysqli);
 	$campaignObj = new DonationCampaign($mysqli);

@@ -28,7 +28,7 @@ $cID = $_GET['cID'];
 $customPageObj = new Basic($mysqli, "custompages", "custompage_id");
 $countErrors = 0;
 $dispError = "";
-if(($_POST['submit'] ?? '')) {
+if($_POST['submit']) {
 	
 	
 	if(trim($_POST['pagename']) == "") {
@@ -78,7 +78,7 @@ if(($_POST['submit'] ?? '')) {
 }
 
 
-if(!($_POST['submit'] ?? '')) {
+if(!$_POST['submit']) {
 	
 	$addMenuItemCID = $consoleObj->findConsoleIDByName("Add Menu Item");
 	

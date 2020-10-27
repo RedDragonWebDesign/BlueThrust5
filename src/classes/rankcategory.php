@@ -12,7 +12,7 @@
  *
  */
 
-require_once("rank.php");
+include_once("rank.php");
 class RankCategory extends Rank {
 	
 	
