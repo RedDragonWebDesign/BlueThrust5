@@ -2,11 +2,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>License - Bluethrust Clan Scripts v4</title>
+<title>License - BlueThrust Clan Scripts</title>
 </head>
 <body>
 
-<b>Bluethrust Clan Scripts v4</b>
+<b>BlueThrust Clan Scripts</b>
 <p>
 Copyright &copy; <?php echo date("Y"); ?>, Bluethrust Web Development<br>
 All rights reserved.

@@ -33,7 +33,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>Bluethrust Clan Website Manager - Clan Scripts v4 Installer</title>
+		<title>Bluethrust Clan Website Manager - Clan Scripts Installer</title>
 		<link rel='stylesheet' type='text/css' href='style.css'>
 		<script type='text/javascript' src='../js/jquery-1.6.4.min.js'></script>
 		<link rel='stylesheet' type='text/css' href='../js/css/jquery-ui-1.8.17.custom.css'>
@@ -97,8 +97,11 @@
 			</div>
 			<div class='contentContainerBottom'></div>
 			<div class='footerContainer'>
-				Powered By: <a href='http://www.bluethrust.com' target='_blank'>Bluethrust Clan Scripts v4</a><br>
-				Installer for BTCSv4 R17
+				Powered By:
+					<a href='https://github.com/RedDragonWebDesign/BlueThrust5' target='_blank'>BlueThrust Clan Scripts <?php echo $VERSION; ?></a><br>
+				
+				Based On:
+					<a href='http://bluethrust.com' target='_blank'>Bluethrust Clan Scripts v4</a><br>
 			</div>
 		</div>
 		

@@ -2473,7 +2473,7 @@ CREATE TABLE IF NOT EXISTS `websiteinfo` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=69 ;
 
-INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(1, 'clanname', 'Bluethrust Clan Website Manager: Clan Scripts v4');
+INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(1, 'clanname', 'Bluethrust Clan Website Manager: Clan Scripts');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(2, 'clantag', '[bT]');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(3, 'preventhack', '5555');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(4, 'maxdsl', '0');

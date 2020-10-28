@@ -2,7 +2,7 @@
 
 
 /*
- * Bluethrust Clan Scripts v4
+ * BlueThrust Clan Scripts
  * Copyright 2014
  *
  * Author: Bluethrust Web Development

@@ -9,7 +9,7 @@ $filterConfigKey = str_replace('$', '\$', $filterConfigKey);
 $configInput = "<?php
 
    /*
-	* Bluethrust Clan Scripts v4
+	* BlueThrust Clan Scripts
 	* Copyright ".date("Y")."
 	*
 	* Author: Bluethrust Web Development

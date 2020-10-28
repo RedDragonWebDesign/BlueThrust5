@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Bluethrust Clan Scripts v4
+ * BlueThrust Clan Scripts
  * Copyright 2013
  *
  * Author: Bluethrust Web Development

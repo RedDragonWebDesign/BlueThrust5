@@ -78,7 +78,7 @@
 					<table class='mainTable'>
 						<tr>
 							<td class='tdTitle'>
-								Installing Bluethrust Clan Scripts v4
+								Installing BlueThrust Clan Scripts
 							</td>
 						</tr>
 						<tr>
