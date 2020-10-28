@@ -54,10 +54,10 @@
 			global $VERSION;
 			echo "
 				Powered By:
-					<a href='https://github.com/RedDragonWebDesign/BlueThrust5' target='_blank'>BlueThrust Clan Scripts $VERSION</a> - <a href='https://github.com/RedDragonWebDesign/BlueThrust5-Themes' target='_blank'>".$this->themeName." Theme</a><br>
+					<a href='https://github.com/RedDragonWebDesign/BlueThrust5' target='_blank'>BlueThrust Clan Scripts $VERSION</a><br>
 				
 				Based On:
-					<a href='http://bluethrust.com' target='_blank'>Bluethrust Clan Scripts v4</a> - <a href='http://bluethrust.com/themes' target='_blank'>Themes</a><br>
+					<a href='http://bluethrust.com' target='_blank'>Bluethrust Clan Scripts v4</a><br>
 				
 				&copy; Copyright ".date("Y")." ".$this->clanName;
 		}
