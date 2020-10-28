@@ -10,7 +10,7 @@ $btThemeObj->menusObj = $themeMenusObj;
 $btThemeObj->addHeadItem("destinyjs", "<script type='text/javascript' src='".MAIN_ROOT."themes/destiny/destiny.js'></script>");
 $btThemeObj->addHeadItem("google-font", "<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>");
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en-us">
 	<head>
 		<?php $btThemeObj->displayHead(); ?>
