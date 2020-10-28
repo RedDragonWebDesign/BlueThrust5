@@ -12,35 +12,7 @@
  *
  */
 
-
-
-// Error reporting default = off.
-$debug = false;
-mysqli_report(MYSQLI_REPORT_OFF);
-error_reporting(0);
-ini_set('display_errors', '0');
-
-function debug() {
-	global $debug;
-	$debug = true;
-	mysqli_report(MYSQLI_REPORT_STRICT);
-	error_reporting(E_ALL);
-	ini_set('display_errors', '1');
-}
-
-
-
-// DECLARE GLOBAL VARIABLES
-$SQL_PROFILER = [];
-$SQL_CACHE_ENABLED = true;
-$EXTERNAL_JAVASCRIPT = '';
-
-// Check PHP Version
-
-if(version_compare(phpversion(), "7.0") < 0) {
-	die("You must be using at least PHP version 7.0 in order to run Bluethrust Clan Scripts v4.  Your current PHP Version: ".phpversion());	
-}
-
+require_once('_global_setup.php');
 
 // This setup page should not be changed.  Edit _config.php to configure your website.
 

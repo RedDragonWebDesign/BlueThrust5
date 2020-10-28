@@ -1,5 +1,7 @@
 <?php
 
+	require_once("../_global_setup.php");
+
 	if(isset($_COOKIE['btSessionID']) && $_COOKIE['btSessionID'] != "") {
 		session_id($_COOKIE['btSessionID']);
 		session_start();
@@ -14,7 +16,6 @@
 		}
 	}
 	
-	
 	require_once("../classes/btmysql.php");
 	require_once("../classes/btmail.php");
 	require_once("../classes/member.php");
@@ -26,9 +27,6 @@
 	require_once("consoleinfo.php");
 	$countErrors = 0;
 	$dispError = "";
-	
-	ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT);
-	ini_set('display_errors', 1);
 	
 ?>
 
