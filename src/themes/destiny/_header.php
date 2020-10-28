@@ -11,7 +11,7 @@ $btThemeObj->addHeadItem("destinyjs", "<script type='text/javascript' src='".MAI
 $btThemeObj->addHeadItem("google-font", "<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html lang="en-us">
 	<head>
 		<?php $btThemeObj->displayHead(); ?>
 	</head>
