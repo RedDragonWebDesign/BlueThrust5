@@ -26,5 +26,5 @@ $VERSION = 'v5';
 // Check PHP Version
 
 if(version_compare(phpversion(), "7.0") < 0) {
-	die("You must be using at least PHP version 7.0 in order to run BlueThrust Clan Scripts.  Your current PHP Version: ".phpversion());	
+	die("You must be using at least PHP version 7.0 in order to run BlueThrust Clan Scripts.  Your current PHP Version: ".phpversion().". You can change your PHP version in your website control panel. For example, cPanel.");	
 }
