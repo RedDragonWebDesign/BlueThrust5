@@ -49,7 +49,9 @@ This repository is a fork of the BlueThrust 4 scripts, and I am going to share s
 
 Please report all bugs, security issues, and feature requests.
 
-Create a GitHub account, then [create an issue](https://github.com/RedDragonWebDesign/BlueThrust5).
+Your feedback is essential. Feel free to make lots of issues if you want. I will investigate and respond to each.
+
+Please create a GitHub account, then [create an issue](https://github.com/RedDragonWebDesign/BlueThrust5).
 
 ## Need help?
 
@@ -73,6 +75,17 @@ Interested in contributing? Here's some [developer notes](https://github.com/Red
 ## Leave A Star
 
 If you like this fork or found it useful, please consider leaving us a star.
+
+## Current Plans
+
+[Milestone 1](https://github.com/RedDragonWebDesign/BlueThrust5/milestone/1), which will be the first stable v5 release, will focus on
+
+- fixing every bug I can find
+- fixing all PHP warnings (right now there's so many warnings that useful warnings get buried)
+
+Milestone 2 and beyond will focus more on requested features.
+
+Please feel free to [create lots of issues](https://github.com/RedDragonWebDesign/BlueThrust5) in our issue tracker. You can use issues to report bugs, security problems, and feature requests. We need feedback from users like you to help direct where we focus our coding efforts.
 
 ## Screenshots
 
