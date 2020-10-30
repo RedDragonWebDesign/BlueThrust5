@@ -80,8 +80,8 @@ If you like this fork or found it useful, please consider leaving us a star.
 
 [Milestone 1](https://github.com/RedDragonWebDesign/BlueThrust5/milestone/1), which will be the first stable v5 release, will focus on
 
-- fixing every bug I can find
 - fixing all PHP warnings (right now there's so many warnings that useful warnings get buried)
+- fixing all the bugs that arise from trying to fix the PHP warnings
 
 Milestone 2 and beyond will focus more on requested features.
 
