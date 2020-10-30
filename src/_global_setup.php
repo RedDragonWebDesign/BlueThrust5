@@ -22,9 +22,9 @@ $SQL_PROFILER = [];
 $SQL_CACHE_ENABLED = true;
 $EXTERNAL_JAVASCRIPT = '';
 $VERSION = 'v5';
+$SHOUTBOX_RELOAD_MS = 20000;
 
 // Check PHP Version
-
 if(version_compare(phpversion(), "7.0") < 0) {
 	die("You must be using at least PHP version 7.0 in order to run BlueThrust Clan Scripts.  Your current PHP Version: ".phpversion().". You can usually change your PHP version in your website control panel. For example, cPanel.");	
 }

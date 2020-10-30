@@ -395,11 +395,11 @@ echo "
 				});
 
 				
-				setTimeout('reloadSquadsShoutbox()', 20000);
+				setTimeout('reloadSquadsShoutbox()', ".$SHOUTBOX_RELOAD_MS.");
 			}
 
 
-			setTimeout('reloadSquadsShoutbox()', 20000);
+			setTimeout('reloadSquadsShoutbox()', ".$SHOUTBOX_RELOAD_MS.");
 		
 		</script>
 ";
