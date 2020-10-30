@@ -32,8 +32,7 @@ $appComponentObj = $memberAppObj->objAppComponent;
 $appSelectValueObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
 $profileOptionObj = new ProfileOption($mysqli);
 
-
-if(($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) || $websiteInfo['memberregistration'] == 1) {
+if( $websiteInfo['memberregistration'] == 1 ) {
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."'
@@ -41,7 +40,6 @@ if(($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSIO
 	";
 	exit();
 }
-
 
 $breadcrumbObj->setTitle("Sign Up");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
