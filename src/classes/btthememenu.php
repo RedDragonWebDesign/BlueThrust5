@@ -173,7 +173,7 @@
 				
 				$altColorSwitch = 0;
 				
-				$result = $this->MySQL->query("SELECT member_id FROM ".$this->MySQL->get_tablePrefix()."members WHERE rank_id != '1' ORDER BY datejoined DESC LIMIT ".$amountToShow);
+				$result = $this->MySQL->query("SELECT member_id FROM ".$this->MySQL->get_tablePrefix()."members WHERE rank_id != '1' AND disabled = '0' ORDER BY datejoined DESC LIMIT ".$amountToShow);
 				while($row = $result->fetch_assoc()) {
 					$member->select($row['member_id']);
 					$rank->select($member->get_info("rank_id"));
