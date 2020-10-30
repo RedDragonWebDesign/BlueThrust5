@@ -10,7 +10,14 @@
 	else {
 		session_start();
 		ini_set('session.use_only_cookies', 1);
-		if(isset($_SESSION['btRememberMe']) && $_SESSION['btRememberMe'] == 1 && (!isset($_COOKIE['btSessionID']) || $_COOKIE['btSessionID'] == "")) {
+		if(
+			isset($_SESSION['btRememberMe']) &&
+			$_SESSION['btRememberMe'] == 1 &&
+			(
+				! isset($_COOKIE['btSessionID']) ||
+				$_COOKIE['btSessionID'] == ""
+			)
+		) {
 			$cookieExpTime = time()+((60*60*24)*3);
 			setcookie("btSessionID", session_id(), $cookieExpTime);
 		}

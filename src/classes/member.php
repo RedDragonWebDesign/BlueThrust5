@@ -72,11 +72,15 @@ class Member extends Basic {
 	
 	function authorizeLogin($check_password, $encryptPW=0) {
 		
+		// get password hash from database
 		$checkRealPassword = $this->arrObjInfo['password'] ?? '';
+		
+		// get just the salt from the database
 		$checkRealPassword2 = $this->arrObjInfo['password2'] ?? '';
 		
 		if($encryptPW == 1) {
 			
+			// hash the plaintext password
 			$checkPass = crypt($check_password, $checkRealPassword2);
 			
 		}
@@ -86,7 +90,11 @@ class Member extends Basic {
 		
 		$returnVal = false;
 		
-		if($checkRealPassword == $checkPass && ($this->arrObjInfo['disabled'] ?? '') == 0) {
+		// if passwords match
+		if(
+			$checkRealPassword == $checkPass &&
+			($this->arrObjInfo['disabled'] ?? '') == 0
+		) {
 			$returnVal = true;
 		}
 		

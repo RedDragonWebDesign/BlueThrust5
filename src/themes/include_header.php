@@ -15,7 +15,16 @@ else {
 }
 
 
-if((!isset($_COOKIE['btUsername']) || !isset($_COOKIE['btPassword'])) && isset($_SESSION['btRememberMe']) && $_SESSION['btRememberMe'] == 1 && isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
+if(
+	(
+		! isset($_COOKIE['btUsername']) ||
+		! isset($_COOKIE['btPassword'])
+	) &&
+	isset($_SESSION['btRememberMe']) &&
+	$_SESSION['btRememberMe'] == 1 &&
+	isset($_SESSION['btUsername']) &&
+	isset($_SESSION['btPassword'])
+) {
 	$cookieExpTime = time()+((60*60*24)*3);
 	setcookie("btUsername", $_SESSION['btUsername'], $cookieExpTime, $MAIN_ROOT);
 	setcookie("btPassword", $_SESSION['btPassword'], $cookieExpTime, $MAIN_ROOT);
