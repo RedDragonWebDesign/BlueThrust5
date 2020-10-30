@@ -122,7 +122,7 @@ if ( ! empty($_POST['submit']) ) {
 				</div>
 				
 				<script type='text/javascript'>
-					popupDialog('Promote Member', '".$MAIN_ROOT."members', 'successBox');
+					popupDialog('Promote Member', '', 'successBox');
 				</script>
 			
 			";
@@ -155,91 +155,87 @@ if ( ! empty($_POST['submit']) ) {
 }
 
 
-if ( empty($_POST['submit']) ) {
-	$rankObj->select($rankInfo['promotepower']);
-	$maxRankInfo = $rankObj->get_info_filtered();
-	
-	if($rankInfo['rank_id'] == 1) {
-		$maxRankInfo['ordernum'] += 1;
-	}
-	
-	$arrRanks = array();
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
-		$rankoptions .= "<option value='".$row['rank_id']."'>".filterText($row['name'])."</option>";
-		$arrRanks[] = $row['rank_id'];
-	}
-	
-	$sqlRanks = "('".implode("','", $arrRanks)."')";
-	$memberoptions = "<option value=''>Select</option>";
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."'  ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
-	while($row = $result->fetch_assoc()) {
-	
-		$rankObj->select($row['rank_id']);
-		$memberoptions .= "<option value='".$row['member_id']."'>".$rankObj->get_info_filtered("name")." ".filterText($row['username'])."</option>";
-	
-	}
-	
-	
-	echo "
-	
-	<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
-	<div class='formDiv'>
-	";
-	
-	if($dispError != "") {
-		echo "
-		<div class='errorDiv'>
-		<strong>Unable to promote member because the following errors occurred:</strong><br><br>
-		$dispError
-		</div>
-		";
-	}
-	
-	echo "
-	
-			Use the form below to promote a member.<br><br>
-				<table class='formTable'>
-					<tr>
-						<td class='formLabel'>Member:</td>
-						<td class='main'><select name='member' id='memberselect' class='textBox'>".$memberoptions."</select></td>
-					</tr>
-					<tr>
-						<td class='formLabel'>New Rank:</td>
-						<td class='main'><div id='loadingSpiral' class='loadingSpiral'><img src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral2.gif' width='20' height='20' onmouseover=\"showToolTip('Loading...')\" onmouseout='hideToolTip()'></div><div id='newrankDiv'>No Member Selected</div></td>
-					</tr>
-					<tr>
-						<td class='formLabel' valign='top'>Reason:</td>
-						<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".$_POST['reason']."</textarea></td>
-					</tr>
-					<tr>
-						<td class='main' align='center' colspan='2'><br>		
-							<input type='submit' name='submit' value='Promote' class='submitButton'>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</form>
-	
-		
-		<script type='text/javascript'>
-			$(document).ready(function() {
-				$('#memberselect').change(function() {
-				
-					$('#newrankDiv').hide();
-					$('#loadingSpiral').show();
-					$.post('".$MAIN_ROOT."members/include/membermanagement/include/checknextrank.php', { mID: $('#memberselect').val(), action: 'promote' }, function(data) {
-						$('#loadingSpiral').hide();
-						$('#newrankDiv').html(data);
-						$('#newrankDiv').show();
-					});
-					
-				
-				});
-			});
-		</script>
-		
-	";
-	
-	
+$rankObj->select($rankInfo['promotepower']);
+$maxRankInfo = $rankObj->get_info_filtered();
+
+if($rankInfo['rank_id'] == 1) {
+	$maxRankInfo['ordernum'] += 1;
 }
+
+$arrRanks = array();
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
+while($row = $result->fetch_assoc()) {
+	$rankoptions .= "<option value='".$row['rank_id']."'>".filterText($row['name'])."</option>";
+	$arrRanks[] = $row['rank_id'];
+}
+
+$sqlRanks = "('".implode("','", $arrRanks)."')";
+$memberoptions = "<option value=''>Select</option>";
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."'  ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
+while($row = $result->fetch_assoc()) {
+
+	$rankObj->select($row['rank_id']);
+	$memberoptions .= "<option value='".$row['member_id']."'>".$rankObj->get_info_filtered("name")." ".filterText($row['username'])."</option>";
+
+}
+
+
+echo "
+
+<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
+<div class='formDiv'>
+";
+
+if($dispError != "") {
+	echo "
+	<div class='errorDiv'>
+	<strong>Unable to promote member because the following errors occurred:</strong><br><br>
+	$dispError
+	</div>
+	";
+}
+
+echo "
+
+		Use the form below to promote a member.<br><br>
+			<table class='formTable'>
+				<tr>
+					<td class='formLabel'>Member:</td>
+					<td class='main'><select name='member' id='memberselect' class='textBox'>".$memberoptions."</select></td>
+				</tr>
+				<tr>
+					<td class='formLabel'>New Rank:</td>
+					<td class='main'><div id='loadingSpiral' class='loadingSpiral'><img src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral2.gif' width='20' height='20' onmouseover=\"showToolTip('Loading...')\" onmouseout='hideToolTip()'></div><div id='newrankDiv'>No Member Selected</div></td>
+				</tr>
+				<tr>
+					<td class='formLabel' valign='top'>Reason:</td>
+					<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".$_POST['reason']."</textarea></td>
+				</tr>
+				<tr>
+					<td class='main' align='center' colspan='2'><br>		
+						<input type='submit' name='submit' value='Promote' class='submitButton'>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+
+	
+	<script type='text/javascript'>
+		$(document).ready(function() {
+			$('#memberselect').change(function() {
+			
+				$('#newrankDiv').hide();
+				$('#loadingSpiral').show();
+				$.post('".$MAIN_ROOT."members/include/membermanagement/include/checknextrank.php', { mID: $('#memberselect').val(), action: 'promote' }, function(data) {
+					$('#loadingSpiral').hide();
+					$('#newrankDiv').html(data);
+					$('#newrankDiv').show();
+				});
+				
+			
+			});
+		});
+	</script>
+	
+";

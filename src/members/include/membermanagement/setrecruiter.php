@@ -75,7 +75,7 @@ if ( ! empty($_POST['submit']) ) {
 				</div>
 				
 				<script type='text/javascript'>
-					popupDialog('Set Member\'s Recruiter', '".$MAIN_ROOT."members', 'successBox');
+					popupDialog('Set Member\'s Recruiter', '', 'successBox');
 				</script>
 			
 			";
@@ -103,57 +103,52 @@ if ( ! empty($_POST['submit']) ) {
 }
 
 
-if ( empty($_POST['submit']) ) {
+$result = $mysqli->query("SELECT ".$dbprefix."members.* FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."ranks.rank_id = ".$dbprefix."members.rank_id AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id != '1' ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
+while($row = $result->fetch_assoc()) {
 	
-	$result = $mysqli->query("SELECT ".$dbprefix."members.* FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."ranks.rank_id = ".$dbprefix."members.rank_id AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id != '1' ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
-	while($row = $result->fetch_assoc()) {
-		
-		$rankObj->select($row['rank_id']);
-		$memberoptions .= "<option value='".$row['member_id']."'>".$rankObj->get_info_filtered("name")." ".filterText($row['username'])."</option>";
-		
-	}
-	
-	
-	echo "
-	
-		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
-			<div class='formDiv'>
-	";
-	
-		if($dispError != "") {
-			echo "
-			<div class='errorDiv'>
-			<strong>Unable to set member's recruiter because the following errors occurred:</strong><br><br>
-			$dispError
-			</div>
-			";
-		}
-		
-		echo "
-				Use the form below to set a member's recruiter.<br><br>
-				<table class='formTable'>
-					<tr>
-						<td class='formLabel'>Member:</td>
-						<td class='main'><select name='member' class='textBox'>".$memberoptions."</select></td>
-					</tr>
-					<tr>
-						<td class='formLabel'>New Recruiter:</td>
-						<td class='main'><select name='newrecruiter' class='textBox'>".$memberoptions."</select></td>
-					</tr>
-					<tr>
-						<td class='formLabel' valign='top'>Reason:</td>
-						<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".$_POST['reason']."</textarea></td>
-					</tr>
-					<tr>
-						<td class='main' align='center' colspan='2'><br>		
-							<input type='submit' name='submit' value='Set Recruiter' class='submitButton'>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</form>
-		
-	";
-	
+	$rankObj->select($row['rank_id']);
+	$memberoptions .= "<option value='".$row['member_id']."'>".$rankObj->get_info_filtered("name")." ".filterText($row['username'])."</option>";
 	
 }
+
+
+echo "
+
+	<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
+		<div class='formDiv'>
+";
+
+	if($dispError != "") {
+		echo "
+		<div class='errorDiv'>
+		<strong>Unable to set member's recruiter because the following errors occurred:</strong><br><br>
+		$dispError
+		</div>
+		";
+	}
+	
+	echo "
+			Use the form below to set a member's recruiter.<br><br>
+			<table class='formTable'>
+				<tr>
+					<td class='formLabel'>Member:</td>
+					<td class='main'><select name='member' class='textBox'>".$memberoptions."</select></td>
+				</tr>
+				<tr>
+					<td class='formLabel'>New Recruiter:</td>
+					<td class='main'><select name='newrecruiter' class='textBox'>".$memberoptions."</select></td>
+				</tr>
+				<tr>
+					<td class='formLabel' valign='top'>Reason:</td>
+					<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".$_POST['reason']."</textarea></td>
+				</tr>
+				<tr>
+					<td class='main' align='center' colspan='2'><br>		
+						<input type='submit' name='submit' value='Set Recruiter' class='submitButton'>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+	
+";

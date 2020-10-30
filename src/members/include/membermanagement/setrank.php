@@ -147,7 +147,7 @@ if ( ! empty($_POST['submit']) ) {
 				</div>
 				
 				<script type='text/javascript'>
-					popupDialog('Set Member Rank', '".$MAIN_ROOT."members', 'successBox');
+					popupDialog('Set Member Rank', '', 'successBox');
 				</script>
 			
 			";
@@ -175,101 +175,95 @@ if ( ! empty($_POST['submit']) ) {
 }
 
 
-if ( empty($_POST['submit']) ) {
-	
-	
-	$rankObj->select($rankInfo['promotepower']);
-	$maxRankInfo = $rankObj->get_info_filtered();
-	
-	if($rankInfo['rank_id'] == 1) {
-		$maxRankInfo['ordernum'] += 1;
-	}
+$rankObj->select($rankInfo['promotepower']);
+$maxRankInfo = $rankObj->get_info_filtered();
 
+if($rankInfo['rank_id'] == 1) {
+	$maxRankInfo['ordernum'] += 1;
+}
+
+
+$arrRanks = array();
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
+while($row = $result->fetch_assoc()) {
+	$rankoptions .= "<option value='".$row['rank_id']."'>".filterText($row['name'])."</option>";
+	$arrRanks[] = $row['rank_id'];
 	
-	$arrRanks = array();
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
-		$rankoptions .= "<option value='".$row['rank_id']."'>".filterText($row['name'])."</option>";
-		$arrRanks[] = $row['rank_id'];
-		
-		if($maxRankInfo['ordernum'] > $row['ordernum']) {
-			$arrMemRanks[] = $row['rank_id'];
-		}
-		
+	if($maxRankInfo['ordernum'] > $row['ordernum']) {
+		$arrMemRanks[] = $row['rank_id'];
 	}
-	
-	$sqlRanks = "('".implode("','", $arrMemRanks)."')";
-	
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."'  ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
-	while($row = $result->fetch_assoc()) {
-		
-		$rankObj->select($row['rank_id']);
-		$memberoptions .= "<option value='".$row['member_id']."'>".$rankObj->get_info_filtered("name")." ".filterText($row['username'])."</option>";
-		
-	}
-	
-	
-	echo "
-	
-		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
-			<input type='hidden' name='csrf' value='".$_SESSION['csrfKey']."'>
-			<div class='formDiv'>
-	";
-	
-		if($dispError != "") {
-			echo "
-			<div class='errorDiv'>
-			<strong>Unable to set member's rank because the following errors occurred:</strong><br><br>
-			$dispError
-			</div>
-			";
-		}
-		
-		echo "
-				Use the form below to set a member's rank.<br><br>
-				<table class='formTable'>
-					<tr>
-						<td class='formLabel'>Member:</td>
-						<td class='main'><select name='member' class='textBox'>".$memberoptions."</select></td>
-					</tr>
-					<tr>
-						<td class='formLabel'>New Rank:</td>
-						<td class='main'><select name='newrank' class='textBox'>".$rankoptions."</select></td>
-					</tr>
-					<tr>
-						<td class='formLabel' valign='top'>Reason:</td>
-						<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".$_POST['reason']."</textarea></td>
-					</tr>
-					<tr>
-						<td class='formLabel'>Freeze Member: <a href='javascript:void(0)' onmouseover=\"showToolTip('When demoting a member, they may be auto-promoted due to the number of days they are in the clan.  Set how long you want to keep the member demoted before being auto-promoted again.')\" onmouseout='hideToolTip()'>(?)</a></td>
-						<td class='main'>
-							<select name='freezetime' class='textBox'>
-								<option value='0'>Don't Freeze</option>
-								<option value='1'>1 day</option>
-								<option value='3'>3 days</option>
-								<option value='7'>7 days</option>
-								<option value='10'>10 days</option>
-								<option value='14'>14 days</option>
-								<option value='21'>21 days</option>
-								<option value='30'>30 days</option>
-								<option value='45'>45 days</option>
-								<option value='60'>60 days</option>
-								<option value='75'>75 days</option>
-								<option value='90'>90 days</option>
-								<option value='36500'>Forever</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td class='main' align='center' colspan='2'><br>		
-							<input type='submit' name='submit' value='Set Rank' class='submitButton'>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</form>
-		
-	";
-	
 	
 }
+
+$sqlRanks = "('".implode("','", $arrMemRanks)."')";
+
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."'  ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
+while($row = $result->fetch_assoc()) {
+	
+	$rankObj->select($row['rank_id']);
+	$memberoptions .= "<option value='".$row['member_id']."'>".$rankObj->get_info_filtered("name")." ".filterText($row['username'])."</option>";
+	
+}
+
+
+echo "
+
+	<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
+		<input type='hidden' name='csrf' value='".$_SESSION['csrfKey']."'>
+		<div class='formDiv'>
+";
+
+	if($dispError != "") {
+		echo "
+		<div class='errorDiv'>
+		<strong>Unable to set member's rank because the following errors occurred:</strong><br><br>
+		$dispError
+		</div>
+		";
+	}
+	
+	echo "
+			Use the form below to set a member's rank.<br><br>
+			<table class='formTable'>
+				<tr>
+					<td class='formLabel'>Member:</td>
+					<td class='main'><select name='member' class='textBox'>".$memberoptions."</select></td>
+				</tr>
+				<tr>
+					<td class='formLabel'>New Rank:</td>
+					<td class='main'><select name='newrank' class='textBox'>".$rankoptions."</select></td>
+				</tr>
+				<tr>
+					<td class='formLabel' valign='top'>Reason:</td>
+					<td class='main' valign='top'><textarea name='reason' cols='40' rows='3' class='textBox'>".$_POST['reason']."</textarea></td>
+				</tr>
+				<tr>
+					<td class='formLabel'>Freeze Member: <a href='javascript:void(0)' onmouseover=\"showToolTip('When demoting a member, they may be auto-promoted due to the number of days they are in the clan.  Set how long you want to keep the member demoted before being auto-promoted again.')\" onmouseout='hideToolTip()'>(?)</a></td>
+					<td class='main'>
+						<select name='freezetime' class='textBox'>
+							<option value='0'>Don't Freeze</option>
+							<option value='1'>1 day</option>
+							<option value='3'>3 days</option>
+							<option value='7'>7 days</option>
+							<option value='10'>10 days</option>
+							<option value='14'>14 days</option>
+							<option value='21'>21 days</option>
+							<option value='30'>30 days</option>
+							<option value='45'>45 days</option>
+							<option value='60'>60 days</option>
+							<option value='75'>75 days</option>
+							<option value='90'>90 days</option>
+							<option value='36500'>Forever</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class='main' align='center' colspan='2'><br>		
+						<input type='submit' name='submit' value='Set Rank' class='submitButton'>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+	
+";
