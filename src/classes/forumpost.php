@@ -79,11 +79,11 @@ class ForumPost extends Basic {
 		
 		if($template == "") {
 			
-			require_once(BASE_DIRECTORY."forum/templates/post.php");
+			require(BASE_DIRECTORY."forum/templates/post.php");
 			
 		}
 		else {
-			require_once(BASE_DIRECTORY."forum/templates/".$template);
+			require(BASE_DIRECTORY."forum/templates/".$template);
 		}
 		
 	}
