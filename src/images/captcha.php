@@ -76,17 +76,10 @@ else {
 	foreach($arrCaptcha as $value) {
 		// Font Locations
 		$arrFonts = array();
-		$arrFonts[0] = "captcha-fonts/AnonymousClippings.ttf";
-		$arrFonts[1] = "captcha-fonts/Pulse_virgin.ttf";
-		$arrFonts[2] = "captcha-fonts/Staubiges_Verg.ttf";
-		$arrFonts[3] = "captcha-fonts/Woodcutter_Anonymous.ttf";
-		
-		/*
 		$arrFonts[0] = $BASE_DIRECTORY."images/captcha-fonts/AnonymousClippings.ttf";
 		$arrFonts[1] = $BASE_DIRECTORY."images/captcha-fonts/Pulse_virgin.ttf";
 		$arrFonts[2] = $BASE_DIRECTORY."images/captcha-fonts/Staubiges_Verg.ttf";
 		$arrFonts[3] = $BASE_DIRECTORY."images/captcha-fonts/Woodcutter_Anonymous.ttf";
-		*/
 		
 		$char = $value;
 	
