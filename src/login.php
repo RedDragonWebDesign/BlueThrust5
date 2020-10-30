@@ -62,7 +62,7 @@ if ( ! empty($_POST['submit']) ) {
 			$x = "";
 			echo "
 				<script type='text/javascript'>
-					window.location = 'index.php';
+					window.location = 'members/';
 				</script>
 			";
 		}
