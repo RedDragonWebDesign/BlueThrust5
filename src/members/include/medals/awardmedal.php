@@ -197,8 +197,9 @@
 	function awardMedalSave() {
 		global $member, $medalObj, $memberInfo;
 		$member->select($_POST['member_id']);
-		$logMessage = $member->getMemberLink()." was awarded the ".$medalObj->get_info_filtered("name")." medal.<br><br><b>Reason:</b><br>".filterText($_POST['reason']);
-			
+		$logMessage = $member->getMemberLink()." was awarded the ".$medalObj->get_info_filtered("name")." medal.";
+		$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
+		
 		$member->postNotification("You were awarded the medal: <b>".$medalObj->get_info_filtered("name")."</b>");
 			
 		$member->select($memberInfo['member_id']);

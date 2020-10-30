@@ -124,7 +124,8 @@ if ( ! empty($_POST['submit']) ) {
 			
 			$dispDays = ($_POST['freezetime'] == 1) ? "day" : "days";
 			
-			$logMessage = $member->getMemberLink()." demoted to rank ".$newRankInfo['name']." from ".$oldRankInfo['name'].".  Rank frozen for ".$_POST['freezetime']." ".$dispDays.".<br><br><b>Reason:</b><br>".filterText($_POST['reason']);
+			$logMessage = $member->getMemberLink()." demoted to rank ".$newRankInfo['name']." from ".$oldRankInfo['name'].".  Rank frozen for ".$_POST['freezetime']." ".$dispDays.".";
+			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
 			
 			echo "
 			

@@ -85,7 +85,8 @@ if ( ! empty($_POST['submit']) ) {
 	if($countErrors == 0) {
 		
 		if($member->update(array("disabled", "disableddate"), array(1, time()))) {
-			$logMessage = "Disabled ".$member->getMemberLink().".<br><br><b>Reason:</b><br>".filterText($_POST['reason']);
+			$logMessage = "Disabled ".$member->getMemberLink().".";
+			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
 			
 			echo "
 			

@@ -65,7 +65,8 @@ if ( ! empty($_POST['submit']) ) {
 		$memberObj->select($_POST['member']);
 		if($memberObj->update($arrColumns, $arrValues)) {
 			
-			$logMessage = $member->getMemberLink()." changed ".$newMemberInfo['username']."'s recruiter from ".$oldRecruiterInfo['username']." to ".$newRecruiterInfo['username'].".<br><br><b>Reason:</b><br>".filterText($_POST['reason']);
+			$logMessage = $member->getMemberLink()." changed ".$newMemberInfo['username']."'s recruiter from ".$oldRecruiterInfo['username']." to ".$newRecruiterInfo['username'].".";
+			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
 			
 			echo "
 				<div style='display: none' id='successBox'>

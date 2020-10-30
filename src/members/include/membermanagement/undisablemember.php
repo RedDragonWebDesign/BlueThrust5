@@ -78,7 +78,8 @@ if ( ! empty($_POST['submit']) ) {
 	if($countErrors == 0) {
 		
 		if($member->update(array("disabled", "lastlogin"), array(0, time()))) {
-			$logMessage = "Undisabled ".$member->getMemberLink().".<br><br><b>Reason:</b><br>".filterText($_POST['reason']);
+			$logMessage = "Undisabled ".$member->getMemberLink().".";
+			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
 			
 			echo "
 			
