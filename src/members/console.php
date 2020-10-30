@@ -27,7 +27,7 @@ while($row = $checkConsole->fetch_assoc()) {
 	$arrConsoleOptions[] = $row['console_id'];
 }
 
-if(!$consoleObj->select($_GET['cID'])) {
+if(!$consoleObj->select($_GET['cID'] ?? '')) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");
 }
 $cID = $_GET['cID'];
