@@ -46,7 +46,7 @@
 				<?php foreach ( ($_SESSION ?? []) as $key => $value ): ?>
 					<tr>
 						<td style="border: 3px solid blue;">
-							$_SESSION[<?php echo $key; ?>]
+							$_SESSION['<?php echo $key; ?>']
 						</td>
 						<td style="border: 3px solid blue;">
 							<?php var_export($value); ?>
