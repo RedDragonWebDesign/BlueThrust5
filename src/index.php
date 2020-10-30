@@ -398,9 +398,4 @@ echo "<p>".$dispRankCatCount."</p>
 
 	";
 
-
-
-
-echo "<!-- ".phpversion()." -->";
-
 require_once("themes/".$THEME."/_footer.php");
