@@ -105,7 +105,7 @@ a:hover {
 }
 
 #topBarBGImg {
-	position: fixed;
+	position: absolute;
 	top: 0px;
 	left: 0px;
 	height: 80px;
@@ -114,12 +114,11 @@ a:hover {
 	background-position: center top;
 	background-repeat: no-repeat;
 	background-color: #010715;
-	z-index: 0;
+	z-index: -1;
 }
 
-
 .topBarBG {
-	position: fixed;
+	position: relative;
 	top: 0px;
 	left: 0px;
 	height: 80px;
@@ -223,7 +222,7 @@ a:hover {
 
 .headerDiv {
 	position: relative;
-	height: 250px;
+	height: 190px;
 	margin-left: auto;
 	margin-right: auto;
 	width: 85%;
@@ -236,7 +235,7 @@ a:hover {
 	margin-left: -332px;
 	width: 664px;
 	height: 374px;
-	top: 0px;
+	top: -60px;
 }
 
 #logoSmall {

@@ -17,7 +17,20 @@ $btThemeObj->addHeadItem("google-font", "<link href='http://fonts.googleapis.com
 	</head>
 <body>
 
-
+	<div class='topBarBG'>
+	
+		<div class='topBar'>
+		
+			<div class='destinyLogo'></div>
+			<div id='logoSmall'><img src='<?php echo $MAIN_ROOT; ?>themes/destiny/images/logo-small.png'></div>
+			
+			<?php $themeMenusObj->displayMenu(2); ?>			
+			
+		</div>
+		
+	</div>
+	<div id='topBarBGImg'></div>
+	
 	<div class='wrapper'>	
 		
 	
