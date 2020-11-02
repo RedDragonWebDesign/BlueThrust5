@@ -16,6 +16,7 @@
 	$setMaxSigHeightUnit = ($websiteInfo['forum_sigheightunit'] == "%") ? "%" : "px";
 	$setMaxSigHeight = ($websiteInfo['forum_sigheight'] > 0) ? "max-height: ".$websiteInfo['forum_sigheight'].$setMaxSigHeightUnit.";" : "";
 	
+	// $arrCSSInfo comes from require_once($THEME."/css.php")
 	if(!isset($arrCSSInfo['forum-code-max-width'])) {
 		$arrCSSInfo['forum-code-max-width'] = "550px";	
 	}

@@ -29,6 +29,7 @@ $breadcrumbObj->setTitle("Log In");
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Log In");
 
+// If form submitted, process form
 if ( ! empty($_POST['submit']) ) {
 	$login_username = $_POST['user'];
 	$login_password = $_POST['pass'];
@@ -39,11 +40,13 @@ if ( ! empty($_POST['submit']) ) {
 	$checkMember->select($login_username);
 	$memberInfo = $checkMember->get_info();
 	
-	if(($memberInfo['username'] ?? '') != "") {
+	$usernameExists = ($memberInfo['username'] ?? '') != "";
+	
+	if( $usernameExists ) {
 		
-		$checkLogin = $checkMember->authorizeLogin($login_password, 1);
+		$passwordMatches = $checkMember->authorizeLogin($login_password, 1);
 		
-		if($checkLogin) {
+		if( $passwordMatches ) {
 			$_SESSION['btUsername'] = $memberInfo['username'];
 			$_SESSION['btPassword'] = $memberInfo['password'];
 			$_SESSION['btRememberMe'] = $_POST['rememberme'] ?? '';
@@ -55,7 +58,10 @@ if ( ! empty($_POST['submit']) ) {
 			$newTimesLoggedIn = $memberInfo['timesloggedin']+1;
 			$newIP = $_SERVER['REMOTE_ADDR'];
 			
-			$checkMember->update(array("lastlogin", "timesloggedin", "ipaddress", "loggedin"), array($newLastLogin, $newTimesLoggedIn, $newIP, 1));
+			$checkMember->update(
+				["lastlogin", "timesloggedin", "ipaddress", "loggedin"],
+				[$newLastLogin, $newTimesLoggedIn, $newIP, 1]
+			);
 			
 			$checkMember->autoPromote();
 			
