@@ -340,3 +340,8 @@ a:hover {
 #notificationDiv a {
 	color: #a8d7ff;
 }
+
+.html-var-export {
+	font-weight: bold;
+	background-color: orange;
+}

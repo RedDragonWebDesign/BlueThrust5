@@ -28,3 +28,48 @@ $SHOUTBOX_RELOAD_MS = 20000;
 if(version_compare(phpversion(), "7.0") < 0) {
 	die("You must be using at least PHP version 7.0 in order to run BlueThrust Clan Scripts.  Your current PHP Version: ".phpversion().". You can usually change your PHP version in your website control panel. For example, cPanel.");	
 }
+
+/** Useful debug function. Pretty prints the contents of a variable.
+	Example usage: html_var_export($limit, '$limit'); */
+function html_var_export($var, $var_name = NULL)
+{
+	$output = '<span class="html-var-export">';
+	
+	if ( $var_name )
+	{
+		$output .= $var_name . ' = ';
+	}
+	
+	$output .= nl2br_and_nbsp(var_export($var, TRUE)) . "</span><br /><br />";
+	
+	echo $output;
+}
+
+function nl2br_and_nbsp($string)
+{
+	$string = nl2br($string);
+	
+	$string = nbsp($string);
+	
+	return $string;
+}
+
+function nbsp($string)
+{
+	$string = preg_replace('/\t/', '&nbsp;&nbsp;&nbsp;&nbsp;', $string);
+	
+	// replace more than 1 space in a row with &nbsp;
+	$string = preg_replace('/  /m', '&nbsp;&nbsp;', $string);
+	$string = preg_replace('/ &nbsp;/m', '&nbsp;&nbsp;', $string);
+	$string = preg_replace('/&nbsp; /m', '&nbsp;&nbsp;', $string);
+	
+	if ( $string == ' ' )
+	{
+		$string = '&nbsp;';
+	}
+	
+	// Convert 2 space tab to 4 space tab
+	$string = preg_replace('/&nbsp;&nbsp;/m', '&nbsp;&nbsp;&nbsp;&nbsp;', $string);
+	
+	return $string;
+}
