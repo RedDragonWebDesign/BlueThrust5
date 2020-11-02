@@ -22,7 +22,7 @@ $SQL_PROFILER = [];
 $SQL_CACHE_ENABLED = true;
 $EXTERNAL_JAVASCRIPT = '';
 $VERSION = 'v5';
-$SHOUTBOX_RELOAD_MS = 20000;
+$COOKIE_EXP_TIME = time()+((60*60*24)*3);
 
 // Check PHP Version
 if(version_compare(phpversion(), "7.0") < 0) {

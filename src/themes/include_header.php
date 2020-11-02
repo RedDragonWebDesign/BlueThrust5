@@ -14,7 +14,7 @@ else {
 	$dispHTTP = "https://";
 }
 
-
+// If user's user/pass cookies are broken, and they had previously selected "Remember Me", fix them
 if(
 	(
 		! isset($_COOKIE['btUsername']) ||
@@ -25,13 +25,14 @@ if(
 	isset($_SESSION['btUsername']) &&
 	isset($_SESSION['btPassword'])
 ) {
-	$cookieExpTime = time()+((60*60*24)*3);
-	setcookie("btUsername", $_SESSION['btUsername'], $cookieExpTime, $MAIN_ROOT);
-	setcookie("btPassword", $_SESSION['btPassword'], $cookieExpTime, $MAIN_ROOT);
+	setcookie("btUsername", $_SESSION['btUsername'], $COOKIE_EXP_TIME, $MAIN_ROOT);
+	setcookie("btPassword", $_SESSION['btPassword'], $COOKIE_EXP_TIME, $MAIN_ROOT);
 }
 
 
 $menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", NULL, true);
+
+// Check if user is logged in
 if(isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 
 	$memberObj = new Member($mysqli);
@@ -123,7 +124,7 @@ if(isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 					function setMembersOnlyTaggerStatus() {
 						$(document).ready(function() {
 							$.post('".$MAIN_ROOT."members/include/admin/membersonlypagetagger.php', { setTaggerStatus: '1' }, function(data) {
-								$('#membersOnlyTagger').fadeOut(250);							
+								$('#membersOnlyTagger').fadeOut(250);
 							});
 						});
 					}
