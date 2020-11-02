@@ -2,9 +2,19 @@
 
 ## Download Link
 
-[Stable Release](https://github.com/RedDragonWebDesign/BlueThrust5/releases) - same as v4, no changes yet
+[Stable Release](https://github.com/RedDragonWebDesign/BlueThrust5/releases) - Same as v4 Revision 17 from year 2016. No changes yet.
 
-[Development Release - May Contain Bugs](https://github.com/RedDragonWebDesign/BlueThrust5/archive/master.zip)
+[Development Release - May Contain Bugs](https://github.com/RedDragonWebDesign/BlueThrust5/archive/master.zip) - For Milestone 1, we are mainly working on "under the hood" improvements, such as fixing PHP warnings. Also, the "Add Menu Item" bug has been fixed.
+
+## Bugs, Security Issues, Feature Requests
+
+For all bugs, security issues, and feature requests, please [create an issue](https://github.com/RedDragonWebDesign/BlueThrust5).
+
+Your feedback is essential to help me decide what to work on. Feel free to make lots of issues.
+
+## Leave A Star
+
+If you like this fork or found it useful, please consider leaving us a star. It lets me know that folks are interested in the project and that I should spend more time on it.
 
 ## Setup Guide
 
@@ -45,14 +55,6 @@ This repository is a fork of the BlueThrust 4 scripts, and I am going to share s
 - Customizable control panel menu
 - Shoutbox
 
-## Bugs, Security Issues, Feature Requests
-
-Please report all bugs, security issues, and feature requests.
-
-Your feedback is essential. Feel free to make lots of issues if you want. I will investigate and respond to each.
-
-Please create a GitHub account, then [create an issue](https://github.com/RedDragonWebDesign/BlueThrust5).
-
 ## Need help?
 
 Do you just want these scripts up and running? Not interested in the technical details? I'm available for hire. I can help with any/all of the following:
@@ -71,21 +73,6 @@ Would you like a different website skin? There are 29 to choose from. Head on ov
 ## Developer Notes
 
 Interested in contributing? Here's some [developer notes](https://github.com/RedDragonWebDesign/BlueThrust5/wiki/Developer-Notes).
-
-## Leave A Star
-
-If you like this fork or found it useful, please consider leaving us a star.
-
-## Current Plans
-
-[Milestone 1](https://github.com/RedDragonWebDesign/BlueThrust5/milestone/1), which will be the first stable v5 release, will focus on
-
-- fixing all PHP warnings (right now there's so many warnings that useful warnings get buried)
-- fixing all the bugs that arise from trying to fix the PHP warnings
-
-Milestone 2 and beyond will focus more on requested features.
-
-Please feel free to [create lots of issues](https://github.com/RedDragonWebDesign/BlueThrust5) in our issue tracker. You can use issues to report bugs, security problems, and feature requests. We need feedback from users like you to help direct where we focus our coding efforts.
 
 ## Screenshots
 
