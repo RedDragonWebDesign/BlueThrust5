@@ -131,6 +131,10 @@
 						</div>
 						
 						<div class='loginFormGroup'>
+							<input type='checkbox' name='rememberme' value='1' checked>
+						</div>
+						
+						<div class='loginFormGroup'>
 							<input type='submit' name='submit' value='LOGIN' class='loginButton'>
 						</div>
 					</div>

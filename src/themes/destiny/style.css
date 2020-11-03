@@ -161,6 +161,10 @@ a:hover {
 	text-shadow: 0px 0px 3px black;
 }
 
+.loginFormGroup input[type="checkbox"] {
+	transform: scale(2);
+}
+
 .loginTextbox {
 	width: 190px;
 	height: 20px;
