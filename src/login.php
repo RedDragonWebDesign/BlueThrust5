@@ -114,7 +114,7 @@ echo "
 					</tr>
 					<tr>
 						<td class='main'>Remember Me:</td>
-						<td class='main'><input type='checkbox' name='rememberme' value='1'></td>
+						<td class='main'><input type='checkbox' name='rememberme' value='1' checked></td>
 					</tr>
 					<tr>
 						<td colspan='2' align='center'><br>
