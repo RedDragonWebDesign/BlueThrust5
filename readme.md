@@ -4,7 +4,7 @@
 
 [Stable Release](https://github.com/RedDragonWebDesign/BlueThrust5/releases) - Same as v4 Revision 17 from year 2016. No changes yet.
 
-[Development Release - May Contain Bugs](https://github.com/RedDragonWebDesign/BlueThrust5/archive/master.zip) - See the [Progress So Far](https://github.com/RedDragonWebDesign/BlueThrust5#progress-so-far) section below for details.
+[Development Release - May Contain Bugs](https://github.com/RedDragonWebDesign/BlueThrust5/archive/master.zip) - See the "Progress So Far" section below for details.
 
 ## Bugs, Security Issues, Feature Requests
 
@@ -22,12 +22,12 @@ If you like this fork or found it useful, please consider leaving us a star. It 
     - Fix PHP warnings.
 	- Reduce # of SQL queries.
 	- Reorganize and improve code.
-	- Create developer documentation - see [the wiki](https://github.com/RedDragonWebDesign/BlueThrust5/wiki).
-- [Fix v4 bugs](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aissue+label%3Abug-v4+is%3Aclosed).
+	- Create developer documentation - see [the wiki](https://github.com/RedDragonWebDesign/BlueThrust5/wiki)
+- [Fix v4 Bugs](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aissue+label%3Abug-v4+is%3Aclosed)
 	- Fix broken page "Add Menu Item"
 	- couple of others
 - [Little Improvements](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aclosed+label%3Alittle-improvement)
-- [Major Features](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=label%3Amajor-feature+is%3Aclosed) - none yet
+- [Major Features](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=label%3Amajor-feature+is%3Aclosed) - None yet. Any suggestions?
 
 ## Setup Guide
 
