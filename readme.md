@@ -16,6 +16,19 @@ Your feedback is essential to help me decide what to work on. Feel free to make 
 
 If you like this fork or found it useful, please consider leaving us a star. It lets me know that folks are interested in the project and that I should spend more time on it.
 
+## Progress So Far
+
+- [Under The Hood](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aclosed+label%3Aunder-the-hood)
+    - Fix PHP warnings.
+	- Reduce # of SQL queries.
+	- Reorganize and improve code.
+	- Create developer documentation - see [the wiki](https://github.com/RedDragonWebDesign/BlueThrust5/wiki).
+- [Fix v4 bugs](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aissue+label%3Abug-v4+is%3Aclosed).
+	- Fix broken page "Add Menu Item"
+	- couple of others
+- [Little Improvements](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aclosed+label%3Alittle-improvement)
+- [Major Features](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=label%3Amajor-feature+is%3Aclosed) - none yet
+
 ## Setup Guide
 
 [Click here](https://github.com/RedDragonWebDesign/BlueThrust5/wiki/Setup-Guide)
