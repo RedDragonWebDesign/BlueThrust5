@@ -12,7 +12,7 @@
  *
  */
  
-$x = '';
+$fail = false;
 
 // Config File
 $prevFolder = "";
@@ -33,7 +33,7 @@ $breadcrumbObj->addCrumb("Log In");
 if ( ! empty($_POST['submit']) ) {
 	$login_username = $_POST['user'];
 	$login_password = $_POST['pass'];
-	$x = "fail";
+	$fail = true;
 	
 	$checkMember = new Member($mysqli);
 	
@@ -65,7 +65,7 @@ if ( ! empty($_POST['submit']) ) {
 			
 			$checkMember->autoPromote();
 			
-			$x = "";
+			$fail = false;
 			echo "
 				<script type='text/javascript'>
 					window.location = 'members/';
@@ -75,7 +75,7 @@ if ( ! empty($_POST['submit']) ) {
 	
 	}
 	
-	if($x == "fail") {
+	if ( $fail ) {
 		$_POST['submit'] = false;
 	}
 }
@@ -83,7 +83,7 @@ if ( ! empty($_POST['submit']) ) {
 
 if( empty($_POST['submit']) && ! constant("LOGGED_IN")) {
 
-	if($x == "fail") {
+	if( $fail ) {
 		$errorMessage = "You entered an incorrect username/password combination!";
 	}
 	else {
