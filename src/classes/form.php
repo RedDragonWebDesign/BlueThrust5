@@ -147,7 +147,7 @@
 					case "autocomplete":
 						$afterJS .= $this->autocompleteJS($componentInfo['options']['list'], $componentInfo['options']['real_id'], $componentInfo['options']['fake_id']);
 						$fakeComponentName = "fake".$componentName;
-						$displayForm .= "<input type='text' name='".$fakeComponentName."' value='".filterText($_POST[$fakeComponentName])."' ".$dispAttributes." id='".$componentInfo['options']['fake_id']."'><input type='hidden' name='".$componentName."' value='".$componentInfo['value']."' id='".$componentInfo['options']['real_id']."'>";
+						$displayForm .= "<input type='text' name='".$fakeComponentName."' value='".filterText($_POST[$fakeComponentName])."' ".$dispAttributes." id='".$componentInfo['options']['fake_id']."'><input type='hidden' name='".$componentName."' value='".($componentInfo['value'] ?? '')."' id='".$componentInfo['options']['real_id']."'>";
 						break;
 					case "textarea":
 						$displayForm .= "<textarea name='".$componentName."' ".$dispAttributes.">".$componentInfo['value']."</textarea>";
@@ -498,7 +498,11 @@
 					$componentInfo['type'] == "radio" ||
 					$componentInfo['type'] == "select"
 				) {
-					if ( ! in_array("RESTRICT_TO_OPTIONS", $componentInfo['validate']) ) {
+					if ( ! isset($this->components[$componentName]['validate']) ) {
+						$this->components[$componentName]['validate'] = [];
+					}
+					
+					if ( ! in_array("RESTRICT_TO_OPTIONS", $this->components[$componentName]['validate']) ) {
 						$componentInfo['validate'][] = "RESTRICT_TO_OPTIONS";
 					}
 				}
@@ -556,7 +560,7 @@
 							break;
 						case "RESTRICT_TO_OPTIONS":
 							
-							if(is_array($componentInfo['options'])) {
+							if( isset($componentInfo['options']) && is_array($componentInfo['options'])) {
 								$arrPostNames = array();
 								$arrPossibleValues = array();
 								$postCounter = 1;
@@ -581,7 +585,7 @@
 									}
 									
 								}
-								elseif(!in_array($_POST[$componentName], $arrPossibleValues)) {
+								elseif( isset($_POST[$componentName]) && !in_array($_POST[$componentName], $arrPossibleValues)) {
 									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid value for ".$componentInfo['display_name'].".";									
 								}
 								

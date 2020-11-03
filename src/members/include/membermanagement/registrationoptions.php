@@ -12,6 +12,7 @@
  *
  */
 
+$dispError = '';
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();

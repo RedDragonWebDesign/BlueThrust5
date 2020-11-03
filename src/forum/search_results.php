@@ -11,6 +11,8 @@
  * License: http://www.bluethrust.com/license.php
  *
  */
+ 
+ $pageOptions = '';
 
 	if(!defined("SHOW_SEARCHRESULTS")) {
 		exit();	
@@ -126,7 +128,16 @@
 	
 	//Filter By Date
 	$oneDay = 24*60*60;
-	$arrFilterDates = array("", $memberInfo['lastlogin'], (time()-$oneDay), (time()-$oneDay*7), (time()-$oneDay*14), (time()-$oneDay*30), (time()-$oneDay*90), (time()-$oneDay*180), (time()-$oneDay*365));
+	$arrFilterDates = [
+		"",
+		$memberInfo['lastlogin'] ?? '',
+		(time()-$oneDay), (time()-$oneDay*7),
+		(time()-$oneDay*14),
+		(time()-$oneDay*30),
+		(time()-$oneDay*90),
+		(time()-$oneDay*180),
+		(time()-$oneDay*365)
+	];
 	
 	
 	if($arrFilterDates[$_POST['filterposts']] != "" || $arrFilterDates[$_POST['filterposts']] != 0) {
@@ -201,7 +212,7 @@
 		$numPerPage = $websiteInfo['forum_postsperpage'];	
 	}
 	
-	$totalPages = ceil($totalResults/$numPerPage);
+	$totalPages = $numPerPage ? ceil($totalResults/$numPerPage) : 1;
 	
 
 	if(!isset($_GET['page']) || !is_numeric($_GET['page']) || $totalPages < $_GET['page'] || $_GET['page'] < 1) {
@@ -302,7 +313,7 @@
 	
 	for($i = 1; $i<=$totalPages; $i++) {
 		
-		$dispSelected = ($i == $_GET['page']) ? " selected" : "";
+		$dispSelected = ($i == ($_GET['page'] ?? '')) ? " selected" : "";
 		
 		$pageOptions .= "<option value='".$i."'".$dispSelected.">".$i."</option>";	
 	}
