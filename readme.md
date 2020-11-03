@@ -19,9 +19,9 @@ If you like this fork or found it useful, please consider leaving us a star. It 
 ## Progress So Far
 
 - [Under The Hood](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aclosed+label%3Aunder-the-hood)
-    - Fix PHP warnings.
-	- Reduce # of SQL queries.
-	- Reorganize and improve code.
+    - Fix PHP warnings
+	- Reduce # of SQL queries
+	- Reorganize and improve code
 	- Create developer documentation - see [the wiki](https://github.com/RedDragonWebDesign/BlueThrust5/wiki)
 - [Fix v4 Bugs](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aissue+label%3Abug-v4+is%3Aclosed)
 	- Fix broken page "Add Menu Item"
