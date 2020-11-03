@@ -23,7 +23,7 @@ $SQL_CACHE_ENABLED = true;
 $EXTERNAL_JAVASCRIPT = '';
 $VERSION = 'v5';
 $SHOUTBOX_RELOAD_MS = 20000;
-$COOKIE_EXP_TIME = time()+((60*60*24)*3);
+$COOKIE_EXP_TIME = time()+((60*60*24)*3); // Remember Me cookie. Expires in 3 days.
 
 // Check PHP Version
 if(version_compare(phpversion(), "7.0") < 0) {
@@ -32,12 +32,10 @@ if(version_compare(phpversion(), "7.0") < 0) {
 
 /** Useful debug function. Pretty prints the contents of a variable.
 	Example usage: html_var_export($limit, '$limit'); */
-function html_var_export($var, $var_name = NULL)
-{
+function html_var_export($var, $var_name = NULL) {
 	$output = '<span class="html-var-export">';
 	
-	if ( $var_name )
-	{
+	if ( $var_name ) {
 		$output .= $var_name . ' = ';
 	}
 	
@@ -46,8 +44,7 @@ function html_var_export($var, $var_name = NULL)
 	echo $output;
 }
 
-function nl2br_and_nbsp($string)
-{
+function nl2br_and_nbsp($string) {
 	$string = nl2br($string);
 	
 	$string = nbsp($string);
@@ -55,8 +52,7 @@ function nl2br_and_nbsp($string)
 	return $string;
 }
 
-function nbsp($string)
-{
+function nbsp($string) {
 	$string = preg_replace('/\t/', '&nbsp;&nbsp;&nbsp;&nbsp;', $string);
 	
 	// replace more than 1 space in a row with &nbsp;
@@ -64,8 +60,7 @@ function nbsp($string)
 	$string = preg_replace('/ &nbsp;/m', '&nbsp;&nbsp;', $string);
 	$string = preg_replace('/&nbsp; /m', '&nbsp;&nbsp;', $string);
 	
-	if ( $string == ' ' )
-	{
+	if ( $string == ' ' ) {
 		$string = '&nbsp;';
 	}
 	
