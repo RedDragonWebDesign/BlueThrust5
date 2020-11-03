@@ -316,7 +316,7 @@ echo "
 			$('#btnPreview').click(function() {
 					
 				$('#loadingSpiral').show();
-				$.post('".$MAIN_ROOT."members/include/forum/include/previewpost.php', { wysiwygHTML: $('#richTextarea').val(), previewSubject: $('#postSubject').val() }, function(data) {
+				$.post('".$MAIN_ROOT."members/include/forum/include/previewpost.php', { wysiwygHTML: $('#richTextarea').val(), previewSubject: $('[name=\"topicname\"]').val() }, function(data) {
 					$('#previewPost').hide();
 					$('#previewPost').html(data);
 					$('#loadingSpiral').hide();

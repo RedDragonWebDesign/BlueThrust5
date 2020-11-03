@@ -31,8 +31,6 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID'])) {
 	$boardObj->select($boardID);
 }
 
-
-
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
@@ -57,7 +55,15 @@ $cID = $_GET['cID'];
 
 $arrActions = array("sticky", "lock", "delete");
 
-if(isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID']) && in_array($_GET['action'], $arrActions) && ($boardObj->memberIsMod($memberInfo['member_id']) || $member->hasAccess($consoleObj))) {
+if(
+	isset($_GET['tID']) &&
+	$boardObj->objTopic->select($_GET['tID']) &&
+	in_array($_GET['action'], $arrActions) &&
+	(
+		$boardObj->memberIsMod($memberInfo['member_id']) ||
+		$member->hasAccess($consoleObj)
+	)
+) {
 	
 	$topicInfo = $boardObj->objTopic->get_info();
 	$boardObj->objPost->select($topicInfo['forumpost_id']);
@@ -102,7 +108,6 @@ if(isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID']) && in_array(
 			break;
 	}
 	
-	
 	if($redirectURL != "") {
 	echo "
 		<script type='text/javascript'>
@@ -128,7 +133,6 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 		$boardObj->objTopic->update(array("lastpost_id"), array($arrPosts[0]));
 		
 		$dialogMessage = "Successfully deleted forum post!";
-		
 	}
 	else {
 		// Topics First Post
@@ -248,8 +252,6 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 			$dispEditTitle = "<b>".$topicPostInfo['title']."<input type='hidden' id='postSubject' value='".$topicPostInfo['title']."'></b>";
 		}
 		
-		
-		
 		echo "
 		
 		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."&pID=".$_GET['pID']."' method='post'>
@@ -264,7 +266,6 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 			</div>
 			";
 		}
-		
 		
 		echo "
 			<table class='formTable'>
@@ -309,7 +310,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 					theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,|,link,unlink,image,emotions,|,quotebbcode,codebbcode,',
 					theme_advanced_buttons2: 'forecolorpicker,fontselect,fontsizeselect',
 					theme_advanced_resizing: true,
-					content_css: '".$MAIN_ROOT."themes/".$THEME."/btcs4.css',
+					content_css: '".$MAIN_ROOT."themes/btcs4.css.php',
 					theme_advanced_statusbar_location: 'none',
 					style_formats: [
 						{title: 'Quote', inline : 'div', classes: 'forumQuote'}
@@ -350,7 +351,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 				$('#btnPreview').click(function() {
 				
 					$('#loadingSpiral').show();
-					$.post('".$MAIN_ROOT."members/include/forum/include/previewpost.php', { wysiwygHTML: $('#tinymceTextArea').val(), previewSubject: $('#postSubject').val() }, function(data) {
+					$.post('".$MAIN_ROOT."members/include/forum/include/previewpost.php', { wysiwygHTML: $('#tinymceTextArea').val(), previewSubject: $('[name=\"topicname\"]').val() }, function(data) {
 						$('#previewPost').hide();
 						$('#previewPost').html(data);
 						$('#loadingSpiral').hide();
@@ -369,10 +370,5 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 		</script>
 		
 		";
-		
-		
 	}
-	
-	
-	
 }
