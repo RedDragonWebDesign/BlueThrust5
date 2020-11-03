@@ -4,7 +4,7 @@
 
 [Stable Release](https://github.com/RedDragonWebDesign/BlueThrust5/releases) - Same as v4 Revision 17 from year 2016. No changes yet.
 
-[Development Release - May Contain Bugs](https://github.com/RedDragonWebDesign/BlueThrust5/archive/master.zip) - For Milestone 1, we are mainly working on "under the hood" improvements, such as fixing PHP warnings. Also, the "Add Menu Item" bug has been fixed.
+[Development Release - May Contain Bugs](https://github.com/RedDragonWebDesign/BlueThrust5/archive/master.zip) - See the [Progress So Far](https://github.com/RedDragonWebDesign/BlueThrust5#progress-so-far) section below for details.
 
 ## Bugs, Security Issues, Feature Requests
 
