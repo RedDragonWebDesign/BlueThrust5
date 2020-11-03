@@ -492,6 +492,17 @@
 			$returnVal = false;
 			foreach($this->components as $componentName => $componentInfo) {
 			
+				// Turn on RESTRICT_TO_OPTIONS by default for select, check boxes, radio buttons
+				if (
+					$componentInfo['type'] == "checkbox" ||
+					$componentInfo['type'] == "radio" ||
+					$componentInfo['type'] == "select"
+				) {
+					if ( ! in_array("RESTRICT_TO_OPTIONS", $componentInfo['validate']) ) {
+						$componentInfo['validate'][] = "RESTRICT_TO_OPTIONS";
+					}
+				}
+			
 				foreach(($componentInfo['validate'] ?? []) as $validateMethod) {
 					
 					$arrValidate = array();
