@@ -50,6 +50,7 @@ $member = new Member($mysqli);
 $checkMember = $member->select($_SESSION['btUsername']);
 
 $LOGIN_FAIL = true;
+$blnShowCategoryList = true;
 
 if($checkMember) {
 
@@ -252,7 +253,7 @@ if($LOGIN_FAIL) {
 die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
 }
 
-if($blnShowCategoryList || true) {
+if($blnShowCategoryList) {
 
 	echo "
 		<script type='text/javascript'>
