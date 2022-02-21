@@ -252,7 +252,7 @@ if($LOGIN_FAIL) {
 die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
 }
 
-if($blnShowCategoryList || true) {
+if($blnShowCategoryList = true) {
 
 	echo "
 		<script type='text/javascript'>
