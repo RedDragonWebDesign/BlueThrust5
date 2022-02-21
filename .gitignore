@@ -3,3 +3,4 @@ gitignore/
 .vscode/
 src/themes/bluegrid
 *savemenu.sql
+vendor/

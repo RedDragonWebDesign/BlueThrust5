@@ -13,9 +13,9 @@
  */
 
 
-
-require_once($prevFolder."include/lib_autolink/lib_autolink.php");
-
+if ( ! isset($unit_tester) ) {
+	require_once($prevFolder."include/lib_autolink/lib_autolink.php");
+}
 
 // General functions to filter out all <, >, ", and ' symbols
 function filterArray($arrValues) {
@@ -292,7 +292,7 @@ function sql_array_select_where($sqlTableAsArray, $condition1Field, $condition1V
 	foreach ( $sqlTableAsArray as $row ) {
 		$condition2 = true;
 		if ( $condition2Field ) {
-			$condition2 = isset($row[$condition2Field]) && $row[$condition1Field] == $condition2Value;
+			$condition2 = isset($row[$condition2Field]) && $row[$condition2Field] == $condition2Value;
 		}
 		
 		if (
@@ -306,17 +306,19 @@ function sql_array_select_where($sqlTableAsArray, $condition1Field, $condition1V
 	return $result;
 }
 
-// Class Loaders
+if ( ! isset($unit_tester) ) {
+	// Class Loaders
 
-function BTCS4Loader($class_name) {
-	if(file_exists(BASE_DIRECTORY."classes/".strtolower($class_name).".php")) {
-		require_once(BASE_DIRECTORY."classes/".strtolower($class_name).".php");
+	function BTCS4Loader($class_name) {
+		if(file_exists(BASE_DIRECTORY."classes/".strtolower($class_name).".php")) {
+			require_once(BASE_DIRECTORY."classes/".strtolower($class_name).".php");
+		}
+		elseif(file_exists(require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php"))) {
+			require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php");
+		}
 	}
-	elseif(file_exists(require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php"))) {
-		require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php");
-	}
+
+	spl_autoload_register("BTCS4Loader", true, true);
+
+	require_once(BASE_DIRECTORY."include/phpmailer/PHPMailerAutoload.php");
 }
-
-spl_autoload_register("BTCS4Loader", true, true);
-
-require_once(BASE_DIRECTORY."include/phpmailer/PHPMailerAutoload.php");
