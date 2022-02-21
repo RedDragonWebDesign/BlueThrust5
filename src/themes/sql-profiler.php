@@ -20,7 +20,7 @@
 			SQL Queries: <strong><?php echo $count; ?><strong>
 		</div>
 	
-		<div id="sql-profiler" style="margin: 0 15px; background-color: white;">
+		<div id="sql-profiler" style="margin: 0 15px;">
 			<p style="font-size: 14pt;">
 				Debug mode is on. To turn off these notifications, please go to My Account -> Administrator Options -> Website Settings -> Debug Mode and set to "Off"
 			</p>
