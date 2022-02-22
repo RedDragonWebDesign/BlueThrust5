@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 
+// To run these unit tests, type this into a command prompt:
 // composer exec phpunit tests
 
-$unit_tester = true;
 include('src/_functions.php');
 
 final class _functionsTest extends TestCase {

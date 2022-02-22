@@ -44,7 +44,21 @@ define("MAIN_ROOT", $MAIN_ROOT);
 
 
 $PAGE_NAME = "";
+require_once($prevFolder."include/lib_autolink/lib_autolink.php");
+
 require_once(BASE_DIRECTORY."_functions.php");
+
+// Class Loaders
+function BTCS4Loader($class_name) {
+	if(file_exists(BASE_DIRECTORY."classes/".strtolower($class_name).".php")) {
+		require_once(BASE_DIRECTORY."classes/".strtolower($class_name).".php");
+	}
+	elseif(file_exists(require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php"))) {
+		require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php");
+	}
+}
+spl_autoload_register("BTCS4Loader", true, true);
+require_once(BASE_DIRECTORY."include/phpmailer/PHPMailerAutoload.php");
 
 define("FULL_SITE_URL", getHTTP().$_SERVER['SERVER_NAME'].MAIN_ROOT);
 

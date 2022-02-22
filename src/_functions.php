@@ -12,10 +12,7 @@
  *
  */
 
-
-if ( ! isset($unit_tester) ) {
-	require_once($prevFolder."include/lib_autolink/lib_autolink.php");
-}
+// This file should consist of functions. When possible, try to use pure functions... functions with no dependencies, just inputs and outputs. Pure functions are ideal for unit testing.
 
 // General functions to filter out all <, >, ", and ' symbols
 function filterArray($arrValues) {
@@ -42,14 +39,10 @@ function filterText($strText) {
 	$temp = str_replace("&middot;", "&#38;middot;", $value);
 	$temp = str_replace("&raquo;", "&#38;raquo;", $temp);
 	$temp = str_replace("&laquo;", "&#38;laquo;", $temp);
-	
-	
-
 	return $temp;
 }
 
 function getPreciseTime($intTime, $timeFormat="", $bypassTimeDiff=false) {
-
 	$timeDiff = (!$bypassTimeDiff) ? time() - $intTime : 99999;
 
 	if($timeDiff < 3) {
@@ -88,22 +81,19 @@ function getPreciseTime($intTime, $timeFormat="", $bypassTimeDiff=false) {
 	}
 
 	return $dispLastDate;
-
 }
 
 function getDateUTC($time, $timeFormat = "D M j, Y g:i a") {
-	
 	$date = new DateTime();
 	$date->setTimezone(new DateTimeZone("UTC"));
 	$date->setTimestamp($time);
 	
 	return $date->format($timeFormat);
-	
 }
 
 
 function parseBBCode($strText) {
-global $MAIN_ROOT;
+	global $MAIN_ROOT;
 
 	// Basic Codes
 
@@ -163,20 +153,15 @@ global $MAIN_ROOT;
 	$strText = autolink($strText);
 
 	return $strText;
-
-
 }
 
 function autoLinkImage($strText) {
-
 	$strText = preg_replace("/<img src=(\"|\')(.*)(\"|\')>/", "<a href='$2' target='_blank'><img src='$2'></a>", $strText);
 	$strText = preg_replace("/<img src=(\"|\')(.*)(\"|\') alt=(\"|\')(.*)(\"|\') width=(\"|\')(.*)(\"|\') height=(\"|\')(.*)(\"|\') \/>/", "<a href='$2' target='_blank'><img src='$2' width='$8' height='$11'></a>", $strText);
 	$strText = preg_replace("/<img src=(\"|\')(.*)(\"|\') alt=(\"|\')(.*)(\"|\') \/>/", "<a href='$2' target='_blank'><img src='$2'></a>", $strText);
 	
-	 
 	return $strText;
 }
-
 
 function deleteFile($filename) {
 	$returnVal = false;
@@ -187,9 +172,7 @@ function deleteFile($filename) {
 	return $returnVal;
 }
 
-
 function getHTTP() {
-
 	if(!isset($_SERVER['HTTPS']) || (isset($_SERVER['HTTPS']) && (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off"))) {
 		$dispHTTP = "http://";
 	}
@@ -200,9 +183,7 @@ function getHTTP() {
 	return $dispHTTP;
 }
 
-
 function addArraySpace($arr, $space, $atSpot) {
-
 	$newArr = array();
 	$i=0;
 	foreach($arr as $key => $value) {
@@ -228,7 +209,6 @@ function addArraySpace($arr, $space, $atSpot) {
 
 
 function pluralize($word, $num) {
-
 	if($num == 1) {
 		$returnVal = $word;
 	}
@@ -239,9 +219,7 @@ function pluralize($word, $num) {
 	return $returnVal;
 }
 
-
 function encryptPassword($password) {
-
 	$randomString = substr(md5(uniqid("", true)),0,22);
 	$randomNum = rand(4,10);
 	if($randomNum < 10) {
@@ -304,21 +282,4 @@ function sql_array_select_where($sqlTableAsArray, $condition1Field, $condition1V
 		}
 	}
 	return $result;
-}
-
-if ( ! isset($unit_tester) ) {
-	// Class Loaders
-
-	function BTCS4Loader($class_name) {
-		if(file_exists(BASE_DIRECTORY."classes/".strtolower($class_name).".php")) {
-			require_once(BASE_DIRECTORY."classes/".strtolower($class_name).".php");
-		}
-		elseif(file_exists(require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php"))) {
-			require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php");
-		}
-	}
-
-	spl_autoload_register("BTCS4Loader", true, true);
-
-	require_once(BASE_DIRECTORY."include/phpmailer/PHPMailerAutoload.php");
 }
