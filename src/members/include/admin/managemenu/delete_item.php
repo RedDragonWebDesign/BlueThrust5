@@ -40,7 +40,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		
 		$menuItemInfo = $menuItemObj->get_info_filtered();
 		
-		if($_POST['confirm'] == "1") {
+		if(($_POST['confirm'] ?? '') == "1") {
 			
 			$menuCatObj->select($menuItemInfo['menucategory_id']);
 			
