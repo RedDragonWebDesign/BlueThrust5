@@ -165,7 +165,7 @@
 					case "codeeditor":
 						$afterJS .= $this->codeEditorJS($componentInfo['attributes']['id']);
 						$displayForm .= "
-							<div style='background-color: white; position: relative; margin-top: 10px'><div id='".$componentInfo['attributes']['id']."' class='codeEditor'>".$componentInfo['value']."</div></div>
+							<div style='background-color: white; position: relative; margin-top: 10px'><div id='".$componentInfo['attributes']['id']."' class='codeEditor'>".($componentInfo['value'] ?? '')."</div></div>
 							<textarea id='".$componentInfo['attributes']['id']."_code' name='".$componentName."' style='display: none'></textarea>
 						";
 						break;
@@ -320,7 +320,7 @@
 							$displayForm .= "<li>File Types: ".implode(", ", $componentInfo['options']['file_types'])."</li>";
 						}
 						
-						if($componentInfo['options']['default_dimensions'] != "") {
+						if(($componentInfo['options']['default_dimensions'] ?? '') != "") {
 							$displayForm .= "<li>Dimensions: ".$componentInfo['options']['default_dimensions']."</li>";	
 						}
 						
@@ -330,7 +330,7 @@
 						
 						$displayForm .= "URL:<br><input type='text' name='".$componentName."_url' ".$dispAttributes.">";
 						
-						if($componentInfo['value'] != "") {
+						if(($componentInfo['value'] ?? '') != "") {
 							
 							$displayForm .= "<br><a href='".$MAIN_ROOT.$componentInfo['value']."' target='_blank'>View Saved File</a>";
 							

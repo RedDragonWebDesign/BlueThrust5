@@ -194,7 +194,7 @@ $arrComponents = array(
 		"display_name" => "Display Order",
 		"attributes" => array("class" => "textBox formInput"),
 		"sortorder" => $i++,
-		"validate" => array("RESTRICT_TO_OPTIONS", array("name" => "VALIDATE_ORDER", "set_category" => $_POST['menucategory'], "orderObject" => $menuItemObj)),
+		"validate" => array("RESTRICT_TO_OPTIONS", array("name" => "VALIDATE_ORDER", "set_category" => ($_POST['menucategory'] ?? ''), "orderObject" => $menuItemObj)),
 		"db_name" => "sortnum",
 		"options" => $displayOrderOptions
 	),
@@ -411,7 +411,7 @@ $setupFormArgs = array(
 	"components" => $arrComponents,
 	"description" => "Use the form below to add a menu item.",
 	"saveObject" => $menuItemObj,
-	"saveMessage" => "Successfully Added New Menu Item: <b>".filterText($_POST['itemname'])."</b>!",
+	"saveMessage" => "Successfully Added New Menu Item: <b>".filterText($_POST['itemname'] ?? '')."</b>!",
 	"saveType" => "add",
 	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post", "enctype" => "multipart/form-data"),
 	"embedJS" => $afterJS,
@@ -489,14 +489,18 @@ $setupFormArgs = array(
 			"args" => array(
 				&$shoutboxOptionComponents,
 				&$menuItemObj->objShoutbox,
-				array(	"width_shoutbox" => "width",
-						"height_shoutbox" => "height",
-						"textboxwidth_shoutbox" => "textboxwidth"),
+				[
+					"width_shoutbox" => "width",
+					"height_shoutbox" => "height",
+					"textboxwidth_shoutbox" => "textboxwidth"
+				],
 				"menushoutbox_id",
 				"shoutbox",
-				array("percentwidth" => $_POST['widthunit_shoutbox'], "percentheight" => $_POST['heightunit_shoutbox'])
+				[
+					"percentwidth" => ($_POST['widthunit_shoutbox'] ?? ''),
+					"percentheight" => ($_POST['heightunit_shoutbox'] ?? '')
+				],
 			)
-		
 		),
 		array(
 			"function" => "saveMenuItem",
