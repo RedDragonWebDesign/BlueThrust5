@@ -1626,4 +1626,9 @@ input[type=file] {
 	font-weight: bold;
 	font-size: ".$arrCSSInfo['default-font-size'].";
 }
+
+.xdebug-error {
+	color: black;
+}
+
 ";
