@@ -81,12 +81,15 @@
 					
 				});
 
-				
-				setTimeout("reloadShoutbox()", <?php echo $SHOUTBOX_RELOAD_MS; ?>);
+				<?php if ( ! $debug ): ?>
+					setTimeout("reloadShoutbox()", <?php echo $SHOUTBOX_RELOAD_MS; ?>);
+				<?php endif; ?>
 			}
 
 
-			setTimeout("reloadShoutbox()", <?php echo $SHOUTBOX_RELOAD_MS; ?>);
+			<?php if ( ! $debug ): ?>
+				setTimeout("reloadShoutbox()", <?php echo $SHOUTBOX_RELOAD_MS; ?>);
+			<?php endif; ?>
 		
 		</script>
 		

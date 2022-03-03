@@ -394,12 +394,19 @@ echo "
 					
 				});
 
-				
-				setTimeout('reloadSquadsShoutbox()', ".$SHOUTBOX_RELOAD_MS.");
+				";
+				if ( ! $debug ) {
+					echo "setTimeout('reloadSquadsShoutbox()', ".$SHOUTBOX_RELOAD_MS.");";
+				}
+				echo "
 			}
 
 
-			setTimeout('reloadSquadsShoutbox()', ".$SHOUTBOX_RELOAD_MS.");
+			";
+			if ( ! $debug ) {
+				echo "setTimeout('reloadSquadsShoutbox()', ".$SHOUTBOX_RELOAD_MS.");";
+			}
+			echo "
 		
 		</script>
 ";
