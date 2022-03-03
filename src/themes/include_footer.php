@@ -49,9 +49,15 @@
 				
 							});
 				
+							";
+							if ( ! $debug ) {
+								echo "
 							if(intCountNotificationCheck < 5) {
 								setTimeout(\"checkForNotification()\", 120000);
 							}
+								";
+							}
+							echo "
 							
 							intCountNotificationCheck++;
 						}
