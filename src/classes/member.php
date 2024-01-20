@@ -918,49 +918,52 @@ class Member extends Basic {
 	
 	
 	
-	protected function getMemberPicture($db_name, $defaultpic, $cssClass = array(), $setWidth = "", $setHeight = "") {
-		global $MAIN_ROOT, $THEME;
-		
-		$checkURL = parse_url($this->arrObjInfo[$db_name]);
-		
-		$avatarURL = $this->arrObjInfo[$db_name];
-		if($this->arrObjInfo[$db_name] == "") {
-			$avatarURL = $MAIN_ROOT."themes/".$THEME."/images/".$defaultpic;
-		}
-		elseif(!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
-			$avatarURL = $MAIN_ROOT.$this->arrObjInfo[$db_name];
-		}
-		
-		$arrStyle = array();
-		if($setWidth != "") {
-			$arrStyle['width'] = $setWidth;
-		}
-		
-		if($setHeight != "") {
-			$arrStyle['height'] = $setHeight;
-		}
-		
-		$dispStyle = "";
-		if(count($arrStyle) > 0) {
-			$dispStyle = " style='";
-			foreach($arrStyle as $attr => $value) {
-				$dispStyle .= $attr.": ".$value.";";
-			}
-			$dispStyle .= "'";
-		}
-		
-		$dispClass = "";
-		if(count($cssClass) > 0) {
-			$dispClass = " class='";
-			foreach($cssClass as $class) {
-				$dispClass .= $class." ";	
-			}
-			$dispClass .= "'";
-		}
-		
-		return "<img src='".$avatarURL."'".$dispStyle.$dispClass.">";
-		
-	}
+protected function getMemberPicture($db_name, $defaultpic, $cssClass = array(), $setWidth = "", $setHeight = "") {
+    global $MAIN_ROOT, $THEME;
+
+    $avatarURL = "";
+
+    if (isset($this->arrObjInfo[$db_name])) {
+        $avatarURL = $this->arrObjInfo[$db_name];
+        $checkURL = parse_url($avatarURL);
+
+        if (!isset($checkURL['scheme']) || $checkURL['scheme'] == "") {
+            $avatarURL = $MAIN_ROOT.$this->arrObjInfo[$db_name];
+        }
+    } else {
+        $avatarURL = $MAIN_ROOT."themes/".$THEME."/images/".$defaultpic;
+    }
+
+    $arrStyle = array();
+    if ($setWidth != "") {
+        $arrStyle['width'] = $setWidth;
+    }
+
+    if ($setHeight != "") {
+        $arrStyle['height'] = $setHeight;
+    }
+
+    $dispStyle = "";
+    if (count($arrStyle) > 0) {
+        $dispStyle = " style='";
+        foreach ($arrStyle as $attr => $value) {
+            $dispStyle .= $attr.": ".$value.";";
+        }
+        $dispStyle .= "'";
+    }
+
+    $dispClass = "";
+    if (count($cssClass) > 0) {
+        $dispClass = " class='";
+        foreach ($cssClass as $class) {
+            $dispClass .= $class." ";
+        }
+        $dispClass .= "'";
+    }
+
+    return "<img src='".$avatarURL."'".$dispStyle.$dispClass.">";
+}
+
 	
 	public function getAvatar($setWidth="", $setHeight="") {
 		return $this->getMemberPicture($setWidth, $setHeight, "avatar", "defaultavatar.png", array("avatarImg"));
