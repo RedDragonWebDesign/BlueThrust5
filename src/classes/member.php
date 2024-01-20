@@ -918,7 +918,7 @@ class Member extends Basic {
 	
 	
 	
-	protected function getMemberPicture($setWidth="", $setHeight="", $db_name, $defaultpic, $cssClass=array()) {
+	protected function getMemberPicture($db_name, $defaultpic, $cssClass = array(), $setWidth = "", $setHeight = "") {
 		global $MAIN_ROOT, $THEME;
 		
 		$checkURL = parse_url($this->arrObjInfo[$db_name]);
