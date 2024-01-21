@@ -142,23 +142,27 @@
 					";
 				}
 				
-				// Output input
-				switch($componentInfo['type']) {
-					case "autocomplete":
-						$afterJS .= $this->autocompleteJS($componentInfo['options']['list'], $componentInfo['options']['real_id'], $componentInfo['options']['fake_id']);
-						$fakeComponentName = "fake".$componentName;
-						$displayForm .= "<input type='text' name='".$fakeComponentName."' value='".filterText($_POST[$fakeComponentName])."' ".$dispAttributes." id='".$componentInfo['options']['fake_id']."'><input type='hidden' name='".$componentName."' value='".($componentInfo['value'] ?? '')."' id='".$componentInfo['options']['real_id']."'>";
-						break;
-					case "textarea":
-						$displayForm .= "<textarea name='".$componentName."' ".$dispAttributes.">".$componentInfo['value']."</textarea>";
-						break;
-					case "richtextbox":
-						$afterJS .= $this->richTextboxJS($componentInfo['attributes']['id'], $componentInfo['allowHTML'] ?? '');
-						$displayForm .= "
-							<div class='formInput' style='width: 100%'>
-								<textarea name='".$componentName."' ".$dispAttributes.">".($componentInfo['value'] ?? '')."</textarea>
-							</div>
-						";
+// Output input
+switch($componentInfo['type']) {
+    case "autocomplete":
+        $afterJS .= $this->autocompleteJS($componentInfo['options']['list'], $componentInfo['options']['real_id'], $componentInfo['options']['fake_id']);
+        $fakeComponentName = "fake".$componentName;
+        $fakeValue = isset($_POST[$fakeComponentName]) ? filterText($_POST[$fakeComponentName]) : '';
+        $realValue = $componentInfo['value'] ?? '';
+        $displayForm .= "<input type='text' name='".$fakeComponentName."' value='".$fakeValue."' ".$dispAttributes." id='".$componentInfo['options']['fake_id']."'><input type='hidden' name='".$componentName."' value='".$realValue."' id='".$componentInfo['options']['real_id']."'>";
+        break;
+    case "textarea":
+        $textareaValue = $componentInfo['value'] ?? '';
+        $displayForm .= "<textarea name='".$componentName."' ".$dispAttributes.">".$textareaValue."</textarea>";
+        break;
+    case "richtextbox":
+        $afterJS .= $this->richTextboxJS($componentInfo['attributes']['id'], $componentInfo['allowHTML'] ?? '');
+        $richTextboxValue = $componentInfo['value'] ?? '';
+        $displayForm .= "
+            <div class='formInput' style='width: 100%'>
+                <textarea name='".$componentName."' ".$dispAttributes.">".$richTextboxValue."</textarea>
+            </div>
+        ";
 						$countRichTextbox++;
 						unset($GLOBALS['richtextEditor']);
 						break;
@@ -462,19 +466,18 @@
 			
 		}
 		
-		public function prefillDBValues() {
+public function prefillDBValues() {
+    if ($this->saveType == "update") {
+        $info = $this->objSave->get_info_filtered();
+        foreach ($this->components as $key => $value) {
+            // Check if 'db_name' key exists in the component
+            if (isset($this->components[$key]['db_name']) && $this->components[$key]['db_name'] != "" && !in_array($this->components[$key]['db_name'], $this->arrSkipPrefill)) {
+                $this->components[$key]['value'] = $info[$this->components[$key]['db_name']];
+            }
+        }
+    }
+}
 
-			if($this->saveType == "update") {
-				$info = $this->objSave->get_info_filtered();
-				foreach($this->components as $key => $value) {
-					if($this->components[$key]['db_name'] != "" && !in_array($this->components[$key]['db_name'], $this->arrSkipPrefill)) {
-						$this->components[$key]['value'] = $info[$this->components[$key]['db_name']];
-					}
-				}
-				
-			}
-			
-		}
 		
 		
 		/**
@@ -732,10 +735,10 @@
 						
 						
 					}
-					elseif($componentInfo['value'] != "") {
-						$_POST[$componentName] = $componentInfo['value'];	
+					elseif(isset($componentInfo['value']) && $componentInfo['value'] != "") {
+					    $_POST[$componentName] = $componentInfo['value'];    
 					}
-					
+
 					if(in_array("NOT_BLANK", $componentInfo['validate'])) {
 						if($_POST[$componentName] == "") {
 							$this->errors[] = $componentInfo['display_name']." may not be blank.";
