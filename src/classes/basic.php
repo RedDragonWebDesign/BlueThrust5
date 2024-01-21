@@ -221,53 +221,46 @@ class Basic {
 	Returns false if there is an error
 	
 	*/
-	public function addNew($arrColumns, $arrValues) {
-		$returnVal = false;
-		
-		
-		
-		if(is_array($arrColumns)) {
-			$sqlColumns = implode(",", $arrColumns);
-			$sqlValues = rtrim(str_repeat("?, ", count($arrColumns)),", ");
-			
-		}
+public function addNew($arrColumns, $arrValues) {
+    $returnVal = false;
+    
+    if (is_array($arrColumns)) {
+        $sqlColumns = implode(",", $arrColumns);
+        $sqlValues = rtrim(str_repeat("?, ", count($arrColumns)), ", ");
+    }
 
+    $stmt = $this->MySQL->prepare("INSERT INTO " . $this->strTableName . " (" . $sqlColumns . ") VALUES (" . $sqlValues . ")");
 
-		$stmt = $this->MySQL->prepare("INSERT INTO ".$this->strTableName." (".$sqlColumns.") VALUES (".$sqlValues.")");
-		
-		if(is_array($arrValues)) {
-			foreach($arrValues as $key=>$value) {
-				$temp = str_replace("&gt;", ">", $value);
-				$value = str_replace("&lt;", "<", $temp);
-				$temp = str_replace('&quot;', '"', $value);
-				$value = str_replace("&#39;", "'", $temp);
-				$temp = str_replace("&#38;middot;", "&middot;", $value);
-				$temp = str_replace("&#38;raquo;", "&raquo;", $temp);
-				$temp = str_replace("&#38;laquo;", "&laquo;", $temp);
-		
-				$arrValues[$key] = $temp;
-			}
-		
-			
-			$stmt = $this->MySQL->bindParams($stmt, $arrValues);
-			
-		}
-		
-			
-		if($stmt->execute()) {
-			$this->select($stmt->insert_id);
-			$returnVal = true;
-			$this->updateTableTime();
-		}
-		else {
-			echo $this->MySQL->displayError("basic.php - addNew");
-		}
+    if (is_array($arrValues)) {
+        foreach ($arrValues as $key => $value) {
+            if ($value !== null) {
+                $temp = str_replace("&gt;", ">", $value);
+                $value = str_replace("&lt;", "<", $temp);
+                $temp = str_replace('&quot;', '"', $value);
+                $value = str_replace("&#39;", "'", $temp);
+                $temp = str_replace("&#38;middot;", "&middot;", $value);
+                $temp = str_replace("&#38;raquo;", "&raquo;", $temp);
+                $temp = str_replace("&#38;laquo;", "&laquo;", $value);
+            } else {
+                $temp = null;
+            }
+            $arrValues[$key] = $temp;
+        }
 
-		return $returnVal;
-	
-	}
-	
-	
+        $stmt = $this->MySQL->bindParams($stmt, $arrValues);
+    }
+
+    if ($stmt->execute()) {
+        $this->select($stmt->insert_id);
+        $returnVal = true;
+        $this->updateTableTime();
+    } else {
+        echo $this->MySQL->displayError("basic.php - addNew");
+    }
+
+    return $returnVal;
+}
+
 	/**
 	
 	-Easy way to send an UPDATE query-
@@ -377,40 +370,35 @@ class Basic {
 		return $returnVal;
 	}
 	
-public function get_info_filtered($returnSingleValue = "") {
-    if ( ! $this->arrObjInfo ) {
-        return $this->arrObjInfo;
-    }
-    
-    $arrFilteredInfo = array();
-    foreach($this->arrObjInfo as $key => $value) {
-        $temp = str_replace("<", "&lt;", $value);
-        $value = str_replace(">", "&gt;", $temp);
-        $temp = str_replace("'", "&#39;", $value);
-        $value = str_replace('"', '&quot;', $temp);
-        $temp = str_replace("&middot;", "&#38;middot;", $value);
-        $temp = str_replace("&raquo;", "&#38;raquo;", $temp);
-        $temp = str_replace("&laquo;", "&#38;laquo;", $temp);
-        
-        $arrFilteredInfo[$key] = $temp;
-    }
-    
-    $returnVal = "";
-    if($returnSingleValue == "") {
-        $returnVal = $arrFilteredInfo;
-    }
-    else {
-        // Check if the key exists in the array
-        if(array_key_exists($returnSingleValue, $arrFilteredInfo)) {
-            $returnVal = $arrFilteredInfo[$returnSingleValue];
-        } else {
-            $returnVal = null; // or some default value or error handling
-        }
-    }
-    
-    return $returnVal;
-}
-
+	public function get_info_filtered($returnSingleValue = "") {
+		if ( ! $this->arrObjInfo ) {
+			return $this->arrObjInfo;
+		}
+		
+		$arrFilteredInfo = array();
+		foreach($this->arrObjInfo as $key => $value) {
+			$temp = str_replace("<", "&lt;", $value);
+			$value = str_replace(">", "&gt;", $temp);
+			$temp = str_replace("'", "&#39;", $value);
+			$value = str_replace('"', '&quot;', $temp);
+			$temp = str_replace("&middot;", "&#38;middot;", $value);
+			$temp = str_replace("&raquo;", "&#38;raquo;", $temp);
+			$temp = str_replace("&laquo;", "&#38;laquo;", $temp);
+			
+			$arrFilteredInfo[$key] = $temp;
+		}
+		
+		$returnVal = "";
+		if($returnSingleValue == "") {
+			$returnVal = $arrFilteredInfo;
+		}
+		else {
+			$returnVal = $arrFilteredInfo[$returnSingleValue];	
+		}
+		
+		return $returnVal;
+	}
+	
 	
 	public function set_tableName($tableName) {
 		$this->strTableName = $tableName;
