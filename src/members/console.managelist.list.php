@@ -19,23 +19,31 @@
 		require_once("../_setup.php");
 
 		
-		$member = new Member($mysqli);
-		$member->select($_SESSION['btUsername']);
-		
-		$consoleObj = new ConsoleOption($mysqli);
-		if(!$consoleObj->select($setupManageListArgs['console_id'])) {
-			exit();
-		}
-		
-		if(!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
-			exit();	
-		}
-		
-		$actionsWidth = count($setupManageListArgs['actions'])*6;
-		$titleWidth = 100-($actionsWidth);
-	}
+require_once("../_setup.php");
 
-	
+$member = new Member($mysqli);
+$member->select($_SESSION['btUsername']);
+
+$consoleObj = new ConsoleOption($mysqli);
+$setupManageListArgs = json_decode($_POST['listArgs'], true);
+
+if(!$consoleObj->select($setupManageListArgs['console_id'])) {
+    exit();
+}
+
+if(!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
+    exit();    
+}
+
+// Ensure that 'actions' key exists and is an array
+$actionsWidth = 0;
+$titleWidth = 100;
+if(isset($setupManageListArgs['actions']) && is_array($setupManageListArgs['actions'])) {
+    $actionsWidth = count($setupManageListArgs['actions']) * 6;
+    $titleWidth = 100 - $actionsWidth;
+}
+    }
+
 	echo "
 	
 		<table class='formTable' style='border-spacing: 0px; margin-top: 0px'>
