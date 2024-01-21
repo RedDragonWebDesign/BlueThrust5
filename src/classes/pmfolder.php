@@ -26,18 +26,20 @@
 		}
 		
 		public function select($intIDNum, $numericIDOnly = true) {
-			$arrSpecialFolders = array("Inbox" => self::INBOX_ID, "Sent Messages" => self::SENTBOX_ID, "Trash" => self::TRASH_ID);
-			if(in_array($intIDNum, $arrSpecialFolders)) {
-				$this->arrObjInfo['name'] = array_search($intIDNum, $arrSpecialFolders);
-				$this->intTableKeyValue = $intIDNum;
+    		$returnVal = false; // Initialize $returnVal
+    		$arrSpecialFolders = array("Inbox" => self::INBOX_ID, "Sent Messages" => self::SENTBOX_ID, "Trash" => self::TRASH_ID);
 
-			}
-			else {
-				$returnVal = parent::select($intIDNum, numericIDOnly);	
-			}
-			
-			return $returnVal;
+    		if(in_array($intIDNum, $arrSpecialFolders)) {
+        		$this->arrObjInfo['name'] = array_search($intIDNum, $arrSpecialFolders);
+        		$this->intTableKeyValue = $intIDNum;
+    	}
+    	else {
+        	$returnVal = parent::select($intIDNum, $numericIDOnly); // Corrected typo here
+    	}
+    
+    	return $returnVal;
 		}
+
 	
 		function isMemberFolder() {
 
