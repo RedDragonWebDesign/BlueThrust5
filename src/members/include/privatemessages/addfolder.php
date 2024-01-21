@@ -114,28 +114,28 @@ if ( empty($_POST['submit']) ) {
 		";
 	}
 
-	echo "
-				Use the form below to add new folder for your private messages.
-				<table class='formTable'>
-					<tr>
-						<td class='formLabel'>Folder Name:</td>
-						<td class='main'><input type='text' name='foldername' value='".$_POST['foldername']."' class='textBox'></td>
-					</tr>
-					<tr>
-						<td class='formLabel' valign='top'>Display Order:</td>
-						<td class='main'>
-							<select name='beforeafter' class='textBox'><option value='before'>Before</option><option value='after'>After</option></select><br>
-							<select name='folderorder' class='textBox'>".$folderOptions."</select>
-						</td>
-					</tr>
-					<tr>
-						<td class='main' colspan='2' align='center'><br>
-							<input type='submit' name='submit' class='submitButton' value='Add Folder'>
-						</td>
-					</tr>
-				</table>
-				<br>
-			</div>
-		</form>
-	";
+echo "
+    Use the form below to add new folder for your private messages.
+    <table class='formTable'>
+        <tr>
+            <td class='formLabel'>Folder Name:</td>
+            <td class='main'><input type='text' name='foldername' value='".(isset($_POST['foldername']) ? $_POST['foldername'] : '')."' class='textBox'></td>
+        </tr>
+        <tr>
+            <td class='formLabel' valign='top'>Display Order:</td>
+            <td class='main'>
+                <select name='beforeafter' class='textBox'><option value='before'>Before</option><option value='after'>After</option></select><br>
+                <select name='folderorder' class='textBox'>".$folderOptions."</select>
+            </td>
+        </tr>
+        <tr>
+            <td class='main' colspan='2' align='center'><br>
+                <input type='submit' name='submit' class='submitButton' value='Add Folder'>
+            </td>
+        </tr>
+    </table>
+    <br>
+</div>
+</form>
+";
 }
