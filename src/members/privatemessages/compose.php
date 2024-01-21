@@ -96,13 +96,14 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			"sortorder" => $i++,
 		
 		),
-		"subject" => array(
-			"type" => "text",
-			"display_name" => "Subject",
-			"attributes" => array("class" => "formInput textBox bigTextBox"),
-			"sortorder" => $i++,
-			"value" => $_POST['subject']
-		),
+        "subject" => array(
+           "type" => "text",
+           "display_name" => "Subject",
+           "attributes" => array("class" => "formInput textBox bigTextBox"),
+           "sortorder" => $i++,
+           "value" => isset($_POST['subject']) ? $_POST['subject'] : ''
+        ),
+
 		"message" => array(
 			"type" => "textarea",
 			"display_name" => "Message",
