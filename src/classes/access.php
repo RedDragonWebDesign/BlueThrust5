@@ -84,49 +84,50 @@
 			
 		}
 		
-		public function dispSetRankAccess($blnShowFull=true) {
-			global $MAIN_ROOT, $THEME;
-			$rankCounter = 0;
-			$rankoptions = "";
+public function dispSetRankAccess($blnShowFull=true) {
+    global $MAIN_ROOT, $THEME;
+    $rankCounter = 0;
+    $rankoptions = "";
+    
+    $result = $this->MySQL->query("SELECT rankcategory_id FROM ".$this->MySQL->get_tablePrefix()."rankcategory ORDER BY ordernum DESC");    
+    while($row = $result->fetch_assoc()) {
+        
+        $this->objRankCat->select($row['rankcategory_id']);
+        $arrRanks = $this->objRankCat->getRanks();
+        $rankCatName = $this->objRankCat->get_info_filtered("name");
+        
+        if(count($arrRanks) > 0) {
+            $rankoptions .= "<b><u>".$rankCatName."</u></b> - <a href='javascript:void(0)' onclick=\"selectAllCheckboxes('rankcat_".$row['rankcategory_id']."', 1)\">Check All</a> - <a href='javascript:void(0)' onclick=\"selectAllCheckboxes('rankcat_".$row['rankcategory_id']."', 0)\">Uncheck All</a><br>";
+            $rankoptions .= "<div id='rankcat_".$row['rankcategory_id']."'>";
+   foreach($arrRanks as $rankID) {
+     
+                $dispRankAccess = "";
+                
+                foreach($this->arrAccessTypes as $accessTypeInfo) {
+                    
+                    if(isset($_SESSION['btAccessCache'][$this->cacheID]["rankaccess_".$rankID]) && $_SESSION['btAccessCache'][$this->cacheID]["rankaccess_".$rankID] == $accessTypeInfo['value']) {
+                        $dispRankAccess = " - <span class='".$accessTypeInfo['css']."' style='font-style: italic'>".$accessTypeInfo['displayValue']."</span>";
+                    }
+                    
+                }
+                
+                $this->objRank->select($rankID);
+                $rankName = $this->objRank->get_info_filtered("name");
+                $rankoptions .= "<input type='checkbox' name='rankaccess_".$rankID."' value='1' data-rankaccess='1'> ".$rankName.$dispRankAccess."<br>";
+                $rankCounter++;
+            }
+            
+            $rankoptions .= "</div><br>";
+        }    
+        
+    }
+
 			
-			$result = $this->MySQL->query("SELECT rankcategory_id FROM ".$this->MySQL->get_tablePrefix()."rankcategory ORDER BY ordernum DESC");	
-			while($row = $result->fetch_assoc()) {
-				
-				$this->objRankCat->select($row['rankcategory_id']);
-				$arrRanks = $this->objRankCat->getRanks();
-				$rankCatName = $this->objRankCat->get_info_filtered("name");
-				
-				if(count($arrRanks) > 0) {
-					$rankoptions .= "<b><u>".$rankCatName."</u></b> - <a href='javascript:void(0)' onclick=\"selectAllCheckboxes('rankcat_".$row['rankcategory_id']."', 1)\">Check All</a> - <a href='javascript:void(0)' onclick=\"selectAllCheckboxes('rankcat_".$row['rankcategory_id']."', 0)\">Uncheck All</a><br>";
-					$rankoptions .= "<div id='rankcat_".$row['rankcategory_id']."'>";
-					foreach($arrRanks as $rankID) {
-						
-						$dispRankAccess = "";
-						
-						foreach($this->arrAccessTypes as $accessTypeInfo) {
-							
-							if($_SESSION['btAccessCache'][$this->cacheID]["rankaccess_".$rankID] == $accessTypeInfo['value']) {
-								$dispRankAccess = " - <span class='".$accessTypeInfo['css']."' style='font-style: italic'>".$accessTypeInfo['displayValue']."</span>";
-							}
-							
-						}
-						
-						$this->objRank->select($rankID);
-						$rankName = $this->objRank->get_info_filtered("name");
-						$rankoptions .= "<input type='checkbox' name='rankaccess_".$rankID."' value='1' data-rankaccess='1'> ".$rankName.$dispRankAccess."<br>";
-						$rankCounter++;
-					}
-					
-					$rankoptions .= "</div><br>";
-				}	
-				
-			}
-			
-			$rankOptionsHeight = $rankCounter*20;
-			
-			if($rankOptionsHeight > 300) {
-				$rankOptionsHeight = 300;
-			}
+    $rankOptionsHeight = $rankCounter * 20;
+    
+    if ($rankOptionsHeight > 300) {
+        $rankOptionsHeight = 300;
+    }
 			
 			
 			if($blnShowFull) {
@@ -192,41 +193,43 @@
 		}
 		
 		
-		public function dispSetMemberAccess($blnShowFull=true) {
-			global $MAIN_ROOT, $THEME;
-			
-			if($blnShowFull) {
-				$membersTable = $this->MySQL->get_tablePrefix()."members";
-				$ranksTable = $this->MySQL->get_tablePrefix()."ranks";
-				$query = "SELECT ".$membersTable.".member_id FROM ".$membersTable.", ".$ranksTable." WHERE ".$membersTable.".rank_id = ".$ranksTable.".rank_id AND ".$membersTable.".disabled = '0' AND ".$membersTable.".rank_id != '1' ORDER BY ".$ranksTable.".ordernum DESC";
-			
-				$result = $this->MySQL->query($query);
-				while($row = $result->fetch_assoc()) {
-					
-					$this->objMember->select($row['member_id']);
-					$this->objRank->select($this->objMember->get_info("rank_id"));
-					
-					$memberName = $this->objMember->get_info_filtered("username");
-					$rankName = $this->objRank->get_info_filtered("name");
-					
-					$memberOptions .= "<option value='".$row['member_id']."'>".$rankName." ".$memberName."</option>";
-					
-				}
-				
-				echo "
-					<table class='formTable'>
-						<tr>
-							<td class='formLabel'>Member:</td>
-							<td class='main'><select class='textBox' id='selectMemberAccessMID'><option value='0'>[SELECT]</option>".$memberOptions."</select></td>
-						</tr>
-						<tr>
-							<td class='formLabel'>Access:</td>
-							<td class='main'>
-								<select class='textBox' id='selectMemberAccessType'>
-									<option value='0'>Remove Access Rules</option>
-									";
-						$this->dispAccessOptions();
-				
+public function dispSetMemberAccess($blnShowFull=true) {
+    global $MAIN_ROOT, $THEME;
+    
+    $memberOptions = "";  // Initialize $memberOptions as an empty string
+
+    if($blnShowFull) {
+        $membersTable = $this->MySQL->get_tablePrefix()."members";
+        $ranksTable = $this->MySQL->get_tablePrefix()."ranks";
+        $query = "SELECT ".$membersTable.".member_id FROM ".$membersTable.", ".$ranksTable." WHERE ".$membersTable.".rank_id = ".$ranksTable.".rank_id AND ".$membersTable.".disabled = '0' AND ".$membersTable.".rank_id != '1' ORDER BY ".$ranksTable.".ordernum DESC";
+    
+        $result = $this->MySQL->query($query);
+        while($row = $result->fetch_assoc()) {
+            
+            $this->objMember->select($row['member_id']);
+            $this->objRank->select($this->objMember->get_info("rank_id"));
+            
+            $memberName = $this->objMember->get_info_filtered("username");
+            $rankName = $this->objRank->get_info_filtered("name");
+            
+            $memberOptions .= "<option value='".$row['member_id']."'>".$rankName." ".$memberName."</option>";
+            
+        }
+        
+        echo "
+            <table class='formTable'>
+                <tr>
+                    <td class='formLabel'>Member:</td>
+                    <td class='main'><select class='textBox' id='selectMemberAccessMID'><option value='0'>[SELECT]</option>".$memberOptions."</select></td>
+                </tr>
+                <tr>
+                    <td class='formLabel'>Access:</td>
+                    <td class='main'>
+                        <select class='textBox' id='selectMemberAccessType'>
+                            <option value='0'>Remove Access Rules</option>
+                            ";
+        $this->dispAccessOptions();
+
 				echo "
 								</select> <input type='button' id='setMemberAccess' class='submitButton' value='Set'>
 							</td>
@@ -253,45 +256,55 @@
 						</tr>
 						";
 				
-				foreach($_SESSION['btMemberAccess'][$this->cacheID] as $memberID => $accessTypeValue) {
-					
-					if($this->objMember->select($memberID)) {
-						
-						$this->objRank->select($this->objMember->get_info("rank_id"));
-					
-						$memberName = $this->objMember->get_info_filtered("username");
-						$rankName = $this->objRank->get_info_filtered("name");
-						
-						foreach($this->arrAccessTypes as $accessTypeInfo) {
-
-							if($_SESSION['btMemberAccess'][$this->cacheID][$memberID] == $accessTypeInfo['value']) {
-								$dispAccessValue = "<span class='".$accessTypeInfo['css']."'>".$accessTypeInfo['displayValue']."</span>";
-							}
-							
-						}
-						
-						echo "
-							<tr>
-								<td class='main manageList' style='padding-left: 5px'><a href='".$MAIN_ROOT."profile.php?mID=".$memberID."' target='_blank'>".$rankName." ".$memberName."</a></td>
-								<td class='main manageList' align='center'>".$dispAccessValue."</td>
-								<td class='main manageList' align='center'><a href='javascript:void(0)'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' class='manageListActionButton' data-deleteMemberAccess='".$memberID."'></a></td>
-							</tr>					
-						";
-					}
-					
-				}
-			
+if (is_array($_SESSION['btMemberAccess'][$this->cacheID])) {
+    foreach ($_SESSION['btMemberAccess'][$this->cacheID] as $memberID => $accessTypeValue) {
+        
+        if ($this->objMember->select($memberID)) {
+            
+            $this->objRank->select($this->objMember->get_info("rank_id"));
+        
+            $memberName = $this->objMember->get_info_filtered("username");
+            $rankName = $this->objRank->get_info_filtered("name");
+            
+            $dispAccessValue = "";
+            foreach ($this->arrAccessTypes as $accessTypeInfo) {
+                if ($_SESSION['btMemberAccess'][$this->cacheID][$memberID] == $accessTypeInfo['value']) {
+                    $dispAccessValue = "<span class='".$accessTypeInfo['css']."'>".$accessTypeInfo['displayValue']."</span>";
+                }
+            }
+            
+            echo "
+                <tr>
+                    <td class='main manageList' style='padding-left: 5px'><a href='".$MAIN_ROOT."profile.php?mID=".$memberID."' target='_blank'>".$rankName." ".$memberName."</a></td>
+                    <td class='main manageList' align='center'>".$dispAccessValue."</td>
+                    <td class='main manageList' align='center'><a href='javascript:void(0)'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' class='manageListActionButton' data-deleteMemberAccess='".$memberID."'></a></td>
+                </tr>                    
+            ";
+        }
+        
+    }
+}
 			echo "
 					</table>
 				";
 			
-			if(count($_SESSION['btMemberAccess'][$this->cacheID]) == 0) {
-				echo "
-					<p class='main' align='center'>
-						<i>No special member access rules set!</i>
-					</p>
-				";
-			}
+if (is_array($_SESSION['btMemberAccess'][$this->cacheID]) && count($_SESSION['btMemberAccess'][$this->cacheID]) == 0) {
+    echo "
+        <p class='main' align='center'>
+            <i>No special member access rules set!</i>
+        </p>
+    ";
+} else {
+    echo "
+        <p class='main' align='center'>
+            <i>No special member access rules set!</i>
+        </p>
+    ";
+}
+
+echo "
+        </table>
+    ";
 			
 			if($blnShowFull) {
 				echo "
