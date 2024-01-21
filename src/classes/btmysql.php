@@ -91,28 +91,32 @@ class btMySQL extends MySQLi {
 		return $strParamTypes;
 	}
 	
-public function bindParams($objMySQLiStmt, $arrValues) {
-    $returnVal = false;
-    $strParamTypes = $this->getParamTypes($arrValues);
 
-    // Prepare the parameters for bind_param
-    $params = array($strParamTypes);
-    foreach ($arrValues as $value) {
-        $params[] = &$value; // Pass by reference
-    }
+	public function bindParams($objMySQLiStmt, $arrValues) {
+		$returnVal = false;
+		$strParamTypes = $this->getParamTypes($arrValues);
 
-    if (!call_user_func_array(array($objMySQLiStmt, "bind_param"), $params)) {
-        $returnVal = false;
-        echo $objMySQLiStmt->error;
-        echo "<br><br>";
-        $this->displayError("btmysql.php - bindParams");
-    } else {
-        $returnVal = $objMySQLiStmt;
-    }
+		$tmpParams = array_merge(array($strParamTypes), $arrValues);
+		$arrParams = array();
+		foreach($tmpParams as $key=>$value) {
+			$arrParams[$key] = &$tmpParams[$key];
+		}
 
-    return $returnVal;
-}
 
+		if(!call_user_func_array(array($objMySQLiStmt, "bind_param"), $arrParams)) {
+			$returnVal = false;
+			echo $objMySQLiStmt->error;
+			echo "<br><br>";
+			$this->displayError("btmysql.php - bindParams");
+		}
+		else {
+			$returnVal = $objMySQLiStmt;
+		}
+
+
+		return $returnVal;
+
+	}
 	
 	public function optimizeTables() {
 		$tables = array();
