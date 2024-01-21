@@ -20,15 +20,13 @@
 	
 	
 	// Setup default values if not given
-	$actionsTitleName = ($setupManageListArgs['action_title'] == "") ? "Actions:" : $setupManageListArgs['action_title'];
-	$itemTitleName = ($setupManageListArgs['item_title'] == "") ? "Item:" : $setupManageListArgs['item_title'];
+	$actionsTitleName = $setupManageListArgs['action_title'] ?? "Actions:";
+	$itemTitleName = $setupManageListArgs['item_title'] ?? "Item:";
 	
 	$dispAddNewLink = (!isset($setupManageListArgs['add_new_link']['url']) || $setupManageListArgs['add_new_link']['url'] == "") ? "" : "&raquo; <a href='".$setupManageListArgs['add_new_link']['url']."'>".$setupManageListArgs['add_new_link']['name']."</a> &laquo;";
 	
-	$setupManageListArgs['list_div_name'] = ($setupManageListArgs['list_div_name'] == "") ? "manageListDiv" : $setupManageListArgs['list_div_name'];
-	
-	$setupManageListArgs['loading_spiral'] = ($setupManageListArgs['loading_spiral'] == "") ? "manageListLoadingSpiral" : $setupManageListArgs['loading_spiral'];
-	
+	$setupManageListArgs['list_div_name'] = $setupManageListArgs['list_div_name'] ?? "manageListDiv";	
+	$setupManageListArgs['loading_spiral'] = $setupManageListArgs['loading_spiral'] ?? "manageListLoadingSpiral";	
 	
 	
 	
@@ -52,31 +50,23 @@
 	";
 		
 		require_once("console.managelist.list.php");
-		
+		$moveLink = $setupManageListArgs['move_link'] ?? "defaultMoveLink.php"; // Replace 'defaultMoveLink.php' with your default link
 	echo "</div>
 	
 	
 		<div id='confirmDeleteDialog'></div>
 		<script type='text/javascript'>
 		
-			function moveItem(move_dir, item_id) {
-		
-				$(document).ready(function() {
-				
-					$('#".$setupManageListArgs['loading_spiral']."').show();
-					$('#".$setupManageListArgs['list_div_name']."').fadeOut(250);
-					//".$setupManageListArgs['move_link']."
-					$.post('".$MAIN_ROOT."members/console.managelist.move.php?cID=".filterText($_GET['cID'])."', { itemID: item_id, moveDir: move_dir }, function(data) {
-					
-						$('#".$setupManageListArgs['loading_spiral']."').hide();
-						$('#".$setupManageListArgs['list_div_name']."').html(data).fadeIn(250);
-						
-					});
-					
-				
-				});
-			
-			}
+    function moveItem(move_dir, item_id) {
+        $(document).ready(function() {
+            $('#".$setupManageListArgs['loading_spiral']."').show();
+            $('#".$setupManageListArgs['list_div_name']."').fadeOut(250);
+            $.post('".$moveLink."', { itemID: item_id, moveDir: move_dir }, function(data) {
+                $('#".$setupManageListArgs['loading_spiral']."').hide();
+                $('#".$setupManageListArgs['list_div_name']."').html(data).fadeIn(250);
+            });
+        });
+    }
 			
 			function deleteItem(item_id) {
 			
