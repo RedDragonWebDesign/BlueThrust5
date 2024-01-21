@@ -33,19 +33,18 @@ class PrivateMessage extends BasicOrder {
 	}
 	
 	
-	public function getRecipients($blnNameOnly=false) {
-		global $MAIN_ROOT;
-		$arrGroups = array();
-		
-		if($this->intTableKeyValue != "" && $this->arrObjInfo['receiver_id'] == 0) {
-			$arrGroups['list'] = array();
-			$arrGroups['rank'] = array();
-			$arrGroups['squad'] = array();
-			$arrGroups['tournament'] = array();
-			$arrGroups['rankcategory'] = array();
-			
-			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."privatemessage_members WHERE pm_id = '".$this->intTableKeyValue."'");
-			while($row = $result->fetch_assoc()) {
+public function getRecipients($blnNameOnly=false) {
+    global $MAIN_ROOT;
+    $arrGroups = array();
+    $arrGroups['list'] = array();  // Initialize 'list' to ensure it's always set
+    $arrGroups['rank'] = array();
+    $arrGroups['squad'] = array();
+    $arrGroups['tournament'] = array();
+    $arrGroups['rankcategory'] = array();
+    
+    if($this->intTableKeyValue != "" && $this->arrObjInfo['receiver_id'] == 0) {
+        $result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."privatemessage_members WHERE pm_id = '".$this->intTableKeyValue."'");
+        while($row = $result->fetch_assoc()) {
 				if($row['grouptype'] != "" && !in_array($row['group_id'], $arrGroups[$row['grouptype']])) {
 					$arrGroups[$row['grouptype']][] = $row['group_id'];
 					$dispName = "";
@@ -84,13 +83,13 @@ class PrivateMessage extends BasicOrder {
 				}
 			}
 			
-			if($blnNameOnly) {
-				$arrGroups['list'] = implode(", ", $arrGroups['list']);	
-			}
-		
-		}
-		
-		return $arrGroups['list'];
+    // Check if 'list' is set and not empty before trying to implode
+    if($blnNameOnly && !empty($arrGroups['list'])) {
+        $arrGroups['list'] = implode(", ", $arrGroups['list']);    
+    }
+    
+    return $arrGroups['list'];
+}
 		
 	}
 	
