@@ -44,6 +44,8 @@ if($NUM_PER_PAGE == 0) {
 
 $seenTopicsSQL = "SELECT forumtopic_id FROM ".$dbprefix."forum_topicseen WHERE member_id = '".$memberInfo['member_id']."'";
 
+$arrTopics = []; // Initialize $arrTopics as an empty array
+
 $accessableTopicsSQL = "SELECT forumtopic_id, forumboard_id FROM ".$dbprefix."forum_topic WHERE forumtopic_id NOT IN (".$seenTopicsSQL.")";
 $result = $mysqli->query($accessableTopicsSQL);
 while($row = $result->fetch_assoc()) {
