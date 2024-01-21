@@ -142,17 +142,16 @@ if ( ! empty($_POST['submit']) ) {
 	}
 	
 	
-	if($countErrors > 0) {
-		
-		$_POST = filterArray($_POST);
-		$_POST['submit'] = false;
-		
-		$arrPostSelected['accesstype']['limited'] = ($_POST['accesstype'] == "memberslimited") ? " selected" : "";
-		$arrPostSelected['accesstype']['public'] = ($_POST['accesstype'] == "public") ? " selected" : "";
-		
-		$arrPostSelected['multivote'] = ($_POST['multivote'] == 1) ? " checked" : "";
-		$arrPostSelected['displayvoters'] = ($_POST['displayvoters'] == 1) ? " checked" : "";
-		
+if ($countErrors > 0) {
+    
+    $_POST = filterArray($_POST);
+    $_POST['submit'] = false;
+    
+    $arrPostSelected['accesstype']['limited'] = ($_POST['accesstype'] == "memberslimited") ? " selected" : "";
+    $arrPostSelected['accesstype']['public'] = ($_POST['accesstype'] == "public") ? " selected" : "";
+    
+    $arrPostSelected['multivote'] = (isset($_POST['multivote']) && $_POST['multivote'] == 1) ? " checked" : "";
+    $arrPostSelected['displayvoters'] = (isset($_POST['displayvoters']) && $_POST['displayvoters'] == 1) ? " checked" : "";
 		
 		$arrPostSelected['resultvisibility']['votedonly'] = ($_POST['resultvisibility'] == "votedonly") ? " selected" : "";
 		$arrPostSelected['resultvisibility']['pollend'] = ($_POST['resultvisibility'] == "pollend") ? " selected" : "";
@@ -178,7 +177,7 @@ if ( empty($_POST['submit']) ) {
 		
 		";
 	
-	
+}
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -219,74 +218,72 @@ if ( empty($_POST['submit']) ) {
 	}
 
 	
-	
-	echo "
-		
-			<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
-			Use the form below to add a poll.  You can display polls in menus by going to the <a href='".$MAIN_ROOT."members/console.php?cID=".$addMenuItemCID."'>Add Menu Item</a> page.		
-			<table class='formTable'>
-				<tr>
-					<td class='formLabel' valign='top'>Question:</td>
-					<td class='main'><textarea name='pollquestion' class='textBox' style='width: 60%; height: 30px'>".$_POST['pollquestion']."</textarea></td>
-				</tr>
-				<tr>
-					<td class='formLabel'>Access:</td>
-					<td class='main'>
-						<select name='accesstype' id='accessType' class='textBox'>
-							<option value='members'>Members Only</option>
-							<option value='memberslimited'".$arrPostSelected['accesstype']['limited'].">Limited Members</option>
-							<option value='public'".$arrPostSelected['accesstype']['public'].">Public</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td class='formLabel'>Multi-Vote: <a href='javascript:void(0)' onmouseover=\"showToolTip('Select the checkbox to allow users to vote on more than one option at a time.')\" onmouseout=\"hideToolTip()\">(?)</a></td>
-					<td class='main'>
-						<input type='checkbox' name='multivote' value='1'".$arrPostSelected['multivote'].">
-					</td>
-				</tr>
-				<tr>
-					<td class='formLabel'>Display Voters: <a href='javascript:void(0)' onmouseover=\"showToolTip('Select the checkbox to show who voted for which option.')\" onmouseout=\"hideToolTip()\">(?)</a></td>
-					<td class='main'><input type='checkbox' name='displayvoters' value='1'".$arrPostSelected['displayvoters']."></td>
-				</tr>
-				<tr>
-					<td class='formLabel'>Result Visibility:</td>
-					<td class='main'>
-						<select name='resultvisibility' class='textBox'>
-							<option value='open'>Show Always</option>
-							<option value='votedonly'".$arrPostSelected['resultvisibility']['votedonly'].">Show only after voted</option>
-							<option value='pollend'".$arrPostSelected['resultvisibility']['pollend'].">Show only when poll ends</option>
-							<option value='never'".$arrPostSelected['resultvisibility']['never'].">Don't reveal results</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td class='formLabel'>Max votes per user: <a href='javascript:void(0)' onmouseover=\"showToolTip('Leave blank or 0 for unlimited votes.')\" onmouseout=\"hideToolTip()\">(?)</a></td>
-					<td class='main'>
-						<input type='text' name='maxvotes' value='".$_POST['maxvotes']."' class='textBox' style='width: 10%'>
-					</td>
-				</tr>
-				<tr>
-					<td class='formLabel' valign='top'>Run poll until:</td>
-					<td class='main'>
-						<select name='enddate' id='endDatePick' class='textBox'>
-							<option value=''>Select</option>
-							<option value='choose'".$arrPostSelected['pollend']['choose'].">Choose Date</option>
-							<option value='forever'".$arrPostSelected['pollend']['forever'].">Forever</option>
-						</select>
-						<div id='pickEndDateDiv' style='display: none'>
-							<br>
-							<input type='text' id='jqEndDate' name='fakeenddate' value='".$_POST['fakeenddate']."' class='textBox' readonly='readonly' style='cursor: pointer'>
-							<p>
-							<select class='textBox' name='endhour'>".$hourOptions."</select> : 
-							<select class='textBox' name='endminute'>".$minuteOptions."</select>
-							<select class='textBox' name='endAMPM'><option value='AM'>AM</option><option value='PM'".$arrPostSelected['endAMPM'].">PM</option></select>
-							</p>
-							<input type='hidden' name='realenddate' id='realEndDate'>
-						</div>
-					</td>
-				</tr>
-			</table>
+echo "
+ 	<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
+    Use the form below to add a poll.  You can display polls in menus by going to the <a href='".$MAIN_ROOT."members/console.php?cID=".$addMenuItemCID."'>Add Menu Item</a> page.        
+    <table class='formTable'>
+        <tr>
+            <td class='formLabel' valign='top'>Question:</td>
+            <td class='main'><textarea name='pollquestion' class='textBox' style='width: 60%; height: 30px'>" . (isset($_POST['pollquestion']) ? htmlspecialchars($_POST['pollquestion']) : '') . "</textarea></td>
+        </tr>
+    <tr>
+        <td class='formLabel'>Access:</td>
+        <td class='main'>
+            <select name='accesstype' id='accessType' class='textBox'>
+                <option value='members'>Members Only</option>
+                <option value='memberslimited'".(isset($arrPostSelected['accesstype']['limited']) ? $arrPostSelected['accesstype']['limited'] : '').">Limited Members</option>
+                <option value='public'".(isset($arrPostSelected['accesstype']['public']) ? $arrPostSelected['accesstype']['public'] : '').">Public</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class='formLabel'>Multi-Vote: <a href='javascript:void(0)' onmouseover=\"showToolTip('Select the checkbox to allow users to vote on more than one option at a time.')\" onmouseout=\"hideToolTip()\">(?)</a></td>
+        <td class='main'>
+            <input type='checkbox' name='multivote' value='1'" . (isset($arrPostSelected['multivote']) ? $arrPostSelected['multivote'] : '') . ">
+        </td>
+    </tr>
+    <tr>
+        <td class='formLabel'>Display Voters: <a href='javascript:void(0)' onmouseover=\"showToolTip('Select the checkbox to show who voted for which option.')\" onmouseout=\"hideToolTip()\">(?)</a></td>
+        <td class='main'><input type='checkbox' name='displayvoters' value='1'" . (isset($arrPostSelected['displayvoters']) ? $arrPostSelected['displayvoters'] : '') . "></td>
+    </tr>
+    <tr>
+        <td class='formLabel'>Result Visibility:</td>
+        <td class='main'>
+            <select name='resultvisibility' class='textBox'>
+                <option value='open'>Show Always</option>
+                <option value='votedonly'" . (isset($arrPostSelected['resultvisibility']['votedonly']) ? $arrPostSelected['resultvisibility']['votedonly'] : '') . ">Show only after voted</option>
+                <option value='pollend'" . (isset($arrPostSelected['resultvisibility']['pollend']) ? $arrPostSelected['resultvisibility']['pollend'] : '') . ">Show only when poll ends</option>
+                <option value='never'" . (isset($arrPostSelected['resultvisibility']['never']) ? $arrPostSelected['resultvisibility']['never'] : '') . ">Don't reveal results</option>
+            </select>
+        </td>
+    </tr>
+        <tr>
+            <td class='formLabel'>Max votes per user: <a href='javascript:void(0)' onmouseover=\"showToolTip('Leave blank or 0 for unlimited votes.')\" onmouseout=\"hideToolTip()\">(?)</a></td>
+            <td class='main'>
+                <input type='text' name='maxvotes' value='".(isset($_POST['maxvotes']) ? $_POST['maxvotes'] : '')."' class='textBox' style='width: 10%'>
+            </td>
+        </tr>
+    <tr>
+        <td class='formLabel' valign='top'>Run poll until:</td>
+        <td class='main'>
+            <select name='enddate' id='endDatePick' class='textBox'>
+                <option value=''>Select</option>
+                <option value='choose'".(isset($arrPostSelected['pollend']['choose']) ? $arrPostSelected['pollend']['choose'] : '').">Choose Date</option>
+                <option value='forever'".(isset($arrPostSelected['pollend']['forever']) ? $arrPostSelected['pollend']['forever'] : '').">Forever</option>
+            </select>
+            <div id='pickEndDateDiv' style='display: none'>
+                <br>
+                <input type='text' id='jqEndDate' name='fakeenddate' value='".(isset($_POST['fakeenddate']) ? $_POST['fakeenddate'] : '')."' class='textBox' readonly='readonly' style='cursor: pointer'>
+                <p>
+                <select class='textBox' name='endhour'>".$hourOptions."</select> : 
+                <select class='textBox' name='endminute'>".$minuteOptions."</select>
+                <select class='textBox' name='endAMPM'><option value='AM'>AM</option><option value='PM'".(isset($arrPostSelected['endAMPM']) ? $arrPostSelected['endAMPM'] : '').">PM</option></select>
+                </p>
+                <input type='hidden' name='realenddate' id='realEndDate'>
+            </div>
+        </td>
+    </tr>
+    </table>
 			
 			<div id='accessDiv' style='margin-bottom: 50px'>
 				<div class='main' style='margin: 20px auto; width: 95%'>
@@ -471,4 +468,3 @@ if ( empty($_POST['submit']) ) {
 		</script>		
 	";
 	
-}
