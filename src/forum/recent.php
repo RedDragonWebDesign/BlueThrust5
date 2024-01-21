@@ -38,6 +38,7 @@ if($NUM_PER_PAGE == 0) {
 	$NUM_PER_PAGE = 25;
 }
 
+$arrTopics = []; // Initialize $arrTopics as an empty array
 
 $accessableTopicsSQL = "SELECT forumtopic_id, forumboard_id FROM ".$dbprefix."forum_topic";
 $result = $mysqli->query($accessableTopicsSQL);
@@ -61,8 +62,6 @@ if(!isset($_GET['pID']) || !is_numeric($_GET['pID'])) {
 else {
 	$intOffset = $NUM_PER_PAGE*($_GET['pID']-1);
 }
-
-
 // Count Pages
 $NUM_OF_PAGES = ceil($totalPosts/$NUM_PER_PAGE);
 
