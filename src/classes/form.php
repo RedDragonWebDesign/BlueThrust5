@@ -795,38 +795,39 @@ public function prefillDBValues() {
 		 * Saves the form data to the database
 		 * 
 		 */
-		public function save() {
-			global $hooksObj;
-			$hooksObj->run($this->formName);
-			
-			$this->blnSaveResult = false;
-			
-						
-			$arrResortOrder = array();
-			if($this->validate()) {
+public function save() {
+    global $hooksObj;
+    $hooksObj->run($this->formName);
+    
+    $this->blnSaveResult = false;
+    
+    $arrResortOrder = array();
+    if ($this->validate()) {
+        $arrColumns = array();
+        $arrValues = array();
+        foreach ($this->components as $componentName => $componentInfo) {
+            if (isset($componentInfo['db_name']) && $componentInfo['db_name'] != "") {
+                $arrColumns[] = $componentInfo['db_name'];
+                // Check if $_POST[$componentName] is set and not null
+                $arrValues[] = isset($_POST[$componentName]) ? $_POST[$componentName] : ''; // Provide a default value if null
+            }
 
-				$arrColumns = array();
-				$arrValues = array();
-				foreach($this->components as $componentName => $componentInfo) {			
-					
-					if(isset($componentInfo['db_name']) && $componentInfo['db_name'] != "") {
-						$arrColumns[] = $componentInfo['db_name'];
-						$arrValues[] = $_POST[$componentName];
-					}
+            // Check if 'hide' key exists in $componentInfo
+            if (isset($componentInfo['hide']) && $componentInfo['hide']) {
+                // Your logic for 'hide' key
+            }
 
-					if($componentInfo['type'] == "beforeafter") {
-						$this->beforeAfter = true;	
-					}
-					
-				}
-				
-				if ( is_array($this->saveAdditional) ) {
-					foreach($this->saveAdditional as $dbName => $dbValue) {
-						$arrColumns[] = $dbName;
-						$arrValues[] = $dbValue;
-					}
-				}
-				
+            if ($componentInfo['type'] == "beforeafter") {
+                $this->beforeAfter = true;
+            }
+        }
+
+        if (is_array($this->saveAdditional)) {
+            foreach ($this->saveAdditional as $dbName => $dbValue) {
+                $arrColumns[] = $dbName;
+                $arrValues[] = $dbValue;
+            }
+        }
 				
 				if($this->objSave != "" && $this->saveType == "add") {
 					$this->blnSaveResult = $this->objSave->addNew($arrColumns, $arrValues);
