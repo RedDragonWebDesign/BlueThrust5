@@ -93,7 +93,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 			
 		}
 		
-		
+		header('Content-Type: application/json');
 		echo json_encode($arrReturn);
 	}
 	
@@ -123,31 +123,31 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 				
 			";
 		
-		if(count($_SESSION['btPollOptionCache'][$pollObj->cacheID]) > 0) {
-			
-			foreach($_SESSION['btPollOptionCache'][$pollObj->cacheID] as $key=>$optionInfo) {
-	
-				$displayOrder .= "<option value='".$key."'>".$optionInfo['value']."</option>";
-				
-			}
-			
-			echo "
-				<tr>
-					<td class='main'><b>Display Order:</b></td>
-					<td class='main'>
-						<select id='optionOrderBeforeAfter' class='textBox'>
-							<option value='before'>Before</option><option value='after'>After</option>
-						</select>
-						<br>
-						<select id='optionOrder' class='textBox'>
-						".$displayOrder."
-						</select>
-			";
-		}
-		
-		echo "
-			</table>
-		";
+if (count($_SESSION['btPollOptionCache'][$pollObj->cacheID]) > 0) {
+    
+    $displayOrder = "";  // Initialize $displayOrder as an empty string
+
+    foreach ($_SESSION['btPollOptionCache'][$pollObj->cacheID] as $key => $optionInfo) {
+        $displayOrder .= "<option value='".$key."'>".$optionInfo['value']."</option>";
+    }
+    
+    echo "
+        <tr>
+            <td class='main'><b>Display Order:</b></td>
+            <td class='main'>
+                <select id='optionOrderBeforeAfter' class='textBox'>
+                    <option value='before'>Before</option><option value='after'>After</option>
+                </select>
+                <br>
+                <select id='optionOrder' class='textBox'>
+                ".$displayOrder."
+                </select>
+    ";
+}
+
+echo "
+    </table>
+";
 		
 	}
 }
