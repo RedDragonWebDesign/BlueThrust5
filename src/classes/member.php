@@ -944,7 +944,7 @@ protected function getMemberPicture($db_name, $defaultpic, $cssClass = array(), 
     }
 
     $dispStyle = "";
-    if (count($arrStyle) > 0) {
+    if (is_array($arrStyle) && count($arrStyle) > 0) {
         $dispStyle = " style='";
         foreach ($arrStyle as $attr => $value) {
             $dispStyle .= $attr.": ".$value.";";
@@ -953,7 +953,7 @@ protected function getMemberPicture($db_name, $defaultpic, $cssClass = array(), 
     }
 
     $dispClass = "";
-    if (count($cssClass) > 0) {
+    if (is_array($cssClass) && count($cssClass) > 0) {
         $dispClass = " class='";
         foreach ($cssClass as $class) {
             $dispClass .= $class." ";
@@ -963,7 +963,6 @@ protected function getMemberPicture($db_name, $defaultpic, $cssClass = array(), 
 
     return "<img src='".$avatarURL."'".$dispStyle.$dispClass.">";
 }
-
 	
 	public function getAvatar($setWidth="", $setHeight="") {
 		return $this->getMemberPicture($setWidth, $setHeight, "avatar", "defaultavatar.png", array("avatarImg"));
