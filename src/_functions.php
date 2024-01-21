@@ -32,15 +32,20 @@ function filterArray($arrValues) {
 }
 
 function filterText($strText) {
-	$temp = str_replace("<", "&lt;", $strText);
-	$value = str_replace(">", "&gt;", $temp);
-	$temp = str_replace("'", "&#39;", $value);
-	$value = str_replace('"', '&quot;', $temp);
-	$temp = str_replace("&middot;", "&#38;middot;", $value);
-	$temp = str_replace("&raquo;", "&#38;raquo;", $temp);
-	$temp = str_replace("&laquo;", "&#38;laquo;", $temp);
-	return $temp;
+    if ($strText === null) {
+        return ''; // Return an empty string or some default value if $strText is null
+    }
+
+    $temp = str_replace("<", "&lt;", $strText);
+    $value = str_replace(">", "&gt;", $temp);
+    $temp = str_replace("'", "&#39;", $value);
+    $value = str_replace('"', '&quot;', $temp);
+    $temp = str_replace("&middot;", "&#38;middot;", $value);
+    $temp = str_replace("&raquo;", "&#38;raquo;", $temp);
+    $temp = str_replace("&laquo;", "&#38;laquo;", $temp);
+    return $temp;
 }
+
 
 function getPreciseTime($intTime, $timeFormat="", $bypassTimeDiff=false) {
 	$timeDiff = (!$bypassTimeDiff) ? time() - $intTime : 99999;
