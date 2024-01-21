@@ -163,64 +163,46 @@ class BasicOrder extends Basic {
 	 *  Returns a number to be used for ordernum
 	 *
 	*/
-	function validateOrder($intOrderNumID, $strBeforeAfter, $blnEdit = false, $intEditOrderNum = "") {
-	
-		$returnVal = false;
-	
-		if($intOrderNumID == "first") {
-			// "(no other categories)" selected, check to see if there are actually no other categories
+function validateOrder($intOrderNumID, $strBeforeAfter, $blnEdit = false, $intEditOrderNum = "") {
+    $returnVal = false;
 
-			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName);
-			$num_rows = $result->num_rows;
-	
-	
-			if($num_rows == 0 || ($num_rows == 1 && $blnEdit)) {
+    // Convert $intEditOrderNum to an integer if it's not empty
+    $intEditOrderNum = ($intEditOrderNum !== "") ? (int)$intEditOrderNum : 0;
 
-				$returnVal = 1;
-			}
-	
-		}
-		elseif($this->select($intOrderNumID) && ($strBeforeAfter == "before" || $strBeforeAfter == "after")) {
-	
-	
-			// Check first to see if we are editing or adding a new rank
-	
-			if($blnEdit) {
-	
-				// Editing...
-				// Check to see if the rank's order is being changed or if its staying the same
-	
-	
-				$addTo = 1; // Add 1 if we chose "before"
-				if($strBeforeAfter == "after") {
-					$addTo = -1; // Minus 1 if we chose "after"
-				}
-	
-				// Get the ordernum of the rank that we are using to determine the order of the rank being edited (*** It was selected in the IF statement above ***)
-				$thisCatOrderNum = $this->get_info("ordernum");
-	
-				$checkOrderNum = $intEditOrderNum+$addTo; // This is the new ordernum of the rank we are editing
-	
-				// If checkOrderNum is the same as intEditOrderNum then the order hasn't changed
-				if($checkOrderNum != $intEditOrderNum) {
-					$returnVal = $this->makeRoom($strBeforeAfter);
-				}
-				else {
-					$returnVal= $intEditOrderNum;
-				}
-	
-	
-			}
-			else {
-	
-				$returnVal = $this->makeRoom($strBeforeAfter);
-	
-			}
-	
-		}
-	
-		return $returnVal;
-	}
+    if ($intOrderNumID == "first") {
+        // "(no other categories)" selected, check to see if there are actually no other categories
+        $result = $this->MySQL->query("SELECT * FROM ".$this->strTableName);
+        $num_rows = $result->num_rows;
+
+        if ($num_rows == 0 || ($num_rows == 1 && $blnEdit)) {
+            $returnVal = 1;
+        }
+    } elseif (is_numeric($intOrderNumID) && $this->select((int)$intOrderNumID) && ($strBeforeAfter == "before" || $strBeforeAfter == "after")) {
+        // Check first to see if we are editing or adding a new rank
+        if ($blnEdit) {
+            // Editing...
+            $addTo = ($strBeforeAfter == "after") ? -1 : 1;
+            $thisCatOrderNum = $this->get_info("ordernum");
+
+            // Ensure $thisCatOrderNum is an integer
+            $thisCatOrderNum = is_numeric($thisCatOrderNum) ? (int)$thisCatOrderNum : 0;
+
+            $checkOrderNum = $intEditOrderNum + $addTo;
+            // If checkOrderNum is the same as intEditOrderNum then the order hasn't changed
+            if ($checkOrderNum != $intEditOrderNum) {
+                $returnVal = $this->makeRoom($strBeforeAfter);
+            } else {
+                $returnVal = $intEditOrderNum;
+            }
+        } else {
+            // Adding new...
+            $returnVal = $this->makeRoom($strBeforeAfter);
+        }
+    }
+
+    return $returnVal;
+}
+
 	
 	/**
 	 * - resortOrder Method -
