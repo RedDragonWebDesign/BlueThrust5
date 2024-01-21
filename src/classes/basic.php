@@ -377,35 +377,40 @@ class Basic {
 		return $returnVal;
 	}
 	
-	public function get_info_filtered($returnSingleValue = "") {
-		if ( ! $this->arrObjInfo ) {
-			return $this->arrObjInfo;
-		}
-		
-		$arrFilteredInfo = array();
-		foreach($this->arrObjInfo as $key => $value) {
-			$temp = str_replace("<", "&lt;", $value);
-			$value = str_replace(">", "&gt;", $temp);
-			$temp = str_replace("'", "&#39;", $value);
-			$value = str_replace('"', '&quot;', $temp);
-			$temp = str_replace("&middot;", "&#38;middot;", $value);
-			$temp = str_replace("&raquo;", "&#38;raquo;", $temp);
-			$temp = str_replace("&laquo;", "&#38;laquo;", $temp);
-			
-			$arrFilteredInfo[$key] = $temp;
-		}
-		
-		$returnVal = "";
-		if($returnSingleValue == "") {
-			$returnVal = $arrFilteredInfo;
-		}
-		else {
-			$returnVal = $arrFilteredInfo[$returnSingleValue];	
-		}
-		
-		return $returnVal;
-	}
-	
+public function get_info_filtered($returnSingleValue = "") {
+    if ( ! $this->arrObjInfo ) {
+        return $this->arrObjInfo;
+    }
+    
+    $arrFilteredInfo = array();
+    foreach($this->arrObjInfo as $key => $value) {
+        $temp = str_replace("<", "&lt;", $value);
+        $value = str_replace(">", "&gt;", $temp);
+        $temp = str_replace("'", "&#39;", $value);
+        $value = str_replace('"', '&quot;', $temp);
+        $temp = str_replace("&middot;", "&#38;middot;", $value);
+        $temp = str_replace("&raquo;", "&#38;raquo;", $temp);
+        $temp = str_replace("&laquo;", "&#38;laquo;", $temp);
+        
+        $arrFilteredInfo[$key] = $temp;
+    }
+    
+    $returnVal = "";
+    if($returnSingleValue == "") {
+        $returnVal = $arrFilteredInfo;
+    }
+    else {
+        // Check if the key exists in the array
+        if(array_key_exists($returnSingleValue, $arrFilteredInfo)) {
+            $returnVal = $arrFilteredInfo[$returnSingleValue];
+        } else {
+            $returnVal = null; // or some default value or error handling
+        }
+    }
+    
+    return $returnVal;
+}
+
 	
 	public function set_tableName($tableName) {
 		$this->strTableName = $tableName;
