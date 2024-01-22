@@ -14,15 +14,13 @@
 
 require_once("basic.php");
 
-class BasicOrder extends Basic
-{
+class BasicOrder extends Basic {
 
 	protected $strAssociateTableName; // See the getAssociateIDs function for an explaination of "Associates"
 	protected $strAssociateKeyName;
 
 
-	public function __construct($sqlConnection, $tableName, $tableKey)
-	{
+	public function __construct($sqlConnection, $tableName, $tableKey) {
 		$this->MySQL = $sqlConnection;
 		$this->strTableName = $this->MySQL->get_tablePrefix() . $tableName;
 		$this->strTableKey = $tableKey;
@@ -40,8 +38,7 @@ class BasicOrder extends Basic
 	 *   Returns false when the table row is not found.
 	 *
 	 */
-	function selectByOrder($intOrderNum)
-	{
+	function selectByOrder($intOrderNum) {
 
 		$returnVal = false;
 		if (is_numeric($intOrderNum)) {
@@ -64,8 +61,7 @@ class BasicOrder extends Basic
 	 *  Returns the highest ordernum in the rank table
 	 *
 	 */
-	function getHighestOrderNum()
-	{
+	function getHighestOrderNum() {
 		$result = $this->MySQL->query("SELECT MAX(ordernum) FROM " . $this->strTableName);
 		$row = $result->fetch_assoc();
 
@@ -87,8 +83,7 @@ class BasicOrder extends Basic
 	 * Returns the ordernum for the new rank on success or "false" on error
 	 *
 	 */
-	function makeRoom($strBeforeAfter)
-	{
+	function makeRoom($strBeforeAfter) {
 
 		$intRankID = $this->intTableKeyValue;
 		if ($intRankID != null) {
@@ -158,8 +153,7 @@ class BasicOrder extends Basic
 	 *  Returns a number to be used for ordernum
 	 *
 	 */
-	function validateOrder($intOrderNumID, $strBeforeAfter, $blnEdit = false, $intEditOrderNum = "")
-	{
+	function validateOrder($intOrderNumID, $strBeforeAfter, $blnEdit = false, $intEditOrderNum = "") {
 		$returnVal = false;
 
 		// Convert $intEditOrderNum to an integer if it's not empty
@@ -197,7 +191,7 @@ class BasicOrder extends Basic
 		}
 
 		return $returnVal;
-	}
+	}1
 
 
 	/**
@@ -211,8 +205,7 @@ class BasicOrder extends Basic
 	 *
 	 *
 	 */
-	function resortOrder()
-	{
+	function resortOrder() {
 
 		$counter = 1; // ordernum counter
 		$x = 0; // array counter
@@ -250,8 +243,7 @@ class BasicOrder extends Basic
 	 * Returns false when no move is made
 	 *
 	 */
-	function move($strDir)
-	{
+	function move($strDir) {
 
 
 		$returnVal = false;
@@ -300,8 +292,7 @@ class BasicOrder extends Basic
 	 *  Returns an array with 2 items, [0] equals the rank id, [1] equals before, after or first (if no other ranks)
 	 *
 	 */
-	function findBeforeAfter()
-	{
+	function findBeforeAfter() {
 		$returnArr = "";
 		if ($this->intTableKeyValue != "") {
 			$intHighestOrderNum = $this->getHighestOrderNum();
@@ -348,8 +339,7 @@ class BasicOrder extends Basic
 	 *  Returns an array of IDs for the associated table
 	 *
 	 */
-	function getAssociateIDs($sqlOrderBY = "", $bypassFilter = false)
-	{
+	function getAssociateIDs($sqlOrderBY = "", $bypassFilter = false) {
 
 		$arrReturn = array();
 		if (!$bypassFilter) {
@@ -367,20 +357,17 @@ class BasicOrder extends Basic
 	}
 
 
-	function set_assocTableName($tableName)
-	{
+	function set_assocTableName($tableName) {
 		$this->strAssociateTableName = $this->MySQL->get_tablePrefix() . $tableName;
 	}
 
-	function set_assocTableKey($tableKey)
-	{
+	function set_assocTableKey($tableKey) {
 		$this->strAssociateKeyName = $tableKey;
 	}
 
 
 
-	function delete()
-	{
+	function delete() {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
