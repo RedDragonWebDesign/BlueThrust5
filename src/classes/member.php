@@ -945,20 +945,22 @@ protected function getMemberPicture($db_name, $defaultpic, $cssClass = array(), 
 
     $dispStyle = "";
     if (is_array($arrStyle) && count($arrStyle) > 0) {
-        $dispStyle = " style='";
+        $styleParts = array();
         foreach ($arrStyle as $attr => $value) {
-            $dispStyle .= $attr.": ".$value.";";
+            // Ensure that $value is a string
+            $styleParts[] = $attr.": ".(is_array($value) ? implode(" ", $value) : $value);
         }
-        $dispStyle .= "'";
+        $dispStyle = " style='".implode("; ", $styleParts)."'";
+    }
+
+    // Ensure cssClass is an array
+    if (!is_array($cssClass)) {
+        $cssClass = array($cssClass);
     }
 
     $dispClass = "";
-    if (is_array($cssClass) && count($cssClass) > 0) {
-        $dispClass = " class='";
-        foreach ($cssClass as $class) {
-            $dispClass .= $class." ";
-        }
-        $dispClass .= "'";
+    if (count($cssClass) > 0) {
+        $dispClass = " class='".implode(" ", $cssClass)."'";
     }
 
     return "<img src='".$avatarURL."'".$dispStyle.$dispClass.">";
