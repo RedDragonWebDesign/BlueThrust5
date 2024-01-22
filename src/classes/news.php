@@ -127,19 +127,20 @@ class News extends Basic {
 	}
 	
 	
-	public function show() {
-		global $hooksObj;
-		if($this->intTableKeyValue != "") {
-			$member = new Member($this->MySQL);
-			$postInfo = $this->arrObjInfo;
-			
-			$checkHTMLAccess = "";
-			if($member->select($postInfo['lasteditmember_id'])) {
-				$checkHTMLAccess = $member->hasAccess($this->consoleObj);
-				$dispLastEditTime = getPreciseTime($postInfo['lasteditdate']);
-				$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";		
-			}
-			
+public function show() {
+    global $hooksObj;
+    if ($this->intTableKeyValue != "") {
+        $member = new Member($this->MySQL);
+        $postInfo = $this->arrObjInfo;
+
+        $checkHTMLAccess = "";
+        $dispLastEdit = ""; // Initialize $dispLastEdit
+
+        if ($member->select($postInfo['lasteditmember_id'])) {
+            $checkHTMLAccess = $member->hasAccess($this->consoleObj);
+            $dispLastEditTime = getPreciseTime($postInfo['lasteditdate']);
+            $dispLastEdit = "<span style='font-style: italic'>last edited by " . $member->getMemberLink() . " - " . $dispLastEditTime . "</span>";
+        }
 			$dispNewsType = "";
 			if($postInfo['newstype'] == 1) {
 				$dispNewsType = " - <span class='publicNewsColor' style='font-style: italic'>public</span>";
