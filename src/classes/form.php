@@ -739,7 +739,7 @@ public function prefillDBValues() {
 					    $_POST[$componentName] = $componentInfo['value'];    
 					}
 
-					if(in_array("NOT_BLANK", $componentInfo['validate'])) {
+					if(is_array($componentInfo['validate']) && in_array("NOT_BLANK", $componentInfo['validate'])) {
 						if($_POST[$componentName] == "") {
 							$this->errors[] = $componentInfo['display_name']." may not be blank.";
 						}
@@ -975,7 +975,7 @@ public function save() {
 			}
 			
 		}
-		
+
 		
 		private function autocompleteJS($searchList, $idTextbox, $wordTextbox) {
 
