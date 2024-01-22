@@ -58,6 +58,8 @@ class btBBCode {
 			}
 			else {
 				$strText = preg_replace(
+
+					}			
 		}
 		
 	}
