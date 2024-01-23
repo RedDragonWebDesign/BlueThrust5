@@ -12,37 +12,37 @@
 	 *
 	 */
 
-	if(!defined("LOGGED_IN") || !LOGGED_IN) { 
-		
+	if (!defined("LOGGED_IN") || !LOGGED_IN) {
+
 		$setupManageListArgs = json_decode($_POST['listArgs'], true);
 
 		require_once("../_setup.php");
 
-		
-require_once("../_setup.php");
 
-$member = new Member($mysqli);
-$member->select($_SESSION['btUsername']);
+		require_once("../_setup.php");
 
-$consoleObj = new ConsoleOption($mysqli);
-$setupManageListArgs = json_decode($_POST['listArgs'], true);
+		$member = new Member($mysqli);
+		$member->select($_SESSION['btUsername']);
 
-if(!$consoleObj->select($setupManageListArgs['console_id'])) {
-    exit();
-}
+		$consoleObj = new ConsoleOption($mysqli);
+		$setupManageListArgs = json_decode($_POST['listArgs'], true);
 
-if(!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
-    exit();    
-}
+		if (!$consoleObj->select($setupManageListArgs['console_id'])) {
+			exit();
+		}
+
+		if (!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
+			exit();
+		}
 
 // Ensure that 'actions' key exists and is an array
-$actionsWidth = 0;
-$titleWidth = 100;
-if(isset($setupManageListArgs['actions']) && is_array($setupManageListArgs['actions'])) {
-    $actionsWidth = count($setupManageListArgs['actions']) * 6;
-    $titleWidth = 100 - $actionsWidth;
-}
-    }
+		$actionsWidth = 0;
+		$titleWidth = 100;
+		if (isset($setupManageListArgs['actions']) && is_array($setupManageListArgs['actions'])) {
+			$actionsWidth = count($setupManageListArgs['actions']) * 6;
+			$titleWidth = 100 - $actionsWidth;
+		}
+	}
 
 	echo "
 	
@@ -50,88 +50,85 @@ if(isset($setupManageListArgs['actions']) && is_array($setupManageListArgs['acti
 
 	";
 
-		$counter = 0;
-		foreach($setupManageListArgs['items'] as $itemInfo) {
+	$counter = 0;
+	foreach ($setupManageListArgs['items'] as $itemInfo) {
 
-			if($itemInfo['type'] == "listitem") {
-			
-				if($counter == 1) {
-					$addCSS = " alternateBGColor";
-					$counter = 0;
-				}
-				else {
-					$addCSS = "";
-					$counter = 1;
-				}
-				
-				echo "
-					<tr>
-						<td class='main manageList dottedLine".$addCSS."' style='width: ".$titleWidth."%; padding-left: 10px'><b><a href='".$itemInfo['edit_link']."'>".$itemInfo['display_name']."</a></b></td>	
-					
-					";
-				
-				foreach($setupManageListArgs['actions'] as $actionTypes) {
-					$dispAction = "";
-					switch($actionTypes) {
-						case "moveup":
-							$dispAction = !in_array("moveup", $itemInfo['actions']) ? "" : "<a href='javascript:void(0)' onclick=\"moveItem('up', '".$itemInfo['item_id']."')\" title='Move Up'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' class='manageListActionButton'></a>";
-							break;
-						case "movedown":
-							$dispAction = !in_array("movedown", $itemInfo['actions']) ? "" : "<a href='javascript:void(0)' onclick=\"moveItem('down', '".$itemInfo['item_id']."')\" title='Move Down'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' class='manageListActionButton'></a>";
-							break;
-						case "edit":
-							$dispAction = "<a href='".$itemInfo['edit_link']."' title='Edit'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/edit.png' class='manageListActionButton'></a>";
-							break;
-						case "delete":
-							$dispAction = "<a href='javascript:void(0)' onclick=\"deleteItem('".$itemInfo['item_id']."')\" title='Delete'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' class='manageListActionButton'></a>";
-							break;
-						default:
-							$dispAction = call_user_func_array($actionTypes, array($itemInfo['item_id']));	
-					}
-					
-					echo "
-						<td align='center' class='main manageList dottedLine".$addCSS."' style='width: 6%;'>".$dispAction."</td>	
-					";
-				}
-				
-						
-				echo "</tr>";
-				
+		if ($itemInfo['type'] == "listitem") {
+
+			if ($counter == 1) {
+				$addCSS = " alternateBGColor";
+				$counter = 0;
+			} else {
+				$addCSS = "";
+				$counter = 1;
 			}
-			else { // Category Title
-				
-				$dispAddItemToCategory = ($itemInfo['add_to_cat_link'] == "") ? "" : "<a href='".$itemInfo['add_to_cat_link']."'><img src='".$MAIN_ROOT."themes/".$THEME."images/buttons/add.png' class='manageListActionButton'></a>";
-				
-				echo "
+
+			echo "
 					<tr>
-						<td class='main manageList dottedLine' style='width: ".$titleWidth."%'></td>
-						<td class='manageList dottedLine' colspan='".count($setupManageListArgs['actions'])."' align='center'>".$dispAddItemToCategory."</td>
+						<td class='main manageList dottedLine" . $addCSS . "' style='width: " . $titleWidth . "%; padding-left: 10px'><b><a href='" . $itemInfo['edit_link'] . "'>" . $itemInfo['display_name'] . "</a></b></td>	
+					
+					";
+
+			foreach ($setupManageListArgs['actions'] as $actionTypes) {
+				$dispAction = "";
+				switch ($actionTypes) {
+					case "moveup":
+						$dispAction = !in_array("moveup", $itemInfo['actions']) ? "" : "<a href='javascript:void(0)' onclick=\"moveItem('up', '" . $itemInfo['item_id'] . "')\" title='Move Up'><img src='" . $MAIN_ROOT . "themes/" . $THEME . "/images/buttons/uparrow.png' class='manageListActionButton'></a>";
+						break;
+					case "movedown":
+						$dispAction = !in_array("movedown", $itemInfo['actions']) ? "" : "<a href='javascript:void(0)' onclick=\"moveItem('down', '" . $itemInfo['item_id'] . "')\" title='Move Down'><img src='" . $MAIN_ROOT . "themes/" . $THEME . "/images/buttons/downarrow.png' class='manageListActionButton'></a>";
+						break;
+					case "edit":
+						$dispAction = "<a href='" . $itemInfo['edit_link'] . "' title='Edit'><img src='" . $MAIN_ROOT . "themes/" . $THEME . "/images/buttons/edit.png' class='manageListActionButton'></a>";
+						break;
+					case "delete":
+						$dispAction = "<a href='javascript:void(0)' onclick=\"deleteItem('" . $itemInfo['item_id'] . "')\" title='Delete'><img src='" . $MAIN_ROOT . "themes/" . $THEME . "/images/buttons/delete.png' class='manageListActionButton'></a>";
+						break;
+					default:
+						$dispAction = call_user_func_array($actionTypes, array($itemInfo['item_id']));
+				}
+
+				echo "
+						<td align='center' class='main manageList dottedLine" . $addCSS . "' style='width: 6%;'>" . $dispAction . "</td>	
+					";
+			}
+
+
+			echo "</tr>";
+
+		} else { // Category Title
+
+			$dispAddItemToCategory = ($itemInfo['add_to_cat_link'] == "") ? "" : "<a href='" . $itemInfo['add_to_cat_link'] . "'><img src='" . $MAIN_ROOT . "themes/" . $THEME . "images/buttons/add.png' class='manageListActionButton'></a>";
+
+			echo "
+					<tr>
+						<td class='main manageList dottedLine' style='width: " . $titleWidth . "%'></td>
+						<td class='manageList dottedLine' colspan='" . count($setupManageListArgs['actions']) . "' align='center'>" . $dispAddItemToCategory . "</td>
 					</tr>
 				";
-				
-			}
+
 		}
-	
+	}
+
 	echo "
 		</table>
 	
 	";
-	
-	if(count($setupManageListArgs['items']) == 0) {
 
-		if(substr($setupManageListArgs['item_title'],-1) == ":") {
-			$noItemName = substr($setupManageListArgs['item_title'], 0, strlen($setupManageListArgs['item_title'])-1);
+	if (count($setupManageListArgs['items']) == 0) {
+
+		if (substr($setupManageListArgs['item_title'], -1) == ":") {
+			$noItemName = substr($setupManageListArgs['item_title'], 0, strlen($setupManageListArgs['item_title']) - 1);
+		} elseif ($setupManageListArgs['item_title'] == "") {
+			$noItemName = "item";
 		}
-		elseif($setupManageListArgs['item_title'] == "") {
-			$noItemName = "item";	
-		}
-		
+
 		echo "
 			<div class='shadedBox' style='margin-left: auto; margin-right: auto; width: 45%; margin-top: 20px'>
 				<p class='main' align='center'>
-					<i>No ".strtolower($noItemName)."s added yet!</i>
+					<i>No " . strtolower($noItemName) . "s added yet!</i>
 				</p>
 			</div>
 		";
-		
+
 	}
