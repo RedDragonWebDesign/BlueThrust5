@@ -4,3 +4,4 @@ gitignore/
 src/themes/bluegrid
 *savemenu.sql
 vendor/
+/.idea/
