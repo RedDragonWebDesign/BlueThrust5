@@ -9,7 +9,7 @@ function validateMenuItem_Links() {
 	if($_POST['itemtype'] != "link") { return false; }
 	
 	
-	global $linkOptionComponents, $formObj, $menuItemObj;
+	global $linkOptionComponents, $formObj, $cID;
 	
 	$linkOptionComponents['linkurl_link']['validate'] = array("NOT_BLANK");
 	$linkOptionComponents['textalign_link']['validate'] = array("RESTRICT_TO_OPTIONS");
@@ -34,7 +34,7 @@ function validateMenuItem_Images() {
 
 	if($_POST['itemtype'] != "image") { return false; }	
 	
-	global $imageOptionComponents, $formObj, $menuItemObj;
+	global $imageOptionComponents, $formObj, $cID;
 	
 	$imageOptionComponents['imagefile_image']['validate'] = array("NOT_BLANK");
 	$imageOptionComponents['width_image']['validate'] = array("POSITIVE_NUMBER");
@@ -61,7 +61,7 @@ function validateMenuItem_CustomPageTypes($pageName, &$formComponents) {
 
 	if($_POST['itemtype'] != $pageName) { return false; }
 	
-	global $formObj, $menuItemObj;
+	global $formObj, $cID;
 	
 	$textAlign = "textalign_".$pageName;
 	$targetWindow = "targetwindow_".$pageName;
@@ -90,7 +90,7 @@ function validateMenuItem_Poll() {
 	
 	if($_POST['itemtype'] != "poll") { return false; }	
 	
-	global $pollOptionComponents, $formObj, $menuItemObj;
+	global $pollOptionComponents, $formObj, $cID;
 	
 	$pollOptionComponents['poll']['validate'] = array("RESTRICT_TO_OPTIONS");
 	
@@ -126,7 +126,7 @@ function saveMenuItem(&$menuComponents, &$saveObj, $arrDBNames, $dbID, $itemType
 	
 	if($_POST['itemtype'] != $itemType) { return false; }	
 	
-	global $formObj, $menuItemObj;
+	global $menuItemObj, $cID;
 
 	foreach($arrDBNames as $componentName => $dbName) {		
 		$menuComponents[$componentName]['db_name'] = $dbName;
@@ -155,7 +155,7 @@ function savePoll() {
 
 	if($_POST['itemtype'] != "poll") { return false; }
 	
-	global $formObj, $menuItemObj, $pollOptionComponents;
+	global $menuItemObj;
 	
 	$menuItemObj->update(array("itemtype_id"), array($_POST['poll']));
 	
