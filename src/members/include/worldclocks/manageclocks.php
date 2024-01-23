@@ -1,16 +1,16 @@
 <?php
 
-	/*
-	 * BlueThrust Clan Scripts
-	 * Copyright 2014
-	 *
-	 * Author: Bluethrust Web Development
-	 * E-mail: support@bluethrust.com
-	 * Website: http://www.bluethrust.com
-	 *
-	 * License: http://www.bluethrust.com/license.php
-	 *
-	 */
+/*
+ * BlueThrust Clan Scripts
+ * Copyright 2014
+ *
+ * Author: Bluethrust Web Development
+ * E-mail: support@bluethrust.com
+ * Website: http://www.bluethrust.com
+ *
+ * License: http://www.bluethrust.com/license.php
+ *
+ */
 
 
 	if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
