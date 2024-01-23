@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /*
  * BlueThrust Clan Scripts
@@ -15,103 +15,106 @@
 // Config File
 
 
-$prevFolder = "../";
+	$prevFolder = "../";
 
-require_once($prevFolder."_setup.php");
+	require_once($prevFolder . "_setup.php");
 
-$breadcrumbObj->setTitle("Unread Posts");
-$breadcrumbObj->addCrumb("Home", MAIN_ROOT);
-$breadcrumbObj->addCrumb("Forum", MAIN_ROOT."forum");
-$breadcrumbObj->addCrumb("Unread Posts");
+	$breadcrumbObj->setTitle("Unread Posts");
+	$breadcrumbObj->addCrumb("Home", MAIN_ROOT);
+	$breadcrumbObj->addCrumb("Forum", MAIN_ROOT . "forum");
+	$breadcrumbObj->addCrumb("Unread Posts");
 
-$PAGE_NAME = "Recent Forum Posts - ";
+	$PAGE_NAME = "Recent Forum Posts - ";
 
-require_once(BASE_DIRECTORY."forum/templates/_header.php");
+	require_once(BASE_DIRECTORY . "forum/templates/_header.php");
 
-$memberInfo = array("member_id" => 0);
-$NUM_PER_PAGE = $websiteInfo['forum_postsperpage'];
-if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
-	$memberInfo = $member->get_info_filtered();
-	$LOGGED_IN = true;
-	$NUM_PER_PAGE = $memberInfo['postsperpage'];
-}
-
-
-if($NUM_PER_PAGE == 0) {
-	$NUM_PER_PAGE = 25;
-}
-
-
-$seenTopicsSQL = "SELECT forumtopic_id FROM ".$dbprefix."forum_topicseen WHERE member_id = '".$memberInfo['member_id']."'";
-
-$accessableTopicsSQL = "SELECT forumtopic_id, forumboard_id FROM ".$dbprefix."forum_topic WHERE forumtopic_id NOT IN (".$seenTopicsSQL.")";
-$result = $mysqli->query($accessableTopicsSQL);
-while($row = $result->fetch_assoc()) {
-	$boardObj->select($row['forumboard_id']);
-	if($boardObj->memberHasAccess($memberInfo)) {
-		$arrTopics[] = $row['forumtopic_id'];
+	$memberInfo = array("member_id" => 0);
+	$NUM_PER_PAGE = $websiteInfo['forum_postsperpage'];
+	if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
+		$memberInfo = $member->get_info_filtered();
+		$LOGGED_IN = true;
+		$NUM_PER_PAGE = $memberInfo['postsperpage'];
 	}
-}
 
-$topicsFilterSQL = "('".implode("','", $arrTopics)."')";
 
-$totalPostsSQL = $mysqli->query("SELECT COUNT(*) as totalPosts FROM ".$dbprefix."forum_post WHERE forumtopic_id IN ".$topicsFilterSQL." ORDER BY dateposted");
-$totalPosts = $totalPostsSQL->fetch_assoc();
-$totalPosts = $totalPosts['totalPosts'];
+	if ($NUM_PER_PAGE == 0) {
+		$NUM_PER_PAGE = 25;
+	}
 
-if(!isset($_GET['pID']) || !is_numeric($_GET['pID'])) {
-	$intOffset = 0;
-	$_GET['pID'] = 1;
-}
-else {
-	$intOffset = $NUM_PER_PAGE*($_GET['pID']-1);
-}
+
+	$seenTopicsSQL = "SELECT forumtopic_id FROM " . $dbprefix . "forum_topicseen WHERE member_id = '" . $memberInfo['member_id'] . "'";
+
+	$arrTopics = [];
+
+	$accessableTopicsSQL = "SELECT forumtopic_id, forumboard_id FROM " . $dbprefix . "forum_topic WHERE forumtopic_id NOT IN (" . $seenTopicsSQL . ")";
+	$result = $mysqli->query($accessableTopicsSQL);
+	while ($row = $result->fetch_assoc()) {
+		$boardObj->select($row['forumboard_id']);
+		if ($boardObj->memberHasAccess($memberInfo)) {
+			$arrTopics[] = $row['forumtopic_id'];
+		}
+	}
+
+	$topicsFilterSQL = "('" . implode("','", $arrTopics) . "')";
+
+	$totalPostsSQL = $mysqli->query("SELECT COUNT(*) as totalPosts FROM " . $dbprefix . "forum_post WHERE forumtopic_id IN " . $topicsFilterSQL . " ORDER BY dateposted");
+	$totalPosts = $totalPostsSQL->fetch_assoc();
+	$totalPosts = $totalPosts['totalPosts'];
+
+	if (!isset($_GET['pID']) || !is_numeric($_GET['pID'])) {
+		$intOffset = 0;
+		$_GET['pID'] = 1;
+	} else {
+		$intOffset = $NUM_PER_PAGE * ($_GET['pID'] - 1);
+	}
 
 
 // Count Pages
-$NUM_OF_PAGES = ceil($totalPosts/$NUM_PER_PAGE);
+	$NUM_OF_PAGES = ceil($totalPosts / $NUM_PER_PAGE);
 
-if($NUM_OF_PAGES == 0) {
-	$NUM_OF_PAGES = 1;	
-}
-
-
-$pageSelector = new PageSelector();
-$pageSelector->setPages($NUM_OF_PAGES);
-$pageSelector->setCurrentPage($_GET['pID']);
-$pageSelector->setLink(MAIN_ROOT."forum/recent.php?pID=");
-
-echo "<div style='position: relative; overflow: auto'>";
-$pageSelector->show();
-echo "</div>";
-
-if($NUM_OF_PAGES == 1) { echo "<br><br>"; }
-
-$query = "SELECT * FROM ".$dbprefix."forum_post WHERE forumtopic_id IN ".$topicsFilterSQL." ORDER BY dateposted DESC LIMIT ".$intOffset.", ".$NUM_PER_PAGE;
-$result = $mysqli->query($query);
-
-$count = 0;
-while($row = $result->fetch_assoc()) {
-	$count++;
-	$boardObj->objPost->select($row['forumpost_id']);
-	$topicInfo = $boardObj->objPost->getTopicInfo(true);
-	$boardObj->select($topicInfo['forumboard_id']);
-
-	echo "<div class='largeFont' style='position:relative;'><b>".$boardObj->getLink(true)." - ".$boardObj->objPost->getLink(true)."</b></div>";
-	$boardObj->objPost->show(true);
-	
-	if($count != $result->num_rows) {
-		echo "<br><div class='dottedLine'></div><br>";
+	if ($NUM_OF_PAGES == 0) {
+		$NUM_OF_PAGES = 1;
 	}
-}
 
-echo "<div style='position: relative; overflow: auto'>";
-$pageSelector->show();
-echo "</div>";
 
-if($result->num_rows == 0) {
+	$pageSelector = new PageSelector();
+	$pageSelector->setPages($NUM_OF_PAGES);
+	$pageSelector->setCurrentPage($_GET['pID']);
+	$pageSelector->setLink(MAIN_ROOT . "forum/recent.php?pID=");
 
-	echo "
+	echo "<div style='position: relative; overflow: auto'>";
+	$pageSelector->show();
+	echo "</div>";
+
+	if ($NUM_OF_PAGES == 1) {
+		echo "<br><br>";
+	}
+
+	$query = "SELECT * FROM " . $dbprefix . "forum_post WHERE forumtopic_id IN " . $topicsFilterSQL . " ORDER BY dateposted DESC LIMIT " . $intOffset . ", " . $NUM_PER_PAGE;
+	$result = $mysqli->query($query);
+
+	$count = 0;
+	while ($row = $result->fetch_assoc()) {
+		$count++;
+		$boardObj->objPost->select($row['forumpost_id']);
+		$topicInfo = $boardObj->objPost->getTopicInfo(true);
+		$boardObj->select($topicInfo['forumboard_id']);
+
+		echo "<div class='largeFont' style='position:relative;'><b>" . $boardObj->getLink(true) . " - " . $boardObj->objPost->getLink(true) . "</b></div>";
+		$boardObj->objPost->show(true);
+
+		if ($count != $result->num_rows) {
+			echo "<br><div class='dottedLine'></div><br>";
+		}
+	}
+
+	echo "<div style='position: relative; overflow: auto'>";
+	$pageSelector->show();
+	echo "</div>";
+
+	if ($result->num_rows == 0) {
+
+		echo "
 		
 		<div class='shadedBox' style='width: 45%; margin-left: auto; margin-right: auto'>
 			<p align='center' class='main'>
@@ -120,8 +123,8 @@ if($result->num_rows == 0) {
 		</div>
 	
 	";
-	
-}
+
+	}
 
 
-require_once(BASE_DIRECTORY."forum/templates/_footer.php");
+	require_once(BASE_DIRECTORY . "forum/templates/_footer.php");
