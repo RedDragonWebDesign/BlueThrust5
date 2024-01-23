@@ -38,7 +38,7 @@ if($NUM_PER_PAGE == 0) {
 	$NUM_PER_PAGE = 25;
 }
 
-
+$arrTopics = [];
 $accessableTopicsSQL = "SELECT forumtopic_id, forumboard_id FROM ".$dbprefix."forum_topic";
 $result = $mysqli->query($accessableTopicsSQL);
 while($row = $result->fetch_assoc()) {
