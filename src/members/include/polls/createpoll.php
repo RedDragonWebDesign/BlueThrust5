@@ -213,7 +213,7 @@ for ($i = 0; $i <= 59; $i++) {
 
 			echo "
 				<form action='" . $MAIN_ROOT . "members/console.php?cID=" . $cID . "' method='post'>
-				Use the form below to add a poll.  You can display polls in menus by going to the <a href='" . $MAIN_ROOT . "members/console.php?cID=" . $addMenuItemCID . "'>Add Menu Item</a> page.        
+				Use the form below to add a poll.  You can display polls in menus by going to the <a href='" . $MAIN_ROOT . "members/console.php?cID=" . $addMenuItemCID . "'>Add Menu Item</a> page.
 				<table class='formTable'>
 					<tr>
 						<td class='formLabel' valign='top'>Question:</td>

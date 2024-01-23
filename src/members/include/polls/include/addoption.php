@@ -103,8 +103,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 
 	if (empty($_POST['submit'])) {
 		echo "	
-	
-		echo "	
 			<script type='text/javascript'>
 				$(document).ready(function() {
 					$('#optionColor').miniColors({
