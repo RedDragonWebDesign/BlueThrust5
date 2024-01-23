@@ -1,105 +1,110 @@
 <?php
 
 /*
-* BlueThrust Clan Scripts
-* Copyright 2014
-*
-* Author: Bluethrust Web Development
-* E-mail: support@bluethrust.com
-* Website: http://www.bluethrust.com
-*
-* License: http://www.bluethrust.com/license.php
-*
-*/
+ * BlueThrust Clan Scripts
+ * Copyright 2014
+ *
+ * Author: Bluethrust Web Development
+ * E-mail: support@bluethrust.com
+ * Website: http://www.bluethrust.com
+ *
+ * License: http://www.bluethrust.com/license.php
+ *
+ */
 
 
-	require_once("../../../../_setup.php");
-	require_once("../../../../classes/member.php");
-	require_once("../../../../classes/poll.php");
+require_once("../../../../_setup.php");
+require_once("../../../../classes/member.php");
+require_once("../../../../classes/poll.php");
 
 // Start Page
 
-	$consoleObj = new ConsoleOption($mysqli);
-	$member = new Member($mysqli);
-	$member->select($_SESSION['btUsername']);
+$consoleObj = new ConsoleOption($mysqli);
+$member = new Member($mysqli);
+$member->select($_SESSION['btUsername']);
 
 
-	$createPollCID = $consoleObj->findConsoleIDByName("Create a Poll");
-	$consoleObj->select($createPollCID);
-	$blnConsoleCheck1 = $member->hasAccess($consoleObj);
+$createPollCID = $consoleObj->findConsoleIDByName("Create a Poll");
+$consoleObj->select($createPollCID);
+$blnConsoleCheck1 = $member->hasAccess($consoleObj);
+$managePollsCID = $consoleObj->findConsoleIDByName("Manage Polls");
+$managePollsCID = $consoleObj->findConsoleIDByName("Manage Polls");
+$consoleObj->select($managePollsCID);
+$blnConsoleCheck2 = $member->hasAccess($consoleObj);
 
-	$managePollsCID = $consoleObj->findConsoleIDByName("Manage Polls");
-	$consoleObj->select($managePollsCID);
-	$blnConsoleCheck2 = $member->hasAccess($consoleObj);
+$blnConsoleCheck = $blnConsoleCheck1 || $blnConsoleCheck2;
+$blnConsoleCheck = $blnConsoleCheck1 || $blnConsoleCheck2;
 
-
-	$blnConsoleCheck = $blnConsoleCheck1 || $blnConsoleCheck2;
-
-
-	$pollObj = new Poll($mysqli);
-
+$pollObj = new Poll($mysqli);
+$pollObj = new Poll($mysqli);
 // Check Login
-	$LOGIN_FAIL = true;
-	if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
+$LOGIN_FAIL = true;
+$LOGIN_FAIL = true;
+if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 
-		$pollObj->cacheID = $_POST['cacheID'];
+	$pollObj->cacheID = $_POST['cacheID'];
 
-		if (!empty($_POST['submit'])) {
+	if (!empty($_POST['submit'])) {
 
-			$arrNewOption = array();
-			$arrErrors = array();
-			$arrReturn = array();
-
-
-			// Check Value
-			if (trim($_POST['optionValue']) == "") {
-				$arrErrors[] = "Option value may not be blank.";
-			}
+		$arrNewOption = array();
+		$arrErrors = array();
+		$arrReturn = array();
 
 
-			// Check Color
-			if (trim($_POST['optionColor']) == "") {
-				$_POST['optionColor'] = "#FFFFFF";
-			}
-
-			// Check Display Order
-
-			if (count($_SESSION['btPollOptionCache'][$pollObj->cacheID]) > 0 && (!is_numeric($_POST['optionOrder']) || !isset($_POST['optionOrder']) || ($_POST['optionOrderBeforeAfter'] != "before" && $_POST['optionOrderBeforeAfter'] != "after"))) {
-				$arrErrors[] = "You selected an invalid display order.";
-			}
-
-			if (count($arrErrors) == 0) {
-
-				$newSortNum = $pollObj->makeCacheRoom($_POST['optionOrderBeforeAfter'], $_POST['optionOrder']);
-
-				$arrReturn['result'] = "success";
-				$arrReturn['info'] = $newSortNum;
-
-				$arrNewOption['value'] = $_POST['optionValue'];
-				$arrNewOption['color'] = $_POST['optionColor'];
-
-
-				$_SESSION['btPollOptionCache'][$pollObj->cacheID][$newSortNum] = $arrNewOption;
-
-				$pollObj->resortCacheOrder();
-
-			}
-
-			if (count($arrErrors) > 0) {
-
-				$arrReturn['result'] = "fail";
-				$arrReturn['errors'] = $arrErrors;
-
-			}
-
-			header('Content-Type: application/json');
-			echo json_encode($arrReturn);
+		// Check Value
+		if (trim($_POST['optionValue']) == "") {
+			$arrErrors[] = "Option value may not be blank.";
 		}
 
 
-		if (empty($_POST['submit'])) {
-			echo "	
-		
+		// Check Color
+		if (trim($_POST['optionColor']) == "") {
+			$_POST['optionColor'] = "#FFFFFF";
+		}
+			$_POST['optionColor'] = "#FFFFFF";
+		}
+
+		// Check Display Order
+
+		if (count($_SESSION['btPollOptionCache'][$pollObj->cacheID]) > 0 && (!is_numeric($_POST['optionOrder']) || !isset($_POST['optionOrder']) || ($_POST['optionOrderBeforeAfter'] != "before" && $_POST['optionOrderBeforeAfter'] != "after"))) {
+			$arrErrors[] = "You selected an invalid display order.";
+		}
+
+		}
+
+		if (count($arrErrors) == 0) {
+			$newSortNum = $pollObj->makeCacheRoom($_POST['optionOrderBeforeAfter'], $_POST['optionOrder']);
+			$newSortNum = $pollObj->makeCacheRoom($_POST['optionOrderBeforeAfter'], $_POST['optionOrder']);
+
+			$arrReturn['result'] = "success";
+			$arrReturn['info'] = $newSortNum;
+
+			$arrNewOption['value'] = $_POST['optionValue'];
+			$arrNewOption['color'] = $_POST['optionColor'];
+
+
+			$_SESSION['btPollOptionCache'][$pollObj->cacheID][$newSortNum] = $arrNewOption;
+			$pollObj->resortCacheOrder();
+			$pollObj->resortCacheOrder();
+
+		}
+
+		if (count($arrErrors) > 0) {
+
+			$arrReturn['result'] = "fail";
+			$arrReturn['errors'] = $arrErrors;
+
+		}
+
+		header('Content-Type: application/json');
+		echo json_encode($arrReturn);
+	}
+
+
+	if (empty($_POST['submit'])) {
+		echo "	
+	
+		echo "	
 			<script type='text/javascript'>
 				$(document).ready(function() {
 					$('#optionColor').miniColors({
@@ -122,31 +127,32 @@
 				
 			";
 
-			if (count($_SESSION['btPollOptionCache'][$pollObj->cacheID]) > 0) {
 
-				$displayOrder = "";  // Initialize $displayOrder as an empty string
+		if (count($_SESSION['btPollOptionCache'][$pollObj->cacheID]) > 0) {
 
-				foreach ($_SESSION['btPollOptionCache'][$pollObj->cacheID] as $key => $optionInfo) {
-					$displayOrder .= "<option value='" . $key . "'>" . $optionInfo['value'] . "</option>";
-				}
+			$displayOrder = "";  // Initialize $displayOrder as an empty string
 
-				echo "
-        <tr>
-            <td class='main'><b>Display Order:</b></td>
-            <td class='main'>
-                <select id='optionOrderBeforeAfter' class='textBox'>
-                    <option value='before'>Before</option><option value='after'>After</option>
-                </select>
-                <br>
-                <select id='optionOrder' class='textBox'>
-                " . $displayOrder . "
-                </select>
-    ";
+			foreach ($_SESSION['btPollOptionCache'][$pollObj->cacheID] as $key => $optionInfo) {
+				$displayOrder .= "<option value='" . $key . "'>" . $optionInfo['value'] . "</option>";
 			}
 
 			echo "
-    </table>
+	<tr>
+		<td class='main'><b>Display Order:</b></td>
+		<td class='main'>
+			<select id='optionOrderBeforeAfter' class='textBox'>
+				<option value='before'>Before</option><option value='after'>After</option>
+			</select>
+			<br>
+			<select id='optionOrder' class='textBox'>
+			" . $displayOrder . "
+			</select>
+";
+		}
+
+		echo "
+</table>
 ";
 
-		}
 	}
+}
