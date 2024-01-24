@@ -1,0 +1,9 @@
+<ruleset>
+    <arg name="tab-width" value="4"/>
+    <exclude-pattern>/.github/</exclude-pattern>
+    <exclude-pattern>/.vscode/</exclude-pattern>
+    <exclude-pattern>/gitignore/</exclude-pattern>
+    <exclude-pattern>/screenshots/</exclude-pattern>
+    <exclude-pattern>/vendor/</exclude-pattern>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>  
+</ruleset>
