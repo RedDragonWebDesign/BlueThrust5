@@ -886,7 +886,7 @@ class Member extends Basic {
 
 
 
-	protected function getMemberPicture($setWidth="", $setHeight="", $db_name, $defaultpic, $cssClass=array()) {
+	protected function getMemberPicture($db_name, $defaultpic, $setWidth = "", $setHeight = "", $cssClass = array()) {
 		global $MAIN_ROOT, $THEME;
 
 		$checkURL = parse_url($this->arrObjInfo[$db_name]);
@@ -930,13 +930,13 @@ class Member extends Basic {
 
 	}
 
-	public function getAvatar($setWidth="", $setHeight="") {
-		return $this->getMemberPicture($setWidth, $setHeight, "avatar", "defaultavatar.png", array("avatarImg"));
+	public function getAvatar($setWidth = "", $setHeight = "") {
+		return $this->getMemberPicture("avatar", "defaultavatar.png", $setWidth, $setHeight, array("avatarImg"));
 	}
 
 
-	public function getProfilePic($setWidth="", $setHeight="") {
-		return $this->getMemberPicture($setWidth, $setHeight, "profilepic", "defaultprofile.png");
+	public function getProfilePic($setWidth = "", $setHeight = "") {
+		return $this->getMemberPicture("profilepic", "defaultprofile.png", $setWidth, $setHeight);
 	}
 
 	public function getEmailNotificationSetting($notificationName) {
