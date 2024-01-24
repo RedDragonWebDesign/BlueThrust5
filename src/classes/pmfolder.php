@@ -17,12 +17,12 @@
 			$this->strTableKey = "pmfolder_id";
 			$this->strTableName = $this->MySQL->get_tablePrefix()."privatemessage_folders";
 			$this->intMemberID = 0;
-   
+			
 			//$this->strAssociateKeyName = "pm_id";
 			//$this->strAssociateTableName = $this->MySQL->get_tablePrefix()."privatemessages";
-   
+			
 			$this->strCategoryKey = "member_id";
-   
+			
 		}
 		
 		public function select($intIDNum, $numericIDOnly = true) {
@@ -39,7 +39,7 @@
 			
 			return $returnVal;
 		}
- 
+	
 		function isMemberFolder() {
 
 			$returnVal = false;
