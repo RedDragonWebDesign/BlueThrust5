@@ -157,7 +157,6 @@ if (count($arrAttachments) > 0 && $blnShowAttachments) {
 					";
 }
 
-
 if ($postMemberInfo['forumsignature'] != "" && $websiteInfo['forum_hidesignatures'] == 0) {
 	echo "
 				<div class='forumSignatureContainer'>".parseBBCode($posterMemberObj->get_info("forumsignature"))."</div>
@@ -165,7 +164,7 @@ if ($postMemberInfo['forumsignature'] != "" && $websiteInfo['forum_hidesignature
 }
 
 		echo "<div class='forumManageLinks'>";
-if ($this->blnManageable || $postMemberInfo['member_id'] == $memberInfo['member_id']) {
+if ($this->blnManageable || (isset($postMemberInfo['member_id']) && $postMemberInfo['member_id'] == $memberInfo['member_id'])) {
 	echo "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&pID=".$postInfo['forumpost_id']."'>EDIT POST</a> &laquo;&nbsp&nbsp;&nbsp;";
 	echo "&raquo; <a href='javascript:void(0)' onclick=\"deletePost('".$postInfo['forumpost_id']."')\">DELETE POST</a> &laquo;&nbsp&nbsp;&nbsp;";
 	$countManagablePosts++;
@@ -178,6 +177,7 @@ if (LOGGED_IN && ($topicInfo['lockstatus'] ?? '') == 0) {
 
 	echo "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$topicInfo['forumboard_id']."&tID=".$topicInfo['forumtopic_id']."&quote=".$postInfo['forumpost_id']."'>QUOTE</a> &laquo;";
 }
+
 
 
 		echo "
