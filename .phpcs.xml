@@ -11,5 +11,13 @@
     <!-- only check *.php files -->
     <exclude-pattern>*\.(?!php$)</exclude-pattern>
 
-    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>  
+    <!-- Empty lines should contain no whitespace -->
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+
+    <!-- All files must end in \n. For Linux devs -->
+    <rule ref="Generic.Files.LineEndings">
+        <properties>
+            <property name="eolChar" value="\n"/>
+        </properties>
+    </rule>
 </ruleset>
