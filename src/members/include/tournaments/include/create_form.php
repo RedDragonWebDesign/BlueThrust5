@@ -1,37 +1,37 @@
 <?php
 
 	if(!defined("MAIN_ROOT")) { exit(); }
-	
+
 	if(!isset($tournamentObj)) {
 		$tournamentObj = new Tournament($mysqli);
 	}
-	
+
 	$gameObj = new Game($mysqli);
-	
+
 	$i=0;
-	
-	
+
+
 	// Date/Time Options
 	$oneYear = 31536000;
-	
+
 	$minDate = "new Date(".date("Y").", ".(date("n")-1).", ".date("j").")";
 	$maxDate = "new Date(".date("Y, n, j", time()+($oneYear*8)).")";
 	$defaultDate = date("M j, Y");
 	$yearRange = date("Y").":".date("Y", time()+($oneYear*8));
-	
-	
+
+
 	// Game Options
 	$gameOptions = array();
 	foreach($gameObj->getGameList() as $gameID) {
 		$gameObj->select($gameID);
-		
+
 		$gameOptions[$gameID] = $gameObj->get_info_filtered("name");
 	}
-	
+
 	if(count($gameOptions) == 0) {
-		$gameOptions[0] = "No Games";	
+		$gameOptions[0] = "No Games";
 	}
-	
+
 	// Tournament Structure
 	$seedTypeOptions = array(
 		1 => "Manual",
@@ -39,9 +39,9 @@
 		3 => "Pools"
 	);
 	$seedExplaination = "<span style=\'text-decoration:underline; font-weight: bold\'>Manual:</span> Seeds go in numeric order as you add players to the tournament.<br><br><span style=\'text-decoration:underline; font-weight: bold\'>Random:</span> Seeds are randomly set to players as you add them to the tournament.<br><br><span style=\'text-decoration:underline; font-weight: bold\'>Pools:</span> Teams/Players are separated into groups before the main tournament starts.  Each team/player plays one another in their group.  Seeds are determined by the win/loss record within that group.<br><br>With each seed option, you will have the ability to change the first round matches.  The matches will be set up with the top seed facing the lowest seed, second top seed facing the second lowest seed, and so on.";
-	
+
 	$eliminationOptions = array(1 => "Single Elimination");
-	
+
 	$maxTeamsPlayers = array(4 => 4, 8 => 8, 16 => 16, 32 => 32, 64 => 64);
 	$playersPerTeam = array();
 	for($i=1; $i<=16; $i++) {
@@ -49,7 +49,7 @@
 	}
 
 	$arrComponents = array(
-	
+
 		"generalinfo" => array(
 			"type" => "section",
 			"options" => array("section_title" => "General Information"),
@@ -68,10 +68,10 @@
 			"sortorder" => $i++,
 			"display_name" => "Start Date",
 			"attributes" => array("class" => "formInput textBox", "id" => "jsStartDate"),
-			"options" => array("changeMonth" => "true", 
-						   "changeYear" => "true", 
-						   "dateFormat" => "M d, yy", 
-						   "minDate" => $minDate, 
+			"options" => array("changeMonth" => "true",
+						   "changeYear" => "true",
+						   "dateFormat" => "M d, yy",
+						   "minDate" => $minDate,
 						   "maxDate" => $maxDate,
 						   "yearRange" => $yearRange,
 						   "defaultDate" => $defaultDate,
@@ -86,7 +86,7 @@
 			"sortorder" => $i++,
 			"display_name" => "Start Time",
 			"attributes" => array("class" => "textBox"),
-			"options" => array("show_timezone" => 1)		
+			"options" => array("show_timezone" => 1)
 		),
 		"game" => array(
 			"type" => "select",
@@ -188,13 +188,13 @@
 			"sortorder" => $i++,
 			"value" => "Create Tournament"
 		)
-		
-	
-	
+
+
+
 	);
 
-	
-	
+
+
 	$setupFormArgs = array(
 		"name" => "console-".$cID,
 		"components" => $arrComponents,

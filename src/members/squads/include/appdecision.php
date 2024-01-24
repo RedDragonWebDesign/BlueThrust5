@@ -42,34 +42,34 @@ $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$LOGIN_FAIL = false;
 	$memberInfo = $member->get_info_filtered();
-	
+
 	if($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], "acceptapps") && $squadAppObj->select($_POST['saID'])) {
 
 		$squadInfo = $squadObj->get_info_filtered();
 		$squadAppInfo = $squadAppObj->get_info();
 		$squadRankList = $squadObj->getRankList();
-		
-		
+
+
 		if($squadAppInfo['squad_id'] == $_POST['sID'] && $squadAppInfo['status'] == 0 && count($squadRankList) > 1) {
-		
-			
-			
+
+
+
 			if($_POST['action'] == "accept") {
-			
+
 				$squadRankKey = count($squadRankList)-1;
 				$newMemberSquadRank = $squadRankList[$squadRankKey];
 				$squadAppObj->update(array("dateaction", "status", "squadmember_id"), array(time(), "1", $memberInfo['member_id']));
-			
+
 				$arrColumns = array("squad_id", "member_id", "squadrank_id", "datejoined");
 				$arrValues = array($squadAppInfo['squad_id'], $squadAppInfo['member_id'], $newMemberSquadRank, time());
-			
+
 				$squadObj->objSquadMember->addNew($arrColumns, $arrValues);
 				$intViewSquadsCID = $consoleObj->findConsoleIDByName("View Your Squads");
 				$member->select($squadAppInfo['member_id']);
 				$member->postNotification("Congratulations!  Your application for the squad <b>".$squadInfo['name']."</b> has been approved.  View the Squads section of <a href='".$MAIN_ROOT."members'>My Account</a> to <a href='".$MAIN_ROOT."members/console.php?cID=".$intViewSquadsCID."'>View Your Squads</a>.");
-			
+
 				$mysqli->query("DELETE FROM ".$dbprefix."squadinvites WHERE receiver_id = '".$squadAppInfo['member_id']."'");
-				
+
 				echo "
 					<script type='text/javascript'>
 						$(document).ready(function() {
@@ -77,16 +77,16 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 						});
 					</script>
 				";
-			
-			
+
+
 			}
 			else {
-			
+
 				$squadAppObj->update(array("dateaction", "status", "squadmember_id"), array(time(), "2", $memberInfo['member_id']));
-			
+
 				$member->select($squadAppInfo['member_id']);
 				$member->postNotification("Your application to join <b><a href='".$MAIN_ROOT."squads/profile.php?sID=".$squadInfo['squad_id']."'>".$squadInfo['name']."</a></b> has been declined.  You may now re-apply if you want to.");
-			
+
 				echo "
 			
 					<script type='text/javascript'>
@@ -96,11 +96,11 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 					</script>
 			
 				";
-			
+
 			}
-			
-			
-		
+
+
+
 		}
 		elseif(count($squadRankList) <= 1 && $_POST['action'] == "accept") {
 			echo "
@@ -130,9 +130,9 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				</script>
 			";
 		}
-		
-		
-		
+
+
+
 		require_once("applist.php");
 	}
 	else {
@@ -142,7 +142,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			</script>
 		";
 	}
-	
-	
-	
+
+
+
 }

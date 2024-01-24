@@ -49,49 +49,49 @@ $sqlCID = "('".implode("','", $arrCIDs)."')";
 $memberoptions = "";
 $result = $mysqli->query("SELECT ".$dbprefix."members.member_id, ".$dbprefix."members.username, ".$dbprefix."ranks.name FROM ".$dbprefix."console_members, ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."console_members.member_id = ".$dbprefix."members.member_id AND ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id AND ".$dbprefix."console_members.console_id IN ".$sqlCID." AND ".$dbprefix."console_members.allowdeny = '1' AND ".$dbprefix."members.disabled = '0' ORDER BY ".$dbprefix."ranks.ordernum DESC");
 while($row = $result->fetch_assoc()) {
-	
+
 	$member->select($row['member_id']);
 	$rankObj->select($row['rank_id']);
 	$rankObj->select($member->get_info("rank_id"));
 	$rankInfo = $rankObj->get_info();
-	
+
 	$dispDefaultPower = "Can't Promote";
 	if($rankInfo['promotepower'] != 0 && $rankObj->select($rankInfo['promotepower'])) {
 		$dispDefaultPower = $rankObj->get_info_filtered("name");
 	}
-	
-	
+
+
 	$memberoptions .= "<option value='".$row['member_id']."' data-maxrank='".$member->get_info("promotepower")."' data-defaultpower=\"".$dispDefaultPower."\">".$row['name']." ".$row['username']."</option>";
-	
-	
+
+
 }
 
 if($memberoptions == "") {
-	$_POST['submit'] = false;	
+	$_POST['submit'] = false;
 }
 
 
 
 
 if ( ! empty($_POST['submit']) ) {
-	
+
 	// Check Member
 	if(!$member->select($_POST['member'])) {
 		$countErrors++;
-		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member.<br>";	
+		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member.<br>";
 	}
-	
-	
-	
-	
+
+
+
+
 	// Check Maximum Rank
 	if($_POST['maximumrank'] != -1 && $_POST['maximumrank'] != 0 && !$rankObj->select($_POST['maximumrank'])) {
 		$countErrors++;
-		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid rank.<br>";	
+		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid rank.<br>";
 	}
-	
+
 	if($countErrors == 0) {
-		
+
 		if($member->update(array("promotepower"), array($_POST['maximumrank']))) {
 			$dispMemberName = $member->getMemberLink();
 			$dispRankName = "Default";
@@ -99,9 +99,9 @@ if ( ! empty($_POST['submit']) ) {
 				$dispRankName = "(Can't Promote)";
 			}
 			elseif($_POST['maximumrank'] != 0 && $rankObj->select($_POST['maximumrank'])) {
-				$dispRankName = $rankObj->get_info_filtered("name");	
+				$dispRankName = $rankObj->get_info_filtered("name");
 			}
-			
+
 			echo "
 				
 				<div style='display: none' id='successBox'>
@@ -116,43 +116,43 @@ if ( ! empty($_POST['submit']) ) {
 			
 			
 			";
-			
-			$member->select($memberInfo['member_id']);			
+
+			$member->select($memberInfo['member_id']);
 			$member->logAction("Set maximum promote power for ".$dispMemberName." to ".$dispRankName);
-			
+
 		}
 		else {
-			
+
 		}
-		
+
 	}
-	
-	
+
+
 	if($countErrors > 0) {
 		$member->select($memberInfo['member_id']);
-		$_POST['submit'] = false;		
+		$_POST['submit'] = false;
 	}
-	
-	
+
+
 }
 
 
 
 if ( empty($_POST['submit']) ) {
-	
+
 	$rankoptions = "<option value='0' id='defaultPower'>Default</option><option value='-1'>(Can't Promote)</option>";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1' ORDER BY ordernum DESC");
 	while($row = $result->fetch_assoc()) {
-		$rankoptions .= "<option value='".$row['rank_id']."'>".filterText($row['name'])."</option>";		
+		$rankoptions .= "<option value='".$row['rank_id']."'>".filterText($row['name'])."</option>";
 	}
-	
+
 	$member->select($memberInfo['member_id']);
 	echo "
 		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
 			<div class='formDiv'>
 			
 			";
-	
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -161,8 +161,8 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
-	
+
+
 	echo "
 				The drop down list below shows all members that were given individual access to the console options Set Rank, Promote/Demote Member, Disable/Undisable Member and/or Award/Revoke medal.<br><br>
 				Use this page to set the maximum rank a member can promote/demote, disable/undisable and award/revoke medals.
@@ -200,5 +200,5 @@ if ( empty($_POST['submit']) ) {
 		</script>
 		
 	";
-	
+
 }

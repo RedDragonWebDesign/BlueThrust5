@@ -77,16 +77,16 @@ if(isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 
 			$consoleOptionObj = new ConsoleOption($mysqli);
 
-			
-			// Members Only Tagger			
-			
+
+			// Members Only Tagger
+
 			$dispMembersOnlyTagger = "";
 			if(isset($_SESSION['btMembersOnlyTagger']) && $_SESSION['btMembersOnlyTagger'] == 1 && substr($_SERVER['PHP_SELF'], -11) != "console.php") {
-				
+
 				$pageTaggerURL = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-				
+
 				$taggerCID = $consoleOptionObj->findConsoleIDByName("Member's Only Pages");
-				
+
 				if($taggerObj->select($pageTaggerURL, false)) {
 					$pageTagStatus = "<span class='pendingFont'>Member's Only</span>";
 					$dispTagOrUntag = "Untag";
@@ -95,7 +95,7 @@ if(isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 					$pageTagStatus = "<span class='publicNewsColor'>Public</span>";
 					$dispTagOrUntag = "Tag";
 				}
-				
+
 				$dispMembersOnlyTagger = "
 				<div id='membersOnlyTagger'>
 				
@@ -149,8 +149,8 @@ if(isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 				</script>
 				
 				";
-			}			
-			
+			}
+
 		}
 
 	}
@@ -174,9 +174,9 @@ if($taggerObj->select($_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'], false) &&
 		</script>
 	
 	";
-	
+
 	exit();
-	
+
 }
 
 
@@ -186,16 +186,16 @@ if($result->num_rows > 0) {
 	$hitCountRow = $result->fetch_assoc();
 	$hitCountObj->select($hitCountRow['hit_id']);
 	$updateHits = $hitCountObj->get_info("totalhits")+1;
-	
-	
+
+
 	$updateColumns = array("totalhits", "pagename");
 	$updateValues = array($updateHits, $PAGE_NAME);
-	
+
 	if(time() > ($hitCountObj->get_info("dateposted")+1800)) {
 		$updateColumns[] = "dateposted";
-		$updateValues[] = time();	
+		$updateValues[] = time();
 	}
-	
+
 	$hitCountObj->update($updateColumns, $updateValues);
 
 }

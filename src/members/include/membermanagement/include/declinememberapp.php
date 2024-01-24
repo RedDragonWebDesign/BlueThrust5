@@ -29,17 +29,17 @@ $memberAppObj = new MemberApp($mysqli);
 
 
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $memberAppObj->select($_POST['mAppID'])) {
-	
+
 	$arrMemAppInfo = $memberAppObj->get_info_filtered();
-	
+
 	if($_POST['confirmDecline'] && $arrMemAppInfo['memberadded'] == 0) {
-		
+
 		if($memberAppObj->delete()) {
-			
-			$memberAppObj->notifyNewMember(false);			
-			
+
+			$memberAppObj->notifyNewMember(false);
+
 			$member->logAction("Declined ".$arrMemAppInfo['username']."'s member application.");
-			
+
 			echo "
 			
 				<div id='resultDeclineMessage' style='display: none'>
@@ -47,7 +47,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				</div>
 			
 			";
-			
+
 		}
 		else {
 			echo "
@@ -58,8 +58,8 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			
 			";
 		}
-		
-		
+
+
 		echo "
 			<script type='text/javascript'>
 				$(document).ready(function() {
@@ -90,7 +90,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				});
 			</script>
 		";
-		
+
 	}
 	else {
 
@@ -144,8 +144,8 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				});
 			</script>
 		";
-		
+
 	}
-	
-	
+
+
 }

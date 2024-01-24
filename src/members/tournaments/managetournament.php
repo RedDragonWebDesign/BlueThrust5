@@ -91,12 +91,12 @@ else {
 // Check Login
 $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID)) {
-	
+
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 	$memberInfo = $member->get_info_filtered();
-	
+
 	if($memberInfo['member_id'] == $tournamentInfo['member_id'] || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
-	
+
 		$formObj = new Form();
 		switch($pID) {
 			case "manageplayers":
@@ -117,21 +117,21 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 						<script type='text/javascript'>window.location = '".$MAIN_ROOT."members/console.php?cID=".$cID."';</script>
 					";
 				}
-				
+
 				break;
 			case "startmatches";
 				require_once("startmatches.php");
 				break;
 			case "managematches":
-				
-				
+
+
 				if(!isset($_GET['match'])) {
 					require_once("managematches.php");
 				}
 				else {
 					require_once("managematch.php");
 				}
-				
+
 				break;
 			case "edittournamentinfo":
 				require_once("editinfo.php");
@@ -151,18 +151,18 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 					<script type='text/javascript'>window.location = '".$MAIN_ROOT."members/console.php?cID=".$cID."';</script>
 				";
 		}
-		
-		
+
+
 		if(isset($setupFormArgs)) {
 			require_once(BASE_DIRECTORY."members/console.form.php");
 		}
-		
-	
-		
+
+
+
 		if(isset($_GET['match'])) {
 			echo "
 			<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'><br><br>&laquo; <a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManageMatches'>Go Back</a></p></div>
-			";			
+			";
 		}
 		elseif($_GET['pID'] == "ManagePools" && isset($_GET['poolID'])) {
 			echo "
@@ -174,8 +174,8 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 			<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'><br><br>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&select=".$tID."'>Go Back</a></p></div>
 			";
 		}
-		
-		
+
+
 	}
 	else {
 		echo "
@@ -192,7 +192,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 else {
 
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
-		
+
 }
 
 

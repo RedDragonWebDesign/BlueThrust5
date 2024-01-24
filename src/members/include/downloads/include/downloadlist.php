@@ -18,15 +18,15 @@ if(!isset($member)) {
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/download.php");
 	require_once("../../../../classes/downloadcategory.php");
-	
+
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);
 	$consoleObj = new ConsoleOption($mysqli);
-	
+
 	$cID = $consoleObj->findConsoleIDByName("Manage Downloads");
 	$consoleObj->select($cID);
-	
-	
+
+
 	// Check Login
 	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
@@ -34,10 +34,10 @@ if(!isset($member)) {
 	else {
 		exit();
 	}
-	
+
 	$downloadObj = new Download($mysqli);
 	$downloadCatObj = new DownloadCategory($mysqli);
-	
+
 }
 
 
@@ -63,9 +63,9 @@ $totalDownloads = 0;
 foreach($arrDownloadCat as $catID => $catName) {
 	$downloadCatObj->select($catID);
 	$arrDownloads = $downloadCatObj->getAssociateIDs($dispOrderBY);
-	
+
 	if(count($arrDownloads) > 0) {
-		
+
 		echo "
 			<tr>
 				<td class='main manageList dottedLine' colspan='2' style='width: 76%'><b><u>".$catName."</u></b></td>
@@ -73,12 +73,12 @@ foreach($arrDownloadCat as $catID => $catName) {
 				<td class='main manageList dottedLine' align='center' style='width: 12%'><a href='".$MAIN_ROOT."members/console.php?cID=".$editCatCID."&action=edit&catID=".$catID."'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/edit.png' class='manageListActionButton' title='Edit ".$catName." Category'></a></td>
 			</tr>
 		";
-		
+
 		$altBGCount = 0;
 		foreach($arrDownloads as $dlID) {
 			$downloadObj->select($dlID);
 			$dlInfo = $downloadObj->get_info_filtered();
-			
+
 			if($altBGCount == 0) {
 				$addCSS = "";
 				$altBGCount = 1;
@@ -87,9 +87,9 @@ foreach($arrDownloadCat as $catID => $catName) {
 				$addCSS = " alternateBGColor";
 				$altBGCount = 0;
 			}
-			
+
 			$dispTime = getPreciseTime($dlInfo['dateuploaded']);
-			
+
 			echo "
 				<tr>
 					<td class='main manageList dottedLine".$addCSS."' style='width: 46%; padding-left: 10px; font-weight: bold'><a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&action=edit&dlID=".$dlID."'>".$dlInfo['name']."</a></td>
@@ -98,20 +98,20 @@ foreach($arrDownloadCat as $catID => $catName) {
 					<td class='main manageList dottedLine".$addCSS."' align='center' style='width: 12%'><a href='javascript:void(0)' onclick=\"deleteDL('".$dlID."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' class='manageListActionButton'></a></td>
 				</tr>
 			";
-			
+
 			$totalDownloads++;
 		}
-		
-		
+
+
 	}
-	
+
 }
 
 echo "</table>";
 
 
 if($totalDownloads == 0) {
-	
+
 	echo "
 	
 		<div class='shadedBox' style='margin: 20px auto; width: 40%'>
@@ -121,5 +121,5 @@ if($totalDownloads == 0) {
 		</div>
 	
 	";
-	
+
 }

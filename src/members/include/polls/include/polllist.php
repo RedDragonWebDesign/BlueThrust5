@@ -1,27 +1,27 @@
 <?php
 
 if(!defined("SHOW_POLLLIST")) {
-	
+
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/poll.php");
-	
+
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);
 	$consoleObj = new ConsoleOption($mysqli);
-	
+
 	$cID = $consoleObj->findConsoleIDByName("Manage Polls");
 	$consoleObj->select($cID);
-	
-	
+
+
 	// Check Login
 	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
 	}
 	else {
 		exit();
-	}	
-	
+	}
+
 }
 
 echo "
@@ -34,16 +34,16 @@ while($row = $result->fetch_assoc()) {
 
 	if($counter == 0) {
 		$addCSS = "";
-		$counter = 1;	
+		$counter = 1;
 	}
 	else {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
 	}
-	
+
 	$dispQuestion = (strlen($row['question']) > 75) ? substr($row['question'], 0, 75) : $row['question'];
-	$dispQuestion = filterText($dispQuestion);	
-	
+	$dispQuestion = filterText($dispQuestion);
+
 	echo "	
 		<tr>
 			<td class='main manageList".$addCSS."' style='padding-left: 10px; width: 76%'><a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&pID=".$row['poll_id']."&action=edit'>".$dispQuestion."</a></td>
@@ -51,7 +51,7 @@ while($row = $result->fetch_assoc()) {
 			<td class='main manageList".$addCSS."' style='width: 12%' align='center'><a href='javascript:void(0)'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' class='manageListActionButton' data-deletePoll='".$row['poll_id']."'></a></td>
 		</tr>
 	";
-	
+
 }
 
 echo "</table>";

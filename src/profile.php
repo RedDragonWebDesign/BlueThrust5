@@ -21,15 +21,15 @@ require_once($prevFolder."_setup.php");
 $member = new Member($mysqli);
 
 if($member->select($_GET['mID'])) {
-	
+
 	$memberInfo = $member->get_info_filtered();
 	$member->addProfileView();
 	$member->autoAwardMedals();
 	$member->autoPromote();
-	
+
 }
 else {
-	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");	
+	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 }
 
 
@@ -80,32 +80,32 @@ $dispSocialMedia = "";
 $memberSocialInfo = $member->objSocial->getMemberSocialInfo(true);
 
 foreach($memberSocialInfo as $socialID => $socialInfo) {
-	
+
 	$dispSocialIconDimensions = "";
 	$member->objSocial->select($socialID);
 	$tempSocialInfo = $member->objSocial->get_info_filtered();
-	
+
 	if($tempSocialInfo['iconwidth'] != 0) {
 		$dispSocialIconDimensions .= "width: ".$tempSocialInfo['iconwidth']."px;";
 	}
-	
+
 	if($tempSocialInfo['iconheight'] != 0) {
 		$dispSocialIconDimensions .= "height: ".$tempSocialInfo['iconheight']."px;";
 	}
-	
-	
-	
+
+
+
 	$dispSocialMedia .= "<a href='".$socialInfo."' target='_blank'><img class='socialMediaProfileIcons' src='".$MAIN_ROOT.$tempSocialInfo['icon']."' style='margin-right: 5px; ".$dispSocialIconDimensions."'></a>";
-	
+
 }
 
 
 
 if($dispSocialMedia != "") {
-	
+
 	$addBar = "<div class='dottedLine' style='padding: 3px 0px; margin-bottom: 3px'></div><b>Follow Me:</b><br><p align='center'>";
 	$dispSocialMedia = $addBar.$dispSocialMedia."</p>";
-	
+
 }
 
 
@@ -122,11 +122,11 @@ $arrRecruits = $member->countRecruits(true);
 $totalRecruits = count($arrRecruits);
 
 foreach($arrRecruits as $recruitID) {
-	
+
 	$member->select($recruitID);
 	$arrDispRecruits[] = $member->getMemberLink();
-	
-	
+
+
 }
 
 $dispRecruits = implode(", ", $arrDispRecruits ?? []);
@@ -141,7 +141,7 @@ if($memberInfo['lastlogin'] != 0) {
 
 $dispLastSeen = "Never Logged In";
 if($memberInfo['lastseen'] != 0) {
-	$dispLastSeen = getPreciseTime($memberInfo['lastseen']);	
+	$dispLastSeen = getPreciseTime($memberInfo['lastseen']);
 }
 
 $dispLastPromotion = "Never Promoted";
@@ -163,12 +163,12 @@ if((time()-$memberInfo['lastseen']) < 600) {
 }
 else {
 	$dispOnlineStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/offlinedot.png' title='Offline'>";
-	
+
 	if($memberInfo['loggedin'] == 1) {
 		$member->select($memberInfo['member_id']);
-		$member->update(array("loggedin"), array(0));	
+		$member->update(array("loggedin"), array(0));
 	}
-	
+
 }
 
 $dispRankImg = "";
@@ -183,26 +183,26 @@ if($rankInfo['imageurl'] != "") {
 
 $dispBirthday = "";
 if($memberInfo['birthday'] != 0) {
-	
+
 	$bdayDate = new DateTime();
 	$bdayDate->setTimestamp($memberInfo['birthday']);
 	$bdayDate->setTimezone(new DateTimeZone("UTC"));
-	
+
 	$formatBirthday = $bdayDate->format("M j, Y");
 	$calcAge = floor((time()-$memberInfo['birthday'])/(31536000));
 	$dispBirthday = "<br><br>
 	<b>Birthday:</b><br>
 	".$formatBirthday."<br><br>
 	<b>Age:</b> ".$calcAge;
-	
+
 }
 
 if($memberInfo['lastseenlink'] == "") {
-	$dispLastSeenLink = "No Where";	
+	$dispLastSeenLink = "No Where";
 }
 else {
 	$member->select($memberInfo['member_id']);
-	$dispLastSeenLink = $member->get_info("lastseenlink");	
+	$dispLastSeenLink = $member->get_info("lastseenlink");
 }
 
 $dispInactive = "";
@@ -249,46 +249,46 @@ require_once($prevFolder."include/breadcrumb.php");
 
 
 	<div class='main userProfileRight'>
-		<?php 
+		<?php
 			define("SHOW_PROFILE_MAIN", true);
 			$arrSections[] = "include/profile/_main.php";
 			$arrSections[] = "include/profile/_customoptions.php";
 			$arrSections[] = "include/profile/_gamesplayed.php";
 			$arrSections[] = "include/profile/_squads.php";
 			$arrSections[] = "include/profile/_medals.php";
-			
+
 			$pluginObj = new btPlugin($mysqli);
-			
+
 			$arrPlugins = $pluginObj->getPluginPage("profile");
-			
+
 			$hooksObj->run("profile_sections");
-			
-			
+
+
 			$arrSections[] = "";
-			
+
 			$x = 0;
-			
+
 			foreach($arrSections as $section) {
-				
+
 				foreach($arrPlugins as $pluginInfo) {
 
 					if($pluginInfo['sortnum'] == $x) {
-						require_once($pluginInfo['pagepath']);	
+						require_once($pluginInfo['pagepath']);
 					}
-					
+
 				}
 
 				if($section != "") {
 					require_once($section);
 				}
-								
+
 				$x++;
-				
+
 			}
-			
-			
-			
-			
+
+
+
+
 		?>
 	
 	</div>

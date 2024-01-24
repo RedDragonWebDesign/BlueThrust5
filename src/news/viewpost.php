@@ -42,9 +42,9 @@ $newsObj = new News($mysqli);
 $consoleObj = new ConsoleOption($mysqli);
 
 if(isset($_GET['nID']) && $newsObj->select($_GET['nID'])) {
-	
+
 	$newsInfo = $newsObj->get_info_filtered();
-	
+
 	$member->select($_SESSION['btUsername']);
 	$memberInfo = $member->get_info_filtered();
 	$privateNewsCID = $consoleObj->findConsoleIDByName("View Private News");
@@ -52,7 +52,7 @@ if(isset($_GET['nID']) && $newsObj->select($_GET['nID'])) {
 	// Check Login
 	$LOGIN_FAIL = true;
 	if($member->authorizeLogin($_SESSION['btPassword'])) {
-		
+
 		$LOGIN_FAIL = false;
 		// Check Private News
 		if($newsInfo['newstype'] == 2 && !$member->hasAccess($consoleObj)) {
@@ -63,8 +63,8 @@ if(isset($_GET['nID']) && $newsObj->select($_GET['nID'])) {
 	elseif($newsInfo['newstype'] == 2) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 	}
-	
-	
+
+
 }
 else {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
@@ -99,7 +99,7 @@ $consoleObj->select($postCommentCID);
 
 if($member->select($memberInfo['member_id'])) {
 	if($member->hasAccess($consoleObj)) {
-	
+
 		echo "
 	
 		<p class='main' style='font-weight: bold; padding: 0px; margin-bottom: 2px'>Post Comment:</p>
@@ -152,7 +152,7 @@ if($member->select($memberInfo['member_id'])) {
 		</script>
 		
 		";
-	
+
 	}
 }
 

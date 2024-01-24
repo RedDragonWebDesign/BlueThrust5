@@ -26,8 +26,8 @@ else {
 $cID = $_GET['cID'];
 $intAddCustomPageID = $consoleObj->findConsoleIDByName("Add Custom Form Page");
 if($_GET['cfID'] == "") {
-	
-	
+
+
 	echo "
 	
 		<table class='formTable' style='border-spacing: 1px; margin-left: auto; margin-right: auto'>
@@ -52,7 +52,7 @@ if($_GET['cfID'] == "") {
 	
 	";
 	require_once("custompages/main_customforms.php");
-	
+
 	echo "
 	</div>
 	<div id='deleteMessage' style='display: none'></div>
@@ -102,12 +102,12 @@ if($_GET['cfID'] == "") {
 	}
 	</script>
 	";
-	
-	
-	
-	
+
+
+
+
 }
 elseif($_GET['cfID'] != "" && $_GET['action'] == "edit") {
-	
-	require_once("custompages/edit_customforms.php");	
+
+	require_once("custompages/edit_customforms.php");
 }

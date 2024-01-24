@@ -31,14 +31,14 @@ $consoleObj = new ConsoleOption($mysqli);
 $consoleObj->select($cID);
 
 if($member->authorizeLogin($_SESSION['btPassword'])) {
-	
+
 	/*
 	 * 0 - No Access
 	 * 1 - Full Access
 	 * 2 - Read Only
 	 */
-	
-	
+
+
 	if(isset($_POST['action']) &&  $accessMemberObj->select($_POST['mID'])) {
 		if($_POST['action'] == "add" && ($_POST['accessRule'] == "1" || $_POST['accessRule'] == "0" || $_POST['accessRule'] == "2")) {
 			$_SESSION['btMemberAccessCache'][$_POST['mID']] = $_POST['accessRule'];
@@ -47,10 +47,10 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			$_SESSION['btMemberAccessCache'][$_POST['mID']] = "";
 		}
 	}
-	
-	
+
+
 	// Display Cache List
-	
+
 	echo "
 	
 		<table align='left' border='0' cellspacing='2' cellpadding='2' width=\"90%\">
@@ -61,15 +61,15 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			</tr>
 			
 			";
-	
+
 	$countRules = 0;
 	foreach($_SESSION['btMemberAccessCache'] as $memID => $accessRule) {
 		if($accessRule != "" &&  $accessMemberObj->select($memID)) {
 			$tempMemInfo = $accessMemberObj->get_info_filtered();
 			$rankObj->select($tempMemInfo['rank_id']);
-			
+
 			$dispRankName = $rankObj->get_info_filtered("name");
-			
+
 			$dispAccess = "<span class='denyText'>Deny</span>";
 			if($accessRule == 1) {
 				$dispAccess = "<span class='pendingFont'>Full</span>";
@@ -78,7 +78,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				$dispAccess = "<span class='allowText'>Read-Only</span>";
 			}
 
-			
+
 			echo "
 				<tr>
 					<td class='main'><a href='".$MAIN_ROOT."profile.php?mID=".$tempMemInfo['username']."'>".$dispRankName." ".$tempMemInfo['username']."</a></td>
@@ -86,13 +86,13 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					<td class='main' align='center'><a href='javascript:void(0)' onclick=\"deleteAccessRule('".$memID."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' title='Delete'></a></td>
 				</tr>			
 			";
-			
-			
+
+
 			$countRules++;
 		}
 	}
-	
-	
+
+
 	if($countRules == 0) {
 
 		echo "
@@ -103,13 +103,13 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			</tr>		
 		";
 	}
-	
+
 	echo "
 			
 		</table>
 	
 	
 	";
-	
+
 
 }

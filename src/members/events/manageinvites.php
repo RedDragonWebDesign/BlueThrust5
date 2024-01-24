@@ -55,7 +55,7 @@ while($row = $result->fetch_assoc()) {
 	if($eventMemberID !== false) {
 
 		$memberoptions .= "<option value='".$eventMemberID."'>".$row['name']." ".$row['username']."</option>";
-		
+
 	}
 }
 

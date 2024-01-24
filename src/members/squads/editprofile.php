@@ -46,18 +46,18 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 
 if ( ! empty($_POST['submit']) ) {
-	
+
 	// Check Squad Name
 	if(trim($_POST['squadname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a squad name.<br>";
 	}
-	
-	
+
+
 	if($_FILES['uploadlogo']['name'] != "") {
-	
+
 		$uploadLogoObj = new BTUpload($_FILES['uploadlogo'], "squad_", "../../images/squads/", array(".png", ".jpg", ".gif", ".bmp"));
-	
+
 		if(!$uploadLogoObj->uploadFile()) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload the squad logo. Please make sure the file extension is either .jpg, .png, .gif or .bmp and that the file size is not too big.<br>";
@@ -65,29 +65,29 @@ if ( ! empty($_POST['submit']) ) {
 		else {
 			$logoImageURL = $MAIN_ROOT."images/squads/".$uploadLogoObj->getUploadedFileName();
 		}
-	
+
 	}
 	else {
 		$logoImageURL = $_POST['logourl'];
 	}
-	
-	
+
+
 	if($countErrors == 0) {
-	
+
 		if($_POST['recruiting'] != 0) {
 			$_POST['recruiting'] = 1;
 		}
-	
+
 		if($_POST['shoutbox'] != 0) {
 			$_POST['shoutbox'] = 1;
 		}
-	
+
 		$time = time();
 		$arrColumns = array("name", "description", "logourl", "recruitingstatus", "privateshoutbox", "website");
 		$arrValues = array($_POST['squadname'], $_POST['squaddesc'], $logoImageURL, $_POST['recruiting'], $_POST['shoutbox'], $_POST['squadsite']);
-	
+
 		if($squadObj->update($arrColumns, $arrValues)) {
-	
+
 			$squadInfo = $squadObj->get_info_filtered();
 
 			echo "
@@ -103,20 +103,20 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 
 			";
-	
+
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-	
+
 	}
-	
+
 }
 
 $privateSelected = "";
 if($squadInfo['privateshoutbox'] == 0) {
-	$privateSelected = "selected";	
+	$privateSelected = "selected";
 }
 
 

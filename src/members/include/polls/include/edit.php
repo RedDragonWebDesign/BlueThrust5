@@ -1,23 +1,23 @@
 <?php
 
 	if(!defined("SHOW_EDITPOLL")) {
-		exit();	
+		exit();
 	}
 
 	$pollObj->objAccess->arrAccessFor = array("keyName" => "poll_id", "keyValue" => $pollInfo['poll_id']);
-	
+
 	$accessObj = $pollObj->objAccess;
-	
+
 	if(isset($_POST['accessCacheID'])) {
 		$accessObj->cacheID = $_POST['accessCacheID'];
 	}
-	
+
 	$_SESSION['btAccessCacheTables'][$accessObj->cacheID] = json_encode($accessObj->arrAccessTables);
 	$_SESSION['btAccessCacheTypes'][$accessObj->cacheID] = json_encode($accessObj->arrAccessTypes);
-	
-	
+
+
 	$dispPollQuestion = (strlen($pollInfo['question']) > 50) ? substr($pollInfo['question'], 0, 50) : $pollInfo['question'];
-	
+
 	echo "
 		
 		<script type='text/javascript'>
@@ -27,39 +27,39 @@
 		});
 		</script>
 	";
-	
+
 	if ( ! empty($_POST['submit']) ) {
-		
+
 		// Check Question
 		if(trim($_POST['pollquestion']) == "") {
 			$countErrors++;
 			$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> Your poll question may not be blank.<br>";
 		}
-		
+
 		// Check Access Types
 		$arrCheckAccessTypes = array("members", "memberslimited", "public");
 		if(!in_array($_POST['accesstype'], $arrCheckAccessTypes)) {
 			$countErrors++;
-			$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid access type.<br>";		
+			$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid access type.<br>";
 		}
-		
-	
+
+
 		// Check Result Visibility
 		$arrCheckVisTypes = array("open", "votedonly", "pollend", "never");
 		if(!in_array($_POST['resultvisibility'], $arrCheckVisTypes)) {
 			$countErrors++;
-			$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid result visibility type.<br>";		
+			$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid result visibility type.<br>";
 		}
-		
+
 		// Check Max Votes
-		
+
 		if($_POST['maxvotes'] != "" && (!is_numeric($_POST['maxvotes']) || $_POST['maxvotes'] < 0)) {
 			$countErrors++;
 			$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> Max votes per user must be a value greater than zero.<br>";
 		}
-		
+
 		// Check Poll End
-		
+
 		if($_POST['enddate'] != "forever" && $_POST['enddate'] != "choose") {
 			$countErrors++;
 			$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid poll end date.<br>";
@@ -68,9 +68,9 @@
 			$countErrors++;
 			$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid poll end date.<br>";
 		}
-	
+
 		if($countErrors == 0) {
-			
+
 			$setEndDate = 0;
 			if($_POST['enddate'] == "choose") {
 				$setEndDate = $_POST['realenddate']/1000;
@@ -79,29 +79,29 @@
 				$tempDay = date("j", $setEndDate);
 				$tempHour = $_POST['endhour'];
 				if($_POST['endAMPM'] == "PM") {
-					$tempHour += 12;	
+					$tempHour += 12;
 				}
-				
-				$setEndDate = mktime($tempHour, $_POST['endminute'], 0, $tempMonth, $tempDay, $tempYear);	
+
+				$setEndDate = mktime($tempHour, $_POST['endminute'], 0, $tempMonth, $tempDay, $tempYear);
 			}
-			
-			
+
+
 			$_POST['multivote'] = ($_POST['multivote'] != 1) ? 0 : 1;
 			$_POST['displayvoters'] = ($_POST['displayvoters'] != 1) ? 0 : 1;
-			
+
 			$arrColumns = array("question", "accesstype", "multivote", "displayvoters", "resultvisibility", "maxvotes", "pollend", "lastedit_date", "lastedit_memberid");
 			$arrValues = array($_POST['pollquestion'], $_POST['accesstype'], $_POST['multivote'], $_POST['displayvoters'], $_POST['resultvisibility'], $_POST['maxvotes'], $setEndDate, time(), $memberInfo['member_id']);
-			
+
 			if($pollObj->update($arrColumns, $arrValues)) {
 				$pollObj->cacheID = $_POST['pollCacheID'];
 				$pollObj->savePollOptions();
-				
+
 				if($_POST['accesstype'] == "memberslimited") {
 					$accessObj->cacheID = $_POST['accessCacheID'];
 					$accessObj->arrAccessFor = array("keyName" => "poll_id", "keyValue" => $pollObj->get_info("poll_id"));
 					$accessObj->saveAccess();
 				}
-				
+
 				echo "
 					<div style='display: none' id='successBox'>
 						<p align='center'>
@@ -113,56 +113,56 @@
 						popupDialog('Manage Polls', '".$MAIN_ROOT."members', 'successBox');
 					</script>			
 				";
-				
+
 			}
 			else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 			}
 		}
-		
-		
+
+
 		if($countErrors > 0) {
 			$_POST = filterArray($_POST);
-			$_POST['submit'] = false;			
+			$_POST['submit'] = false;
 		}
-		
-		
+
+
 	}
-	
-	
-	
+
+
+
 	if ( empty($_POST['submit']) ) {
-		
+
 		$arrPostSelected['accesstype']['limited'] = ($pollInfo['accesstype'] == "memberslimited") ? " selected" : "";
 		$arrPostSelected['accesstype']['public'] = ($pollInfo['accesstype'] == "public") ? " selected" : "";
-		
+
 		$arrPostSelected['multivote'] = ($pollInfo['multivote'] == 1) ? " checked" : "";
 		$arrPostSelected['displayvoters'] = ($pollInfo['displayvoters'] == 1) ? " checked" : "";
-		
-		
+
+
 		$arrPostSelected['resultvisibility']['votedonly'] = ($pollInfo['resultvisibility'] == "votedonly") ? " selected" : "";
 		$arrPostSelected['resultvisibility']['pollend'] = ($pollInfo['resultvisibility'] == "pollend") ? " selected" : "";
 		$arrPostSelected['resultvisibility']['never'] = ($pollInfo['resultvisibility'] == "never") ? " selected" : "";
-		
+
 		$arrPostSelected['pollend']['choose'] = ($pollInfo['pollend'] != 0) ? " selected" : "";
 		$arrPostSelected['pollend']['forever'] = ($pollInfo['pollend'] == 0) ? " selected" : "";
-		
-		
+
+
 		$checkAMPM = date("A", $pollInfo['pollend']);
 		$checkEndHour = date("g", $pollInfo['pollend']);
 		$checkEndMinute = date("i", $pollInfo['pollend']);
 		$arrPostSelected['endAMPM'] = ($checkAMPM == "PM") ? " selected" : "";
 
 		$dispFakeEndDate = date("M j, Y", $pollInfo['pollend']);
-		
+
 		echo "
 	
 		<div class='formDiv'>
 		
 		";
-	
-	
+
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -174,19 +174,19 @@
 	}
 	else {
 		$pollOptionCacheID = md5(time().uniqid());
-		
+
 		foreach($pollObj->getPollOptions() as $pollOptionID) {
 			$pollObj->objPollOption->select($pollOptionID);
 			$pollOptionInfo = $pollObj->objPollOption->get_info_filtered();
 
 			$_SESSION['btPollOptionCache'][$pollOptionCacheID][] = array("value" => $pollOptionInfo['optionvalue'], "color" => $pollOptionInfo['color'], "polloption_id" => $pollOptionInfo['polloption_id']);
 		}
-		
+
 		$pollObj->objAccess->loadCache();
 	}
-	
-	
-	
+
+
+
 	$hourOptions = "";
 	for($i=12; $i>=1; $i--) {
 		$tempNum = str_pad($i, 2, "0", STR_PAD_LEFT);
@@ -194,24 +194,24 @@
 		if($checkEndHour == $i) {
 			$dispSelected = " selected";
 		}
-		
+
 		$hourOptions .= "<option value='".$i."'".$dispSelected.">".$tempNum."</option>";
 	}
-	
+
 	$minuteOptions = "";
 	for($i=0; $i<=59; $i++) {
 		$tempNum = str_pad($i, 2, "0", STR_PAD_LEFT);
-		
+
 		$dispSelected = "";
 		if($checkEndMinute == $i) {
-			$dispSelected = " selected";	
+			$dispSelected = " selected";
 		}
-		
-		$minuteOptions .= "<option value='".$i."'".$dispSelected.">".$tempNum."</option>";	
+
+		$minuteOptions .= "<option value='".$i."'".$dispSelected.">".$tempNum."</option>";
 	}
 
 	$addMenuItemCID = $consoleObj->findConsoleIDByName("Add Menu Item");
-	
+
 	echo "
 		
 			<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."&pID=".$pollInfo['poll_id']."&action=edit' method='post'>
@@ -292,10 +292,10 @@
 				</div>
 	
 					";
-					
+
 					$accessObj->rankAccessDiv = "rankAccessList";
 					$accessObj->dispSetRankAccess();
-	
+
 				echo "
 				
 					<div class='main' style='margin: 20px auto; width: 95%'>
@@ -303,10 +303,10 @@
 						<p style='margin: 3px 0px;padding-left: 3px'>Use this section to set whether a specific member is allowed to access this poll.</p>
 					</div>
 				";
-				
+
 					$accessObj->memberAccessDiv = "memberAccessList";
 					$accessObj->dispSetMemberAccess();
-				
+
 			echo "	
 			</div>
 			
@@ -467,6 +467,6 @@
 			
 		</script>		
 	";
-		
-		
+
+
 	}

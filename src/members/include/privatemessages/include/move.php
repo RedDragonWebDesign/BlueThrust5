@@ -31,7 +31,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	$arrSpecialFolders = array(0, -1, -2);
 	$pmFolderObj->intMemberID = $memberInfo['member_id'];
 	if($member->hasAccess($consoleObj) && $pmFolderObj->select($_POST['folder']) && $pmFolderObj->isMemberFolder() && !in_array($_POST['folder'], $arrSpecialFolders)) {
-		
+
 		define('SHOW_FOLDERLIST', true);
 		$pmFolderObj->setCategoryKeyValue($memberInfo['member_id']);
 		$pmFolderObj->move($_POST['folderDir']);

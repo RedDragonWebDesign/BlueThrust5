@@ -40,7 +40,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventPositi
 
 
 		$eventObj->objEventPosition->move($_POST['pDir']);
-		
+
 		$_GET['eID'] = $eventID;
 
 		require_once("manageposition_main.php");

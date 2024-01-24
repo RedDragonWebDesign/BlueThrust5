@@ -50,31 +50,31 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 </script>
 ";
 
-	
+
 	$medalValidateObj = new Medal($mysqli);
 	$arrMedals = $medalObj->get_entries(array(), "ordernum DESC");
 	$medalOptions = array();
 	foreach($arrMedals as $eachMedalInfo) {
 		$medalName = filterText($eachMedalInfo['name']);
 		$medalOptions[$eachMedalInfo['medal_id']] = $medalName;
-	
+
 	}
-        
+
 
 	if(count($medalOptions) == 0) {
 		$medalOptions['first'] = "(first medal)";
 	}
-	
-	
+
+
 	$medalOrder = $medalValidateObj->findBeforeAfter();
-	
+
 	$medalInfo['imageurl'] = substr($medalInfo['imageurl'], strlen($MAIN_ROOT));
 	$i = 1;
 	$arrComponents = array(
 		"generalinfo" => array(
 			"type" => "section",
 			"options" => array("section_title" => "General Information:"),
-			"sortorder" => $i++,			
+			"sortorder" => $i++,
 		),
 		"medalname" => array(
 			"type" => "text",
@@ -122,7 +122,7 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 			"db_name" => "description",
 			"sortorder" => $i++,
 			"display_name" => "Description",
-			"value" => $medalInfo['description']	
+			"value" => $medalInfo['description']
 		),
 		"displayorder" => array(
 			"type" => "beforeafter",
@@ -135,7 +135,7 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 			"value" => $medalInfo['medal_id'],
 			"before_after_value" => $medalOrder[0],
 			"after_selected" => $medalOrder[1]
-		
+
 		),
 		"autoawardinfo" => array(
 			"type" => "section",
@@ -162,7 +162,7 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 			"type" => "submit",
 			"attributes" => array("class" => "submitButton formSubmitButton"),
 			"value" => "Edit Medal",
-			"sortorder" => $i++		
+			"sortorder" => $i++
 		)
 	);
 

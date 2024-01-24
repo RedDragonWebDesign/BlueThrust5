@@ -28,12 +28,12 @@ $memberAppObj = new MemberApp($mysqli);
 
 
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $memberAppObj->select($_POST['mAppID'])) {
-	
+
 	$arrMemAppInfo = $memberAppObj->get_info_filtered();
-	
-	
+
+
 	require_once(BASE_DIRECTORY."members/include/membermanagement/include/memberapp_setrank.php");
-	
+
 	$newRankID = 2;
 	$setRankOptions = memberAppSetRank();
 	if(count($setRankOptions) > 0) {
@@ -42,19 +42,19 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			$newRankID = $_POST['newRank'];
 		}
 	}
-	
+
 	if($memberAppObj->addMember($newRankID)) {
-		
+
 		$newMemberInfo = $memberAppObj->getNewMemberInfo();
 		$dispNewMember = $newMemberInfo['username'];
-		
+
 		$member->logAction("Accepted ".$dispNewMember."'s member application.");
-		
+
 		if($newMemberInfo['recruiter'] == 0) {
-			$memberAppObj->setRecruiter($memberInfo['member_id']);			
+			$memberAppObj->setRecruiter($memberInfo['member_id']);
 		}
-		
-		
+
+
 		echo "
 			<div id='memAppMessage'>
 				<p class='main' align='center'>
@@ -62,7 +62,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				</p>
 			</div>
 		";
-		
+
 	}
 	else {
 		echo "
@@ -73,8 +73,8 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			</div>
 		";
 	}
-	
-	
+
+
 	echo "
 		
 		<script type='text/javascript'>
@@ -100,8 +100,8 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			});		
 		</script>
 	";
-	
-	
+
+
 }
 
 require_once("memberapplist.php");

@@ -82,7 +82,7 @@ $arrComponents = array(
 		"value" => $websiteInfo['forum_avatarheight'],
 		"sortorder" => $i++,
 		"html" => "<div class='formInput formInputSideComponent'>".$pixelPercentBox->getHTML("avatarheightunit", $websiteInfo['forum_avatarheightunit'])."</div>",
-		"db_name" => "forum_avatarheight"		
+		"db_name" => "forum_avatarheight"
 	),
 	"newindicator" => array(
 		"type" => "text",
@@ -255,7 +255,7 @@ $arrComponents = array(
 		"attributes" => array("class" => "submitButton formSubmitButton"),
 		"sortorder" => $i++
 	)
-	
+
 );
 
 
@@ -314,7 +314,7 @@ $embedJS = "
 		clickShowRank();
 
 ";
-	
+
 
 $setupFormArgs = array(
 	"name" => "console-".$cID,

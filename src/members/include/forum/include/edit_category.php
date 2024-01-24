@@ -40,31 +40,31 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 
 if ( ! empty($_POST['submit']) ) {
-	
+
 	// Check Name
 	if(trim($_POST['catname']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Category name may not be blank.<br>";
 		$countErrors++;
 	}
-	
-	
+
+
 	// Check Order
-	
+
 	$intNewOrderSpot = $categoryObj->validateOrder($_POST['displayorder'], $_POST['beforeafter'], true, $categoryInfo['ordernum']);
-	
+
 	if($intNewOrderSpot === false) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
 		$countErrors++;
 	}
-	
-	
+
+
 	if($countErrors == 0) {
-	
+
 		$arrColumns = array("name", "ordernum");
 		$arrValues = array($_POST['catname'], $intNewOrderSpot);
 		$categoryObj->select($categoryInfo['forumcategory_id']);
 		if($categoryObj->update($arrColumns, $arrValues)) {
-	
+
 			$forumCatInfo = $categoryObj->get_info_filtered();
 			echo "
 				<div style='display: none' id='successBox'>
@@ -82,50 +82,50 @@ if ( ! empty($_POST['submit']) ) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save category to the database.  Please contact the website administrator.<br>";
 		}
-	
+
 		$categoryObj->resortOrder();
 	}
-	
-	
+
+
 	if($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-	
-	
+
+
 }
 
 
 
 if ( empty($_POST['submit']) ) {
-	
+
 	$arrDisplayOrder = $categoryObj->findBeforeAfter();
 	$dispSelected = "";
 	if($arrDisplayOrder[1] == "after") {
 		$dispSelected = " selected";
 	}
-	
+
 	$orderoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
 	while($row = $result->fetch_assoc()) {
 		$selectCat = "";
 		if($arrDisplayOrder[0] == $row['forumcategory_id']) {
-			$selectCat = " selected";	
+			$selectCat = " selected";
 		}
-		$orderoptions .= "<option value='".$row['forumcategory_id']."'".$selectCat.">".filterText($row['name'])."</option>";	
+		$orderoptions .= "<option value='".$row['forumcategory_id']."'".$selectCat.">".filterText($row['name'])."</option>";
 	}
-	
-	
+
+
 	if($result->num_rows == 0) {
-		$orderoptions = "<option value='first'>(first category)</option>";	
+		$orderoptions = "<option value='first'>(first category)</option>";
 	}
-	
+
 	echo "
 	
 		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."&catID=".$_GET['catID']."&action=edit' method='post'>
 		<div class='formDiv'>
 		";
-	
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -134,7 +134,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
+
 	echo "
 			Use the form below to edit the selected forum category.<br>
 			<table class='formTable'>
@@ -159,5 +159,5 @@ if ( empty($_POST['submit']) ) {
 		</form>
 	
 	";
-	
+
 }

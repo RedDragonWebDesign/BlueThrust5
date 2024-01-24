@@ -1,6 +1,6 @@
-<?php 
+<?php
 	if(!defined("SHOW_PROFILE_MAIN")) {
-		exit();	
+		exit();
 	}
 ?>
 

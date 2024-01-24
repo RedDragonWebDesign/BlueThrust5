@@ -43,35 +43,35 @@ function saveGameStats() {
 	global $mysqli, $dbprefix, $memberInfo, $member, $arrGames, $gameObj, $memberGameStatObj, $gameStatsObj;
 	$mysqli->query("DELETE FROM ".$dbprefix."gamestats_members WHERE member_id = '".$memberInfo['member_id']."'");
 	foreach($arrGames as $gameID) {
-		
+
 		if($member->playsGame($gameID)) {
-		
+
 			$gameObj->select($gameID);
-			
+
 			$arrGameStats = $gameObj->getAssociateIDs("ORDER BY ordernum");
 			foreach($arrGameStats as $gameStatsID) {
 
 				$gameStatsObj->select($gameStatsID);
-				
+
 				if($gameStatsObj->get_info("stattype") == "input") {
-					
+
 					$statType = "statvalue";
 					if($gameStatsObj->get_info("textinput") == 1) {
-						$statType = "stattext";	
+						$statType = "stattext";
 					}
-					
+
 					$postVal = "stat_".$gameStatsID;
-					
+
 					$memberGameStatObj->addNew(array("gamestats_id", "member_id", $statType, "dateupdated"), array($gameStatsID, $memberInfo['member_id'], $_POST[$postVal], time()));
 
 				}
 
 			}
-		
+
 		}
-		
+
 	}
-	
+
 }
 
 
@@ -89,19 +89,19 @@ foreach($arrGames as $gameID) {
 			"options" => array("section_title" => $gameObj->get_info_filtered("name")),
 			"sortorder" => $i++
 		);
-		
+
 		foreach($arrGameStats as $gameStatsID) {
-			$gameStatsObj->select($gameStatsID);	
+			$gameStatsObj->select($gameStatsID);
 			$gameStatsInfo = $gameStatsObj->get_info_filtered();
 			if($gameStatsInfo['stattype'] == "input") {
 				$textBoxWidth = array("style" => "width: 5%");
 				$blnText = false;
 				if($gameStatsInfo['textinput'] == 1) {
-					$textBoxWidth = array();	
+					$textBoxWidth = array();
 					$blnText = true;
 				}
 				$gameStatValue = $member->getGameStatValue($gameStatsID, $blnText);
-				
+
 				$arrComponents['stat_'.$gameStatsID] = array(
 					"display_name" => $gameStatsInfo['name'],
 					"attributes" => array_merge(array("class" => "formInput textBox"), $textBoxWidth),
@@ -110,9 +110,9 @@ foreach($arrGames as $gameID) {
 				);
 			}
 		}
-		
+
 	}
-	
+
 }
 
 
@@ -125,7 +125,7 @@ if($i == 1) {
 			</p>
 		</div>
 	";
-	
+
 	$arrComponents['nogamesmessage'] = array(
 		"type" => "custom",
 		"html" => $customHTML,
@@ -142,7 +142,7 @@ else {
 		"value" => "Save Stats",
 		"sortorder" => $i++
 	);
-	
+
 }
 
 $setupFormArgs = array(

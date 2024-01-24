@@ -60,24 +60,24 @@ if(isset($_POST['menucategory'])) {
 	}
 
 	if(count($displayOrderOptions) == 0) {
-		$displayOrderOptions['first'] = "(first item)";	
+		$displayOrderOptions['first'] = "(first item)";
 	}
 }
 
 $itemTypeOptions = array(
-	"link" => "Link", 
-	"image" => "Image", 
-	"custompage" => "Custom Page", 
+	"link" => "Link",
+	"image" => "Image",
+	"custompage" => "Custom Page",
 	"customform" => "Custom Form Page",
 	"downloads" => "Download Page",
-	"top-players" => "Top Players", 
-	"shoutbox" => "Shoutbox", 
-	"forumactivity" => "Latest Forum Activity", 
-	"newestmembers" => "Newest Members", 
+	"top-players" => "Top Players",
+	"shoutbox" => "Shoutbox",
+	"forumactivity" => "Latest Forum Activity",
+	"newestmembers" => "Newest Members",
 	"poll" => "Poll",
-	"login" => "Default Login", 
-	"customcode" => "Custom Block - Code Editor", 
-	"customformat" => "Custom Block - WYSIWYG Editor" 
+	"login" => "Default Login",
+	"customcode" => "Custom Block - Code Editor",
+	"customformat" => "Custom Block - WYSIWYG Editor"
 );
 
 
@@ -176,16 +176,16 @@ $arrExtraComponents = "";
 foreach($itemTypeInclude as $key => $itemTypeInfo) {
 	if($key == $menuItemInfo['itemtype']) {
 		require_once("include/".$itemTypeInfo['file']);
-		
+
 		$arrExtraComponentSection['extra_info'] = array(
 			"type" => "section",
 			"options" => array("section_title" => $itemTypeInfo['sectionname'], "section_description" => $itemTypeInfo['sectioninfo']),
 			"sortorder" => $i++
 		);
-		
-		
-		$arrExtraComponents = ${$itemTypeInfo['array']};		
-	
+
+
+		$arrExtraComponents = ${$itemTypeInfo['array']};
+
 	}
 }
 
@@ -193,7 +193,7 @@ $globalLinkOptionsNeeded = array("link", "custompage", "customform", "downloads"
 
 if(in_array($menuItemInfo['itemtype'], $globalLinkOptionsNeeded)) {
 	$optionName = $menuItemInfo['itemtype'];
-	
+
 	$globalLinkOptions = array(
 		"targetwindow_".$optionName => array(
 			"type" => "select",
@@ -217,8 +217,8 @@ if(in_array($menuItemInfo['itemtype'], $globalLinkOptionsNeeded)) {
 			"attributes" => array("class" => "textBox formInput")
 		)
 	);
-	
-	$arrExtraComponents = array_merge($arrExtraComponents, $globalLinkOptions);	
+
+	$arrExtraComponents = array_merge($arrExtraComponents, $globalLinkOptions);
 }
 
 $arrAfterSave = "";
@@ -230,20 +230,20 @@ switch($menuItemInfo['itemtype']) {
 		$arrExtraComponents['targetwindow_link']['value'] = $menuItemExtraInfo['linktarget'];
 		$arrExtraComponents['textalign_link']['value'] = $menuItemExtraInfo['textalign'];
 		$arrExtraComponents['prefix_link']['value'] = $menuItemExtraInfo['prefix'];
-	
+
 		$arrAfterSave = array(array(
-			"function" => "saveMenuItem", 
+			"function" => "saveMenuItem",
 			"args" => array(
-				&$arrExtraComponents, 
-				&$menuItemObj->objLink, 
-				array(	"linkurl_link" => "link", 
-						"targetwindow_link" => "linktarget", 
-						"textalign_link" => "textalign", 
-						"prefix_link" => "prefix"), 
-				"menulink_id", 
+				&$arrExtraComponents,
+				&$menuItemObj->objLink,
+				array(	"linkurl_link" => "link",
+						"targetwindow_link" => "linktarget",
+						"textalign_link" => "textalign",
+						"prefix_link" => "prefix"),
+				"menulink_id",
 				"link", array(), "update")
 			));
-		
+
 		break;
 	case "image":
 		$menuItemObj->objImage->select($menuItemInfo['itemtype_id']);
@@ -254,23 +254,23 @@ switch($menuItemInfo['itemtype']) {
 		$arrExtraComponents['linkurl_image']['value'] = $menuItemExtraInfo['link'];
 		$arrExtraComponents['targetwindow_image']['value'] = $menuItemExtraInfo['linktarget'];
 		$arrExtraComponents['textalign_image']['value'] = $menuItemExtraInfo['imagealign'];
-		
+
 		$arrAfterSave = array(
 			array(
-			"function" => "saveMenuItem", 
+			"function" => "saveMenuItem",
 			"args" => array(
-				&$arrExtraComponents, 
-				&$menuItemObj->objImage, 
-				array(	"imagefile_image" => "imageurl", 
-						"width_image" => "width", 
-						"height_image" => "height", 
+				&$arrExtraComponents,
+				&$menuItemObj->objImage,
+				array(	"imagefile_image" => "imageurl",
+						"width_image" => "width",
+						"height_image" => "height",
 						"linkurl_image" => "link",
 						"targetwindow_image" => "linktarget",
-						"textalign_image" => "imagealign"), 
-				"menuimage_id", 
+						"textalign_image" => "imagealign"),
+				"menuimage_id",
 				"image", array(), "update")
 			));
-		
+
 		break;
 	case "custompage":
 		$menuItemObj->objCustomPage->select($menuItemInfo['itemtype_id']);
@@ -279,7 +279,7 @@ switch($menuItemInfo['itemtype']) {
 		$arrExtraComponents['targetwindow_custompage']['value'] = $menuItemExtraInfo['linktarget'];
 		$arrExtraComponents['textalign_custompage']['value'] = $menuItemExtraInfo['textalign'];
 		$arrExtraComponents['prefix_custompage']['value'] = $menuItemExtraInfo['prefix'];
-		
+
 		$arrAfterSave = array(
 			array(
 			"function" => "saveMenuItem",
@@ -294,7 +294,7 @@ switch($menuItemInfo['itemtype']) {
 				"custompage", array(), "update"
 			)
 		));
-		
+
 		break;
 	case "customform":
 		$menuItemObj->objCustomPage->select($menuItemInfo['itemtype_id']);
@@ -303,7 +303,7 @@ switch($menuItemInfo['itemtype']) {
 		$arrExtraComponents['targetwindow_customform']['value'] = $menuItemExtraInfo['linktarget'];
 		$arrExtraComponents['textalign_customform']['value'] = $menuItemExtraInfo['textalign'];
 		$arrExtraComponents['prefix_customform']['value'] = $menuItemExtraInfo['prefix'];
-		
+
 		$arrAfterSave = array(
 			array(
 			"function" => "saveMenuItem",
@@ -318,7 +318,7 @@ switch($menuItemInfo['itemtype']) {
 				"customform", array(), "update"
 			)
 		));
-		
+
 		break;
 	case "downloads":
 		$menuItemObj->objCustomPage->select($menuItemInfo['itemtype_id']);
@@ -327,7 +327,7 @@ switch($menuItemInfo['itemtype']) {
 		$arrExtraComponents['targetwindow_downloads']['value'] = $menuItemExtraInfo['linktarget'];
 		$arrExtraComponents['textalign_downloads']['value'] = $menuItemExtraInfo['textalign'];
 		$arrExtraComponents['prefix_downloads']['value'] = $menuItemExtraInfo['prefix'];
-	
+
 		$arrAfterSave = array(
 			array(
 				"function" => "saveMenuItem",
@@ -343,33 +343,33 @@ switch($menuItemInfo['itemtype']) {
 				)
 			)
 		);
-		
+
 		break;
 	case "shoutbox":
 		$menuItemObj->objShoutbox->select($menuItemInfo['itemtype_id']);
 		$menuItemExtraInfo = $menuItemObj->objShoutbox->get_info_filtered();
-		
+
 		$shoutboxWidthPercentSelected = ($menuItemExtraInfo['percentwidth'] == 1) ? " selected" : "";
 		$shoutboxHeightPercentSelected = ($menuItemExtraInfo['percentheight'] == 1) ? " selected" : "";
-		
+
 		require_once("include/shoutboxoptions.php");
-		
+
 		$arrExtraComponentSection['extra_info'] = array(
 			"type" => "section",
 			"options" => array("section_title" => "Shoutbox Information:", "section_description" => "<b><u>NOTE:</u></b> Leave all fields blank to keep the theme's default settings."),
 			"sortorder" => $i++
 		);
-		
-		
-		$arrExtraComponents = $shoutboxOptionComponents;	
-		
-		
+
+
+		$arrExtraComponents = $shoutboxOptionComponents;
+
+
 		$arrExtraComponents['width_shoutbox']['value'] = $menuItemExtraInfo['width'];
 		$arrExtraComponents['height_shoutbox']['value'] = $menuItemExtraInfo['height'];
 		$arrExtraComponents['textboxwidth_shoutbox']['value'] = $menuItemExtraInfo['textboxwidth'];
-	
+
 		$arrAfterSave = array(
-		
+
 			array(
 				"function" => "saveMenuItem",
 				"args" => array(
@@ -383,22 +383,22 @@ switch($menuItemInfo['itemtype']) {
 					array("percentwidth" => $_POST['widthunit_shoutbox'], "percentheight" => $_POST['heightunit_shoutbox']),
 					"update"
 				)
-			
+
 			)
-		
+
 		);
-		
+
 		break;
 	case "poll":
 		$arrExtraComponents['poll']['value'] = $menuItemInfo['itemtype_id'];
 		$arrAfterSave = array("savePoll");
-		
+
 		break;
 	case "customcode":
 		$menuItemObj->objCustomBlock->select($menuItemInfo['itemtype_id']);
 		$menuItemExtraInfo = $menuItemObj->objCustomBlock->get_info_filtered();
 		$arrExtraComponents['customcode']['value'] = $menuItemExtraInfo['code'];
-		
+
 		$arrAfterSave = array(
 			array(
 				"function" => "saveMenuItem",
@@ -412,18 +412,18 @@ switch($menuItemInfo['itemtype']) {
 					"update"
 				)
 			)
-		
+
 		);
-		
+
 		break;
 	case "customformat":
 		$menuItemObj->objCustomBlock->select($menuItemInfo['itemtype_id']);
 		$menuItemExtraInfo = $menuItemObj->objCustomBlock->get_info_filtered();
 		$arrExtraComponents['wysiwygEditor']['value'] = $menuItemExtraInfo['code'];
-		
-		
+
+
 		$arrAfterSave = array(
-		
+
 			array(
 				"function" => "saveMenuItem",
 				"args" => array(
@@ -437,7 +437,7 @@ switch($menuItemInfo['itemtype']) {
 				)
 			)
 		);
-		
+
 		break;
 }
 
@@ -463,7 +463,7 @@ $submitButtonArray = array(
 	)
 );
 
-$arrComponents = array_merge($arrComponents, $submitButtonArray);	
+$arrComponents = array_merge($arrComponents, $submitButtonArray);
 
 $afterJS = "
 
@@ -485,7 +485,7 @@ $afterJS = "
 	if($menuItemInfo['itemtype'] == "customcode") {
 
 		$afterJS .= "$('#menuCodeEditor_code').val(menuCodeEditor.getValue());";
-		
+
 	}
 
 
@@ -495,7 +495,7 @@ $afterJS .= "
 });";
 
 if($menuItemInfo['itemtype'] == "shoutbox") {
-	
+
 	$afterJS .= "
 	
 		$('#shoutBoxWidthPercent').change(function() {
@@ -511,7 +511,7 @@ if($menuItemInfo['itemtype'] == "shoutbox") {
 		
 		$('#shoutBoxWidthPercent').change();
 	";
-	
+
 }
 
 

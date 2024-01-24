@@ -39,80 +39,80 @@ $dispBreadCrumb = "<a href='".$MAIN_ROOT."'>Home</a> > Log In";
 require_once($prevFolder."themes/".$THEME."/_header.php");
 
 if(constant("LOGGED_IN")) {
-	
+
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."members'
 		</script>
 	";
 	exit();
-	
+
 }
 
 
 
 
 if(isset($_GET['code'])) {
-	
-	// Check if a member is connected	
-	
+
+	// Check if a member is connected
+
 	$fbObj->tokenNonce = $_SESSION['btFacebookNonce'];
 
 	$arrURLInfo = parse_url($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
-	
+
 	$arrAccessToken = $fbObj->getAccessToken($_GET['code'], $_GET['state'], $arrURLInfo['scheme']."://".$arrURLInfo['host'].$arrURLInfo['path']);
-	
+
 	$_SESSION['btFBAccessToken'] = $arrAccessToken['access_token'];
-	
+
 	if($fbObj->checkAccessToken()) {
 		$fbInfo = $fbObj->getFBInfo();
-		
+
 		// Save in DB
 		$arrColumns = array("name", "lastupdate");
 		$arrValues = array($fbInfo['name'], time());
-		
+
 		if($fbObj->authorizeLogin($fbInfo['id'])) {
 			$fbInfo = $fbObj->get_info();
-			
+
 			$memberObj = new Member($mysqli);
 			$memberObj->select($fbInfo['member_id']);
 			$memberInfo = $memberObj->get_info();
-			
+
 			$_SESSION['btUsername'] = $memberInfo['username'];
 			$_SESSION['btPassword'] = $memberInfo['password'];
 			$_SESSION['btRememberMe'] = $_POST['rememberme'];
-			
+
 			$newLastLogin = time();
 			$newTimesLoggedIn = $memberInfo['timesloggedin']+1;
 			$newIP = $_SERVER['REMOTE_ADDR'];
-			
+
 			$memberObj->update(array("lastlogin", "timesloggedin", "ipaddress", "loggedin"), array($newLastLogin, $newTimesLoggedIn, $newIP, 1));
-			
+
 			$memberObj->autoPromote();
-			
+
 			echo "
 				<script type='text/javascript'>
 					window.location = '".$MAIN_ROOT."index.php';
 				</script>
 			";
-			
+
 			exit();
-		
-			
-			
+
+
+
 		}
 		else {
-			$dispError = "There is no user associated with this Facebook account.  You must connect your Facebook account while logged in before using this feature.";	
+			$dispError = "There is no user associated with this Facebook account.  You must connect your Facebook account while logged in before using this feature.";
 		}
-		
+
 	}
 	else {
-		
+
 		$dispError = "Unable to validate your Facebook account, please log in regularly through the website.";
-		
+
 	}
-	
-	
+
+
 }
 elseif(isset($_GET['error_reason'])) {
 	$dispError = "There is no user associated with this Facebook account.  You must connect your Facebook account while logged in before using this feature.";
@@ -124,7 +124,7 @@ if(!isset($_GET['code']) || $dispError == "") {
 
 	$loginURL = $fbObj->getFBConnectLink($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 	$_SESSION['btFacebookNonce'] = $fbObj->tokenNonce;
-	
+
 	echo "
 		<p>Redirecting to Facebook...</p>
 	
@@ -132,7 +132,7 @@ if(!isset($_GET['code']) || $dispError == "") {
 			window.location = '".$loginURL."';
 		</script>
 	";
-	
+
 	exit();
 }
 

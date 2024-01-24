@@ -41,27 +41,27 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
 	if($checkAccess && is_numeric($_POST['mID'])) {
-		
-		
+
+
 		if($member->select($_POST['mID']) && ($_POST['accessrule'] == "allow" || $_POST['accessrule'] == "deny")) {
-			
+
 			$intAlreadyAdded = "no";
 			$counter = 0;
 			foreach($_SESSION['btAccessRules'] as $key => $accessInfo) {
-				
+
 				if($accessInfo['mID'] == $_POST['mID']) {
-					$intAlreadyAdded = $key;			
+					$intAlreadyAdded = $key;
 				}
-				
+
 			}
-			
-			
-			
+
+
+
 			$arrSaveInfo = array(
-					'mID' => $_POST['mID'], 
+					'mID' => $_POST['mID'],
 					'accessRule' => $_POST['accessrule']
 					);
-			
+
 			if(is_numeric($intAlreadyAdded)) {
 				$_SESSION['btAccessRules'][$intAlreadyAdded] = $arrSaveInfo;
 			}
@@ -69,19 +69,19 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				$_SESSION['btAccessRules'][] = $arrSaveInfo;
 			}
 			$blnSuccess = true;
-			
+
 		}
 
-		
-		
+
+
 	}
-	
+
 	if($checkAccess) { require_once("view.php"); }
-	
-	
+
+
 	if(!$blnSuccess && $checkAccess) {
-		
-		
+
+
 
 		echo "
 			<div id='addErrorMessage' style='display: none'><p align='center'>Unable to add special access rule!  Please Try Again.</p></div>

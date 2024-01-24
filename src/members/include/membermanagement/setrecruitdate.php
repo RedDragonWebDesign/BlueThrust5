@@ -33,10 +33,10 @@ $rankObj = new Rank($mysqli);
 $rankObj->select($memberInfo['rank_id']);
 $rankInfo = $rankObj->get_info();
 if($memberInfo['promotepower'] != 0) {
-	$rankInfo['promotepower'] = $memberInfo['promotepower'];	
+	$rankInfo['promotepower'] = $memberInfo['promotepower'];
 }
 elseif($memberInfo['promotepower'] == -1) {
-	$rankInfo['promotepower'] = 0;	
+	$rankInfo['promotepower'] = 0;
 }
 
 if($memberInfo['rank_id'] == 1) {
@@ -50,40 +50,40 @@ else {
 }
 
 if ( ! empty($_POST['submit']) ) {
-	
-	
+
+
 	if(!$memberObj->select($_POST['member'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member.<br>";
 	}
 	elseif($memberObj->select($_POST['member'])) {
-		
+
 		$tempMemInfo = $memberObj->get_info();
 		$rankObj->select($tempMemInfo['rank_id']);
 		$tempRankInfo = $rankObj->get_info();
-		
+
 		if($powerRankInfo['ordernum'] < $tempRankInfo['ordernum']) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not change the selected member's recruit date.<br>";
 		}
 
 	}
-	
-	
+
+
 	$recruitDate = $_POST['newrecruitdate']/1000;
 
 	if($recruitDate > time()) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid date.<br>";
 	}
-	
+
 	if($countErrors == 0) {
-		
+
 		$arrColumn = array("datejoined");
 		$arrValue = array($recruitDate);
-		
+
 		if($memberObj->update($arrColumn, $arrValue)) {
-			
+
 			echo "
 				<div style='display: none' id='successBox'>
 					<p align='center'>
@@ -96,28 +96,28 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			
 			";
-			
+
 			$logMessage = "Changed ".$tempMemInfo['username']."'s recruit date to ".date("D M j, Y g:i a", $recruitDate).".";
 			$member->logAction($logMessage);
-			
-			
+
+
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
 	}
-	
-	
+
+
 	if($countErrors > 0) {
-		$_POST['submit'] = false;	
+		$_POST['submit'] = false;
 	}
-	
-	
+
+
 }
 
 if ( empty($_POST['submit']) ) {
-	
+
 	$result = $mysqli->query("SELECT ".$dbprefix."members.member_id FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."ranks.rank_id = ".$dbprefix."members.rank_id AND ".$dbprefix."ranks.ordernum <= '".$powerRankInfo['ordernum']."' AND ".$dbprefix."members.rank_id != '1' AND ".$dbprefix."members.disabled = '0' ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
 	while($row = $result->fetch_assoc()) {
 		$memberObj->select($row['member_id']);
@@ -125,15 +125,15 @@ if ( empty($_POST['submit']) ) {
 		$rankObj->select($tempMemInfo['rank_id']);
 		$tempRankInfo = $rankObj->get_info_filtered();
 		$memberoptions .= "<option value='".$row['member_id']."'>".$tempRankInfo['name']." ".$tempMemInfo['username']."</option>";
-		
+
 	}
-	
-	
+
+
 	echo "
 		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
 			<div class='formDiv'>
 			";
-	
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -142,7 +142,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
+
 	echo "
 				Use the form below to change a member's recruit date.
 				<table class='formTable'>
@@ -184,6 +184,6 @@ if ( empty($_POST['submit']) ) {
 			});
 		</script>
 	";
-	
+
 }
 

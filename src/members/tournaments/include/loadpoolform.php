@@ -37,67 +37,67 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->
 	$tournamentObj->select($teamInfo['tournament_id']);
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 	$poolInfo = $tournamentObj->objTournamentPool->get_info();
-	
+
 	$dispTeamName = $tournamentObj->getPlayerName();
-	
+
 	$tmemberID = $tournamentInfo['member_id'];
-	
-	
+
+
 	if(($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) && $poolInfo['tournament_id'] == $teamInfo['tournament_id']) {
-		
+
 		$selectedTeam = "";
 		$dispNoWinnerSelected = "";
 		$dispPlayerOneWinnerSelected = "";
 		$dispPlayerTwoWinnerSelected = "";
-		
+
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentpools_teams WHERE pool_id = '".$_POST['poolID']."' AND (team1_id = '".$_POST['teamID']."' OR team2_id = '".$_POST['teamID']."') ORDER BY poolteam_id");
 		while($row = $result->fetch_assoc()) {
-			
+
 			if($_POST['poolTeamID'] == "") {
-				$_POST['poolTeamID'] = $row['poolteam_id'];	
+				$_POST['poolTeamID'] = $row['poolteam_id'];
 			}
-			
+
 			if($row['team1_id'] != $_POST['teamID']) {
 				$selectedTeam = $row['team1_id'];
 			}
 			elseif($row['team2_id'] != $_POST['teamID']) {
 				$selectedTeam = $row['team2_id'];
 			}
-			
-			
-			if($_POST['poolTeamID'] == $row['poolteam_id']) {				
-				
+
+
+			if($_POST['poolTeamID'] == $row['poolteam_id']) {
+
 				if($row['team1_id'] == $_POST['teamID']) {
 					$playerOneValue = 1;
 					$playerTwoValue = 2;
-					
-			
+
+
 					if($row['winner'] == 1) {
-						$dispPlayerOneWinnerSelected = " selected";	
+						$dispPlayerOneWinnerSelected = " selected";
 					}
 					elseif($row['winner'] == 2) {
-						$dispPlayerTwoWinnerSelected = " selected";	
+						$dispPlayerTwoWinnerSelected = " selected";
 					}
-					
-					
+
+
 				}
 				elseif($row['team2_id'] == $_POST['teamID']) {
 					$playerOneValue = 2;
 					$playerTwoValue = 1;
-					
+
 					if($row['winner'] == 1) {
 						$dispPlayerTwoWinnerSelected = " selected";
 					}
 					elseif($row['winner'] == 2) {
 						$dispPlayerOneWinnerSelected = " selected";
 					}
-					
+
 				}
-				
+
 				if($row['winner'] == 0) {
 					$dispNoWinnerSelected = " selected";
 				}
-				
+
 				if($_POST['teamID'] == $row['team1_id']) {
 					$dispTeamScore = $row['team1score'];
 					$dispOpponentScore = $row['team2score'];
@@ -106,47 +106,47 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->
 					$dispTeamScore = $row['team2score'];
 					$dispOpponentScore = $row['team1score'];
 				}
-			
-			
+
+
 			}
-		
+
 			if($selectedTeam != "") {
-		
+
 				$tournamentObj->objTeam->select($selectedTeam);
 				$dispOpponentName = $tournamentObj->getPlayerName();
-		
+
 				if($dispOpponentName == "") {
 					$dispOpponentName = "Empty Spot";
 				}
-		
-				
+
+
 				if($row['winner'] == 0) {
 					$dispOpponentName .= " (no winner selected)";
 				}
 
-		
+
 				$dispSelected = "";
 				if($_POST['poolTeamID'] == $row['poolteam_id']) {
-					$dispSelected  = " selected";	
+					$dispSelected  = " selected";
 				}
-				
-		
+
+
 				$opponentoptions .= "<option value='".$row['poolteam_id']."'".$dispSelected.">".$dispOpponentName."</option>";
 			}
-			
-			
+
+
 			if($_POST['poolTeamID'] == $row['poolteam_id']) {
-			
-				
-				
-				
+
+
+
+
 			}
-			
-			
+
+
 		}
-		
-		
-		
+
+
+
 		echo "
 		
 		<table class='formTable'>
@@ -222,9 +222,9 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->
 		</script>
 		
 		";
-		
-		
+
+
 	}
-	
-	
+
+
 }

@@ -66,18 +66,18 @@ require_once($prevFolder."include/breadcrumb.php");
 		$counter = 0;
 		$result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."squads ORDER BY name");
 		while($row = $result->fetch_assoc()) {
-			
-			
+
+
 			if($row['recruitingstatus'] == 1) {
-				$dispRecruiting = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/bluedot.png' title='Recruiting Open'>";	
+				$dispRecruiting = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/bluedot.png' title='Recruiting Open'>";
 			}
 			else {
 				$dispRecruiting = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/graydot.png' title='Recruiting Closed'>";
 			}
-			
+
 			$memberObj->select($row['member_id']);
 			$dispMemberLink = $memberObj->getMemberLink();
-			
+
 			if($counter == 1) {
 				$addCSS = " alternateBGColor";
 				$counter = 0;
@@ -86,7 +86,7 @@ require_once($prevFolder."include/breadcrumb.php");
 				$addCSS = "";
 				$counter = 1;
 			}
-			
+
 			echo "
 				<tr>
 					<td class='main ".$addCSS."'><a href='".$MAIN_ROOT."squads/profile.php?sID=".$row['squad_id']."'>".filterText($row['name'])."</a></td>
@@ -96,9 +96,9 @@ require_once($prevFolder."include/breadcrumb.php");
 				</tr>
 			";
 		}
-		
+
 		if($result->num_rows == 0) {
-			
+
 			echo "
 				<tr>
 					<td class='main' colspan='4'>
@@ -109,10 +109,10 @@ require_once($prevFolder."include/breadcrumb.php");
 				</tr>
 			
 			";
-			
+
 		}
-		
-		
+
+
 	?>
 	<tr>
 		<td class='main' colspan='4' valign='top'>

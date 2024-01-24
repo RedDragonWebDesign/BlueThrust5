@@ -35,7 +35,7 @@ $consoleCatObj = new ConsoleCategory($mysqli);
 
 
 if($_GET['cnID'] == "") {
-	
+
 	echo "
 	<div id='loadingSpiral' class='loadingSpiral'>
 		<p align='center'>
@@ -44,8 +44,8 @@ if($_GET['cnID'] == "") {
 	</div>
 	<div id='contentDiv'>
 	";
-	require_once("consoleoptions/main.php");	
-	
+	require_once("consoleoptions/main.php");
+
 	echo "	
 	</div>
 	<div id='deleteMessage' style='display: none'></div>
@@ -127,8 +127,8 @@ if($_GET['cnID'] == "") {
 	
 	</script>
 	";
-	
-	
+
+
 }
 elseif($_GET['cnID'] != "" AND $_GET['action'] == "edit") {
 	require_once("consoleoptions/edit.php");

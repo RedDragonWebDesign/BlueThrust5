@@ -42,44 +42,44 @@ $componentIndex = $_POST['whichComponent'];
 if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2) && is_numeric($componentIndex)) {
 	$countErrors == 0;
 	$dispError = "";
-	
-	
+
+
 	if($_POST['editComponent']) {
-		
-		
+
+
 		$arrTypes = array("input", "largeinput", "select", "multiselect", "separator");
-		
+
 		// Check Name
-		
+
 		if(trim($_POST['componentName']) == "") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Component name may not be blank.<br>";
 		}
-		
+
 		// Check Component Type
-		
+
 		if(!in_array($_POST['componentType'], $arrTypes)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid component type.<br>";
 		}
-		
-		
+
+
 		$intRequired = 1;
 		if($_POST['componentRequired'] != 1) {
 			$intRequired = 0;
 		}
-		
+
 		if($countErrors == 0) {
-		
+
 			$_SESSION['btFormComponent'][$componentIndex]['name'] = $_POST['componentName'];
 			$_SESSION['btFormComponent'][$componentIndex]['type'] = $_POST['componentType'];
 			$_SESSION['btFormComponent'][$componentIndex]['required'] = $_POST['componentRequired'];
 			$_SESSION['btFormComponent'][$componentIndex]['tooltip'] = $_POST['componentToolTip'];
-		
-			
+
+
 			$_SESSION['btFormComponent'][$componentIndex]['cOptions'] = $_SESSION['btFormComponentTempSelectValues'];
-			
-		
+
+
 			echo "
 				<script type='text/javascript'>
 		
@@ -101,13 +101,13 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 		
 				</script>
 			";
-		
+
 		}
-		
+
 		if($countErrors > 0) {
 			$_POST = filterArray($_POST);
 			$_POST['editComponent'] = false;
-		
+
 			echo "
 				<script type='text/javascript'>
 					$(document).ready(function() {
@@ -117,34 +117,34 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 					});
 				</script>
 			";
-		
-			
+
+
 			$arrComponentInfo['type'] = $_POST['componentType'];
 			$arrComponentInfo['name'] = $_POST['componentName'];
 			$arrComponentInfo['required'] = $_POST['componentRequired'];
 			$arrComponentInfo['tooltip'] = $_POST['componentToolTip'];
-			
-			
+
+
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 	if(!$_POST['editComponent']) {
-	
-		
+
+
 		if($dispError != "") {
-			
-			
-			
+
+
+
 		}
 		else {
-		
+
 			$_SESSION['btFormComponentTempSelectValues'] = $_SESSION['btFormComponent'][$componentIndex]['cOptions'];
 			$arrComponentInfo = filterArray($_SESSION['btFormComponent'][$componentIndex]);
 		}
-		
+
 		$arrSelectedType = array();
 		$checkRequired = "";
 		switch($arrComponentInfo['type']) {
@@ -160,14 +160,14 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 			case "separator":
 				$arrSelectedType['separator'] = " selected";
 				break;
-		
+
 		}
-		
+
 		if($arrComponentInfo['required'] == 1) {
 			$checkRequired = " checked";
 		}
-	
-		
+
+
 		echo "
 		
 				<div id='addComponentForm'>
@@ -303,9 +303,9 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 				</script>
 		
 		";
-	
-	
-	
+
+
+
 	}
-	
+
 }

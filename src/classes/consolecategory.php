@@ -16,18 +16,18 @@ require_once("basicorder.php");
 
 
 class ConsoleCategory extends BasicOrder {
-	
-	
+
+
 	function __construct($sqlConnection) {
-	
+
 		$this->MySQL = $sqlConnection;
 		$this->strTableName = $this->MySQL->get_tablePrefix()."consolecategory";
 		$this->strTableKey = "consolecategory_id";
 		$this->strAssociateTableName = $this->MySQL->get_tablePrefix()."console";
 		$this->strAssociateKeyName = "console_id";
-		
+
 	}
-	
+
 	public function delete() {
 		$returnVal = false;
 		if($this->intTableKeyValue != "") {
@@ -40,14 +40,13 @@ class ConsoleCategory extends BasicOrder {
 				$this->MySQL->displayError("basic.php");
 			}
 
-	
 		}
-	
+
 		return $returnVal;
-	
+
 	}
-	
-	
+
+
 	/**
 	 * - makeRoom Method -
 	*
@@ -60,23 +59,23 @@ class ConsoleCategory extends BasicOrder {
 	* strBeforeAfter: String of either "before" or "after"
 	*
 	* Returns the ordernum for the new rank on success or "false" on error
-	* 
+	*
 	* Reason for Override: preventing the editing of admin categories was causing problems
 	*
 	*/
 	function makeRoom($strBeforeAfter) {
-	
+
 		$intRankID = $this->intTableKeyValue;
 		if($intRankID != null) {
-	
+
 			$intNewRankOrderNum = 0;
 			$arrRanks = array();
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." ORDER BY ordernum");
 			$x = 1;
 			while($row = $result->fetch_assoc()) {
-	
+
 				if($row[$this->strTableKey] == $intRankID) {
-	
+
 					if($strBeforeAfter == "after") {
 						$intNewRankOrderNum = $x;
 						$x++;
@@ -89,47 +88,44 @@ class ConsoleCategory extends BasicOrder {
 						$intNewRankOrderNum = $x;
 						$x++;
 					}
-	
+
 				}
 				else {
 					$arrRanks[$x] = $row[$this->strTableKey];
 					$x++;
 				}
 			}
-	
-	
+
 			if($intNewRankOrderNum == 0) {
 				// intNewRank should not equal 0 after the above loop.
 				// The test will be if a numeric value is returned, so if it returns this string, something went wrong.
 				$intNewRankOrderNum = "false";
 			}
-	
-	
+
 			if(is_numeric($intNewRankOrderNum)) {
-	
+
 				$intOriginalRank = $this->intTableKeyValue;
-	
+
 				foreach($arrRanks as $key => $value) {
-	
+
 					$arrColumns[0] = "ordernum";
 					$arrValues[0] = $key;
-	
+
 					$this->select($value);
 					$this->update($arrColumns, $arrValues);
-	
+
 				}
-	
+
 				$this->select($intOriginalRank);
-	
+
 			}
-	
+
 			return $intNewRankOrderNum;
 		}
-	
-	
+
 	}
-	
-	
+
+
 	/**
 	 * - resortOrder Method -
 	*
@@ -152,7 +148,7 @@ class ConsoleCategory extends BasicOrder {
 			$arrUpdateID[] = $row[$this->strTableKey];
 			$x++;
 		}
-	
+
 		$intOriginalRank = $this->intTableKeyValue;
 		foreach($arrUpdateID as $intUpdateID) {
 			$arrUpdateCol[0] = "ordernum";
@@ -161,11 +157,11 @@ class ConsoleCategory extends BasicOrder {
 			$this->update($arrUpdateCol, $arrUpdateVal);
 			$counter++;
 		}
-	
+
 		$this->select($intOriginalRank);
-	
+
 		return true;
 	}
-	
-	
+
+
 }

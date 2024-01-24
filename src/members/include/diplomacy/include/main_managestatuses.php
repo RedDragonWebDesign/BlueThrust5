@@ -79,8 +79,8 @@ while($row = $result->fetch_assoc()) {
 	else {
 		$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveStatus('up', '".$row['diplomacystatus_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 	}
-	
-	
+
+
 	if($x == $intHighestOrder) {
 		$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 	}

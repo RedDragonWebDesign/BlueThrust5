@@ -55,12 +55,12 @@ else {
 		</div>
 		<div id='pollList'>
 	";
-	
+
 	define("SHOW_POLLLIST", true);
 	require_once("include/polllist.php");
-	
+
 	echo "
 		</div>
 	";
-	
+
 }

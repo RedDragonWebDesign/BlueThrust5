@@ -39,7 +39,7 @@ $intViewInvitesCID = $consoleObj->findConsoleIDByName("View Event Invitations");
 
 $result = $mysqli->query("SELECT event_id FROM ".$dbprefix."events_members WHERE member_id = '".$memberInfo['member_id']."'");
 while($row = $result->fetch_assoc()) {
-	$arrEvents[] = $row['event_id'];	
+	$arrEvents[] = $row['event_id'];
 }
 
 $sqlEvents = "('".implode("','", $arrEvents)."')";
@@ -54,17 +54,17 @@ else {
 $result = $mysqli->query($query);
 while($row = $result->fetch_assoc()) {
 
-	
+
 	$row = filterArray($row);
-	
+
 	$arrPositionOptions['invitemembers'] = "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=InviteMembers'>Invite Members</a><br>";
 	$arrPositionOptions['manageinvites'] = "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=ManageInvites'>Manage Invites</a><br>";
 	$arrPositionOptions['editinfo'] = "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=EditInfo'>Edit Event Information</a><br>";
 	$arrPositionOptions['eventpositions'] = "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=AddPosition'>Add Event Position</a><br><b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=ManagePositions'>Manage Event Positions</a><br>";
 	$arrPositionOptions['attendenceconfirm'] = "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=ManageInvites'>Manage Invites</a><br>";
-	
-	
-	
+
+
+
 	$dispEventTitle = $row['title'];
 	if(strlen($dispEventTitle) >= 25) {
 		$dispEventTitle = "<span title='".$row['title']."'>".substr($dispEventTitle, 0, 20)."...</span>";
@@ -76,15 +76,15 @@ while($row = $result->fetch_assoc()) {
 		$hideoptions = "style='display: none'";
 		$categoryCSS = "consoleCategory";
 	}
-	
+
 	$counter++;
-	
+
 	if($_GET['select'] == $row['event_id']) {
 		$clickCounter = $counter;
 	}
-	
-	
-	
+
+
+
 	$dispEventTitles .= "<div class='".$categoryCSS."' style='width: 200px; margin: 3px' id='categoryName".$counter."' onmouseover=\"moverCategory('".$counter."')\" onmouseout=\"moutCategory('".$counter."')\" onclick=\"selectCategory('".$counter."')\">".$dispEventTitle."</div>";
 	$dispEventOptions .= "<div id='categoryOption".$counter."' ".$hideoptions.">";
 	$dispEventOptions .= "
@@ -104,57 +104,57 @@ while($row = $result->fetch_assoc()) {
 			<b>&middot;</b> <a href='javascript:void(0)' onclick=\"deleteEvent('".$row['event_id']."')\">Delete This Event</a><br>
 		
 		";
-		
+
 		if($row['startdate'] < time()) {
-			
-			$dispEventOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=SetAttendance'>Set Attendance</a><br>";	
-			
+
+			$dispEventOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=SetAttendance'>Set Attendance</a><br>";
+
 		}
-		
+
 	}
 	else {
-		// Invited Member	
-		
+		// Invited Member
+
 		$eventObj->select($row['event_id']);
 		$eventObj->getEventMemberID($memberInfo['member_id'], true);
 		$eventMemberInfo = $eventObj->objEventMember->get_info_filtered();
 
 		if($eventMemberInfo['status'] == 1) {
-		
+
 			if($eventMemberInfo['position_id'] == 0 && $row['invitepermission'] == 1) {
 				$dispEventOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=InviteMembers'>Invite Members</a><br>";
 			}
 			elseif($eventMemberInfo['position_id'] != 0 && $eventObj->objEventPosition->select($eventMemberInfo['position_id']) && $eventObj->objEventPosition->get_info("event_id") == $row['event_id']) {
 				$eventPositionInfo = $eventObj->objEventPosition->get_info();
 				foreach($arrPositionOptions as $key => $value) {
-	
+
 					if($eventPositionInfo[$key] == 1 && $key != "attendenceconfirm") {
 						$dispEventOptions .= $value;
 					}
 					elseif($eventPositionInfo[$key] == 1 && $key == "attendenceconfirm" && $eventPositionInfo['manageinvites'] == 0) {
-						$dispEventOptions .= $value;						
+						$dispEventOptions .= $value;
 					}
-					
-					
+
+
 				}
-				
+
 				// Member has access to the attendenceconfirm privilege
 				if($row['startdate'] < time() && $eventPositionInfo['attendenceconfirm'] == 1) {
-					$dispEventOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=SetAttendance'>Set Attendance</a><br>";	
+					$dispEventOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=SetAttendance'>Set Attendance</a><br>";
 				}
-				
+
 			}
 		}
-		
-		
+
+
 		$dispEventOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/console.php?cID=".$intViewInvitesCID."&note=1'>Confirm Your Attendance</a><br>";
 	}
-	
+
 	$dispEventOptions .= "
 	<b>&middot;</b> <a href='".$MAIN_ROOT."events/info.php?eID=".$row['event_id']."'>View Event Page</a>
 	</div></div>";
-	
-	
+
+
 }
 
 if($result->num_rows > 0) {
@@ -183,7 +183,7 @@ if($clickCounter != 0) {
 
 
 if($result->num_rows == 0) {
-	
+
 	echo "
 		<div class='shadedBox' style='width: 400px; margin-bottom: 50px; margin-left: auto; margin-right: auto;'>
 			<p align='center' class='main'>

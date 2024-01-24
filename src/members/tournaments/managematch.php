@@ -36,7 +36,7 @@ else {
 
 
 if(!$tournamentObj->objMatch->select($_GET['match']) || ($tournamentObj->objMatch->get_info("team1_id") == 0 && $tournamentObj->objMatch->get_info("team2_id") == 0)) {
-	
+
 	echo "
 	<div id='errorMessage' style='display: none'>
 		<p class='main' align='center'>
@@ -48,9 +48,9 @@ if(!$tournamentObj->objMatch->select($_GET['match']) || ($tournamentObj->objMatc
 		popupDialog('Update Match - Error!', '".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManageMatches', 'errorMessage');
 	</script>
 	";
-	
-	
-	
+
+
+
 	exit();
 }
 
@@ -71,38 +71,38 @@ $countErrors = 0;
 $matchInfo = $tournamentObj->objMatch->get_info();
 
 if ( ! empty($_POST['submit']) ) {
-	
-	
+
+
 	// Check Player 2
-	
+
 	if($_POST['playertwo'] != 0 && (!$tournamentObj->objTeam->select($_POST['playertwo']) || $tournamentObj->objTeam->get_info("tournament_id") != $tournamentInfo['tournament_id'] || $tournamentObj->objTeam->get_info("tournamentteam_id") == $matchInfo['team1_id'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid team in the match up.<br>";
 	}
-	
-	
-	
+
+
+
 	// Check Scores
-	
+
 	if(($_POST['team1score'] != "" && !is_numeric($_POST['team1score'])) || ($_POST['team2score'] != "" && !is_numeric($_POST['team2score']))) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Scores must be a numeric value.<br>";
 	}
-	
+
 	// Check Outcome
-	
+
 	if($_POST['outcome'] != 0 && $_POST['outcome'] != 1 && $_POST['outcome'] != 2) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid outcome.<br>";
 	}
-	
-	
+
+
 	// Check Replay Upload
-	
+
 	if($_FILES['uploadreplay']['name'] != "") {
-		
+
 		$uploadReplayObj = new BTUpload($_FILES['uploadreplay'], "replay_", "../../downloads/replays/", array(".zip"));
-		
+
 		if(!$uploadReplayObj->uploadFile()) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload the replay. Please make sure the file extension is .zip and that the file size is not too big.<br>";
@@ -110,65 +110,65 @@ if ( ! empty($_POST['submit']) ) {
 		else {
 			$matchReplayURL = $MAIN_ROOT."downloads/replays/".$uploadReplayObj->getUploadedFileName();
 		}
-		
-		
+
+
 	}
 	else {
-		$matchReplayURL = $_POST['replayurl'];	
+		$matchReplayURL = $_POST['replayurl'];
 	}
-	
-	
-	
-	
+
+
+
+
 	if($countErrors == 0) {
-		
-		
+
+
 		// Swap players if team 2 is changing
 		if($matchInfo['team2_id'] != $_POST['playertwo'] && $_POST['playertwo'] != 0) {
-			
+
 			$playerTwoMatch = $tournamentObj->getMatches($matchInfo['round'], $_POST['playertwo']);
 			$tournamentObj->objMatch->select($playerTwoMatch[0]);
 			$playerTwoMatchInfo = $tournamentObj->objMatch->get_info();
-			
+
 			if($_POST['playertwo'] == $playerTwoMatchInfo['team1_id']) {
 				$arrColumns = array("team1_id");
 			}
 			else {
 				$arrColumns = array("team2_id");
 			}
-			
+
 			$tournamentObj->objMatch->update($arrColumns, array($matchInfo['team2_id']));
 
-			
+
 		}
-		
-		
+
+
 		if($_POST['outcome'] == 1) {
 			$matchWinner = $matchInfo['team1_id'];
 		}
 		elseif($_POST['outcome'] == 2) {
-			$matchWinner = $_POST['playertwo'];	
+			$matchWinner = $_POST['playertwo'];
 		}
-		
-		
-		
+
+
+
 		$arrColumns = array("team2_id", "team1score", "team2score", "outcome", "adminreplayurl");
 		$arrValues = array($_POST['playertwo'], $_POST['team1score'], $_POST['team2score'], $_POST['outcome'], $matchReplayURL);
 		$tournamentObj->objMatch->select($matchInfo['tournamentmatch_id']);
-		
+
 		if($tournamentObj->objMatch->update($arrColumns, $arrValues)) {
-			
+
 			if($_POST['outcome'] != 0 && $matchInfo['nextmatch_id'] != 0) {
-			
+
 				$nextMatchSpot = $tournamentObj->getNextMatchTeamSpot($matchWinner);
-				
+
 				$tournamentObj->objMatch->select($matchInfo['nextmatch_id']);
-				
-				
+
+
 				$tournamentObj->objMatch->update(array($nextMatchSpot), array($matchWinner));
 			}
-			
-			
+
+
 			echo "
 			
 			<div style='display: none' id='successBox'>
@@ -182,75 +182,75 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 			
 			";
-			
-			
+
+
 		}
 		else {
 			$countErrors++;
-			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";			
+			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-		
-		
-		
+
+
+
 	}
-	
-	
+
+
 	if($countErrors > 0) {
 		$_POST = filterArray($_POST);
-		$_POST['submit'] = false;	
+		$_POST['submit'] = false;
 	}
-	
-	
-	
+
+
+
 }
 
 
 if ( empty($_POST['submit']) ) {
-	
+
 	if($tournamentInfo['playersperteam'] == 1) {
 		$strPlayerTeam = "Player";
-		
+
 		if($tournamentObj->objTeam->select($matchInfo['team1_id'])) {
-			
+
 			$teamInfo = $tournamentObj->objTeam->get_info_filtered();
-			
+
 			$arrPlayers = $tournamentObj->getTeamPlayers($teamInfo['tournamentteam_id'], true);
 			$dispPlayer1 = "Empty Spot";
 			if($tournamentObj->objPlayer->select($arrPlayers[0])) {
-				
+
 				$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
-				
+
 				if($member->select($playerInfo['member_id'])) {
 					$dispPlayer1 = $member->getMemberLink();
 				}
 				else {
 					$dispPlayer1 = $playerInfo['displayname'];
 				}
-				
+
 			}
-			
-			
+
+
 		}
-		
-		
+
+
 		$arrPlayers = $tournamentObj->getPlayers(true);
-		
+
 		$selectOutcomePlayer1 = "";
 		$selectOutcomePlayer2 = "";
 		if($matchInfo['outcome'] == 1) {
-			$selectOutcomePlayer1 = " selected";	
+			$selectOutcomePlayer1 = " selected";
 		}
 		elseif($matchInfo['outcome'] != 0) {
 			$selectOutcomePlayer2 = " selected";
 		}
-		
-		
+
+
 		foreach($arrPlayers as $playerID) {
-			
+
 			if($playerID != $playerInfo['tournamentplayer_id']) {
-				
-				
-				
+
+
+
 				$tournamentObj->objPlayer->select($playerID);
 				$player2TeamID = $tournamentObj->objPlayer->get_info("team_id");
 				if($member->select($tournamentObj->objPlayer->get_info("member_id"))) {
@@ -259,50 +259,50 @@ if ( empty($_POST['submit']) ) {
 				else {
 					$dispOptionName = $tournamentObj->objPlayer->get_info_filtered("displayname");
 				}
-				
+
 				$dispSelected = "";
 				if($player2TeamID == $matchInfo['team2_id']) {
 					$dispSelected = " selected";
 				}
-				
+
 				$teamoptions .= "<option value='".$player2TeamID."'".$dispSelected.">".$dispOptionName."</option>";
 			}
-			
+
 		}
-		
-		
+
+
 	}
 	else {
 		$strPlayerTeam = "Team";
-		
+
 		$arrTeams = $tournamentObj->getTeams(true);
-		foreach($arrTeams as $teamID) {	
-			
+		foreach($arrTeams as $teamID) {
+
 			$dispSelected = "";
 			if($teamID == $matchInfo['team2_id']) {
 				$dispSelected = " selected";
 			}
-			
+
 			$tournamentObj->objTeam->select($teamID);
 			$teamoptions .= "<option value='".$teamID."'".$dispSelected.">".$tournamentObj->objTeam->get_info_filtered("name")."</option>";
-			
+
 		}
-		
+
 		$tournamentObj->objTeam->select($matchInfo['team1_id']);
 		$dispPlayer1 = $tournamentObj->objTeam->get_info_filtered("name");
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	echo "
 	
 		<form action='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManageMatches&match=".$_GET['match']."' method='post' enctype='multipart/form-data'>
 		<div class='formDiv'>
 		
 		";
-	
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -311,7 +311,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-		
+
 	echo "
 		Use the form below to edit the match details.<br>
 		<p class='main'>
@@ -378,5 +378,5 @@ if ( empty($_POST['submit']) ) {
 		</form>
 	
 	";
-	
+
 }

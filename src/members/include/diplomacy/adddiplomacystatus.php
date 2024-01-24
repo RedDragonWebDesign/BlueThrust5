@@ -30,42 +30,42 @@ $cID = $_GET['cID'];
 require_once("../classes/btupload.php");
 
 if ( ! empty($_POST['submit']) ) {
-	
+
 	$diplomacyStatusObj = new BasicOrder($mysqli, "diplomacy_status", "diplomacystatus_id");
-	
+
 	// Check Name
-	
+
 	if(trim($_POST['statusname']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Status name may not be blank.<br>";
 		$countErrors++;
 	}
-	
+
 	// Check Display Order
 	$intNewOrderNum = $diplomacyStatusObj->validateOrder($_POST['displayorder'], $_POST['beforeafter']);
 	if($intNewOrderNum === false) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
 		$countErrors++;
 	}
-	
-	
+
+
 	$statusImageURL = "";
 	if($countErrors == 0) {
 		// If no errors, check for image upload and try to upload the image
 		if($_FILES['statusimagefile']['name'] != "") {
-			
+
 			$uploadImg = new BTUpload($_FILES['statusimagefile'], "status_", "../images/diplomacy/", array(".jpg", ".png", ".gif", ".bmp"));
 			if(!$uploadImg->uploadFile()) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload status image. Please make sure the file size is not too big and it has an acceptable file extension.<br>";
 			}
 			else {
-				$statusImageURL = "images/diplomacy/".$uploadImg->getUploadedFileName();		
+				$statusImageURL = "images/diplomacy/".$uploadImg->getUploadedFileName();
 			}
-			
-			
+
+
 		}
 		else {
-			
+
 			$uploadImg = new BTUpload($_POST['statusimageurl'], "status_", "../images/diplomacy/", array(".jpg", ".png", ".gif", ".bmp"), 4, true);
 			if(!$uploadImg->uploadFile()) {
 				$countErrors++;
@@ -74,20 +74,20 @@ if ( ! empty($_POST['submit']) ) {
 			else {
 				$statusImageURL = "images/diplomacy/".$uploadImg->getUploadedFileName();
 			}
-			
-			
-			//$statusImageURL = $_POST['statusimageurl'];	
-			
+
+
+			//$statusImageURL = $_POST['statusimageurl'];
+
 		}
-		
+
 		// If there are still no errors after uploading the image, add to db
 		if($countErrors == 0) {
-			
+
 			$arrColumns = array("name", "imageurl", "imagewidth", "imageheight", "ordernum");
 			$arrValues = array($_POST['statusname'], $statusImageURL, $_POST['imagewidth'], $_POST['imageheight'], $intNewOrderNum);
-		
+
 			if($diplomacyStatusObj->addNew($arrColumns, $arrValues)) {
-				
+
 				echo "
 				
 					<div style='display: none' id='successBox'>
@@ -102,9 +102,9 @@ if ( ! empty($_POST['submit']) ) {
 				
 				
 				";
-				
-				
-				
+
+
+
 				$member->logAction("Added the ".$_POST['statusname']." status to the diplomacy page.");
 			}
 			else {
@@ -112,36 +112,36 @@ if ( ! empty($_POST['submit']) ) {
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 			}
 		}
-		
+
 	}
-	
+
 	if($countErrors > 0) {
-		$_POST = filterArray($_POST);	
+		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-	
-	
-	
-	
+
+
+
+
 
 }
 
 
 if ( empty($_POST['submit']) ) {
-	
+
 	$orderoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status ORDER BY ordernum DESC");
 	while($row = $result->fetch_assoc()) {
-		
+
 		$orderoptions .= "<option value='".$row['diplomacystatus_id']."'>".filterText($row['name'])."</option>";
-		
+
 	}
-	
+
 	if($orderoptions == "") {
-		$orderoptions = "<option value='first'>This is the first status</option>";	
+		$orderoptions = "<option value='first'>This is the first status</option>";
 	}
-	
-	
+
+
 	echo "
 		<div class='formDiv'>
 		";
@@ -153,7 +153,7 @@ if ( empty($_POST['submit']) ) {
 			</div>
 			";
 		}
-	
+
 		echo "
 			<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post' enctype='multipart/form-data'>
 				Use the form below to add a new diplomacy status type to your diplomacy page.

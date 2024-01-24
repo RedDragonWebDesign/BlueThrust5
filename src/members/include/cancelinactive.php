@@ -1,5 +1,5 @@
 <?php
- 
+
 /*
  * BlueThrust Clan Scripts
  * Copyright 2014
@@ -11,7 +11,7 @@
  * License: http://www.bluethrust.com/license.php
  *
  */
- 
+
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
@@ -22,14 +22,14 @@ else {
 		exit();
 	}
 }
- 
- 
- 
+
+
+
 $cID = $_GET['cID'];
- 
-  
-if($member->update(array("onia"), array(0))) { 
-   
+
+
+if($member->update(array("onia"), array(0))) {
+
 	echo "
 		<div style='display: none' id='successBox'>
 			<p align='center'>

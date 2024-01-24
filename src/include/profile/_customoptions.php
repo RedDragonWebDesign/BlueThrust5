@@ -1,7 +1,7 @@
 <?php
 	if(!defined("SHOW_PROFILE_MAIN")) {
-		exit();	
-	}		
+		exit();
+	}
 // CUSTOM PROFILE OPTIONS
 
 $profileCatObj = new ProfileCategory($mysqli);
@@ -13,20 +13,20 @@ $result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY or
 while($row = $result->fetch_assoc()) {
 
 	$profileCatObj->select($row['profilecategory_id']);
-	
+
 	$arrProfileOptions = $profileCatObj->getAssociateIDs("ORDER BY sortnum");
-	
-	
+
+
 	echo "
 		<div class='formTitle' style='text-align: center; margin-top: 20px'>".$profileCatObj->get_info_filtered("name")."</div>
 		<table class='profileTable' style='border-top-width: 0px'>
 	";
-	
+
 	foreach($arrProfileOptions as $profileOptionID) {
-		
+
 		$profileOptionObj->select($profileOptionID);
-		
-		
+
+
 		echo "
 		
 		<tr>
@@ -35,8 +35,8 @@ while($row = $result->fetch_assoc()) {
 		</tr>
 		
 		";
-		
+
 	}
-	
+
 	echo "</table>";
 }

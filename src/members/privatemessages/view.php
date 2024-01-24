@@ -57,45 +57,45 @@ $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $pmObj->select($_GET['pmID'])) {
 
 	$memberInfo = $member->get_info_filtered();
-	
+
 	$pmInfo = $pmObj->get_info_filtered();
-	
+
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."privatemessage_members WHERE pm_id = '".$pmInfo['pm_id']."' AND member_id = '".$memberInfo['member_id']."'");
-	
+
 	$senderResult = $mysqli->query("SELECT * FROM ".$dbprefix."privatemessage_members WHERE pm_id = '".$pmInfo['pm_id']."'");
-	
+
 	$blnMultiPM = false;
-	
-	
+
+
 	if($pmInfo['receiver_id'] == $memberInfo['member_id'] || $pmInfo['sender_id'] == $memberInfo['member_id'] || $result->num_rows > 0) {
 		$member->select($pmInfo['sender_id']);
 		$dispFromMember = $member->getMemberLink();
-		
+
 		if(($memberInfo['member_id'] == $pmInfo['receiver_id']) || ($memberInfo['member_id'] == $pmInfo['sender_id'] && $senderResult->num_rows == 0)) {
 			$member->select($pmInfo['receiver_id']);
 			$dispToMember = $member->getMemberLink();
-			$pmObj->update(array("status"), array(1));	
+			$pmObj->update(array("status"), array(1));
 		}
 		elseif($result->num_rows > 0) {
-			
+
 			$row = $result->fetch_assoc();
 			$pmMemberID = $row['pmmember_id'];
 			$multiMemPMObj->select($pmMemberID);
 			$multiMemPMObj->update(array("seenstatus"), array(1));
 			$blnMultiPM = true;
 			$dispToMember = $pmObj->getRecipients(true);
-			
+
 		}
 		elseif($memberInfo['member_id'] == $pmInfo['sender_id'] && $senderResult->num_rows > 0) {
-			// Member is the sender			
+			// Member is the sender
 			$blnMultiPM = true;
 			$dispToMember = $pmObj->getRecipients(true);
 		}
-		
+
 		$dispPreviousMessages = "";
-		
-		
-		
+
+
+
 		// Folder Info
 		$multiPM = isset($_GET['pmMID']);
 
@@ -103,13 +103,13 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		$pmFolderObj = new PMFolder($mysqli);
 		$pmFolderObj->select($pmFolderID);
 		$pmFolderInfo = $pmFolderObj->get_info_filtered();
-		
-		
+
+
 		if($pmInfo['originalpm_id'] != 0) {
 			$result = $mysqli->query("SELECT * FROM ".$dbprefix."privatemessages WHERE originalpm_id = '".$pmInfo['originalpm_id']."' AND pm_id != '".$pmInfo['pm_id']."' ORDER BY datesent DESC");
 			$oldPMObj = new PrivateMessage($mysqli);
-	
-				
+
+
 			$dispPreviousMessages .= "
 				<tr>
 					<td class='main' colspan='2'><br><br>
@@ -118,32 +118,32 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 					</td>
 				</tr>
 			";
-			
-			
-			
-			
-			
+
+
+
+
+
 			while($row = $result->fetch_assoc()) {
 				$oldPMObj->select($row['pm_id']);
-				
+
 				if($row['receiver_id'] != 0) {
-				
+
 					$member->select($row['receiver_id']);
 					$dispToPrevMember = $member->getMemberLink();
 				}
 				else {
-					
+
 					$dispToPrevMember = $oldPMObj->getRecipients(true);
 					$pmObj->select($row['pm_id']);
 					$arrReceivers = $pmObj->getAssociateIDs();
-					
-					
+
+
 				}
-				
+
 				$member->select($row['sender_id']);
 				$dispFromPrevMember = $member->getMemberLink();
-				
-				
+
+
 				$dispPreviousMessages .= "
 				
 					<tr>
@@ -185,13 +185,13 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 						</td>
 					</tr>
 				";
-				
+
 			}
-		
+
 		}
-		
-		
-		
+
+
+
 		if($pmInfo['originalpm_id'] == 0) {
 			$replyID = $pmInfo['pm_id'];
 			$threadID = $pmInfo['pm_id'];
@@ -199,17 +199,17 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		else {
 			$replyID = $pmInfo['pm_id'];
 			$threadID = $pmInfo['originalpm_id'];
-			
+
 			$pmObj->select($threadID);
-			
+
 			$originalPMInfo = $pmObj->get_info_filtered();
 			$member->select($originalPMInfo['receiver_id']);
 			$oldPMObj->select($originalPMInfo['pm_id']);
 			$dispToPrevMember = ($originalPMInfo['receiver_id'] != 0) ? $member->getMemberLink() : $oldPMObj->getRecipients(true);
-			
+
 			$member->select($originalPMInfo['sender_id']);
 			$dispFromPrevMember = $member->getMemberLink();
-			
+
 			$dispPreviousMessages .= "
 			
 			
@@ -254,13 +254,13 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			
 			
 			";
-			
-			
-			
-			
+
+
+
+
 		}
-		
-		
+
+
 		echo "
 		
 			<div class='formDiv'>
@@ -307,13 +307,13 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 							<div class='dottedLine' style='width: 75%'></div><br>
 							<input type='button' id='replyButton' class='submitButton' value='Reply'>
 							";
-		
+
 						if($blnMultiPM) {
-							
+
 							echo "<input type='button' id='replyAllButton' class='submitButton' style='margin-left: 20px' value='Reply All'>";
-							
+
 						}
-		
+
 		echo "
 						</td>
 					</tr>
@@ -323,11 +323,11 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			</div>
 		
 			";
-		
+
 		$member->select($memberInfo['member_id']);
 		$totalPMs = $member->countPMs();
 		$totalNewPMs = $member->countPMs(true);
-		
+
 
 		if($totalNewPMs > 0) {
 			$dispPMCount = "PM Inbox <b>(".$totalNewPMs.")</b> <img src='".$MAIN_ROOT."themes/".$THEME."/images/pmalert.gif'>";
@@ -337,7 +337,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			$dispPMCount = "PM Inbox (".$totalPMs.")";
 			$intPMCount = $totalPMs;
 		}
-		
+
 		echo "
 			
 			<script type='text/javascript'>
@@ -361,14 +361,14 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			</script>
 			
 		";
-		
-	
-	
+
+
+
 	}
 	else {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");
 	}
-	
+
 }
 else {
 

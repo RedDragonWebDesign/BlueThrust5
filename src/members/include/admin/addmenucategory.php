@@ -38,27 +38,27 @@ $countErrors = 0;
 
 $arrCheckType = array("image", "customcode", "customformat");
 if ( ! empty($_POST['submit']) ) {
-	
+
 	// Check Name
 	if(trim($_POST['categoryname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not enter a blank category name.<br>";
 	}
-	
+
 	// Check Section
-	
+
 	if(!is_numeric($_POST['section']) || $_POST['section'] >= $menuXML->info->section->count() || $_POST['section'] < 0) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid menu section.<br>";
 	}
-	
+
 	// Check Header Type
 	if(!in_array($_POST['headertype'], $arrCheckType)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid header type.<br>";
 	}
-	
-	
+
+
 	// Check Display Order
 	$menuCatObj->setCategoryKeyValue($_POST['section']);
 	$intNewOrderNum = $menuCatObj->validateOrder($_POST['displayorder'], $_POST['beforeafter']);
@@ -66,35 +66,35 @@ if ( ! empty($_POST['submit']) ) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid header type.<br>";
 	}
-	
-	
+
+
 	if($_POST['accesstype'] != "0" && $_POST['accesstype'] != "1" && $_POST['accesstype'] != "2") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid access type.<br>";
 	}
-	
+
 	if($_POST['hidecategory'] != "1") {
-		$_POST['hidecategory'] = 0;	
+		$_POST['hidecategory'] = 0;
 	}
 
-	
+
 	if($_POST['headertype'] == "customcode") {
 		$headerImageURL = $_POST['headercustomcode'];
 	}
 	elseif($_POST['headertype'] == "customformat") {
 		$headerImageURL = $_POST['wysiwygHTML'];
 	}
-	
-	
+
+
 	if($countErrors == 0) {
-		
+
 		if($_POST['headertype'] == "image" && $_FILES['headerimagefile']['name'] != "") {
 			$btUploadObj = new BTUpload($_FILES['headerimagefile'], "menuheader_", "../images/menu/", array(".jpg", ".png", ".bmp", ".gif"));
 		}
 		elseif($_POST['headertype'] == "image") {
 			$btUploadObj = new BTUpload($_POST['headerimageurl'], "menuheader_", "../images/menu/", array(".jpg", ".png", ".bmp", ".gif"), 4, true);
 		}
-		
+
 		if($_POST['headertype'] == "image" && $btUploadObj->uploadFile()) {
 			$headerImageURL = "images/menu/".$btUploadObj->getUploadedFileName();
 		}
@@ -102,18 +102,18 @@ if ( ! empty($_POST['submit']) ) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload selected image.  Make sure it's the correct file extension and not too big.<br>";
 		}
-		
+
 	}
-	
+
 	if($countErrors == 0) {
-		
+
 		$arrColumns = array("section", "name", "sortnum", "headertype", "headercode", "accesstype", "hide");
 		$arrValues = array($_POST['section'], $_POST['categoryname'], $intNewOrderNum, $_POST['headertype'], $headerImageURL, $_POST['accesstype'], $_POST['hidecategory']);
-		
+
 		if($menuCatObj->addNew($arrColumns, $arrValues)) {
-			
+
 			$menuCatInfo = $menuCatObj->get_info_filtered();
-			
+
 			echo "
 			<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -125,37 +125,37 @@ if ( ! empty($_POST['submit']) ) {
 				popupDialog('Add New Menu Category', '".$MAIN_ROOT."members', 'successBox');
 			</script>
 			";
-			
+
 		}
-		
-		
+
+
 	}
-	
+
 	if($countErrors > 0) {
 		$_POST = filterArray($_POST);
-		$_POST['submit'] = false;	
+		$_POST['submit'] = false;
 	}
-	
+
 }
 
 
 if ( empty($_POST['submit']) ) {
-	
+
 	$selectSection = array();
 	if(isset($_GET['sectionID'])) {
-		$selectSection[$_GET['sectionID']] = " selected";	
+		$selectSection[$_GET['sectionID']] = " selected";
 	}
-	
+
 	for($i=0; $i<$menuXML->info->section->count(); $i++) {
-		$sectionoptions .= "<option value='".$i."'".$selectSection[$i].">".$menuXML->info->section[$i]."</option>";	
+		$sectionoptions .= "<option value='".$i."'".$selectSection[$i].">".$menuXML->info->section[$i]."</option>";
 	}
-	
+
 	echo "
 	
 		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post' enctype='multipart/form-data'>
 			<div class='formDiv'>
 			";
-	
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -164,7 +164,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
+
 	echo "
 	
 				Use the form below to add a new menu category.
@@ -292,5 +292,5 @@ if ( empty($_POST['submit']) ) {
 			
 		</script>
 	";
-	
+
 }

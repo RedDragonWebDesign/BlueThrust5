@@ -64,72 +64,72 @@ $arrLatestPostInfo = array("time" => 0, "id" => 0);
 $result = $mysqli->query("SELECT forumcategory_id FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
 while($row = $result->fetch_assoc()) {
 	$arrForumCats[] = $row['forumcategory_id'];
-	
+
 	$categoryObj->select($row['forumcategory_id']);
 	$catInfo = $categoryObj->get_info_filtered();
 	$arrBoards = $categoryObj->getAssociateIDs("AND subforum_id = '0' ORDER BY sortnum", true);
 	$dispBoards = "";
 	foreach($arrBoards as $boardID) {
-		
+
 		$boardObj->select($boardID);
-		
+
 		if($boardObj->memberHasAccess($memberInfo)) {
 			$boardInfo = $boardObj->get_info_filtered();
 			$arrForumTopics = $boardObj->getForumTopics();
-			
+
 			$newTopicBG = "";
 			$dispNewTopicIMG = "";
-			
+
 			if($LOGGED_IN && $boardObj->hasNewTopics($memberInfo['member_id'])) {
 				$dispNewTopicIMG = " <img style='margin-left: 5px' src='".$MAIN_ROOT."themes/".$THEME."/images/forum-new.png' title='New Posts!'>";
 				$newTopicBG = " boardNewPostBG";
 			}
-			
+
 			// Get Last Post Display Info
 			if(count($arrForumTopics) > 0) {
 				$boardObj->objPost->select($arrForumTopics[0]);
 				$firstPostInfo = $boardObj->objPost->get_info_filtered();
-				
+
 				$boardObj->objTopic->select($firstPostInfo['forumtopic_id']);
 				$lastPostID = $boardObj->objTopic->get_info("lastpost_id");
-				
+
 				$boardObj->objPost->select($lastPostID);
 				$lastPostInfo = $boardObj->objPost->get_info_filtered();
-				
+
 				if($lastPostInfo['dateposted'] > $arrLatestPostInfo['time']) {
 					$arrLatestPostInfo['time'] = $lastPostInfo['dateposted'];
 					$arrLatestPostInfo['id'] = $lastPostInfo['forumpost_id'];
 				}
-				
-				
+
+
 				$postMemberObj->select($lastPostInfo['member_id']);
-				
+
 				$dispLastPost = "<div class='boardLastPostTitle'><a href='viewtopic.php?tID=".$firstPostInfo['forumtopic_id']."#".$lastPostID."' title='".$firstPostInfo['title']."'>".$firstPostInfo['title']."</a></div>by ".$postMemberObj->getMemberLink()."<br>".getPreciseTime($lastPostInfo['dateposted']);
 			}
 			else {
-				$dispLastPost = "<div style='text-align: center'>No Posts</div>";	
+				$dispLastPost = "<div style='text-align: center'>No Posts</div>";
 			}
-			
+
 			$dispTopicCount = $boardObj->countTopics();
 			$dispPostCount = $boardObj->countPosts();
-			
+
 			$arrDispSubForums = array();
 			$arrSubForums = $boardObj->getSubForums();
-		
+
 			foreach($arrSubForums as $value) {
 				$subForumObj->select($value);
 				$subForumInfo = $subForumObj->get_info_filtered();
-				
+
 				$arrDispSubForums[] = "<a href='".$MAIN_ROOT."forum/viewboard.php?bID=".$value."'>".$subForumInfo['name']."</a>";
 			}
-			
-			
+
+
 			$dispSubForums = "";
 			if(count($arrDispSubForums) > 0) {
-				$dispSubForums = "<br><br><b>Sub-Forums:</b><br>&nbsp;&nbsp;".implode("&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;", $arrDispSubForums);	
+				$dispSubForums = "<br><br><b>Sub-Forums:</b><br>&nbsp;&nbsp;".implode("&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;", $arrDispSubForums);
 			}
-			
-			
+
+
 			$dispBoards .= "
 				<tr class='boardRows".$newTopicBG."'>
 					<td class='boardName dottedLine".$newTopicBG."'><a href='viewboard.php?bID=".$boardInfo['forumboard_id']."'>".$boardInfo['name']."</a>".$dispNewTopicIMG."<br><span class='boardDescription'>".$boardInfo['description'].$dispSubForums."</span></td>
@@ -139,14 +139,14 @@ while($row = $result->fetch_assoc()) {
 				
 				</tr>
 			";
-			
+
 		}
 
 	}
-	
-	
+
+
 	if($dispBoards != "") {
-	
+
 		echo "
 			<tr>
 				<td colspan='4' class='boardCategory'>
@@ -161,12 +161,12 @@ while($row = $result->fetch_assoc()) {
 			</tr>
 		";
 		echo $dispBoards;
-		
+
 		echo "<tr><td colspan='4'><br></td></tr>";
-	
+
 	}
-	
-	
+
+
 }
 
 if($result->num_rows == 0) {

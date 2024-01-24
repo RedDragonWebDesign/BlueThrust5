@@ -84,9 +84,9 @@ foreach($arrRounds as $roundNum) {
 	</div>
 	<div id='matchDiv'>
 	<?php
-	
+
 		require_once("include/listmatches.php");
-	
+
 	?>
 	</div>
 </div>
@@ -114,15 +114,15 @@ foreach($arrRounds as $roundNum) {
 
 
 	<?php
-	
+
 		if($tournamentInfo['playersperteam'] == 1) {
-			$dispTeamOrPlayer = "Player";			
+			$dispTeamOrPlayer = "Player";
 		}
 		else {
 			$dispTeamOrPlayer = "Team";
 		}
-	
-			
+
+
 		echo "
 
 			function setPlayerSeed(intTeamID) {
@@ -191,11 +191,11 @@ foreach($arrRounds as $roundNum) {
 			}
 
 		";
-			
-			
-		
-	
-	
+
+
+
+
+
 	?>
 	
 

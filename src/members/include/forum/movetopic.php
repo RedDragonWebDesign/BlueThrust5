@@ -32,7 +32,7 @@ if(!$boardObj->objTopic->select($_GET['topicID'])) {
 			window.location = '".$MAIN_ROOT."members'
 		</script>
 	";
-	
+
 	exit();
 }
 
@@ -57,7 +57,7 @@ foreach($boardIDs as $id) {
 		$forumBoardOptions[$catKey] = $catName;
 		$nonSelectableItems[] = $catKey;
 	}
-	
+
 	if(($member->hasAccess($consoleObj) || $boardObj->memberIsMod($memberInfo['member_id'])) && $id != $topicInfo['forumboard_id']) {
 		$spacing = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $boardObj->calcBoardDepth());
 		$forumBoardOptions[$id] = $spacing.$boardObj->get_info_filtered("name");
@@ -113,7 +113,7 @@ $arrComponents = array(
 		"value" => "Move Topic",
 		"sortorder" => $i++,
 		"attributes" => array("class" => "submitButton formSubmitButton")
-	
+
 	)
 );
 
@@ -133,28 +133,27 @@ $setupFormArgs = array(
 
 function post_topic_redirect() {
 	global $mysqli, $boardObj, $postInfo, $MAIN_ROOT, $topicInfo, $member;
-		
+
 	if($_POST['postredirect'] == 1) {
 		$boardObj->select($_POST['moveto']);
-		
+
 		$arrColumns = array("forumboard_id", "lockstatus");
 		$arrValues = array($topicInfo['forumboard_id'], 1);
 		$boardObj->objTopic->addNew($arrColumns, $arrValues);
-		
+
 		$message = str_replace("[BOARD]", "<a href='".$MAIN_ROOT."forum/viewboard.php?bID=".$_POST['moveto']."'>".$boardObj->get_info_filtered("name")."</a>", $_POST['postredirect_desc']);
 		$message = str_replace("[TOPIC_LINK]", "<a href='".$MAIN_ROOT."forum/viewtopic.php?tID=".$_GET['topicID']."'>".$postInfo['title']."</a>", $message);
-		
+
 		$message .= "\n\n\n<p class='tinyFont'><i>Moved by ".$member->getMemberLink()." on ".getPreciseTime(time(), "", true)."</i></p>";
-		
+
 		$arrColumns = array("member_id", "dateposted", "title", "message", "forumtopic_id");
 		$arrValues = array($postInfo['member_id'], time(), "MOVED - ".$postInfo['title'], $message, $boardObj->objTopic->get_info("forumtopic_id"));
 		$boardObj->objPost->addNew($arrColumns, $arrValues);
 		$boardObj->objTopic->update(array("forumpost_id", "lastpost_id"), array($boardObj->objPost->get_info("forumpost_id"), $boardObj->objPost->get_info("forumpost_id")));
 	}
-	
-	
+
 	$member->logAction("Moved forum topic, <a href='".$MAIN_ROOT."forum/viewtopic.php?tID=".$topicInfo['forumtopic_id']."'>".$postInfo['title']."</a>, to <a href='".$MAIN_ROOT."forum/viewboard.php?bID=".$_POST['moveto']."'>".$boardObj->get_info_filtered("name")."</a>");
-	
+
 }
 
 $breadcrumbObj->clearBreadcrumb();

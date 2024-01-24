@@ -37,23 +37,23 @@ $imageSliderObj = new ImageSlider($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-	
+
 	$countErrors = 0;
 	$dispErrors = "";
 	$widthUnit = ($_POST['containerWidthUnit'] == 1) ? "px" : "%";
 	$heightUnit = ($_POST['containerHeightUnit'] == 1) ? "px" : "%";
 	$displayType = ($_POST['displayStyle'] == "slider") ? "slider" : "random";
-	
+
 	if(!is_numeric($_POST['containerWidth'])) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Display width must be a numeric value.<br>";
-		$countErrors++;	
+		$countErrors++;
 	}
-	
+
 	if(!is_numeric($_POST['containerHeight'])) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Display height must be a numeric value.<br>";
 		$countErrors++;
 	}
-	
+
 	if($countErrors == 0) {
 		$arrColumns = array("hpimagetype", "hpimagewidth", "hpimageheight", "hpimagewidthunit", "hpimageheightunit");
 		$arrValues = array($displayType, $_POST['containerWidth'], $_POST['containerHeight'], $widthUnit, $heightUnit);
@@ -72,9 +72,9 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save the information to the database.<br>";
 		}
 	}
-	
+
 	if($countErrors > 0) {
-		
+
 		echo "
 			
 			<span id='errorMessages'>
@@ -96,5 +96,5 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		
 		";
 	}
-	
+
 }

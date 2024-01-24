@@ -31,17 +31,17 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
 	if($member->hasAccess($consoleObj) && $imageSliderObj->select($_POST['imgID'])) {
-		
+
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
-		
+
 		$imageSliderObj->move($_POST['iDir']);
-		
+
 		$_GET['cID'] = $cID;
 		require_once("imagelist.php");
 	}
 	else {
 		echo $_POST['imgID'];
 	}
-	
-	
+
+
 }

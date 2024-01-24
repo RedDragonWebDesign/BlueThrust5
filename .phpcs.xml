@@ -1,0 +1,26 @@
+<ruleset>
+    <arg name="tab-width" value="4"/>
+
+    <!-- don't touch files that aren't in git -->
+    <exclude-pattern>/.github/</exclude-pattern>
+    <exclude-pattern>/.vscode/</exclude-pattern>
+    <exclude-pattern>/gitignore/</exclude-pattern>
+    <exclude-pattern>/screenshots/</exclude-pattern>
+    <exclude-pattern>/vendor/</exclude-pattern>
+
+    <!-- only check *.php files -->
+    <exclude-pattern>*\.(?!php$)</exclude-pattern>
+
+    <!-- Empty lines should contain no whitespace -->
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+
+    <!-- All files must end in \n. For Linux devs -->
+    <rule ref="Generic.Files.LineEndings">
+        <properties>
+            <property name="eolChar" value="\n"/>
+        </properties>
+    </rule>
+
+    <!-- opening brace location: ) {, not ){, not )\n{ -->
+    <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
+</ruleset>

@@ -29,41 +29,41 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 	$memberInfo = $member->get_info_filtered();
 	$pmSessionID = $_POST['pmSessionID'];
-	
+
 	$arrSearch = array("member", "squad", "rank", "tournament", "rankcategory");
-	
+
 	foreach($arrSearch as $search) {
-		
+
 		$stripWord = $search."_";
-		
+
 		if(substr($_POST['composeID'], 0, strlen($stripWord)) == $stripWord) {
 			$composeID = str_replace($stripWord, "", $_POST['composeID']);
-			
+
 			if(is_numeric($composeID)) {
-				
-				
+
+
 				if(isset($_POST['remove'])) {
-				
+
 					$removeKey = array_search($composeID, $_SESSION['btComposeList'][$pmSessionID][$search]);
 					if($removeKey !== false) {
-						unset($_SESSION['btComposeList'][$pmSessionID][$search][$removeKey]);	
+						unset($_SESSION['btComposeList'][$pmSessionID][$search][$removeKey]);
 					}
-					
-					
+
+
 				}
 				else {
 					$_SESSION['btComposeList'][$pmSessionID][$search][] = $composeID;
 				}
-				
+
 				echo $composeID;
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	print_r($_SESSION['btComposeList'][$pmSessionID]);
-	
-	
-	
+
+
+
 }

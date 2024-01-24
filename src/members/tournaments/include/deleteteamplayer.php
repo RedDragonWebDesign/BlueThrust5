@@ -35,23 +35,23 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objPlayer
 	$memberInfo = $member->get_info();
 
 	$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
-	
+
 	$tournamentObj->objTeam->select($playerInfo['team_id']);
 	$tournamentObj->select($playerInfo['tournament_id']);
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 	$tmemberID = $tournamentInfo['member_id'];
-	
-	
+
+
 	if($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
-		
-		$tournamentObj->objPlayer->update(array("team_id"), array(0));	
+
+		$tournamentObj->objPlayer->update(array("team_id"), array(0));
 
 		$_POST['teamID'] = $tournamentObj->objTeam->get_info("tournamentteam_id");
 		$_POST['getWhat'] = "playerlist";
 		require_once("getteaminfo.php");
-		
-		
+
+
 	}
-	
-	
+
+
 }

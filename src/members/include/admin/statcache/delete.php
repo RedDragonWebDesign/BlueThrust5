@@ -42,41 +42,41 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
 	if($checkAccess) {
-		
-		
+
+
 		if(isset($_SESSION['btStatCache'][$_POST['sID']])) {
-		
-			
+
+
 			$countErrors = 0;
 			if($_SESSION['btStatCache'][$_POST['sID']]['statType'] == "input") {
-				
+
 				foreach($_SESSION['btStatCache'] as $statInfo) {
 					if($statInfo['statType'] == "calculate" AND ($statInfo['firstStat'] == $_POST['sID'] OR $statInfo['secondStat'] == $_POST['sID'])) {
 						$countErrors++;
 					}
 				}
-				
+
 			}
-			
-			
+
+
 			if($countErrors == 0) {
-				
+
 				if($gameStatsObj->select($_SESSION['btStatCache'][$_POST['sID']]['gamestatsID'])) {
 					$gameStatsObj->delete();
 				}
-				
-				
+
+
 				unset($_SESSION['btStatCache'][$_POST['sID']]);
-				
+
 				$x = 0;
 				$tempArray = array();
 				foreach($_SESSION['btStatCache'] as $statInfo) {
 					$tempArray[$x] = $statInfo;
 					$x++;
 				}
-				
+
 				$_SESSION['btStatCache'] = $tempArray;
-				
+
 			}
 			else {
 				echo "
@@ -108,9 +108,9 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					</script>
 				
 				";
-				
+
 			}
-			
+
 			echo "
 			<script type='text/javascript'>
 				$(document).ready(function() {
@@ -128,9 +128,9 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				});
 			</script>
 			";
-			
-			
+
+
 		}
 	}
-	
+
 }

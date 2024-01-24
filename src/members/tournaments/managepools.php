@@ -53,15 +53,15 @@ $countErrors = 0;
 $blnShowPoolList = true;
 
 if(isset($_GET['poolID']) && isset($_GET['teamID']) && $tournamentObj->objTournamentPool->select($_GET['poolID']) && $tournamentObj->objTeam->select($_GET['teamID'])) {
-	
+
 	$poolInfo = $tournamentObj->objTournamentPool->get_info();
 	$teamInfo = $tournamentObj->objTeam->get_info_filtered();
-	
+
 	$dispTeamName = $tournamentObj->getPlayerName();
-	
+
 	if(trim($dispTeamName) != "" && $tournamentInfo['tournament_id'] == $poolInfo['tournament_id'] && $tournamentInfo['tournament_id'] == $teamInfo['tournament_id']) {
-		$blnShowPoolList = false;		
-		
+		$blnShowPoolList = false;
+
 		echo "
 		
 			<div class='formDiv'>
@@ -98,15 +98,15 @@ if(isset($_GET['poolID']) && isset($_GET['teamID']) && $tournamentObj->objTourna
 				
 				
 		";
-		
-		
+
+
 	}
-	
+
 	echo "
 			</div>
 	";
 
-	
+
 }
 
 
@@ -118,8 +118,8 @@ if($blnShowPoolList) {
 	else {
 		$dispTeamOrPlayer = "Team";
 	}
-	
-	
+
+
 	echo "
 	
 	<div class='formDiv main' style='border: 0px; background: none'>
@@ -129,18 +129,18 @@ if($blnShowPoolList) {
 		</p>
 	
 		";
-	
-			
+
+
 			$arrPools = $tournamentObj->getPoolList();
 			$arrPoolTeams = array();
 			$startingPoolLetter = "A";
-			
+
 			foreach($arrPools as $poolID) {
 				$tournamentObj->objTournamentPool->select($poolID);
-				
+
 				$arrPoolTeams = $tournamentObj->objTournamentPool->getTeamsInPool();
-				
-				
+
+
 				echo "
 					<table class='formTable' style='margin-left: 0px'>
 						<tr>
@@ -155,37 +155,37 @@ if($blnShowPoolList) {
 							<td class='main' style='width: 35%; text-decoration: underline; font-weight: bold'>Record:</td>
 						</tr>
 					";
-				
+
 				$counter = 0;
 				foreach($arrPoolTeams as $teamID) {
 					$addCSS = " alternateBGColor";
 					if($counter%2 == 0) {
 						$addCSS = "";
 					}
-					
+
 					$dispTeamName = "";
 					$tournamentObj->objTeam->select($teamID);
 					$teamInfo = $tournamentObj->objTeam->get_info_filtered();
-					
+
 					if($tournamentInfo['playersperteam'] == 1) {
-						
+
 						$dispTeamName = $tournamentObj->getPlayerName($teamID);
-						
+
 						if($dispTeamName == "") {
-							$dispTeamName = "<i>Empty Spot</i>";	
+							$dispTeamName = "<i>Empty Spot</i>";
 						}
 						else {
 							$dispTeamName = "<b><a href='managetournament.php?tID=".$tID."&pID=ManagePools&poolID=".$poolID."&teamID=".$teamID."'>".$dispTeamName."</a></b>";
 						}
-						
-						
+
+
 					}
 					else {
 						$dispTeamName = "<b><a href='managetournament.php?tID=".$tID."&pID=ManagePools&poolID=".$poolID."&teamID=".$teamID."'>".$teamInfo['name']."</a></b>";
 					}
-					
+
 					$teamRecord = $tournamentObj->objTournamentPool->getTeamRecord($teamInfo['tournamentteam_id']);
-					
+
 					echo "
 						<tr>
 							<td class='main".$addCSS."' style='width: 65%; height: 20px'>".$dispTeamName."</td>
@@ -194,18 +194,18 @@ if($blnShowPoolList) {
 					";
 					$counter++;
 				}
-				
-				
+
+
 				echo "
 						
 						
 					</table>
 				";
-				
+
 				$startingPoolLetter++;
 			}
-		
-	
+
+
 	echo "
 	</div>
 	";

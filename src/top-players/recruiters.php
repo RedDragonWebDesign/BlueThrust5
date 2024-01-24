@@ -56,12 +56,12 @@ require_once($prevFolder."include/breadcrumb.php");
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '0' AND rank_id != '1'");
 	while($row = $result->fetch_assoc()) {
 		$member->select($row['member_id']);
-		
+
 		$arrMembers[$row['member_id']] = $member->countRecruits();
-		
+
 	}
-	
-	
+
+
 	if( isset($_GET['sort']) && $_GET['sort'] != "up") {
 		$dispSort = "<a href='".$MAIN_ROOT."top-players/recruiters.php?sort=up'><img src='".$MAIN_ROOT."themes/".$THEME."/images/downarrow.png'></a>";
 		$_GET['sort'] = "down";
@@ -72,8 +72,8 @@ require_once($prevFolder."include/breadcrumb.php");
 		$_GET['sort'] = "up";
 		asort($arrMembers);
 	}
-	
-	
+
+
 	echo "
 		<table class='formTable' style='margin-top: 50px'>
 			<tr>
@@ -82,17 +82,17 @@ require_once($prevFolder."include/breadcrumb.php");
 				<td class='formTitle' align='center' style='width: 35%'>Recruits - ".$dispSort."</td>
 			</tr>
 	";
-	
-	
+
+
 	$counter = 0;
 	foreach($arrMembers as $memberID => $statValue) {
 		$counter++;
-	
+
 		$addCSS = "";
 		if($counter%2 == 0) {
 			$addCSS = " alternateBGColor";
 		}
-	
+
 		$member->select($memberID);
 		echo "
 		<tr>
@@ -102,21 +102,21 @@ require_once($prevFolder."include/breadcrumb.php");
 		</tr>
 	
 		";
-	
-	
+
+
 		if($counter >= 10) {
 			break;
 		}
 	}
-	
+
 	if($counter < 10) {
 		for($i=($counter+1); $i<=10; $i++) {
 			$addCSS = "";
 			if($i%2 == 0) {
 				$addCSS = " alternateBGColor";
 			}
-	
-	
+
+
 			echo "
 			<tr>
 				<td class='main".$addCSS."' style='height: 30px'>".$i.".</td>
@@ -126,6 +126,6 @@ require_once($prevFolder."include/breadcrumb.php");
 			";
 		}
 	}
-	
+
 	echo "</table>";
 	require_once($prevFolder."themes/".$THEME."/_footer.php");

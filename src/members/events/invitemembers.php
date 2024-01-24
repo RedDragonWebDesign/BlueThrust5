@@ -47,11 +47,11 @@ $countErrors = 0;
 $objInviteMember = new Member($mysqli);
 
 if ( ! empty($_POST['submit']) ) {
-	
-	
+
+
 	foreach($_SESSION['btInviteList'] as $value) {
-		
-		
+
+
 		$checkInvite = $eventObj->inviteMember($value, $memberInfo['member_id']);
 		if($objInviteMember->select($value) && $checkInvite === true) {
 			$objInviteMember->postNotification("You have been invited to the event, <b>".$eventInfo['title']."</b>!.  Go to the <a href='".$MAIN_ROOT."events/info.php?eID=".$eventInfo['event_id']."'>event</a> page to view more info.", "general");
@@ -70,11 +70,11 @@ if ( ! empty($_POST['submit']) ) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to invite ".$dispInviteErrorName.". (already invited)<br>";
 		}
-		
+
 	}
-	
+
 	if($countErrors == 0) {
-		
+
 		echo "
 			
 			<div style='display: none' id='successBox'>
@@ -88,62 +88,62 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 		
 		";
-		
+
 	}
-	
+
 	if($countErrors > 0) {
 		$_POST = filterArray($_POST);
-		$_POST['submit'] = false;	
+		$_POST['submit'] = false;
 	}
-	
+
 }
 
 
 if ( empty($_POST['submit']) ) {
-	
+
 	$_SESSION['btEventID'] = $eventInfo['event_id'];
-	
+
 	if($countErrors == 0) {
 		$_SESSION['btInviteList'] = array();
 	}
 	else {
-		$_SESSION['btInviteList'] = filterArray($_SESSION['btInviteList']);	
+		$_SESSION['btInviteList'] = filterArray($_SESSION['btInviteList']);
 	}
-	
+
 	$arrInvitedMembers = $eventObj->getInvitedMembers(true);
 	$arrInvitedMembers = array_merge($arrInvitedMembers, $_SESSION['btInviteList']);
-	
-	
+
+
 	$sqlInvitedMembers = "('".implode("','", $arrInvitedMembers)."')";
 	$memberoptions = "<option value=''>Select</option>";
 	$result = $mysqli->query("SELECT m.username,m.member_id,r.ordernum,r.name FROM ".$dbprefix."members m, ".$dbprefix."ranks r WHERE m.rank_id = r.rank_id AND m.member_id NOT IN ".$sqlInvitedMembers." AND m.disabled = '0' AND m.rank_id != '1' ORDER BY r.ordernum DESC");
 	while($row = $result->fetch_assoc()) {
-		$memberoptions .= "<option value='".$row['member_id']."'>".filterText($row['name'])." ".filterText($row['username'])."</option>";		
+		$memberoptions .= "<option value='".$row['member_id']."'>".filterText($row['name'])." ".filterText($row['username'])."</option>";
 	}
 
-	
-	
+
+
 	$showInviteList = "<p align='center'><i>- Empty -</i></p>";
 	if(count($_SESSION['btInviteList']) > 0) {
-		
+
 		$showInviteList = "";
 		foreach($_SESSION['btInviteList'] as $key => $value) {
-		
+
 			if($objInviteMember->select($value)) {
 				$showInviteList .= "<div class='mttPlayerSlot' style='width: 95%'>".$objInviteMember->get_info_filtered("username")."<div class='mttDeletePlayer'><a href='javascript:void(0)' onclick=\"removeMember('".$key."')\">X</a></div></div>";
 			}
-			
+
 		}
 	}
-	
-	
+
+
 	echo "
 	
 		<form action='".$MAIN_ROOT."members/events/manage.php?eID=".$eventInfo['event_id']."&pID=InviteMembers' method='post'>
 			<div class='formDiv'>
 			
 			";
-	
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -152,7 +152,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
+
 	echo "
 			
 				Use the form below to send event invitations.<br><br>
@@ -267,5 +267,5 @@ if ( empty($_POST['submit']) ) {
 		</script>
 		
 	";
-	
+
 }

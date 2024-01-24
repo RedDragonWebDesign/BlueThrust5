@@ -45,11 +45,11 @@ $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $squadObj->memberHasAccess($member->get_info("member_id"), $pID)) {
 	$LOGIN_FAIL = false;
 	$memberInfo = $member->get_info_filtered();
-	
-	
-		
-	
-	
+
+
+
+
+
 	echo "
 	
 	<script type='text/javascript'>
@@ -59,7 +59,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	});
 	</script>
 	";
-	
+
 	$intFounderRankID = $squadObj->getFounderRankID();
 	$intHighestOrder = $squadObj->countRanks();
 	$x = 1;
@@ -75,28 +75,28 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			$addCSS = "";
 			$counter = 1;
 		}
-	
+
 		$dispDeleteButton = "<a href='javascript:void(0)' onclick=\"deleteRank('".$_GET['sID']."', '".$row['squadrank_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' title='Delete Rank'></a>";
-		
+
 		if($row['squadrank_id'] == $intFounderRankID) {
-			$dispDeleteButton = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";	
+			$dispDeleteButton = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 		}
-		
+
 		if($x == 1 || $x == 2) {
 			$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 		}
 		else {
 			$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveRank('up', '".$squadInfo['squad_id']."', '".$row['squadrank_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 		}
-	
+
 		if($x == $intHighestOrder || $x == 1) {
 			$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 		}
 		elseif($x != 1) {
 			$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveRank('down', '".$squadInfo['squad_id']."', '".$row['squadrank_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' width='24' height='24' title='Move Down'></a>";
 		}
-	
-	
+
+
 		$dispRanks .= "
 		<tr>
 		<td class='dottedLine".$addCSS."' width=\"80%\">&nbsp;&nbsp;<span class='main'><b><a href='managesquad.php?sID=".$_GET['sID']."&pID=ManageRanks&rID=".$row['squadrank_id']."'>".$row['name']."</a></b></td>
@@ -106,15 +106,15 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		<td align='center' class='dottedLine".$addCSS."' width=\"10%\">".$dispDeleteButton."</td>
 		</tr>
 		";
-	
+
 		$x++;
 	}
-	
-	
+
+
 	if($x == 0) {
 		$dispRanks = "<tr><td colspan='3' align='center'><br><p class='main'><i>No ranks added yet!</i></p></td></tr>";
 	}
-	
+
 	echo "
 	
 	

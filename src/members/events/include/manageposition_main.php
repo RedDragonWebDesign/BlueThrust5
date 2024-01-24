@@ -35,7 +35,7 @@ if(!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen(
 	$memberInfo = $member->get_info();
 	// Check Login
 	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $eventObj->select($_GET['eID']) && ($eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions") || $memberInfo['rank_id'] == 1)) {
-		
+
 		$eventInfo = $eventObj->get_info_filtered();
 	}
 	else {
@@ -51,7 +51,7 @@ else {
 	}
 }
 
-	
+
 echo "
 <table class='formTable' style='border-spacing: 0px; margin-top: 0px'>
 	<tr><td colspan='5' class='dottedLine'></td></tr>
@@ -80,8 +80,8 @@ while($row = $result->fetch_assoc()) {
 	else {
 		$dispUpArrow = "<a href='javascript:void(0)' onclick=\"movePosition('up', '".$row['position_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 	}
-	
-	
+
+
 	if($x == $intHighestOrder) {
 		$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 	}
@@ -110,7 +110,7 @@ echo "</table>";
 
 
 if($result->num_rows == 0) {
-	
+
 	echo "
 	
 		<div class='shadedBox' style='width: 40%; margin: 20px auto'>
@@ -119,6 +119,6 @@ if($result->num_rows == 0) {
 			</p>
 		</div>
 	
-	";	
-	
+	";
+
 }

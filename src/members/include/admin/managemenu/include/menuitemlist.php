@@ -17,39 +17,39 @@ if(!isset($member)) {
 	require_once("../../../../../classes/member.php");
 	require_once("../../../../../classes/menucategory.php");
 	require_once("../../../../../classes/menuitem.php");
-	
+
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);
 	$consoleObj = new ConsoleOption($mysqli);
-	
+
 	$menuCatObj = new MenuCategory($mysqli);
 	$menuItemObj = new MenuItem($mysqli);
-	
+
 }
 
 if(!isset($intAddNewMenuItemID)) {  $intAddNewMenuItemID = $consoleObj->findConsoleIDByName("Add Menu Item"); }
 
 if($member->authorizeLogin($_SESSION['btPassword'])) {
-	
+
 	if(isset($_POST['menuCatID']) && $menuCatObj->select($_POST['menuCatID'])) {
 		$orderoptions = "";
 		$menuCatInfo = $menuCatObj->get_info_filtered();
-		
+
 		$selectItemID = "";
 		if(!isset($_POST['itemID'])) {
 			$_POST['itemID'] = "";
 		}
 		else {
-			
-			$menuItemObj->select($_POST['itemID']);			
+
+			$menuItemObj->select($_POST['itemID']);
 			$selectItemID = $menuItemObj->findBeforeAfter();
 			$selectItemID = $selectItemID[0];
 		}
-		
-		
+
+
 		$lastItem = "";
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_item WHERE menucategory_id = '".$menuCatInfo['menucategory_id']."' ORDER BY sortnum");
-		while($row = $result->fetch_assoc()) {		
+		while($row = $result->fetch_assoc()) {
 			if($_POST['itemID'] != $row['menuitem_id']) {
 				$dispSelected = "";
 				if($selectItemID == $row['menuitem_id']) {
@@ -58,24 +58,24 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				echo $selectItemID;
 				$orderoptions .= "<option value='".$row['menuitem_id']."'".$dispSelected.">".filterText($row['name'])."</option>";
 			}
-			
+
 			$lastItem = $row['menuitem_id'];
 		}
-		
+
 		if($result->num_rows == 0 || ($result->num_rows == 1 && $_POST['itemID'] != "" && $_POST['itemID'] == $lastItem)) {
-			$orderoptions = "<option value='first'>(first item)</option>";	
+			$orderoptions = "<option value='first'>(first item)</option>";
 		}
-		
+
 		echo $orderoptions;
 	}
 	elseif(!isset($_POST['menuCatID'])) {
-		
+
 		$intManageMenuCatCID = $consoleObj->findConsoleIDByName("Manage Menu Categories");
 		$query = "SELECT ".$dbprefix."menu_item.* FROM ".$dbprefix."menu_item, ".$dbprefix."menu_category WHERE ".$dbprefix."menu_item.menucategory_id = ".$dbprefix."menu_category.menucategory_id ORDER BY ".$dbprefix."menu_category.section, ".$dbprefix."menu_category.sortnum, ".$dbprefix."menu_item.menucategory_id, ".$dbprefix."menu_item.sortnum";
-		
+
 		echo "<table class='formTable' style='border-spacing: 0px; margin-top: 0px'><tr><td class='dottedLine' colspan='5'></td></tr>";
 		$result = $mysqli->query($query);
-		
+
 		$intMenuCatID = "";
 		while($row = $result->fetch_assoc()) {
 
@@ -92,31 +92,31 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					</tr>
 				
 				";
-				
-				
+
+
 			}
-			
+
 			$addCSS = "";
 			if($counter%2 == 1) {
-				$addCSS = " alternateBGColor";				
+				$addCSS = " alternateBGColor";
 			}
-			
+
 			$menuItemObj->setCategoryKeyValue($intMenuCatID);
 			$intHighestSortNum = $menuItemObj->getHighestSortNum();
 			if(($counter+1) == $intHighestSortNum) {
-				$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' class='manageListActionButton'>";		
+				$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' class='manageListActionButton'>";
 			}
 			else {
-				$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveItem('down', '".$row['menuitem_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' class='manageListActionButton' title='Move Down'></a>";				
+				$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveItem('down', '".$row['menuitem_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' class='manageListActionButton' title='Move Down'></a>";
 			}
-			
+
 			if($counter == 0) {
 				$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' class='manageListActionButton'>";
 			}
 			else {
-				$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveItem('up', '".$row['menuitem_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' class='manageListActionButton' title='Move Up'></a>";			
+				$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveItem('up', '".$row['menuitem_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' class='manageListActionButton' title='Move Up'></a>";
 			}
-			
+
 			echo "
 				<tr>
 					<td class='main dottedLine manageList".$addCSS."' style='padding-left: 10px; font-weight: bold; width: 76%'><a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&menuID=".$row['menuitem_id']."&action=edit'>".filterText($row['name'])."</a></td>
@@ -126,12 +126,12 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					<td class='main dottedLine manageList".$addCSS."' style='width: 6%' align='center'><a href='javascript:void(0)' onclick=\"deleteItem('".$row['menuitem_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' class='manageListActionButton' title='Delete Menu Item'></a></td>
 				</tr>
 				";
-			
+
 			$counter++;
 		}
 		echo "</table>";
-		
-		
+
+
 	}
-	
+
 }

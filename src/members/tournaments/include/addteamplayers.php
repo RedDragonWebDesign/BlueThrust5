@@ -38,11 +38,11 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->
 	$tournamentObj->select($teamInfo['tournament_id']);
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 	$tmemberID = $tournamentInfo['member_id'];
-	
-	
+
+
 	if($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
-		
-		
+
+
 		$arrAllPlayers = $tournamentObj->getPlayers();
 		$playerList = urlencode($_POST['players']);
 		$arrNewPlayers = explode("%0A", $playerList);
@@ -51,53 +51,53 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->
 		$blnErrorDuplicatePlayer = false;
 		$blnErrorFullTeam = false;
 		foreach($arrNewPlayers as $newPlayer) {
-			
+
 			$newPlayer = urldecode($newPlayer);
 			if($teamPlayerCount < $tournamentInfo['playersperteam']) {
 				if($member->select($newPlayer)) {
 					$checkMemberID = $member->get_info("member_id");
-	
+
 					if(!in_array($checkMemberID, $arrAllPlayers)) {
-						
+
 						if($tournamentObj->objPlayer->addNew(array("tournament_id", "team_id", "member_id"), array($tournamentInfo['tournament_id'], $_POST['teamID'], $checkMemberID))) {
-						
+
 							$teamPlayerCount++;
-						
+
 						}
-						
-						
+
+
 					}
 					else {
-						
+
 						$dispErrorMembers .= "<b>&middot;</b> ".$member->getMemberLink()."<br>";
 						$blnErrorDuplicatePlayer = true;
-						
+
 					}
-					
-					
+
+
 				}
 				elseif(!$member->select($newPlayer) && $tournamentInfo['access'] != 1) {
-					
+
 					if($tournamentObj->objPlayer->addNew(array("tournament_id", "team_id", "displayname"), array($tournamentInfo['tournament_id'], $_POST['teamID'], $newPlayer))) {
-						
+
 						$teamPlayerCount++;
-						
+
 					}
-					
+
 				}
-				
+
 			}
 			else {
 				$blnErrorFullTeam = true;
 				break;
 			}
-			
+
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 }
 
 $_POST['getWhat'] = "playerlist";
@@ -150,7 +150,7 @@ if($blnErrorDuplicatePlayer) {
 	
 	
 	";
-	
+
 }
 
 if($blnErrorFullTeam) {

@@ -11,7 +11,7 @@
  * License: http://www.bluethrust.com/license.php
  *
  */
- 
+
 $fail = false;
 
 // Config File
@@ -34,37 +34,37 @@ if ( ! empty($_POST['submit']) ) {
 	$login_username = $_POST['user'];
 	$login_password = $_POST['pass'];
 	$fail = true;
-	
+
 	$checkMember = new Member($mysqli);
-	
+
 	$checkMember->select($login_username);
 	$memberInfo = $checkMember->get_info();
-	
+
 	$usernameExists = ($memberInfo['username'] ?? '') != "";
-	
+
 	if( $usernameExists ) {
-		
+
 		$passwordMatches = $checkMember->authorizeLogin($login_password, 1);
-		
+
 		if( $passwordMatches ) {
 			$_SESSION['btUsername'] = $memberInfo['username'];
 			$_SESSION['btPassword'] = $memberInfo['password'];
 			$_SESSION['btRememberMe'] = $_POST['rememberme'] ?? '';
-			
-			
+
+
 			$memberInfo = $checkMember->get_info();
-			
+
 			$newLastLogin = time();
 			$newTimesLoggedIn = $memberInfo['timesloggedin']+1;
 			$newIP = $_SERVER['REMOTE_ADDR'];
-			
+
 			$checkMember->update(
 				["lastlogin", "timesloggedin", "ipaddress", "loggedin"],
 				[$newLastLogin, $newTimesLoggedIn, $newIP, 1]
 			);
-			
+
 			$checkMember->autoPromote();
-			
+
 			$fail = false;
 			echo "
 				<script type='text/javascript'>
@@ -72,9 +72,9 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			";
 		}
-	
+
 	}
-	
+
 	if ( $fail ) {
 		$_POST['submit'] = false;
 	}

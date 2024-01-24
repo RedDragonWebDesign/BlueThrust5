@@ -26,10 +26,10 @@ else {
 
 $rankInfo = $memberRank->get_info_filtered();
 if($memberInfo['promotepower'] != 0) {
-	$rankInfo['promotepower'] = $memberInfo['promotepower'];	
+	$rankInfo['promotepower'] = $memberInfo['promotepower'];
 }
 elseif($memberInfo['promotepower'] == -1) {
-	$rankInfo['promotepower'] = 0;	
+	$rankInfo['promotepower'] = 0;
 }
 
 
@@ -56,17 +56,17 @@ if ( ! empty($_POST['submit']) ) {
 
 	$rankObj->select($rankInfo['promotepower']);
 	$maxRankInfo = $rankObj->get_info_filtered();
-	
+
 	if($rankInfo['rank_id'] == 1) {
 		$maxRankInfo['ordernum'] += 1;
 	}
-	
+
 	$arrRanks = array();
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
 	while($row = $result->fetch_assoc()) {
 		$arrRanks[] = $row['rank_id'];
 	}
-	
+
 	// Check Member
 	$newRank = 0;
 	if($_POST['member'] == "" || !$member->select($_POST['member']) || $_POST['member'] == $memberInfo['member_id']) {
@@ -77,23 +77,23 @@ if ( ! empty($_POST['submit']) ) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not change the selected member's username.<br>";
 	}
-	
+
 	// Check New Username
-	
+
 	if(trim($_POST['newusername']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not enter a blank username.<br>";
 	}
-	
+
 	if($member->select($_POST['newusername'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> There is already a user with the chosen new username.<br>";
 	}
-	
+
 	if($countErrors == 0) {
 		$member->select($_POST['member']);
 		$oldUsername = $member->get_info_filtered("username");
-		
+
 		if($member->update(array("username"), array($_POST['newusername']))) {
 			$newUserInfo = $member->get_info_filtered();
 			echo "
@@ -109,8 +109,8 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			
 			";
-			
-			
+
+
 			$member->select($memberInfo['member_id']);
 			$member->logAction("Changed ".$oldUsername."'s username to <a href='".$MAIN_ROOT."profile.php?mID=".$newUserInfo['member_id']."'>".$newUserInfo['username']."</a>.");
 		}
@@ -118,44 +118,44 @@ if ( ! empty($_POST['submit']) ) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-		
+
 	}
-	
-	
+
+
 	if($countErrors > 0) {
 		$_POST = filterArray($_POST);
-		$_POST['submit'] = false;	
+		$_POST['submit'] = false;
 	}
-	
-	
+
+
 }
 
 if ( empty($_POST['submit']) ) {
-	
+
 	$rankObj->select($rankInfo['promotepower']);
 	$maxRankInfo = $rankObj->get_info_filtered();
-	
+
 	if($rankInfo['rank_id'] == 1) {
 		$maxRankInfo['ordernum'] += 1;
 	}
-	
+
 	$arrRanks = array();
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
 	while($row = $result->fetch_assoc()) {
 		$arrRanks[] = $row['rank_id'];
 	}
-	
+
 	$sqlRanks = "('".implode("','", $arrRanks)."')";
 	$memberoptions = "<option value=''>Select</option>";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."'  ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
 	while($row = $result->fetch_assoc()) {
-	
+
 		$rankObj->select($row['rank_id']);
 		$memberoptions .= "<option value='".$row['member_id']."'>".$rankObj->get_info_filtered("name")." ".filterText($row['username'])."</option>";
-	
-	}	
-	
-	
+
+	}
+
+
 	echo "
 		<div class='formDiv'>
 		";
@@ -168,7 +168,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
+
 	echo "
 			Use the form below to change a member's username.
 			<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
@@ -190,5 +190,5 @@ if ( empty($_POST['submit']) ) {
 			</form><br>
 		</div>
 	";
-	
+
 }

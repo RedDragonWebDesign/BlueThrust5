@@ -13,7 +13,7 @@
  */
 
 if(!isset($prevFolder) || $prevFolder == "") {
-	$prevFolder = "../../../../";	
+	$prevFolder = "../../../../";
 }
 
 require_once($prevFolder."_setup.php");
@@ -38,7 +38,7 @@ if($checkMember) {
 		}
 
 		$cOptObj->select($_GET['cID']);
-		
+
 		$intAddNewRankCID = $cOptObj->findConsoleIDByName("Add New Rank");
 
 		$memberInfo = $member->get_info();
@@ -57,8 +57,8 @@ if($checkMember) {
 
 			$cOptObj = new ConsoleOption($mysqli);
 			$intAddNewRankCID = $cOptObj->findConsoleIDByName("Add New Rank");
-			
-			
+
+
 			$x = 0;
 			$counter = 0;
 			$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1' ORDER BY ordernum DESC");
@@ -72,7 +72,7 @@ if($checkMember) {
 					$addCSS = "";
 					$counter = 1;
 				}
-			
+
 				$dispRanks .= "
 				<tr>
 				<td class='dottedLine".$addCSS."' width=\"80%\">&nbsp;&nbsp;<span class='main'><b><a href='console.php?cID=".$cID."&rID=".$row['rank_id']."&action=edit'>".$row['name']."</a></b></td>
@@ -80,15 +80,15 @@ if($checkMember) {
 				<td align='center' class='dottedLine".$addCSS."' width=\"10%\"><a href='javascript:void(0)' onclick=\"deleteRank('".$row['rank_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' title='Delete Rank'></a></td>
 				</tr>
 				";
-				
+
 				$x++;
 			}
-			
-		
+
+
 			if($x == 0) {
-				$dispRanks = "<tr><td colspan='3' align='center'><br><p class='main'><i>No ranks added yet!</i></p></td></tr>";	
+				$dispRanks = "<tr><td colspan='3' align='center'><br><p class='main'><i>No ranks added yet!</i></p></td></tr>";
 			}
-			
+
 			echo "
 			<div id='contentDiv'>
 			

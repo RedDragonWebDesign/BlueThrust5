@@ -48,9 +48,9 @@ $countErrors = 0;
 $arrSquadRanks = $squadObj->getRankList();
 
 if ( ! empty($_POST['submit']) ) {
-	
+
 	// Check Squad Member
-	
+
 	if(!$squadObj->objSquadMember->select($_POST['squadmember'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid squad member.<br>";
@@ -63,30 +63,30 @@ if ( ! empty($_POST['submit']) ) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not change the founder's rank.<br>";
 	}
-	
+
 	// Check Squad Rank
-	
+
 	if(!in_array($_POST['squadrank'], $arrSquadRanks)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid rank.<br>";
 	}
-	
+
 	if($countErrors == 0) {
-		
+
 		$arrColumns = array("squadrank_id");
 		$arrValues = array($_POST['squadrank']);
-		
+
 		// Squad Member Info
 		$squadMemberInfo = $squadObj->objSquadMember->get_info_filtered();
 		$squadObj->objSquadRank->select($squadMemberInfo['squadrank_id']); // Old Rank
 		$squadMemberRankInfo = $squadObj->objSquadRank->get_info_filtered();
-		
-		
+
+
 		$squadObj->objSquadRank->select($_POST['squadrank']); // New Rank
 		$newRankInfo = $squadObj->objSquadRank->get_info_filtered();
-		
+
 		// Check if promotion or demotion
-		
+
 		$strAction = "changed";
 		if($squadMemberRankInfo['sortnum'] > $newRankInfo['sortnum']) {
 			$arrColumns[] = "lastpromotion";
@@ -98,15 +98,15 @@ if ( ! empty($_POST['submit']) ) {
 			$arrValues[] = time();
 			$strAction = "demoted";
 		}
-		
+
 		if($squadObj->objSquadMember->update($arrColumns, $arrValues)) {
 			$member->select($squadMemberInfo['member_id']);
 			$dispMemberLink = $member->getMemberLink();
-			
-			
+
+
 			$member->postNotification("Your were ".$strAction." to the rank of <b>".$newRankInfo['name']."</b> in squad: <b><a href='".$MAIN_ROOT."squads/profile.php?sID=".$squadInfo['squad_id']."'>".$squadInfo['name']."</a></b>.");
-			
-			
+
+
 			echo "
 			<div style='display: none' id='successBox'>
 			<p align='center'>
@@ -119,28 +119,28 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 			
 			";
-			
+
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 	if($countErrors > 0) {
 		$_POST['submit'] = false;
 	}
 
-	
+
 }
 
 
 
 if ( empty($_POST['submit']) ) {
-	
+
 	$arrSquadMembers = $squadObj->getMemberListSorted();
 	$squadmemberoptions = "";
 	foreach($arrSquadMembers as $memberID) {
@@ -149,8 +149,8 @@ if ( empty($_POST['submit']) ) {
 			$squadmemberoptions .= "<option value='".$squadObj->getSquadMemberID($memberID)."'>".$member->get_info_filtered("username")."</option>";
 		}
 	}
-	
-	
+
+
 	$squadrankoptions = "";
 	foreach($arrSquadRanks as $squadRank) {
 		$squadObj->objSquadRank->select($squadRank);
@@ -158,13 +158,13 @@ if ( empty($_POST['submit']) ) {
 			$squadrankoptions .= "<option value='".$squadRank."'>".$squadObj->objSquadRank->get_info_filtered("name")."</option>";
 		}
 	}
-	
+
 	echo "
 		<form action='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$squadInfo['squad_id']."&pID=SetRank' method='post'>
 			<div class='formDiv'>
 		";
-	
-	
+
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -173,7 +173,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
+
 	echo "
 				Use the form below to set a squad members' rank.<br><br>
 				<table class='formTable'>
@@ -194,5 +194,5 @@ if ( empty($_POST['submit']) ) {
 			</div>
 		</form>
 	";
-	
+
 }

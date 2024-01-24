@@ -32,15 +32,15 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
 	if($member->hasAccess($consoleObj) && $menuCatObj->select($_POST['mcID'])) {
-		
+
 		$menuCatInfo = $menuCatObj->get_info_filtered();
-		
+
 		$result = $mysqli->query("SELECT menuitem_id FROM ".$dbprefix."menu_item WHERE menucategory_id = '".$menuCatInfo['menucategory_id']."'");
 
 		if($result->num_rows > 0) {
-			
+
 			echo "<div id='newDeleteMessage' style='display: none'><p align='center'>There are currently menu items under the menu category <b>".$menuCatInfo['name']."</b>.  Please move all menu items out of this category before deleting it.</p></div>";
-			
+
 			echo "
 				<script type='text/javascript'>
 					$(document).ready(function() {
@@ -63,38 +63,38 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					});
 				</script>
 			";
-		
-			
+
+
 		}
 		elseif($_POST['confirm'] == "1") {
-			
+
 			$refreshSection = $menuCatObj->get_info("section");
-			
+
 			$menuCatObj->delete();
 			$menuCatObj->resortOrder();
 			require_once("include/menucategorylist.php");
 			/*
 			echo "
-			
+
 				<script type='text/javascript'>
-			
+
 					$(document).ready(function() {
-					
+
 						$.post('".$MAIN_ROOT."themes/_refreshmenus.php', { refreshSectionID: '".$refreshSection."' }, function(data) {
-							$('#menuSection_".$refreshSection."').html(data);		
+                            $('#menuSection_".$refreshSection."').html(data);
 						});
-					
+
 					});
-				
+
 				</script>
-			
-			
+
+
 			";
 			*/
 		}
 		else {
 			echo "<div id='confirmDelete'><p align='center'>Are you sure you want to delete the menu category <b>".$menuCatInfo['name']."</b>?</p></div>";
-			
+
 			echo "
 			<script type='text/javascript'>
 				$(document).ready(function() {
@@ -133,13 +133,13 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			
 			";
 		}
-		
+
 	}
 	elseif(!$menuCatObj->select($_POST['mcID'])) {
-	
+
 		echo "<div id='confirmDelete'><p align='center'>Unable find the selected menu category.  Please try again or contact the website administrator.</p></div>";
-	
-		
+
+
 		echo "
 		
 			<script type='text/javascript'>
@@ -164,7 +164,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			</script>
 		
 		";
-		
+
 	}
-	
+
 }

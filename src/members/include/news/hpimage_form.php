@@ -1,18 +1,18 @@
 <?php
 
 	if(!defined("HPIMAGE_FORM")) { exit(); }
-	
+
 	$imageOrderObj = new ImageSlider($mysqli);
 	$imageOptions = array();
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."imageslider ORDER BY ordernum DESC");
 	while($row = $result->fetch_assoc()) {
 		$imageOptions[$row['imageslider_id']] = $row['name'];
 	}
-	
+
 	if(count($imageOptions) == 0) {
-		$imageOptions['first'] = "(first image)";	
+		$imageOptions['first'] = "(first image)";
 	}
-	
+
 	$i=1;
 	$arrComponents = array(
 		"imageinfo" => array(
@@ -78,13 +78,13 @@
 			"html" => "
 				<label class='formLabel' style='display: inline-block'></label>
 				<select id='autofillID' class='textBox formInput' disabled='disabled'><option value''>Select</option></select>
-				"		
+				"
 		),
 		"messagetitle" => array(
 			"type" => "text",
 			"sortorder" => $i++,
 			"display_name" => "Title",
-			"attributes" => array("class" => "textBox formInput bigTextBox", "id" => "imageTitle"),		
+			"attributes" => array("class" => "textBox formInput bigTextBox", "id" => "imageTitle"),
 			"db_name" => "messagetitle"
 		),
 		"messagetext" => array(
@@ -92,8 +92,8 @@
 			"sortorder" => $i++,
 			"attributes" => array("class" => "textBox formInput bigTextBox", "rows" => 4, "id" => "imageMessage"),
 			"db_name" => "message",
-			"display_name" => "Message"		
-			
+			"display_name" => "Message"
+
 		),
 		"messagelink" => array(
 			"type" => "text",
@@ -116,17 +116,17 @@
 			"attributes" => array("class" => "textBox formInput"),
 			"db_name" => "membersonly",
 			"options" => array("Always", "Logged In", "Logged Out"),
-			"display_name" => "Show When"		
+			"display_name" => "Show When"
 		),
 		"submit" => array(
 			"type" => "submit",
 			"sortorder" => $i++,
 			"value" => "Add Image",
-			"attributes" => array("class" => "submitButton formSubmitButton")		
+			"attributes" => array("class" => "submitButton formSubmitButton")
 		)
-			
+
 	);
-	
+
 	$setupFormArgs = array(
 			"name" => "console-".$cID,
 			"components" => $arrComponents,
@@ -137,9 +137,9 @@
 			"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
 			"beforeAfter" => true
 	);
-	
-	
-	
+
+
+
 	echo "
 		<div id='autoFillInfo' style='display: none'></div>
 		<script type='text/javascript'>

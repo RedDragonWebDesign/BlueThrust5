@@ -36,25 +36,25 @@ $member->select($_SESSION['btUsername']);
 // Check Login
 $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-	
-	
+
+
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."news WHERE newstype != '3' ORDER BY dateposted DESC");
 	$checkHTMLConsoleObj = new ConsoleOption($mysqli);
 	$htmlNewsCID = $checkHTMLConsoleObj->findConsoleIDByName("HTML in News Posts");
 	$checkHTMLConsoleObj->select($htmlNewsCID);
 	if($result->num_rows > 0) {
 		while($row = $result->fetch_assoc()) {
-		
+
 			$member->select($row['member_id']);
 			$posterInfo = $member->get_info_filtered();
-			
+
 			if($posterInfo['avatar'] == "") {
 				$posterInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 			}
 			else {
 				$posterInfo['avatar'] = $MAIN_ROOT.$posterInfo['avatar'];
 			}
-			
+
 			if($row['newstype'] == 1) {
 				$dispNewsType = " - <span class='publicNewsColor' style='font-style: italic'>public</span>";
 			}
@@ -64,23 +64,23 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			elseif($row['newstype'] == 3) {
 				$dispNewsType = "";
 			}
-			
-			
+
+
 			$dispLastEdit = "";
-		
+
 			if($member->select($row['lasteditmember_id'])) {
 				$checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj);
 				$dispLastEditTime = getPreciseTime($row['lasteditdate']);
 				$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";
 			}
-			
+
 			$member->select($row['member_id']);
-			
+
 			if(!isset($checkHTMLAccess)) { $checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj); }
-		
-			
+
+
 			$dispNews = ($checkHTMLAccess) ? parseBBCode($row['newspost']) : nl2br(parseBBCode(filterText($row['newspost'])));
-		
+
 			echo "
 			
 				<div class='newsDiv' id='newsDiv_".$row['news_id']."'>
@@ -102,12 +102,12 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			
 			
 			";
-			
-		}		
+
+		}
 	}
 	else {
-		
-		
+
+
 		echo "
 			<div class='shadedBox' style='width: 300px; margin-left: auto; margin-right: auto'>
 				<p class='main' align='center'>
@@ -115,11 +115,11 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				</p>
 			</div>
 		";
-		
-		
+
+
 	}
-	
-	
-	
-	
+
+
+
+
 }

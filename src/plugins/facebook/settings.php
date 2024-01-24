@@ -69,21 +69,21 @@ $dispBreadCrumb
 // Check Login
 $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-	
-	
+
+
 	$fbObj = new Facebook($mysqli);
 	$pluginObj->selectByName("Facebook Login");
-	
+
 	if ( ! empty($_POST['submit']) ) {
-		
+
 		$arrAPIKey = array(
 			'appID' => $_POST['appid'],
 			'appSecret' => $_POST['appsecret']
 		);
-		
+
 		$jsonAPIKey = json_encode($arrAPIKey);
 		if($pluginObj->update(array("apikey"), array($jsonAPIKey))) {
-		
+
 			echo "
 				<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -96,35 +96,35 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				</script>
 				
 			";
-				
+
 			$member->logAction("Changed Facebook Login Plugin Settings.");
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 		}
-		
-		
+
+
 	}
-	
-	
-	
+
+
+
 	if ( empty($_POST['submit']) ) {
 		$dispNote = "";
-			
+
 		$arrFacebookAPIKeys = array("App ID"=>$fbObj->getAppID(), "App Secret"=>$fbObj->getAppSecret());
-		
+
 		foreach($arrFacebookAPIKeys as $key=>$value) {
-			
+
 			if($value == "") {
 				$dispNote .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> ".$key."<br>";
 			}
-	
+
 			$dispFacebookAPIKey[$key] = filterText($value);
-			
-			
+
+
 		}
-		
+
 		echo "
 			<p align='right' style='margin-bottom: 10px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."'>Return to Plugin Manager</a></p>
 			
@@ -132,7 +132,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			<div class='formDiv'>
 		
 			";
-		
+
 			if($dispError != "") {
 				echo "
 				<div class='errorDiv'>
@@ -141,7 +141,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				</div>
 				";
 			}
-		
+
 			if($dispNote != "") {
 				echo "
 					<div class='errorDiv'>
@@ -150,8 +150,8 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 					</div>
 				";
 			}
-		
-		
+
+
 		echo "
 				
 				Your Facebook Login plugin settings are listed below.  You must set App ID and App Secret in order for the plugin to work properly.

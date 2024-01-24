@@ -56,57 +56,57 @@ if($checkMember) {
 
 	if($member->authorizeLogin($_SESSION['btPassword'])) {
 		$LOGIN_FAIL = false;
-		
+
 		$memberInfo = $member->get_info();
 		$memberRankID = $memberInfo['rank_id'];
-		
+
 		$memberRank = new Rank($mysqli);
 		$memberRank->select($memberRankID);
 		$rankPrivileges = $member->get_privileges();
 		$clickCategory = "";
-		
-		
+
+
 		$strPrivileges = implode(",", $rankPrivileges);
-		
+
 		$result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."consolecategory ORDER BY ordernum DESC");
-		
+
 		while($row = $result->fetch_assoc()) {
 			$arrConsoleCats[] = $row['consolecategory_id'];
 		}
-		
+
 		$result->free();
-		
+
 		$arrFullySortedConsole = array();
 		$consoleObj = new ConsoleOption($mysqli);
 		foreach($rankPrivileges as $consoleoption) {
-		
-			
+
+
 			$consoleObj->select($consoleoption);
 			$consoleInfo = $consoleObj->get_info();
 			if($member->hasAccess($consoleObj) && $consoleInfo['hide'] == 0) {
 				$sortNum = array_search($consoleInfo['consolecategory_id'], $arrConsoleCats);
-				
+
 				$arrFullySortedConsole[$sortNum][] = $consoleoption;
 			}
-		
+
 		}
 		$consoleCatObj = new ConsoleCategory($mysqli);
-		
+
 		$dispConsoleOptions = "";
 		$dispConsoleCategories = "";
 		$counter = 0;
 		$totalConsoleCats = count($arrConsoleCats);
-		
+
 		foreach($arrConsoleCats as $key => $categoryID) {
-			
+
 			$consoleCatObj->select($categoryID);
 			$consoleCatInfo = $consoleCatObj->get_info_filtered();
-			
+
 			$arrConsoleOptions = $arrFullySortedConsole[$key] ?? [];
 			$categoryCSS = "consoleCategory_clicked";
 			if(count($arrConsoleOptions)) {
-				
-				
+
+
 				$blnShowCategoryList = false;
 				$hideoptions = "";
 				if($counter > 0) {
@@ -114,14 +114,14 @@ if($checkMember) {
 					$categoryCSS = "consoleCategory";
 				}
 				$counter++;
-				
+
 				if(isset($_GET['select']) && $categoryID == $_GET['select']) {
 					$clickCategory = "
 						<script type='text/javascript'>
 							selectCategory('".$counter."');
 						</script>
 					";
-					
+
 				}
 				elseif(isset($_SESSION['lastConsoleCategory']) && $_SESSION['lastConsoleCategory']['catID'] == $categoryID && $_SESSION['lastConsoleCategory']['exptime'] > time()) {
 					$clickCategory = "
@@ -138,11 +138,11 @@ if($checkMember) {
 					";
 					$blnShowCategoryList = true;
 				}
-				
-				
-				
+
+
+
 				$divIDName = str_replace(" ", "", $consoleCatInfo['name']).$categoryID;
-				$dispConsoleCategories .= "<div class='".$categoryCSS."' id='categoryName".$counter."' onmouseover=\"moverCategory('".$counter."')\" onmouseout=\"moutCategory('".$counter."')\" onclick=\"selectCategory('".$counter."')\">".$consoleCatInfo['name']."</div>";		
+				$dispConsoleCategories .= "<div class='".$categoryCSS."' id='categoryName".$counter."' onmouseover=\"moverCategory('".$counter."')\" onmouseout=\"moutCategory('".$counter."')\" onclick=\"selectCategory('".$counter."')\">".$consoleCatInfo['name']."</div>";
 				$dispConsoleOptions .= "<div id='categoryOption".$counter."' ".$hideoptions.">";
 				$dispConsoleOptions .= "
 				<div class='dottedLine' style='padding-bottom: 3px; margin-bottom: 5px'>
@@ -152,7 +152,7 @@ if($checkMember) {
 				<ul style='padding: 0px; padding-left: 15px'>
 				";
 				foreach($arrConsoleOptions as $consoleOptionID) {
-			
+
 					$consoleObj->select($consoleOptionID);
 					$consoleInfo = $consoleObj->get_info_filtered();
 					$dispPageTitle = $consoleInfo['pagetitle'];
@@ -161,30 +161,30 @@ if($checkMember) {
 						$dispConsoleOptions .= $dispPageTitle;
 					}
 					elseif($consoleInfo['hide'] == 0) {
-						
+
 						$memberAppCID = $consoleObj->findConsoleIDByName("View Member Applications");
 						$diplomacyRequestsCID = $consoleObj->findConsoleIDByName("View Diplomacy Requests");
 						$viewEventInvitationsCID = $consoleObj->findConsoleIDByName("View Event Invitations");
 						$viewInactiveRequestsCID = $consoleObj->findConsoleIDByName("View Inactive Requests");
 						$privateMessagesCID = $consoleObj->findConsoleIDByName("Private Messages");
-						
+
 						if($consoleInfo['console_id'] == $memberAppCID) {
 							$getUnseenApps = $mysqli->query("SELECT memberapp_id FROM ".$dbprefix."memberapps WHERE seenstatus = '0'");
 							$unseenApps = $getUnseenApps->num_rows;
 							$getAllApps = $mysqli->query("SELECT memberapp_id FROM ".$dbprefix."memberapps");
 							$totalApps = $getAllApps->num_rows;
-							
+
 							if($unseenApps > 0) {
 								$dispPageTitle .= " <b>(".$unseenApps.")</b>";
 							}
 							else {
 								$dispPageTitle .= " (".$totalApps.")";
 							}
-							
-							
+
+
 						}
-						
-						
+
+
 						switch($consoleInfo['console_id']) {
 							case $diplomacyRequestsCID:
 								$diplomacyRequestsSQL = $mysqli->query("SELECT diplomacyrequest_id FROM ".$dbprefix."diplomacy_request WHERE confirmemail = '1'");
@@ -206,20 +206,20 @@ if($checkMember) {
 								$dispPageTitle .= "<li><a href='".$MAIN_ROOT."members/privatemessages/compose.php'>Compose Message";
 								break;
 						}
-						
-						
+
+
 						$dispConsoleOptions .= "<li><a href='console.php?cID=".$consoleInfo['console_id']."'>".$dispPageTitle."</a></li>";
 					}
 				}
 				$dispConsoleOptions .= "</ul></div></div>";
-				
+
 			}
-					
-		
+
+
 		}
-		
-		
-		
+
+
+
 		echo "
 		<div class='breadCrumbTitle'>My Account</div>
 		<div class='breadCrumb' style='padding-top: 0px; margin-top: 0px'>
@@ -240,8 +240,8 @@ if($checkMember) {
 				</div>
 			</div>
 		";
-		
-		
+
+
 		echo $clickCategory;
 	}
 
@@ -263,7 +263,7 @@ if($blnShowCategoryList) {
 			});
 		</script>
 	";
-	
+
 }
 
 require_once("../themes/".$THEME."/_footer.php");

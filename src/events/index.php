@@ -57,14 +57,14 @@ require_once($prevFolder."include/breadcrumb.php");
 		</tr>
 		
 		<?php
-		
+
 			$eventObj = new Event($mysqli);
 			$objMember = new Member($mysqli);
 			$counter = 0;
 			$countEvents = 0;
 			$result = $mysqli->query("SELECT event_id FROM ".$dbprefix."events ORDER BY startdate");
 			while($row = $result->fetch_assoc()) {
-				
+
 				$eventObj->select($row['event_id']);
 				$eventInfo = $eventObj->get_info_filtered();
 
@@ -73,39 +73,39 @@ require_once($prevFolder."include/breadcrumb.php");
 					$showEvent == true;
 				}
 				elseif($eventInfo['visibility'] == 1 && $LOGGED_IN) {
-			
-					$showEvent = true;					
+
+					$showEvent = true;
 				}
 				elseif($eventInfo['visibility'] == 0) {
-					$showEvent = true;					
+					$showEvent = true;
 				}
-				
-				
-				
+
+
+
 				if($showEvent) {
-					
+
 					$countEvents++;
 					$addCSS = "";
 					if($counter%2 == 0) {
 						$addCSS = " alternateBGColor";
 					}
 					$counter++;
-					
+
 					$objMember->select($eventInfo['member_id']);
-					
+
 					$dateTimeObj = new DateTime();
 					$dateTimeObj->setTimezone(new DateTimeZone("UTC"));
 					$dateTimeObj->setTimestamp($eventInfo['startdate']);
 					$includeTimezone = "";
-					
+
 					$dispStartDate = $dateTimeObj->format("M j, Y g:i A");
 					if($eventInfo['timezone'] != "") {
 						$dateTimeObj->setTimezone(new DateTimeZone($eventInfo['timezone']));
-						$dispTimezone = $dateTimeObj->format(" T"); 
+						$dispTimezone = $dateTimeObj->format(" T");
 					}
-					
+
 					$dispStartDate .= $dispTimezone;
-					
+
 					echo "
 					<tr>
 						<td class='main".$addCSS."' style='padding: 3px'><a href='info.php?eID=".$eventInfo['event_id']."'>".$eventInfo['title']."</a></td>
@@ -114,20 +114,20 @@ require_once($prevFolder."include/breadcrumb.php");
 					</tr>
 					
 					";
-					
-					
+
+
 				}
-				
+
 			}
-			
+
 		?>
 		
 	</table>
 	
 	<?php
-	
+
 		if($countEvents == 0) {
-			
+
 
 			echo "
 			
@@ -138,9 +138,9 @@ require_once($prevFolder."include/breadcrumb.php");
 				</div>
 			
 			";
-			
+
 		}
-	
+
 	?>
 	
 </div>

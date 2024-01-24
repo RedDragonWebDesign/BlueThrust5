@@ -14,35 +14,35 @@
 
 
 	if(!defined("SHOW_BANLIST")) {
-	
-	
+
+
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/rank.php");
 
 	$consoleObj = new ConsoleOption($mysqli);
-	
+
 	$cID = $consoleObj->findConsoleIDByName("IP Banning");
 	$consoleObj->select($cID);
-	
-	
+
+
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);
-	
-	
+
+
 		if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-			$memberInfo = $member->get_info_filtered();		
+			$memberInfo = $member->get_info_filtered();
 		}
 		else {
-			exit();	
+			exit();
 		}
-	
+
 	}
-		
+
 ?>
 
 <table class='formTable' style='margin-top: 0px; border-spacing: 0px; width: 80%'>
-<?php 
+<?php
 	$counter = 0;
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ipban ORDER BY exptime");
 	while($row = $result->fetch_assoc()) {
@@ -56,9 +56,9 @@
 			$counter = 1;
 			$addCSS = "";
 		}
-		
+
 		$dispExpireTime = ($row['exptime'] == 0) ? "Never" : date("D M j, Y g:i a T", $row['exptime']);
-		
+
 		echo "
 			<tr>
 				<td class='main manageList".$addCSS."' align='center' style='width: 40%'>".$row['ipaddress']."</td>
@@ -66,9 +66,9 @@
 				<td class='main manageList".$addCSS."' align='center' style='width: 15%'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' class='manageListActionButton' data-deleteip='".$row['ipaddress']."' style='cursor: pointer'></td>
 			</tr>
 		";
-		
+
 	}
-	
+
 	if($result->num_rows == 0) {
 		echo "
 			<div class='shadedBox' style='width: 45%; margin: 20px auto'>

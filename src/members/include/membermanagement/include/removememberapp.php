@@ -28,11 +28,11 @@ $memberAppObj = new MemberApp($mysqli);
 
 
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $memberAppObj->select($_POST['mAppID']) && $memberAppObj->get_info("memberadded") == 1) {
-	
+
 	$memberAppUser = $memberAppObj->get_info_filtered("username");
-	
+
 	if(!$memberAppObj->delete()) {
-		
+
 		echo "
 			<div id='memberAppMessage' style='display: none'>
 				<p class='main' align='center'>
@@ -65,12 +65,12 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			
 			</script>
 		";
-		
+
 	}
 	else {
-		$member->logAction("Removed the member application for ".$memberAppUser.".");	
+		$member->logAction("Removed the member application for ".$memberAppUser.".");
 	}
-	
+
 	require_once("memberapplist.php");
 
 }

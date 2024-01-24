@@ -100,7 +100,7 @@ if($_POST['submit'] && !$_POST['approve']) {
 		else {
 			$matchReplayURL = $MAIN_ROOT."downloads/replays/".$uploadReplayObj->getUploadedFileName();
 		}
-		
+
 	}
 	else {
 		$matchReplayURL = $_POST['uploadurl'];
@@ -115,11 +115,11 @@ if($_POST['submit'] && !$_POST['approve']) {
 		$arrValues[] = $_POST['team1score'];
 		$arrColumns[] = "team2score";
 		$arrValues[] = $_POST['team2score'];
-		
 
-		
+
+
 		if($tournamentObj->objMatch->update($arrColumns, $arrValues)) {
-			
+
 			echo "
 			
 			<div style='display: none' id='successBox'>
@@ -133,7 +133,7 @@ if($_POST['submit'] && !$_POST['approve']) {
 			</script>
 			
 			";
-			
+
 			foreach($arrOpponent as $value) {
 				$tMemberObj->select($value);
 				$tMemberObj->postNotification($member->getMemberLink()." has updated the match results for <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&mID=".$_GET['mID']."'>".$dispTeam1." vs. ".$dispTeam2."</a>");
@@ -144,19 +144,19 @@ if($_POST['submit'] && !$_POST['approve']) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-		
+
 	}
 
 
 }
 elseif(!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
-	
+
 	// Upload Replay
-	
+
 	if($_FILES['uploadfile']['name'] != "") {
-	
+
 		$uploadReplayObj = new BTUpload($_FILES['uploadfile'], "replay_", "../downloads/replays/", array(".zip"));
-	
+
 		if(!$uploadReplayObj->uploadFile()) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload the replay. Please make sure the file extension is .zip and that the file size is not too big.<br>";
@@ -164,21 +164,21 @@ elseif(!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
 		else {
 			$matchReplayURL = $MAIN_ROOT."downloads/replays/".$uploadReplayObj->getUploadedFileName();
 		}
-	
+
 	}
 	else {
 		$matchReplayURL = $_POST['uploadurl'];
 	}
-	
+
 	if($countErrors == 0) {
-	
+
 		$arrColumns[] = $dispReplayColumn;
 		$arrValues[] = $matchReplayURL;
 		$arrColumns[] = $dispMyTeamApprove;
 		$arrValues[] = 1;
-		
+
 		if($tournamentObj->objMatch->update($arrColumns, $arrValues)) {
-			
+
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -193,35 +193,35 @@ elseif(!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
 			
 			
 			";
-			
+
 			foreach($arrOpponent as $value) {
 				$tMemberObj->select($value);
 				$tMemberObj->postNotification($member->getMemberLink()." has approved the match results for <a href='".$MAIN_ROOT."tournaments/view.php?tID=".$matchInfo['tournament_id']."'>".$dispTeam1." vs. ".$dispTeam2."</a>");
 			}
-			
+
 			if($_POST['matchwinner'] == 1) {
 				$matchWinner = $matchInfo['team1_id'];
 			}
 			else {
 				$matchWinner = $matchInfo['team2_id'];
 			}
-			
+
 			$nextMatchSpot = $tournamentObj->getNextMatchTeamSpot($matchWinner);
-			
+
 			$tournamentObj->objMatch->select($matchInfo['nextmatch_id']);
-			
-			
+
+
 			$tournamentObj->objMatch->update(array($nextMatchSpot), array($matchWinner));
-			
-			
-			
+
+
+
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
 	}
-	
+
 
 }
 
@@ -287,11 +287,11 @@ if($dispError != "") {
 						<b>Upload Replay</b>
 						<div class='dottedLine' style='width: 90%; padding-top: 3px'></div>
 						";
-	
+
 				if($checkApprove == 1) {
-					echo "<p style='margin: 2px; padding-left: 5px'>* Clicking the Approve Results button will also upload your replay.</p><br>";	
+					echo "<p style='margin: 2px; padding-left: 5px'>* Clicking the Approve Results button will also upload your replay.</p><br>";
 				}
-	
+
 	echo "
 					</td>
 				</tr>
@@ -310,13 +310,13 @@ if($dispError != "") {
 				</tr>
 				<tr>
 					<td class='main' colspan='2' align='center'><br>";
-				
+
 					if($checkApprove == 1) {
-						
+
 						echo "<input type='submit' name='approve' value='Approve Results' class='submitButton' style='width: 125px'><br><br>";
-						
+
 					}
-	
+
 				echo "
 					
 						<input type='submit' name='submit' value='Update Results' class='submitButton' style='width: 125px'>

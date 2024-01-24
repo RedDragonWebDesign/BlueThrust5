@@ -33,7 +33,7 @@ else {
 }
 
 if($tournamentInfo['playersperteam'] > 1) {
-	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManageTeams';</script>");	
+	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManageTeams';</script>");
 }
 
 
@@ -83,7 +83,7 @@ echo "
 	</div>
 	<div id='playerListDiv'>
 	";
-	
+
 
 	$dispSeedChangeDiv = "";
 	if($tournamentInfo['playersperteam'] == 1) {
@@ -93,62 +93,62 @@ echo "
 		$arrDispPlayers = array();
 		$arrEmptySpots = array();
 		foreach($arrTeams as $teamID) {
-		
+
 			$teamPlayer = $tournamentObj->getTeamPlayers($teamID, true);
 			$tournamentObj->objTeam->select($teamID);
 			$teamInfo = $tournamentObj->objTeam->get_info_filtered();
-			
-			
+
+
 			if(count($teamPlayer) > 0) {
-				
+
 				$tournamentObj->objPlayer->select($teamPlayer[0]);
 				$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
-				
+
 				if($member->select($playerInfo['member_id'])) {
 					$dispPlayer = $member->get_info_filtered("username");
-					
+
 				}
 				else {
 					$dispPlayer = $playerInfo['displayname'];
 				}
-				
+
 				$arrSortPlayers[$teamID] = strtolower($dispPlayer);
-				
+
 				$arrDispPlayers[$teamID] = "
 					<a href='javascript:void(0)' onclick=\"setPlayerSeed('".$teamInfo['tournamentteam_id']."')\">".$dispPlayer."</a><div class='mttDeletePlayer'><a href='javascript:void(0)' onclick=\"deletePlayer('".$playerInfo['tournamentplayer_id']."')\">X</a></div>
 				";
-				
-				
+
+
 			}
 			else {
-				
+
 				$arrEmptySpots[$teamID] = "";
 				$arrDispPlayers[$teamID] = "
 					<span style='font-style: italic'>Empty Player Slot</span>
 				";
 			}
-			
+
 			$i++;
 		}
-		
-		
+
+
 		asort($arrSortPlayers);
 		$arrCombinedPlayersAndEmpty = $arrSortPlayers+$arrEmptySpots;
 		$i=1;
 		foreach($arrCombinedPlayersAndEmpty as $key=>$value) {
-			
+
 			echo "<div class='mttPlayerSlot main'>".$i.". ".$arrDispPlayers[$key]."</div>";
 			$i++;
-			
+
 		}
-		
-		
+
+
 	}
 	else {
-		
-		
+
+
 	}
-	
+
 
 	echo "
 	</div>
@@ -215,7 +215,7 @@ echo "
 	
 	";
 	if($tournamentInfo['playersperteam'] == 1) {
-		
+
 		echo "
 			function setPlayerSeed(intTeamID) {
 				
@@ -280,9 +280,9 @@ echo "
 			
 			}
 		";
-		
+
 	}
-	
+
 echo "
 </script>
 

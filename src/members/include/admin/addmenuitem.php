@@ -38,19 +38,19 @@ $dispError = "";
 $countErrors = 0;
 
 $itemTypeOptions = array(
-	"link" => "Link", 
-	"image" => "Image", 
-	"custompage" => "Custom Page", 
+	"link" => "Link",
+	"image" => "Image",
+	"custompage" => "Custom Page",
 	"customform" => "Custom Form Page",
 	"downloads" => "Download Page",
-	"top-players" => "Top Players", 
-	"shoutbox" => "Shoutbox", 
-	"forumactivity" => "Latest Forum Activity", 
-	"newestmembers" => "Newest Members", 
+	"top-players" => "Top Players",
+	"shoutbox" => "Shoutbox",
+	"forumactivity" => "Latest Forum Activity",
+	"newestmembers" => "Newest Members",
 	"poll" => "Poll",
-	"login" => "Default Login", 
-	"customcode" => "Custom Block - Code Editor", 
-	"customformat" => "Custom Block - WYSIWYG Editor" 
+	"login" => "Default Login",
+	"customcode" => "Custom Block - Code Editor",
+	"customformat" => "Custom Block - WYSIWYG Editor"
 );
 
 $textAlignOptions = array("left" => "Left", "center" => "Center", "right" => "Right");
@@ -75,7 +75,7 @@ if(count($arrMenuCats) == 0) {
 		popupDialog('Add New Menu Item', '".$MAIN_ROOT."members', 'errorBox');
 	</script>
 	";
-	
+
 	exit();
 }
 
@@ -88,7 +88,7 @@ if(isset($_POST['menucategory'])) {
 	}
 
 	if(count($displayOrderOptions) == 0) {
-		$displayOrderOptions['first'] = "(first item)";	
+		$displayOrderOptions['first'] = "(first item)";
 	}
 }
 
@@ -248,9 +248,9 @@ $arrComponents = array(
 		"components" => $customPageOptionComponents,
 		"validate" => array(
 			array(
-				"name" => 
+				"name" =>
 				array(
-					"function" => "validateMenuItem_CustomPageTypes", 
+					"function" => "validateMenuItem_CustomPageTypes",
 					"args" => array("custompage", &$customPageOptionComponents)
 				)
 			)
@@ -264,9 +264,9 @@ $arrComponents = array(
 		"components" => $customFormOptionComponents,
 		"validate" => array(
 			array(
-				"name" => 
+				"name" =>
 				array(
-					"function" => "validateMenuItem_CustomPageTypes", 
+					"function" => "validateMenuItem_CustomPageTypes",
 					"args" => array("customform", &$customFormOptionComponents)
 				)
 			)
@@ -280,9 +280,9 @@ $arrComponents = array(
 		"components" => $downloadOptionComponents,
 		"validate" => array(
 			array(
-				"name" => 
+				"name" =>
 				array(
-					"function" => "validateMenuItem_CustomPageTypes", 
+					"function" => "validateMenuItem_CustomPageTypes",
 					"args" => array("downloads", &$downloadOptionComponents)
 				)
 			)
@@ -390,14 +390,14 @@ $('#btnFakeSubmit').click(function() {
 $afterJS = "
 
 	$(document).ready(function() {
-	";	
-		
+	";
+
 	foreach($arrAfterJS as $value) {
-		
-		$afterJS .= $value."\n";	
-		
+
+		$afterJS .= $value."\n";
+
 	}
-		
+
 $afterJS .= "		
 	});
 	
@@ -417,29 +417,29 @@ $setupFormArgs = array(
 	"embedJS" => $afterJS,
 	"afterSave" => array(
 		array(
-			"function" => "saveMenuItem", 
+			"function" => "saveMenuItem",
 			"args" => array(
-				&$linkOptionComponents, 
-				&$menuItemObj->objLink, 
-				array(	"linkurl_link" => "link", 
-						"targetwindow_link" => "linktarget", 
-						"textalign_link" => "textalign", 
-						"prefix_link" => "prefix"), 
-				"menulink_id", 
+				&$linkOptionComponents,
+				&$menuItemObj->objLink,
+				array(	"linkurl_link" => "link",
+						"targetwindow_link" => "linktarget",
+						"textalign_link" => "textalign",
+						"prefix_link" => "prefix"),
+				"menulink_id",
 				"link")
 		),
 		array(
-			"function" => "saveMenuItem", 
+			"function" => "saveMenuItem",
 			"args" => array(
-				&$imageOptionComponents, 
-				&$menuItemObj->objImage, 
-				array(	"imagefile_image" => "imageurl", 
-						"width_image" => "width", 
-						"height_image" => "height", 
+				&$imageOptionComponents,
+				&$menuItemObj->objImage,
+				array(	"imagefile_image" => "imageurl",
+						"width_image" => "width",
+						"height_image" => "height",
 						"linkurl_image" => "link",
 						"targetwindow_image" => "linktarget",
-						"textalign_image" => "imagealign"), 
-				"menuimage_id", 
+						"textalign_image" => "imagealign"),
+				"menuimage_id",
 				"image")
 		),
 		array(
@@ -454,7 +454,7 @@ $setupFormArgs = array(
 				"menucustompage_id",
 				"custompage"
 			)
-		
+
 		),
 		array(
 			"function" => "saveMenuItem",
@@ -468,7 +468,7 @@ $setupFormArgs = array(
 				"menucustompage_id",
 				"customform"
 			)
-		
+
 		),
 		array(
 			"function" => "saveMenuItem",
@@ -482,7 +482,7 @@ $setupFormArgs = array(
 				"menucustompage_id",
 				"downloads"
 			)
-		
+
 		),
 		array(
 			"function" => "saveMenuItem",

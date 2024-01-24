@@ -14,10 +14,10 @@
 
 	<div class='donationMessageText'>
 	
-		<?php 
-		
-			echo 
-				
+		<?php
+
+			echo
+
 				nl2br(parseBBCode($donationInfo['message'])). "
 			
 				<br><br>
@@ -27,7 +27,7 @@
 				".getPreciseTime($donationInfo['datesent'])."</div>
 			
 			";
-			
+
 		?>
 	
 	</div>

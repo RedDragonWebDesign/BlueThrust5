@@ -54,9 +54,9 @@ if(count($arrPosts) > 0) {
 		$newsObj->select($post['news_id']);
 		$newsObj->show();
 	}
-	
+
 	$newsObj->displayPageSelector();
-	
+
 }
 else {
 

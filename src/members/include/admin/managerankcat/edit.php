@@ -25,15 +25,15 @@ else {
 
 
 if(!$rankCatObj->select($_GET['rID'])) {
-	
-	
+
+
 	echo "
 	<script type='text/javascript'>
 		window.location = '".$MAIN_ROOT."members/console.php?cID=".$cID."';
 	</script>
 	";
 	exit();
-	
+
 }
 $rankCatInfo = $rankCatObj->get_info_filtered();
 
@@ -54,77 +54,77 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 
 	$countErrors = 0;
 	$dispError = "";
-	
-	
+
+
 	// Check Category Name
-	
+
 	if(trim($_POST['catname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a Category Name.<br>";
 	}
-	
+
 	// Check Before/After
-	
+
 	if($_POST['beforeafter'] != "before" AND $_POST['beforeafter'] != "after") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (before/after).<br>";
 	}
 
-	
+
 	// Check image width
-	
+
 	if($_FILES['catimagefile']['name'] == "" AND trim($_POST['catimageurl']) != "" AND $_POST['useimage'] == "1" AND (trim($_POST['catimagewidth']) == "" OR $_POST['catimagewidth'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a valid image width when using an external image.<br>";
 	}
-	
-	
+
+
 	// Check image height
-	
+
 	if($_FILES['catimagefile']['name'] == "" AND trim($_POST['catimageurl']) != "" AND $_POST['useimage'] == "1" AND (trim($_POST['catimageheight']) == "" OR $_POST['catimageheight'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a valid image height when using an external image.<br>";
 	}
 
-	
+
 	// Check Order
 
 	$resetCatOrder = false;
 	if($_POST['catorder'] != "first") {
-		
-		
+
+
 		if(!$rankCatObj->select($_POST['catorder'])) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (category).<br>";
 		}
 		else {
-			
-			
+
+
 			$arrBeforeAfter['before'] = 1;
 			$arrBeforeAfter['after'] = -1;
-			
+
 			$testNewCatOrderNum = $arrBeforeAfter[$_POST['beforeafter']]+$rankCatObj->get_info("ordernum");
-			
-			
-			
+
+
+
 			if($testNewCatOrderNum != $rankCatInfo['ordernum']) {
 				$intNewCatOrderNum = $rankCatObj->makeRoom($_POST['beforeafter']);
 				if($intNewCatOrderNum == "false") {
 					$countErrors++;
-					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (category).<br>";			
+					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (category).<br>";
 				}
-				
+
 				$resetCatOrder = true;
 			}
 			else {
 				$intNewCatOrderNum = $rankCatInfo['ordernum'];
-			}	
-			
-			
-			
+			}
+
+
+
 		}
-		
-		
+
+
 	}
 	else {
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."rankcategory ORDER BY ordernum");
@@ -136,21 +136,21 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 			$intNewCatOrderNum = 1;
 		}
 	}
-	
-	
+
+
 	$strCatImageURL = "";
 	// Check Image
 	if(isset($_POST['useimage']) && $_POST['useimage'] == 1) {
-		
+
 		// Use Image Selected, check for no errors
-		
+
 		if($countErrors == 0) {
-			
+
 			if($_FILES['catimagefile']['name'] != "") {
 				// Image File Selected.... Upload it
-				
+
 				$uploadFile = new BTUpload($_FILES['catimagefile'], "rankcat_", "../images/ranks/", array(".jpg",".png",".gif",".bmp"));
-				
+
 				if(!$uploadFile->uploadFile()) {
 					$countErrors++;
 					$dispError .= "<b>&middot;</b> Unable to upload category image file.  Please make sure the file extension is either .jpg, .png, .gif or .bmp<br>";
@@ -158,43 +158,43 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 				else {
 					$strCatImageURL = "images/ranks/".$uploadFile->getUploadedFileName();
 				}
-				
-				
+
+
 			}
 			elseif($_POST['catimageurl'] != "") {
-				
+
 				$strCatImageURL = $_POST['catimageurl'];
-				
+
 			}
 			else {
-				$strCatImageURL = $rankCatInfo['imageurl'];	
+				$strCatImageURL = $rankCatInfo['imageurl'];
 			}
-			
+
 		}
-		
+
 		if($strCatImageURL == "") {
 			$_POST['useimage'] = 0;
 		}
-		
+
 	}
-	
-	
+
+
 	if($countErrors == 0) {
-		
+
 		// No errors... Add to DB
-		
-		
+
+
 		$arrColumns = array("name", "imageurl", "ordernum", "hidecat", "useimage", "description", "imagewidth", "imageheight", "color");
 		$arrValues = array($_POST['catname'], $strCatImageURL, $intNewCatOrderNum, $_POST['hidecat'], $_POST['useimage'], $_POST['catdesc'], $_POST['catimagewidth'], $_POST['catimageheight'], $_POST['rankcolor']);
-		
+
 		$rankCatObj->select($_GET['rID']);
-		
+
 		if($rankCatObj->update($arrColumns, $arrValues)) {
-			
+
 			if($resetCatOrder) {
-				$rankCatObj->resortOrder();	
+				$rankCatObj->resortOrder();
 			}
-			
+
 			echo "
 			<div style='display: none' id='successBox'>
 			<p align='center'>
@@ -206,29 +206,29 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 			popupDialog('Edit Rank Category', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'successBox');
 			</script>
 			";
-			
-			
+
+
 		}
 		else {
 			$_POST['submit'] = false;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to edit category.  Please try again.<br>";
 		}
-		
+
 	}
 	else {
 		$_POST['submit'] = false;
 	}
 
 
-	
+
 }
-	
-	
+
+
 if(!isset($_POST['submit']) || !$_POST['submit']) {
-	
+
 	$afterSelected = "";
 	$intCatBeforeAfter = "";
-	
+
 	$intNextCatOrder = $rankCatInfo['ordernum']-1;
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."rankcategory WHERE ordernum = '".$intNextCatOrder."'");
 	if($result->num_rows == 1) {
@@ -257,67 +257,67 @@ if(!isset($_POST['submit']) || !$_POST['submit']) {
 		else {
 			$catOrderOptions .= "<option value='".$row['rankcategory_id']."'>".$catName."</option>";
 		}
-		
+
 	}
-	
+
 	if($counter == 0) {
 		$catOrderOptions = "<option value='first'>(no other games)</option>";
 	}
-	
-	
+
+
 	$rankoptions = "";
 	$arrRanksInCat = $rankCatObj->getAssociateIDs();
 	$sqlRanksInCat = "('".implode("','", $arrRanksInCat)."')";
-	
+
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1' AND rank_id IN ".$sqlRanksInCat." ORDER BY ordernum DESC");
-	
+
 	$rankcounter = 1;
 	$manageRanksCID = $consoleObj->findConsoleIDByName("Manage Ranks");
 	while($row = $result->fetch_assoc()) {
 
-		
+
 		$rankoptions .= $rankcounter.". <a href='console.php?cID=".$manageRanksCID."&rID=".$row['rank_id']."&action=edit'>".$row['name']."</a><br>";
 		$rankcounter++;
-		
+
 	}
-	
+
 	$rankoptionheight = 20*$rankcounter;
-	
+
 	if($rankoptionheight > 300) { $rankoptionheight = 300; }
-	
+
 	if($rankoptions == "") {
 		$rankoptions = "<i>no ranks in this category!</i>";
 	}
-	
-	
+
+
 	$useImageChecked = "";
 	$dispImageWidth = "";
 	$dispImageHeight = "";
 	$dispImagePopup = "";
 	$dispImagePopupLink = "";
-	
+
 	if($rankCatInfo['useimage'] == 1 AND $rankCatInfo['imageurl'] != "") {
 		$useImageChecked = "checked";
-		
+
 		$imageURL = $rankCatObj->getLocalImageURL();
 		$imageSize = "";
-		
+
 		if($imageURL !== false) {
 			$imageSize = getimagesize($prevFolder.$imageURL);
 		}
-		
+
 		$dispImageWidth = $rankCatInfo['imagewidth'];
 		$dispImageHeight = $rankCatInfo['imageheight'];
 		if($rankCatInfo['imagewidth'] == 0) {
 			$dispImageWidth = $imageSize[0];
 		}
-		
+
 		if($rankCatInfo['imageheight'] == 0) {
-			$dispImageHeight = $imageSize[1];	
+			$dispImageHeight = $imageSize[1];
 		}
-		
+
 		$intDialogWidth = $dispImageWidth+150;
-		
+
 		$dispImagePopup = "
 			<div id='showCatImageDiv' style='display: none'><p align='center'><img src='".$rankCatInfo['imageurl']."' width='".$dispImageWidth."' height='".$dispImageHeight."'></p></div>
 			<script type='text/javascript'>
@@ -344,25 +344,25 @@ if(!isset($_POST['submit']) || !$_POST['submit']) {
 				}
 			</script>
 		";
-		
+
 		$dispImagePopupLink = "<i><a href='javascript:void(0)' onclick='showCatImage()'>View Current Image</a></i><br>";
-		
+
 	}
-	
-	
+
+
 	$hideCatChecked = "";
 	if($rankCatInfo['hidecat'] == 1) {
-		$hideCatChecked = "checked";	
+		$hideCatChecked = "checked";
 	}
-	
-	
+
+
 	echo "
 	
 	<form action='console.php?cID=".$cID."&rID=".$_GET['rID']."&action=edit' method='post' enctype='multipart/form-data'>
 		<div class='formDiv'>
 		
 		";
-	
+
 	if(isset($dispError) && $dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -371,7 +371,7 @@ if(!isset($_POST['submit']) || !$_POST['submit']) {
 		</div>
 		";
 	}
-	
+
 	echo $dispImagePopup;
 	echo "
 	<script type='text/javascript'>
@@ -490,7 +490,7 @@ if(!isset($_POST['submit']) || !$_POST['submit']) {
 	
 	";
 
-	
-	
-	
+
+
+
 }

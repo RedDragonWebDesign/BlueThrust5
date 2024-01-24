@@ -63,12 +63,12 @@ $setupFormArgs = array(
 
 function validateUsername() {
 	global $formObj, $mysqli;
-	
+
 	$checkMemberObj = new Member($mysqli);
 	if($checkMemberObj->select($_POST['newusername'])) {
 		$formObj->errors[] = "There is already a member with that username.";
 	}
-	
+
 }
 
 // After Save Functions

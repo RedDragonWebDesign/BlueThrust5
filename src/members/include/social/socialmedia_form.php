@@ -2,17 +2,17 @@
 
 	if(!defined("SOCIALMEDIA_FORM")) { exit(); }
 
-	$socialOrderObj = new Social($mysqli);	
+	$socialOrderObj = new Social($mysqli);
 	$socialOptions = array();
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."social ORDER BY ordernum DESC");
 	while($row = $result->fetch_assoc()) {
 		$socialOptions[$row['social_id']] = filterText($row['name']);
 	}
-	
+
 	if(count($socialOptions) == 0) {
-		$socialOptions['first'] = "(first icon)";	
+		$socialOptions['first'] = "(first icon)";
 	}
-	
+
 	$i=0;
 	$arrComponents = array(
 		"name" => array(
@@ -81,11 +81,11 @@
 			"value" => "Add Icon",
 			"attributes" => array("class" => "submitButton formSubmitButton")
 		)
-	
-	);
-	
 
-	
+	);
+
+
+
 	$setupFormArgs = array(
 		"name" => "console-".$cID,
 		"components" => $arrComponents,

@@ -16,18 +16,15 @@
 require_once("basic.php");
 
 class Forum extends Basic {
-	
+
 	public $objBoard;
 	public $objCategory;
 	public $objPost;
-	
-	
+
+
 	public function __construct($sqlConnection) {
-		
-		
-		
-		
+
 	}
-	
-	
+
+
 }

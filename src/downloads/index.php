@@ -1,5 +1,5 @@
 <?php
-	
+
 /*
  * BlueThrust Clan Scripts
  * Copyright 2014
@@ -58,17 +58,17 @@ foreach($arrDownloads as $dlID) {
 	$downloadInfo = $downloadObj->get_info_filtered();
 	$posterMemberObj->select($downloadInfo['member_id']);
 	$posterInfo = $posterMemberObj->get_info_filtered();
-	
+
 	if($posterInfo['avatar'] == "") {
 		$posterInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 	}
 	else {
 		$posterInfo['avatar'] = $MAIN_ROOT.$posterInfo['avatar'];
 	}
-	
-	
+
+
 	$dispFileSize = $downloadInfo['filesize']/1024;
-	
+
 	if($dispFileSize < 1) {
 		$dispFileSize = $downloadInfo['filesize']."B";
 	}
@@ -78,7 +78,7 @@ foreach($arrDownloads as $dlID) {
 	else {
 		$dispFileSize = round(($dispFileSize/1024),2)."MB";
 	}
-	
+
 	$addS = ($downloadInfo['downloadcount'] == 1) ? "" : "s";
 	echo "
 		<div class='downloadDiv'>
@@ -103,9 +103,9 @@ foreach($arrDownloads as $dlID) {
 }
 
 if(count($arrDownloads) == 0) {
-	
+
 	echo "<div class='shadedBox' style='width: 50%; margin: 20px auto'><p align='center' class='main'><i>No downloads added to ".$downloadCatInfo['name']." yet!</i></p></div>";
-	
+
 }
 
 require_once($prevFolder."themes/".$THEME."/_footer.php");

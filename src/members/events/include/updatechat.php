@@ -40,18 +40,18 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventChatObj->select($_P
 
 	$memberInfo = $member->get_info_filtered();
 	$eventChatInfo = $eventChatObj->get_info_filtered();
-	
+
 	$eventObj->select($eventChatInfo['event_id']);
-	
+
 	if(in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true)) || $memberInfo['member_id'] == $eventInfo['member_id']) {
-		
-	
-	
+
+
+
 		$eventInfo = $eventObj->get_info_filtered();
 		$eventID = $eventInfo['event_id'];
 
-	
-	
+
+
 	}
-	
+
 }

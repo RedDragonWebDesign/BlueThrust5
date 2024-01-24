@@ -66,7 +66,7 @@ if(in_array($consoleInfo['pagetitle'], $arrTinyMCEPages)) {
 }
 
 if(in_array($consoleInfo['pagetitle'], $arrAceEditorPages)) {
-	$btThemeObj->addHeadItem("codeedtior", "<script type='text/javascript' src='".$MAIN_ROOT."js/ace/src-min-noconflict/ace.js' charset='utf-8'></script>");	
+	$btThemeObj->addHeadItem("codeedtior", "<script type='text/javascript' src='".$MAIN_ROOT."js/ace/src-min-noconflict/ace.js' charset='utf-8'></script>");
 }
 
 $hooksObj->run("init_console");
@@ -89,13 +89,13 @@ if($checkMember) {
 
 	if($member->authorizeLogin($_SESSION['btPassword'])) {
 		$LOGIN_FAIL = false;
-		
+
 		$memberInfo = $member->get_info();
-		
+
 		$_SESSION['lastConsoleCategory'] = array("catID" => $consoleInfo['consolecategory_id'], "exptime" => time()+300);
-		
+
 		// Check for IA
-		
+
 		if($memberInfo['onia'] == 1 && $cID != $consoleObj->findConsoleIDByName("Cancel IA")) {
 			$cancelIACID = $consoleObj->findConsoleIDByName("Cancel IA");
 			echo "
@@ -108,29 +108,29 @@ if($checkMember) {
 					popupDialog('Inactive Member', '".$MAIN_ROOT."members', 'iaMessage');
 				</script>
 			";
-				
+
 			exit();
-		}		
-		
+		}
+
 		$memberRankID = $memberInfo['rank_id'];
 		define("MEMBERRANK_ID", $memberRankID);
-		
+
 		$memberRank = new Rank($mysqli);
 		$memberRank->select($memberRankID);
 		$rankPrivileges = $memberRank->get_privileges();
-		
-		
-		
-		
+
+
+
+
 		if($member->hasAccess($consoleObj) || ($consoleInfo['pagetitle'] == "Manage Forum Posts" && !isset($_GET['noaccess']))) {
 			//$getClanInfo = $mysqli->query("SELECT * FROM ".$dbprefix."websiteinfo WHERE websiteinfo_id = '1'");
 			$arrClanInfo = $websiteInfo;//$getClanInfo->fetch_assoc();
 			// Console Security
 
 			define("PREVENT_HACK", $arrClanInfo['preventhack']);
-			
+
 			require_once($prevFolder."include/breadcrumb.php");
-			
+
 			if(isset($_GET['action']) && $_GET['action'] == "edit") {
 				echo "
 				<p align='right' style='margin-bottom: 10px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."'>Go Back</a></p>
@@ -141,25 +141,25 @@ if($checkMember) {
 				<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/index.php?select=".$consoleInfo['consolecategory_id']."' id='consoleTopBackButton'>Go Back</a></p>
 				";
 			}
-			
-			
+
+
 			if(substr($consoleInfo['filename'], 0, strlen("../")) != "../") {
 				$include_file = "include/".$consoleInfo['filename'];
 			}
 			else {
-				$include_file = $consoleInfo['filename'];	
+				$include_file = $consoleInfo['filename'];
 			}
-						
+
 			$formObj = new Form();
 			require_once($include_file);
 			if(isset($setupFormArgs)) {
 				require_once("console.form.php");
 			}
 			elseif(isset($setupManageListArgs)) {
-				require_once("console.managelist.php");	
+				require_once("console.managelist.php");
 			}
-			
-			
+
+
 			if(isset($_GET['action']) && $_GET['action'] == "edit") {
 				echo "
 					<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."'>Go Back</a></p>				
@@ -170,12 +170,12 @@ if($checkMember) {
 					<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/index.php?select=".$consoleInfo['consolecategory_id']."' id='consoleBottomBackButton'>Go Back</a></p></div>
 				";
 			}
-			
+
 		}
 		else {
-			echo "<div class='formDiv' style='width: 300px; padding: 5px; margin-top: 50px; margin-left: auto; margin-right: auto'><p align='center'><i>You don't have access to this console option!</i><br><br><a href='console.php'>Return to My Account</a></p></div>";	
+			echo "<div class='formDiv' style='width: 300px; padding: 5px; margin-top: 50px; margin-left: auto; margin-right: auto'><p align='center'><i>You don't have access to this console option!</i><br><br><a href='console.php'>Return to My Account</a></p></div>";
 		}
-		
+
 	}
 
 }

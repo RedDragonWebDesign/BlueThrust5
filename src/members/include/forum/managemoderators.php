@@ -34,7 +34,7 @@ $boardObj = new ForumBoard($mysqli);
 $categoryObj = new BasicOrder($mysqli, "forum_category", "forumcategory_id");
 $categoryObj->set_assocTableName("forum_board");
 $categoryObj->set_assocTableKey("forumboard_id");
-	
+
 $memberOptions = "<option value='select'>[SELECT]</option>";
 $result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.ordernum FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id != '1' AND ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id ORDER BY ".$dbprefix."ranks.ordernum DESC");
 while($row = $result->fetch_assoc()) {
@@ -49,8 +49,8 @@ while($row = $result->fetch_assoc()) {
 $boardOptions = "<option value='select'>[SELECT]</option>";
 $result = $mysqli->query("SELECT forumcategory_id FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
 while($row = $result->fetch_assoc()) {
-	
-	
+
+
 	$categoryObj->select($row['forumcategory_id']);
 	$arrBoards = $categoryObj->getAssociateIDs(" ORDER BY sortnum");
 	$catInfo = $categoryObj->get_info_filtered();
@@ -59,9 +59,9 @@ while($row = $result->fetch_assoc()) {
 		$boardObj->select($boardID);
 		$boardInfo = $boardObj->get_info_filtered();
 		$boardOptions .= "<option value='board_".$boardInfo['forumboard_id']."'>&nbsp;&nbsp;&nbsp;".$boardInfo['name']."</option>";
-	
+
 	}
-	
+
 }
 
 echo "

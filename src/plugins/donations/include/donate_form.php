@@ -9,11 +9,11 @@
 		$usernameMessage = $member->getMemberLink();
 		$extraNameTooltip = "";
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	$i = 0;
 	$arrComponents = array(
 		"username" => array(
@@ -23,8 +23,8 @@
 			"display_name" => "Account Name"
 		)
 	);
-	
-	
+
+
 	if($campaignInfo['allowname'] == 1) {
 
 		$arrComponents['name'] = array(
@@ -34,15 +34,15 @@
 			"display_name" => "Your Name",
 			"tooltip" => "This field is optional.".$extraNameTooltip
 		);
-		
-		
-		
+
+
+
 	}
-	
-	
-	
+
+
+
 	if($campaignInfo['allowmessage'] == 1) {
-		
+
 		$arrComponents['message'] = array(
 			"type" => "textarea",
 			"sortorder" => $i++,
@@ -52,8 +52,8 @@
 		);
 
 	}
-		
-	
+
+
 	$arrComponents['amount'] = array(
 		"type" => "text",
 		"sortorder" => $i++,
@@ -63,7 +63,7 @@
 		"html" => "<div class='formInput formInputSideText'>".$campaignInfo['currency']."</div>"
 	);
 
-	
+
 	if($campaignInfo['allowhiddenamount'] == 1) {
 
 		$arrComponents['hideamount'] = array(
@@ -74,29 +74,29 @@
 			"tooltip" => "If you check this box, your donation amount will be hidden on the donation profile page.",
 			"value" => 1
 		);
-		
+
 	}
 
 	$arrComponents['submit'] = array(
 		"type" => "submit",
 		"value" => "Continue",
 		"attributes" => array("class" => "submitButton formSubmitButton"),
-		"sortorder" => $i++	
+		"sortorder" => $i++
 	);
-	
-	
+
+
 	if(isset($_GET['fail']) && $_GET['fail'] == "amount") {
 
 		$arrComponents['show_fail'] = array(
-		
+
 			"type" => "custom",
 			"sortorder" => $i++,
-			"html" => "<p align='center' class='main failedFont'><b>The minimum donation amount is ".$campaignObj->formatAmount($campaignInfo['minimumamount'])."</b></p>"		
+			"html" => "<p align='center' class='main failedFont'><b>The minimum donation amount is ".$campaignObj->formatAmount($campaignInfo['minimumamount'])."</b></p>"
 		);
-		
+
 	}
-	
-	
+
+
 	$setupFormArgs = array(
 		"name" => "donate_form-".$_GET['campaign_id'],
 		"components" => $arrComponents,
@@ -105,5 +105,5 @@
 	);
 
 	$hooksObj->run("donate_form-".$_GET['campaign_id']);
-	
+
 	$donationForm->buildForm($setupFormArgs);

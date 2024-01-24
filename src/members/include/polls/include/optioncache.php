@@ -37,38 +37,38 @@ $pollObj = new Poll($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-	
+
 	$pollObj->cacheID = $_POST['cacheID'];
-	
-	
+
+
 	if(isset($_POST['action']) && $_POST['action'] == "move") {
-		$pollObj->moveCache($_POST['direction'], $_POST['optionOrder']);		
+		$pollObj->moveCache($_POST['direction'], $_POST['optionOrder']);
 	}
 	elseif(isset($_POST['action']) && $_POST['action'] == "delete") {
 		unset($_SESSION['btPollOptionCache'][$pollObj->cacheID][$_POST['pollOption']]);
-		
+
 		$pollObj->resortCacheOrder();
 	}
 
 	$optionCount = count($_SESSION['btPollOptionCache'][$pollObj->cacheID]);
 
 	echo "<table class='formTable' style='width: 75%; margin-top: 0px'>";
-	
+
 	foreach($_SESSION['btPollOptionCache'][$pollObj->cacheID] as $key => $pollOptionInfo) {
 
 		$pollOptionInfo = filterArray($pollOptionInfo);
-		
+
 		$dispDownArrow = "<a href='javascript:void(0)' title='Move Down'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' data-pollcache='".$key."' data-polldirection='down' class='manageListActionButton'></a>";
 		$dispUpArrow = "<a href='javascript:void(0)' title='Move Up'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' data-pollcache='".$key."' data-polldirection='up' class='manageListActionButton'></a>";
-		
+
 		if($key == ($optionCount-1)) {
 			$dispDownArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' class='manageListActionButton'>";
 		}
-		
+
 		if($key == 0) {
 			$dispUpArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' class='manageListActionButton'>";
 		}
-		
+
 		echo "
 			<tr>
 				<td class='main' align='center' style='width: 50%'>".$pollOptionInfo['value']."</td>
@@ -80,7 +80,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			</tr>
 		
 		";
-		
+
 	}
 	echo "</table>
 	
@@ -185,7 +185,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		
 		</script>
 	";
-	
+
 	if(count($_SESSION['btPollOptionCache'][$pollObj->cacheID]) == 0) {
 
 		echo "

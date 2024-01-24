@@ -35,23 +35,23 @@ $newsObj = new News($mysqli);
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $commentObj->select($_POST['commentID'])) {
 
 	$commentInfo = $commentObj->get_info_filtered();
-	
+
 	$newsObj->select($commentInfo['news_id']);
 	$newsInfo = $newsObj->get_info_filtered();
 	$member->select($commentInfo['member_id']);
-	
+
 	$posterInfo = $member->get_info_filtered();
-	
+
 	$logMessage = "Deleted comment by ".$member->getMemberLink()." on news post: <b><a href='".$MAIN_ROOT."news/viewpost.php?nID=".$newsInfo['news_id']."'>".$newsInfo['postsubject']."</a></b>";
-	
+
 	$member->select($memberInfo['member_id']);
 	$member->logAction($logMessage);
-	
-	$commentObj->delete();	
-	
+
+	$commentObj->delete();
+
 	$arrComments = $newsObj->getComments();
 	$commentCount = $newsObj->countComments();
-	
+
 }
 
 

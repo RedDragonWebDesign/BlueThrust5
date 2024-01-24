@@ -63,40 +63,40 @@ require_once($prevFolder."include/breadcrumb.php");
 	
 	<?php
 		$memberObj = new Member($mysqli);
-	
+
 		$counter = 0;
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournaments ORDER BY startdate DESC");
-		
+
 		while($row = $result->fetch_assoc()) {
-			
-			
+
+
 			$tournamentObj->select($row['tournament_id']);
 			$memberObj->select($row['member_id']);
 			$dispManager = $memberObj->getMemberLink();
-			
+
 			$dateTimeObj = new DateTime();
 			$dateTimeObj->setTimestamp($row['startdate']);
 			$includeTimezone = "";
 			$dateTimeObj->setTimezone(new DateTimeZone("UTC"));
 			$dispStartDate = $dateTimeObj->format("M j, Y g:i A");
-			
-			if($row['timezone'] != "") { 
+
+			if($row['timezone'] != "") {
 				$dateTimeObj->setTimezone(new DateTimeZone($row['timezone']));
-				$includeTimezone = " T"; 
+				$includeTimezone = " T";
 			}
-			
+
 			$dispStartDate .= $dateTimeObj->format($includeTimezone);
-			
+
 			if($row['startdate'] < time() && $tournamentObj->getTournamentWinner() == 0) {
-				$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/bluedot.png' title='Started'>";	
+				$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/bluedot.png' title='Started'>";
 			}
 			elseif($row['startdate'] > time()) {
 				$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/orangedot.png' title='Forming'>";
 			}
 			elseif($row['startdate'] < time() && $tournamentObj->getTournamentWinner() != 0) {
-				$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/graydot.png' title='Finished'>";	
+				$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/graydot.png' title='Finished'>";
 			}
-			
+
 			if($counter == 1) {
 				$addCSS = " alternateBGColor";
 				$counter = 0;
@@ -105,7 +105,7 @@ require_once($prevFolder."include/breadcrumb.php");
 				$addCSS = "";
 				$counter = 1;
 			}
-			
+
 			echo "
 				<tr>
 					<td class='main ".$addCSS."'><a href='".$MAIN_ROOT."tournaments/view.php?tID=".$row['tournament_id']."'>".filterText($row['name'])."</a></td>
@@ -115,11 +115,11 @@ require_once($prevFolder."include/breadcrumb.php");
 				</tr>
 			
 			";
-			
+
 		}
-		
+
 		if($result->num_rows == 0) {
-			
+
 
 			echo "
 				<tr>
@@ -130,7 +130,7 @@ require_once($prevFolder."include/breadcrumb.php");
 					</td>
 				</tr>
 			";
-			
+
 		}
 		?>
 		

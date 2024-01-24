@@ -13,30 +13,30 @@
  */
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
-	
+
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
-	
+
 	// Start Page
-	
+
 	$consoleObj = new ConsoleOption($mysqli);
-	
+
 	$cID = $consoleObj->findConsoleIDByName("Diplomacy: Manage Clans");
 	$consoleObj->select($cID);
 	$consoleInfo = $consoleObj->get_info_filtered();
 	$consoleTitle = $consoleInfo['pagetitle'];
-	
+
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);
-	
+
 	// Check Login
 	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
 	}
 	else {
-		exit();	
+		exit();
 	}
-	
+
 }
 else {
 	$memberInfo = $member->get_info();
@@ -64,8 +64,8 @@ while($row = $result->fetch_assoc()) {
 		$addCSS = "";
 		$counter = 1;
 	}
-	
-	
+
+
 	echo "
 	<tr>
 		<td class='dottedLine".$addCSS."' width=\"80%\">&nbsp;&nbsp;<span class='main'><b><a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&dID=".$row['diplomacy_id']."&action=edit'>".filterText($row['clanname'])."</a></b></td>
@@ -73,7 +73,7 @@ while($row = $result->fetch_assoc()) {
 		<td align='center' class='dottedLine".$addCSS."' width=\"10%\"><a href='javascript:void(0)' onclick=\"deleteClan('".$row['diplomacy_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' width='24' height='24' title='Delete Clan'></a></td>
 	</tr>
 	";
-	
+
 	$x++;
 
 

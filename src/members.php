@@ -49,7 +49,7 @@ if($websiteInfo['maxdsl'] != 0) {
 	$maxDSLTime = time() - ($websiteInfo['maxdsl']*86400);
 	$time = time();
 	$result = $mysqli->query("UPDATE ".$dbprefix."members SET disabled = '1', disableddate = '".$time."' WHERE disabled = '0' AND rank_id != '1' AND onia = '0' AND lastlogin <= '".$maxDSLTime."'");
-	
+
 	$result = $mysqli->query("SELECT member_id FROM ".$dbprefix."members WHERE disableddate = '".$time."'");
 	while($row = $result->fetch_assoc()) {
 		$arrLogColumns = array("member_id", "logdate", "message");
@@ -104,21 +104,21 @@ $arrGameCount = array();
 $arrGamesPlayed = array();
 $result = $mysqli->query("SELECT rankcategory_id FROM ".$dbprefix."rankcategory WHERE hidecat = '0' ORDER BY ordernum DESC");
 while($row = $result->fetch_assoc()) {
-	
+
 	$rankCatObj->select($row['rankcategory_id']);
 	$rankCatObj->refreshImageSize();
 	$rankCatInfo = $rankCatObj->get_info_filtered();
-	
+
 	$arrRanks = $rankCatObj->getAssociateIDs(" ORDER BY ordernum DESC");
-	
+
 	if($websiteInfo['maxdsl'] == 0) {
-		$tableCols = 4;	
+		$tableCols = 4;
 	}
 	else {
 		$tableCols = 5;
 	}
-	
-	
+
+
 	if($rankCatInfo['useimage'] == 1 && $rankCatInfo['imageurl'] != "") {
 		echo "
 		<tr>
@@ -127,41 +127,41 @@ while($row = $result->fetch_assoc()) {
 		";
 	}
 	else {
-	
+
 		$dispCatDesc = "";
 		if($rankCatInfo['description'] != "") {
 			$dispCatDesc = " style='cursor: pointer' onmouseover=\"showToolTip('<b>".$rankCatInfo['name']."</b><br>".$rankCatInfo['description']."')\" onmouseout='hideToolTip()'";
 		}
-	
+
 		echo "
 		<tr>
 			<td class='largeFont' style='font-weight: bold' align='center' colspan='".$tableCols."'><span".$dispCatDesc.">".$rankCatInfo['name']."</span></td>
 		</tr>
 		";
 	}
-	
-	
+
+
 	echo "
 		<tr>
 			<td class='formTitle'>Rank:</td>
 			<td class='formTitle'>Username:</td>
 			<td class='formTitle'>Main Game:</td>
 			";
-			
+
 			if($tableCols == 5) { echo "<td class='formTitle'><span onmouseover=\"showToolTip('Days Since Last Login')\" onmouseout='hideToolTip()' style='cursor: help'>DSL:</span></td>"; }
-			
+
 			echo "
 			<td class='formTitle'>Status:</td>
 		</tr>
 	";
-	
+
 	$sqlRanks = "('".implode("','", $arrRanks)."')";
-	
+
 	$sqlHideInactive = "";
 	if($websiteInfo['hideinactive'] == 1) {
 		$sqlHideInactive = " AND ".$dbprefix."members.onia = '0'";
 	}
-	
+
 	$query = "SELECT ".$dbprefix."members.member_id FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id=".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."ranks.hiderank = '0'".$sqlHideInactive." ORDER BY ".$dbprefix."ranks.ordernum DESC";
 	$result2 = $mysqli->query($query);
 	$arrMemberCountCat[$row['rankcategory_id']] = $result2->num_rows;
@@ -171,9 +171,9 @@ while($row = $result->fetch_assoc()) {
 		$rankObj->select($memberListInfo['rank_id']);
 		$rankObj->refreshImageSize();
 		$rankListInfo = $rankObj->get_info_filtered();
-		
-		
-	
+
+
+
 		$dispMainGame = "Not Set";
 		if($gameObj->select($memberListInfo['maingame_id'])) {
 			$gameObj->refreshImageSize();
@@ -182,20 +182,20 @@ while($row = $result->fetch_assoc()) {
 			$dispMainGame = "<div class='memberPageImage'><img src='".$gameInfo['imageurl']."' width='".$gameInfo['imagewidth']."' height='".$gameInfo['imageheight']."' onmouseover=\"showToolTip('".$gameInfo['name']."')\" onmouseout='hideToolTip()'></div>";
 		}
 		else {
-			$arrGameCount[] = "NotSet";	
+			$arrGameCount[] = "NotSet";
 		}
-		
-		
+
+
 		$arrGamesPlayed = array_merge($arrGamesPlayed, $member->gamesPlayed());
-		
+
 		$dispDSL = floor((time()-$memberListInfo['lastlogin'])/86400);
 		if($memberListInfo['onia'] == 1) {
-			$dispDSL = "IA";	
+			$dispDSL = "IA";
 		}
-		
-		
+
+
 		if(is_numeric($dispDSL) && $dispDSL >= 0 && $dispDSL <= $maxDSLIntervals) {
-			$arrCountDSL[1]++;	
+			$arrCountDSL[1]++;
 		}
 		elseif(is_numeric($dispDSL) && $dispDSL > $maxDSLIntervals && $dispDSL <= ($maxDSLIntervals*2)) {
 			$arrCountDSL[2]++;
@@ -204,21 +204,21 @@ while($row = $result->fetch_assoc()) {
 			$arrCountDSL[3]++;
 		}
 
-		
-		
-		
+
+
+
 		if($memberListInfo['loggedin'] == 1 && (time()-$memberListInfo['lastseen']) < 600) {
-			$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/onlinedot.png' onmouseover=\"showToolTip('".$memberListInfo['username']." is Online!')\" onmouseout='hideToolTip()'>";	
+			$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/onlinedot.png' onmouseover=\"showToolTip('".$memberListInfo['username']." is Online!')\" onmouseout='hideToolTip()'>";
 		}
 		else {
 			$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/offlinedot.png'>";
-			
+
 			if($memberListInfo['loggedin'] == 1) {
 				$member->update(array("loggedin"), array(0));
 			}
-			
+
 		}
-		
+
 		echo "
 			<tr>
 				<td class='main' align='center'><div class='memberPageImage'><img src='".$rankListInfo['imageurl']."' width='".$rankListInfo['imagewidth']."' height='".$rankListInfo['imageheight']."'></div></td>
@@ -230,11 +230,11 @@ while($row = $result->fetch_assoc()) {
 				<td class='main' align='center'><div class='memberPageImage'>".$dispStatus."</div></td>
 			</tr>
 		";
-		
+
 	}
-	
+
 	echo "<tr><td colspan='5'><br></td></tr>";
-	
+
 }
 
 $totalMembers = array_sum($arrMemberCountCat);
@@ -252,11 +252,11 @@ $totalMembers = array_sum($arrMemberCountCat);
 			foreach($arrMemberCountCat as $key=>$value) {
 				$rankCatObj->select($key);
 				$rankCatInfo = $rankCatObj->get_info_filtered();
-				
+
 				$totalBars = $totalMembers ? round(($value/$totalMembers)*100) : 0;
 				//$dispBars = "|".str_repeat("|", $totalBars);
 				$dispBars = "<div class='solidBox' style='position: reltaive; padding: 0px; margin: 0px; width: 90%'><div class='tinyFont' style='width: ".$totalBars."%; background-color: ".$rankCatInfo['color']."'>&nbsp;</div></div>";
-				
+
 				echo "
 					<tr>
 						<td class='main' style='font-weight: bold; width: 40%'>Total ".$rankCatInfo['name'].":</td>
@@ -265,7 +265,7 @@ $totalMembers = array_sum($arrMemberCountCat);
 					</tr>
 				
 				";
-				
+
 			}
 		?>
 	</table>
@@ -280,19 +280,19 @@ $totalMembers = array_sum($arrMemberCountCat);
 		</tr>
 		<?php
 			$arrGames = $gameObj->getGameList();
-		
+
 			$arrTotalGamesPlayed = array_count_values($arrGamesPlayed);
 			foreach($arrGames as $value) {
 				$gameObj->select($value);
 				$gameInfo = $gameObj->get_info_filtered();
-				
+
 				if( $arrTotalGamesPlayed[$value] ?? "" == "") {
 					$arrTotalGamesPlayed[$value] = 0;
 				}
-				
+
 				$totalBars = $arrTotalGamesPlayed[$value] ? round(($arrTotalGamesPlayed[$value]/$totalMembers))*100 : 0;
 				$dispBars = "<div class='solidBox' style='position: reltaive; padding: 0px; margin: 0px; width: 90%'><div class='tinyFont alternateBGColor' style='width: ".$totalBars."%'>&nbsp;</div></div>";
-				
+
 				echo "
 					<tr>
 						<td class='main' style='font-weight: bold; width: 40%'>Total ".$gameInfo['name']." Players:</td>
@@ -301,7 +301,7 @@ $totalMembers = array_sum($arrMemberCountCat);
 					</tr>
 				
 				";
-				
+
 			}
 		?>
 	</table>
@@ -310,9 +310,9 @@ $totalMembers = array_sum($arrMemberCountCat);
 </div>
 <div style='margin: 20px auto'>
 
-<?php 
+<?php
 if($websiteInfo['maxdsl'] != 0) {
-	
+
 	echo "
 	<table class='formTable' id='membersPageTable' style='width: 85%; margin-left: auto; margin-right: auto'>
 		<tr>
@@ -320,8 +320,8 @@ if($websiteInfo['maxdsl'] != 0) {
 		</tr>
 		";
 			for($i=1;$i<=3;$i++) {
-				
-				
+
+
 				if($i == 1) {
 					$dispTitle = "Low DSL";
 					$dispColor = $websiteInfo['lowdsl'];
@@ -330,24 +330,24 @@ if($websiteInfo['maxdsl'] != 0) {
 					$extraDSLMessage = "These members are very safe from being disabled due to inactivity.";
 				}
 				elseif($i == 2) {
-					$dispTitle = "Medium DSL";	
+					$dispTitle = "Medium DSL";
 					$dispColor = $websiteInfo['meddsl'];
 					$highEndDSL = $maxDSLIntervals*2;
 					$lowEndDSL =  $maxDSLIntervals+1;
 					$extraDSLMessage = "These members are somewhat safe from being disabled but should log in soon.";
 				}
 				else {
-					$dispTitle = "High DSL";	
+					$dispTitle = "High DSL";
 					$dispColor = $websiteInfo['highdsl'];
 					$highEndDSL = $websiteInfo['maxdsl']-1;
 					$lowEndDSL =  1+($maxDSLIntervals*2);
 					$extraDSLMessage = "These members are in danger of being disabled due to inactivity.";
 				}
-				
+
 				$totalBars = round(($arrCountDSL[$i]/$totalMembers)*100);
 				$dispBars = "<div class='solidBox' style='position: reltaive; padding: 0px; margin: 0px; width: 90%'><div class='tinyFont' style='width: ".$totalBars."%; background-color: ".$dispColor."'>&nbsp;</div></div>";
-				
-				
+
+
 				echo "
 					<tr>
 						<td class='main' style='font-weight: bold; width: 40%'>".$dispTitle." <span onmouseover=\"showToolTip('Members who logged in within the last ".$lowEndDSL." to ".$highEndDSL." days. ".$extraDSLMessage."')\" onmouseout='hideToolTip()' style='cursor: help'>(?)</span>:</td>

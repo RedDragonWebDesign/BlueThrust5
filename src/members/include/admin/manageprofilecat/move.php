@@ -36,16 +36,16 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
 	if($member->hasAccess($consoleObj) && $profileCatObj->select($_POST['catID'])) {
-		
+
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
-		
+
 		$profileCatObj->move($_POST['cDir']);
-		
+
 		require_once("main.php");
-		
-		
-		
+
+
+
 	}
-	
-	
+
+
 }

@@ -32,7 +32,7 @@ $countErrors = 0;
 $arrDiplomacyStatus = array();
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status ORDER BY ordernum DESC");
 while($row = $result->fetch_assoc()) {
-	$arrDiplomacyStatus[$row['diplomacystatus_id']] = filterText($row['name']);	
+	$arrDiplomacyStatus[$row['diplomacystatus_id']] = filterText($row['name']);
 }
 
 $diplomacyRequestObj = new Basic($mysqli, "diplomacy_request", "diplomacyrequest_id");
@@ -40,39 +40,39 @@ $diplomacyRequestObj = new Basic($mysqli, "diplomacy_request", "diplomacyrequest
 if ( ! empty($_POST['submit']) ) {
 	$diplomacyStatusObj = new Basic($mysqli, "diplomacy_status", "diplomacystatus_id");
 	// Check for clan name
-	
+
 	if(trim($_POST['clanname']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Clan name may not be blank.<br>";
 		$countErrors++;
 	}
-	
+
 	// Check Status
-	
+
 	$allowedStatuses = array_keys($arrDiplomacyStatus);
 	if(!in_array($_POST['status'], $allowedStatuses) || !$diplomacyStatusObj->select($_POST['status'])) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid status.<br>";
 		$countErrors++;
 	}
-	
+
 	// Check Clan Size
-	
+
 	$allowedSizes = array("large", "medium", "small");
 	if(!in_array($_POST['clansize'], $allowedSizes)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid clan size.<br>";
 		$countErrors++;
 	}
-	
-	
+
+
 	if($countErrors == 0) {
-		
+
 		$diplomacyObj = new Basic($mysqli, "diplomacy", "diplomacy_id");
-		
-		
+
+
 		$arrColumns = array("member_id", "dateadded", "clanname", "diplomacystatus_id", "website", "clansize", "clantag", "skill", "gamesplayed", "extrainfo", "leaders");
 		$arrValues = array($memberInfo['member_id'], time(), $_POST['clanname'], $_POST['status'], $_POST['website'], $_POST['clansize'], $_POST['tag'], $_POST['skill'], $_POST['gamesplayed'], $_POST['extrainfo'], $_POST['leaders']);
-		
+
 		if($diplomacyObj->addNew($arrColumns, $arrValues)) {
-			
+
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -87,12 +87,12 @@ if ( ! empty($_POST['submit']) ) {
 			
 			
 			";
-			
-			
+
+
 			$member->logAction("Added ".$_POST['clanname']." to the diplomacy page with ".$diplomacyStatusObj->get_info_filtered("name")." status.");
-		
+
 			if(isset($_POST['reqID']) && $diplomacyRequestObj->select($_POST['reqID'])) {
-				
+
 				$diplomacyRequestInfo = $diplomacyRequestObj->get_info_filtered();
 				$dispStatus = $arrDiplomacyStatus[$_POST['status']];
 				// Send E-mail Confirmation
@@ -105,9 +105,9 @@ Hi ".$diplomacyRequestInfo['name'].",\n\n
 Your diplomacy request has been accepted.  Your clan has been given the status of ".$dispStatus.".\n\n
 Thanks,\n
 ".$websiteInfo['clanname'];
-				
+
 				mail($emailTo, $emailSubject, $emailMessage, "From: ".$emailFrom);
-				
+
 				$diplomacyRequestObj->delete();
 			}
 		}
@@ -115,52 +115,52 @@ Thanks,\n
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 	if($countErrors > 0) {
-		
+
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 }
 
 
 if ( empty($_POST['submit']) ) {
-	
-	
-	
-	
+
+
+
+
 	$arrSelectSize['large'] = "";
 	$arrSelectSize['medium'] = "";
 	$arrSelectSize['small'] = "";
-	
+
 	$dispReqID = "";
 	if(isset($_GET['reqID']) && $diplomacyRequestObj->select($_GET['reqID'])) {
 		$diplomacyRequestInfo = $diplomacyRequestObj->get_info_filtered();
 
-		
+
 		$_POST['clanname'] = $diplomacyRequestInfo['clanname'];
 		$_POST['leaders'] = $diplomacyRequestInfo['leaders'];
 		$_POST['website'] = $diplomacyRequestInfo['website'];
 		$_POST['gamesplayed'] = $diplomacyRequestInfo['gamesplayed'];
 		$_POST['tag'] = $diplomacyRequestInfo['clantag'];
 		$_POST['status'] = $diplomacyRequestInfo['diplomacystatus_id'];
-		
+
 		$arrSelectSize[$diplomacyRequestInfo['clansize']] = " selected";
-		
+
 		$dispReqID = "<input type='hidden' value='".$_GET['reqID']."' name='reqID'>";
 	}
-	
-	
-	
+
+
+
 	echo "
 		<div class='formDiv'>
 		";
@@ -172,7 +172,7 @@ if ( empty($_POST['submit']) ) {
 			</div>
 			";
 		}
-	
+
 		echo "
 			<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
 				Use the form below to add a new clan to the diplomacy page.<br><br>
@@ -186,17 +186,17 @@ if ( empty($_POST['submit']) ) {
 						<td class='main'>
 							<select name='status' class='textBox'>
 							";
-								
+
 								foreach($arrDiplomacyStatus as $key=>$value) {
-									
+
 									$dispSelected = "";
 									if($_POST['status'] == $key) {
 										$dispSelected = " selected";
 									}
-									
-									echo "<option value='".$key."'".$dispSelected.">".$value."</option>";	
+
+									echo "<option value='".$key."'".$dispSelected.">".$value."</option>";
 								}
-		
+
 							echo "
 							</select>
 						</td>
@@ -249,6 +249,6 @@ if ( empty($_POST['submit']) ) {
 			</form>
 		</div>	
 	";
-	
-	
+
+
 }

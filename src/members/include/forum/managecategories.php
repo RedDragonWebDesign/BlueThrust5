@@ -39,9 +39,9 @@ if($categoryObj->select($_GET['catID']) && $_GET['action'] == "edit") {
 
 }
 else {
-	
-	
-	
+
+
+
 	echo "
 	
 		<table class='formTable'>
@@ -65,9 +65,9 @@ else {
 		
 		<div id='categoryList'>
 	";
-	
+
 	require_once("include/main_managecategory.php");
-	
+
 	echo "
 		</div>
 		<div id='deleteCatDiv' style='display: none'></div>
@@ -102,5 +102,5 @@ else {
 		</script>
 		
 	";
-	
+
 }

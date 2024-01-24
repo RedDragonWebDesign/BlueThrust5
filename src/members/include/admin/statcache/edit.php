@@ -41,21 +41,21 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
 	if($checkAccess) {
-		
-		
+
+
 		if(isset($_SESSION['btStatCache'][$_POST['sID']])) {
-			
-			
+
+
 			if ( ! empty($_POST['submit']) ) {
-				
+
 				$countErrors = 0;
-				
+
 				// Check Stat Name
 				if(trim($_POST['statName'] == "")) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You must enter a stat name.<br>";
 				}
-				
+
 				// Check Stat type
 				if($_POST['statType'] == "calculate") {
 					if(count($_SESSION['btStatCache']) < 2) {
@@ -64,34 +64,34 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					}
 					else {
 						// Check the for two calculated stats and the math operation
-				
-				
+
+
 						// Check operation
 						$possibleOps = array("add", "sub", "mul", "div");
 						if(!in_array($_POST['calcOperation'], $possibleOps)) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid operation. - ".$_POST['calcOperation']."<br>";
 						}
-				
+
 						//Check First Stat
 						if(trim($_SESSION['btStatCache'][$_POST['firstStat']]['statName']) == "" OR $_POST['firstStat'] == $_POST['sID'] OR $_SESSION['btStatCache'][$_POST['firstStat']]['textInput'] == 1) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid first calculation statistic.";
 						}
-						
+
 						if(trim($_SESSION['btStatCache'][$_POST['secondStat']]['statName']) == "" OR $_POST['secondStat'] == $_POST['sID'] OR $_SESSION['btStatCache'][$_POST['secondStat']]['textInput'] == 1) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid second calculation statistic.";
-						}		
-				
+						}
+
 					}
 				}
 				elseif($_POST['statType'] != "inputnum" AND $_POST['statType'] != "inputtext") {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid stat type.<br>";
 				}
-				
-				
+
+
 				// Check Rounding
 				if($_POST['rounding'] != "" AND !is_numeric($_POST['rounding'])) {
 					$countErrors++;
@@ -101,23 +101,23 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You may not enter a negative value for rounding.<br>";
 				}
-				
 
-				
+
+
 				if($_POST['hideStat'] != 1) {
 					$_POST['hideStat'] = 0;
 				}
-				
-				
-				
+
+
+
 				if($countErrors == 0) {
-					
+
 					if($_POST['statType'] == "inputnum" OR $_POST['statType'] == "inputtext") {
 						$_POST['firstStat'] = "";
 						$_POST['secondStat'] = "";
 						$_POST['calcOperation'] = "";
 					}
-					
+
 					$intInputText = 0;
 					if($_POST['statType'] == "inputtext") {
 						$intInputText = 1;
@@ -126,13 +126,13 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					elseif($_POST['statType'] == "inputnum") {
 						$_POST['statType'] = "input";
 					}
-					
+
 					$_POST = filterArray($_POST);
-					
+
 					$savedGameStatsID = $_SESSION['btStatCache'][$_POST['sID']]['gamestatsID'];
-					
+
 					$_SESSION['btStatCache'][$_POST['sID']] = array(
-							
+
 							'statName' => $_POST['statName'],
 							'statType' => $_POST['statType'],
 							'calcOperation' => $_POST['calcOperation'],
@@ -142,9 +142,9 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 							'hideStat' => $_POST['hideStat'],
 							'textInput' => $intInputText,
 							'gamestatsID' => $savedGameStatsID
-							
+
 						);
-					
+
 					echo "
 						<script type='text/javascript'>
 							$(document).ready(function() {
@@ -165,40 +165,40 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 							});
 						</script>
 					";
-					
+
 				}
 				else {
-					$_POST['submit'] = false;	
+					$_POST['submit'] = false;
 				}
-				
+
 			}
-			
+
 			if ( empty($_POST['submit']) ) {
-			
+
 				$statInfo = filterArray($_SESSION['btStatCache'][$_POST['sID']]);
-				
+
 				$selectTextInput = "";
 				if($statInfo['textInput'] == 1) {
-					$selectTextInput = "selected";	
+					$selectTextInput = "selected";
 				}
-				
-				
+
+
 				$statOptions = "<option value='inputnum'>Input (Number)</option><option value='inputtext' ".$selectTextInput.">Input (Text)</option>";
 				$onChange = "";
-				if(is_array($_SESSION['btStatCache'])) {				
+				if(is_array($_SESSION['btStatCache'])) {
 					if(count($_SESSION['btStatCache']) > 1) {
-						
+
 						if($statInfo['statType'] == "calculate") {
 							$statOptions .= "<option value='calculate' selected>Auto-Calculate</option>";
 						}
 						else {
 							$statOptions .= "<option value='calculate'>Auto-Calculate</option>";
 						}
-						
+
 						$onChange = "onchange='changeStatsForm()'";
 					}
 				}
-				
+
 				foreach($_SESSION['btStatCache'] as $key => $arrStats) {
 
 					if($statInfo['firstStat'] == $key AND is_numeric($statInfo['firstStat'])) {
@@ -207,20 +207,20 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					elseif($key != $_POST['sID'] AND $arrStats['textInput'] == 0) {
 						$firstStatOptions .= "<option value='".$key."'>".filterText($arrStats['statName'])."</option>";
 					}
-					
+
 					if($statInfo['secondStat'] == $key AND is_numeric($statInfo['secondStat'])) {
 						$secondStatOptions .= "<option value='".$key."' selected>".filterText($arrStats['statName'])."</option>";
 					}
 					elseif($key != $_POST['sID'] AND $arrStats['textInput'] == 0) {
 						$secondStatOptions .= "<option value='".$key."'>".filterText($arrStats['statName'])."</option>";
 					}
-					
-					
-					
+
+
+
 				}
-				
+
 				$calcOps = array("add" => "Plus", "sub" => "Minus", "mul" => "Multiplied By", "div" => "Divided By");
-				
+
 				foreach($calcOps as $key => $value) {
 					if($statInfo['calcOperation'] == $key) {
 						$calcOpsOptions .= "<option value='".$key."' selected>".$value."</option>";
@@ -229,7 +229,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 						$calcOpsOptions .= "<option value='".$key."'>".$value."</option>";
 					}
 				}
-				
+
 				if($dispError != "") {
 					echo "
 					<div class='errorDiv' style='width: 400px'>
@@ -238,12 +238,12 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					</div>
 					";
 				}
-				
+
 				$hideStatsChecked = "";
 				if($statInfo['hideStat'] == 1) {
-					$hideStatsChecked = "checked";	
+					$hideStatsChecked = "checked";
 				}
-				
+
 				echo "
 				<table align='center' border='0' cellspacing='2' cellpadding='2' width='400'>
 					<tr>
@@ -359,12 +359,12 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				</script>
 				
 				";
-			
-			
+
+
 			}
-		
+
 		}
-				
+
 	}
-	
+
 }

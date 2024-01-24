@@ -30,20 +30,20 @@ $countErrors = 0;
 $dispError = "";
 
 if ( ! empty($_POST['submit']) ) {
-	
+
 	// Check Name
 	if(trim($_POST['title']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must give your download a title.<br>";
 	}
-	
+
 	if($countErrors == 0) {
-		
-		
+
+
 		$arrColumns = array("name", "description");
 		$arrValues = array($_POST['title'], $_POST['description']);
 		if($downloadObj->update($arrColumns, $arrValues)) {
-		
+
 			$downloadInfo = $downloadObj->get_info_filtered();
 			echo "
 			
@@ -58,38 +58,38 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			
 			";
-			
-			
+
+
 			$member->logAction("Edited <a href='".$MAIN_ROOT."downloads/index.php?catID=".$downloadInfo['downloadcategory_id']."#".$downloadInfo['download_id']."'>".$downloadInfo['name']."</a> download information.");
-			
+
 		}
 		else {
-			
+
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
-			
+
 		}
-		
-		
+
+
 	}
-	
-	
-	
+
+
+
 	if($countErrors > 0) {
-	
+
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
-	
+
 	}
-	
-	
+
+
 }
 
 
 
 if ( empty($_POST['submit']) ) {
 
-	
+
 	echo "
 		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."&action=edit&dlID=".$_GET['dlID']."' method='post'>
 			<div class='formDiv'>
@@ -126,6 +126,6 @@ if ( empty($_POST['submit']) ) {
 	
 	
 	";
-	
-	
+
+
 }

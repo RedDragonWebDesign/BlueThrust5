@@ -37,16 +37,16 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 	if($checkAccess) {
 
-		
+
 		if(is_array($_SESSION['btProfileCache']) && count($_SESSION['btProfileCache']) > 0) {
-		
+
 			if($_SESSION['btProfileCacheRefresh']) {
 				echo "
 					<p class='failedFont' align='center'><b>Select Values Modified!  Your member's currently saved information will be reset.</b></p>
 				";
 			}
-			
-			
+
+
 			echo "
 				<table id='selectValueTable' align='center' border='0' cellspacing='2' cellpadding='2' width=\"75%\">
 					<tr>
@@ -58,21 +58,21 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			$counter = 0;
 			$totalOptions = count($_SESSION['btProfileCache']);
 			foreach($_SESSION['btProfileCache'] as $key => $selectValue) {
-				
+
 				$counter++;
-				
-				
+
+
 				$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveOption('up', '".$key."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' title='Move Up' width='24' height='24'></a>";
 				if($counter == 1) {
 					$dispUpArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' width='24' height='24'>";
 				}
-				
+
 				$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveOption('down', '".$key."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' title='Move Down' width='24' height='24'></a>";
 				if($totalOptions == $counter) {
 					$dispDownArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' width='24' height='24'>";
 				}
-				
-				
+
+
 				echo "
 					<tr>
 						<td class='main' style='padding-left: 3px' width=\"65%\">".$selectValue."</td>
@@ -83,13 +83,13 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 						</td>
 					</tr>
 				";
-				
+
 			}
-			
+
 			echo "</table>";
-			
+
 			if($counter == 0) {
-				
+
 				echo "
 					<script type='text/javascript'>
 						$(document).ready(function() {
@@ -97,10 +97,10 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 						});
 					</script>
 				";
-				
+
 			}
-			
-			
+
+
 			echo "
 				<script type='text/javascript'>
 					function moveOption(strDir, intKey) {
@@ -192,10 +192,10 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					
 				</script>
 			";
-		
+
 		}
-		
+
 	}
-	
-	
+
+
 }

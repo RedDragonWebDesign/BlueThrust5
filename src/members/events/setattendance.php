@@ -65,34 +65,34 @@ $statusSelectBox->setOptions(array("Unconfirmed", "Attended", "Excused Absence",
 			<td class='formTitle' style='border-right: 0px' align='center'><span id='checkAllX' style='cursor: pointer'>X</span></td>
 			<td class='formTitle' style='border-left: 0px'>Member:</td>
 		</tr>
-	<?php 
-		
+	<?php
+
 		if ( ! empty($_POST['submit']) ) {
-			
+
 			$arrColumns = array("attendconfirm_admin");
 			$arrValues = array($_POST['status']);
 			foreach($_POST as $value) {
-				
+
 				if(is_numeric($value) && $eventObj->objEventMember->select($value)) {
 					$checkEventID = $eventObj->objEventMember->get_info("event_id");
 					if($checkEventID == $eventInfo['event_id']) {
 						$eventObj->objEventMember->update($arrColumns, $arrValues);
 					}
 				}
-	
+
 			}
-		
+
 			$formObj = new Form();
 			$formObj->saveLink = MAIN_ROOT."members/events/manage.php?eID=".$eventInfo['event_id']."&pID=SetAttendance";
 			$formObj->saveMessageTitle = "Set Attendance";
 			$formObj->saveMessage = "Successfully set attendance!";
 			$formObj->showSuccessDialog();
 		}
-	
+
 		$counter = 0;
 		$eventMemberObj = new Member($mysqli);
 		while($row = $result->fetch_assoc()) {
-			
+
 			if($counter == 1) {
 				$addCSS = " alternateBGColor";
 				$counter = 0;
@@ -101,10 +101,10 @@ $statusSelectBox->setOptions(array("Unconfirmed", "Attended", "Excused Absence",
 				$addCSS = "";
 				$counter = 1;
 			}
-			
+
 			$eventMemberObj->select($row['member_id']);
 			$eventMemberID = $eventObj->getEventMemberID($row['member_id']);
-			
+
 			$formComponentName = "eventmember_".$eventMemberID;
 
 			echo "
@@ -114,7 +114,7 @@ $statusSelectBox->setOptions(array("Unconfirmed", "Attended", "Excused Absence",
 			</tr>
 			";
 		}
-	
+
 	?>
 	
 	</table>

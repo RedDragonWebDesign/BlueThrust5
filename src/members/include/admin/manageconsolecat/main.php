@@ -39,7 +39,7 @@ $cID = $_GET['cID'];
 
 
 if($cID == "") {
-	$cID = $consoleObj->findConsoleIDByName("Manage Console Categories");	
+	$cID = $consoleObj->findConsoleIDByName("Manage Console Categories");
 }
 
 

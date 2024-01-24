@@ -38,20 +38,20 @@ foreach($arrFolderList as $folderID => $folderName) {
 		$addCSS = "";
 		$counter = 1;
 	}
-	
+
 	$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveFolder('up', '".$folderID."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' class='manageListActionButton' title='Move Up'></a>";
 	$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveFolder('down', '".$folderID."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' class='manageListActionButton' title='Move Down'></a>";
-	
+
 	if($x == 0) {
-		$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height='24'>";	
+		$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height='24'>";
 	}
-	
+
 
 	if($intHighestOrder == $pmFolderInfo['sortnum']) {
 		$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height='24'>";
-	}	
-	
-	
+	}
+
+
 	echo "
 		<tr>
 			<td class='main manageList dottedLine".$addCSS."' style='width: 76%; padding-left: 10px'><b><a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&fID=".$folderID."&action=edit'>".filterText($folderName)."</a></b></td>
@@ -61,7 +61,7 @@ foreach($arrFolderList as $folderID => $folderName) {
 			<td class='main manageList dottedLine".$addCSS."' style='width: 6%'><a href='javascript:void(0)' onclick=\"deleteFolder('".$folderID."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' class='manageListActionButton' title='Delete Folder'></a></td>
 		</tr>	
 	";
-	
+
 	$x++;
 }
 
@@ -71,7 +71,7 @@ echo "
 
 
 if($x == 0) {
-	
+
 	echo "
 		<div class='shadedBox' style='margin-top: 20px; width: 45%; margin-left: auto; margin-right: auto'>
 			<p class='main' align='center'>
@@ -80,5 +80,5 @@ if($x == 0) {
 		</div>
 	
 	";
-	
+
 }

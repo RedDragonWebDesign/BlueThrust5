@@ -102,13 +102,13 @@ $dateTimeObj->setTimestamp($tournamentInfo['startdate']);
 $includeTimezone = "";
 $dispTimezone = "";
 
-if($tournamentInfo['timezone'] != "") { 
+if($tournamentInfo['timezone'] != "") {
 	$timeZoneObj = new DateTimeZone($tournamentInfo['timezone']);
 	$dateTimeObj->setTimezone($timeZoneObj);
 	$includeTimezone = " T";
 	$dispOffset = ((($timeZoneObj->getOffset($dateTimeObj))/60)/60);
 	$dispSign = ($dispOffset < 0) ? "" : "+";
-	
+
 	$dispTimezone = $dateTimeObj->format(" T")."<br>".str_replace("_", " ", $tournamentInfo['timezone'])." (UTC".$dispSign.$dispOffset.")";
 }
 
@@ -117,13 +117,13 @@ $dateTimeObj->setTimezone(new DateTimeZone("UTC"));
 $dispStartDate = $dateTimeObj->format("M j, Y g:i A").$dispTimezone;
 
 if($tournamentInfo['startdate'] < time() && $tournamentObj->getTournamentWinner() == 0) {
-	$dispStatus = "<span class='successFont'>Started</span>";	
+	$dispStatus = "<span class='successFont'>Started</span>";
 }
 elseif($tournamentInfo['startdate'] > time()) {
 	$dispStatus = "<span class='pendingFont'>Forming</span>";
 }
 elseif($tournamentInfo['startdate'] < time() && $tournamentObj->getTournamentWinner() != 0) {
-	$dispStatus = "<span class='failedFont'>Finished</span>";	
+	$dispStatus = "<span class='failedFont'>Finished</span>";
 }
 
 
@@ -138,7 +138,7 @@ else {
 }
 
 if($tournamentInfo['description'] == "") {
-	$tournamentInfo['description'] = "None";	
+	$tournamentInfo['description'] = "None";
 }
 
 if($tournamentInfo['seedtype'] == 1 && !$tournamentObj->checkForPools()) {
@@ -148,12 +148,12 @@ elseif($tournamentInfo['seedtype'] == 2) {
 	$dispSeedType = "Random";
 }
 else {
-	$dispSeedType = "Pools";	
+	$dispSeedType = "Pools";
 }
 
 
 if($tournamentInfo['eliminations'] == 1) {
-	$dispEliminations = "Single Elimination";	
+	$dispEliminations = "Single Elimination";
 }
 else {
 	$dispEliminations = "Double Elimination";
@@ -216,24 +216,24 @@ echo "
 			</p>
 		";
 
-		
-		
+
+
 		if($tournamentInfo['playersperteam'] == 1) {
-			$dispPlayerOrTeam = "Player";	
+			$dispPlayerOrTeam = "Player";
 		}
 		else {
-			$dispPlayerOrTeam = "Team";	
+			$dispPlayerOrTeam = "Team";
 		}
-		
+
 		if($tournamentInfo['seedtype'] == 3) {
 			$arrPools = $tournamentObj->getPoolList();
 			$dispPools = "";
 			$dispPoolLetter = "A";
 			foreach($arrPools as $poolID) {
 				$tournamentObj->objTournamentPool->select($poolID);
-				
-				
-				
+
+
+
 				$arrPoolTeams = $tournamentObj->objTournamentPool->getTeamsInPool();
 				$dispPools .= "<tr><td colspan='2' class='main'><b><u>Pool ".$dispPoolLetter.":</u></b></td></tr>";
 				$dispPools .= "<tr><td class='tinyFont' style='width: 65%'><b>".$dispPlayerOrTeam.":</b></td><td class='tinyFont' style='width: 35%'><b>Record:</b></td></tr>";
@@ -247,23 +247,23 @@ echo "
 					$tournamentObj->objTeam->select($teamID);
 					$dispTeamName = $tournamentObj->getPlayerName();
 					if($dispTeamName == "") {
-						$dispTeamName = "<i>Empty Spot</i>";	
+						$dispTeamName = "<i>Empty Spot</i>";
 					}
-					
+
 					$dispTeamRecord = $tournamentObj->objTournamentPool->getTeamRecord($teamID);
-					
-					$dispPools .= "<tr><td class='tinyFont".$addCSS."' valign='top' style='width: 65%'>".$counter.". ".$dispTeamName."</td><td class='tinyFont".$addCSS."' style='width: 35%' valign='top'>".$dispTeamRecord."</td></tr>";						
-					
+
+					$dispPools .= "<tr><td class='tinyFont".$addCSS."' valign='top' style='width: 65%'>".$counter.". ".$dispTeamName."</td><td class='tinyFont".$addCSS."' style='width: 35%' valign='top'>".$dispTeamRecord."</td></tr>";
+
 				}
-				
-				
-				
+
+
+
 				$dispPoolLetter++;
 				$dispPools .= "<tr><td colspan='2' class='tinyFont'><br></td></tr>";
 			}
-			
-			
-				
+
+
+
 			echo "
 				
 				<span class='tournamentProfileTitle'>POOLS</span>
@@ -277,13 +277,13 @@ echo "
 				</p>
 				
 			";
-				
-			
-			
-			
+
+
+
+
 		}
-		
-		
+
+
 		if($tournamentInfo['seedtype'] != 3) {
 			echo "
 			<span class='tournamentProfileTitle'>MATCHES</span>
@@ -308,7 +308,7 @@ echo "
 			</p>
 			
 			";
-			
+
 			if($tournamentObj->checkForPools()) {
 				echo "
 					<p class='tournamentProfileTitle' align='center'>
@@ -316,21 +316,21 @@ echo "
 					</p>
 				";
 			}
-			
+
 			if($tournamentObj->memberCanJoin($memberInfo['member_id'])) {
-				
+
 				$tConsoleObj = new ConsoleOption($mysqli);
 				$joinTournamentLink = $tConsoleObj->getConsoleLinkByName("Join a Tournament", false);
-				
+
 				echo "
 					<p class='tournamentProfileTitle' align='center'>
 						<a href='".$joinTournamentLink."&tID=".$tID."'>Join Tournament</a>
 					</p>
 				";
 			}
-			
+
 		}
-		
+
 		echo "	
 		</div>
 	

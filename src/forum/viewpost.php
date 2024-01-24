@@ -29,13 +29,13 @@ require_once(BASE_DIRECTORY."forum/templates/_header.php");
 if($boardObj->objPost->select($_GET['post'])) {
 	$topicInfo = $boardObj->objPost->getTopicInfo(true);
 	$boardObj->select($topicInfo['forumboard_id']);
-	
+
 	echo "
 		<div class='largeFont' style='padding-top: 20px; position:relative;'>
 			<b>".$boardObj->getLink(true)." - ".$boardObj->objPost->getLink(true)."</b>
 		</div>
 	";
-	
+
 	$boardObj->objPost->show(true);
 }
 else {

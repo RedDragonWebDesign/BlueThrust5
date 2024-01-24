@@ -1,7 +1,7 @@
 <?php
 
 	if(!defined("CAMPAIGN_FORM")) { exit(); }
-	
+
 	$arrPaypalCurrencyCodes = $campaignObj->getCurrencyCodes();
 	$arrPaypalCurrencyInfo = $campaignObj->getCurrencyCodeInfo();
 
@@ -41,19 +41,19 @@
 			$('#runUntil').change();
 		});
 	";
-	
-	
+
+
 	$maxYear = date("Y")+10;
 	$maxDate = "new Date(".$maxYear.",12,31)";
 
-	
+
 	$i=0;
-	
+
 	$arrComponents = array(
 		"mainsection" => array(
 			"type" => "section",
 			"options" => array("section_title" => "General Information"),
-			"sortorder" => $i++				
+			"sortorder" => $i++
 		),
 		"title" => array(
 			"type" => "text",
@@ -75,7 +75,7 @@
 			"display_name" => "Run Until",
 			"options" => array("forever" => "Forever", "choose" => "Choose Date"),
 			"attributes" => array("class" => "textBox formInput", "id" => "runUntil"),
-			"sortorder" => $i++	
+			"sortorder" => $i++
 		),
 		"enddate" => array(
 			"type" => "datepicker",
@@ -84,12 +84,12 @@
 			"db_name" => "dateend",
 			"before_html" => "<label class='formLabel' style='display: inline-block'></label>
 			",
-			"options" => array("changeMonth" => "true", 
-							   "changeYear" => "true", 
-							   "dateFormat" => "M d, yy", 
-							   "minDate" => "new Date(50, 1, 1)", 
-							   "maxDate" => $maxDate, 
-							   "yearRange" => "1950:".$maxYear, 
+			"options" => array("changeMonth" => "true",
+							   "changeYear" => "true",
+							   "dateFormat" => "M d, yy",
+							   "minDate" => "new Date(50, 1, 1)",
+							   "maxDate" => $maxDate,
+							   "yearRange" => "1950:".$maxYear,
 							   "altField" => "realEndDate"),
 			"validate" => array("NUMBER_ONLY"),
 			"value" => 0
@@ -148,11 +148,11 @@
 			"options" => $arrPaypalCurrencyCodes,
 			"value" => $donationPlugin->getConfigInfo("currency")
 		)
-			
+
 	);
-	
+
 	// Check for award medal console access
-	
+
 	$awardMedalCID = $consoleObj->findConsoleIDByName("Award Medal");
 	$consoleObj->select($awardMedalCID);
 	$hasAwardMedalAccess = false;
@@ -161,10 +161,10 @@
 		$medalOptions[0] = "None";
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."medals ORDER BY ordernum DESC");
 		while($row = $result->fetch_assoc()) {
-			$medalOptions[$row['medal_id']] = filterText($row['name']);	
+			$medalOptions[$row['medal_id']] = filterText($row['name']);
 		}
-		
-		
+
+
 		$arrComponents['awardmedal'] = array(
 			"type" => "select",
 			"display_name" => "Award Medal",
@@ -174,22 +174,22 @@
 			"db_name" => "awardmedal",
 			"options" => $medalOptions
 		);
-		
+
 	}
-	
+
 	$consoleObj->select($cID);
-	
+
 	if(!is_array($arrSelectRecur)) {
 		$arrSelectRecur['months'] = "selected";
 	}
-	
+
 	$arrRecurUnits = array("days"=>"Days", "weeks"=>"Weeks", "months"=>"Months", "years"=>"Years");
 	foreach($arrRecurUnits as $key => $value) {
-		$recurOptions .= "<option value='".$key."'".$arrSelectRecur[$key].">".$value."</option>";	
+		$recurOptions .= "<option value='".$key."'".$arrSelectRecur[$key].">".$value."</option>";
 	}
-	
+
 	$disabledRecurring = ($checkRecurringBox == 1) ? "" : " disabled='disabled'";
-	
+
 	$arrRecurringComponents = array(
 		"recurringsection" => array(
 			"type" => "section",
@@ -213,15 +213,15 @@
 			"validate" => array("validateCreateCampaignForm")
 		)
 	);
-	
-	
+
+
 	$arrComponents['submit'] = array(
 		"type" => "submit",
 		"value" => "Create Campaign",
 		"attributes" => array("class" => "submitButton formSubmitButton"),
 		"sortorder" => $i++
 	);
-	
+
 	$arrComponents = array_merge($arrComponents, $arrRecurringComponents);
 	$setupFormArgs = array(
 		"name" => "console-".$cID,
@@ -235,32 +235,30 @@
 		"saveAdditional" => array("member_id" => $memberInfo['member_id'], "datestarted" => time(), "recurringamount" => $_POST['recurringamount'], "recurringunit" => $_POST['recurringunit'])
 	);
 
-	
+
 	function validateCreateCampaignForm() {
 		global $hasAwardMedalAccess, $formObj, $arrRecurUnits;
-		
 
 		if(!$hasAwardMedalAccess) {
 			$formObj->errors[] = "You don't have access to the award medal privilege.";
 		}
-		
-		
+
 		$validRecurringUnits = array_keys($arrRecurUnits);
 		if(!in_array($_POST['recurringunit'], $validRecurringUnits) && $_POST['recurring'] == 1) {
-			$formObj->errors[] = "You selected an invalid recurring unit.";	
+			$formObj->errors[] = "You selected an invalid recurring unit.";
 		}
-		
+
 		if($_POST['recurringamount'] <= 0 && $_POST['recurring'] == 1) {
-			$formObj->errors[] = "The recurring amount must be greater than zero.";	
+			$formObj->errors[] = "The recurring amount must be greater than zero.";
 		}
-		
+
 		if($_POST['recurring'] != 1) {
 			$_POST['recurringunit'] = "";
 			$_POST['recurringamount'] = 0;
 			$_POST['recurring'] = 0;
 		}
 		else {
-		
+
 			switch($_POST['recurringunit']) {
 				case "days":
 					$_POST['recurring'] = date($formObj->objSave->DAY);
@@ -275,23 +273,20 @@
 					$_POST['recurring'] = date($formObj->objSave->YEAR);
 					break;
 			}
-			
-			
-			
+
 		}
-		
-		
+
 		if($_POST['rununtil'] == "forever") {
 			$_POST['enddate'] = 0;
 		}
-		
+
 		if($formObj->saveType == "update") {
 			global $campaignInfo;
-		
+
 			if($campaignInfo['recurringunit'] == $_POST['recurringunit'] && $campaignInfo['recurringamount'] == $_POST['recurringamount']) {
 				$_POST['recurring'] = $campaignInfo['currentperiod'];
 			}
-			
+
 		}
 
 	}

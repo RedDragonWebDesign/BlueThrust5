@@ -29,56 +29,56 @@ $appComponentObj = new BasicOrder($mysqli, "app_components", "appcomponent_id");
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 	require_once(BASE_DIRECTORY."members/include/membermanagement/include/appcomponent_form.php");
-	
+
 	if($_POST['saveComponent']) {
-		
-		
+
+
 		// Check Component Name
-			
+
 		if(trim($_POST['newComponentName']) == "") {
 			$addAppForm->errors[] = "You can't have a blank component name.<br>";
 		}
-		
+
 		if(!in_array($_POST['newComponentType'], array_keys($typeOptions))) {
 			$addAppForm->errors[] = "You selected an invalid component type.<br>";
 		}
-		
-		
-		
+
+
+
 	if(count($addAppForm->errors) == 0) {
-			
-			
+
+
 			if($appComponentObj->getHighestOrderNum() == "") {
-				$componentOrderNum = $appComponentObj->validateOrder("first", "before");	
+				$componentOrderNum = $appComponentObj->validateOrder("first", "before");
 			}
 			else {
 				$appComponentObj->selectByOrder(1);
 				$componentOrderNum = $appComponentObj->makeRoom("after");
 			}
-			
+
 			if($_POST['newComponentRequired'] != 0) {
 				$_POST['newComponentRequired'] = 1;
 			}
-			
+
 			$arrColumns = array("name", "componenttype", "ordernum", "required", "tooltip");
 			$arrValues = array($_POST['newComponentName'], $_POST['newComponentType'], $componentOrderNum, $_POST['newComponentRequired'], $_POST['newComponentTooltip']);
-			
+
 			if($appComponentObj->addNew($arrColumns, $arrValues)) {
-				
+
 				if($_POST['newComponentType'] == "select" || $_POST['newComponentType'] == "multiselect") {
 					$appComponentSelectOptionObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
 					$newComponentID = $appComponentObj->get_info("appcomponent_id");
 					foreach($_SESSION['btAppComponent']['cOptions'] as $optionValue) {
 						$appComponentSelectOptionObj->addNew(array("appcomponent_id", "componentvalue"), array($newComponentID, $optionValue));
 					}
-					
+
 				}
 				elseif($_POST['newComponentType'] == "profile") {
 					$appComponentSelectOptionObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
 					$newComponentID = $appComponentObj->get_info("appcomponent_id");
 					$appComponentSelectOptionObj->addNew(array("appcomponent_id", "componentvalue"), array($newComponentID, $_POST['profileOptionID']));
 				}
-				
+
 				$member->logAction("Added a new member application component.");
 				echo "
 					<div id='addAppComponentSuccess' style='display: none'>
@@ -124,16 +124,16 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 					</script>
 					
 				";
-				
-				
+
+
 			}
 			else {
 				$addAppForm->errors[] = "nable to save information to the database.  Please contact the website administrator.";
 			}
-			
+
 		}
-		
-		
+
+
 		if(count($addAppForm->errors) == 0) {
 			echo "
 				<script type='text/javascript'>
@@ -145,22 +145,22 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				</script>
 			";
 		}
-		
-		
-		
+
+
+
 	}
-	
+
 	if(!$_POST['saveComponent']) {
 		$_SESSION['btAppComponent']['cOptions'] = array();
 	}
-	
-		
-	
+
+
+
 	echo "<div id='addAppComponentFormDialog'>";
-	
+
 	$addAppForm->show();
-	
+
 	echo "</div>";
-	
-	
+
+
 }

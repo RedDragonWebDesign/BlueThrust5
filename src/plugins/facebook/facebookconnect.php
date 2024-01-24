@@ -44,12 +44,12 @@ if($blnCheckForFacebook) {
 
 		$fbObj->accessToken = $fbInfo['access_token'];
 		$fbInfo = $fbObj->getFBInfo();
-		
+
 		if($fbInfo == "") {
 			// User revoked access through Facebook, refresh page and re-ask for access
-			
+
 			$fbObj->delete();
-			
+
 			echo "
 			
 				<script type='text/javascript'>
@@ -59,19 +59,19 @@ if($blnCheckForFacebook) {
 				</script>
 			
 			";
-			
+
 			exit();
 		}
-		
+
 		$arrColumns = array("name", "lastupdate");
 		$arrValues = array($fbInfo['name'], time());
-		
+
 		$fbObj->select($fbID);
 		$fbObj->update($arrColumns, $arrValues);
 		$fbInfo = $fbObj->get_info_filtered();
-		
+
 	}
-	
+
 	echo "
 	
 		<div id='loadingSpiral' class='loadingSpiral'>
@@ -160,27 +160,27 @@ if($blnCheckForFacebook) {
 		</script>
 	
 	";
-	
+
 }
 elseif(!$blnCheckForFacebook && isset($_GET['code'])) {
-	
+
 	$fbObj->tokenNonce = $_SESSION['btFacebookNonce'];
 
 	$arrURLInfo = parse_url($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
-	
+
 	$arrAccessToken = $fbObj->getAccessToken($_GET['code'], $_GET['state'], $arrURLInfo['scheme']."://".$arrURLInfo['host'].$arrURLInfo['path']."?cID=".$_GET['cID']);
-	
+
 	$_SESSION['btFBAccessToken'] = $arrAccessToken['access_token'];
-	
+
 	if($fbObj->checkAccessToken()) {
 		$fbInfo = $fbObj->getFBInfo();
-		
+
 		// Save in DB
 		$arrColumns = array("facebook_id", "member_id", "name", "access_token", "lastupdate");
 		$arrValues = array($fbInfo['id'], $memberInfo['member_id'], $fbInfo['name'], $arrAccessToken['access_token'], time());
-		
+
 		$fbObj->addNew($arrColumns, $arrValues);
-		
+
 		echo "
 			
 			<script type='text/javascript'>
@@ -190,7 +190,7 @@ elseif(!$blnCheckForFacebook && isset($_GET['code'])) {
 		";
 	}
 	else {
-		
+
 		echo "
 		
 			<div class='shadedBox' style='margin-left: auto; margin-right: auto; width: 50%'>
@@ -201,9 +201,9 @@ elseif(!$blnCheckForFacebook && isset($_GET['code'])) {
 			</div>
 		
 		";
-		
+
 	}
-	
+
 }
 elseif(!$blnCheckForFacebook && isset($_GET['error_reason'])) {
 	echo "
@@ -214,10 +214,10 @@ elseif(!$blnCheckForFacebook && isset($_GET['error_reason'])) {
 	";
 }
 elseif(!$blnCheckForFacebook) {
-	
+
 	$loginURL = $fbObj->getFBConnectLink($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 	$_SESSION['btFacebookNonce'] = $fbObj->tokenNonce;
-	
+
 	echo "
 		<p>Redirecting to Facebook...</p>
 	
@@ -225,5 +225,5 @@ elseif(!$blnCheckForFacebook) {
 			window.location = '".$loginURL."';
 		</script>
 	";
-	
+
 }
