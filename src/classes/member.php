@@ -38,6 +38,10 @@ class Member extends Basic {
 
 
 	function select($memberID, $numericIDOnly = true) {
+		if ($memberID === null) {
+			return false;
+		}
+
 		$returnVal = false;
 		if (is_numeric($memberID)) {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE member_id = '$memberID'");
@@ -47,12 +51,8 @@ class Member extends Basic {
 				$returnVal = true;
 			}
 		} else {
-			if ($memberID !== null) {
-				$memberID = $this->MySQL->real_escape_string($memberID);
-				$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE username = '$memberID'");
-			} else {
-				return false;
-			}
+			$memberID = $this->MySQL->real_escape_string($memberID);
+			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE username = '$memberID'");
 
 			if ($result->num_rows > 0) {
 				$this->arrObjInfo = $result->fetch_assoc();
