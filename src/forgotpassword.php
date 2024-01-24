@@ -21,7 +21,7 @@ $siteDomain = $_SERVER['SERVER_NAME'];
 $dispError = "";
 $countErrors = 0;
 if (isset($_POST['countErrors'])) {
-$countErrors = $_POST['countErrors'];
+	$countErrors = $_POST['countErrors'];
 }
 
 
@@ -46,27 +46,27 @@ $dispBreadCrumb = "";
 require_once($prevFolder."themes/".$THEME."/_header.php");
 
 if (LOGGED_IN) {
-$countErrors++;
-$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You are logged in and cannot use this feature. Please use the change password in the console.<br>";
+	$countErrors++;
+	$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You are logged in and cannot use this feature. Please use the change password in the console.<br>";
 }
 
 if (count($_GET) > 0 && !isset($_GET['stage'])) {
-$countErrors++;
-$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Stage data not properly defined.<br>";
+	$countErrors++;
+	$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Stage data not properly defined.<br>";
 }
 elseif (!isset($_GET['stage'])) {
-$stage = 'start';
+	$stage = 'start';
 }
 else {
-$stage = $_GET['stage'];
+	$stage = $_GET['stage'];
 }
 
 if ( ! isset($_SERVER['HTTPS']) || trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
-    $dispHTTP = "http://";
+	$dispHTTP = "http://";
 }
-   else {
-    $dispHTTP = "https://";
-   }
+else {
+	$dispHTTP = "https://";
+}
 $url=$dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME'];
 $forgotPassObj = new Basic($mysqli, "forgotpass", "rqid");
 $memberObj = new Member($mysqli);
@@ -79,7 +79,7 @@ require_once($prevFolder."include/breadcrumb.php");
 
 <?php
 if ($stage == "start"  && $countErrors == 0) {
-echo "
+	echo "
 <form action='forgotpassword.php?stage=send' method='post'>
 	<input type='hidden' name='validator' value='20473833234' />
 	<div class='formDiv'>
@@ -102,41 +102,41 @@ echo "
 ";
 }
 elseif ($stage == "send"  && $countErrors == 0) {
-if (isset($_POST['validator'])) {
-if ($_POST['validator'] != '20473833234') {
-$countErrors++;
-$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Validator Entry Not Correct. Most likely due to an invalid form submission.<br>";
-}
-}
-else {
-$countErrors++;
-$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Validator Entry Not Existant. Most likely due to an invalid form submission.<br>";
-}
-$username = $_POST['username'];
-$email = $_POST['email'];
-$changekey = sha1(rand(-100000, 100000) . rand(-100000, 100000) . $username);
-$time = time();
-if ($memberObj->select($username)) {
-if ($memberObj->get_info("email") == $email) {
-$emailvalid = true;
-}
-else {
-$countErrors++;
-$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Email Address Not Valid.<br>";
-}
-}
-else {
-$countErrors++;
-$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Username Not Valid.<br>";
-}
-if ($countErrors == 0) {
-$arrayCol = array('username', 'email', 'changekey', 'timeofrq');
-$arrayVal = array($username, $email, $changekey, $time);
-$forgotPassObj->addNew($arrayCol, $arrayVal);
+	if (isset($_POST['validator'])) {
+		if ($_POST['validator'] != '20473833234') {
+			$countErrors++;
+			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Validator Entry Not Correct. Most likely due to an invalid form submission.<br>";
+		}
+	}
+	else {
+		$countErrors++;
+		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Validator Entry Not Existant. Most likely due to an invalid form submission.<br>";
+	}
+	$username = $_POST['username'];
+	$email = $_POST['email'];
+	$changekey = sha1(rand(-100000, 100000) . rand(-100000, 100000) . $username);
+	$time = time();
+	if ($memberObj->select($username)) {
+		if ($memberObj->get_info("email") == $email) {
+			$emailvalid = true;
+		}
+		else {
+			$countErrors++;
+			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Email Address Not Valid.<br>";
+		}
+	}
+	else {
+		$countErrors++;
+		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Username Not Valid.<br>";
+	}
+	if ($countErrors == 0) {
+		$arrayCol = array('username', 'email', 'changekey', 'timeofrq');
+		$arrayVal = array($username, $email, $changekey, $time);
+		$forgotPassObj->addNew($arrayCol, $arrayVal);
 
-$subject = 'Your Forgotten Password Request - ' . $CLAN_NAME;
+		$subject = 'Your Forgotten Password Request - ' . $CLAN_NAME;
 
-$message = "
+		$message = "
 <html>
 <body>
 Hello,<br>
@@ -149,29 +149,29 @@ Please click the following link to continue and follow the instructions on the p
 Thanks!
 ";
 
-$headers  = 'MIME-Version: 1.0' . "\r\n";
-$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-$headers .= 'From: '.$CLAN_NAME.' <no-reply@'.$siteDomain.'>' . "\r\n";
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		$headers .= 'From: '.$CLAN_NAME.' <no-reply@'.$siteDomain.'>' . "\r\n";
 
-mail($email, $subject, $message, $headers);
-echo "
+		mail($email, $subject, $message, $headers);
+		echo "
 <div class='formDiv'>
 Your request has been successfully submitted. Please check your email for the link and further instructions.
 </div>
 ";
-}
+	}
 }
 elseif ($stage == "validate"  && $countErrors == 0) {
-$changekey = $mysqli->real_escape_string($_GET['changekey']);
-$forgotPassObj->set_tableKey("changekey");
-if ($forgotPassObj->select($changekey, false)) {
-$dataArr = $forgotPassObj->get_info();
-$rqid = $dataArr['rqid'];
-$username = $dataArr['username'];
-$email = $dataArr['email'];
-$timeofrq = $dataArr['timeofrq'];
-$timeofrqcon = date('l jS \of F Y h:i:s A', $timeofrq);
-echo "
+	$changekey = $mysqli->real_escape_string($_GET['changekey']);
+	$forgotPassObj->set_tableKey("changekey");
+	if ($forgotPassObj->select($changekey, false)) {
+		$dataArr = $forgotPassObj->get_info();
+		$rqid = $dataArr['rqid'];
+		$username = $dataArr['username'];
+		$email = $dataArr['email'];
+		$timeofrq = $dataArr['timeofrq'];
+		$timeofrqcon = date('l jS \of F Y h:i:s A', $timeofrq);
+		echo "
 <form action='forgotpassword.php?stage=set' method='post'>
 <input type='hidden' name='changekey' value='$changekey' />
 <div class='formDiv'>
@@ -227,60 +227,60 @@ Time of Request: $timeofrqcon Server Time<br>
   
   </script>
 ";
-}
-else {
-$countErrors++;
-$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Not a Valid Changekey.<br>";
-}
+	}
+	else {
+		$countErrors++;
+		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Not a Valid Changekey.<br>";
+	}
 }
 elseif ($stage == "set" && isset($_POST['newpass']) && isset($_POST['changekey'])  && $countErrors == 0) {
-$newpass = $_POST['newpass'];
-$newpasscon = $_POST['connewpass'];
-$changekey = $_POST['changekey'];
-if ($newpass != $newpasscon) {
-$countErrors++;
-$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The two passwords did not match. Please click the back button in your browser and try again.<br>";
-}
+	$newpass = $_POST['newpass'];
+	$newpasscon = $_POST['connewpass'];
+	$changekey = $_POST['changekey'];
+	if ($newpass != $newpasscon) {
+		$countErrors++;
+		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The two passwords did not match. Please click the back button in your browser and try again.<br>";
+	}
 
-if ($countErrors == 0) {
-$forgotPassObj->set_tableKey("changekey");
-if ($forgotPassObj->select($changekey, false)) {
-$dataArr = $forgotPassObj->get_info();
-$username = $dataArr['username'];
-$email = $dataArr['email'];
-if ($memberObj->select($username)) {
-if ($memberObj->get_info("email") == $email) {
-$emailvalid = true;
-}
-else {
-$countErrors++;
-$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> POST Validation Failed. Email Validation Error.<br>";
-}
-}
-else {
-$countErrors++;
-$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> POST Validation Failed. Username Validation Error.<br>";
-}
-}
-else {
-$countErrors++;
-$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> POST Validation Failed. Changekey Validation Error.<br>";
-}
-if ($emailvalid == true && $countErrors == 0) {
-$memberObj->set_password($newpass);
-$forgotPassObj->delete();
-echo "
+	if ($countErrors == 0) {
+		$forgotPassObj->set_tableKey("changekey");
+		if ($forgotPassObj->select($changekey, false)) {
+			$dataArr = $forgotPassObj->get_info();
+			$username = $dataArr['username'];
+			$email = $dataArr['email'];
+			if ($memberObj->select($username)) {
+				if ($memberObj->get_info("email") == $email) {
+					$emailvalid = true;
+				}
+				else {
+					$countErrors++;
+					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> POST Validation Failed. Email Validation Error.<br>";
+				}
+			}
+			else {
+				$countErrors++;
+				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> POST Validation Failed. Username Validation Error.<br>";
+			}
+		}
+		else {
+			$countErrors++;
+			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> POST Validation Failed. Changekey Validation Error.<br>";
+		}
+		if ($emailvalid == true && $countErrors == 0) {
+			$memberObj->set_password($newpass);
+			$forgotPassObj->delete();
+			echo "
 <div class='shadedBox' style='margin-left: auto; margin-right: auto; width: 40%'>
 	<p class'main' align='center'>
 		<b>Password Successfully Changed!</b> You can now log in to the site with your new password!
 	</p>
 </div>
 ";
-}
-}
+		}
+	}
 }
 elseif ($countErrors == 0) {
-$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Not a proper setup definition.<br>";
+	$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Not a proper setup definition.<br>";
 }
 if ($dispError != "") {
 		echo "

@@ -163,7 +163,7 @@ class ImageSlider extends BasicOrder {
 			$closeLinkTag = ($addLink != "") ? "</a>" : "";
 
 			if ($this->arrObjInfo['fillstretch'] == "stretch") {
-			echo "
+				echo "
 				<div class='hp_imgScrollContainer'>
 					".$addLink.$addOverlay."<img src='".$this->arrObjInfo['imageurl']."' style='width: ".$this->intDisplayWidth.$this->strDisplayWidthUnit."; height: ".$this->intDisplayHeight.$this->strDisplayHeightUnit."'>".$closeLinkTag."
 				</div>

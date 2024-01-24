@@ -159,11 +159,11 @@ if ( ! empty($_POST['submit']) ) {
 
 
 				if ($statInfo['gamestatsID'] != "" and $gameStatsObj->select($statInfo['gamestatsID'])) {
-				// Updating already added stats
+					// Updating already added stats
 					$checkSave = $gameStatsObj->update($updateGameStatCol, $updateGameStatsVal);
 				}
 				else {
-				// Adding new stats
+					// Adding new stats
 					$checkSave = $gameStatsObj->addNew($updateGameStatCol, $updateGameStatsVal);
 				}
 

@@ -27,20 +27,20 @@
 	$member->select($_SESSION['btUsername']);
 
 
-	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-		$memberInfo = $member->get_info_filtered();
-	}
-	else {
-		exit();
-	}
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+	$memberInfo = $member->get_info_filtered();
+}
+else {
+	exit();
+}
 
 
-	if ($ipbanObj->select($_POST['ipaddress'])) {
-		$ipbanObj->delete();
-		$arrReturn = array("result" => "success");
-	}
-	else {
-		$arrReturn = array("result" => "fail");
-	}
+if ($ipbanObj->select($_POST['ipaddress'])) {
+	$ipbanObj->delete();
+	$arrReturn = array("result" => "success");
+}
+else {
+	$arrReturn = array("result" => "fail");
+}
 
 	echo json_encode($arrReturn);

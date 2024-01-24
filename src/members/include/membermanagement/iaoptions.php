@@ -37,13 +37,13 @@ $dispError = "";
 $countErrors = 0;
 if ($memberInfo['rank_id'] == 1) {
 	$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
- 	$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
+	$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
 
- 	if ($maxOrderNum->num_rows > 0) {
- 		$result = $mysqli->query("SELECT rank_id FROM ".$dbprefix."ranks WHERE ordernum = '".$arrMaxOrderNum[0]."'");
- 		$row = $result->fetch_assoc();
- 		$rankInfo['promotepower'] = $row['rank_id'];
- 	}
+	if ($maxOrderNum->num_rows > 0) {
+		$result = $mysqli->query("SELECT rank_id FROM ".$dbprefix."ranks WHERE ordernum = '".$arrMaxOrderNum[0]."'");
+		$row = $result->fetch_assoc();
+		$rankInfo['promotepower'] = $row['rank_id'];
+	}
 }
 
 $rankObj = new Rank($mysqli);
@@ -73,10 +73,10 @@ if ( ! empty($_POST['submit']) ) {
 		$arrValues = ($_POST['ia'] == 1) ? array(1) : array(0);
 
 		if ($_POST['ia'] = "1") {
-$ia_NAME = "On Leave";
-        } else {
-$ia_NAME = "Off Leave";
-        }
+			$ia_NAME = "On Leave";
+		} else {
+			$ia_NAME = "Off Leave";
+		}
 
 
 		if ($member->update($arrColumns, $arrValues)) {
@@ -101,10 +101,10 @@ $ia_NAME = "Off Leave";
 			";
 
 			if ($_POST['why'] != "I") {
-$reasonWHY = " Until $reason";
-            } else {
-$reasonWHY = "";
-            }
+				$reasonWHY = " Until $reason";
+			} else {
+				$reasonWHY = "";
+			}
 			$member->postNotification("You are ".$ia_NAME.$reasonWHY);
 
 			$dispIAMember = $member->getMemberLink();
@@ -127,7 +127,7 @@ $reasonWHY = "";
 
 
 if ( empty($_POST['submit']) ) {
- 	$memberoptions = "";
+	$memberoptions = "";
 	$result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.name FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."ranks.rank_id = ".$dbprefix."members.rank_id AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id != '1' ORDER BY ".$dbprefix."ranks.ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
 		$memberoptions .= "<option value='".$row['member_id']."'>".filterText($row['name'])." ".filterText($row['username'])."</option>";

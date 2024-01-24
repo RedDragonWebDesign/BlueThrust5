@@ -84,7 +84,7 @@ class ProfileOption extends BasicSort {
 
 		$returnVal = false;
 
-			if ($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$countErrors = 0;
 			$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."profileoptions_select WHERE profileoption_id = '".$this->intTableKeyValue."'");
 
@@ -107,7 +107,7 @@ class ProfileOption extends BasicSort {
 			if ($countErrors == 0) {
 				$returnVal = true;
 			}
-		    }
+		}
 
 		return $returnVal;
 	}

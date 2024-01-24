@@ -50,27 +50,27 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 
 				$arrPlayers = $tournamentObj->getPlayers();
 
-					if ($member->select($newPlayer)) {
-						$newPlayerID = $member->get_info("member_id");
+				if ($member->select($newPlayer)) {
+					$newPlayerID = $member->get_info("member_id");
 
-						if (!in_array($newPlayerID, $arrPlayers)) { // Prevent multiple entries of same person
-							$tournamentObj->objPlayer->addNew(array("member_id", "tournament_id"), array($newPlayerID, $tID));
-						}
+					if (!in_array($newPlayerID, $arrPlayers)) { // Prevent multiple entries of same person
+						$tournamentObj->objPlayer->addNew(array("member_id", "tournament_id"), array($newPlayerID, $tID));
 					}
-					elseif ($tournamentInfo['access'] != 1) {
-						if (!in_array($newPlayer, $arrPlayers)) { // Prevent multiple entries of same person
-							$tournamentObj->objPlayer->addNew(array("displayname", "tournament_id"), array($newPlayer, $tID));
-						}
+				}
+				elseif ($tournamentInfo['access'] != 1) {
+					if (!in_array($newPlayer, $arrPlayers)) { // Prevent multiple entries of same person
+						$tournamentObj->objPlayer->addNew(array("displayname", "tournament_id"), array($newPlayer, $tID));
 					}
+				}
 
 
-					if ($tournamentInfo['playersperteam'] == 1) {
-						$arrUnfilledTeams = $tournamentObj->getUnfilledTeams();
-						if (count($arrUnfilledTeams) > 0) {
-							$newTeam = $arrUnfilledTeams[0];
-							$tournamentObj->objPlayer->update(array("team_id"), array($newTeam));
-						}
+				if ($tournamentInfo['playersperteam'] == 1) {
+					$arrUnfilledTeams = $tournamentObj->getUnfilledTeams();
+					if (count($arrUnfilledTeams) > 0) {
+						$newTeam = $arrUnfilledTeams[0];
+						$tournamentObj->objPlayer->update(array("team_id"), array($newTeam));
 					}
+				}
 			}
 
 
@@ -81,10 +81,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 					});
 				</script>
 			";
-	    }
-	else {
-		$filterPlayers = filterText($_POST['players']);
-		echo "
+		}
+		else {
+			$filterPlayers = filterText($_POST['players']);
+			echo "
 			
 			<script type='text/javascript'>
 			
@@ -115,7 +115,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 			</script>
 		
 		";
-	}
+		}
 
 
 		$arrPlayers = $tournamentObj->getPlayers();

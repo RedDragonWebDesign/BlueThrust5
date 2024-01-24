@@ -245,9 +245,9 @@ if ( empty($_POST['submit']) ) {
 								File:<br><input type='file' name='headerimagefile' class='textBox' style='width: 250px; border: 0px'><br>
 								<span style='font-size: 10px'>File Types: .jpg, .gif, .png, .bmp | <a href='javascript:void(0)' onmouseover=\"showToolTip('The file size upload limit is controlled by your PHP settings in the php.ini file.')\" onmouseout='hideToolTip()'>File Size: ".ini_get("upload_max_filesize")."B or less</a></span>
 								";
-								if ($menuCatInfo['headertype'] == "image") {
-									echo "<br><i>Current Image: <a href='javascript:void(0)' id='previewImageLink'>View Image</a></i>";
-								}
+	if ($menuCatInfo['headertype'] == "image") {
+		echo "<br><i>Current Image: <a href='javascript:void(0)' id='previewImageLink'>View Image</a></i>";
+	}
 							echo "
 								<p><b><i>OR</i></b></p>
 								URL:<br><input type='text' name='headerimageurl' value='' class='textBox' style='width: 250px'>

@@ -1,8 +1,8 @@
 <?php
 
-	if (!defined("RESIZE_FORUM_IMAGES")) {
-		exit();
-	}
+if (!defined("RESIZE_FORUM_IMAGES")) {
+	exit();
+}
 
 	// Image and Signuature Size Settings
 	$setMaxImageWidthUnit = ($websiteInfo['forum_imagewidthunit'] == "%") ? "%" : "px";
@@ -19,8 +19,8 @@
 
 	$editForumCSS = "";
 
-	if ($setMaxImageWidth != "" || $setMaxImageHeight != "") {
-		$editForumCSS .= "
+if ($setMaxImageWidth != "" || $setMaxImageHeight != "") {
+	$editForumCSS .= "
 			.boardPostInfo img {
 				".$setMaxImageWidth.";
 				".$setMaxImageHeight.";
@@ -31,25 +31,25 @@
 				".$setMaxImageHeight.";
 			}	
 		";
-	}
+}
 
-	if ($setMaxSigWidth != "" || $setMaxSigHeight != "") {
-		$editForumCSS .= "
+if ($setMaxSigWidth != "" || $setMaxSigHeight != "") {
+	$editForumCSS .= "
 			.forumSignatureContainer img {
 				".$setMaxSigWidth.";
 				".$setMaxSigHeight.";
 			}	
 		";
-	}
+}
 
 
-	if ($editForumCSS != "") {
-		$EXTERNAL_JAVASCRIPT .= "	
+if ($editForumCSS != "") {
+	$EXTERNAL_JAVASCRIPT .= "	
 			<style>
 				".$editForumCSS."		
 			</style>
 		";
-	}
+}
 
 	$EXTERNAL_JAVASCRIPT .= "
 	<style>

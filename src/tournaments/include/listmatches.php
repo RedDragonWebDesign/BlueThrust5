@@ -19,15 +19,15 @@ require_once("../../classes/tournament.php");
 require_once("../../classes/consoleoption.php");
 
 if (!isset($tournamentObj)) {
-$consoleObj = new ConsoleOption($mysqli);
+	$consoleObj = new ConsoleOption($mysqli);
 
-$cID = $consoleObj->findConsoleIDByName("Manage Tournaments");
-$consoleObj->select($cID);
+	$cID = $consoleObj->findConsoleIDByName("Manage Tournaments");
+	$consoleObj->select($cID);
 
 
-$member = new Member($mysqli);
-$member->select($_SESSION['btUsername']);
-$tournamentObj = new Tournament($mysqli);
+	$member = new Member($mysqli);
+	$member->select($_SESSION['btUsername']);
+	$tournamentObj = new Tournament($mysqli);
 }
 
 
@@ -76,31 +76,31 @@ foreach ($arrMatches as $matchID) {
 	";
 
 
-		for ($i=1; $i<=2; $i++) {
-			$teamColumn = "team".$i."_id";
-			$dispName = "Empty Spot";
-			$dispSeed = "";
-			if ($tournamentObj->objTeam->select($matchInfo[$teamColumn])) {
-				$teamInfo = $tournamentObj->objTeam->get_info_filtered();
-				$dispSeed = "#".$teamInfo['seed'];
-				//$arrPlayers = $tournamentObj->getTeamPlayers($matchInfo[$teamColumn], true);
-				$dispName = $tournamentObj->getPlayerName();
+	for ($i=1; $i<=2; $i++) {
+		$teamColumn = "team".$i."_id";
+		$dispName = "Empty Spot";
+		$dispSeed = "";
+		if ($tournamentObj->objTeam->select($matchInfo[$teamColumn])) {
+			$teamInfo = $tournamentObj->objTeam->get_info_filtered();
+			$dispSeed = "#".$teamInfo['seed'];
+			//$arrPlayers = $tournamentObj->getTeamPlayers($matchInfo[$teamColumn], true);
+			$dispName = $tournamentObj->getPlayerName();
 
-				if ($dispName == "") {
-					$dispName = "Bye";
-				}
+			if ($dispName == "") {
+				$dispName = "Bye";
 			}
+		}
 
 
 
-			echo "
+		echo "
 			<div class='shadedBox' style='position: relative; border: 0px; margin-bottom: 2px'>".$dispName."
 			
 				<div style='position: absolute; width: 40px; right: 30px; top: 5px; z-index: 9999'><a href='javascript:void(0)' onmouseover=\"showToolTip('Score')\" onmouseout='hideToolTip()'".$addStyle[$i].">".$teamScore[$i]."</a></div>
 				<div style='position: absolute; width: 25px; right: 3px; top: 5px; z-index: 9999'><a href='javascript:void(0)' onmouseover=\"showToolTip('Seed')\" onmouseout='hideToolTip()'>".$dispSeed."</a></div>
 			</div>					
 			";
-		}
+	}
 
 
 

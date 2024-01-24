@@ -79,36 +79,36 @@ if ($tournamentInfo['seedtype'] != 3 && !$tournamentObj->checkForPools()) {
 		
 		<?php
 
-			$arrPools = $tournamentObj->getPoolList();
-			$dispPoolLetter = "A";
-			foreach ($arrPools as $poolID) {
-				$tournamentObj->objTournamentPool->select($poolID);
-				$arrTeamsInPool = $tournamentObj->objTournamentPool->getTeamsInPool();
+		$arrPools = $tournamentObj->getPoolList();
+		$dispPoolLetter = "A";
+		foreach ($arrPools as $poolID) {
+			$tournamentObj->objTournamentPool->select($poolID);
+			$arrTeamsInPool = $tournamentObj->objTournamentPool->getTeamsInPool();
 
-				echo "<p class='main' align='left'><b><u>Pool ".$dispPoolLetter.":</u></b></p>";
-				$counter = 0;
+			echo "<p class='main' align='left'><b><u>Pool ".$dispPoolLetter.":</u></b></p>";
+			$counter = 0;
 
-				$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentpools_teams WHERE pool_id = '".$poolID."'");
-				while ($row = $result->fetch_assoc()) {
-					$dispTeamOne = $tournamentObj->getPlayerName($row['team1_id']);
-					$dispTeamTwo = $tournamentObj->getPlayerName($row['team2_id']);
+			$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentpools_teams WHERE pool_id = '".$poolID."'");
+			while ($row = $result->fetch_assoc()) {
+				$dispTeamOne = $tournamentObj->getPlayerName($row['team1_id']);
+				$dispTeamTwo = $tournamentObj->getPlayerName($row['team2_id']);
 
-					if ($dispTeamOne == "") {
-						$dispTeamOne = "<i>Empty Spot</i>";
-					}
+				if ($dispTeamOne == "") {
+					$dispTeamOne = "<i>Empty Spot</i>";
+				}
 
-					if ($dispTeamTwo == "") {
-						$dispTeamTwo = "<i>Empty Spot</i>";
-					}
+				if ($dispTeamTwo == "") {
+					$dispTeamTwo = "<i>Empty Spot</i>";
+				}
 
-					if ($row['winner'] == 1) {
-						$dispTeamOne = "<span class='successFont' style='font-weight: bold'>".$dispTeamOne."</span>";
-					}
-					elseif ($row['winner'] == 2) {
-						$dispTeamTwo = "<span class='successFont' style='font-weight: bold'>".$dispTeamTwo."</span>";
-					}
+				if ($row['winner'] == 1) {
+					$dispTeamOne = "<span class='successFont' style='font-weight: bold'>".$dispTeamOne."</span>";
+				}
+				elseif ($row['winner'] == 2) {
+					$dispTeamTwo = "<span class='successFont' style='font-weight: bold'>".$dispTeamTwo."</span>";
+				}
 
-					echo "
+				echo "
 						<div class='dottedBox main' style='width: 280px; float: left'>
 							<div class='shadedBox main' style='position: relative; border-width: 0px; text-align: left'>
 								".$dispTeamOne."
@@ -124,16 +124,16 @@ if ($tournamentInfo['seedtype'] != 3 && !$tournamentObj->checkForPools()) {
 						</div>
 					";
 
-					$counter++;
-					if ($counter == 2) {
-						$counter = 0;
-						echo "<div style='clear: both'></div>";
-					}
+				$counter++;
+				if ($counter == 2) {
+					$counter = 0;
+					echo "<div style='clear: both'></div>";
 				}
-
-
-				$dispPoolLetter++;
 			}
+
+
+			$dispPoolLetter++;
+		}
 
 
 		?>

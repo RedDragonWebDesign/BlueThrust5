@@ -27,7 +27,7 @@ if (!isset($member)) {
 }
 
 if (!isset($intAddNewMenuItemID)) {
-$intAddNewMenuItemID = $consoleObj->findConsoleIDByName("Add Menu Item");
+	$intAddNewMenuItemID = $consoleObj->findConsoleIDByName("Add Menu Item");
 }
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {

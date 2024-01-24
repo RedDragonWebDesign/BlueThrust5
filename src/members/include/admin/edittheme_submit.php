@@ -191,9 +191,9 @@ else {
 				$('#saveMessage').fadeIn(400);
 				";
 
-		if ($scrollTop) {
-			echo "$('html, body').animate({ scrollTop: 0 });";
-		}
+	if ($scrollTop) {
+		echo "$('html, body').animate({ scrollTop: 0 });";
+	}
 
 				echo "
 			});

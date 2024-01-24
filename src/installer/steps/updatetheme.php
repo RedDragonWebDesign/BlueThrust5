@@ -10,13 +10,13 @@
 	$websiteInfoObj = new Basic($mysqli, "websiteinfo", "websiteinfo_id");
 
 	$member->select($_POST['user']);
-	if ($member->authorizeLogin($_POST['pass'], 1) && $member->get_info("rank_id") == "1") {
-		$memberInfo = $member->get_info_filtered();
-		$websiteInfoObj->select(1);
-		$websiteInfoObj->update(array("theme"), array($_POST['themeName']));
+if ($member->authorizeLogin($_POST['pass'], 1) && $member->get_info("rank_id") == "1") {
+	$memberInfo = $member->get_info_filtered();
+	$websiteInfoObj->select(1);
+	$websiteInfoObj->update(array("theme"), array($_POST['themeName']));
 
 
-		echo "
+	echo "
 		
 			<script type='text/javascript'>
 			
@@ -25,18 +25,18 @@
 			</script>
 		
 		";
+}
+else {
+	if (!$member->select($_POST['user'])) {
+		echo "Unable to select user ".$_POST['user']."<br>";
 	}
-	else {
-		if (!$member->select($_POST['user'])) {
-			echo "Unable to select user ".$_POST['user']."<br>";
-		}
 
 
-		if (!$member->authorizeLogin($_POST['pass'], 1)) {
-			echo "Not Authorized<br>";
-		}
-
-		if (!$member->get_info("rank_id") == "1") {
-			echo "Not Admin<br>";
-		}
+	if (!$member->authorizeLogin($_POST['pass'], 1)) {
+		echo "Not Authorized<br>";
 	}
+
+	if (!$member->get_info("rank_id") == "1") {
+		echo "Not Admin<br>";
+	}
+}

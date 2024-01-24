@@ -138,7 +138,7 @@ class Basic {
 		if (count($filterArgs) > 0) {
 			$arrSQL = array();
 			foreach ($filterArgs as $columnName => $value) {
-			$setComparator = isset($filterComparators[$columnName]) ? $filterComparators[$columnName] : "=";
+				$setComparator = isset($filterComparators[$columnName]) ? $filterComparators[$columnName] : "=";
 
 				$arrSQL[] = $columnName." ".$setComparator." ?";
 			}

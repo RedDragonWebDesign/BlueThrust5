@@ -221,8 +221,8 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 				}
 			}
 
-		$manageRanksCID = $consoleObj->findConsoleIDByName("Manage Ranks");
-		echo "
+			$manageRanksCID = $consoleObj->findConsoleIDByName("Manage Ranks");
+			echo "
 			<div style='display: none' id='successBox'>
 				<p align='center'>
 					Successfully Added New Rank: <b>".$newRankInfo['name']."</b>!
@@ -246,7 +246,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 if (!isset($_POST['submit']) || !$_POST['submit']) {
 	$rankCategories = $mysqli->query("SELECT * FROM ".$dbprefix."rankcategory ORDER BY ordernum");
 
-    $rankCatOptions = "";
+	$rankCatOptions = "";
 	while ($arrRankCat = $rankCategories->fetch_assoc()) {
 		$rankCatName = filterText($arrRankCat['name']);
 		$rankCatOptions .= "<option value='".$arrRankCat['rankcategory_id']."'>".$arrRankCat['name']."</option>";
@@ -384,52 +384,52 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 							";
 
 							$consoleCategories = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory ORDER BY ordernum DESC");
-							while ($arrConsoleCats = $consoleCategories->fetch_assoc()) {
-								$tempNum = $arrConsoleCats['consolecategory_id'];
-								$arrFormatOptions[$tempNum] = array();
-							}
+	while ($arrConsoleCats = $consoleCategories->fetch_assoc()) {
+		$tempNum = $arrConsoleCats['consolecategory_id'];
+		$arrFormatOptions[$tempNum] = array();
+	}
 
 							$consoleOptions = $mysqli->query("SELECT * FROM ".$dbprefix."console ORDER BY sortnum");
 							$rankOptions = "";
-							while ($arrConsoleOptions = $consoleOptions->fetch_assoc()) {
-								$tempCat = $arrConsoleOptions['consolecategory_id'];
-								$arrFormatOptions[$tempCat][] = $arrConsoleOptions['console_id'];
-							}
+	while ($arrConsoleOptions = $consoleOptions->fetch_assoc()) {
+		$tempCat = $arrConsoleOptions['consolecategory_id'];
+		$arrFormatOptions[$tempCat][] = $arrConsoleOptions['console_id'];
+	}
 
 							$countConsoleCats = 0;
 							$consoleCatObj = new Basic($mysqli, "consolecategory", "consolecategory_id");
-                            $consoleJSCode = "";
-							foreach ($arrFormatOptions as $key => $arrOptions) {
-								$consoleCatObj->select($key);
-								$consoleCatInfo = $consoleCatObj->get_info();
+							$consoleJSCode = "";
+	foreach ($arrFormatOptions as $key => $arrOptions) {
+		$consoleCatObj->select($key);
+		$consoleCatInfo = $consoleCatObj->get_info();
 
-								if (count($arrOptions) > 0) {
-									$countConsoleCats++;
-									echo "<br>
+		if (count($arrOptions) > 0) {
+			$countConsoleCats++;
+			echo "<br>
 										<u><b>".$consoleCatInfo['name']."</b></u> - <a href='javascript:void(0)' onclick=\"selectAllCheckboxes('category".$countConsoleCats."', 1)\">Check All</a> - <a href='javascript:void(0)' onclick=\"selectAllCheckboxes('category".$countConsoleCats."', 0)\">Uncheck All</a><br>
 										<div id='category".$countConsoleCats."'>
 									";
 
-									foreach ($arrOptions as $consoleOption) {
-										$consoleObj->select($consoleOption);
-										$consoleOptionInfo = $consoleObj->get_info();
+			foreach ($arrOptions as $consoleOption) {
+				$consoleObj->select($consoleOption);
+				$consoleOptionInfo = $consoleObj->get_info();
 
-										$consoleJSCode .= "arrConsoleIDs[".$consoleOptionInfo['console_id']."] = $('#consoleid_".$consoleOptionInfo['console_id']."').attr('checked'); 
+				$consoleJSCode .= "arrConsoleIDs[".$consoleOptionInfo['console_id']."] = $('#consoleid_".$consoleOptionInfo['console_id']."').attr('checked'); 
 			";
 
-										if ($consoleOptionInfo['pagetitle'] != "-separator-") {
-											echo "&nbsp;&nbsp;<input type='checkbox' name='consoleid_".$consoleOptionInfo['console_id']."' value='1'> ".$consoleOptionInfo['pagetitle']."<br>";
-										}
-										elseif ($consoleOptionInfo['pagetitle'] == "-separator-") {
-											$dispSeparator = "<div class='dashedLine' style='width: 250px; margin: 6px 1px; padding: 0px; float: left'></div>";
-											echo "<div style='float: left'>&nbsp;&nbsp;<input type='checkbox' name='consoleid_".$consoleOptionInfo['console_id']."' value='1'>&nbsp;</div>".$dispSeparator;
-											echo "<div style='clear: both'></div>";
-										}
-									}
+				if ($consoleOptionInfo['pagetitle'] != "-separator-") {
+					echo "&nbsp;&nbsp;<input type='checkbox' name='consoleid_".$consoleOptionInfo['console_id']."' value='1'> ".$consoleOptionInfo['pagetitle']."<br>";
+				}
+				elseif ($consoleOptionInfo['pagetitle'] == "-separator-") {
+					$dispSeparator = "<div class='dashedLine' style='width: 250px; margin: 6px 1px; padding: 0px; float: left'></div>";
+					echo "<div style='float: left'>&nbsp;&nbsp;<input type='checkbox' name='consoleid_".$consoleOptionInfo['console_id']."' value='1'>&nbsp;</div>".$dispSeparator;
+					echo "<div style='clear: both'></div>";
+				}
+			}
 
-									echo "</div>";
-								}
-							}
+			echo "</div>";
+		}
+	}
 
 							echo "
 						</div>

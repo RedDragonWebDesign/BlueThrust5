@@ -177,7 +177,7 @@ if ($checkMember) {
 
 
 if ($LOGIN_FAIL) {
-die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
+	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
 }
 
 

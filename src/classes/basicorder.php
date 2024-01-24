@@ -335,7 +335,7 @@ class BasicOrder extends Basic {
 	 *  if you want to modify the scripts.
 	 *
 	 *
- 	 *  Returns an array of IDs for the associated table
+	 *  Returns an array of IDs for the associated table
 	 *
 	 */
 	function getAssociateIDs($sqlOrderBY = "", $bypassFilter = false) {

@@ -1,8 +1,8 @@
 <?php
 
-	if (!defined("MAIN_ROOT")) {
-exit();
-    }
+if (!defined("MAIN_ROOT")) {
+	exit();
+}
 
 
 	$totalPostsQuery = "SELECT COUNT(*) as totalPosts FROM ".$dbprefix."forum_post";
@@ -20,17 +20,17 @@ exit();
 
 	// Find latest post
 	$dispLatestPost = "";
-	if ($arrLatestPostInfo['id'] != 0) {
-		$boardObj->objPost->select($arrLatestPostInfo['id']);
-		$postInfo = $boardObj->objPost->get_info_filtered();
-		$topicInfo = $boardObj->objPost->getTopicInfo(true);
+if ($arrLatestPostInfo['id'] != 0) {
+	$boardObj->objPost->select($arrLatestPostInfo['id']);
+	$postInfo = $boardObj->objPost->get_info_filtered();
+	$topicInfo = $boardObj->objPost->getTopicInfo(true);
 
-		$postMemberObj->select($postInfo['member_id']);
+	$postMemberObj->select($postInfo['member_id']);
 
-		$postLink = $boardObj->objPost->getLink();
+	$postLink = $boardObj->objPost->getLink();
 
-		$dispLatestPost = "<br><b>Latest Post:</b> <a href='".$postLink."'>".$topicInfo['title']."</a> by ".$postMemberObj->getMemberLink()."<br>";
-	}
+	$dispLatestPost = "<br><b>Latest Post:</b> <a href='".$postLink."'>".$topicInfo['title']."</a> by ".$postMemberObj->getMemberLink()."<br>";
+}
 
 ?>
 

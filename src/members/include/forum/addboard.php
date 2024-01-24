@@ -415,8 +415,8 @@ if ( empty($_POST['submit']) ) {
 				
 				";
 
-			if ($dispError != "") {
-				echo "
+	if ($dispError != "") {
+		echo "
 					$('#loadingSpiral').show();
 					$('#boardMemberAccess').hide();
 					
@@ -428,7 +428,7 @@ if ( empty($_POST['submit']) ) {
 	
 					});
 				";
-			}
+	}
 
 			echo "
 				

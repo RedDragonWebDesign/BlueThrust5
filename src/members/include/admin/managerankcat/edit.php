@@ -250,8 +250,8 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 	$rankoptionheight = 20*$rankcounter;
 
 	if ($rankoptionheight > 300) {
-$rankoptionheight = 300;
-    }
+		$rankoptionheight = 300;
+	}
 
 	if ($rankoptions == "") {
 		$rankoptions = "<i>no ranks in this category!</i>";

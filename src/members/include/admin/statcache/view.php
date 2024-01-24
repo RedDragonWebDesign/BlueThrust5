@@ -66,20 +66,20 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 						$dispSecondStat = filterText($_SESSION['btStatCache'][$statInfo['secondStat']]['statName']);
 
 						$dispOp = "";
-						switch ($statInfo['calcOperation']) {
-							case "add":
-								$dispOp = " + ";
-								break;
-							case "sub":
-								$dispOp = " - ";
-								break;
-							case "mul":
-								$dispOp = " x ";
-								break;
-							case "div":
-								$dispOp = " / ";
-								break;
-						}
+					switch ($statInfo['calcOperation']) {
+						case "add":
+							$dispOp = " + ";
+							break;
+						case "sub":
+							$dispOp = " - ";
+							break;
+						case "mul":
+							$dispOp = " x ";
+							break;
+						case "div":
+							$dispOp = " / ";
+							break;
+					}
 
 						$dispFormula = $dispFirstStat.$dispOp.$dispSecondStat;
 				}

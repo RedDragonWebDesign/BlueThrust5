@@ -123,23 +123,23 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		
 			";
 
-			if ($dispError != "") {
-				echo "
+		if ($dispError != "") {
+			echo "
 				<div class='errorDiv'>
 				<strong>Unable to save Facebook Login settings because the following errors occurred:</strong><br><br>
 				$dispError
 				</div>
 				";
-			}
+		}
 
-			if ($dispNote != "") {
-				echo "
+		if ($dispNote != "") {
+			echo "
 					<div class='errorDiv'>
 						<strong><u>NOTE:</u> In order for Facebook Login to work you must set the following variables in the facebook.php plugin file.</strong><br><br>
 						".$dispNote."
 					</div>
 				";
-			}
+		}
 
 
 		echo "

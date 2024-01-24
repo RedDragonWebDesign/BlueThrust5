@@ -158,8 +158,8 @@ else {
 
 	$topicOrReply = (isset($_GET['tID'])) ? "Reply" : "Topic";
 
-	if (!$boardObj->memberHasAccess($memberInfo, true)) {
-		echo "
+if (!$boardObj->memberHasAccess($memberInfo, true)) {
+	echo "
 			<div id='lockedMessage' style='display: none'>
 				<p class='main' align='center'>
 					You don't have posting privileges on this board!
@@ -188,8 +188,8 @@ else {
 				});
 			</script>
 		";
-		exit();
-	}
+	exit();
+}
 
 
 

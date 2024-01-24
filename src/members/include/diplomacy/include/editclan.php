@@ -120,13 +120,13 @@ if ( empty($_POST['submit']) ) {
 							<select name='status' class='textBox'>
 							";
 
-								foreach ($arrDiplomacyStatus as $key => $value) {
-									$dispSelected = "";
-									if ($diplomacyClanInfo['diplomacystatus_id'] == $key) {
-										$dispSelected = " selected";
-									}
-									echo "<option value='".$key."'".$dispSelected.">".$value."</option>";
-								}
+	foreach ($arrDiplomacyStatus as $key => $value) {
+		$dispSelected = "";
+		if ($diplomacyClanInfo['diplomacystatus_id'] == $key) {
+			$dispSelected = " selected";
+		}
+		echo "<option value='".$key."'".$dispSelected.">".$value."</option>";
+	}
 
 							echo "
 							</select>
@@ -155,15 +155,15 @@ if ( empty($_POST['submit']) ) {
 								
 								";
 							$arrClanSize = array("Small", "Medium", "Large");
-							foreach ($arrClanSize as $clanSize) {
-								$dispSelected = "";
-								$clanSizeLC = strtolower($clanSize);
-								if ($diplomacyClanInfo['clansize'] == $clanSizeLC) {
-									$dispSelected = " selected";
-								}
+	foreach ($arrClanSize as $clanSize) {
+		$dispSelected = "";
+		$clanSizeLC = strtolower($clanSize);
+		if ($diplomacyClanInfo['clansize'] == $clanSizeLC) {
+			$dispSelected = " selected";
+		}
 
-								echo "<option value='".$clanSizeLC."'".$dispSelected.">".$clanSize."</option>";
-							}
+		echo "<option value='".$clanSizeLC."'".$dispSelected.">".$clanSize."</option>";
+	}
 							echo "
 							
 							</select>

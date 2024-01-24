@@ -52,8 +52,8 @@ if ( ! empty($_POST['submit']) ) {
 
 	$arrMinutes = array();
 	for ($i=0; $i<=59; $i++) {
-$arrMinutes[] = $i;
-    }
+		$arrMinutes[] = $i;
+	}
 
 	if (!in_array($_POST['startminute'], $arrMinutes)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid start minute.<br>";

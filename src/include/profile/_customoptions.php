@@ -1,7 +1,7 @@
 <?php
-	if (!defined("SHOW_PROFILE_MAIN")) {
-		exit();
-	}
+if (!defined("SHOW_PROFILE_MAIN")) {
+	exit();
+}
 // CUSTOM PROFILE OPTIONS
 
 $profileCatObj = new ProfileCategory($mysqli);

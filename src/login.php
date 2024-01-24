@@ -87,8 +87,8 @@ if ( empty($_POST['submit']) && ! constant("LOGGED_IN")) {
 		$errorMessage = "You must be logged in to view this page!";
 	}
 
-require_once($prevFolder."include/breadcrumb.php");
-echo "
+	require_once($prevFolder."include/breadcrumb.php");
+	echo "
 
 
 	<div class='shadedBox' style='width: 40%; margin-bottom: 20px; margin-top: 50px; margin-left: auto; margin-right: auto;'>

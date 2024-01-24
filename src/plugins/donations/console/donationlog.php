@@ -1,8 +1,8 @@
 <?php
 
-	if (!defined("MAIN_ROOT")) {
-		exit();
-    }
+if (!defined("MAIN_ROOT")) {
+	exit();
+}
 	require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
 
 	$campaignInfo = $campaignObj->get_info_filtered();
@@ -16,19 +16,19 @@
 
 
 	$addToPageSelectorLink = "";
-	if (!isset($_GET['start']) || !isset($_GET['end'])) {
-		$period = $campaignObj->getCurrentPeriodRange(true);
-		$_GET['start'] = $period['current'];
-		$_GET['end'] = $period['next']-(60*60*24);
-	}
-	elseif (is_numeric($_GET['start']) && is_numeric($_GET['end']) && $_GET['start'] > $_GET['end']) {
-		$temp = $_GET['start'];
-		$_GET['start'] = $_GET['end'];
-		$_GET['end'] = $temp;
-	}
-	else {
-		$addToPageSelectorLink = "&start=".$_GET['start']."&end=".$_GET['end'];
-	}
+if (!isset($_GET['start']) || !isset($_GET['end'])) {
+	$period = $campaignObj->getCurrentPeriodRange(true);
+	$_GET['start'] = $period['current'];
+	$_GET['end'] = $period['next']-(60*60*24);
+}
+elseif (is_numeric($_GET['start']) && is_numeric($_GET['end']) && $_GET['start'] > $_GET['end']) {
+	$temp = $_GET['start'];
+	$_GET['start'] = $_GET['end'];
+	$_GET['end'] = $temp;
+}
+else {
+	$addToPageSelectorLink = "&start=".$_GET['start']."&end=".$_GET['end'];
+}
 
 	$donationsPerPage = 25;
 
@@ -70,19 +70,19 @@
 
 	$counter = 0;
 	$i = ($_GET['pageNum']-1)*$donationsPerPage;
-	while ($counter < $donationsPerPage && $i < $totalDonations) {
-		$info = $donationInfo[$i];
+while ($counter < $donationsPerPage && $i < $totalDonations) {
+	$info = $donationInfo[$i];
 
-		$dispDate = getPreciseTime($info['datesent'], "", true);
+	$dispDate = getPreciseTime($info['datesent'], "", true);
 
-		$dispFrom = ($info['name'] == "") ? "Anonymous" : $info['name'];
-		if ($donateMember->select($info['member_id'])) {
-			$dispFrom = $donateMember->getMemberLink();
-		}
+	$dispFrom = ($info['name'] == "") ? "Anonymous" : $info['name'];
+	if ($donateMember->select($info['member_id'])) {
+		$dispFrom = $donateMember->getMemberLink();
+	}
 
-		$addCSS = ($counter%2 == 1) ? " alternateBGColor" : "";
+	$addCSS = ($counter%2 == 1) ? " alternateBGColor" : "";
 
-		echo "
+	echo "
 			<tr>
 				<td class='main manageList".$addCSS."'>".$dispDate."</td>
 				<td class='main manageList".$addCSS."'>".$dispFrom."</td>
@@ -91,14 +91,14 @@
 			</tr>		
 		";
 
-		$counter++;
-		$i++;
-	}
+	$counter++;
+	$i++;
+}
 
 	echo "</table>";
 
-	if ($totalDonations == 0) {
-		echo "
+if ($totalDonations == 0) {
+	echo "
 		
 			<div class='shadedBox' style='margin-left: auto; margin-right: auto; width: 45%; margin-top: 20px'>
 			
@@ -109,7 +109,7 @@
 			</div>
 		
 		";
-	}
+}
 
 
 ?>

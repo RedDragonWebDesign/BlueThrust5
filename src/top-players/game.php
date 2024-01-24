@@ -64,62 +64,62 @@ $breadcrumbObj->addCrumb("Top Players: ".$gameInfo['name']);
 
 require_once($prevFolder."include/breadcrumb.php");
 
-	$gameStatObj = new Basic($mysqli, "gamestats", "gamestats_id");
-	$arrGameStats = $gameObj->getAssociateIDs("ORDER BY ordernum");
+$gameStatObj = new Basic($mysqli, "gamestats", "gamestats_id");
+$arrGameStats = $gameObj->getAssociateIDs("ORDER BY ordernum");
 
 
-	if (count($arrGameStats) > 0) {
-		if (isset($_GET['sID']) && in_array($_GET['sID'], $arrGameStats) && $gameStatObj->select($_GET['sID'])) {
-			$gameStatObj->select($_GET['sID']);
+if (count($arrGameStats) > 0) {
+	if (isset($_GET['sID']) && in_array($_GET['sID'], $arrGameStats) && $gameStatObj->select($_GET['sID'])) {
+		$gameStatObj->select($_GET['sID']);
+	}
+	else {
+		$gameStatObj->select($arrGameStats[0]);
+		$_GET['sID'] = $arrGameStats[0];
+	}
+
+	$gameStatInfo = $gameStatObj->get_info_filtered();
+
+	$arrMemberList = $gameObj->getMembersWhoPlayThisGame();
+	$arrTopPlayers = array();
+	foreach ($arrMemberList as $memberID) {
+		$member->select($memberID);
+
+
+		if ($gameStatInfo['stattype'] == "calculate") {
+			$arrTopPlayers[$memberID] = $gameObj->calcStat($_GET['sID'], $member);
 		}
 		else {
-			$gameStatObj->select($arrGameStats[0]);
-			$_GET['sID'] = $arrGameStats[0];
+			$arrTopPlayers[$memberID] = $member->getGameStatValue($_GET['sID']);
+		}
+	}
+
+
+
+	if ( isset($_GET['sort']) && $_GET['sort'] != "up") {
+		$dispSort = "<a href='".$MAIN_ROOT."top-players/game.php?gID=".$_GET['gID']."&sID=".$_GET['sID']."&sort=up'><img src='".$MAIN_ROOT."themes/".$THEME."/images/downarrow.png'></a>";
+		$_GET['sort'] = "down";
+		arsort($arrTopPlayers);
+	}
+	else {
+		$dispSort = "<a href='".$MAIN_ROOT."top-players/game.php?gID=".$_GET['gID']."&sID=".$_GET['sID']."&sort=down'><img src='".$MAIN_ROOT."themes/".$THEME."/images/uparrow.png'></a>";
+		$_GET['sort'] = "up";
+		asort($arrTopPlayers);
+	}
+
+
+	foreach ($arrGameStats as $gameStatID) {
+		$gameStatObj->select($gameStatID);
+		$dispSelected = "";
+		if ($gameStatID == $_GET['sID']) {
+			$dispSelected = " selected";
 		}
 
-		$gameStatInfo = $gameStatObj->get_info_filtered();
-
-		$arrMemberList = $gameObj->getMembersWhoPlayThisGame();
-		$arrTopPlayers = array();
-		foreach ($arrMemberList as $memberID) {
-			$member->select($memberID);
-
-
-			if ($gameStatInfo['stattype'] == "calculate") {
-				$arrTopPlayers[$memberID] = $gameObj->calcStat($_GET['sID'], $member);
-			}
-			else {
-				$arrTopPlayers[$memberID] = $member->getGameStatValue($_GET['sID']);
-			}
-		}
+		$statoptions .= "<option value='".$gameStatID."'".$dispSelected.">".$gameStatObj->get_info_filtered("name")."</option>";
+	}
 
 
 
-		if ( isset($_GET['sort']) && $_GET['sort'] != "up") {
-			$dispSort = "<a href='".$MAIN_ROOT."top-players/game.php?gID=".$_GET['gID']."&sID=".$_GET['sID']."&sort=up'><img src='".$MAIN_ROOT."themes/".$THEME."/images/downarrow.png'></a>";
-			$_GET['sort'] = "down";
-			arsort($arrTopPlayers);
-		}
-		else {
-			$dispSort = "<a href='".$MAIN_ROOT."top-players/game.php?gID=".$_GET['gID']."&sID=".$_GET['sID']."&sort=down'><img src='".$MAIN_ROOT."themes/".$THEME."/images/uparrow.png'></a>";
-			$_GET['sort'] = "up";
-			asort($arrTopPlayers);
-		}
-
-
-		foreach ($arrGameStats as $gameStatID) {
-			$gameStatObj->select($gameStatID);
-			$dispSelected = "";
-			if ($gameStatID == $_GET['sID']) {
-				$dispSelected = " selected";
-			}
-
-			$statoptions .= "<option value='".$gameStatID."'".$dispSelected.">".$gameStatObj->get_info_filtered("name")."</option>";
-		}
-
-
-
-		echo "
+	echo "
 			<div style='padding-top: 20px; padding-bottom: 10px'>
 				<p class='main' align='right' style='padding-right: 20px'>
 					<b>Select Stat:</b> <select id='statSelect' class='textBox'>".$statoptions."</option></select> <input type='button' class='submitButton' id='selectStatButton' style='width: 40px' value='GO'>
@@ -137,17 +137,17 @@ require_once($prevFolder."include/breadcrumb.php");
 				";
 
 
-		$counter = 0;
-		foreach ($arrTopPlayers as $memberID => $statValue) {
-			$counter++;
+	$counter = 0;
+	foreach ($arrTopPlayers as $memberID => $statValue) {
+		$counter++;
 
-			$addCSS = "";
-			if ($counter%2 == 0) {
-				$addCSS = " alternateBGColor";
-			}
+		$addCSS = "";
+		if ($counter%2 == 0) {
+			$addCSS = " alternateBGColor";
+		}
 
-			$member->select($memberID);
-			echo "
+		$member->select($memberID);
+		echo "
 				<tr>
 					<td class='main".$addCSS."' style='height: 30px'>".$counter.".</td>
 					<td class='main".$addCSS."' style='height: 30px; padding-left: 20px'>".$member->getMemberLink()."</td>
@@ -157,31 +157,31 @@ require_once($prevFolder."include/breadcrumb.php");
 			";
 
 
-			if ($counter >= 10) {
-				break;
-			}
+		if ($counter >= 10) {
+			break;
 		}
+	}
 
-		if ($counter < 10) {
-			for ($i=($counter+1); $i<=10; $i++) {
-				$addCSS = "";
-				if ($i%2 == 0) {
-					$addCSS = " alternateBGColor";
-				}
+	if ($counter < 10) {
+		for ($i=($counter+1); $i<=10; $i++) {
+			$addCSS = "";
+			if ($i%2 == 0) {
+				$addCSS = " alternateBGColor";
+			}
 
 
-				echo "
+			echo "
 					<tr>
 						<td class='main".$addCSS."' style='height: 30px'>".$i.".</td>
 						<td class='main".$addCSS."' style='height: 30px; padding-left: 20px'><i>Empty</i></td>
 						<td class='main".$addCSS."' align='center' style='height: 30px'>-</td>
 					</tr>
 				";
-			}
 		}
+	}
 
 
-		echo "
+	echo "
 			</table>
 
 			
@@ -193,9 +193,9 @@ require_once($prevFolder."include/breadcrumb.php");
 				});
 			</script>
 		";
-	}
-	else {
-		echo "
+}
+else {
+	echo "
 		
 			<div class='shadedBox' style='width: 300px; margin-top: 50px; margin-left: auto; margin-right: auto'>
 				<p class='main' align='center'>
@@ -203,8 +203,8 @@ require_once($prevFolder."include/breadcrumb.php");
 				</p>
 			</div>
 		
-		";
-	}
+	";
+}
 
 
 

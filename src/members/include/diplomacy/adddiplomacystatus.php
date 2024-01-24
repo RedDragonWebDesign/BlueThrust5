@@ -128,14 +128,14 @@ if ( empty($_POST['submit']) ) {
 	echo "
 		<div class='formDiv'>
 		";
-		if ($dispError != "") {
-			echo "
+	if ($dispError != "") {
+		echo "
 			<div class='errorDiv'>
 			<strong>Unable to add new diplomacy status because the following errors occurred:</strong><br><br>
 			$dispError
 			</div>
 			";
-		}
+	}
 
 		echo "
 			<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post' enctype='multipart/form-data'>

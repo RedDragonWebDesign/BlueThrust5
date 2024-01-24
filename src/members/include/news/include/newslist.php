@@ -74,8 +74,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$member->select($row['member_id']);
 
 			if (!isset($checkHTMLAccess)) {
-$checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj);
-            }
+				$checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj);
+			}
 
 
 			$dispNews = ($checkHTMLAccess) ? parseBBCode($row['newspost']) : nl2br(parseBBCode(filterText($row['newspost'])));

@@ -1,8 +1,8 @@
 <?php
 
-	if (!defined("MAIN_ROOT")) {
-exit();
-    }
+if (!defined("MAIN_ROOT")) {
+	exit();
+}
 
 	global $pluginObj;
 
@@ -18,8 +18,8 @@ exit();
 
 	$totalTwitchUsers = $twitchObj->displayAllMemberCards();
 
-	if ($totalTwitchUsers == 0) {
-		echo "
+if ($totalTwitchUsers == 0) {
+	echo "
 			
 			<div class='shadedBox' style='margin: 20px auto; width: 45%'>
 			
@@ -30,7 +30,7 @@ exit();
 			</div>
 		
 		";
-	}
+}
 
 ?>
 

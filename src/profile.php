@@ -256,19 +256,19 @@ require_once($prevFolder."include/breadcrumb.php");
 
 			$x = 0;
 
-			foreach ($arrSections as $section) {
-				foreach ($arrPlugins as $pluginInfo) {
-					if ($pluginInfo['sortnum'] == $x) {
-						require_once($pluginInfo['pagepath']);
-					}
+		foreach ($arrSections as $section) {
+			foreach ($arrPlugins as $pluginInfo) {
+				if ($pluginInfo['sortnum'] == $x) {
+					require_once($pluginInfo['pagepath']);
 				}
-
-				if ($section != "") {
-					require_once($section);
-				}
-
-				$x++;
 			}
+
+			if ($section != "") {
+				require_once($section);
+			}
+
+			$x++;
+		}
 
 
 

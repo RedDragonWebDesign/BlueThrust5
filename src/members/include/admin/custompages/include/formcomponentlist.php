@@ -57,30 +57,30 @@ echo "
 
 	$objAppComponent = new BasicOrder($mysqli, "app_components", "appcomponent_id");
 	$result = $mysqli->query("SELECT appcomponent_id FROM ".$dbprefix."app_components ORDER BY ordernum DESC");
-	while ($row = $result->fetch_assoc()) {
-		$objAppComponent->select($row['appcomponent_id']);
-		$appComponentInfo = $objAppComponent->get_info_filtered();
+while ($row = $result->fetch_assoc()) {
+	$objAppComponent->select($row['appcomponent_id']);
+	$appComponentInfo = $objAppComponent->get_info_filtered();
 
-		$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveAppComponent('up', '".$row['appcomponent_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
-		$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveAppComponent('down', '".$row['appcomponent_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' width='24' height='24' title='Move Down'></a>";
-		if ($appComponentInfo['ordernum'] == 1) {
-			$dispDownArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' width='24' height='24'>";
-		}
+	$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveAppComponent('up', '".$row['appcomponent_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
+	$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveAppComponent('down', '".$row['appcomponent_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' width='24' height='24' title='Move Down'></a>";
+	if ($appComponentInfo['ordernum'] == 1) {
+		$dispDownArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' width='24' height='24'>";
+	}
 
-		if ($appComponentInfo['ordernum'] == $objAppComponent->getHighestOrderNum()) {
-			$dispUpArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' width='24' height='24'>";
-		}
+	if ($appComponentInfo['ordernum'] == $objAppComponent->getHighestOrderNum()) {
+		$dispUpArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' width='24' height='24'>";
+	}
 
-		if ($appComponentInfo['componenttype'] == "multiselect") {
-			$appComponentInfo['componenttype'] = "Multi-Select";
-		}
-		elseif ($appComponentInfo['componenttype'] == "largeinput") {
-			$appComponentInfo['componenttype'] = "Large-Input";
-		}
+	if ($appComponentInfo['componenttype'] == "multiselect") {
+		$appComponentInfo['componenttype'] = "Multi-Select";
+	}
+	elseif ($appComponentInfo['componenttype'] == "largeinput") {
+		$appComponentInfo['componenttype'] = "Large-Input";
+	}
 
-		$dispType = ucfirst($appComponentInfo['componenttype']);
+	$dispType = ucfirst($appComponentInfo['componenttype']);
 
-		echo "
+	echo "
 		
 			<tr>
 				<td class='main' style='width: 50%'>".$appComponentInfo['name']."</td>
@@ -90,7 +90,7 @@ echo "
 		
 		
 		";
-	}
+}
 
 echo "
 		</table>

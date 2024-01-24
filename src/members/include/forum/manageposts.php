@@ -105,7 +105,7 @@ if (
 	}
 
 	if ($redirectURL != "") {
-	echo "
+		echo "
 		<script type='text/javascript'>
 			window.location = '".$redirectURL."';
 		</script>
@@ -113,7 +113,7 @@ if (
 	}
 }
 elseif (isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET['action'] ?? '') == "delete") {
-// DELETE POST
+	// DELETE POST
 
 	$postInfo = $boardObj->objPost->get_info_filtered();
 	$boardObj->objTopic->select($postInfo['forumtopic_id']);
@@ -161,7 +161,7 @@ elseif (isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GE
 	$member->logAction("Deleted post in topic: <a href='".$MAIN_ROOT."forum/viewtopic.php?tID=".$topicInfo['forumtopic_id']."'>".$boardObj->objPost->get_info_filtered("title")."</a>");
 }
 elseif (isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET['action'] ?? '') != "delete") {
-// EDIT POST
+	// EDIT POST
 
 	$postInfo = $boardObj->objPost->get_info();
 	$boardObj->objTopic->select($postInfo['forumtopic_id']);

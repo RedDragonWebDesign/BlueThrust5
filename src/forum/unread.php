@@ -86,7 +86,7 @@ $pageSelector->show();
 echo "</div>";
 
 if ($NUM_OF_PAGES == 1) {
-echo "<br><br>";
+	echo "<br><br>";
 }
 
 $query = "SELECT * FROM ".$dbprefix."forum_post WHERE forumtopic_id IN ".$topicsFilterSQL." ORDER BY dateposted DESC LIMIT ".$intOffset.", ".$NUM_PER_PAGE;

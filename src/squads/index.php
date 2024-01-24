@@ -64,27 +64,27 @@ require_once($prevFolder."include/breadcrumb.php");
 		$memberObj = new Member($mysqli);
 		$counter = 0;
 		$result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."squads ORDER BY name");
-		while ($row = $result->fetch_assoc()) {
-			if ($row['recruitingstatus'] == 1) {
-				$dispRecruiting = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/bluedot.png' title='Recruiting Open'>";
-			}
-			else {
-				$dispRecruiting = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/graydot.png' title='Recruiting Closed'>";
-			}
+	while ($row = $result->fetch_assoc()) {
+		if ($row['recruitingstatus'] == 1) {
+			$dispRecruiting = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/bluedot.png' title='Recruiting Open'>";
+		}
+		else {
+			$dispRecruiting = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/graydot.png' title='Recruiting Closed'>";
+		}
 
-			$memberObj->select($row['member_id']);
-			$dispMemberLink = $memberObj->getMemberLink();
+		$memberObj->select($row['member_id']);
+		$dispMemberLink = $memberObj->getMemberLink();
 
-			if ($counter == 1) {
-				$addCSS = " alternateBGColor";
-				$counter = 0;
-			}
-			else {
-				$addCSS = "";
-				$counter = 1;
-			}
+		if ($counter == 1) {
+			$addCSS = " alternateBGColor";
+			$counter = 0;
+		}
+		else {
+			$addCSS = "";
+			$counter = 1;
+		}
 
-			echo "
+		echo "
 				<tr>
 					<td class='main ".$addCSS."'><a href='".$MAIN_ROOT."squads/profile.php?sID=".$row['squad_id']."'>".filterText($row['name'])."</a></td>
 					<td class='main ".$addCSS."'>".$dispMemberLink."</td>
@@ -92,10 +92,10 @@ require_once($prevFolder."include/breadcrumb.php");
 					<td class='main ".$addCSS."' align='center'>".$dispRecruiting."</td>
 				</tr>
 			";
-		}
+	}
 
-		if ($result->num_rows == 0) {
-			echo "
+	if ($result->num_rows == 0) {
+		echo "
 				<tr>
 					<td class='main' colspan='4'>
 						<p align='center'>
@@ -105,7 +105,7 @@ require_once($prevFolder."include/breadcrumb.php");
 				</tr>
 			
 			";
-		}
+	}
 
 
 	?>

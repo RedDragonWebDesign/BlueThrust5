@@ -78,78 +78,78 @@ echo "
 
 	$arrUnassignedPlayers = array();
 	$result = $mysqli->query("SELECT tournamentplayer_id FROM ".$dbprefix."tournamentplayers WHERE tournament_id = '".$tID."' AND team_id = '0'");
-	while ($row = $result->fetch_assoc()) {
-		$tournamentObj->objPlayer->select($row['tournamentplayer_id']);
-		$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
+while ($row = $result->fetch_assoc()) {
+	$tournamentObj->objPlayer->select($row['tournamentplayer_id']);
+	$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
 
-		if ($member->select($playerInfo['member_id']) && $playerInfo['member_id'] != 0) {
-			$arrUnassignedPlayers[$row['tournamentplayer_id']] = $member->getMemberLink();
-		}
-		else {
-			$arrUnassignedPlayers[$row['tournamentplayer_id']] = $playerInfo['displayname'];
-		}
+	if ($member->select($playerInfo['member_id']) && $playerInfo['member_id'] != 0) {
+		$arrUnassignedPlayers[$row['tournamentplayer_id']] = $member->getMemberLink();
 	}
+	else {
+		$arrUnassignedPlayers[$row['tournamentplayer_id']] = $playerInfo['displayname'];
+	}
+}
 
 
 	asort($arrUnassignedPlayers);
 
 	$counter = 0;
-	foreach ($arrUnassignedPlayers as $playerID => $playerName) {
-		$tournamentObj->objPlayer->select($playerID);
-		$plainTextUsername = "";
-		if ($member->select($tournamentObj->objPlayer->get_info("member_id"))) {
-			$plainTextUsername = $member->get_info_filtered("username");
-		}
+foreach ($arrUnassignedPlayers as $playerID => $playerName) {
+	$tournamentObj->objPlayer->select($playerID);
+	$plainTextUsername = "";
+	if ($member->select($tournamentObj->objPlayer->get_info("member_id"))) {
+		$plainTextUsername = $member->get_info_filtered("username");
+	}
 
-		if ($counter == 1) {
-			$addCSS = " alternateBGColor";
-			$counter = 0;
-		}
-		else {
-			$addCSS = "";
-			$counter = 1;
-		}
+	if ($counter == 1) {
+		$addCSS = " alternateBGColor";
+		$counter = 0;
+	}
+	else {
+		$addCSS = "";
+		$counter = 1;
+	}
 
-		echo "
+	echo "
 				<tr>
 					<td class='main manageList".$addCSS."' style='text-align: center; width: 5%'><input type='checkbox' value='".$playerID."' data-unassignedplayer='1' data-username='".$plainTextUsername."'></td>
 					<td class='main manageList".$addCSS."' style='padding-left: 10px'>".$playerName."</td>
 				</tr>			
 			";
-	}
+}
 
 	echo "
 		</table>
 		";
 
 
-	if ($result->num_rows == 0) {
-		echo "
+if ($result->num_rows == 0) {
+	echo "
 		
 			<div class='shadedBox main' style='width: 45%; margin-left: auto; margin-right: auto'>
 				<p align='center'><i>There are no unassigned players!</i></p>
 			</div>
 		
 		";
-	}
+}
 
 	$member->select($memberInfo['member_id']);
 
-	if (isset($arrUnableToAddPlayer) && count($arrUnableToAddPlayer) > 0) {
-		echo "
+if (isset($arrUnableToAddPlayer) && count($arrUnableToAddPlayer) > 0) {
+	echo "
 			<div id='unassignedPlayersMessage' class='main' style='display: none'>
 				<p align='center' class='main'>
 					This team is full! The following players were not added:<br>
 				</p>
 				<ul>
 					";
-				foreach ($arrUnableToAddPlayer as $playerID) {
-					if ($tournamentObj->objPlayer->select($playerID) && $member->select($tournamentObj->objPlayer->get_info("member_id"))) {
-						echo "
+	foreach ($arrUnableToAddPlayer as $playerID) {
+		if ($tournamentObj->objPlayer->select($playerID) && $member->select($tournamentObj->objPlayer->get_info("member_id"))) {
+					echo "
 							<li>".$member->getMemberLink()."</li>
 						";
-					}
-				}
+		}
+	}
 		echo "
 				</ul>
 			</div>
@@ -175,6 +175,6 @@ echo "
 			</script>
 		";
 		$member->select($memberInfo['member_id']);
-	}
+}
 
 ?><br>

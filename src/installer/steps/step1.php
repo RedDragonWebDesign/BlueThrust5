@@ -1,13 +1,13 @@
 <div class='pageTitle'>Step 1</div>
 <?php
-	if ($countErrors > 0) {
-		echo "
+if ($countErrors > 0) {
+	echo "
 			<div class='errorDiv'>
 				<b>Unable to continue installation because of the following error:</b><br><br>
 				".$dispError."
 			</div>
 		";
-	}
+}
 
 ?>
 

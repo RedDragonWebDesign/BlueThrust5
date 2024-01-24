@@ -215,52 +215,52 @@ echo "
 
 
 
-		if ($tournamentInfo['playersperteam'] == 1) {
-			$dispPlayerOrTeam = "Player";
-		}
-		else {
-			$dispPlayerOrTeam = "Team";
-		}
+if ($tournamentInfo['playersperteam'] == 1) {
+	$dispPlayerOrTeam = "Player";
+}
+else {
+	$dispPlayerOrTeam = "Team";
+}
 
-		if ($tournamentInfo['seedtype'] == 3) {
-			$arrPools = $tournamentObj->getPoolList();
-			$dispPools = "";
-			$dispPoolLetter = "A";
-			foreach ($arrPools as $poolID) {
-				$tournamentObj->objTournamentPool->select($poolID);
-
-
-
-				$arrPoolTeams = $tournamentObj->objTournamentPool->getTeamsInPool();
-				$dispPools .= "<tr><td colspan='2' class='main'><b><u>Pool ".$dispPoolLetter.":</u></b></td></tr>";
-				$dispPools .= "<tr><td class='tinyFont' style='width: 65%'><b>".$dispPlayerOrTeam.":</b></td><td class='tinyFont' style='width: 35%'><b>Record:</b></td></tr>";
-				$counter = 0;
-				foreach ($arrPoolTeams as $teamID) {
-					$addCSS = " alternateBGColor";
-					if ($counter%2 == 0) {
-						$addCSS = "";
-					}
-					$counter++;
-					$tournamentObj->objTeam->select($teamID);
-					$dispTeamName = $tournamentObj->getPlayerName();
-					if ($dispTeamName == "") {
-						$dispTeamName = "<i>Empty Spot</i>";
-					}
-
-					$dispTeamRecord = $tournamentObj->objTournamentPool->getTeamRecord($teamID);
-
-					$dispPools .= "<tr><td class='tinyFont".$addCSS."' valign='top' style='width: 65%'>".$counter.". ".$dispTeamName."</td><td class='tinyFont".$addCSS."' style='width: 35%' valign='top'>".$dispTeamRecord."</td></tr>";
-				}
+if ($tournamentInfo['seedtype'] == 3) {
+	$arrPools = $tournamentObj->getPoolList();
+	$dispPools = "";
+	$dispPoolLetter = "A";
+	foreach ($arrPools as $poolID) {
+		$tournamentObj->objTournamentPool->select($poolID);
 
 
 
-				$dispPoolLetter++;
-				$dispPools .= "<tr><td colspan='2' class='tinyFont'><br></td></tr>";
+		$arrPoolTeams = $tournamentObj->objTournamentPool->getTeamsInPool();
+		$dispPools .= "<tr><td colspan='2' class='main'><b><u>Pool ".$dispPoolLetter.":</u></b></td></tr>";
+		$dispPools .= "<tr><td class='tinyFont' style='width: 65%'><b>".$dispPlayerOrTeam.":</b></td><td class='tinyFont' style='width: 35%'><b>Record:</b></td></tr>";
+		$counter = 0;
+		foreach ($arrPoolTeams as $teamID) {
+			$addCSS = " alternateBGColor";
+			if ($counter%2 == 0) {
+				$addCSS = "";
+			}
+			$counter++;
+			$tournamentObj->objTeam->select($teamID);
+			$dispTeamName = $tournamentObj->getPlayerName();
+			if ($dispTeamName == "") {
+				$dispTeamName = "<i>Empty Spot</i>";
 			}
 
+			$dispTeamRecord = $tournamentObj->objTournamentPool->getTeamRecord($teamID);
+
+			$dispPools .= "<tr><td class='tinyFont".$addCSS."' valign='top' style='width: 65%'>".$counter.". ".$dispTeamName."</td><td class='tinyFont".$addCSS."' style='width: 35%' valign='top'>".$dispTeamRecord."</td></tr>";
+		}
 
 
-			echo "
+
+		$dispPoolLetter++;
+		$dispPools .= "<tr><td colspan='2' class='tinyFont'><br></td></tr>";
+	}
+
+
+
+	echo "
 				
 				<span class='tournamentProfileTitle'>POOLS</span>
 				<div class='dashedBox main' style='height: 400px; overflow-y: auto; padding: 5px'>
@@ -273,11 +273,11 @@ echo "
 				</p>
 				
 			";
-		}
+}
 
 
-		if ($tournamentInfo['seedtype'] != 3) {
-			echo "
+if ($tournamentInfo['seedtype'] != 3) {
+	echo "
 			<span class='tournamentProfileTitle'>MATCHES</span>
 			<div class='dashedBox main' style='height: 400px; overflow-y: auto; padding: 5px'>
 			
@@ -291,8 +291,8 @@ echo "
 				
 					";
 
-			require_once("include/listmatches.php");
-			echo "
+	require_once("include/listmatches.php");
+	echo "
 				</div>
 			</div>
 			<p class='tournamentProfileTitle' align='center'>
@@ -301,25 +301,25 @@ echo "
 			
 			";
 
-			if ($tournamentObj->checkForPools()) {
-				echo "
+	if ($tournamentObj->checkForPools()) {
+		echo "
 					<p class='tournamentProfileTitle' align='center'>
 						<a href='".$MAIN_ROOT."tournaments/poolmatches.php?tID=".$tID."' target='_blank'>View Pool Matches</a>
 					</p>
 				";
-			}
+	}
 
-			if ($tournamentObj->memberCanJoin($memberInfo['member_id'])) {
-				$tConsoleObj = new ConsoleOption($mysqli);
-				$joinTournamentLink = $tConsoleObj->getConsoleLinkByName("Join a Tournament", false);
+	if ($tournamentObj->memberCanJoin($memberInfo['member_id'])) {
+		$tConsoleObj = new ConsoleOption($mysqli);
+		$joinTournamentLink = $tConsoleObj->getConsoleLinkByName("Join a Tournament", false);
 
-				echo "
+		echo "
 					<p class='tournamentProfileTitle' align='center'>
 						<a href='".$joinTournamentLink."&tID=".$tID."'>Join Tournament</a>
 					</p>
 				";
-			}
-		}
+	}
+}
 
 		echo "	
 		</div>

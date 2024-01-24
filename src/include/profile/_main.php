@@ -1,7 +1,7 @@
 <?php
-	if (!defined("SHOW_PROFILE_MAIN")) {
-		exit();
-	}
+if (!defined("SHOW_PROFILE_MAIN")) {
+	exit();
+}
 ?>
 
 	<div class='formTitle' style='text-align: center'>User Information</div>

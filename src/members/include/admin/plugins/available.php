@@ -36,46 +36,46 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 echo "
 <table class='formTable' style='margin-top: 0px; border-spacing: 0px'>
-	";
-	$dispPlugins = "";
-	$pluginsDir = scandir($prevFolder."plugins");
-	$addCSS = "";
-	$x = 0;
-	foreach ($pluginsDir as $dir) {
-		if (is_dir($prevFolder."plugins/".$dir) && $dir != "." && $dir != ".." && !in_array($dir, $pluginObj->getPlugins("filepath")) && (file_exists($prevFolder."plugins/".$dir."/install.php") || file_exists($prevFolder."plugins/".$dir."/install_setup.php"))) {
-			if ($x == 0) {
-				$x = 1;
-				$addCSS = "";
-			}
-			else {
-				$x = 0;
-				$addCSS = " alternateBGColor";
-			}
+";
+$dispPlugins = "";
+$pluginsDir = scandir($prevFolder."plugins");
+$addCSS = "";
+$x = 0;
+foreach ($pluginsDir as $dir) {
+	if (is_dir($prevFolder."plugins/".$dir) && $dir != "." && $dir != ".." && !in_array($dir, $pluginObj->getPlugins("filepath")) && (file_exists($prevFolder."plugins/".$dir."/install.php") || file_exists($prevFolder."plugins/".$dir."/install_setup.php"))) {
+		if ($x == 0) {
+			$x = 1;
+			$addCSS = "";
+		}
+		else {
+			$x = 0;
+			$addCSS = " alternateBGColor";
+		}
 
-			$pluginName = file_get_contents($prevFolder."plugins/".$dir."/PLUGINNAME.txt");
-			if ($pluginName === false) {
-				$pluginName = ucfirst($dir);
-			}
+		$pluginName = file_get_contents($prevFolder."plugins/".$dir."/PLUGINNAME.txt");
+		if ($pluginName === false) {
+			$pluginName = ucfirst($dir);
+		}
 
-			$installJSData = "";
-			if (file_exists(BASE_DIRECTORY."plugins/".$dir."/install_setup.php")) {
-				$installJSData = " data-install='1'";
-			}
+		$installJSData = "";
+		if (file_exists(BASE_DIRECTORY."plugins/".$dir."/install_setup.php")) {
+			$installJSData = " data-install='1'";
+		}
 
-			$dispPlugins .= "
+		$dispPlugins .= "
 				<tr>
 					<td class='dottedLine main manageList".$addCSS."' style='padding-left: 10px'>".$pluginName."</td>
 					<td class='dottedLine main manageList".$addCSS."' style='width: 24%' align='center'><a style='cursor: pointer' id='installPlugin' data-plugin='".$dir."' data-clicked='0'".$installJSData.">Install</a></td>
 				</tr>			
-			";
-		}
+		";
 	}
+}
 
-	if ($dispPlugins != "") {
-		echo $dispPlugins;
-	}
-	else {
-		echo "
+if ($dispPlugins != "") {
+	echo $dispPlugins;
+}
+else {
+	echo "
 			<tr>
 				<td>
 					<div class='shadedBox' style='width: 50%; margin: 20px auto'>
@@ -86,9 +86,9 @@ echo "
 				</td>
 			</tr>
 		";
-	}
+}
 
-	echo "</table>
+echo "</table>
 	
 	<script type='text/javascript'>
 		$(document).ready(function() {
@@ -162,5 +162,4 @@ echo "
 				
 	</script>
 	
-	
-	";
+";

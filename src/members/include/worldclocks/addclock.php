@@ -13,16 +13,16 @@
 	 *
 	 */
 
-	if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+	exit();
+}
+else {
+	$memberInfo = $member->get_info_filtered();
+	$consoleObj->select($_GET['cID']);
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
-	else {
-		$memberInfo = $member->get_info_filtered();
-		$consoleObj->select($_GET['cID']);
-		if (!$member->hasAccess($consoleObj)) {
-			exit();
-		}
-	}
+}
 
 
 	require_once(BASE_DIRECTORY."members/include/worldclocks/clock_form.php");

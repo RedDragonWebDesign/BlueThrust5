@@ -12,9 +12,9 @@
 	 *
 	 */
 
-	if (!defined("LOGGED_IN") || !LOGGED_IN) {
-die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."'</script>");
-    }
+if (!defined("LOGGED_IN") || !LOGGED_IN) {
+	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."'</script>");
+}
 
 	$objManageList->intAddCID = $consoleObj->findConsoleIDByName("Create a Donation Campaign");
 	$objManageList->strEditItemLink = MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&campaignID=";
@@ -27,7 +27,7 @@ die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."'</script>"
 	$setupManageListArgs = $objManageList->getListArray();
 
 
-	function dispDonationLogIcon($campaignID) {
+function dispDonationLogIcon($campaignID) {
 
-		return "<a href='".MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&campaignID=".$campaignID."&p=log' title='View Donation Log'><img src='".MAIN_ROOT."plugins/donations/money.png' class='manageListActionButton'></a>";
-	}
+	return "<a href='".MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&campaignID=".$campaignID."&p=log' title='View Donation Log'><img src='".MAIN_ROOT."plugins/donations/money.png' class='manageListActionButton'></a>";
+}

@@ -32,15 +32,15 @@ $medalObj = new Medal($mysqli);
 
 	$getMedals = $mysqli->query("SELECT * FROM ".$dbprefix."medals ORDER BY ordernum DESC");
 	$medalOptions = array();
-	while ($arrMedals = $getMedals->fetch_assoc()) {
-		$medalName = filterText($arrMedals['name']);
-		$medalOptions[$arrMedals['medal_id']] = $medalName;
-	}
+while ($arrMedals = $getMedals->fetch_assoc()) {
+	$medalName = filterText($arrMedals['name']);
+	$medalOptions[$arrMedals['medal_id']] = $medalName;
+}
 
 
-	if (count($medalOptions) == 0) {
-		$medalOptions['first'] = "(first medal)";
-	}
+if (count($medalOptions) == 0) {
+	$medalOptions['first'] = "(first medal)";
+}
 
 	$i = 1;
 	$arrComponents = array(

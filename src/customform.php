@@ -190,12 +190,12 @@ if ( ! empty($_POST['submit']) ) {
 					<form action='".$customPageInfo['submitlink']."' method='post'>
 						";
 
-					foreach ($arrComponents as $value) {
-						$tempName = "customform_".$value;
-						echo "	
+			foreach ($arrComponents as $value) {
+				$tempName = "customform_".$value;
+				echo "	
 							<input type='hidden' name='".$tempName."' value='".$_POST[$tempName]."'>
 						";
-					}
+			}
 
 					echo "
 						<input type='submit' name='submit' id='btnSubmitCustomForm' style='display: none'>
@@ -267,61 +267,61 @@ if ( empty($_POST['submit']) ) {
 			<table class='formTable'>
 			";
 
-			foreach ($arrComponents as $componentID) {
-				$customFormObj->objComponent->select($componentID);
-				$componentInfo = $customFormObj->objComponent->get_info_filtered();
-				$dispInput = "";
-				$componentFormName = "customform_".$componentID;
-				switch ($componentInfo['componenttype']) {
-					case "largeinput":
-						$dispInput = "<textarea name='customform_".$componentID."' class='textBox' rows='4' style='width: 250px'>".$_POST[$componentFormName]."</textarea>";
-						break;
-					case "select":
-						$selectoptions = "";
-						$arrSelectValues = $customFormObj->getSelectValues($componentID);
-						foreach ($arrSelectValues as $selectValueID) {
-							$customFormObj->objSelectValue->select($selectValueID);
-							$selectValue = $customFormObj->objSelectValue->get_info_filtered("componentvalue");
-							$selectoptions .= "<option value='".$selectValueID."'>".$selectValue."</option>";
-						}
-
-						$dispInput = "<select name='".$componentFormName."' class='textBox'>".$selectoptions."</select>";
-						break;
-					case "multiselect":
-						$selectoptions = "";
-						$arrSelectValues = $customFormObj->getSelectValues($componentID);
-						foreach ($arrSelectValues as $selectValueID) {
-							$customFormObj->objSelectValue->select($selectValueID);
-							$selectValue = $customFormObj->objSelectValue->get_info_filtered("componentvalue");
-							$dispInput .= "<input type='checkbox' value='1' name='".$componentFormName."_".$selectValueID."'> ".$selectValue."<br>";
-						}
-						break;
-					case "input":
-						$dispInput = "<input type='text' value='".$_POST[$componentFormName]."' name='".$componentFormName."' class='textBox' style='width: 150px'>";
+	foreach ($arrComponents as $componentID) {
+		$customFormObj->objComponent->select($componentID);
+		$componentInfo = $customFormObj->objComponent->get_info_filtered();
+		$dispInput = "";
+		$componentFormName = "customform_".$componentID;
+		switch ($componentInfo['componenttype']) {
+			case "largeinput":
+				$dispInput = "<textarea name='customform_".$componentID."' class='textBox' rows='4' style='width: 250px'>".$_POST[$componentFormName]."</textarea>";
+				break;
+			case "select":
+				$selectoptions = "";
+				$arrSelectValues = $customFormObj->getSelectValues($componentID);
+				foreach ($arrSelectValues as $selectValueID) {
+					$customFormObj->objSelectValue->select($selectValueID);
+					$selectValue = $customFormObj->objSelectValue->get_info_filtered("componentvalue");
+					$selectoptions .= "<option value='".$selectValueID."'>".$selectValue."</option>";
 				}
 
-				$dispRequired = "";
-				if ($componentInfo['required'] == 1) {
-					$dispRequired = "<span class='failFont' title='Required' style='cursor: default'>*</span>";
+				$dispInput = "<select name='".$componentFormName."' class='textBox'>".$selectoptions."</select>";
+				break;
+			case "multiselect":
+				$selectoptions = "";
+				$arrSelectValues = $customFormObj->getSelectValues($componentID);
+				foreach ($arrSelectValues as $selectValueID) {
+					$customFormObj->objSelectValue->select($selectValueID);
+					$selectValue = $customFormObj->objSelectValue->get_info_filtered("componentvalue");
+					$dispInput .= "<input type='checkbox' value='1' name='".$componentFormName."_".$selectValueID."'> ".$selectValue."<br>";
 				}
+				break;
+			case "input":
+				$dispInput = "<input type='text' value='".$_POST[$componentFormName]."' name='".$componentFormName."' class='textBox' style='width: 150px'>";
+		}
 
-				$dispToolTip = "";
-				if ($componentInfo['tooltip'] != "") {
-					$dispToolTip = "<div style='display: none' id='tooltip_".$componentID."'>".nl2br($componentInfo['tooltip'])."</div> <a href='javascript:void(0)' onmouseover=\"showToolTip($('#tooltip_".$componentID."').html())\" onmouseout='hideToolTip()'><b>(?)</b></a>";
-				}
+		$dispRequired = "";
+		if ($componentInfo['required'] == 1) {
+			$dispRequired = "<span class='failFont' title='Required' style='cursor: default'>*</span>";
+		}
+
+		$dispToolTip = "";
+		if ($componentInfo['tooltip'] != "") {
+			$dispToolTip = "<div style='display: none' id='tooltip_".$componentID."'>".nl2br($componentInfo['tooltip'])."</div> <a href='javascript:void(0)' onmouseover=\"showToolTip($('#tooltip_".$componentID."').html())\" onmouseout='hideToolTip()'><b>(?)</b></a>";
+		}
 
 
-				if ($componentInfo['componenttype'] != "separator") {
-					echo "
+		if ($componentInfo['componenttype'] != "separator") {
+			echo "
 						<tr>
 							<td class='formLabel' valign='top'>".$componentInfo['name'].": ".$dispRequired.$dispToolTip."</td>
 							<td class='main' valign='top'>".$dispInput."</td>
 						</tr>
 					
 					";
-				}
-				else {
-					echo "
+		}
+		else {
+			echo "
 						<tr>
 							<td colspan='2' class='main'><br>
 								<b>".$componentInfo['name']."</b>
@@ -332,8 +332,8 @@ if ( empty($_POST['submit']) ) {
 							</td>
 						</tr>
 					";
-				}
-			}
+		}
+	}
 
 			echo "
 				<tr>

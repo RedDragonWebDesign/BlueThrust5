@@ -85,7 +85,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 	if ( ! empty($_POST['submit']) ) {
-	// Check Display Order (before/after)
+		// Check Display Order (before/after)
 		if ($_POST['beforeafter'] != "before" && $_POST['beforeafter'] != "after") {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order (before/after).<br>";
 			$countErrors++;

@@ -48,7 +48,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				$(document).ready(function() {
 
 					$.post('".$MAIN_ROOT."themes/_refreshmenus.php', { refreshSectionID: '".$menuCatObj->get_info("section")."' }, function(data) {
-                        $('#menuSection_".$menuCatObj->get_info("section")."').html(data);
+						$('#menuSection_".$menuCatObj->get_info("section")."').html(data);
 					});
 
 				});

@@ -54,15 +54,15 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 	$medalValidateObj = new Medal($mysqli);
 	$arrMedals = $medalObj->get_entries(array(), "ordernum DESC");
 	$medalOptions = array();
-	foreach ($arrMedals as $eachMedalInfo) {
-		$medalName = filterText($eachMedalInfo['name']);
-		$medalOptions[$eachMedalInfo['medal_id']] = $medalName;
-	}
+foreach ($arrMedals as $eachMedalInfo) {
+	$medalName = filterText($eachMedalInfo['name']);
+	$medalOptions[$eachMedalInfo['medal_id']] = $medalName;
+}
 
 
-	if (count($medalOptions) == 0) {
-		$medalOptions['first'] = "(first medal)";
-	}
+if (count($medalOptions) == 0) {
+	$medalOptions['first'] = "(first medal)";
+}
 
 
 	$medalOrder = $medalValidateObj->findBeforeAfter();
@@ -167,7 +167,7 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 
 
 
-$setupFormArgs = array(
+	$setupFormArgs = array(
 	"name" => "console-".$cID,
 	"components" => $arrComponents,
 	"description" => "Fill out the form below to edit the selected medal.<br><br><b><u>NOTE:</u></b> When setting the Medal Image, if both the File and URL are filled out, the File will be used.",
@@ -176,4 +176,4 @@ $setupFormArgs = array(
 	"saveType" => "update",
 	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID."&mID=".$medalInfo['medal_id']."&action=edit", "method" => "post"),
 	"beforeAfter" => true
-);
+	);

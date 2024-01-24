@@ -20,22 +20,22 @@ require_once("../../../classes/squad.php");
 
 // Start Page
 if (!isset($consoleObj)) {
-$consoleObj = new ConsoleOption($mysqli);
+	$consoleObj = new ConsoleOption($mysqli);
 }
 
 if (!isset($cID)) {
-$cID = $consoleObj->findConsoleIDByName("View Your Squads"); $consoleObj->select($cID);
+	$cID = $consoleObj->findConsoleIDByName("View Your Squads"); $consoleObj->select($cID);
 }
 
 
 if (!isset($consoleInfo)) {
-$consoleInfo = $consoleObj->get_info_filtered();
+	$consoleInfo = $consoleObj->get_info_filtered();
 }
 
 
 
 if (!isset($member)) {
-$member = new Member($mysqli); $member->select($_SESSION['btUsername']);
+	$member = new Member($mysqli); $member->select($_SESSION['btUsername']);
 }
 
 

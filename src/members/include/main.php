@@ -62,17 +62,17 @@ if ($checkMember) {
 
 			$arrConsoleOptions = $arrFullySortedConsole[$key];
 
-				foreach ($arrConsoleOptions as $consoleOptionID) {
-					$consoleObj->select($consoleOptionID);
-					$consoleInfo = $consoleObj->get_info();
+			foreach ($arrConsoleOptions as $consoleOptionID) {
+				$consoleObj->select($consoleOptionID);
+				$consoleInfo = $consoleObj->get_info();
 
-					echo " - ".$consoleInfo['pagetitle']."<br>";
-				}
+				echo " - ".$consoleInfo['pagetitle']."<br>";
+			}
 		}
 	}
 }
 
 
 if ($LOGIN_FAIL) {
-die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."index.php?p=Login';</script>");
+	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."index.php?p=Login';</script>");
 }

@@ -113,7 +113,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-	// No Errors! Check game image, if it needs to be uploaded, try uploading.
+		// No Errors! Check game image, if it needs to be uploaded, try uploading.
 
 		if ($_FILES['gameimagefile']['name'] != "") {
 			$btUploadObj = new BTUpload($_FILES['gameimagefile'], "game_", "../images/gamesplayed/", array(".jpg", ".png", ".bmp", ".gif"));
@@ -138,7 +138,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-	// No errors after adding the image. Add game to database.
+		// No errors after adding the image. Add game to database.
 
 		$newGame = new Basic($mysqli, "gamesplayed", "gamesplayed_id");
 

@@ -1,19 +1,19 @@
 <?php
 
-	if (!defined("MAIN_ROOT")) {
-exit();
-    }
+if (!defined("MAIN_ROOT")) {
+	exit();
+}
 
 	$donationMember = new Member($mysqli);
 	$dispMemberName = $donationMember->select($donationInfo['member_id']) ? $donationMember->getMemberLink() : "";
 
 	$dispName = $donationInfo['name'];
-	if ($donationInfo['name'] == "" && $dispMemberName == "") {
-		$dispName = "Anonymous";
-	}
-	elseif ($donationInfo['name'] != "" && $dispMemberName != "") {
-		$dispName = $dispMemberName." <i>(".$donationInfo['name'].")</i>";
-	}
+if ($donationInfo['name'] == "" && $dispMemberName == "") {
+	$dispName = "Anonymous";
+}
+elseif ($donationInfo['name'] != "" && $dispMemberName != "") {
+	$dispName = $dispMemberName." <i>(".$donationInfo['name'].")</i>";
+}
 
 
 	$dispMessage = ($donationInfo['message'] == "") ? "None" : nl2br(parseBBCode($donationInfo['message']));

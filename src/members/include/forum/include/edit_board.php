@@ -345,9 +345,9 @@ if ( empty($_POST['submit']) ) {
 			$(document).ready(function() {
 				var intSubForumClick = ".$blnIsSubforum.";
 				";
-		if ($blnIsSubforum == 0) {
-			echo "$('#subForumBoard').attr('disabled', 'disabled');";
-		}
+	if ($blnIsSubforum == 0) {
+		echo "$('#subForumBoard').attr('disabled', 'disabled');";
+	}
 		echo "
 			
 				$('#isSubForum').click(function() {	
@@ -437,8 +437,8 @@ if ( empty($_POST['submit']) ) {
 				
 				";
 
-			if ($dispError != "") {
-				echo "
+	if ($dispError != "") {
+		echo "
 					$('#loadingSpiral').show();
 					$('#boardMemberAccess').hide();
 					
@@ -450,7 +450,7 @@ if ( empty($_POST['submit']) ) {
 	
 					});
 				";
-			}
+	}
 
 
 		echo "

@@ -14,7 +14,7 @@
 
 
 if (!isset($pluginObj)) {
-exit();
+	exit();
 }
 require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
 

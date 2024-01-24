@@ -271,9 +271,9 @@ if ($dispError != "") {
 						<div class='dottedLine' style='width: 90%; padding-top: 3px'></div>
 						";
 
-				if ($checkApprove == 1) {
-					echo "<p style='margin: 2px; padding-left: 5px'>* Clicking the Approve Results button will also upload your replay.</p><br>";
-				}
+if ($checkApprove == 1) {
+	echo "<p style='margin: 2px; padding-left: 5px'>* Clicking the Approve Results button will also upload your replay.</p><br>";
+}
 
 	echo "
 					</td>
@@ -294,9 +294,9 @@ if ($dispError != "") {
 				<tr>
 					<td class='main' colspan='2' align='center'><br>";
 
-					if ($checkApprove == 1) {
-						echo "<input type='submit' name='approve' value='Approve Results' class='submitButton' style='width: 125px'><br><br>";
-					}
+if ($checkApprove == 1) {
+	echo "<input type='submit' name='approve' value='Approve Results' class='submitButton' style='width: 125px'><br><br>";
+}
 
 				echo "
 					

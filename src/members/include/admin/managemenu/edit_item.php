@@ -481,9 +481,9 @@ $afterJS = "
 		$('#btnFakeSubmit').click(function() {
 	";
 
-	if ($menuItemInfo['itemtype'] == "customcode") {
-		$afterJS .= "$('#menuCodeEditor_code').val(menuCodeEditor.getValue());";
-	}
+if ($menuItemInfo['itemtype'] == "customcode") {
+	$afterJS .= "$('#menuCodeEditor_code').val(menuCodeEditor.getValue());";
+}
 
 
 $afterJS .= "

@@ -1,61 +1,61 @@
 <?php
 
-	class BreadCrumb {
+class BreadCrumb {
 
 
-		protected $title;
-		protected $arrBreadcrumb = array();
-		protected $separator = ">";
+	protected $title;
+	protected $arrBreadcrumb = array();
+	protected $separator = ">";
 
 
-		function setTitle($strTitle) {
-			$this->title = $strTitle;
-		}
+	function setTitle($strTitle) {
+		$this->title = $strTitle;
+	}
 
-		function getTitle() {
-			return $this->title;
-		}
+	function getTitle() {
+		return $this->title;
+	}
 
-		function setSeparator($strSeparator) {
-			$this->separator = $strSeparator;
-		}
-
-
-		function clearBreadcrumb() {
-			$this->arrBreadcrumb = array();
-		}
+	function setSeparator($strSeparator) {
+		$this->separator = $strSeparator;
+	}
 
 
-		function addCrumb($crumbName, $crumbLink = "") {
-			$this->arrBreadcrumb[] = array("link" => $crumbLink, "value" => $crumbName);
-		}
+	function clearBreadcrumb() {
+		$this->arrBreadcrumb = array();
+	}
 
-		function getBreadcrumb() {
 
-			$breadcrumbs = array();
-			foreach ($this->arrBreadcrumb as $breadcrumbInfo) {
-				if ($breadcrumbInfo['link'] != "") {
-					$breadcrumbs[] = "<a href='".$breadcrumbInfo['link']."'>".$breadcrumbInfo['value']."</a>";
-				}
-				else {
-					$breadcrumbs[] = $breadcrumbInfo['value'];
-				}
+	function addCrumb($crumbName, $crumbLink = "") {
+		$this->arrBreadcrumb[] = array("link" => $crumbLink, "value" => $crumbName);
+	}
+
+	function getBreadcrumb() {
+
+		$breadcrumbs = array();
+		foreach ($this->arrBreadcrumb as $breadcrumbInfo) {
+			if ($breadcrumbInfo['link'] != "") {
+				$breadcrumbs[] = "<a href='".$breadcrumbInfo['link']."'>".$breadcrumbInfo['value']."</a>";
 			}
-
-			return implode(" ".$this->separator." ", $breadcrumbs);
+			else {
+				$breadcrumbs[] = $breadcrumbInfo['value'];
+			}
 		}
 
-		function popCrumb() {
-			return array_pop($this->arrBreadcrumb);
-		}
+		return implode(" ".$this->separator." ", $breadcrumbs);
+	}
 
-		function updateBreadcrumb() {
-			echo "
+	function popCrumb() {
+		return array_pop($this->arrBreadcrumb);
+	}
+
+	function updateBreadcrumb() {
+		echo "
 				<script type='text/javascript'>
 					$('#breadCrumbTitle').html(\"".addslashes($this->getTitle())."\");
 					$('#breadCrumb').html(\"".addslashes($this->getBreadcrumb())."\");
 				</script>
 			";
-		}
-
 	}
+
+}

@@ -223,7 +223,7 @@ while ($row = $result->fetch_assoc()) {
 
 		if (!isset($checkHTMLAccess)) {
 			$checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj);
-        }
+		}
 
 		$dispNews = ($checkHTMLAccess) ? parseBBCode($newsObj->get_info("newspost")) : nl2br(parseBBCode(filterText($newsInfo['newspost'])));
 
@@ -284,7 +284,7 @@ if ($result->num_rows > 0) {
 
 		if (!isset($checkHTMLAccess)) {
 			$checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj);
-        }
+		}
 
 		$dispNews = ($checkHTMLAccess) ? parseBBCode($newsObj->get_info("newspost")) : nl2br(parseBBCode(filterText($newsInfo['newspost'])));
 

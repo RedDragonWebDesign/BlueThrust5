@@ -1,8 +1,8 @@
 <?php
 
-	if (!defined("CONVERT_WEBSITEINFO")) {
-		exit();
-	}
+if (!defined("CONVERT_WEBSITEINFO")) {
+	exit();
+}
 
 	$websiteInfoObj = new Basic($mysqli, "websiteinfo", "websiteinfo_id");
 	$websiteInfoObj->select(1);
@@ -20,10 +20,10 @@
 	$mysqli->query($newWebsiteInfoSQL);
 	$skipColumns = array("websiteinfo_id", "name", "value");
 
-	foreach ($websiteInfo as $key => $value) {
-		if (!in_array($key, $skipColumns)) {
-			$websiteInfoObj->addNew(array("name", "value"), array($key, $value));
-		}
+foreach ($websiteInfo as $key => $value) {
+	if (!in_array($key, $skipColumns)) {
+		$websiteInfoObj->addNew(array("name", "value"), array($key, $value));
 	}
+}
 
 	$websiteInfoObj->addNew(array("name", "value"), array("news_postsperpage", 10));

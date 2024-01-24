@@ -392,9 +392,9 @@ $afterJS = "
 	$(document).ready(function() {
 	";
 
-	foreach ($arrAfterJS as $value) {
-		$afterJS .= $value."\n";
-	}
+foreach ($arrAfterJS as $value) {
+	$afterJS .= $value."\n";
+}
 
 $afterJS .= "		
 	});

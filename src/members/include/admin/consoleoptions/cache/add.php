@@ -66,8 +66,8 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	}
 
 	if ($checkAccess) {
-require_once("view.php");
-    }
+		require_once("view.php");
+	}
 
 
 	if (!$blnSuccess && $checkAccess) {

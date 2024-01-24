@@ -319,15 +319,15 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 						<td class='main'>
 						";
 
-						if ($squadRankInfo['squadrank_id'] != $intFounderRankID) {
-							echo "
+		if ($squadRankInfo['squadrank_id'] != $intFounderRankID) {
+			echo "
 							<select name='beforeafter' class='textBox'><option value='before'>Before</option><option value='after' ".$selectAfter.">After</option></select><br>
 							<select name='rankorder' class='textBox'>".$rankoptions."</select>
 							";
-						}
-						else {
-							echo "<span style='font-weight: bold; font-style: italic'>Founder Rank</span>";
-						}
+		}
+		else {
+			echo "<span style='font-weight: bold; font-style: italic'>Founder Rank</span>";
+		}
 
 							echo "
 						</td>

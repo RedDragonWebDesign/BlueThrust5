@@ -1,7 +1,7 @@
 <?php
 
 if (!defined("MANAGEMENU_FUNCTIONS")) {
-exit();
+	exit();
 }
 
 // Validate Functions
@@ -9,8 +9,8 @@ exit();
 function validateMenuItem_Links() {
 
 	if ($_POST['itemtype'] != "link") {
-return false;
-    }
+		return false;
+	}
 
 	global $linkOptionComponents, $formObj, $cID;
 
@@ -33,8 +33,8 @@ return false;
 function validateMenuItem_Images() {
 
 	if ($_POST['itemtype'] != "image") {
-return false;
-    }
+		return false;
+	}
 
 	global $imageOptionComponents, $formObj, $cID;
 
@@ -59,8 +59,8 @@ return false;
 function validateMenuItem_CustomPageTypes($pageName, &$formComponents) {
 
 	if ($_POST['itemtype'] != $pageName) {
-return false;
-    }
+		return false;
+	}
 
 	global $formObj, $cID;
 
@@ -86,8 +86,8 @@ return false;
 function validateMenuItem_Poll() {
 
 	if ($_POST['itemtype'] != "poll") {
-return false;
-    }
+		return false;
+	}
 
 	global $pollOptionComponents, $formObj, $cID;
 
@@ -122,8 +122,8 @@ return false;
 function saveMenuItem(&$menuComponents, &$saveObj, $arrDBNames, $dbID, $itemType, $saveAdditionalArgs = array(), $saveType = "add") {
 
 	if ($_POST['itemtype'] != $itemType) {
-return false;
-    }
+		return false;
+	}
 
 	global $menuItemObj, $cID;
 
@@ -149,8 +149,8 @@ return false;
 function savePoll() {
 
 	if ($_POST['itemtype'] != "poll") {
-return false;
-    }
+		return false;
+	}
 
 	global $menuItemObj;
 

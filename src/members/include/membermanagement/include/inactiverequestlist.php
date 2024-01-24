@@ -116,36 +116,36 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 $iaMember = new Member($mysqli);
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."iarequest ORDER BY requestdate DESC");
-	while ($row = $result->fetch_assoc()) {
-		$iaMessages = dispIAMessages($row['iarequest_id']);
+while ($row = $result->fetch_assoc()) {
+	$iaMessages = dispIAMessages($row['iarequest_id']);
 
-		$iaMember->select($row['member_id']);
+	$iaMember->select($row['member_id']);
 
-		if (trim($row['reason']) == "") {
-			$row['reason'] = "None";
-		}
+	if (trim($row['reason']) == "") {
+		$row['reason'] = "None";
+	}
 
-		$dispActions = "";
-		if ($row['requeststatus'] == 0) {
-			$dispActions = "<a href='javascript:void(0)' id='iaRequestAction' data-iarequest='".$row['iarequest_id']."' data-action='approve'>Approve</a> - <a href='javascript:void(0)' id='iaRequestAction' data-iarequest='".$row['iarequest_id']."' data-action='deny'>Deny</a> - ";
-		}
+	$dispActions = "";
+	if ($row['requeststatus'] == 0) {
+		$dispActions = "<a href='javascript:void(0)' id='iaRequestAction' data-iarequest='".$row['iarequest_id']."' data-action='approve'>Approve</a> - <a href='javascript:void(0)' id='iaRequestAction' data-iarequest='".$row['iarequest_id']."' data-action='deny'>Deny</a> - ";
+	}
 
-		$dispActions .= "<a href='javascript:void(0)' id='iaRequestAction' data-iarequest='".$row['iarequest_id']."' data-action='delete'>Delete</a>";
+	$dispActions .= "<a href='javascript:void(0)' id='iaRequestAction' data-iarequest='".$row['iarequest_id']."' data-action='delete'>Delete</a>";
 
 
-		$dispRequestStatus = "<span class='pendingFont'>Pending</span>";
-		if ($row['requeststatus'] == 1) {
-			$member->select($row['reviewer_id']);
-			$dispRequestStatus = "<span class='allowText'>Approved</span> by ".$member->getMemberLink()." - ".getPreciseTime($row['reviewdate']);
-			$member->select($memberInfo['member_id']);
-		}
-		elseif ($row['requeststatus'] == 2) {
-			$member->select($row['reviewer_id']);
-			$dispRequestStatus = "<span class='denyText'>Denied</span> by ".$member->getMemberLink()." - ".getPreciseTime($row['reviewdate']);
-			$member->select($memberInfo['member_id']);
-		}
+	$dispRequestStatus = "<span class='pendingFont'>Pending</span>";
+	if ($row['requeststatus'] == 1) {
+		$member->select($row['reviewer_id']);
+		$dispRequestStatus = "<span class='allowText'>Approved</span> by ".$member->getMemberLink()." - ".getPreciseTime($row['reviewdate']);
+		$member->select($memberInfo['member_id']);
+	}
+	elseif ($row['requeststatus'] == 2) {
+		$member->select($row['reviewer_id']);
+		$dispRequestStatus = "<span class='denyText'>Denied</span> by ".$member->getMemberLink()." - ".getPreciseTime($row['reviewdate']);
+		$member->select($memberInfo['member_id']);
+	}
 
-		echo "
+	echo "
 
 			<div class='dottedBox' style='margin: 20px auto; width: 90%'>
 				<table class='formTable' style='width: 95%'>
@@ -191,19 +191,19 @@ $result = $mysqli->query("SELECT * FROM ".$dbprefix."iarequest ORDER BY requestd
 			</div>
 			<br>
 		";
-	}
+}
 
-	if ($result->num_rows == 0) {
-		echo "
+if ($result->num_rows == 0) {
+	echo "
 			<div class='shadedBox' style='width: 50%; margin: 20px auto;'>
 				<p class='main' align='center'>
 					No Inactive Requests!
 				</p>
 			</div>
 		";
-	}
-	else {
-		echo "
+}
+else {
+	echo "
 
 			<script type='text/javascript'>
 				$(document).ready(function() {
@@ -249,4 +249,4 @@ $result = $mysqli->query("SELECT * FROM ".$dbprefix."iarequest ORDER BY requestd
 			</script>
 		
 		";
-	}
+}

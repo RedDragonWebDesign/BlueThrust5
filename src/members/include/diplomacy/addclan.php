@@ -149,14 +149,14 @@ if ( empty($_POST['submit']) ) {
 	echo "
 		<div class='formDiv'>
 		";
-		if ($dispError != "") {
-			echo "
+	if ($dispError != "") {
+		echo "
 			<div class='errorDiv'>
 			<strong>Unable to add new clan because the following errors occurred:</strong><br><br>
 			$dispError
 			</div>
 			";
-		}
+	}
 
 		echo "
 			<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
@@ -172,14 +172,14 @@ if ( empty($_POST['submit']) ) {
 							<select name='status' class='textBox'>
 							";
 
-								foreach ($arrDiplomacyStatus as $key => $value) {
-									$dispSelected = "";
-									if ($_POST['status'] == $key) {
-										$dispSelected = " selected";
-									}
+	foreach ($arrDiplomacyStatus as $key => $value) {
+		$dispSelected = "";
+		if ($_POST['status'] == $key) {
+			$dispSelected = " selected";
+		}
 
-									echo "<option value='".$key."'".$dispSelected.">".$value."</option>";
-								}
+		echo "<option value='".$key."'".$dispSelected.">".$value."</option>";
+	}
 
 							echo "
 							</select>

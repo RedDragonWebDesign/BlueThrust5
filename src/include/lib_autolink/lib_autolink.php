@@ -131,8 +131,8 @@
 					$display_url = $url;
 
 					if ($force_prefix) {
-$link_url = $force_prefix.$link_url;
-                    }
+						$link_url = $force_prefix.$link_url;
+					}
 
 					if ($GLOBALS['autolink_options']['strip_protocols']) {
 						if (preg_match('!^(http|https)://!i', $display_url, $m)) {
@@ -182,8 +182,8 @@ $link_url = $force_prefix.$link_url;
 	function autolink_label($text, $limit) {
 
 		if (!$limit) {
-return $text;
-        }
+			return $text;
+		}
 
 		if (strlen($text) > $limit) {
 			return substr($text, 0, $limit-3).'...';

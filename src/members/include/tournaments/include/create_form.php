@@ -1,12 +1,12 @@
 <?php
 
-	if (!defined("MAIN_ROOT")) {
-exit();
-    }
+if (!defined("MAIN_ROOT")) {
+	exit();
+}
 
-	if (!isset($tournamentObj)) {
-		$tournamentObj = new Tournament($mysqli);
-	}
+if (!isset($tournamentObj)) {
+	$tournamentObj = new Tournament($mysqli);
+}
 
 	$gameObj = new Game($mysqli);
 
@@ -24,15 +24,15 @@ exit();
 
 	// Game Options
 	$gameOptions = array();
-	foreach ($gameObj->getGameList() as $gameID) {
-		$gameObj->select($gameID);
+foreach ($gameObj->getGameList() as $gameID) {
+	$gameObj->select($gameID);
 
-		$gameOptions[$gameID] = $gameObj->get_info_filtered("name");
-	}
+	$gameOptions[$gameID] = $gameObj->get_info_filtered("name");
+}
 
-	if (count($gameOptions) == 0) {
-		$gameOptions[0] = "No Games";
-	}
+if (count($gameOptions) == 0) {
+	$gameOptions[0] = "No Games";
+}
 
 	// Tournament Structure
 	$seedTypeOptions = array(
@@ -208,7 +208,7 @@ exit();
 		"saveAdditional" => array("password" => md5($_POST['tournamentpw']), "timezone" => $_POST['starttime_timezone'], "member_id" => $memberInfo['member_id'])
 	);
 
-?>
+	?>
 
 
 <script type='text/javascript'>

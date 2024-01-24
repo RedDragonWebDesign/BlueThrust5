@@ -249,15 +249,15 @@ $totalMembers = array_sum($arrMemberCountCat);
 			<td colspan='3' class='main dottedLine' align='center'><b>Total Members:</b> <?php echo $totalMembers; ?></td>
 		</tr>
 		<?php
-			foreach ($arrMemberCountCat as $key => $value) {
-				$rankCatObj->select($key);
-				$rankCatInfo = $rankCatObj->get_info_filtered();
+		foreach ($arrMemberCountCat as $key => $value) {
+			$rankCatObj->select($key);
+			$rankCatInfo = $rankCatObj->get_info_filtered();
 
-				$totalBars = $totalMembers ? round(($value/$totalMembers)*100) : 0;
-				//$dispBars = "|".str_repeat("|", $totalBars);
-				$dispBars = "<div class='solidBox' style='position: reltaive; padding: 0px; margin: 0px; width: 90%'><div class='tinyFont' style='width: ".$totalBars."%; background-color: ".$rankCatInfo['color']."'>&nbsp;</div></div>";
+			$totalBars = $totalMembers ? round(($value/$totalMembers)*100) : 0;
+			//$dispBars = "|".str_repeat("|", $totalBars);
+			$dispBars = "<div class='solidBox' style='position: reltaive; padding: 0px; margin: 0px; width: 90%'><div class='tinyFont' style='width: ".$totalBars."%; background-color: ".$rankCatInfo['color']."'>&nbsp;</div></div>";
 
-				echo "
+			echo "
 					<tr>
 						<td class='main' style='font-weight: bold; width: 40%'>Total ".$rankCatInfo['name'].":</td>
 						<td class='main' style='font-weight: bold; width: 20%'>".$value." - ".($totalMembers ? (round($value/$totalMembers, 2)*100) : 0)."%</td>
@@ -265,7 +265,7 @@ $totalMembers = array_sum($arrMemberCountCat);
 					</tr>
 				
 				";
-			}
+		}
 		?>
 	</table>
 	
@@ -281,18 +281,18 @@ $totalMembers = array_sum($arrMemberCountCat);
 			$arrGames = $gameObj->getGameList();
 
 			$arrTotalGamesPlayed = array_count_values($arrGamesPlayed);
-			foreach ($arrGames as $value) {
-				$gameObj->select($value);
-				$gameInfo = $gameObj->get_info_filtered();
+		foreach ($arrGames as $value) {
+			$gameObj->select($value);
+			$gameInfo = $gameObj->get_info_filtered();
 
-				if ( $arrTotalGamesPlayed[$value] ?? "" == "") {
-					$arrTotalGamesPlayed[$value] = 0;
-				}
+			if ( $arrTotalGamesPlayed[$value] ?? "" == "") {
+				$arrTotalGamesPlayed[$value] = 0;
+			}
 
-				$totalBars = $arrTotalGamesPlayed[$value] ? round(($arrTotalGamesPlayed[$value]/$totalMembers))*100 : 0;
-				$dispBars = "<div class='solidBox' style='position: reltaive; padding: 0px; margin: 0px; width: 90%'><div class='tinyFont alternateBGColor' style='width: ".$totalBars."%'>&nbsp;</div></div>";
+			$totalBars = $arrTotalGamesPlayed[$value] ? round(($arrTotalGamesPlayed[$value]/$totalMembers))*100 : 0;
+			$dispBars = "<div class='solidBox' style='position: reltaive; padding: 0px; margin: 0px; width: 90%'><div class='tinyFont alternateBGColor' style='width: ".$totalBars."%'>&nbsp;</div></div>";
 
-				echo "
+			echo "
 					<tr>
 						<td class='main' style='font-weight: bold; width: 40%'>Total ".$gameInfo['name']." Players:</td>
 						<td class='main' style='font-weight: bold; width: 20%'>".$arrTotalGamesPlayed[$value]." - ".($arrTotalGamesPlayed[$value] ? round($arrTotalGamesPlayed[$value]/$totalMembers, 2)*100 : 0)."%</td>
@@ -300,7 +300,7 @@ $totalMembers = array_sum($arrMemberCountCat);
 					</tr>
 				
 				";
-			}
+		}
 		?>
 	</table>
 	
@@ -316,34 +316,34 @@ if ($websiteInfo['maxdsl'] != 0) {
 			<td colspan='3' class='main dottedLine' align='center'><b>- Activity Statistics -</b></td>
 		</tr>
 		";
-			for ($i=1; $i<=3; $i++) {
-				if ($i == 1) {
-					$dispTitle = "Low DSL";
-					$dispColor = $websiteInfo['lowdsl'];
-					$highEndDSL = $maxDSLIntervals;
-					$lowEndDSL = 0;
-					$extraDSLMessage = "These members are very safe from being disabled due to inactivity.";
-				}
-				elseif ($i == 2) {
-					$dispTitle = "Medium DSL";
-					$dispColor = $websiteInfo['meddsl'];
-					$highEndDSL = $maxDSLIntervals*2;
-					$lowEndDSL =  $maxDSLIntervals+1;
-					$extraDSLMessage = "These members are somewhat safe from being disabled but should log in soon.";
-				}
-				else {
-					$dispTitle = "High DSL";
-					$dispColor = $websiteInfo['highdsl'];
-					$highEndDSL = $websiteInfo['maxdsl']-1;
-					$lowEndDSL =  1+($maxDSLIntervals*2);
-					$extraDSLMessage = "These members are in danger of being disabled due to inactivity.";
-				}
+	for ($i=1; $i<=3; $i++) {
+		if ($i == 1) {
+			$dispTitle = "Low DSL";
+			$dispColor = $websiteInfo['lowdsl'];
+			$highEndDSL = $maxDSLIntervals;
+			$lowEndDSL = 0;
+			$extraDSLMessage = "These members are very safe from being disabled due to inactivity.";
+		}
+		elseif ($i == 2) {
+			$dispTitle = "Medium DSL";
+			$dispColor = $websiteInfo['meddsl'];
+			$highEndDSL = $maxDSLIntervals*2;
+			$lowEndDSL =  $maxDSLIntervals+1;
+			$extraDSLMessage = "These members are somewhat safe from being disabled but should log in soon.";
+		}
+		else {
+			$dispTitle = "High DSL";
+			$dispColor = $websiteInfo['highdsl'];
+			$highEndDSL = $websiteInfo['maxdsl']-1;
+			$lowEndDSL =  1+($maxDSLIntervals*2);
+			$extraDSLMessage = "These members are in danger of being disabled due to inactivity.";
+		}
 
-				$totalBars = round(($arrCountDSL[$i]/$totalMembers)*100);
-				$dispBars = "<div class='solidBox' style='position: reltaive; padding: 0px; margin: 0px; width: 90%'><div class='tinyFont' style='width: ".$totalBars."%; background-color: ".$dispColor."'>&nbsp;</div></div>";
+		$totalBars = round(($arrCountDSL[$i]/$totalMembers)*100);
+		$dispBars = "<div class='solidBox' style='position: reltaive; padding: 0px; margin: 0px; width: 90%'><div class='tinyFont' style='width: ".$totalBars."%; background-color: ".$dispColor."'>&nbsp;</div></div>";
 
 
-				echo "
+		echo "
 					<tr>
 						<td class='main' style='font-weight: bold; width: 40%'>".$dispTitle." <span onmouseover=\"showToolTip('Members who logged in within the last ".$lowEndDSL." to ".$highEndDSL." days. ".$extraDSLMessage."')\" onmouseout='hideToolTip()' style='cursor: help'>(?)</span>:</td>
 						<td class='main' style='font-weight: bold; width: 20%'>".$arrCountDSL[$i]." - ".(round($arrCountDSL[$i]/$totalMembers, 2)*100)."%</td>
@@ -351,7 +351,7 @@ if ($websiteInfo['maxdsl'] != 0) {
 					</tr>
 				
 				";
-			}
+	}
 			echo "
 				<tr>
 					<td colspan='3' align='center' class='main'><br><br>

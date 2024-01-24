@@ -1,16 +1,16 @@
 <?php
 
-	if (!defined("MAIN_ROOT")) {
-exit();
-    }
+if (!defined("MAIN_ROOT")) {
+	exit();
+}
 
 	$usernameMessage = "Not Logged In! - <a href='".MAIN_ROOT."login.php'>Log In</a> to have your account connected to this donation!";
 	$extraNameTooltip = "If left blank, the donation will be from Anonymous.";
-	if (LOGGED_IN) {
-		$member->select($_SESSION['btUsername']);
-		$usernameMessage = $member->getMemberLink();
-		$extraNameTooltip = "";
-	}
+if (LOGGED_IN) {
+	$member->select($_SESSION['btUsername']);
+	$usernameMessage = $member->getMemberLink();
+	$extraNameTooltip = "";
+}
 
 
 

@@ -155,15 +155,15 @@ elseif ( empty($_POST['submit']) ) {
 
 
 			$arrTeams = $tournamentObj->getTeams(true, "ORDER BY seed");
-			foreach ($arrTeams as $teamID) {
-				$dispName = $tournamentObj->getPlayerName($teamID);
-				$tournamentObj->objTeam->select($teamID);
-				$dispSeed = $tournamentObj->objTeam->get_info("seed");
-				$teamPoolID = $tournamentObj->getTeamPoolID($teamID);
-				$tournamentObj->objTournamentPool->select($teamPoolID);
-				$tournamentObj->objTournamentPool->getTeamRecord($teamID);
+	foreach ($arrTeams as $teamID) {
+		$dispName = $tournamentObj->getPlayerName($teamID);
+		$tournamentObj->objTeam->select($teamID);
+		$dispSeed = $tournamentObj->objTeam->get_info("seed");
+		$teamPoolID = $tournamentObj->getTeamPoolID($teamID);
+		$tournamentObj->objTournamentPool->select($teamPoolID);
+		$tournamentObj->objTournamentPool->getTeamRecord($teamID);
 
-				echo "
+		echo "
 					<tr>
 						<td class='main' align='center'>".$dispSeed.".</td>
 						<td class='main' style='padding-left: 5px'><a href='javascript:void(0)' onclick=\"setSeed('".$teamID."')\">".$dispName."</a> (".$tournamentObj->objTournamentPool->getTeamRecord($teamID).")</td>
@@ -171,8 +171,8 @@ elseif ( empty($_POST['submit']) ) {
 				";
 
 
-				$seedCount++;
-			}
+		$seedCount++;
+	}
 
 			echo "
 				

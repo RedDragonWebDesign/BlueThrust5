@@ -53,23 +53,23 @@ require_once($prevFolder."include/breadcrumb.php");
 
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '0' AND rank_id != '1'");
-	while ($row = $result->fetch_assoc()) {
-		$member->select($row['member_id']);
+while ($row = $result->fetch_assoc()) {
+	$member->select($row['member_id']);
 
-		$arrMembers[$row['member_id']] = $member->countRecruits();
-	}
+	$arrMembers[$row['member_id']] = $member->countRecruits();
+}
 
 
-	if ( isset($_GET['sort']) && $_GET['sort'] != "up") {
-		$dispSort = "<a href='".$MAIN_ROOT."top-players/recruiters.php?sort=up'><img src='".$MAIN_ROOT."themes/".$THEME."/images/downarrow.png'></a>";
-		$_GET['sort'] = "down";
-		arsort($arrMembers);
-	}
-	else {
-		$dispSort = "<a href='".$MAIN_ROOT."top-players/recruiters.php?sort=down'><img src='".$MAIN_ROOT."themes/".$THEME."/images/uparrow.png'></a>";
-		$_GET['sort'] = "up";
-		asort($arrMembers);
-	}
+if ( isset($_GET['sort']) && $_GET['sort'] != "up") {
+	$dispSort = "<a href='".$MAIN_ROOT."top-players/recruiters.php?sort=up'><img src='".$MAIN_ROOT."themes/".$THEME."/images/downarrow.png'></a>";
+	$_GET['sort'] = "down";
+	arsort($arrMembers);
+}
+else {
+	$dispSort = "<a href='".$MAIN_ROOT."top-players/recruiters.php?sort=down'><img src='".$MAIN_ROOT."themes/".$THEME."/images/uparrow.png'></a>";
+	$_GET['sort'] = "up";
+	asort($arrMembers);
+}
 
 
 	echo "
@@ -83,16 +83,16 @@ require_once($prevFolder."include/breadcrumb.php");
 
 
 	$counter = 0;
-	foreach ($arrMembers as $memberID => $statValue) {
-		$counter++;
+foreach ($arrMembers as $memberID => $statValue) {
+	$counter++;
 
-		$addCSS = "";
-		if ($counter%2 == 0) {
-			$addCSS = " alternateBGColor";
-		}
+	$addCSS = "";
+	if ($counter%2 == 0) {
+		$addCSS = " alternateBGColor";
+	}
 
-		$member->select($memberID);
-		echo "
+	$member->select($memberID);
+	echo "
 		<tr>
 			<td class='main".$addCSS."' style='height: 30px'>".$counter.".</td>
 			<td class='main".$addCSS."' style='height: 30px; padding-left: 20px'>".$member->getMemberLink()."</td>
@@ -102,28 +102,28 @@ require_once($prevFolder."include/breadcrumb.php");
 		";
 
 
-		if ($counter >= 10) {
-			break;
-		}
+	if ($counter >= 10) {
+		break;
 	}
+}
 
-	if ($counter < 10) {
-		for ($i=($counter+1); $i<=10; $i++) {
-			$addCSS = "";
-			if ($i%2 == 0) {
-				$addCSS = " alternateBGColor";
-			}
+if ($counter < 10) {
+	for ($i=($counter+1); $i<=10; $i++) {
+		$addCSS = "";
+		if ($i%2 == 0) {
+			$addCSS = " alternateBGColor";
+		}
 
 
-			echo "
+		echo "
 			<tr>
 				<td class='main".$addCSS."' style='height: 30px'>".$i.".</td>
 				<td class='main".$addCSS."' style='height: 30px; padding-left: 20px'><i>Empty</i></td>
 				<td class='main".$addCSS."' align='center' style='height: 30px'>-</td>
 			</tr>
 			";
-		}
 	}
+}
 
 	echo "</table>";
 	require_once($prevFolder."themes/".$THEME."/_footer.php");

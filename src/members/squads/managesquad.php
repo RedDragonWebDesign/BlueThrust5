@@ -57,7 +57,7 @@ $arrSquadPrivileges = $squadObj->arrSquadPrivileges;
 $pID = strtolower($_GET['pID']);
 
 if ($pID == "viewapps") {
-$pID = "acceptapps";
+	$pID = "acceptapps";
 }
 
 $sID = $_GET['sID'];

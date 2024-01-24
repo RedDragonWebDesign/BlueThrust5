@@ -18,25 +18,25 @@
 
 	$ytObj = new Youtube($mysqli);
 	$arrReturn = array();
-	if (isset($_POST['yID']) && is_numeric($_POST['yID']) && $ytObj->select($_POST['yID'])) {
-		$ytInfo = $ytObj->get_info_filtered();
+if (isset($_POST['yID']) && is_numeric($_POST['yID']) && $ytObj->select($_POST['yID'])) {
+	$ytInfo = $ytObj->get_info_filtered();
 
-		if ((time()-$ytInfo['lastupdate']) > 1800) {
-			$ytObj->reloadCache();
+	if ((time()-$ytInfo['lastupdate']) > 1800) {
+		$ytObj->reloadCache();
 
-			$arrReturn['result'] = "success";
-			$arrReturn['html'] = $ytObj->dispSubscribeButton();
-			$arrReturn['time'] = getPreciseTime(time());
-		}
-		else {
-			$arrReturn['result'] = "error";
-			$arrReturn['message'] = "Reload Limit Reached";
-		}
+		$arrReturn['result'] = "success";
+		$arrReturn['html'] = $ytObj->dispSubscribeButton();
+		$arrReturn['time'] = getPreciseTime(time());
 	}
 	else {
 		$arrReturn['result'] = "error";
-		$arrReturn['message'] = "Invalid yID";
+		$arrReturn['message'] = "Reload Limit Reached";
 	}
+}
+else {
+	$arrReturn['result'] = "error";
+	$arrReturn['message'] = "Invalid yID";
+}
 
 
 	echo json_encode($arrReturn);

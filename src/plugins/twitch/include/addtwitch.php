@@ -16,10 +16,10 @@
 
 	// Check Login
 	$LOGIN_FAIL = true;
-	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-		$socialObj = new Social($mysqli);
-		if (!$_POST['confirm'] && $socialObj->selectByMulti(array("name" => "Twitch"))) {
-			echo "
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+	$socialObj = new Social($mysqli);
+	if (!$_POST['confirm'] && $socialObj->selectByMulti(array("name" => "Twitch"))) {
+		echo "
 				<div id='addTwitchInfo'></div>
 				<div id='confirmAddTwitch' style='display: none'>
 					<p align='center' class='main'>
@@ -57,28 +57,28 @@
 					});
 				</script>
 			";
+	}
+	else {
+		$saveName = "Twitch";
+		if ($socialObj->selectByMulti(array("name" => "Twitch"))) {
+			$result = $mysqli->query("SELECT social_id FROM ".$dbprefix."social WHERE name LIKE '%Twitch%'");
+
+			$totalTwitch = $result->num_rows;
+
+			$saveName = "Twitch - ".($totalTwitch+1);
 		}
-		else {
-			$saveName = "Twitch";
-			if ($socialObj->selectByMulti(array("name" => "Twitch"))) {
-				$result = $mysqli->query("SELECT social_id FROM ".$dbprefix."social WHERE name LIKE '%Twitch%'");
 
-				$totalTwitch = $result->num_rows;
+		$arrColumns = array("name", "icon", "iconwidth", "iconheight", "url", "tooltip", "ordernum");
+		$arrValues = array($saveName, "plugins/twitch/images/twitch.png", "24", "24", "http://twitch.tv/", "Enter your Twitch username", $socialObj->getHighestOrderNum()+1);
+		$socialObj->addNew($arrColumns, $arrValues);
 
-				$saveName = "Twitch - ".($totalTwitch+1);
-			}
+		$socialOptions = "";
+		$result = $mysqli->query("SELECT social_id,name FROM ".$dbprefix."social ORDER BY ordernum DESC");
+		while ($row = $result->fetch_assoc()) {
+			$socialOptions .= "<option value='".$row['social_id']."'>".$row['name']."</option>";
+		}
 
-			$arrColumns = array("name", "icon", "iconwidth", "iconheight", "url", "tooltip", "ordernum");
-			$arrValues = array($saveName, "plugins/twitch/images/twitch.png", "24", "24", "http://twitch.tv/", "Enter your Twitch username", $socialObj->getHighestOrderNum()+1);
-			$socialObj->addNew($arrColumns, $arrValues);
-
-			$socialOptions = "";
-			$result = $mysqli->query("SELECT social_id,name FROM ".$dbprefix."social ORDER BY ordernum DESC");
-			while ($row = $result->fetch_assoc()) {
-				$socialOptions .= "<option value='".$row['social_id']."'>".$row['name']."</option>";
-			}
-
-			echo "
+		echo "
 				<script type='text/javascript'>
 					$(document).ready(function() {
 						$('#addTwitchLoading').hide();						
@@ -87,10 +87,10 @@
 					});
 				</script>
 			";
-		}
 	}
-	else {
-		echo "
+}
+else {
+	echo "
 			<div id='errorTwitch' style='display: none'>
 				<p align='center' class='main'>
 					You do not have access to Add Social Media Icons.
@@ -115,4 +115,4 @@
 				});
 			</script>
 		";
-	}
+}

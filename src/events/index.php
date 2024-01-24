@@ -62,47 +62,47 @@ require_once($prevFolder."include/breadcrumb.php");
 			$counter = 0;
 			$countEvents = 0;
 			$result = $mysqli->query("SELECT event_id FROM ".$dbprefix."events ORDER BY startdate");
-			while ($row = $result->fetch_assoc()) {
-				$eventObj->select($row['event_id']);
-				$eventInfo = $eventObj->get_info_filtered();
+		while ($row = $result->fetch_assoc()) {
+			$eventObj->select($row['event_id']);
+			$eventInfo = $eventObj->get_info_filtered();
 
-				$showEvent = false;
-				if ($eventInfo['visibility'] == 2 && (in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true)) || $memberInfo['member_id'] == $eventInfo['member_id'] || $memberInfo['rank_id'] == 1)) {
-					$showEvent == true;
+			$showEvent = false;
+			if ($eventInfo['visibility'] == 2 && (in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true)) || $memberInfo['member_id'] == $eventInfo['member_id'] || $memberInfo['rank_id'] == 1)) {
+				$showEvent == true;
+			}
+			elseif ($eventInfo['visibility'] == 1 && $LOGGED_IN) {
+				$showEvent = true;
+			}
+			elseif ($eventInfo['visibility'] == 0) {
+				$showEvent = true;
+			}
+
+
+
+			if ($showEvent) {
+				$countEvents++;
+				$addCSS = "";
+				if ($counter%2 == 0) {
+					$addCSS = " alternateBGColor";
 				}
-				elseif ($eventInfo['visibility'] == 1 && $LOGGED_IN) {
-					$showEvent = true;
+				$counter++;
+
+				$objMember->select($eventInfo['member_id']);
+
+				$dateTimeObj = new DateTime();
+				$dateTimeObj->setTimezone(new DateTimeZone("UTC"));
+				$dateTimeObj->setTimestamp($eventInfo['startdate']);
+				$includeTimezone = "";
+
+				$dispStartDate = $dateTimeObj->format("M j, Y g:i A");
+				if ($eventInfo['timezone'] != "") {
+					$dateTimeObj->setTimezone(new DateTimeZone($eventInfo['timezone']));
+					$dispTimezone = $dateTimeObj->format(" T");
 				}
-				elseif ($eventInfo['visibility'] == 0) {
-					$showEvent = true;
-				}
 
+				$dispStartDate .= $dispTimezone;
 
-
-				if ($showEvent) {
-					$countEvents++;
-					$addCSS = "";
-					if ($counter%2 == 0) {
-						$addCSS = " alternateBGColor";
-					}
-					$counter++;
-
-					$objMember->select($eventInfo['member_id']);
-
-					$dateTimeObj = new DateTime();
-					$dateTimeObj->setTimezone(new DateTimeZone("UTC"));
-					$dateTimeObj->setTimestamp($eventInfo['startdate']);
-					$includeTimezone = "";
-
-					$dispStartDate = $dateTimeObj->format("M j, Y g:i A");
-					if ($eventInfo['timezone'] != "") {
-						$dateTimeObj->setTimezone(new DateTimeZone($eventInfo['timezone']));
-						$dispTimezone = $dateTimeObj->format(" T");
-					}
-
-					$dispStartDate .= $dispTimezone;
-
-					echo "
+				echo "
 					<tr>
 						<td class='main".$addCSS."' style='padding: 3px'><a href='info.php?eID=".$eventInfo['event_id']."'>".$eventInfo['title']."</a></td>
 						<td class='main".$addCSS."' style='padding: 3px' align='center'>".$objMember->getMemberLink()."</td>
@@ -110,8 +110,8 @@ require_once($prevFolder."include/breadcrumb.php");
 					</tr>
 					
 					";
-				}
 			}
+		}
 
 		?>
 		
@@ -119,8 +119,8 @@ require_once($prevFolder."include/breadcrumb.php");
 	
 	<?php
 
-		if ($countEvents == 0) {
-			echo "
+	if ($countEvents == 0) {
+		echo "
 			
 				<div class='shadedBox' style='width: 30%; margin-top: 20px; margin-left: auto; margin-right: auto'>
 					<p class='main' align='center'>
@@ -129,7 +129,7 @@ require_once($prevFolder."include/breadcrumb.php");
 				</div>
 			
 			";
-		}
+	}
 
 	?>
 	

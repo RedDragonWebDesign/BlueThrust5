@@ -280,9 +280,9 @@ echo "
 	<tr>
 		<td colspan='2' class='main' valign='bottom'>
 			";
-			if (LOGGED_IN && $boardObj->memberHasAccess($memberInfo, true)) {
-				echo "<p style='margin-top: 0px'><b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$boardInfo['forumboard_id']."'>NEW TOPIC</a> &laquo;</b></p>";
-			}
+if (LOGGED_IN && $boardObj->memberHasAccess($memberInfo, true)) {
+	echo "<p style='margin-top: 0px'><b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$boardInfo['forumboard_id']."'>NEW TOPIC</a> &laquo;</b></p>";
+}
 		echo "
 		</td>
 		<td colspan='2' align='right' class='main'>
@@ -361,11 +361,11 @@ echo "
 		<td colspan='2' style='padding-top: 15px' class='main' valign='top'>
 		";
 
-		if (LOGGED_IN) {
-			echo "
+if (LOGGED_IN) {
+	echo "
 				<p style='margin-top: 0px'><b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$boardInfo['forumboard_id']."'>NEW TOPIC</a> &laquo;</b></p>
 			";
-		}
+}
 	echo "
 		
 		</td>

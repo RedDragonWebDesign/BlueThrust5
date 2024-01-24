@@ -293,11 +293,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 						<td class='main' colspan='2' align='center'><br>
 							<div class='dottedLine' style='width: 75%'></div><br>
 							<input type='button' id='replyButton' class='submitButton' value='Reply'>
-							";
+		";
 
-						if ($blnMultiPM) {
-							echo "<input type='button' id='replyAllButton' class='submitButton' style='margin-left: 20px' value='Reply All'>";
-						}
+		if ($blnMultiPM) {
+			echo "<input type='button' id='replyAllButton' class='submitButton' style='margin-left: 20px' value='Reply All'>";
+		}
 
 		echo "
 						</td>

@@ -225,7 +225,7 @@ class Member extends Basic {
 				}
 			}
 
-		//print_r($returnArr);
+			//print_r($returnArr);
 		}
 
 		return $returnArr;

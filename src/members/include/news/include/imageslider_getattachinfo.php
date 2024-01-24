@@ -109,5 +109,5 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 		}
 	}
 } else {
-echo "no";
+	echo "no";
 }

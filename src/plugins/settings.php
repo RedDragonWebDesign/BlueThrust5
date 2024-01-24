@@ -16,7 +16,7 @@ require_once("../_setup.php");
 $pluginObj = new btPlugin($mysqli);
 
 if (!isset($_GET['plugin']) || !$pluginObj->selectByName($_GET['plugin'])) {
-echo "<script type='text/javascript'>window.location = '".$MAIN_ROOT."';"; exit();
+	echo "<script type='text/javascript'>window.location = '".$MAIN_ROOT."';"; exit();
 }
 
 $pluginInfo = $pluginObj->get_info_filtered();

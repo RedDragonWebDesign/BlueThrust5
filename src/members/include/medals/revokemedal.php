@@ -12,56 +12,56 @@
  *
  */
 
-	if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+	exit();
+}
+else {
+	$memberInfo = $member->get_info();
+	$consoleObj->select($_GET['cID']);
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
-	else {
-		$memberInfo = $member->get_info();
-		$consoleObj->select($_GET['cID']);
-		if (!$member->hasAccess($consoleObj)) {
-			exit();
-		}
-	}
+}
 
 	require_once("../classes/medal.php");
 
 	$rankInfo = $memberRank->get_info_filtered();
-	if ($memberInfo['promotepower'] != 0) {
-		$rankInfo['promotepower'] = $memberInfo['promotepower'];
-	}
-	elseif ($memberInfo['promotepower'] == -1) {
-		$rankInfo['promotepower'] = 0;
-	}
+if ($memberInfo['promotepower'] != 0) {
+	$rankInfo['promotepower'] = $memberInfo['promotepower'];
+}
+elseif ($memberInfo['promotepower'] == -1) {
+	$rankInfo['promotepower'] = 0;
+}
 
 	$cID = $_GET['cID'];
 
 	$dispError = "";
 	$countErrors = 0;
-	if ($memberInfo['rank_id'] == 1) {
-		$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
-		$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
+if ($memberInfo['rank_id'] == 1) {
+	$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
+	$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
 
-		if ($maxOrderNum->num_rows > 0) {
-			$result = $mysqli->query("SELECT rank_id FROM ".$dbprefix."ranks WHERE ordernum = '".$arrMaxOrderNum[0]."'");
-			$row = $result->fetch_assoc();
-			$rankInfo['promotepower'] = $row['rank_id'];
-		}
+	if ($maxOrderNum->num_rows > 0) {
+		$result = $mysqli->query("SELECT rank_id FROM ".$dbprefix."ranks WHERE ordernum = '".$arrMaxOrderNum[0]."'");
+		$row = $result->fetch_assoc();
+		$rankInfo['promotepower'] = $row['rank_id'];
 	}
+}
 
 	$rankObj = new Rank($mysqli);
 	$medalObj = new Medal($mysqli);
 	$rankObj->select($rankInfo['promotepower']);
 	$maxRankInfo = $rankObj->get_info_filtered();
 
-	if ($rankInfo['rank_id'] == 1) {
-		$maxRankInfo['ordernum'] += 1;
-	}
+if ($rankInfo['rank_id'] == 1) {
+	$maxRankInfo['ordernum'] += 1;
+}
 
 	$arrRanks = array();
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum < '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
-	while ($row = $result->fetch_assoc()) {
-		$arrRanks[] = $row['rank_id'];
-	}
+while ($row = $result->fetch_assoc()) {
+	$arrRanks[] = $row['rank_id'];
+}
 
 
 
@@ -69,24 +69,24 @@
 
 	$sqlRanks = "('".implode("','", $arrRanks)."')";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."' ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
-	while ($row = $result->fetch_assoc()) {
-		$rankObj->select($row['rank_id']);
-		$memberOptions[$row['member_id']] = $rankObj->get_info_filtered("name")." ".filterText($row['username']);
+while ($row = $result->fetch_assoc()) {
+	$rankObj->select($row['rank_id']);
+	$memberOptions[$row['member_id']] = $rankObj->get_info_filtered("name")." ".filterText($row['username']);
+}
+
+if ( ! empty($_POST['submit']) ) {
+	$member->select($_POST['member']);
+	$arrMedals = $member->getMedalList();
+	$medaloptions = array();
+	foreach ($arrMedals as $medalID) {
+		$medalObj->select($medalID);
+		$medalInfo = $medalObj->get_info_filtered();
+
+		$medalOptions[$medalInfo['medal_id']] = $medalInfo['name'];
 	}
 
-	if ( ! empty($_POST['submit']) ) {
-		$member->select($_POST['member']);
-		$arrMedals = $member->getMedalList();
-		$medaloptions = array();
-		foreach ($arrMedals as $medalID) {
-			$medalObj->select($medalID);
-			$medalInfo = $medalObj->get_info_filtered();
-
-			$medalOptions[$medalInfo['medal_id']] = $medalInfo['name'];
-		}
-
-		$medalObj->select($_POST['medal']);
-	}
+	$medalObj->select($_POST['medal']);
+}
 
 
 	$i = 1;

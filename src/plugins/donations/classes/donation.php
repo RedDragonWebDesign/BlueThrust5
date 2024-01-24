@@ -2,25 +2,25 @@
 
 	require_once(BASE_DIRECTORY."classes/basic.php");
 
-	class Donation extends Basic {
+class Donation extends Basic {
 
 
-		protected $objError;
+	protected $objError;
 
-		public function __construct($sqlConnection) {
+	public function __construct($sqlConnection) {
 
-			$this->MySQL = $sqlConnection;
-			$this->strTableName = $this->MySQL->get_tablePrefix()."donations";
-			$this->strTableKey = "donation_id";
+		$this->MySQL = $sqlConnection;
+		$this->strTableName = $this->MySQL->get_tablePrefix()."donations";
+		$this->strTableKey = "donation_id";
 
-			$this->objError = new Basic($sqlConnection, "donations_errorlog", "donationerror_id");
-		}
-
-
-		public function logError($response) {
-
-			$this->objError->addNew(array("datesent", "response"), array(time(), $response));
-		}
-
-
+		$this->objError = new Basic($sqlConnection, "donations_errorlog", "donationerror_id");
 	}
+
+
+	public function logError($response) {
+
+		$this->objError->addNew(array("datesent", "response"), array(time(), $response));
+	}
+
+
+}

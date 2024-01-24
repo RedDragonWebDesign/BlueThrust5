@@ -1,16 +1,16 @@
 <?php
 
-	if (!defined("SHOW_EDITPOLL")) {
-		exit();
-	}
+if (!defined("SHOW_EDITPOLL")) {
+	exit();
+}
 
 	$pollObj->objAccess->arrAccessFor = array("keyName" => "poll_id", "keyValue" => $pollInfo['poll_id']);
 
 	$accessObj = $pollObj->objAccess;
 
-	if (isset($_POST['accessCacheID'])) {
-		$accessObj->cacheID = $_POST['accessCacheID'];
-	}
+if (isset($_POST['accessCacheID'])) {
+	$accessObj->cacheID = $_POST['accessCacheID'];
+}
 
 	$_SESSION['btAccessCacheTables'][$accessObj->cacheID] = json_encode($accessObj->arrAccessTables);
 	$_SESSION['btAccessCacheTypes'][$accessObj->cacheID] = json_encode($accessObj->arrAccessTypes);
@@ -28,79 +28,79 @@
 		</script>
 	";
 
-	if ( ! empty($_POST['submit']) ) {
-		// Check Question
-		if (trim($_POST['pollquestion']) == "") {
-			$countErrors++;
-			$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> Your poll question may not be blank.<br>";
-		}
+if ( ! empty($_POST['submit']) ) {
+	// Check Question
+	if (trim($_POST['pollquestion']) == "") {
+		$countErrors++;
+		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> Your poll question may not be blank.<br>";
+	}
 
-		// Check Access Types
-		$arrCheckAccessTypes = array("members", "memberslimited", "public");
-		if (!in_array($_POST['accesstype'], $arrCheckAccessTypes)) {
-			$countErrors++;
-			$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid access type.<br>";
-		}
+	// Check Access Types
+	$arrCheckAccessTypes = array("members", "memberslimited", "public");
+	if (!in_array($_POST['accesstype'], $arrCheckAccessTypes)) {
+		$countErrors++;
+		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid access type.<br>";
+	}
 
 
-		// Check Result Visibility
-		$arrCheckVisTypes = array("open", "votedonly", "pollend", "never");
-		if (!in_array($_POST['resultvisibility'], $arrCheckVisTypes)) {
-			$countErrors++;
-			$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid result visibility type.<br>";
-		}
+	// Check Result Visibility
+	$arrCheckVisTypes = array("open", "votedonly", "pollend", "never");
+	if (!in_array($_POST['resultvisibility'], $arrCheckVisTypes)) {
+		$countErrors++;
+		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid result visibility type.<br>";
+	}
 
-		// Check Max Votes
+	// Check Max Votes
 
-		if ($_POST['maxvotes'] != "" && (!is_numeric($_POST['maxvotes']) || $_POST['maxvotes'] < 0)) {
-			$countErrors++;
-			$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> Max votes per user must be a value greater than zero.<br>";
-		}
+	if ($_POST['maxvotes'] != "" && (!is_numeric($_POST['maxvotes']) || $_POST['maxvotes'] < 0)) {
+		$countErrors++;
+		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> Max votes per user must be a value greater than zero.<br>";
+	}
 
-		// Check Poll End
+	// Check Poll End
 
-		if ($_POST['enddate'] != "forever" && $_POST['enddate'] != "choose") {
-			$countErrors++;
-			$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid poll end date.<br>";
-		}
-		elseif ($_POST['enddate'] == "choose" && (!is_numeric($_POST['realenddate']) || $_POST['realenddate'] <= 0)) {
-			$countErrors++;
-			$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid poll end date.<br>";
-		}
+	if ($_POST['enddate'] != "forever" && $_POST['enddate'] != "choose") {
+		$countErrors++;
+		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid poll end date.<br>";
+	}
+	elseif ($_POST['enddate'] == "choose" && (!is_numeric($_POST['realenddate']) || $_POST['realenddate'] <= 0)) {
+		$countErrors++;
+		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid poll end date.<br>";
+	}
 
-		if ($countErrors == 0) {
-			$setEndDate = 0;
-			if ($_POST['enddate'] == "choose") {
-				$setEndDate = $_POST['realenddate']/1000;
-				$tempYear = date("Y", $setEndDate);
-				$tempMonth = date("n", $setEndDate);
-				$tempDay = date("j", $setEndDate);
-				$tempHour = $_POST['endhour'];
-				if ($_POST['endAMPM'] == "PM") {
-					$tempHour += 12;
-				}
-
-				$setEndDate = mktime($tempHour, $_POST['endminute'], 0, $tempMonth, $tempDay, $tempYear);
+	if ($countErrors == 0) {
+		$setEndDate = 0;
+		if ($_POST['enddate'] == "choose") {
+			$setEndDate = $_POST['realenddate']/1000;
+			$tempYear = date("Y", $setEndDate);
+			$tempMonth = date("n", $setEndDate);
+			$tempDay = date("j", $setEndDate);
+			$tempHour = $_POST['endhour'];
+			if ($_POST['endAMPM'] == "PM") {
+				$tempHour += 12;
 			}
 
+			$setEndDate = mktime($tempHour, $_POST['endminute'], 0, $tempMonth, $tempDay, $tempYear);
+		}
 
-			$_POST['multivote'] = ($_POST['multivote'] != 1) ? 0 : 1;
-			$_POST['displayvoters'] = ($_POST['displayvoters'] != 1) ? 0 : 1;
 
-			$arrColumns = array("question", "accesstype", "multivote", "displayvoters", "resultvisibility", "maxvotes", "pollend", "lastedit_date", "lastedit_memberid");
-			$arrValues = array($_POST['pollquestion'], $_POST['accesstype'], $_POST['multivote'], $_POST['displayvoters'], $_POST['resultvisibility'], $_POST['maxvotes'], $setEndDate, time(), $memberInfo['member_id']);
+		$_POST['multivote'] = ($_POST['multivote'] != 1) ? 0 : 1;
+		$_POST['displayvoters'] = ($_POST['displayvoters'] != 1) ? 0 : 1;
 
-			if ($pollObj->update($arrColumns, $arrValues)) {
-				$pollObj->cacheID = $_POST['pollCacheID'];
-				$pollObj->savePollOptions();
+		$arrColumns = array("question", "accesstype", "multivote", "displayvoters", "resultvisibility", "maxvotes", "pollend", "lastedit_date", "lastedit_memberid");
+		$arrValues = array($_POST['pollquestion'], $_POST['accesstype'], $_POST['multivote'], $_POST['displayvoters'], $_POST['resultvisibility'], $_POST['maxvotes'], $setEndDate, time(), $memberInfo['member_id']);
 
-				if ($_POST['accesstype'] == "memberslimited") {
-					$accessObj->cacheID = $_POST['accessCacheID'];
-					$accessObj->arrAccessFor = array("keyName" => "poll_id", "keyValue" => $pollObj->get_info("poll_id"));
-					$accessObj->saveAccess();
-				}
+		if ($pollObj->update($arrColumns, $arrValues)) {
+			$pollObj->cacheID = $_POST['pollCacheID'];
+			$pollObj->savePollOptions();
 
-				echo "
+			if ($_POST['accesstype'] == "memberslimited") {
+				$accessObj->cacheID = $_POST['accessCacheID'];
+				$accessObj->arrAccessFor = array("keyName" => "poll_id", "keyValue" => $pollObj->get_info("poll_id"));
+				$accessObj->saveAccess();
+			}
+
+			echo "
 					<div style='display: none' id='successBox'>
 						<p align='center'>
 							Successfully saved the poll!
@@ -111,46 +111,46 @@
 						popupDialog('Manage Polls', '".$MAIN_ROOT."members', 'successBox');
 					</script>			
 				";
-			}
-			else {
-				$countErrors++;
-				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
-			}
 		}
-
-
-		if ($countErrors > 0) {
-			$_POST = filterArray($_POST);
-			$_POST['submit'] = false;
+		else {
+			$countErrors++;
+			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
 	}
 
 
-
-	if ( empty($_POST['submit']) ) {
-		$arrPostSelected['accesstype']['limited'] = ($pollInfo['accesstype'] == "memberslimited") ? " selected" : "";
-		$arrPostSelected['accesstype']['public'] = ($pollInfo['accesstype'] == "public") ? " selected" : "";
-
-		$arrPostSelected['multivote'] = ($pollInfo['multivote'] == 1) ? " checked" : "";
-		$arrPostSelected['displayvoters'] = ($pollInfo['displayvoters'] == 1) ? " checked" : "";
+	if ($countErrors > 0) {
+		$_POST = filterArray($_POST);
+		$_POST['submit'] = false;
+	}
+}
 
 
-		$arrPostSelected['resultvisibility']['votedonly'] = ($pollInfo['resultvisibility'] == "votedonly") ? " selected" : "";
-		$arrPostSelected['resultvisibility']['pollend'] = ($pollInfo['resultvisibility'] == "pollend") ? " selected" : "";
-		$arrPostSelected['resultvisibility']['never'] = ($pollInfo['resultvisibility'] == "never") ? " selected" : "";
 
-		$arrPostSelected['pollend']['choose'] = ($pollInfo['pollend'] != 0) ? " selected" : "";
-		$arrPostSelected['pollend']['forever'] = ($pollInfo['pollend'] == 0) ? " selected" : "";
+if ( empty($_POST['submit']) ) {
+	$arrPostSelected['accesstype']['limited'] = ($pollInfo['accesstype'] == "memberslimited") ? " selected" : "";
+	$arrPostSelected['accesstype']['public'] = ($pollInfo['accesstype'] == "public") ? " selected" : "";
+
+	$arrPostSelected['multivote'] = ($pollInfo['multivote'] == 1) ? " checked" : "";
+	$arrPostSelected['displayvoters'] = ($pollInfo['displayvoters'] == 1) ? " checked" : "";
 
 
-		$checkAMPM = date("A", $pollInfo['pollend']);
-		$checkEndHour = date("g", $pollInfo['pollend']);
-		$checkEndMinute = date("i", $pollInfo['pollend']);
-		$arrPostSelected['endAMPM'] = ($checkAMPM == "PM") ? " selected" : "";
+	$arrPostSelected['resultvisibility']['votedonly'] = ($pollInfo['resultvisibility'] == "votedonly") ? " selected" : "";
+	$arrPostSelected['resultvisibility']['pollend'] = ($pollInfo['resultvisibility'] == "pollend") ? " selected" : "";
+	$arrPostSelected['resultvisibility']['never'] = ($pollInfo['resultvisibility'] == "never") ? " selected" : "";
 
-		$dispFakeEndDate = date("M j, Y", $pollInfo['pollend']);
+	$arrPostSelected['pollend']['choose'] = ($pollInfo['pollend'] != 0) ? " selected" : "";
+	$arrPostSelected['pollend']['forever'] = ($pollInfo['pollend'] == 0) ? " selected" : "";
 
-		echo "
+
+	$checkAMPM = date("A", $pollInfo['pollend']);
+	$checkEndHour = date("g", $pollInfo['pollend']);
+	$checkEndMinute = date("i", $pollInfo['pollend']);
+	$arrPostSelected['endAMPM'] = ($checkAMPM == "PM") ? " selected" : "";
+
+	$dispFakeEndDate = date("M j, Y", $pollInfo['pollend']);
+
+	echo "
 	
 		<div class='formDiv'>
 		
@@ -287,10 +287,10 @@
 	
 					";
 
-					$accessObj->rankAccessDiv = "rankAccessList";
-					$accessObj->dispSetRankAccess();
+				$accessObj->rankAccessDiv = "rankAccessList";
+				$accessObj->dispSetRankAccess();
 
-				echo "
+			echo "
 				
 					<div class='main' style='margin: 20px auto; width: 95%'>
 						<div class='dottedLine'><b>Member Access:</b></div>
@@ -298,10 +298,10 @@
 					</div>
 				";
 
-					$accessObj->memberAccessDiv = "memberAccessList";
-					$accessObj->dispSetMemberAccess();
+				$accessObj->memberAccessDiv = "memberAccessList";
+				$accessObj->dispSetMemberAccess();
 
-			echo "	
+		echo "	
 			</div>
 			
 			<div class='dottedLine main' style='margin-top: 20px; width: 95%; margin-left: auto; margin-right: auto'>
@@ -461,4 +461,4 @@
 			
 		</script>		
 	";
-	}
+}

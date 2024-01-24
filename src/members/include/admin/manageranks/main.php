@@ -61,7 +61,7 @@ if ($checkMember) {
 			$counter = 0;
 			$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1' ORDER BY ordernum DESC");
 			$dispRanks = "";
-            while ($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				if ($counter == 1) {
 					$addCSS = " alternateBGColor";
 					$counter = 0;

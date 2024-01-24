@@ -1,25 +1,25 @@
 <?php
 
-	if (!defined("SHOW_FORUMSEARCH")) {
-		exit();
-	}
+if (!defined("SHOW_FORUMSEARCH")) {
+	exit();
+}
 
 	$setFilterTopic = empty($filterTopic) ? "" : "data-topic='".$filterTopic."'";
 	$setFilterBoard = empty($filterBoard) ? "" : "data-board='".$filterBoard."'";
 
 	$arrSearchFilterURL = array();
-	if ($setFilterTopic != "") {
-		$arrSearchFilterURL[] = "topic=".$filterTopic;
-	}
+if ($setFilterTopic != "") {
+	$arrSearchFilterURL[] = "topic=".$filterTopic;
+}
 
-	if ($setFilterBoard != "") {
-		$arrSearchFilterURL[] = "filterboards[]=".$filterBoard;
-	}
+if ($setFilterBoard != "") {
+	$arrSearchFilterURL[] = "filterboards[]=".$filterBoard;
+}
 
 	$addToURL = addslashes(implode("&", $arrSearchFilterURL));
-	if ($addToURL != "") {
-$addToURL = "&".$addToURL;
-    }
+if ($addToURL != "") {
+	$addToURL = "&".$addToURL;
+}
 
 	echo "
 	

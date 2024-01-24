@@ -249,7 +249,7 @@ $shoutboxObj->intDispHeight = 400;
 $shoutboxObj->strSQLSort = " AND squad_id ='".$squadInfo['squad_id']."'";
 
 if ($blnPost) {
-$shoutboxObj->strPostLink = $MAIN_ROOT."members/squads/include/postshoutbox.php?sID=".$squadInfo['squad_id'];
+	$shoutboxObj->strPostLink = $MAIN_ROOT."members/squads/include/postshoutbox.php?sID=".$squadInfo['squad_id'];
 }
 if ($blnManageShoutbox) {
 	$shoutboxObj->strEditLink = $MAIN_ROOT."members/squads/managesquad.php?pID=ManageShoutbox&sID=".$squadInfo['squad_id']."&nID=";
@@ -303,26 +303,26 @@ echo "
 					
 					";
 
-					if ($squadInfo['website'] != "") {
-						echo "
+if ($squadInfo['website'] != "") {
+	echo "
 							<b>Website:</b> <a href='".$squadInfo['website']."' target='_blank'>View Site</a><br><br>
 						";
-					}
+}
 
-				if (in_array($memberInfo['member_id'], $squadMemberList)) {
-					echo "
+if (in_array($memberInfo['member_id'], $squadMemberList)) {
+	echo "
 
 						<div class='dottedLine' style='margin: 5px 0px'></div>
 						<p align='center' class='largeFont main'><b><a href='".$MAIN_ROOT."members/console.php?cID=".$consoleObj->findConsoleIDByName("View Your Squads")."&select=".$squadInfo['squad_id']."'>Manage Squad</a></b></p>
 					";
-				}
-				else {
-					echo "
+}
+else {
+	echo "
 					
 						<div class='dottedLine' style='margin: 5px 0px'></div>
 						<p align='center' class='largeFont main'><b><a href='".$MAIN_ROOT."members/console.php?cID=".$consoleObj->findConsoleIDByName("Apply to a Squad")."&select=".$squadInfo['squad_id']."'>Apply to this Squad</a></b></p>
 					";
-				}
+}
 
 
 				echo "
@@ -339,12 +339,12 @@ echo "
 				</div>
 			";
 
-			if ($squadInfo['privateshoutbox'] == 0 && in_array($memberInfo['member_id'], $squadMemberList)) {
-				echo $dispShoutbox;
-			}
-			elseif ($squadInfo['privateshoutbox'] == 1) {
-				echo $dispShoutbox;
-			}
+if ($squadInfo['privateshoutbox'] == 0 && in_array($memberInfo['member_id'], $squadMemberList)) {
+	echo $dispShoutbox;
+}
+elseif ($squadInfo['privateshoutbox'] == 1) {
+	echo $dispShoutbox;
+}
 
 
 				echo "
@@ -382,17 +382,17 @@ echo "
 				});
 
 				";
-				if ( ! $debug ) {
-					echo "setTimeout('reloadSquadsShoutbox()', ".$SHOUTBOX_RELOAD_MS.");";
-				}
+if ( ! $debug ) {
+	echo "setTimeout('reloadSquadsShoutbox()', ".$SHOUTBOX_RELOAD_MS.");";
+}
 				echo "
 			}
 
 
 			";
-			if ( ! $debug ) {
-				echo "setTimeout('reloadSquadsShoutbox()', ".$SHOUTBOX_RELOAD_MS.");";
-			}
+if ( ! $debug ) {
+	echo "setTimeout('reloadSquadsShoutbox()', ".$SHOUTBOX_RELOAD_MS.");";
+}
 			echo "
 		
 		</script>

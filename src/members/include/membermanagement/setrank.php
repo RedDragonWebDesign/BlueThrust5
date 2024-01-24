@@ -201,14 +201,14 @@ echo "
 		<div class='formDiv'>
 ";
 
-	if ($dispError != "") {
-		echo "
+if ($dispError != "") {
+	echo "
 		<div class='errorDiv'>
 		<strong>Unable to set member's rank because the following errors occurred:</strong><br><br>
 		$dispError
 		</div>
 		";
-	}
+}
 
 	echo "
 			Use the form below to set a member's rank.<br><br>

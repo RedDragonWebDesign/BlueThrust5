@@ -113,12 +113,12 @@ foreach ($arrRounds as $roundNum) {
 
 	<?php
 
-		if ($tournamentInfo['playersperteam'] == 1) {
-			$dispTeamOrPlayer = "Player";
-		}
-		else {
-			$dispTeamOrPlayer = "Team";
-		}
+	if ($tournamentInfo['playersperteam'] == 1) {
+		$dispTeamOrPlayer = "Player";
+	}
+	else {
+		$dispTeamOrPlayer = "Team";
+	}
 
 
 		echo "

@@ -1,8 +1,8 @@
 <?php
 
-	if (!defined("CAMPAIGN_FORM")) {
-exit();
-    }
+if (!defined("CAMPAIGN_FORM")) {
+	exit();
+}
 
 	$arrPaypalCurrencyCodes = $campaignObj->getCurrencyCodes();
 	$arrPaypalCurrencyInfo = $campaignObj->getCurrencyCodeInfo();

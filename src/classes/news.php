@@ -192,8 +192,8 @@ class News extends Basic {
 	public function displayPageSelector($postType = "", $pageURL = "") {
 
 		if (!isset($_GET['page'])) {
-$_GET['page'] = 1;
-        }
+			$_GET['page'] = 1;
+		}
 		$totalPages = $this->calcPages($postType);
 
 		$dispLink = ($pageURL == "") ? MAIN_ROOT."news/?page=" : $pageURL;
@@ -215,7 +215,7 @@ $_GET['page'] = 1;
 
 			$dispLink = ($pageURL == "") ? MAIN_ROOT."news/?page=" : $pageURL;
 
-            $dispPrevPage = ($prevPage > 0) ? "<a href='".$dispLink.$prevPage."'>NEWER ENTRIES</a>" : "";
+			$dispPrevPage = ($prevPage > 0) ? "<a href='".$dispLink.$prevPage."'>NEWER ENTRIES</a>" : "";
 			$dispNextPage = ($nextPage <= $totalPages) ? "<a href='".$dispLink.$nextPage."'>OLDER ENTRIES</a>" : "";
 
 			$pageSpacer = ($dispPrevPage != "" && $dispNextPage != "") ? "&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;" : "";

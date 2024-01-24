@@ -1,8 +1,8 @@
 <?php
 
-	if (!defined("MAIN_ROOT")) {
-exit();
-    }
+if (!defined("MAIN_ROOT")) {
+	exit();
+}
 
 
 	$signUpForm = $memberAppObj->objSignUpForm;
@@ -12,30 +12,30 @@ exit();
 	$i = $appComponentObj->defaultCounter;
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."app_components ORDER BY ordernum DESC");
-	if ($result->num_rows > 0) {
-		$arrComponents['applicationquestions'] = array(
-			"type" => "section",
-			"options" => array("section_title" => "Application Questions"),
-			"sortorder" => $i++
+if ($result->num_rows > 0) {
+	$arrComponents['applicationquestions'] = array(
+		"type" => "section",
+		"options" => array("section_title" => "Application Questions"),
+		"sortorder" => $i++
+	);
+
+
+	while ($row = $result->fetch_assoc()) {
+		$appComponentObj->select($row['appcomponent_id']);
+		$arrAppCompInfo = filterArray($row);
+		$formInputName = "appcomponent_".$arrAppCompInfo['appcomponent_id'];
+
+		$arrComponents[$formInputName] = array(
+			"sortorder" => $i++,
+			"attributes" => array("class" => "formInput textBox"),
+			"display_name" => $arrAppCompInfo['name'],
+			"tooltip" => $arrAppCompInfo['tooltip'],
+			"type" => "text"
 		);
 
-
-		while ($row = $result->fetch_assoc()) {
-			$appComponentObj->select($row['appcomponent_id']);
-			$arrAppCompInfo = filterArray($row);
-			$formInputName = "appcomponent_".$arrAppCompInfo['appcomponent_id'];
-
-			$arrComponents[$formInputName] = array(
-				"sortorder" => $i++,
-				"attributes" => array("class" => "formInput textBox"),
-				"display_name" => $arrAppCompInfo['name'],
-				"tooltip" => $arrAppCompInfo['tooltip'],
-				"type" => "text"
-			);
-
-			$arrComponents[$formInputName] = array_merge($arrComponents[$formInputName], $appComponentObj->getComponentInputCode());
-		}
+		$arrComponents[$formInputName] = array_merge($arrComponents[$formInputName], $appComponentObj->getComponentInputCode());
 	}
+}
 
 	$arrComponents['submit'] = array(
 		"type" => "submit",

@@ -101,14 +101,14 @@ if ( empty($_POST['submit']) ) {
 		<div class='formDiv'>
 		";
 
-		if ($dispError != "") {
-			echo "
+	if ($dispError != "") {
+		echo "
 			<div class='errorDiv'>
 			<strong>Unable to disable member because the following errors occurred:</strong><br><br>
 			$dispError
 			</div>
 			";
-		}
+	}
 
 		echo "
 		

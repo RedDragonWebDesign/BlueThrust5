@@ -1,8 +1,8 @@
 <?php
 
-	if (!defined("MAIN_ROOT")) {
-exit();
-    }
+if (!defined("MAIN_ROOT")) {
+	exit();
+}
 
 	$donationLogForm = new Form();
 
@@ -15,25 +15,25 @@ exit();
 	$setStartValue = $_GET['start'];
 	$setEndValue = $_GET['end'];
 
-	if (is_numeric($_GET['start'])) {
-		$dateObj->setTimestamp($_GET['start']);
-	}
-	else {
-		$startDate = explode("-", $_GET['start']);
-		$dateObj->setDate($startDate[2], $startDate[0], $startDate[1]);
-		$setStartValue = $dateObj->getTimestamp();
-	}
+if (is_numeric($_GET['start'])) {
+	$dateObj->setTimestamp($_GET['start']);
+}
+else {
+	$startDate = explode("-", $_GET['start']);
+	$dateObj->setDate($startDate[2], $startDate[0], $startDate[1]);
+	$setStartValue = $dateObj->getTimestamp();
+}
 
 	$defaultStartDate = $dateObj->format("M j, Y");
 
-	if (is_numeric($_GET['end'])) {
-		$dateObj->setTimestamp($_GET['end']);
-	}
-	else {
-		$endDate = explode("-", $_GET['end']);
-		$dateObj->setDate($endDate[2], $endDate[0], $endDate[1]);
-		$setEndValue = $dateObj->getTimestamp();
-	}
+if (is_numeric($_GET['end'])) {
+	$dateObj->setTimestamp($_GET['end']);
+}
+else {
+	$endDate = explode("-", $_GET['end']);
+	$dateObj->setDate($endDate[2], $endDate[0], $endDate[1]);
+	$setEndValue = $dateObj->getTimestamp();
+}
 
 	$defaultEndDate = $dateObj->format("M j, Y");
 

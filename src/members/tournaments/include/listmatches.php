@@ -18,15 +18,15 @@ require_once("../../../classes/rank.php");
 require_once("../../../classes/tournament.php");
 
 if (!isset($consoleObj)) {
-$consoleObj = new ConsoleOption($mysqli);
+	$consoleObj = new ConsoleOption($mysqli);
 
-$cID = $consoleObj->findConsoleIDByName("Manage Tournaments");
-$consoleObj->select($cID);
+	$cID = $consoleObj->findConsoleIDByName("Manage Tournaments");
+	$consoleObj->select($cID);
 
 
-$member = new Member($mysqli);
-$member->select($_SESSION['btUsername']);
-$tournamentObj = new Tournament($mysqli);
+	$member = new Member($mysqli);
+	$member->select($_SESSION['btUsername']);
+	$tournamentObj = new Tournament($mysqli);
 }
 
 

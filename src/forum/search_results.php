@@ -14,24 +14,24 @@
 
  $pageOptions = '';
 
-	if (!defined("SHOW_SEARCHRESULTS")) {
-		exit();
-	}
+if (!defined("SHOW_SEARCHRESULTS")) {
+	exit();
+}
 
 	/*
 	 * Filter Keyword: keyword
 	 * 0 = Search Entire Posts
 	 * 1 = Search Titles Only
-     *
-     *
+	 *
+	 *
 	 * Filter Username: searchuser
 	 * 0 = Find Posts by User
 	 * 1 = Find Topics started by User
-     *
+	 *
 	 * Find Topics with: filtertopics, filtertopics_replies
 	 * 0 = At Least
 	 * 1 = At Most
-     *
+	 *
 	 * Find Posts From: filterposts, filterposts_newold
 	 * 0 = Any Date
 	 * 1 = Last Login
@@ -45,7 +45,7 @@
 	 * --
 	 * 0 = and Newer
 	 * 1 = and Older
-     *
+	 *
 	 * Sort Results by: sortresults, sortresults_ascdesc
 	 * 0 = Last post date
 	 * 1 = Topic Title
@@ -58,7 +58,7 @@
 	 * --
 	 * 0 = Descending
 	 * 1 = Ascending
-     *
+	 *
 	 */
 
 	$postTable = $dbprefix."forum_post";
@@ -73,52 +73,52 @@
 
 	// Filter By Keyword
 	$filterKeyword = array();
-	if (trim($_POST['keyword']) != "") {
-		$_POST['keyword'] = str_replace("%", "\%", $_POST['keyword']);
+if (trim($_POST['keyword']) != "") {
+	$_POST['keyword'] = str_replace("%", "\%", $_POST['keyword']);
 
-		if ($_POST['filterkeyword'] == 0) {
-			$filterKeyword = array("message" => $_POST['keyword'], "title" => $_POST['keyword']);
+	if ($_POST['filterkeyword'] == 0) {
+		$filterKeyword = array("message" => $_POST['keyword'], "title" => $_POST['keyword']);
 
-			$filterResults[] = " (".$postTable.".message LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%' OR ".$postTable.".title LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%') ";
-		}
-		else {
-			$filterResults[] = " ".$postTable.".title LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%' ";
-		}
+		$filterResults[] = " (".$postTable.".message LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%' OR ".$postTable.".title LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%') ";
 	}
+	else {
+		$filterResults[] = " ".$postTable.".title LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%' ";
+	}
+}
 
 	// Filter By Username
 	$filterByUsername = "";
 	$memberIDList = array();
-	if (trim($_POST['fakesearchuser']) != "") {
- 		$_POST['fakesearchuser'] = str_replace("*", "%", $_POST['fakesearchuser']);
+if (trim($_POST['fakesearchuser']) != "") {
+		$_POST['fakesearchuser'] = str_replace("*", "%", $_POST['fakesearchuser']);
 
- 		$memberList = $member->get_entries(array("username" => $_POST['fakesearchuser']), "username", true, array("username" => "Like"));
- 		$memberIDList = array();
+		$memberList = $member->get_entries(array("username" => $_POST['fakesearchuser']), "username", true, array("username" => "Like"));
+		$memberIDList = array();
 
- 		foreach ($memberList as $searchMemberInfo) {
- 			$memberIDList[] = $searchMemberInfo['member_id'];
- 		}
-
- 		$memberListSQL = "('".implode("','", $memberIDList)."')";
- 		$filterResults[] = " ".$postTable.".member_id IN ".$memberListSQL;
-
- 		if ($_POST['filterusername'] == 1) {
- 			$topicList = array();
- 			$result = $mysqli->query("SELECT DISTINCT ".$topicTable.".forumpost_id FROM ".$topicTable.", ".$postTable." WHERE ".$topicTable.".forumpost_id = ".$postTable.".forumpost_id AND ".$postTable.".member_id IN ".$memberListSQL);
- 			while ($row = $result->fetch_assoc()) {
- 				$topicList[] = $row['forumpost_id'];
- 			}
-
- 			$topicListSQL = "('".implode("','", $topicList)."')";
- 			$filterResults[] = " ".$postTable.".forumpost_id IN ".$topicListSQL;
- 		}
+	foreach ($memberList as $searchMemberInfo) {
+		$memberIDList[] = $searchMemberInfo['member_id'];
 	}
+
+		$memberListSQL = "('".implode("','", $memberIDList)."')";
+		$filterResults[] = " ".$postTable.".member_id IN ".$memberListSQL;
+
+	if ($_POST['filterusername'] == 1) {
+		$topicList = array();
+		$result = $mysqli->query("SELECT DISTINCT ".$topicTable.".forumpost_id FROM ".$topicTable.", ".$postTable." WHERE ".$topicTable.".forumpost_id = ".$postTable.".forumpost_id AND ".$postTable.".member_id IN ".$memberListSQL);
+		while ($row = $result->fetch_assoc()) {
+			$topicList[] = $row['forumpost_id'];
+		}
+
+		$topicListSQL = "('".implode("','", $topicList)."')";
+		$filterResults[] = " ".$postTable.".forumpost_id IN ".$topicListSQL;
+	}
+}
 
 	// Filter By Reply Count
 	$filterTopicGTLT = "<=";
-	if ($_POST['filtertopics'] == 0) {
-		$filterTopicGTLT = ">=";
-	}
+if ($_POST['filtertopics'] == 0) {
+	$filterTopicGTLT = ">=";
+}
 	$filterResults[] = " ".$topicTable.".replies ".$filterTopicGTLT." ".$_POST['filtertopics_replies']." ";
 
 

@@ -20,7 +20,7 @@ if (!defined("EDIT_FOLDER")) {
 $folderInfo = $pmFolderObj->get_info_filtered();
 
 if ( ! empty($_POST['submit']) ) {
-// Check Folder Name
+	// Check Folder Name
 	if (trim($_POST['foldername']) == "") {
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Your folder name may not be blank.";
 		$countErrors++;

@@ -12,22 +12,22 @@
 	 *
 	 */
 
-	if (!defined("MAIN_ROOT")) {
-exit();
-    }
+if (!defined("MAIN_ROOT")) {
+	exit();
+}
 
 	$arrTimezoneOptions = $clockObj->getTimezones();
 
 	$clockOrderObj = new Clock($mysqli);
 	$arrClocks = array();
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."clocks ORDER BY ordernum DESC");
-	while ($row = $result->fetch_assoc()) {
-		$arrClocks[$row['clock_id']] = filterText($row['name']);
-	}
+while ($row = $result->fetch_assoc()) {
+	$arrClocks[$row['clock_id']] = filterText($row['name']);
+}
 
-	if (count($arrClocks) == 0) {
-		$arrClocks['first'] = "(first clock)";
-	}
+if (count($arrClocks) == 0) {
+	$arrClocks['first'] = "(first clock)";
+}
 
 	$i=0;
 	$arrComponents = array(

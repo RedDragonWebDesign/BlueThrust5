@@ -89,9 +89,9 @@ foreach ($arrFolders as $folderID => $folderName) {
 
 		<?php
 
-			if (isset($_GET['folder']) && is_numeric($_GET['folder'])) {
-				echo "$('#selectFolder').val('".$_GET['folder']."');";
-			}
+		if (isset($_GET['folder']) && is_numeric($_GET['folder'])) {
+			echo "$('#selectFolder').val('".$_GET['folder']."');";
+		}
 
 		?>
 				

@@ -66,41 +66,41 @@ $breadcrumbObj->addCrumb("Diplomacy");
 	<?php
 		$counter = 0;
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy ORDER BY clanname");
-		while ($row = $result->fetch_assoc()) {
-			$diplomacyStatusObj->select($row['diplomacystatus_id']);
+	while ($row = $result->fetch_assoc()) {
+		$diplomacyStatusObj->select($row['diplomacystatus_id']);
 
-			$statusInfo = $diplomacyStatusObj->get_info_filtered();
-
-
-			if ($statusInfo['imageurl'] == "") {
-				$dispStatus = $statusInfo['name'];
-			}
-			else {
-				if (strpos($statusInfo['imageurl'], "http://") === false) {
-					$statusInfo['imageurl'] = "../".$statusInfo['imageurl'];
-				}
+		$statusInfo = $diplomacyStatusObj->get_info_filtered();
 
 
-				$dispImgWidth = "";
-				$dispImgHeight = "";
-				if ($statusInfo['imagewidth'] != 0) {
-					$dispImgWidth = " width = '".$statusInfo['imagewidth']."' ";
-				}
-
-				if ($statusInfo['imageheight'] != 0) {
-					$dispImgWidth = " height = '".$statusInfo['imageheight']."' ";
-				}
-
-				$dispStatus = "<img src='".$statusInfo['imageurl']."'".$dispImgWidth.$dispImgHeight." title='".$statusInfo['name']."'>";
+		if ($statusInfo['imageurl'] == "") {
+			$dispStatus = $statusInfo['name'];
+		}
+		else {
+			if (strpos($statusInfo['imageurl'], "http://") === false) {
+				$statusInfo['imageurl'] = "../".$statusInfo['imageurl'];
 			}
 
-			$addCSS = "";
-			if ($counter%2 == 0) {
-				$addCSS = " alternateBGColor";
-			}
-			$counter++;
 
-			echo "
+			$dispImgWidth = "";
+			$dispImgHeight = "";
+			if ($statusInfo['imagewidth'] != 0) {
+				$dispImgWidth = " width = '".$statusInfo['imagewidth']."' ";
+			}
+
+			if ($statusInfo['imageheight'] != 0) {
+				$dispImgWidth = " height = '".$statusInfo['imageheight']."' ";
+			}
+
+			$dispStatus = "<img src='".$statusInfo['imageurl']."'".$dispImgWidth.$dispImgHeight." title='".$statusInfo['name']."'>";
+		}
+
+		$addCSS = "";
+		if ($counter%2 == 0) {
+			$addCSS = " alternateBGColor";
+		}
+		$counter++;
+
+		echo "
 				<tr>
 					<td class='main".$addCSS."' style='padding: 3px'><a href='info.php?dID=".$row['diplomacy_id']."'>".filterText($row['clanname'])."</a></td>
 					<td class='main".$addCSS."' style='padding: 3px' align='center'>".filterText($row['leaders'])."</td>
@@ -108,7 +108,7 @@ $breadcrumbObj->addCrumb("Diplomacy");
 				</tr>
 			
 			";
-		}
+	}
 
 	?>
 	
@@ -117,8 +117,8 @@ $breadcrumbObj->addCrumb("Diplomacy");
 <?php
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status WHERE imageurl != '' ORDER BY ordernum DESC");
 	$counter = 0;
-	if ($result->num_rows > 0) {
-		echo "
+if ($result->num_rows > 0) {
+	echo "
 		
 			<div style='margin-top: 50px; margin-left: auto; margin-right: auto'>
 
@@ -128,42 +128,42 @@ $breadcrumbObj->addCrumb("Diplomacy");
 					</tr>
 			";
 
-		while ($row = $result->fetch_assoc()) {
-			if (strpos($row['imageurl'], "http://") === false) {
-				$row['imageurl'] = "../".$row['imageurl'];
-			}
+	while ($row = $result->fetch_assoc()) {
+		if (strpos($row['imageurl'], "http://") === false) {
+			$row['imageurl'] = "../".$row['imageurl'];
+		}
 
-			$dispImgWidth = "";
-			$dispImgHeight = "";
-			if ( isset($statusInfo['imagewidth']) && $statusInfo['imagewidth'] != 0) {
-				$dispImgWidth = " width = '".$statusInfo['imagewidth']."' ";
-			}
+		$dispImgWidth = "";
+		$dispImgHeight = "";
+		if ( isset($statusInfo['imagewidth']) && $statusInfo['imagewidth'] != 0) {
+			$dispImgWidth = " width = '".$statusInfo['imagewidth']."' ";
+		}
 
-			if ( isset($statusInfo['imageheight']) && $statusInfo['imageheight'] != 0) {
-				$dispImgWidth = " height = '".$statusInfo['imageheight']."' ";
-			}
+		if ( isset($statusInfo['imageheight']) && $statusInfo['imageheight'] != 0) {
+			$dispImgWidth = " height = '".$statusInfo['imageheight']."' ";
+		}
 
 
-			$addCSS = "";
-			if ($counter%2 == 0) {
-				$addCSS = " alternateBGColor";
-			}
-			$counter++;
+		$addCSS = "";
+		if ($counter%2 == 0) {
+			$addCSS = " alternateBGColor";
+		}
+		$counter++;
 
-			echo "
+		echo "
 				<tr>
 					<td class='main".$addCSS."' style='width: 200px' align='center'>".filterText($row['name'])."</td>
 					<td class='main".$addCSS."' style='width: 100px' align='center'><img src='".filterText($row['imageurl'])."'".$dispImgWidth.$dispImgHeight."></td>
 				</tr>
 			";
-		}
+	}
 
-		echo "
+	echo "
 			</table>
 			</div>
 		
 		";
-	}
+}
 
 ?>
 </div>

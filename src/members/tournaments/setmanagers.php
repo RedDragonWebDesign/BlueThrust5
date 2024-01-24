@@ -75,12 +75,12 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 					$tournamentConsoleCheck = new ConsoleOption($mysqli);
 					$tournamentConsoleCheck->select($cID);
 					$result = $mysqli->query("SELECT ".$dbprefix."tournamentplayers.member_id FROM ".$dbprefix."tournamentplayers, ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.member_id = ".$dbprefix."tournamentplayers.member_id AND ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id AND ".$dbprefix."tournamentplayers.tournament_id = '".$tID."' AND ".$dbprefix."tournamentplayers.member_id != '0' ORDER BY ".$dbprefix."ranks.ordernum DESC");
-					while ($row = $result->fetch_assoc()) {
-						$member->select($row['member_id']);
-						if ($member->hasAccess($tournamentConsoleCheck)) {
-							echo "<option value='".$row['member_id']."'>".$member->getMemberLink()."</option>";
-						}
+				while ($row = $result->fetch_assoc()) {
+					$member->select($row['member_id']);
+					if ($member->hasAccess($tournamentConsoleCheck)) {
+						echo "<option value='".$row['member_id']."'>".$member->getMemberLink()."</option>";
 					}
+				}
 
 					$member->select($memberInfo['member_id']);
 				?>
@@ -100,13 +100,13 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 	$arrMembers = array();
 
 	$result = $mysqli->query("SELECT ".$dbprefix."members.member_id, ".$dbprefix."members.username FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id = ".$dbprefix.".ranks.rank_id AND ".$dbprefix."members.disabled = '0' ORDER BY ".$dbprefix."ranks.ordernum DESC");
-	while ($row = $result->fetch_assoc()) {
-		$member->select($row['member_id']);
+while ($row = $result->fetch_assoc()) {
+	$member->select($row['member_id']);
 
-		if ($member->hasAccess($tournamentConsoleCheck)) {
-			$arrMembers[] = array("id" => $row['member_id'], "value" => filterText($row['username']));
-		}
+	if ($member->hasAccess($tournamentConsoleCheck)) {
+		$arrMembers[] = array("id" => $row['member_id'], "value" => filterText($row['username']));
 	}
+}
 	$member->select($memberInfo['member_id']);
 	$arrJSONMembers = json_encode($arrMembers);
 ?>

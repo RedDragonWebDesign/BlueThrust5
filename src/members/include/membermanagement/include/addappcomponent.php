@@ -42,7 +42,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 
-	if (count($addAppForm->errors) == 0) {
+		if (count($addAppForm->errors) == 0) {
 			if ($appComponentObj->getHighestOrderNum() == "") {
 				$componentOrderNum = $appComponentObj->validateOrder("first", "before");
 			}
@@ -121,7 +121,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			else {
 				$addAppForm->errors[] = "nable to save information to the database.  Please contact the website administrator.";
 			}
-    }
+		}
 
 
 		if (count($addAppForm->errors) == 0) {

@@ -19,7 +19,7 @@ class Medal extends Rank {
 
 	public $objFrozenMedal;
 
-    function __construct($sqlConnection) {
+	function __construct($sqlConnection) {
 		$this->MySQL = $sqlConnection;
 		$this->strTableName = $this->MySQL->get_tablePrefix()."medals";
 		$this->strTableKey = "medal_id";

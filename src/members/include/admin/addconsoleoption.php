@@ -249,8 +249,8 @@ if ( empty($_POST['submit']) ) {
 	$rankOptionsHeight = $counter*20;
 
 	if ($rankOptionsHeight > 300) {
-$rankOptionsHeight = 300;
-    }
+		$rankOptionsHeight = 300;
+	}
 
 
 	$memberOptions = "<option value='select'>[SELECT]</option>";

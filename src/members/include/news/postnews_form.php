@@ -1,7 +1,7 @@
 <?php
 
 if (!defined("POSTNEWS_FORM")) {
-exit();
+	exit();
 }
 
 $newsTextbox = $member->hasAccess($newsObj->getHTMLNewsConsole()) ? "richtextbox" : "textarea";

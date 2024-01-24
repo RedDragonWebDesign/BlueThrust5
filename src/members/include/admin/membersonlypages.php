@@ -45,30 +45,30 @@ echo "
 		";
 
 
-		if (isset($_SESSION['btMembersOnlyTagger']) && $_SESSION['btMembersOnlyTagger'] == 1) {
-			echo "
+if (isset($_SESSION['btMembersOnlyTagger']) && $_SESSION['btMembersOnlyTagger'] == 1) {
+	echo "
 				The member's only page tagger is currently <b>on</b>.<br><br>
 			
 				<a href='javascript:void(0)' onclick='setMembersOnlyTaggerStatus()'>Turn Off Member's Only Page Tagger</a>
 			";
-		}
-		else {
-			echo "
+}
+else {
+	echo "
 				The member's only page tagger is currently <b>off</b>.<br><br>
 			
 				<a href='javascript:void(0)' onclick='setMembersOnlyTaggerStatus()'>Turn On Member's Only Page Tagger</a>
 			";
-		}
+}
 
 		$selectPrivateForum = "";
-		if ($websiteInfo['privateforum'] == 1) {
-			$selectPrivateForum = " selected";
-		}
+if ($websiteInfo['privateforum'] == 1) {
+	$selectPrivateForum = " selected";
+}
 
 		$selectPrivateProfile = "";
-		if ($websiteInfo['privateprofile'] == 1) {
-			$selectPrivateProfile = " selected";
-		}
+if ($websiteInfo['privateprofile'] == 1) {
+	$selectPrivateProfile = " selected";
+}
 
 
 		echo "
