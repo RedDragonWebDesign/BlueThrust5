@@ -119,7 +119,7 @@ if ( empty($_POST['submit']) ) {
 				<table class='formTable'>
 					<tr>
 						<td class='formLabel'>Folder Name:</td>
-						<td class='main'><input type='text' name='foldername' value='".$_POST['foldername']."' class='textBox'></td>
+						<td class='main'><input type='text' name='foldername' value='".($_POST['foldername'] ?? '')."' class='textBox'></td>
 					</tr>
 					<tr>
 						<td class='formLabel' valign='top'>Display Order:</td>

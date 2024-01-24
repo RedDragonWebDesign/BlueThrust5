@@ -26,6 +26,7 @@
 		}
 
 		public function select($intIDNum, $numericIDOnly = true) {
+			$returnVal = false; 
 			$arrSpecialFolders = array("Inbox" => self::INBOX_ID, "Sent Messages" => self::SENTBOX_ID, "Trash" => self::TRASH_ID);
 			if(in_array($intIDNum, $arrSpecialFolders)) {
 				$this->arrObjInfo['name'] = array_search($intIDNum, $arrSpecialFolders);
@@ -33,7 +34,7 @@
 
 			}
 			else {
-				$returnVal = parent::select($intIDNum, numericIDOnly);
+				$returnVal = parent::select($intIDNum, $numericIDOnly);	
 			}
 
 			return $returnVal;
