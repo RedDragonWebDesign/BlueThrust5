@@ -86,34 +86,40 @@ class Access {
 		$rankCounter = 0;
 		$rankoptions = "";
 
+		if (!isset($_SESSION['btAccessCache'])) {
+			$_SESSION['btAccessCache'] = array();
+		}
+	
 		$result = $this->MySQL->query("SELECT rankcategory_id FROM ".$this->MySQL->get_tablePrefix()."rankcategory ORDER BY ordernum DESC");
 		while ($row = $result->fetch_assoc()) {
 			$this->objRankCat->select($row['rankcategory_id']);
 			$arrRanks = $this->objRankCat->getRanks();
 			$rankCatName = $this->objRankCat->get_info_filtered("name");
-
-			if (count($arrRanks) > 0) {
-				$rankoptions .= "<b><u>".$rankCatName."</u></b> - <a href='javascript:void(0)' onclick=\"selectAllCheckboxes('rankcat_".$row['rankcategory_id']."', 1)\">Check All</a> - <a href='javascript:void(0)' onclick=\"selectAllCheckboxes('rankcat_".$row['rankcategory_id']."', 0)\">Uncheck All</a><br>";
-				$rankoptions .= "<div id='rankcat_".$row['rankcategory_id']."'>";
-				foreach ($arrRanks as $rankID) {
-					$dispRankAccess = "";
-
-					foreach ($this->arrAccessTypes as $accessTypeInfo) {
-						if ($_SESSION['btAccessCache'][$this->cacheID]["rankaccess_".$rankID] == $accessTypeInfo['value']) {
-							$dispRankAccess = " - <span class='".$accessTypeInfo['css']."' style='font-style: italic'>".$accessTypeInfo['displayValue']."</span>";
-						}
-					}
-
-					$this->objRank->select($rankID);
-					$rankName = $this->objRank->get_info_filtered("name");
-					$rankoptions .= "<input type='checkbox' name='rankaccess_".$rankID."' value='1' data-rankaccess='1'> ".$rankName.$dispRankAccess."<br>";
-					$rankCounter++;
+			
+		if (count($arrRanks) > 0) {
+			$rankoptions .= "<b><u>".$rankCatName."</u></b> - <a href='javascript:void(0)' onclick=\"selectAllCheckboxes('rankcat_".$row['rankcategory_id']."', 1)\">Check All</a> - <a href='javascript:void(0)' onclick=\"selectAllCheckboxes('rankcat_".$row['rankcategory_id']."', 0)\">Uncheck All</a><br>";
+			$rankoptions .= "<div id='rankcat_".$row['rankcategory_id']."'>";
+			foreach ($arrRanks as $rankID) {
+				$dispRankAccess = "";
+	
+		if (isset($_SESSION['btAccessCache'][$this->cacheID])) {
+			foreach ($this->arrAccessTypes as $accessTypeInfo) {
+				if ($_SESSION['btAccessCache'][$this->cacheID]["rankaccess_".$rankID] == $accessTypeInfo['value']) {
+					$dispRankAccess = " - <span class='".$accessTypeInfo['css']."' style='font-style: italic'>".$accessTypeInfo['displayValue']."</span>";
 				}
-
-				$rankoptions .= "</div><br>";
 			}
 		}
+	
+	                $this->objRank->select($rankID);
+	                $rankName = $this->objRank->get_info_filtered("name");
+	                $rankoptions .= "<input type='checkbox' name='rankaccess_".$rankID."' value='1' data-rankaccess='1'> ".$rankName.$dispRankAccess."<br>";
+	                $rankCounter++;
+	            }
 
+			$rankoptions .= "</div><br>";
+		}
+		}
+	
 		$rankOptionsHeight = $rankCounter*20;
 
 		if ($rankOptionsHeight > 300) {
@@ -127,7 +133,7 @@ class Access {
 							<img src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral2.gif'><br>Loading
 						</p>
 					</div>
-				
+
 				<div id='".$this->rankAccessDiv."' style='margin-left: auto; margin-right: auto; overflow-y: auto; height: ".$rankOptionsHeight."px; width: 90%'>";
 		}
 
