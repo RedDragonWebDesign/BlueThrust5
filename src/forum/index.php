@@ -43,9 +43,11 @@ $memberInfo = array();
 
 
 $LOGGED_IN = false;
-if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
-	$memberInfo = $member->get_info_filtered();
-	$LOGGED_IN = true;
+if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
+	if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
+		$memberInfo = $member->get_info_filtered();
+		$LOGGED_IN = true;
+	}
 }
 
 $breadcrumbObj->setTitle("Forum");
