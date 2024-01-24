@@ -29,7 +29,7 @@ if (
 }
 
 
-$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", null, true);
+$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", 0, true);
 
 // Check if user is logged in
 if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {

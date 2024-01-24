@@ -33,9 +33,9 @@ if (!isset($menuXML)) {
 	$siteDomain = $_SERVER['SERVER_NAME'];
 
 	try {
-		$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", null, true);
+		$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", 0, true);
 	} catch (Exception $e) {
-		$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", null, true);
+		$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", 0, true);
 	}
 }
 
