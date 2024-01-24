@@ -95,13 +95,12 @@ class btMySQL extends MySQLi {
 		$returnVal = false;
 		$strParamTypes = $this->getParamTypes($arrValues);
 		
-		
 		$params = array($strParamTypes); 
 		foreach ($arrValues as $key => $value) {
-				$params[] = &$arrValues[$key];
+			$params[] = &$arrValues[$key];
 		}
-
-
+		
+		
 		if(!call_user_func_array(array($objMySQLiStmt, "bind_param"), $params)) {
 			$returnVal = false;
 			echo $objMySQLiStmt->error;
@@ -116,7 +115,6 @@ class btMySQL extends MySQLi {
 		return $returnVal;
 		
 	}
-
 	
 	public function optimizeTables() {
 		$tables = array();
