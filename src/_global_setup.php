@@ -32,14 +32,14 @@ if (version_compare(phpversion(), "7.0") < 0) {
 
 /** Useful debug function. Pretty prints the contents of a variable.
 	Example usage: html_var_export($limit, '$limit'); */
-function html_var_export($var, $var_name = NULL) {
+function html_var_export($var, $var_name = null) {
 	$output = '<span class="html-var-export">';
 
 	if ( $var_name ) {
 		$output .= $var_name . ' = ';
 	}
 
-	$output .= nl2br_and_nbsp(var_export($var, TRUE)) . "</span><br /><br />";
+	$output .= nl2br_and_nbsp(var_export($var, true)) . "</span><br /><br />";
 
 	echo $output;
 }

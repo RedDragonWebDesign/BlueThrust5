@@ -33,4 +33,7 @@
         <!-- false positives when comments are between if/elseif/else, turning off for now -->
         <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace"/>
     </rule>
+
+    <!-- true/false/null not TRUE/FALSE/NULL -->
+    <rule ref="Generic.PHP.LowerCaseConstant"/>
 </ruleset>
