@@ -16,13 +16,13 @@
 require_once("../classes/event.php");
 $_SESSION['btEventID'] = "";
 $_SESSION['btCountMindChanges'] = array();
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -32,7 +32,7 @@ $cID = $_GET['cID'];
 
 $eventObj = new Event($mysqli);
 
-if(isset($_GET['note'])) {
+if (isset($_GET['note'])) {
 	echo "
 		<div class='formDiv'>
 			<b><u>NOTE:</u></b> If you are here after clicking the confirm your attendance link, you must wait for the event to start before confirming your attendance at the event.  You can however, RSVP to an event from this page.

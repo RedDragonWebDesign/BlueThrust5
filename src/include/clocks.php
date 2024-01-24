@@ -1,6 +1,7 @@
 <?php
 
-	if(!defined("MAIN_ROOT")) { exit(); }
+	if (!defined("MAIN_ROOT")) {
+exit(); }
 
 	$websiteInfo['date_format'] = (!isset($websiteInfo['date_format']) || $websiteInfo['date_format'] == "") ? "l, F j, Y" : $websiteInfo['date_format'];
 
@@ -20,6 +21,6 @@
 		";
 	}
 
-	if($websiteInfo['display_date'] == 1) {
+	if ($websiteInfo['display_date'] == 1) {
 		$hooksObj->run("worldclock-display");
 	}

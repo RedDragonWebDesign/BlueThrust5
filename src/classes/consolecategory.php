@@ -30,10 +30,10 @@ class ConsoleCategory extends BasicOrder {
 
 	public function delete() {
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("DELETE FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 			$this->resortOrder();
-			if(!$this->MySQL->error) {
+			if (!$this->MySQL->error) {
 				$returnVal = true;
 			}
 			else {
@@ -66,23 +66,23 @@ class ConsoleCategory extends BasicOrder {
 	function makeRoom($strBeforeAfter) {
 
 		$intRankID = $this->intTableKeyValue;
-		if($intRankID != null) {
+		if ($intRankID != null) {
 
 			$intNewRankOrderNum = 0;
 			$arrRanks = array();
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." ORDER BY ordernum");
 			$x = 1;
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
-				if($row[$this->strTableKey] == $intRankID) {
+				if ($row[$this->strTableKey] == $intRankID) {
 
-					if($strBeforeAfter == "after") {
+					if ($strBeforeAfter == "after") {
 						$intNewRankOrderNum = $x;
 						$x++;
 						$arrRanks[$x] = $row[$this->strTableKey];
 						$x++;
 					}
-					elseif($strBeforeAfter == "before") {
+					elseif ($strBeforeAfter == "before") {
 						$arrRanks[$x] = $row[$this->strTableKey];
 						$x++;
 						$intNewRankOrderNum = $x;
@@ -96,17 +96,17 @@ class ConsoleCategory extends BasicOrder {
 				}
 			}
 
-			if($intNewRankOrderNum == 0) {
+			if ($intNewRankOrderNum == 0) {
 				// intNewRank should not equal 0 after the above loop.
 				// The test will be if a numeric value is returned, so if it returns this string, something went wrong.
 				$intNewRankOrderNum = "false";
 			}
 
-			if(is_numeric($intNewRankOrderNum)) {
+			if (is_numeric($intNewRankOrderNum)) {
 
 				$intOriginalRank = $this->intTableKeyValue;
 
-				foreach($arrRanks as $key => $value) {
+				foreach ($arrRanks as $key => $value) {
 
 					$arrColumns[0] = "ordernum";
 					$arrValues[0] = $key;
@@ -144,13 +144,13 @@ class ConsoleCategory extends BasicOrder {
 		$x = 0; // array counter
 		$arrUpdateID = array();
 		$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." ORDER BY ordernum");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$arrUpdateID[] = $row[$this->strTableKey];
 			$x++;
 		}
 
 		$intOriginalRank = $this->intTableKeyValue;
-		foreach($arrUpdateID as $intUpdateID) {
+		foreach ($arrUpdateID as $intUpdateID) {
 			$arrUpdateCol[0] = "ordernum";
 			$arrUpdateVal[0] = $counter;
 			$this->select($intUpdateID);

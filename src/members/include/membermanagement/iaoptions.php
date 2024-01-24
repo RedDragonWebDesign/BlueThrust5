@@ -12,22 +12,22 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
 
 $rankInfo = $memberRank->get_info_filtered();
-if($memberInfo['promotepower'] != 0) {
+if ($memberInfo['promotepower'] != 0) {
 	$rankInfo['promotepower'] = $memberInfo['promotepower'];
 }
-elseif($memberInfo['promotepower'] == -1) {
+elseif ($memberInfo['promotepower'] == -1) {
 	$rankInfo['promotepower'] = 0;
 }
 
@@ -35,12 +35,12 @@ $cID = $_GET['cID'];
 
 $dispError = "";
 $countErrors = 0;
-if($memberInfo['rank_id'] == 1) {
+if ($memberInfo['rank_id'] == 1) {
 
 	$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
  	$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
 
- 	if($maxOrderNum->num_rows > 0) {
+ 	if ($maxOrderNum->num_rows > 0) {
  		$result = $mysqli->query("SELECT rank_id FROM ".$dbprefix."ranks WHERE ordernum = '".$arrMaxOrderNum[0]."'");
  		$row = $result->fetch_assoc();
  		$rankInfo['promotepower'] = $row['rank_id'];
@@ -51,22 +51,22 @@ if($memberInfo['rank_id'] == 1) {
 $rankObj = new Rank($mysqli);
 if ( ! empty($_POST['submit']) ) {
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		$time = time();
 
 		// Check Member
-		if(!$member->select($_POST['member'])) {
+		if (!$member->select($_POST['member'])) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member.<br>";
 		}
 
 		// Check Status
-		if($member->get_info("onia") == 1 && $_POST['ia'] == 1) {
+		if ($member->get_info("onia") == 1 && $_POST['ia'] == 1) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The selected member is already on IA.<br>";
 		}
 
-		if($member->get_info("onia") == 0 && $_POST['ia'] == 0) {
+		if ($member->get_info("onia") == 0 && $_POST['ia'] == 0) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The selected member is not on IA.<br>";
 		}
@@ -75,14 +75,16 @@ if ( ! empty($_POST['submit']) ) {
 		$arrColumns = array("onia");
 		$arrValues = ($_POST['ia'] == 1) ? array(1) : array(0);
 
-		if($_POST['ia'] = "1") { $ia_NAME = "On Leave"; } else { $ia_NAME = "Off Leave"; }
+		if ($_POST['ia'] = "1") {
+$ia_NAME = "On Leave"; } else {
+$ia_NAME = "Off Leave"; }
 
 
-		if($member->update($arrColumns, $arrValues)) {
+		if ($member->update($arrColumns, $arrValues)) {
 
 			// Check for pending IA request and delete
 			$checkRequested = $member->requestedIA(true);
-			if($checkRequested !== false) {
+			if ($checkRequested !== false) {
 				$requestIAObj = new Basic($mysqli, "iarequest", "iarequest_id");
 				$requestIAObj->select($checkRequested);
 				$requestIAObj->delete();
@@ -100,7 +102,9 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			";
 
-			if($_POST['why'] != "I") { $reasonWHY = " Until $reason"; } else { $reasonWHY = ""; }
+			if ($_POST['why'] != "I") {
+$reasonWHY = " Until $reason"; } else {
+$reasonWHY = ""; }
 			$member->postNotification("You are ".$ia_NAME.$reasonWHY);
 
 			$dispIAMember = $member->getMemberLink();
@@ -119,7 +123,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	}
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
@@ -131,7 +135,7 @@ if ( empty($_POST['submit']) ) {
 
  	$memberoptions = "";
 	$result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.name FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."ranks.rank_id = ".$dbprefix."members.rank_id AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id != '1' ORDER BY ".$dbprefix."ranks.ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 		$memberoptions .= "<option value='".$row['member_id']."'>".filterText($row['name'])." ".filterText($row['username'])."</option>";
 
@@ -148,7 +152,7 @@ if ( empty($_POST['submit']) ) {
 	";
 
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to set IA Status because the following errors occurred:</strong><br><br>

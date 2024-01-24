@@ -23,10 +23,10 @@ $member = new Member($mysqli);
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -35,7 +35,7 @@ if($ipbanObj->select($IP_ADDRESS, false)) {
 
 }
 
-if(!$eventObj->select($_GET['eID'])) {
+if (!$eventObj->select($_GET['eID'])) {
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."events';
@@ -50,13 +50,13 @@ $eventPgMemberObj = new Member($mysqli);
 
 $dispCreatorLink = "Unknown";
 
-if($eventPgMemberObj->select($eventInfo['member_id'])) {
+if ($eventPgMemberObj->select($eventInfo['member_id'])) {
 	$dispCreatorLink = $eventPgMemberObj->getMemberLink();
 }
 
 $eventMemberProfilePic = $eventPgMemberObj->get_info_filtered("profilepic");
 
-if($eventMemberProfilePic == "") {
+if ($eventMemberProfilePic == "") {
 	$eventMemberProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
 }
 else {
@@ -73,10 +73,10 @@ $dispBreadCrumb = "";
 require_once($prevFolder."themes/".$THEME."/_header.php");
 
 $memberInfo = array();
-if(constant("LOGGED_IN") && $member->select($_SESSION['btUsername'])) {
+if (constant("LOGGED_IN") && $member->select($_SESSION['btUsername'])) {
 	$memberInfo = $member->get_info_filtered();
 
-	if($eventInfo['status'] == 2 && !in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true)) && $memberInfo['member_id'] != $eventInfo['member_id']) {
+	if ($eventInfo['status'] == 2 && !in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true)) && $memberInfo['member_id'] != $eventInfo['member_id']) {
 		echo "
 			<script type='text/javascript'>
 				window.location = '".$MAIN_ROOT."events';
@@ -86,7 +86,7 @@ if(constant("LOGGED_IN") && $member->select($_SESSION['btUsername'])) {
 	}
 
 }
-elseif($eventInfo['visibility'] != 0) {
+elseif ($eventInfo['visibility'] != 0) {
 
 	echo "
 		<script type='text/javascript'>
@@ -123,11 +123,11 @@ echo "
 
 	$arrSortInviteList = array();
 	$arrInviteListNoPosition = array();
-	foreach($arrInviteList as $value) {
+	foreach ($arrInviteList as $value) {
 		$eventMemberID = $eventObj->getEventMemberID($value, true);
 		$eventMemInfo = $eventObj->objEventMember->get_info();
 
-		if($eventObj->objEventPosition->select($eventMemInfo['position_id'])) {
+		if ($eventObj->objEventPosition->select($eventMemInfo['position_id'])) {
 			$arrSortInviteList[] = $value;
 		}
 		else {
@@ -140,7 +140,7 @@ echo "
 	$query[0] = "SELECT m.rank_id, ep.sortnum, r.ordernum, m.member_id FROM ".$dbprefix."members m, ".$dbprefix."eventpositions ep, ".$dbprefix."events_members em, ".$dbprefix."ranks r WHERE r.rank_id = m.rank_id AND m.member_id = em.member_id AND em.event_id = '".$eventInfo['event_id']."' AND em.position_id = ep.position_id AND em.member_id IN ".$sqlInviteList[0]." ORDER BY ep.sortnum ASC, r.ordernum DESC";
 
 	$sqlInviteList[1] = "('".implode("','", $arrInviteListNoPosition)."')";
-	if($eventInfo['startdate'] > time()) {
+	if ($eventInfo['startdate'] > time()) {
 		$query[1] = "SELECT m.rank_id, r.ordernum, m.member_id FROM ".$dbprefix."members m, ".$dbprefix."events_members em, ".$dbprefix."ranks r WHERE r.rank_id = m.rank_id AND m.member_id = em.member_id AND em.event_id = '".$eventInfo['event_id']."' AND em.member_id IN ".$sqlInviteList[1]." ORDER BY em.status DESC, r.ordernum DESC";
 	}
 	else {
@@ -150,15 +150,15 @@ echo "
 
 	$counter = 1;
 	$currentAttendStatus = "";
-	for($x=0;$x<=1;$x++) {
+	for ($x=0;$x<=1;$x++) {
 
 		$result = $mysqli->query($query[$x]);
-		while($row = $result->fetch_assoc()) {
-			if($eventPgMemberObj->select($row['member_id'])) {
+		while ($row = $result->fetch_assoc()) {
+			if ($eventPgMemberObj->select($row['member_id'])) {
 				$eventMemID = $eventObj->getEventMemberID($row['member_id'], true);
 				$eventMemInfo = $eventObj->objEventMember->get_info();
 
-				if($eventObj->objEventPosition->select($eventMemInfo['position_id'])) {
+				if ($eventObj->objEventPosition->select($eventMemInfo['position_id'])) {
 					$dispPositionName = $eventObj->objEventPosition->get_info_filtered("name");
 				}
 				else {
@@ -168,7 +168,7 @@ echo "
 
 				$eventMemberProfilePic = $eventPgMemberObj->get_info_filtered("profilepic");
 
-				if($eventMemberProfilePic == "") {
+				if ($eventMemberProfilePic == "") {
 					$eventMemberProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
 				}
 				else {
@@ -177,8 +177,8 @@ echo "
 
 
 				date_default_timezone_set("UTC");
-				if($eventInfo['startdate'] > time()) {
-					switch($eventMemInfo['status']) {
+				if ($eventInfo['startdate'] > time()) {
+					switch ($eventMemInfo['status']) {
 						case 2:
 							$dispAttendStatus = "Not Attending";
 							break;
@@ -192,7 +192,7 @@ echo "
 				else {
 
 					$dispAttendStatus = "";
-					switch($eventMemInfo['attendconfirm_admin']) {
+					switch ($eventMemInfo['attendconfirm_admin']) {
 						case 1:
 							$dispAttendStatus = "Attended";
 							break;
@@ -208,7 +208,7 @@ echo "
 
 				}
 
-				if($x == 1 && $currentAttendStatus != $dispAttendStatus) {
+				if ($x == 1 && $currentAttendStatus != $dispAttendStatus) {
 					$currentAttendStatus = $dispAttendStatus;
 					$counter = 0;
 					echo "
@@ -220,7 +220,7 @@ echo "
 					";
 				}
 
-				if($counter == 1) {
+				if ($counter == 1) {
 					$addCSS = " alternateBGColor";
 					$counter = 0;
 				}
@@ -240,7 +240,8 @@ echo "
 							<span class='largeFont'>".$eventPgMemberObj->getMemberLink()."</span><br>
 							";
 
-				if($x == 0) { echo "<b>Position:</b> ".$dispPositionName."<br><i>".$dispAttendStatus."</i>"; }
+				if ($x == 0) {
+echo "<b>Position:</b> ".$dispPositionName."<br><i>".$dispAttendStatus."</i>"; }
 
 				echo "
 					</td>
@@ -255,7 +256,7 @@ echo "
 	$dispEventPositions = "";
 	$arrEventPositions = $eventObj->getPositions();
 	$x = 1;
-	foreach($arrEventPositions as $value) {
+	foreach ($arrEventPositions as $value) {
 
 		$eventObj->objEventPosition->select($value);
 
@@ -264,7 +265,7 @@ echo "
 		$x++;
 	}
 
-	if($dispEventPositions == "") {
+	if ($dispEventPositions == "") {
 		$dispEventPositions = "<i>None</i>";
 	}
 
@@ -275,7 +276,7 @@ echo "
 	$dispTimezone = "";
 	$dispStartDate = $dateTimeObj->format("M j, Y g:i A");
 
-	if($eventInfo['timezone'] != "") {
+	if ($eventInfo['timezone'] != "") {
 		$timeZoneObj = new DateTimeZone($eventInfo['timezone']);
 		$dateTimeObj->setTimezone($timeZoneObj);
 		$includeTimezone = " T";
@@ -335,7 +336,7 @@ echo "
 				";
 
 			$dispPostMessageJS = "";
-			if($eventObj->memberHasAccess($memberInfo['member_id'], "postmessages")) {
+			if ($eventObj->memberHasAccess($memberInfo['member_id'], "postmessages")) {
 				echo "
 				
 					<div style='position: relative; margin-top: 5px; margin-left: auto; margin-right: auto; width: 95%'>
@@ -395,7 +396,7 @@ echo "
 
 
 			$dispManageMessagesJS = "";
-			if($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) {
+			if ($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) {
 
 				$dispManageMessagesJS = "
 				
@@ -442,12 +443,12 @@ echo "
 					";
 
 				$result = $mysqli->query("SELECT * FROM ".$dbprefix."eventmessages WHERE event_id = '".$eventInfo['event_id']."' ORDER BY dateposted DESC");
-				while($row = $result->fetch_assoc()) {
+				while ($row = $result->fetch_assoc()) {
 
 					$eventPgMemberObj->select($row['member_id']);
 					$memInfo = $eventPgMemberObj->get_info_filtered();
 
-					if($memInfo['profilepic'] == "") {
+					if ($memInfo['profilepic'] == "") {
 						$dispProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
 					}
 					else {
@@ -455,7 +456,7 @@ echo "
 					}
 
 					$dispDeleteMessage = "";
-					if($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) {
+					if ($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) {
 						$dispDeleteMessage = " - <a href='javascript:void(0)' onclick=\"deleteMessage('".$row['eventmessage_id']."', 'm')\">Delete</a>";
 					}
 
@@ -475,14 +476,14 @@ echo "
 							$eventObj->objEventMessage->select($row['eventmessage_id']);
 							$arrMessageComments = $eventObj->objEventMessage->getComments(" ORDER BY dateposted ASC");
 
-							foreach($arrMessageComments as $commentID) {
-								if($eventObj->objEventMessageComment->select($commentID)) {
+							foreach ($arrMessageComments as $commentID) {
+								if ($eventObj->objEventMessageComment->select($commentID)) {
 									$commentInfo = $eventObj->objEventMessageComment->get_info_filtered();
 									$eventPgMemberObj->select($commentInfo['member_id']);
 
 									$memInfo = $eventPgMemberObj->get_info_filtered();
 
-									if($memInfo['profilepic'] == "") {
+									if ($memInfo['profilepic'] == "") {
 										$dispProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
 									}
 									else {
@@ -490,7 +491,7 @@ echo "
 									}
 
 									$dispDeleteMessage = "";
-									if($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) {
+									if ($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) {
 										$dispDeleteMessage = " - <a href='javascript:void(0)' onclick=\"deleteMessage('".$commentID."', 'c')\">Delete</a>";
 									}
 
@@ -518,7 +519,7 @@ echo "
 						";
 
 
-					if(constant("LOGGED_IN") && $eventObj->memberHasAccess($memberInfo['member_id'], "postmessages")) {
+					if (constant("LOGGED_IN") && $eventObj->memberHasAccess($memberInfo['member_id'], "postmessages")) {
 						echo "	
 							<li class='dashedLine'>
 								Comment:<br>

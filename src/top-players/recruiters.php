@@ -26,10 +26,10 @@ require_once($prevFolder."classes/rank.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -54,7 +54,7 @@ require_once($prevFolder."include/breadcrumb.php");
 
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '0' AND rank_id != '1'");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$member->select($row['member_id']);
 
 		$arrMembers[$row['member_id']] = $member->countRecruits();
@@ -62,7 +62,7 @@ require_once($prevFolder."include/breadcrumb.php");
 	}
 
 
-	if( isset($_GET['sort']) && $_GET['sort'] != "up") {
+	if ( isset($_GET['sort']) && $_GET['sort'] != "up") {
 		$dispSort = "<a href='".$MAIN_ROOT."top-players/recruiters.php?sort=up'><img src='".$MAIN_ROOT."themes/".$THEME."/images/downarrow.png'></a>";
 		$_GET['sort'] = "down";
 		arsort($arrMembers);
@@ -85,11 +85,11 @@ require_once($prevFolder."include/breadcrumb.php");
 
 
 	$counter = 0;
-	foreach($arrMembers as $memberID => $statValue) {
+	foreach ($arrMembers as $memberID => $statValue) {
 		$counter++;
 
 		$addCSS = "";
-		if($counter%2 == 0) {
+		if ($counter%2 == 0) {
 			$addCSS = " alternateBGColor";
 		}
 
@@ -104,15 +104,15 @@ require_once($prevFolder."include/breadcrumb.php");
 		";
 
 
-		if($counter >= 10) {
+		if ($counter >= 10) {
 			break;
 		}
 	}
 
-	if($counter < 10) {
-		for($i=($counter+1); $i<=10; $i++) {
+	if ($counter < 10) {
+		for ($i=($counter+1); $i<=10; $i++) {
 			$addCSS = "";
-			if($i%2 == 0) {
+			if ($i%2 == 0) {
 				$addCSS = " alternateBGColor";
 			}
 

@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -32,39 +32,39 @@ $counter = 0;
 $dispSquadNames = "";
 $arrSquads = $member->getSquadList();
 
-if($squadObj->getManageAllStatus()) {
+if ($squadObj->getManageAllStatus()) {
 	$arrSquads = array();
 	$result = $mysqli->query("SELECT squad_id FROM ".$dbprefix."squads ORDER BY name");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$arrSquads[] = $row['squad_id'];
 	}
 }
 
 $clickCounter = 0;
-if(count($arrSquads) > 0) {
+if (count($arrSquads) > 0) {
 
-	foreach($arrSquads as $squadID) {
+	foreach ($arrSquads as $squadID) {
 
-		if($squadObj->select($squadID)) {
+		if ($squadObj->select($squadID)) {
 			$intSquadMemberID = $squadObj->getSquadMemberID($memberInfo['member_id']);
 
-			if($squadObj->objSquadMember->select($intSquadMemberID) || $squadObj->getManageAllStatus()) {
+			if ($squadObj->objSquadMember->select($intSquadMemberID) || $squadObj->getManageAllStatus()) {
 				$squadMemberInfo = $squadObj->objSquadMember->get_info_filtered();
 
-				if($squadObj->objSquadRank->select($squadMemberInfo['squadrank_id']) || $squadObj->getManageAllStatus()) {
+				if ($squadObj->objSquadRank->select($squadMemberInfo['squadrank_id']) || $squadObj->getManageAllStatus()) {
 
 					$squadRankInfo = $squadObj->objSquadRank->get_info_filtered();
 
 					$categoryCSS = "consoleCategory_clicked";
 					$hideoptions = "";
-					if($counter > 0) {
+					if ($counter > 0) {
 						$hideoptions = "style='display: none'";
 						$categoryCSS = "consoleCategory";
 					}
 					$counter++;
 					$squadInfo = $squadObj->get_info_filtered();
 
-					if($_GET['select'] == $squadInfo['squad_id']) {
+					if ($_GET['select'] == $squadInfo['squad_id']) {
 						$clickCounter = $counter;
 					}
 
@@ -81,9 +81,9 @@ if(count($arrSquads) > 0) {
 					$arrSquadOptions = array("postnews", "managenews", "manageshoutbox", "addrank", "manageranks", "setrank", "editprofile", "sendinvites", "acceptapps",  "removemember");
 					$arrSquadOptionsPageID = array("PostNews", "ManageNews", "ManageShoutbox", "AddRank", "ManageRanks", "SetRank", "EditProfile", "SendInvites", "ViewApps",  "RemoveMember");
 					$arrSquadOptionsDispName = array("Post News", "Manage News", "Manage Shoutbox Posts", "Add Rank", "Manage Ranks", "Set Member Rank", "Edit Squad Profile", "Send Squad Invite", "View Applications", "Remove Member");
-					foreach($arrSquadOptions as $key=>$squadOption) {
+					foreach ($arrSquadOptions as $key=>$squadOption) {
 
-						if($squadRankInfo[$squadOption] == 1 || $squadObj->getManageAllStatus()) {
+						if ($squadRankInfo[$squadOption] == 1 || $squadObj->getManageAllStatus()) {
 
 							$dispSquadOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$squadInfo['squad_id']."&pID=".$arrSquadOptionsPageID[$key]."'>".$arrSquadOptionsDispName[$key]."</a><br>";
 
@@ -93,7 +93,7 @@ if(count($arrSquads) > 0) {
 
 					$dispSquadOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."squads/profile.php?sID=".$squadInfo['squad_id']."'>View Squad Profile</a><br>";
 
-					if($squadInfo['member_id'] == $memberInfo['member_id'] || $squadObj->getManageAllStatus()) {
+					if ($squadInfo['member_id'] == $memberInfo['member_id'] || $squadObj->getManageAllStatus()) {
 						$dispSquadOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$squadInfo['squad_id']."&pID=CloseSquad'>Close Squad</a><br>";
 					}
 					else {
@@ -127,7 +127,7 @@ if(count($arrSquads) > 0) {
 
 	";
 
-	if($clickCounter != 0) {
+	if ($clickCounter != 0) {
 
 		echo "
 			<script type='text/javascript'>

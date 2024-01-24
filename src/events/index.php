@@ -34,7 +34,7 @@ $memberInfo = array();
 
 
 $LOGGED_IN = false;
-if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 	$LOGGED_IN = true;
 
@@ -63,30 +63,30 @@ require_once($prevFolder."include/breadcrumb.php");
 			$counter = 0;
 			$countEvents = 0;
 			$result = $mysqli->query("SELECT event_id FROM ".$dbprefix."events ORDER BY startdate");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
 				$eventObj->select($row['event_id']);
 				$eventInfo = $eventObj->get_info_filtered();
 
 				$showEvent = false;
-				if($eventInfo['visibility'] == 2 && (in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true)) || $memberInfo['member_id'] == $eventInfo['member_id'] || $memberInfo['rank_id'] == 1)) {
+				if ($eventInfo['visibility'] == 2 && (in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true)) || $memberInfo['member_id'] == $eventInfo['member_id'] || $memberInfo['rank_id'] == 1)) {
 					$showEvent == true;
 				}
-				elseif($eventInfo['visibility'] == 1 && $LOGGED_IN) {
+				elseif ($eventInfo['visibility'] == 1 && $LOGGED_IN) {
 
 					$showEvent = true;
 				}
-				elseif($eventInfo['visibility'] == 0) {
+				elseif ($eventInfo['visibility'] == 0) {
 					$showEvent = true;
 				}
 
 
 
-				if($showEvent) {
+				if ($showEvent) {
 
 					$countEvents++;
 					$addCSS = "";
-					if($counter%2 == 0) {
+					if ($counter%2 == 0) {
 						$addCSS = " alternateBGColor";
 					}
 					$counter++;
@@ -99,7 +99,7 @@ require_once($prevFolder."include/breadcrumb.php");
 					$includeTimezone = "";
 
 					$dispStartDate = $dateTimeObj->format("M j, Y g:i A");
-					if($eventInfo['timezone'] != "") {
+					if ($eventInfo['timezone'] != "") {
 						$dateTimeObj->setTimezone(new DateTimeZone($eventInfo['timezone']));
 						$dispTimezone = $dateTimeObj->format(" T");
 					}
@@ -126,7 +126,7 @@ require_once($prevFolder."include/breadcrumb.php");
 	
 	<?php
 
-		if($countEvents == 0) {
+		if ($countEvents == 0) {
 
 
 			echo "

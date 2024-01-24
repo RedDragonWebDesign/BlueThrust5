@@ -18,7 +18,7 @@
 
 		public function update($arrTableColumns, $arrColumnValues) {
 
-			if($this->intTableKeyValue == "" && $this->memberID != 0) {
+			if ($this->intTableKeyValue == "" && $this->memberID != 0) {
 				$this->addNew(array("member_id"), array($this->memberID));
 			}
 
@@ -31,7 +31,7 @@
 		public function setMemberID($member_id) {
 			$this->memberID = $member_id;
 
-			if(!$this->selectByMulti(array("member_id" => $member_id))) {
+			if (!$this->selectByMulti(array("member_id" => $member_id))) {
 				$this->addNew(array("member_id"), array($this->memberID));
 			}
 

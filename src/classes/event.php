@@ -48,12 +48,12 @@ class Event extends Basic {
 	public function checkManageAllEvents() {
 
 		$this->blnManageAllEvents = false;
-		if(isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
+		if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 			$member = new Member($this->MySQL);
 			$consoleObj = new ConsoleOption($this->MySQL);
 
 			$manageAllEventsCID = $consoleObj->findConsoleIDByName("Manage All Events");
-			if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
+			if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
 				$consoleObj->select($manageAllEventsCID);
 				$this->blnManageAllEvents = $member->hasAccess($consoleObj);
 			}
@@ -71,13 +71,13 @@ class Event extends Basic {
 	public function inviteMember($memberID, $invitedByMID=0) {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
-			if(!in_array($memberID, $this->getInvitedMembers(true)) && $memberID != $this->arrObjInfo['member_id']) {
+			if (!in_array($memberID, $this->getInvitedMembers(true)) && $memberID != $this->arrObjInfo['member_id']) {
 				$arrColumns = array("event_id", "member_id", "invitedbymember_id");
 				$arrValues = array($this->intTableKeyValue, $memberID, $invitedByMID);
 
-				if($this->objEventMember->addNew($arrColumns, $arrValues)) {
+				if ($this->objEventMember->addNew($arrColumns, $arrValues)) {
 					$returnVal = true;
 				}
 			}
@@ -97,11 +97,11 @@ class Event extends Basic {
 
 		$returnArr = array();
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."events_members WHERE event_id = '".$this->intTableKeyValue."'");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
-				if($returnMemberIDs) {
+				if ($returnMemberIDs) {
 					$returnArr[] = $row['member_id'];
 				}
 				else {
@@ -124,14 +124,14 @@ class Event extends Basic {
 	public function getEventMemberID($intMemberID, $blnSelectMember=false) {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "" && is_numeric($intMemberID)) {
+		if ($this->intTableKeyValue != "" && is_numeric($intMemberID)) {
 
 			$result = $this->MySQL->query("SELECT eventmember_id FROM ".$this->MySQL->get_tablePrefix()."events_members WHERE event_id = '".$this->intTableKeyValue."' AND member_id = '".$intMemberID."'");
-			if($result->num_rows > 0) {
+			if ($result->num_rows > 0) {
 				$row = $result->fetch_assoc();
 				$returnVal = $row['eventmember_id'];
 
-				if($blnSelectMember) {
+				if ($blnSelectMember) {
 					$this->objEventMember->select($returnVal);
 				}
 
@@ -145,9 +145,9 @@ class Event extends Basic {
 	public function getPositions($sqlOrderBy = "") {
 		$returnArr = array();
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
-			if($sqlOrderBy == "") {
+			if ($sqlOrderBy == "") {
 				$sqlOrderBy = " ORDER BY sortnum";
 			}
 			else {
@@ -155,7 +155,7 @@ class Event extends Basic {
 			}
 
 			$result = $this->MySQL->query("SELECT position_id FROM ".$this->MySQL->get_tablePrefix()."eventpositions WHERE event_id = '".$this->intTableKeyValue."'".$sqlOrderBy);
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$returnArr[] = $row['position_id'];
 			}
 
@@ -169,27 +169,27 @@ class Event extends Basic {
 	public function memberHasAccess($memberID, $privilegeName) {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			// Check if member is the creator, if so he has access.
-			if($memberID == $this->arrObjInfo['member_id'] || $this->blnManageAllEvents) {
+			if ($memberID == $this->arrObjInfo['member_id'] || $this->blnManageAllEvents) {
 				$returnVal = true;
 			}
 			else {
 				// Otherwise check if their position has access
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."events_members WHERE member_id = '".$memberID."' AND event_id = '".$this->intTableKeyValue."'");
-				if($result->num_rows > 0) {
+				if ($result->num_rows > 0) {
 					$row = $result->fetch_assoc();
 
-					if($this->objEventPosition->select($row['position_id'])) {
-						if($this->objEventPosition->get_info($privilegeName) == 1) {
+					if ($this->objEventPosition->select($row['position_id'])) {
+						if ($this->objEventPosition->get_info($privilegeName) == 1) {
 							$returnVal = true;
 						}
 					}
-					elseif($privilegeName == "invitemembers" && $this->arrObjInfo['invitepermission'] == 1) {
+					elseif ($privilegeName == "invitemembers" && $this->arrObjInfo['invitepermission'] == 1) {
 						$returnVal = true;
 					}
-					elseif($privilegeName == "postmessages" && $this->arrObjInfo['messages'] == 1) {
+					elseif ($privilegeName == "postmessages" && $this->arrObjInfo['messages'] == 1) {
 						$returnVal;
 					}
 
@@ -204,13 +204,13 @@ class Event extends Basic {
 
 	public function notifyEventInvites($strMessage) {
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$objMember = new Member($this->MySQL);
 
 			$arrInvitedMembers = $this->getInvitedMembers(true);
-			foreach($arrInvitedMembers as $value) {
+			foreach ($arrInvitedMembers as $value) {
 
-				if($objMember->select($value)) {
+				if ($objMember->select($value)) {
 					$objMember->postNotification($strMessage);
 				}
 
@@ -224,10 +224,10 @@ class Event extends Basic {
 	public function chatRoomStarted() {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$result = $this->MySQL->query("SELECT eventchat_id FROM ".$this->MySQL->get_tablePrefix()."eventchat WHERE event_id = '".$this->intTableKeyValue."'");
-			if($result->num_rows > 0) {
+			if ($result->num_rows > 0) {
 				$row = $result->fetch_assoc();
 				$returnVal = $row['eventchat_id'];
 			}
@@ -243,12 +243,12 @@ class Event extends Basic {
 
 		$returnVal = false;
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$result = $this->MySQL->query("SELECT eventmessage_id FROM ".$this->MySQL->get_tablePrefix()."eventmessages WHERE event_id = '".$this->intTableKeyValue."'");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
-				if($this->objEventMessage->select($row['eventmessage_id'])) {
+				if ($this->objEventMessage->select($row['eventmessage_id'])) {
 					$this->objEventMessage->delete();
 				}
 
@@ -256,19 +256,19 @@ class Event extends Basic {
 
 			$countErrors = 0;
 
-			if($this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."eventpositions WHERE event_id = '".$this->intTableKeyValue."'")) {
+			if ($this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."eventpositions WHERE event_id = '".$this->intTableKeyValue."'")) {
 				$countErrors++;
 			}
 
-			if($this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."events_members WHERE event_id = '".$this->intTableKeyValue."'")) {
+			if ($this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."events_members WHERE event_id = '".$this->intTableKeyValue."'")) {
 				$countErrors++;
 			}
 
-			if($this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."events WHERE event_id = '".$this->intTableKeyValue."'")) {
+			if ($this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."events WHERE event_id = '".$this->intTableKeyValue."'")) {
 				$countErrors++;
 			}
 
-			if($countErrors == 0) {
+			if ($countErrors == 0) {
 				$returnVal = true;
 			}
 
@@ -291,15 +291,15 @@ class Event extends Basic {
 
 		$result = parent::update($arrColumns, $arrValues);
 
-		if($result) {
+		if ($result) {
 
 			$arrNewInfo = $this->arrObjInfo;
 
 			// Check for time change
-			if($arrOriginalInfo['startdate'] != $arrNewInfo['startdate']) {
+			if ($arrOriginalInfo['startdate'] != $arrNewInfo['startdate']) {
 
 				//Update reminders
-				foreach($this->getInvitedMembers() as $eventMemberID) {
+				foreach ($this->getInvitedMembers() as $eventMemberID) {
 					$this->objEventMember->select($eventMemberID);
 					$this->objEventMember->setReminder();
 				}

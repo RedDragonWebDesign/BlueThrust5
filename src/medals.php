@@ -27,10 +27,10 @@ require_once($prevFolder."classes/medal.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -62,7 +62,7 @@ require_once($prevFolder."include/breadcrumb.php");
 <?php
 
 $result = $mysqli->query("SELECT medal_id FROM ".$dbprefix."medals ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 
 	$medalObj->select($row['medal_id']);
 	$medalObj->refreshImageSize();

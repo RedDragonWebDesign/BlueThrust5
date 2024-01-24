@@ -12,7 +12,7 @@
  *
  */
 
-if(!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
+if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 
 	exit();
 }
@@ -28,7 +28,7 @@ else {
 	$consoleAllSquads = new ConsoleOption($mysqli);
 	$consoleAllSquads->select($manageAllSquadsCID);
 
-	if(!$member->hasAccess($consoleObj) || ($squadInfo['member_id'] != $memberInfo['member_id'] && !$member->hasAccess($consoleAllSquads))) {
+	if (!$member->hasAccess($consoleObj) || ($squadInfo['member_id'] != $memberInfo['member_id'] && !$member->hasAccess($consoleAllSquads))) {
 
 		exit();
 	}
@@ -52,15 +52,15 @@ $countErrors = 0;
 $squadMemberList = $squadObj->getMemberListSorted();
 
 
-if($_POST['submitted']) {
+if ($_POST['submitted']) {
 
-	if($squadObj->delete()) {
+	if ($squadObj->delete()) {
 		$dispMessage = "Successfully closed squad: <b>".$squadInfo['name']."</b>";
 		$dispFounderName = $member->getMemberLink();
 
-		foreach($squadMemberList as $memberID) {
+		foreach ($squadMemberList as $memberID) {
 
-			if($memberID != $squadInfo['member_id']) {
+			if ($memberID != $squadInfo['member_id']) {
 				$member->select($memberID);
 				$member->postNotification($dispFounderName." has closed the squad: <b>".$squadInfo['name']."</b>!");
 			}
@@ -89,7 +89,7 @@ if($_POST['submitted']) {
 }
 
 
-if(!$_POST['submitted']) {
+if (!$_POST['submitted']) {
 
 	echo "
 	

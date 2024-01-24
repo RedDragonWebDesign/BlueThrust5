@@ -20,17 +20,17 @@ require_once($prevFolder."_setup.php");
 $downloadCatObj = new DownloadCategory($mysqli);
 $downloadObj = new Download($mysqli);
 
-if(!$downloadCatObj->select($_GET['catID'])) {
+if (!$downloadCatObj->select($_GET['catID'])) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 }
 
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -53,13 +53,13 @@ require_once($prevFolder."include/breadcrumb.php");
 
 $posterMemberObj = new Member($mysqli);
 $arrDownloads = $downloadCatObj->getAssociateIDs("ORDER BY dateuploaded DESC");
-foreach($arrDownloads as $dlID) {
+foreach ($arrDownloads as $dlID) {
 	$downloadObj->select($dlID);
 	$downloadInfo = $downloadObj->get_info_filtered();
 	$posterMemberObj->select($downloadInfo['member_id']);
 	$posterInfo = $posterMemberObj->get_info_filtered();
 
-	if($posterInfo['avatar'] == "") {
+	if ($posterInfo['avatar'] == "") {
 		$posterInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 	}
 	else {
@@ -69,10 +69,10 @@ foreach($arrDownloads as $dlID) {
 
 	$dispFileSize = $downloadInfo['filesize']/1024;
 
-	if($dispFileSize < 1) {
+	if ($dispFileSize < 1) {
 		$dispFileSize = $downloadInfo['filesize']."B";
 	}
-	elseif(($dispFileSize/1024) < 1) {
+	elseif (($dispFileSize/1024) < 1) {
 		$dispFileSize = round($dispFileSize, 2)."KB";
 	}
 	else {
@@ -102,7 +102,7 @@ foreach($arrDownloads as $dlID) {
 	";
 }
 
-if(count($arrDownloads) == 0) {
+if (count($arrDownloads) == 0) {
 
 	echo "<div class='shadedBox' style='width: 50%; margin: 20px auto'><p align='center' class='main'><i>No downloads added to ".$downloadCatInfo['name']." yet!</i></p></div>";
 

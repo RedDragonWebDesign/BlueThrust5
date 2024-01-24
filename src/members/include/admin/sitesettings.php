@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -30,61 +30,61 @@ $arrThemes = scandir("../themes");
 $themeOptions = "";
 
 
-foreach($arrThemes as $themeName) {
+foreach ($arrThemes as $themeName) {
 
 	$themeURL = "../themes/".$themeName;
 
-	if(is_dir($themeURL) && $themeName != "." && $themeName != "..") {
+	if (is_dir($themeURL) && $themeName != "." && $themeName != "..") {
 
 		$dispThemeName = "";
-		if(is_readable($themeURL."/THEMENAME.txt")) {
+		if (is_readable($themeURL."/THEMENAME.txt")) {
 			$dispThemeName = file_get_contents($themeURL."/THEMENAME.txt");
 		}
 
 		$dispSelected = "";
 
-		if($themeName == $websiteInfo['theme']) {
+		if ($themeName == $websiteInfo['theme']) {
 			$dispSelected = " selected";
 		}
 
-		if($dispThemeName != "") {
+		if ($dispThemeName != "") {
 			$themeOptions .= "<option value='".$themeName."'".$dispSelected.">".$dispThemeName."</option>";
 		}
 	}
 }
 
-if($themeOptions == "") {
+if ($themeOptions == "") {
 	$themeOptions = "<option value=''>No Themes Installed!</option>";
 }
 
 
 $arrMedalDisplayOrder = array(0 => "Date Awarded", 1 => "Display Order", 2 => "Alphabetical Order");
-foreach($arrMedalDisplayOrder as $key => $value) {
+foreach ($arrMedalDisplayOrder as $key => $value) {
 	$dispSelected = "";
-	if($websiteInfo['medalorder'] == $key) {
+	if ($websiteInfo['medalorder'] == $key) {
 		$dispSelected = " selected";
 	}
 	$medaldisplayorder .= "<option value='".$key."'".$dispSelected.">".$value."</option>";
 }
 
 $selectDebugOn = "";
-if($websiteInfo['debugmode'] == 1) {
+if ($websiteInfo['debugmode'] == 1) {
 	$selectDebugOn = " selected";
 }
 
 $selectHideInactive = "";
-if($websiteInfo['hideinactive'] == 1) {
+if ($websiteInfo['hideinactive'] == 1) {
 	$selectHideInactive = " selected";
 }
 
 $selectShowNewsPosts = "";
 
-if($websiteInfo['hpnews'] == 0) {
+if ($websiteInfo['hpnews'] == 0) {
 	$selectShowNewsPosts = " selected";
 }
 else {
 	$showCustomAmount = "";
-	switch($websiteInfo['hpnews']) {
+	switch ($websiteInfo['hpnews']) {
 
 		case 5:
 			$selectNumOfNewsPosts[5] = " selected";
@@ -113,8 +113,8 @@ else {
 
 $websiteLogoInfo = $webInfoObj->get_info_filtered("logourl");
 $selectNewsPostsPerPage = array();
-foreach(array(10,25,50,100) as $value) {
-	if($value == $websiteInfo['news_postsperpage']) {
+foreach (array(10,25,50,100) as $value) {
+	if ($value == $websiteInfo['news_postsperpage']) {
 		$selectNewsPostsPerPage[$value] = " selected";
 	}
 }

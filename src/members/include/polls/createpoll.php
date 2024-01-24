@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -37,7 +37,7 @@ $pollObj = new Poll($mysqli);
 $accessObj = $pollObj->objAccess;
 
 
-if(isset($_POST['accessCacheID'])) {
+if (isset($_POST['accessCacheID'])) {
 	$accessObj->cacheID = $_POST['accessCacheID'];
 }
 
@@ -49,14 +49,14 @@ $arrPostSelected = array();
 if ( ! empty($_POST['submit']) ) {
 
 	// Check Question
-	if(trim($_POST['pollquestion']) == "") {
+	if (trim($_POST['pollquestion']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> Your poll question may not be blank.<br>";
 	}
 
 	// Check Access Types
 	$arrCheckAccessTypes = array("members", "memberslimited", "public");
-	if(!in_array($_POST['accesstype'], $arrCheckAccessTypes)) {
+	if (!in_array($_POST['accesstype'], $arrCheckAccessTypes)) {
 		$countErrors++;
 		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid access type.<br>";
 	}
@@ -64,41 +64,41 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check Result Visibility
 	$arrCheckVisTypes = array("open", "votedonly", "pollend", "never");
-	if(!in_array($_POST['resultvisibility'], $arrCheckVisTypes)) {
+	if (!in_array($_POST['resultvisibility'], $arrCheckVisTypes)) {
 		$countErrors++;
 		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid result visibility type.<br>";
 	}
 
 	// Check Max Votes
 
-	if($_POST['maxvotes'] != "" && (!is_numeric($_POST['maxvotes']) || $_POST['maxvotes'] < 0)) {
+	if ($_POST['maxvotes'] != "" && (!is_numeric($_POST['maxvotes']) || $_POST['maxvotes'] < 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> Max votes per user must be a value greater than zero.<br>";
 	}
 
 	// Check Poll End
 
-	if($_POST['enddate'] != "forever" && $_POST['enddate'] != "choose") {
+	if ($_POST['enddate'] != "forever" && $_POST['enddate'] != "choose") {
 		$countErrors++;
 		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid poll end date.<br>";
 	}
-	elseif($_POST['enddate'] == "choose" && (!is_numeric($_POST['realenddate']) || $_POST['realenddate'] <= 0)) {
+	elseif ($_POST['enddate'] == "choose" && (!is_numeric($_POST['realenddate']) || $_POST['realenddate'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid poll end date.<br>";
 	}
 
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 		$setEndDate = 0;
-		if($_POST['enddate'] == "choose") {
+		if ($_POST['enddate'] == "choose") {
 			$setEndDate = $_POST['realenddate']/1000;
 			$tempYear = date("Y", $setEndDate);
 			$tempMonth = date("n", $setEndDate);
 			$tempDay = date("j", $setEndDate);
 			$tempHour = $_POST['endhour'];
-			if($_POST['endAMPM'] == "PM") {
+			if ($_POST['endAMPM'] == "PM") {
 				$tempHour += 12;
 			}
 
@@ -112,11 +112,11 @@ if ( ! empty($_POST['submit']) ) {
 		$arrColumns = array("member_id", "question", "accesstype", "multivote", "displayvoters", "resultvisibility", "maxvotes", "pollend", "dateposted");
 		$arrValues = array($memberInfo['member_id'], $_POST['pollquestion'], $_POST['accesstype'], $_POST['multivote'], $_POST['displayvoters'], $_POST['resultvisibility'], $_POST['maxvotes'], $setEndDate, time());
 
-		if($pollObj->addNew($arrColumns, $arrValues)) {
+		if ($pollObj->addNew($arrColumns, $arrValues)) {
 			$pollObj->cacheID = $_POST['pollCacheID'];
 			$pollObj->savePollOptions();
 
-			if($_POST['accesstype'] == "memberslimited") {
+			if ($_POST['accesstype'] == "memberslimited") {
 				$accessObj->cacheID = $_POST['accessCacheID'];
 				$accessObj->arrAccessFor = array("keyName" => "poll_id", "keyValue" => $pollObj->get_info("poll_id"));
 				$accessObj->saveAccess();
@@ -142,7 +142,7 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
@@ -179,7 +179,7 @@ if ( empty($_POST['submit']) ) {
 		";
 
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to create poll because the following errors occurred:</strong><br><br>
@@ -196,10 +196,10 @@ if ( empty($_POST['submit']) ) {
 
 
 	$hourOptions = "";
-	for($i=12; $i>=1; $i--) {
+	for ($i=12; $i>=1; $i--) {
 		$tempNum = str_pad($i, 2, "0", STR_PAD_LEFT);
 		$dispSelected = "";
-		if(isset($_POST['endhour']) && $_POST['endhour'] == $i) {
+		if (isset($_POST['endhour']) && $_POST['endhour'] == $i) {
 			$dispSelected = " selected";
 		}
 
@@ -207,11 +207,11 @@ if ( empty($_POST['submit']) ) {
 	}
 
 	$minuteOptions = "";
-	for($i=0; $i<=59; $i++) {
+	for ($i=0; $i<=59; $i++) {
 		$tempNum = str_pad($i, 2, "0", STR_PAD_LEFT);
 
 		$dispSelected = "";
-		if(isset($_POST['endminute']) && $_POST['endminute'] == $i) {
+		if (isset($_POST['endminute']) && $_POST['endminute'] == $i) {
 			$dispSelected = " selected";
 		}
 

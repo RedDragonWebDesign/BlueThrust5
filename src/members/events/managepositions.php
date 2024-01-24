@@ -14,7 +14,7 @@
 
 
 
-if(!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
+if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 
 	exit();
 }
@@ -26,7 +26,7 @@ else {
 
 	$eventObj->select($eID);
 
-	if(!$member->hasAccess($consoleObj) || (!$eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions") && $memberInfo['rank_id'] != 1)) {
+	if (!$member->hasAccess($consoleObj) || (!$eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions") && $memberInfo['rank_id'] != 1)) {
 
 		exit();
 	}
@@ -44,7 +44,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 ";
 
 
-if(!isset($_GET['posID']) || (isset($_GET['posID']) && !$eventObj->objEventPosition->select($_GET['posID']))) {
+if (!isset($_GET['posID']) || (isset($_GET['posID']) && !$eventObj->objEventPosition->select($_GET['posID']))) {
 
 
 	echo "
@@ -102,6 +102,6 @@ if(!isset($_GET['posID']) || (isset($_GET['posID']) && !$eventObj->objEventPosit
 	";
 
 }
-elseif(isset($_GET['posID']) && $_GET['action'] == "edit") {
+elseif (isset($_GET['posID']) && $_GET['action'] == "edit") {
 	require_once("include/manageposition_edit.php");
 }

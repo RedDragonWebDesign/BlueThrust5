@@ -30,7 +30,7 @@ $member->select($_SESSION['btUsername']);
 
 $tournamentObj = new Tournament($mysqli);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($_POST['tournamentID']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($_POST['tournamentID']) && $member->hasAccess($consoleObj)) {
 
 	$memberInfo = $member->get_info();
 
@@ -38,7 +38,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($_
 	$tmemberID = $tournamentInfo['member_id'];
 
 
-	if($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1") {
+	if ($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1") {
 
 		$tournamentObj->deleteManager($_POST['managerID']);
 

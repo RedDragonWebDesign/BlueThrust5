@@ -51,10 +51,10 @@
 		public function hasFacebook($memberID) {
 
 			$returnVal = false;
-			if(is_numeric($memberID)) {
+			if (is_numeric($memberID)) {
 
 				$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE member_id = '".$memberID."'");
-				if($result->num_rows > 0) {
+				if ($result->num_rows > 0) {
 					$row = $result->fetch_assoc();
 					$this->select($row['fbconnect_id']);
 					$returnVal = true;
@@ -69,11 +69,11 @@
 		public function getProfilePic($picSize="") {
 
 			$returnVal = false;
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 
 				$addToURL = "";
 				$arrPicSizes = array("square", "small", "normal", "large");
-				if($picSize != "" && in_array($picSize, $arrPicSizes)) {
+				if ($picSize != "" && in_array($picSize, $arrPicSizes)) {
 					$addToURL = "?type=".$picSize;
 				}
 
@@ -89,10 +89,10 @@
 
 			$returnVal = false;
 
-			if(is_numeric($facebookID)) {
+			if (is_numeric($facebookID)) {
 				$query = "SELECT * FROM ".$this->strTableName." WHERE facebook_id = '".$facebookID."'";
 				$result = $this->MySQL->query($query);
-				if($result->num_rows == 1) {
+				if ($result->num_rows == 1) {
 					$row = $result->fetch_assoc();
 
 					$this->select($row['fbconnect_id']);
@@ -121,7 +121,7 @@
 			$accessTokenURL = $this->facebookAccessTokenURL."?client_id=".$this->appID."&redirect_uri=".urlencode($callbackURL)."&client_secret=".$this->appSecret."&code=".$loginCode;
 			$params = array();
 
-			if($this->tokenNonce == $checkNonce) {
+			if ($this->tokenNonce == $checkNonce) {
 
 				$response = file_get_contents($accessTokenURL);
 
@@ -138,7 +138,7 @@
 		public function checkAccessToken() {
 
 			$returnVal = false;
-			if(isset($this->accessToken)) {
+			if (isset($this->accessToken)) {
 
 				$this->getFBInfo();
 
@@ -150,7 +150,7 @@
 				$res = preg_replace('/:\s*(\-?\d+(\.\d+)?([e|E][\-|\+]\d+)?)/', ': "$1"', $res);
 				$response = json_decode($res, true);
 
-				if($this->appID == $response['data']['app_id'] && $this->arrFacebookInfo['id'] == $response['data']['user_id']) {
+				if ($this->appID == $response['data']['app_id'] && $this->arrFacebookInfo['id'] == $response['data']['user_id']) {
 					$returnVal = true;
 				}
 
@@ -190,7 +190,7 @@
 		public function postStatus($message, $linkurl, $linkname) {
 
 			$returnVal = "";
-			if(isset($this->accessToken)) {
+			if (isset($this->accessToken)) {
 
 				$postURL = "https://graph.facebook.com/".$this->arrFacebookInfo['id']."/feed";
 
@@ -210,11 +210,11 @@
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-			if($method == "POST") {
+			if ($method == "POST") {
 				curl_setopt($ch, CURLOPT_POST, true);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
 			}
-			elseif($method = "DELETE") {
+			elseif ($method = "DELETE") {
 				curl_setopt($ch, CURLOPT_POST, true);
 				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
@@ -236,7 +236,7 @@
 
 		public function delete() {
 			$returnVal = false;
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 
 				$blnDelete = parent::delete();
 
@@ -246,7 +246,7 @@
 
 				$revokeAccess = $this->httpRequest($deleteURL, "DELETE", array(), "access_token=".$this->accessToken);
 
-				if($blnDelete && $revokeAccess == "true") {
+				if ($blnDelete && $revokeAccess == "true") {
 
 					$returnVal = true;
 

@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -30,7 +30,7 @@ $rankCatObj = new RankCategory($mysqli);
 
 
 
-if(!isset($_GET['rID']) || $_GET['rID'] == "") {
+if (!isset($_GET['rID']) || $_GET['rID'] == "") {
 
 	echo "
 		<div id='loadingSpiral' class='loadingSpiral'>
@@ -118,6 +118,6 @@ if(!isset($_GET['rID']) || $_GET['rID'] == "") {
 
 
 }
-elseif($_GET['rID'] != "" AND $_GET['action'] == "edit") {
+elseif ($_GET['rID'] != "" AND $_GET['action'] == "edit") {
 	require_once("managerankcat/edit.php");
 }

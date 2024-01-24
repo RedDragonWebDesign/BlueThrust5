@@ -75,12 +75,12 @@
 		public function hasTwitter($memID) {
 
 			$returnVal = false;
-			if(is_numeric($memID)) {
+			if (is_numeric($memID)) {
 
 				$query = "SELECT twitter_id FROM ".$this->MySQL->get_tablePrefix()."twitter WHERE member_id = '".$memID."'";
 				$result = $this->MySQL->query($query);
 
-				if($result->num_rows > 0) {
+				if ($result->num_rows > 0) {
 
 					$row = $result->fetch_assoc();
 					$this->select($row['twitter_id']);
@@ -100,13 +100,13 @@
 
 			$returnVal = false;
 
-			if(isset($oauth_token) && isset($oauth_token_secret)) {
+			if (isset($oauth_token) && isset($oauth_token_secret)) {
 
 				$loginHash = md5($oauth_token);
 
 				$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE loginhash = '".$loginHash."'");
 				$row = $result->fetch_assoc();
-				if($result->num_rows > 0 && $row['oauth_tokensecret'] == $oauth_token_secret) {
+				if ($result->num_rows > 0 && $row['oauth_tokensecret'] == $oauth_token_secret) {
 
 					$this->select($row['twitter_id']);
 
@@ -122,12 +122,12 @@
 
 		public function reloadCacheInfo() {
 
-			if($this->intTableKeyValue != "" && isset($this->oauthToken) && isset($this->oauthTokenSecret)) {
+			if ($this->intTableKeyValue != "" && isset($this->oauthToken) && isset($this->oauthTokenSecret)) {
 
-				if((time()-$this->arrObjInfo["lastupdate"]) > 1800) {
+				if ((time()-$this->arrObjInfo["lastupdate"]) > 1800) {
 					$twitterInfo = $this->getTwitterInfo();
 
-					if($twitterInfo !== false) {
+					if ($twitterInfo !== false) {
 						$embedTweet = $this->getEmbeddedTweet($twitterInfo['status']['id_str']);
 
 						$arrColumns = array("lastupdate", "username", "name", "description", "followers", "following", "tweets", "profilepic", "lasttweet_id", "lasttweet_html");
@@ -149,7 +149,7 @@
 		public function dispCard() {
 
 			$returnVal = "";
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 				$returnVal = "
 					
 									
@@ -188,7 +188,7 @@
 			ksort($this->arrParameters);
 			$arrEncodedString = array();
 
-			foreach($this->arrParameters as $key => $value) {
+			foreach ($this->arrParameters as $key => $value) {
 
 				$encodedString = "";
 
@@ -221,7 +221,7 @@
 
 			// Prepare Authorization Header
 
-			foreach($this->arrParameters as $key => $value) {
+			foreach ($this->arrParameters as $key => $value) {
 
 				$arrHeaderParams[] = rawurlencode($key)."=\"".rawurlencode($value)."\"";
 
@@ -237,7 +237,7 @@
 
 		public function getRequestToken($setCallBackURL = "") {
 
-			if($setCallBackURL != "") {
+			if ($setCallBackURL != "") {
 				$this->callbackURL = $setCallBackURL;
 			}
 
@@ -252,7 +252,7 @@
 
 			$response = $this->httpRequest($this->requestTokenURL, "POST", $arrHeader);
 
-			if($this->httpCode == 200) {
+			if ($this->httpCode == 200) {
 
 				$returnVal = $response;
 
@@ -271,7 +271,7 @@
 
 		public function getAccessToken($setOauthToken, $oauthVerifier) {
 
-			if($setOauthToken != "") {
+			if ($setOauthToken != "") {
 				$this->oauthToken = $setOauthToken;
 			}
 
@@ -293,7 +293,7 @@
 
 			$this->lastResponse = $response;
 
-			if($this->httpCode == 200) {
+			if ($this->httpCode == 200) {
 
 				$returnVal = $response;
 
@@ -323,7 +323,7 @@
 
 			$response = $this->httpRequest($this->tweetURL, "POST", $arrHeader, "status=".urlencode($tweet));
 
-			if($this->httpCode == 200) {
+			if ($this->httpCode == 200) {
 				$returnVal = $response;
 			}
 			else {
@@ -347,7 +347,7 @@
 
 			$response = $this->httpRequest($this->twitterInfoURL, "GET", $arrHeader);
 
-			if($this->httpCode == 200) {
+			if ($this->httpCode == 200) {
 
 				$returnVal = json_decode($response, true);
 
@@ -366,7 +366,7 @@
 		public function getEmbeddedTweet($tweetID) {
 
 			$returnArr = array();
-			if(is_numeric($tweetID)) {
+			if (is_numeric($tweetID)) {
 
 				$this->resetParamArray();
 
@@ -386,7 +386,7 @@
 
 				$response = $this->httpRequest($url, "GET", $arrHeader);
 
-				if($this->httpCode == 200) {
+				if ($this->httpCode == 200) {
 
 					$returnArr = json_decode($response, true);
 
@@ -404,7 +404,7 @@
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-			if($method == "POST") {
+			if ($method == "POST") {
 				curl_setopt($ch, CURLOPT_POST, true);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
 			}

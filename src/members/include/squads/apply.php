@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -32,30 +32,30 @@ $countErrors = 0;
 if ( ! empty($_POST['submit']) ) {
 
 	// Check Squad
-	if(!$squadObj->select($_POST['squad'])) {
+	if (!$squadObj->select($_POST['squad'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid squad!<br>";
 	}
 	else {
 		$outstandingApps = $squadObj->getOutstandingApplications();
 
-		if(in_array($memberInfo['member_id'], $outstandingApps)) {
+		if (in_array($memberInfo['member_id'], $outstandingApps)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have already applied to this squad!  Please wait for a decision to be made before re-applying.<br>";
 		}
 
 	}
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		$squadInfo = $squadObj->get_info_filtered();
 		$squadAppObj = new Basic($mysqli, "squadapps", "squadapp_id");
 		$arrColumns = array("member_id", "squad_id", "message", "applydate", "status");
 		$arrValues = array($memberInfo['member_id'], $_POST['squad'], $_POST['message'], time(), 0);
 
-		if($squadAppObj->addNew($arrColumns, $arrValues)) {
+		if ($squadAppObj->addNew($arrColumns, $arrValues)) {
 
 			$arrRecruiterMembers = $squadObj->getRecruiterMembers();
-			foreach($arrRecruiterMembers as $recruiterID) {
+			foreach ($arrRecruiterMembers as $recruiterID) {
 
 				$member->select($recruiterID);
 				$member->postNotification("A new member has applied to join the squad <b><a href='".$MAIN_ROOT."squads/profile.php?sID=".$squadInfo['squad_id']."'>".$squadInfo['name']."</a></b>.  <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$squadInfo['squad_id']."&pID=AcceptApps'>Click Here</a> to review squad applications.");
@@ -86,7 +86,7 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
@@ -102,10 +102,10 @@ if ( empty($_POST['submit']) ) {
 
 	$counter = 0;
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."squads WHERE squad_id NOT IN ".$sqlSquadList." ORDER BY name");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 		$dispSelected = "";
-		if($_GET['select'] == $row['squad_id']) {
+		if ($_GET['select'] == $row['squad_id']) {
 			$dispSelected = "selected";
 		}
 
@@ -114,7 +114,7 @@ if ( empty($_POST['submit']) ) {
 		$counter++;
 	}
 
-	if($counter == 0) {
+	if ($counter == 0) {
 		$dispSquadOptions = "<option value='none'>No Squads Available!</option>";
 	}
 
@@ -125,7 +125,7 @@ if ( empty($_POST['submit']) ) {
 			
 			";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to apply to the squad because the following errors occurred:</strong><br><br>

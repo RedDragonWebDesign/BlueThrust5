@@ -36,9 +36,9 @@ class ChatRoom extends Basic {
 	public function select($intIDNum) {
 
 		$returnVal = false;
-		if(is_numeric($intIDNum) && parent::select($intIDNum)) {
+		if (is_numeric($intIDNum) && parent::select($intIDNum)) {
 
-			if($this->objEvent->select($this->arrObjInfo['event_id'])) {
+			if ($this->objEvent->select($this->arrObjInfo['event_id'])) {
 				$returnVal = true;
 			}
 
@@ -51,7 +51,7 @@ class ChatRoom extends Basic {
 	public function postMessage($strMessage, $intMemberID) {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$returnVal = $this->objChatMessage->addNew(array($this->strTableKey, "member_id", "message", "dateposted"), array($this->intTableKeyValue, $intMemberID, $strMessage, time()));
 		}
 
@@ -61,14 +61,14 @@ class ChatRoom extends Basic {
 	public function getRoomList($blnActiveOnly=false) {
 
 		$addSQL = "";
-		if($blnActiveOnly) {
+		if ($blnActiveOnly) {
 			$addSQL = " AND inactive = '0'";
 		}
 
 		$returnArr = array();
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."eventchat_roomlist WHERE eventchat_id = '".$this->intTableKeyValue."'".$addSQL);
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
 				$tempVar = $row['eventchatlist_id'];
 				$returnArr[$tempVar] = $row['member_id'];
@@ -82,20 +82,20 @@ class ChatRoom extends Basic {
 	public function enterRoom($intMemberID) {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$arrRoomList = $this->getRoomList();
 
-			if(!in_array($intMemberID, $arrRoomList)) {
+			if (!in_array($intMemberID, $arrRoomList)) {
 
 				$returnVal = $this->objChatRoomList->addNew(array("member_id", "eventchat_id"), array($intMemberID, $this->intTableKeyValue));
 
 			}
-			elseif(in_array($intMemberID, $arrRoomList)) {
+			elseif (in_array($intMemberID, $arrRoomList)) {
 
 				$intChatListID = array_search($intMemberID, $arrRoomList);
 				$this->objChatRoomList->select($intChatListID);
-				if($this->objChatRoomList->get_info("inactive") == 1) {
+				if ($this->objChatRoomList->get_info("inactive") == 1) {
 					$returnVal = $this->objChatRoomList->update(array("inactive"), array(0));
 				}
 
@@ -110,10 +110,10 @@ class ChatRoom extends Basic {
 	public function leaveRoom($intMemberID) {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$arrRoomList = $this->getRoomList();
-			if(in_array($intMemberID, $arrRoomList)) {
+			if (in_array($intMemberID, $arrRoomList)) {
 				$intChatListID = array_search($intMemberID, $arrRoomList);
 				$this->objChatRoomList->select($intChatListID);
 				$returnVal = $this->objChatRoomList->update(array("inactive"), array(1));

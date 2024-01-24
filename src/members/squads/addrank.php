@@ -12,7 +12,7 @@
  *
  */
 
-if(!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
+if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 
 	exit();
 }
@@ -25,7 +25,7 @@ else {
 	$squadObj->select($sID);
 
 
-	if(!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "addrank")) {
+	if (!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "addrank")) {
 
 		exit();
 	}
@@ -48,7 +48,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check Rank Name
 
-	if(trim($_POST['rankname'] == "")) {
+	if (trim($_POST['rankname'] == "")) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not enter a blank rank name.<br>";
 	}
@@ -66,18 +66,18 @@ if ( ! empty($_POST['submit']) ) {
 	$blnCheckOrder4 = $_POST['beforeafter'] != "before" && $_POST['beforeafter'] != "after";
 
 
-	if($blnCheckOrder1 || $blnCheckOrder2 || $blnCheckOrder3 || $blnCheckOrder4) {
+	if ($blnCheckOrder1 || $blnCheckOrder2 || $blnCheckOrder3 || $blnCheckOrder4) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid rank order.<br>";
 	}
-	elseif($_POST['rankorder'] == "first" && count($arrRankList) == 1) {
+	elseif ($_POST['rankorder'] == "first" && count($arrRankList) == 1) {
 		$intNewOrderNum = 2;
 	}
-	elseif($_POST['rankorder'] != "first" && $squadObj->objSquadRank->select($_POST['rankorder'])) {
+	elseif ($_POST['rankorder'] != "first" && $squadObj->objSquadRank->select($_POST['rankorder'])) {
 
 		$intNewOrderNum = $squadObj->objSquadRank->makeRoom($_POST['beforeafter']);
 
-		if($intNewOrderNum === false) {
+		if ($intNewOrderNum === false) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid rank order.<br>";
 		}
@@ -87,19 +87,19 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Filter Rank Privileges
 	$arrRankPrivileges = $squadObj->arrSquadPrivileges;
-	foreach($arrRankPrivileges as $squadPriv) {
-		if($_POST[$squadPriv] != 1) {
+	foreach ($arrRankPrivileges as $squadPriv) {
+		if ($_POST[$squadPriv] != 1) {
 			$_POST[$squadPriv] = 0;
 		}
 	}
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 		$arrColumns = array("squad_id", "name", "sortnum", "postnews", "managenews", "postshoutbox", "manageshoutbox", "addrank", "manageranks", "editprofile", "sendinvites", "acceptapps", "setrank", "removemember");
 		$arrValues = array($_GET['sID'], $_POST['rankname'], $intNewOrderNum, $_POST['postnews'], $_POST['managenews'], $_POST['postshoutbox'], $_POST['manageshoutbox'], $_POST['addrank'], $_POST['manageranks'], $_POST['editprofile'], $_POST['sendinvites'], $_POST['acceptapps'], $_POST['setrank'], $_POST['removemember']);
 
-		if($squadObj->objSquadRank->addNew($arrColumns, $arrValues)) {
+		if ($squadObj->objSquadRank->addNew($arrColumns, $arrValues)) {
 
 			echo "
 			<div style='display: none' id='successBox'>
@@ -124,7 +124,7 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
@@ -139,9 +139,9 @@ if ( empty($_POST['submit']) ) {
 	$arrSquadRanks = $squadObj->getRankList();
 	$intFounderRankID = $squadObj->getFounderRankID();
 
-	foreach($arrSquadRanks as $squadRankID) {
+	foreach ($arrSquadRanks as $squadRankID) {
 
-		if($squadRankID != $intFounderRankID) {
+		if ($squadRankID != $intFounderRankID) {
 
 			$countRanks++;
 			$squadObj->objSquadRank->select($squadRankID);
@@ -153,7 +153,7 @@ if ( empty($_POST['submit']) ) {
 	}
 
 
-	if($countRanks == 0) {
+	if ($countRanks == 0) {
 		$rankoptions = "<option value='first'>(first rank)</option>";
 	}
 
@@ -161,11 +161,11 @@ if ( empty($_POST['submit']) ) {
 	$arrSquadOptionsDispName = array("Post News", "Manage News", "Post in Shoutbox", "Manage Shoutbox Posts", "Add Rank", "Manage Ranks", "Set Member Rank", "Edit Squad Profile", "Send Squad Invites", "View Applications", "Remove Member");
 	$arrSquadOptionDescriptions = array("", "", "", "", "", "", "", "Edit Squad Information, squad name, recruiting status, etc.", "Send invitations for new members to join.", "Review and Accept/Decline new member applications.", "");
 
-	foreach($arrSquadOptions as $key=>$squadOption) {
+	foreach ($arrSquadOptions as $key=>$squadOption) {
 
 		$showTip = "";
 
-		if($arrSquadOptionDescriptions[$key] != "") {
+		if ($arrSquadOptionDescriptions[$key] != "") {
 			$showTip = "<a href='javascript:void(0)' onmouseover=\"showToolTip('".$arrSquadOptionDescriptions[$key]."')\" onmouseout='hideToolTip()'><b>(?)</b></a>";
 		}
 
@@ -180,7 +180,7 @@ if ( empty($_POST['submit']) ) {
 			<div class='formDiv'>
 			";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to add squad because the following errors occurred:</strong><br><br>

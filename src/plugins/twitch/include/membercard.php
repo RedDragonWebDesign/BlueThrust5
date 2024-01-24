@@ -1,6 +1,7 @@
 <?php
 
-	if(!isset($this->twitchObj->data['memberCard']['memberID'])) { exit(); }
+	if (!isset($this->twitchObj->data['memberCard']['memberID'])) {
+exit(); }
 
 	$twitchObj = $this->twitchObj;
 
@@ -11,7 +12,7 @@
 	<div class='twitchPreview'>
 	<?php
 
-		if($twitchObj->data['memberCard']['online']) {
+		if ($twitchObj->data['memberCard']['online']) {
 
 			echo "
 				<div class='twitchLiveIcon'></div>

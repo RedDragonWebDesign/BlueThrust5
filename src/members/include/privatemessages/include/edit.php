@@ -13,7 +13,7 @@
  */
 
 
-if(!defined("EDIT_FOLDER")) {
+if (!defined("EDIT_FOLDER")) {
 	exit();
 }
 
@@ -22,7 +22,7 @@ $folderInfo = $pmFolderObj->get_info_filtered();
 if ( ! empty($_POST['submit']) ) {
 
 // Check Folder Name
-	if(trim($_POST['foldername']) == "") {
+	if (trim($_POST['foldername']) == "") {
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Your folder name may not be blank.";
 		$countErrors++;
 	}
@@ -31,17 +31,17 @@ if ( ! empty($_POST['submit']) ) {
 	$pmFolderObj->setCategoryKeyValue($memberInfo['member_id']);
 	$intNewOrderSpot = $pmFolderObj->validateOrder($_POST['folderorder'], $_POST['beforeafter'], true, $folderInfo['sortnum']);
 
-	if($intNewOrderSpot === false) {
+	if ($intNewOrderSpot === false) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid folder order.<br>";
 	}
 
 	$pmFolderObj->select($folderInfo['pmfolder_id']);
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		$arrColumns = array("name", "sortnum");
 		$arrValues = array($_POST['foldername'], $intNewOrderSpot);
 
-		if($pmFolderObj->update($arrColumns, $arrValues)) {
+		if ($pmFolderObj->update($arrColumns, $arrValues)) {
 
 			$folderInfo = $pmFolderObj->get_info_filtered();
 
@@ -69,7 +69,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
@@ -88,12 +88,12 @@ if ( empty($_POST['submit']) ) {
 
 	$folderOptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."privatemessage_folders WHERE pmfolder_id != '".$folderInfo['pmfolder_id']."' AND member_id = '".$memberInfo['member_id']."' ORDER BY sortnum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$dispSelected = ($findBeforeAfter[0] == $row['pmfolder_id']) ? " selected" : "";
 		$folderOptions .= "<option value='".$row['pmfolder_id']."'".$dispSelected.">".filterText($row['name'])."</option>";
 	}
 
-	if($folderOptions == "") {
+	if ($folderOptions == "") {
 		$folderOptions = "<option value='first'>(first folder')</option>";
 	}
 
@@ -102,7 +102,7 @@ if ( empty($_POST['submit']) ) {
 			<div class='formDiv'>
 		";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to edit folder because the following errors occurred:</strong><br><br>

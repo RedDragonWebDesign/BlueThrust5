@@ -39,10 +39,10 @@ class Member extends Basic {
 
 	function select($memberID, $numericIDOnly = true) {
 		$returnVal = false;
-		if(is_numeric($memberID)) {
+		if (is_numeric($memberID)) {
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE member_id = '$memberID'");
-			if($result->num_rows > 0) {
+			if ($result->num_rows > 0) {
 
 				$this->arrObjInfo = $result->fetch_assoc();
 				$this->intTableKeyValue = $this->arrObjInfo['member_id'];
@@ -54,7 +54,7 @@ class Member extends Basic {
 			$memberID = $this->MySQL->real_escape_string($memberID);
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE username = '$memberID'");
 
-			if($result->num_rows > 0) {
+			if ($result->num_rows > 0) {
 				$this->arrObjInfo = $result->fetch_assoc();
 				$this->intTableKeyValue = $this->arrObjInfo['member_id'];
 				$returnVal = true;
@@ -78,7 +78,7 @@ class Member extends Basic {
 		// get just the salt from the database
 		$checkRealPassword2 = $this->arrObjInfo['password2'] ?? '';
 
-		if($encryptPW == 1) {
+		if ($encryptPW == 1) {
 
 			// hash the plaintext password
 			$checkPass = crypt($check_password, $checkRealPassword2);
@@ -91,7 +91,7 @@ class Member extends Basic {
 		$returnVal = false;
 
 		// if passwords match
-		if(
+		if (
 			$checkRealPassword == $checkPass &&
 			($this->arrObjInfo['disabled'] ?? '') == 0
 		) {
@@ -105,11 +105,11 @@ class Member extends Basic {
 	function set_password($new_password) {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "" ) {
+		if ($this->intTableKeyValue != "" ) {
 
 			$passwordInfo = encryptPassword($new_password);
 
-			if($this->update(array("password", "password2"), array($passwordInfo['password'], $passwordInfo['salt']))) {
+			if ($this->update(array("password", "password2"), array($passwordInfo['password'], $passwordInfo['salt']))) {
 				$returnVal = true;
 			}
 
@@ -131,12 +131,12 @@ class Member extends Basic {
 	function playsGame($gamesplayed_id) {
 
 		$returnVal = false;
-		if(is_numeric($gamesplayed_id)) {
+		if (is_numeric($gamesplayed_id)) {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."gamesplayed_members WHERE gamesplayed_id = '".$gamesplayed_id."' AND member_id = '".$this->intTableKeyValue."'");
 
 			$num_rows = $result->num_rows;
 
-			if($num_rows > 0) {
+			if ($num_rows > 0) {
 				$returnVal = true;
 			}
 
@@ -153,10 +153,10 @@ class Member extends Basic {
 	function gamesPlayed() {
 
 		$returnArr = array();
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT gamesplayed_id FROM ".$this->MySQL->get_tablePrefix()."gamesplayed_members WHERE member_id = '".$this->intTableKeyValue."'");
 
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$returnArr[] = $row['gamesplayed_id'];
 			}
 
@@ -176,9 +176,9 @@ class Member extends Basic {
 	function getSquadList($founderOnly=false) {
 		$returnArr = array();
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
-			if($founderOnly) {
+			if ($founderOnly) {
 				$query = "SELECT * FROM ".$this->MySQL->get_tablePrefix()."squads WHERE member_id = '".$this->intTableKeyValue."'";
 			}
 			else {
@@ -186,7 +186,7 @@ class Member extends Basic {
 			}
 
 			$result = $this->MySQL->query($query);
-			while($row = $result->fetch_array()) {
+			while ($row = $result->fetch_array()) {
 				$returnArr[] = $row['squad_id'];
 			}
 
@@ -210,17 +210,17 @@ class Member extends Basic {
 	function getTournamentList($creatorOnly=false) {
 		$returnArr = array();
 
-		if($this->intTableKeyValue != "") {
-			if($creatorOnly) {
+		if ($this->intTableKeyValue != "") {
+			if ($creatorOnly) {
 				$query = "SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournaments WHERE member_id = '".$this->intTableKeyValue."'";
 				$result = $this->MySQL->query($query);
-				while($row = $result->fetch_array()) {
+				while ($row = $result->fetch_array()) {
 					$returnArr[] = $row['tournament_id'];
 				}
 
 				$query = "SELECT tournament_id FROM ".$this->MySQL->get_tablePrefix()."tournament_managers WHERE member_id = '".$this->intTableKeyValue."'";
 				$result = $this->MySQL->query($query);
-				while($row = $result->fetch_assoc()) {
+				while ($row = $result->fetch_assoc()) {
 					$returnArr[] = $row['tournament_id'];
 				}
 
@@ -229,7 +229,7 @@ class Member extends Basic {
 
 				$query = "SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentplayers WHERE member_id = '".$this->intTableKeyValue."'";
 				$result = $this->MySQL->query($query);
-				while($row = $result->fetch_array()) {
+				while ($row = $result->fetch_array()) {
 					$teamArr[] = $row['team_id'];
 				}
 
@@ -238,7 +238,7 @@ class Member extends Basic {
 				$query = "SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentteams WHERE tournamentteam_id IN ".$teamSQL;
 				$result = $this->MySQL->query($query);
 				//echo $this->MySQL->error;
-				while($row = $result->fetch_array()) {
+				while ($row = $result->fetch_array()) {
 					$returnArr[] = $row['tournament_id'];
 					//echo $row['tournament_id']."<br>";
 				}
@@ -260,7 +260,7 @@ class Member extends Basic {
 		$returnVal = false;
 		$consoleInfo = $consoleOption->get_info_filtered();
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			if ( isset($sqlCache['console_members']) ) {
 				$result = sql_array_select_where(
@@ -276,13 +276,13 @@ class Member extends Basic {
 				$num_rows = $result->num_rows;
 			}
 
-			if($num_rows == 1) {
+			if ($num_rows == 1) {
 				$accessInfo = $result;
 
-				if($accessInfo['allowdeny'] == 1) {
+				if ($accessInfo['allowdeny'] == 1) {
 					$returnVal = true;
 				}
-			} elseif($num_rows == 0 && $consoleOption->hasAccess($this->arrObjInfo['rank_id'])) {
+			} elseif ($num_rows == 0 && $consoleOption->hasAccess($this->arrObjInfo['rank_id'])) {
 				$returnVal = true;
 			}
 		}
@@ -295,18 +295,18 @@ class Member extends Basic {
 	function getProfileValue($profileOptionID, $skipSelectOption=false) {
 
 		$returnVal = "";
-		if($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
+		if ($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."profileoptions_values WHERE member_id = '".$this->intTableKeyValue."' AND profileoption_id = '".$profileOptionID."'");
 
-			if($result->num_rows == 1) {
+			if ($result->num_rows == 1) {
 
 				$row = $result->fetch_assoc();
 				$returnVal = filterText($row['inputvalue']);
 
 				$this->objProfileOption->select($profileOptionID);
 
-				if($this->objProfileOption->isSelectOption() && !$skipSelectOption) {
+				if ($this->objProfileOption->isSelectOption() && !$skipSelectOption) {
 					// returnVal is currently just a selectopt_id
 					// Look up what the value is for the selectopt_id
 
@@ -329,17 +329,17 @@ class Member extends Basic {
 
 	function setProfileValue($profileOptionID, $profileOptionValue) {
 		$returnVal = false;
-		if($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
+		if ($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."profileoptions_values WHERE member_id = '".$this->intTableKeyValue."' AND profileoption_id = '".$profileOptionID."'");
 
-			if($result->num_rows == 1) {
+			if ($result->num_rows == 1) {
 				$row = $result->fetch_assoc();
 				$this->objProfileOption->objProfileOptionValue->select($row['values_id']);
 				$this->objProfileOption->objProfileOptionValue->delete();
 			}
 
-			if($this->objProfileOption->objProfileOptionValue->addNew(array("profileoption_id", "member_id", "inputvalue"), array($profileOptionID, $this->intTableKeyValue, $profileOptionValue))) {
+			if ($this->objProfileOption->objProfileOptionValue->addNew(array("profileoption_id", "member_id", "inputvalue"), array($profileOptionID, $this->intTableKeyValue, $profileOptionValue))) {
 				$returnVal = true;
 			}
 
@@ -355,16 +355,16 @@ class Member extends Basic {
 		$returnVal = "";
 		$gameStatObj = new Basic($this->MySQL, "gamestats", "gamestats_id");
 
-		if($this->intTableKeyValue != "" && $gameStatObj->select($gameStatID)) {
+		if ($this->intTableKeyValue != "" && $gameStatObj->select($gameStatID)) {
 
 			$gameStatInfo = $gameStatObj->get_info_filtered();
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."gamestats_members WHERE member_id = '".$this->intTableKeyValue."' AND gamestats_id = '".$gameStatID."'");
 
-			if($result->num_rows == 1) {
+			if ($result->num_rows == 1) {
 				$row = $result->fetch_assoc();
 
-				if($gameStatInfo['textinput'] != 1) {
+				if ($gameStatInfo['textinput'] != 1) {
 					$returnVal = round($row['statvalue'], $gameStatInfo['decimalspots']);
 				}
 				else {
@@ -382,7 +382,7 @@ class Member extends Basic {
 	function getMemberLink($args=array("color" => true)) {
 		global $MAIN_ROOT;
 		$returnVal = "";
-		if($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
+		if ($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
 
 			$memberRank = new Rank($this->MySQL);
 			$memberRankCat = new Basic($this->MySQL, "rankcategory", "rankcategory_id");
@@ -394,14 +394,14 @@ class Member extends Basic {
 			$memberRankCat->select($rankInfo['rankcategory_id']);
 			$memberColor = $memberRankCat->get_info_filtered("color");
 
-			if($args['color'] ?? '') {
+			if ($args['color'] ?? '') {
 				$returnVal = "<span style='color: ".$rankInfo['color']."'><a href='".$MAIN_ROOT."profile.php?mID=".$memberInfo['member_id']."' style='color: ".$memberColor."' title='".$memberInfo['username']."'>".$memberInfo['username']."</a></span>";
 			}
 			else {
 				$returnVal = "<a href='".MAIN_ROOT."profile.php?mID=".$this->intTableKeyValue."'>".$memberInfo['username']."</a>";
 			}
 
-			if( isset($args['wrapper']) && $args['wrapper'] === false ) {
+			if ( isset($args['wrapper']) && $args['wrapper'] === false ) {
 				$returnVal = MAIN_ROOT."profile.php?mID=".$this->intTableKeyValue;
 			}
 
@@ -416,13 +416,13 @@ class Member extends Basic {
 
 		$returnVal = false;
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$objNotification = new Basic($this->MySQL, "notifications", "notification_id");
 			$time = time();
 			$arrColumns = array("member_id", "datesent", "message", "icontype");
 			$arrValues = array($this->intTableKeyValue, $time, $strMessage, $strIconType);
 
-			if($objNotification->addNew($arrColumns, $arrValues)) {
+			if ($objNotification->addNew($arrColumns, $arrValues)) {
 				$returnVal = true;
 			}
 
@@ -436,10 +436,10 @@ class Member extends Basic {
 
 		$returnVal = false;
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$pmObj = new Basic($this->MySQL, "privatemessages", "pm_id");
 			$toMemberObj = new Member($this->MySQL);
-			if(is_array($to)) {
+			if (is_array($to)) {
 				// Multi Member PM
 
 				$multiMemPMObj = new Basic($this->MySQL, "privatemessage_members", "pmmember_id");
@@ -447,12 +447,12 @@ class Member extends Basic {
 				$arrColumns = array("sender_id", "datesent", "subject", "message", "originalpm_id");
 				$arrValues = array($this->intTableKeyValue, time(), $subject, $message, $replypmID);
 
-				if($pmObj->addNew($arrColumns, $arrValues)) {
+				if ($pmObj->addNew($arrColumns, $arrValues)) {
 
 					$pmInfo = $pmObj->get_info();
 					$arrBCC = array();
 					$arrColumns = array("pm_id", "member_id", "grouptype", "group_id");
-					foreach($to as $memberID) {
+					foreach ($to as $memberID) {
 
 						$groupType = (is_array($arrGroups[$memberID])) ? $arrGroups[$memberID][0] : "";
 						$groupID = (is_array($arrGroups[$memberID])) ? $arrGroups[$memberID][1] : "";
@@ -463,13 +463,13 @@ class Member extends Basic {
 						$toMemberObj->select($memberID);
 						$emailNotificationPM = $toMemberObj->getEmailNotificationSetting("privatemessage") == 1;
 						$blockedEmailPM = $toMemberObj->getEmailNotificationSetting("email_privatemessage") == 1;
-						if($toMemberObj->get_info("email") != "" && ($emailNotificationPM || ($email && !$blockedEmailPM))) {
+						if ($toMemberObj->get_info("email") != "" && ($emailNotificationPM || ($email && !$blockedEmailPM))) {
 							$arrBCC[] = $toMemberObj->get_info("email");
 						}
 
 					}
 
-					if(count(arrBCC) > 0) {
+					if (count(arrBCC) > 0) {
 
 						$objMail = new btMail();
 						$objMail->sendMail("", $subject, $message, array("from" => $this->arrObjInfo['email'], "bcc" => $arrBCC));
@@ -485,9 +485,9 @@ class Member extends Basic {
 				$arrColumns = array("sender_id", "receiver_id", "datesent", "subject", "message", "originalpm_id");
 				$arrValues = array($this->intTableKeyValue, $to, time(), $subject, $message, $replypmID);
 
-				if($pmObj->addNew($arrColumns, $arrValues)) {
+				if ($pmObj->addNew($arrColumns, $arrValues)) {
 					$toMemberObj->select($to);
-					if($toMemberObj->getEmailNotificationSetting("privatemessage") == 1 || ($email && $toMemberObj->getEmailNotificationSetting("email_privatemessage") == 0)) {
+					if ($toMemberObj->getEmailNotificationSetting("privatemessage") == 1 || ($email && $toMemberObj->getEmailNotificationSetting("email_privatemessage") == 0)) {
 						$toMemberObj->email($subject, $message, $this->arrObjInfo['email']);
 					}
 
@@ -507,8 +507,8 @@ class Member extends Basic {
 	function countPMs($showOnlyNew=false) {
 
 		$totalPMInbox = 0;
-		if($this->intTableKeyValue != "") {
-			if($showOnlyNew) {
+		if ($this->intTableKeyValue != "") {
+			if ($showOnlyNew) {
 				$result1 = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."privatemessages WHERE receiver_id = '".$this->intTableKeyValue."' AND status = '0' AND deletereceiver = '0' AND receiverfolder_id = '0'");
 				$result2 = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."privatemessage_members WHERE member_id = '".$this->intTableKeyValue."' AND seenstatus = '0' AND deletestatus = '0' AND pmfolder_id = '0'");
 			}
@@ -531,7 +531,7 @@ class Member extends Basic {
 	function addProfileView() {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$profileViews = $this->arrObjInfo['profileviews'];
 
@@ -551,15 +551,15 @@ class Member extends Basic {
 	function countRecruits($returnList=false) {
 
 		$returnVal = 0;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE recruiter = '".$this->intTableKeyValue."' AND disabled = '0'");
 
-			if($returnList) {
+			if ($returnList) {
 
 				$returnArr = array();
 
-				while($row = $result->fetch_assoc()) {
+				while ($row = $result->fetch_assoc()) {
 
 					$returnArr[] = $row['member_id'];
 
@@ -589,9 +589,9 @@ class Member extends Basic {
 	function getMedalList($blnIDKeys=false, $orderNumID=0) {
 
 		$returnArr = array();
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
-			switch($orderNumID) {
+			switch ($orderNumID) {
 				case 1:
 					$sqlDisplayOrder = "m.ordernum DESC";
 					break;
@@ -604,9 +604,9 @@ class Member extends Basic {
 			}
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."medals_members mm, ".$this->MySQL->get_tablePrefix()."medals m WHERE member_id = '".$this->intTableKeyValue."' AND m.medal_id = mm.medal_id ORDER BY ".$sqlDisplayOrder);
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
-				if($blnIDKeys) {
+				if ($blnIDKeys) {
 					$key = $row['medalmember_id'];
 					$returnArr[$key] = $row['medal_id'];
 				}
@@ -629,23 +629,23 @@ class Member extends Basic {
 	 */
 	function autoAwardMedals() {
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."medals WHERE autodays != '0' OR autorecruits != '0' ORDER BY ordernum DESC");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$arrMedals[] = $row['medal_id'];
 			}
 
 			$medalObj = new Medal($this->MySQL);
 			$awardMedalObj = new Basic($this->MySQL, "medals_members", "medalmember_id");
-			foreach($arrMedals as $medalID) {
+			foreach ($arrMedals as $medalID) {
 
 				$medalObj->select($medalID);
 				$arrMembers = $medalObj->getAssociateIDs();
 
 				$arrFrozenMembers = $medalObj->getFrozenMembersList();
 				$frozenDate = 0;
-				if(in_array($this->intTableKeyValue, $arrFrozenMembers)) {
+				if (in_array($this->intTableKeyValue, $arrFrozenMembers)) {
 					$frozenMedalID = array_search($this->intTableKeyValue, $arrFrozenMembers);
 					$medalObj->objFrozenMedal->select($frozenMedalID);
 
@@ -655,7 +655,7 @@ class Member extends Basic {
 
 				$daysInClan = (time() - $this->arrObjInfo['datejoined'])/86400;
 
-				if($medalObj->get_info("autodays") != 0 && ($daysInClan >= $medalObj->get_info("autodays") && !in_array($this->intTableKeyValue, $arrMembers)) && time() > $frozenDate) {
+				if ($medalObj->get_info("autodays") != 0 && ($daysInClan >= $medalObj->get_info("autodays") && !in_array($this->intTableKeyValue, $arrMembers)) && time() > $frozenDate) {
 					$awardMedalObj->addNew(array("medal_id", "member_id", "dateawarded"), array($medalID, $this->intTableKeyValue, time()));
 
 					$this->postNotification("You have been awarded the ".$medalObj->get_info_filtered("name")." for being the clan for ".$medalObj->get_info("autodays")." days.");
@@ -663,7 +663,7 @@ class Member extends Basic {
 
 				}
 
-				if($medalObj->get_info("autorecruits") != 0 && ($this->countRecruits() >= $medalObj->get_info("autorecruits") && !in_array($this->intTableKeyValue, $arrMembers)) && time() > $frozenDate) {
+				if ($medalObj->get_info("autorecruits") != 0 && ($this->countRecruits() >= $medalObj->get_info("autorecruits") && !in_array($this->intTableKeyValue, $arrMembers)) && time() > $frozenDate) {
 					$awardMedalObj->addNew(array("medal_id", "member_id", "dateawarded"), array($medalID, $this->intTableKeyValue, time()));
 
 					$this->postNotification("You have been awarded the ".$medalObj->get_info_filtered("name")." for recruiting ".$medalObj->get_info("autorecruits")." members.");
@@ -686,10 +686,10 @@ class Member extends Basic {
 	*/
 	function autoPromote() {
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$result = $this->MySQL->query("SELECT rank_id FROM ".$this->MySQL->get_tablePrefix()."ranks WHERE autodays != '0' ORDER BY ordernum DESC");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$arrRanks[] = $row['rank_id'];
 			}
 
@@ -697,13 +697,13 @@ class Member extends Basic {
 			$rankObj->select($this->arrObjInfo['rank_id']);
 			$memberRankInfo = $rankObj->get_info();
 			$daysInClan = (time() - $this->arrObjInfo['datejoined'])/86400;
-			foreach($arrRanks as $rankID) {
+			foreach ($arrRanks as $rankID) {
 
 				$rankObj->select($rankID);
 
-				if($rankObj->get_info("ordernum") > $memberRankInfo['ordernum'] && $memberRankInfo['rank_id'] != 1 && $daysInClan >= $rankObj->get_info("autodays") && time() > $this->arrObjInfo['freezerank']) {
+				if ($rankObj->get_info("ordernum") > $memberRankInfo['ordernum'] && $memberRankInfo['rank_id'] != 1 && $daysInClan >= $rankObj->get_info("autodays") && time() > $this->arrObjInfo['freezerank']) {
 
-					if($this->update(array("rank_id", "lastpromotion"), array($rankID, time()))) {
+					if ($this->update(array("rank_id", "lastpromotion"), array($rankID, time()))) {
 						$this->logAction("Auto promoted for being in the clan for ".$rankObj->get_info("autodays")." days.");
 						$memberRankInfo['ordernum'] = $rankObj->get_info("ordernum");
 					}
@@ -719,14 +719,14 @@ class Member extends Basic {
 
 	public function awardMedal($medalID, $reason="") {
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$medal = new Medal($this->MySQL);
 			$medalList = $this->getMedalList();
-			if($medal->select($medalID) && !in_array($medalID, $medalList)) {
+			if ($medal->select($medalID) && !in_array($medalID, $medalList)) {
 				$medalMemberObj = new Basic($this->MySQL, "medals_members", "medalmember_id");
 				$arrColumns = array("member_id", "medal_id", "dateawarded", "reason");
 				$arrValues = array($this->intTableKeyValue, $medalID, time(), $reason);
-				if($medalMemberObj->addNew($arrColumns, $arrValues)) {
+				if ($medalMemberObj->addNew($arrColumns, $arrValues)) {
 
 					$this->postNotification("You were awarded the medal: <b>".$medal->get_info_filtered("name")."</b>");
 
@@ -750,13 +750,13 @@ class Member extends Basic {
 	function logAction($message="") {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$logObj = new Basic($this->MySQL, "logs", "log_id");
 
 			$arrColumns = array("member_id", "logdate", "message", "ipaddress");
 			$arrValues = array($this->intTableKeyValue, time(), $message, $_SERVER['REMOTE_ADDR']);
 
-			if($logObj->addNew($arrColumns, $arrValues)) {
+			if ($logObj->addNew($arrColumns, $arrValues)) {
 				$returnVal = true;
 			}
 
@@ -779,7 +779,7 @@ class Member extends Basic {
 		$result = $this->MySQL->query("SELECT member_id FROM ".$this->strTableName." WHERE rank_id = '1'");
 		$row = $result->fetch_assoc();
 
-		if($this->select($row['member_id'])) {
+		if ($this->select($row['member_id'])) {
 			$returnVal = true;
 		}
 
@@ -795,17 +795,17 @@ class Member extends Basic {
 
 		$rankObj = new Rank($this->MySQL);
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$rankObj->select($this->arrObjInfo['rank_id']);
 			$arrPrivileges = $rankObj->get_privileges();
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."console_members WHERE member_id = '".$this->intTableKeyValue."'");
-			while($row = $result->fetch_assoc()) {
-				if($row['allowdeny'] == 1 && !in_array($row['console_id'], $arrPrivileges)) {
+			while ($row = $result->fetch_assoc()) {
+				if ($row['allowdeny'] == 1 && !in_array($row['console_id'], $arrPrivileges)) {
 					$arrPrivileges[] = $row['console_id'];
 				}
-				elseif($row['allowdeny'] == 0 && in_array($row['console_id'], $arrPrivileges)) {
+				elseif ($row['allowdeny'] == 0 && in_array($row['console_id'], $arrPrivileges)) {
 					$key = array_search($row['console_id'], $arrPrivileges);
 					$arrPrivileges[$key] = 0;
 				}
@@ -827,11 +827,11 @@ class Member extends Basic {
 
 		$returnVal = false;
 
-		if($this->intTableKeyValue != "" && $topicID != "" && is_numeric($topicID)) {
+		if ($this->intTableKeyValue != "" && $topicID != "" && is_numeric($topicID)) {
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."forum_topicseen WHERE forumtopic_id = '".$topicID."' AND member_id = '".$this->intTableKeyValue."'");
 
-			if($result->num_rows > 0) {
+			if ($result->num_rows > 0) {
 				$returnVal = true;
 			}
 
@@ -844,7 +844,7 @@ class Member extends Basic {
 
 	public function countForumPosts() {
 		$returnVal = 0;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$result = $this->MySQL->query("SELECT member_id FROM ".$this->MySQL->get_tablePrefix()."forum_post WHERE member_id = '".$this->intTableKeyValue."'");
 			$returnVal = $result->num_rows;
@@ -857,7 +857,7 @@ class Member extends Basic {
 	public function updateTableTime() {
 
 		$arrCallingInfo = debug_backtrace();
-		if($arrCallingInfo[1]['function'] == "addNew") {
+		if ($arrCallingInfo[1]['function'] == "addNew") {
 			parent::updateTableTime();
 		}
 	}
@@ -866,11 +866,11 @@ class Member extends Basic {
 	public function requestedIA($returnID=false) {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$result = $this->MySQL->query("SELECT iarequest_id FROM ".$this->MySQL->get_tablePrefix()."iarequest WHERE member_id = '".$this->intTableKeyValue."'");
 
-			if(!$returnID) {
+			if (!$returnID) {
 				$returnVal = ($result->num_rows > 0) ? true : false;
 			}
 			else {
@@ -892,35 +892,35 @@ class Member extends Basic {
 		$checkURL = parse_url($this->arrObjInfo[$db_name]);
 
 		$avatarURL = $this->arrObjInfo[$db_name];
-		if($this->arrObjInfo[$db_name] == "") {
+		if ($this->arrObjInfo[$db_name] == "") {
 			$avatarURL = $MAIN_ROOT."themes/".$THEME."/images/".$defaultpic;
 		}
-		elseif(!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
+		elseif (!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
 			$avatarURL = $MAIN_ROOT.$this->arrObjInfo[$db_name];
 		}
 
 		$arrStyle = array();
-		if($setWidth != "") {
+		if ($setWidth != "") {
 			$arrStyle['width'] = $setWidth;
 		}
 
-		if($setHeight != "") {
+		if ($setHeight != "") {
 			$arrStyle['height'] = $setHeight;
 		}
 
 		$dispStyle = "";
-		if(count($arrStyle) > 0) {
+		if (count($arrStyle) > 0) {
 			$dispStyle = " style='";
-			foreach($arrStyle as $attr => $value) {
+			foreach ($arrStyle as $attr => $value) {
 				$dispStyle .= $attr.": ".$value.";";
 			}
 			$dispStyle .= "'";
 		}
 
 		$dispClass = "";
-		if(count($cssClass) > 0) {
+		if (count($cssClass) > 0) {
 			$dispClass = " class='";
-			foreach($cssClass as $class) {
+			foreach ($cssClass as $class) {
 				$dispClass .= $class." ";
 			}
 			$dispClass .= "'";
@@ -951,16 +951,16 @@ class Member extends Basic {
 
 	public function delete() {
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$info = $this->arrObjInfo;
 
 			$returnVal = parent::delete();
-			if($returnVal) {
-				if($info['profilepic'] != "") {
+			if ($returnVal) {
+				if ($info['profilepic'] != "") {
 					deleteFile(BASE_DIRECTORY.$info['profilepic']);
 				}
 
-				if($info['avatar'] != "") {
+				if ($info['avatar'] != "") {
 					deleteFile(BASE_DIRECTORY.$info['avatar']);
 				}
 			}
@@ -974,7 +974,7 @@ class Member extends Basic {
 
 		$emailReminder = new Basic($this->MySQL, "emailnotifications_queue", "emailnotificationsqueue_id");
 
-		if($updateID == 0) {
+		if ($updateID == 0) {
 			$emailReminder->addNew(array("member_id", "senddate", "subject", "message"), array($this->intTableKeyValue, $sendDate, $subject, $message));
 		}
 		else {
@@ -987,7 +987,7 @@ class Member extends Basic {
 
 	public function email($subject, $message, $from="") {
 
-		if($this->arrObjInfo['email'] != "") {
+		if ($this->arrObjInfo['email'] != "") {
 			$objMail = new btMail();
 			$objMail->sendMail($this->arrObjInfo['email'], $subject, $message, array("from" => $from));
 

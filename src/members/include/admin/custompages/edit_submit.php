@@ -30,30 +30,30 @@ $consoleObj->select($cID);
 $customPageObj = new Basic($mysqli, "custompages", "custompage_id");
 
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $customPageObj->select($_POST['cpID'])) {
+	if ($member->hasAccess($consoleObj) && $customPageObj->select($_POST['cpID'])) {
 
 		$countErrors = 0;
 		// Check Page Name
 
-		if(trim($_POST['pagename']) == "") {
+		if (trim($_POST['pagename']) == "") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a page name for your custom page.<br>";
 		}
 
 
 
-		if($countErrors == 0) {
+		if ($countErrors == 0) {
 
 			$_POST['wysiwygHTML'] = str_replace("<?", "", $_POST['wysiwygHTML']);
 			$_POST['wysiwygHTML'] = str_replace("?>", "", $_POST['wysiwygHTML']);
 			$_POST['wysiwygHTML'] = str_replace("&lt;?", "", $_POST['wysiwygHTML']);
 			$_POST['wysiwygHTML'] = str_replace("?&gt;", "", $_POST['wysiwygHTML']);
 
-			if($customPageObj->update(array("pagename", "pageinfo"), array($_POST['pagename'], $_POST['wysiwygHTML']))) {
+			if ($customPageObj->update(array("pagename", "pageinfo"), array($_POST['pagename'], $_POST['wysiwygHTML']))) {
 
 
 				$dispTime = date("l F j, Y g:i:s A");
@@ -93,7 +93,7 @@ else {
 
 
 
-if($countErrors > 0) {
+if ($countErrors > 0) {
 	echo "
 	<script type='text/javascript'>
 	

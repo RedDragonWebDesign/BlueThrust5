@@ -9,7 +9,7 @@ $consoleObj = new ConsoleOption($mysqli);
 $websiteSettingsCID = $consoleObj->findConsoleIDByName("Website Settings");
 $consoleObj->select($websiteSettingsCID);
 
-if(!isset($_SESSION['btUsername']) || !isset($_SESSION['btPassword']) || !$member->select($_SESSION['btUsername']) || ($member->select($_SESSION['btUsername']) && !$member->authorizeLogin($_SESSION['btPassword'])) || ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword']) && !$member->hasAccess($consoleObj))) {
+if (!isset($_SESSION['btUsername']) || !isset($_SESSION['btPassword']) || !$member->select($_SESSION['btUsername']) || ($member->select($_SESSION['btUsername']) && !$member->authorizeLogin($_SESSION['btPassword'])) || ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword']) && !$member->hasAccess($consoleObj))) {
 	header("HTTP/1.0 404 Not Found");
 	exit();
 }
@@ -17,7 +17,7 @@ if(!isset($_SESSION['btUsername']) || !isset($_SESSION['btPassword']) || !$membe
 
 $menuSQL = file_get_contents("savemenu.sql");
 
-if($menuSQL !== false) {
+if ($menuSQL !== false) {
 
 	//$menuSQL = str_replace("INSERT INTO `", "INSERT INTO `".$dbprefix, $menuSQL);
 
@@ -33,15 +33,15 @@ if($menuSQL !== false) {
 
 	$fullSQL = $emptyMenusSQL.$menuSQL;
 
-	if($mysqli->multi_query($fullSQL)) {
+	if ($mysqli->multi_query($fullSQL)) {
 
 
 		do {
-			if($result = $mysqli->store_result()) {
+			if ($result = $mysqli->store_result()) {
 				$result->free();
 			}
 		}
-		while($mysqli->next_result());
+		while ($mysqli->next_result());
 
 		echo "1";
 

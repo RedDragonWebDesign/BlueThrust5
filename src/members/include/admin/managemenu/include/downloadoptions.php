@@ -4,11 +4,11 @@
 $downloadPageObj = new DownloadCategory($mysqli);
 $arrDownloadPages = $downloadPageObj->get_entries(array("specialkey" => ""));
 $downloadPageOptions = array();
-foreach($arrDownloadPages as $eachDownloadPage) {
+foreach ($arrDownloadPages as $eachDownloadPage) {
 	$downloadPageOptions[$eachDownloadPage['downloadcategory_id']] = $eachDownloadPage['name'];
 }
 
-if(count($downloadPageOptions) == 0) {
+if (count($downloadPageOptions) == 0) {
 	$downloadPageOptions = array("No Download Categories");
 }
 

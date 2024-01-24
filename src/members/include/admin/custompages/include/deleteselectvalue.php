@@ -34,7 +34,7 @@ $customFormObj = new CustomForm($mysqli);
 $appComponentObj = $customFormObj->objComponent;
 
 
-if($_POST['whichValue'] == "" || !is_numeric($_POST['whichValue'])) {
+if ($_POST['whichValue'] == "" || !is_numeric($_POST['whichValue'])) {
 	$componentIndex = $_SESSION['btFormComponentCount'];
 	$arrSelectValues = $_SESSION['btFormComponent'][$componentIndex]['cOptions'];
 	$blnAddComponent = true;
@@ -46,11 +46,11 @@ else {
 }
 
 
-if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2) && is_numeric($componentIndex) && is_numeric($_POST['intDeleteKey'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2) && is_numeric($componentIndex) && is_numeric($_POST['intDeleteKey'])) {
 
 	unset($arrSelectValues[$_POST['intDeleteKey']]);
 
-	if($blnAddComponent) {
+	if ($blnAddComponent) {
 		$_SESSION['btFormComponent'][$componentIndex]['cOptions'] = $arrSelectValues;
 	}
 	else {

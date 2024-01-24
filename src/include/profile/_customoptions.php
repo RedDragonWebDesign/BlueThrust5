@@ -1,5 +1,5 @@
 <?php
-	if(!defined("SHOW_PROFILE_MAIN")) {
+	if (!defined("SHOW_PROFILE_MAIN")) {
 		exit();
 	}
 // CUSTOM PROFILE OPTIONS
@@ -10,7 +10,7 @@ $profileOptionObj = new ProfileOption($mysqli);
 $member->select($memberInfo['member_id']);
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 
 	$profileCatObj->select($row['profilecategory_id']);
 
@@ -22,7 +22,7 @@ while($row = $result->fetch_assoc()) {
 		<table class='profileTable' style='border-top-width: 0px'>
 	";
 
-	foreach($arrProfileOptions as $profileOptionID) {
+	foreach ($arrProfileOptions as $profileOptionID) {
 
 		$profileOptionObj->select($profileOptionID);
 

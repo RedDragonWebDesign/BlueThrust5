@@ -38,19 +38,19 @@
 
 		public function savePollOptions() {
 
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 
 				$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."poll_options WHERE poll_id = '".$this->intTableKeyValue."'");
 				$this->MySQL->query("OPTIMIZE TABLE `".$this->MySQL->get_tablePrefix()."poll_options`");
 
 			}
 
-			foreach($_SESSION['btPollOptionCache'][$this->cacheID] as $sortNum => $pollOptionInfo) {
+			foreach ($_SESSION['btPollOptionCache'][$this->cacheID] as $sortNum => $pollOptionInfo) {
 
 				$arrColumns = array("poll_id", "optionvalue", "color", "sortnum");
 				$arrValues = array($this->intTableKeyValue, $pollOptionInfo['value'], $pollOptionInfo['color'], $sortNum);
 
-				if(isset($pollOptionInfo['polloption_id'])) {
+				if (isset($pollOptionInfo['polloption_id'])) {
 					$arrColumns[] = "polloption_id";
 					$arrValues[] = $pollOptionInfo['polloption_id'];
 				}
@@ -81,15 +81,15 @@
 			$x = 0;
 			$returnVal = count($_SESSION['btPollOptionCache'][$this->cacheID]);
 
-			foreach($_SESSION['btPollOptionCache'][$this->cacheID] as $key => $value) {
+			foreach ($_SESSION['btPollOptionCache'][$this->cacheID] as $key => $value) {
 
-				if($strBeforeAfter == "before" && $key == $intSpot) {
+				if ($strBeforeAfter == "before" && $key == $intSpot) {
 					$returnVal = $x;
 					$tempArr[$x] = "";
 					$x++;
 					$tempArr[$x] = $_SESSION['btPollOptionCache'][$this->cacheID][$key];
 				}
-				elseif($strBeforeAfter == "after" && $key == $intSpot) {
+				elseif ($strBeforeAfter == "after" && $key == $intSpot) {
 					$tempArr[$x] = $_SESSION['btPollOptionCache'][$this->cacheID][$key];
 					$x++;
 					$returnVal = $x;
@@ -116,7 +116,7 @@
 			ksort($_SESSION['btPollOptionCache'][$this->cacheID]);
 
 			$tempArr = array();
-			foreach($_SESSION['btPollOptionCache'][$this->cacheID] as $value) {
+			foreach ($_SESSION['btPollOptionCache'][$this->cacheID] as $value) {
 				$tempArr[] = $value;
 			}
 
@@ -152,9 +152,9 @@
 		public function getPollOptions() {
 
 			$returnArr = array();
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 				$result = $this->MySQL->query("SELECT polloption_id FROM ".$this->MySQL->get_tablePrefix()."poll_options WHERE poll_id = '".$this->intTableKeyValue."' ORDER BY sortnum");
-				while($row = $result->fetch_assoc()) {
+				while ($row = $result->fetch_assoc()) {
 					$returnArr[] = $row['polloption_id'];
 				}
 			}
@@ -167,9 +167,9 @@
 
 			$arrResults = array();
 
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."poll_votes WHERE poll_id = '".$this->intTableKeyValue."'");
-				while($row = $result->fetch_assoc()) {
+				while ($row = $result->fetch_assoc()) {
 					if ( ! isset($arrResults[$row['polloption_id']]) ) {
 						$arrResults[$row['polloption_id']] = 0;
 					}
@@ -184,10 +184,10 @@
 		public function getVoterInfo() {
 
 			$arrReturn = array();
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."poll_votes WHERE poll_id = '".$this->intTableKeyValue."'");
-				while($row = $result->fetch_assoc()) {
+				while ($row = $result->fetch_assoc()) {
 
 					$arrReturn[$row['member_id']][$row['polloption_id']] = array("votes" => $row['votecount'], "lastvoted" => $row['datevoted']);
 
@@ -200,13 +200,13 @@
 
 		public function dispPollMenu($memberObj) {
 			global $MAIN_ROOT, $member;
-			if($this->intTableKeyValue != "" && $this->hasAccess($memberObj)) {
+			if ($this->intTableKeyValue != "" && $this->hasAccess($memberObj)) {
 
 				$pollInfo = $this->get_info_filtered();
 
 				$hideResultLink = ($pollInfo['resultvisibility'] == "votedonly" && !$this->hasVoted($memberObj->get_info("member_id"))) ? " style='display: none'" : "";
 				$dispResultLink = "";
-				if($pollInfo['resultvisibility'] == "open" || $pollInfo['resultvisibility'] == "votedonly" || ($pollInfo['resultvisibility'] == "pollend" && $pollInfo['pollend'] != 0 && $pollInfo['pollend'] < time())) {
+				if ($pollInfo['resultvisibility'] == "open" || $pollInfo['resultvisibility'] == "votedonly" || ($pollInfo['resultvisibility'] == "pollend" && $pollInfo['pollend'] != 0 && $pollInfo['pollend'] < time())) {
 					$dispResultLink = "<br><p class='main' id='pollResultsLink_".$pollInfo['poll_id']."' align='center'".$hideResultLink."><a href='".$MAIN_ROOT."polls/view.php?pID=".$pollInfo['poll_id']."'>View Results</a></p>";
 				}
 
@@ -219,7 +219,7 @@
 							";
 
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."poll_options WHERE poll_id = '".$this->intTableKeyValue."' ORDER BY sortnum");
-				while($row = $result->fetch_assoc()) {
+				while ($row = $result->fetch_assoc()) {
 					$row = filterArray($row);
 
 					$inputType = ($pollInfo['multivote'] == 1) ? "checkbox" : "radio";
@@ -270,7 +270,7 @@
 											dialogHTML = \"Thank you for voting!\";
 										";
 
-										if($pollInfo['resultvisibility'] == "votedonly") {
+										if ($pollInfo['resultvisibility'] == "votedonly") {
 
 											echo "
 												dialogHTML += \"<br><br>You may now view the <a href='".$MAIN_ROOT."polls/view.php?pID=".$pollInfo['poll_id']."'><b>poll results</b></a>.\";
@@ -329,24 +329,24 @@
 		public function hasAccess($member) {
 
 			$returnVal = false;
-			if($this->arrObjInfo['accesstype'] == "memberslimited") {
+			if ($this->arrObjInfo['accesstype'] == "memberslimited") {
 				$accessInfo = $this->objAccess->getAccessInfo($member);
 
-				if($accessInfo['rank'] == 2 || $member->get_info("rank_id") == 1) {
+				if ($accessInfo['rank'] == 2 || $member->get_info("rank_id") == 1) {
 					$returnVal = true;
 				}
-				elseif($accessInfo['member'] == 2) {
+				elseif ($accessInfo['member'] == 2) {
 					$returnVal = true;
 				}
 
-				if($returnVal && $accessInfo['member'] == 3) {
+				if ($returnVal && $accessInfo['member'] == 3) {
 					$returnVal = false;
 				}
 			}
-			elseif($this->arrObjInfo['accesstype'] == "members" && $member->get_info("datejoined") > 0 && $member->get_info("disabled") == 0) {
+			elseif ($this->arrObjInfo['accesstype'] == "members" && $member->get_info("datejoined") > 0 && $member->get_info("disabled") == 0) {
 				$returnVal = true;
 			}
-			elseif($this->arrObjInfo['accesstype'] == "public") {
+			elseif ($this->arrObjInfo['accesstype'] == "public") {
 				$returnVal = true;
 			}
 
@@ -355,10 +355,10 @@
 
 		public function hasVoted($memberID) {
 			$returnVal = false;
-			if($this->intTableKeyValue != "" && is_numeric($memberID)) {
+			if ($this->intTableKeyValue != "" && is_numeric($memberID)) {
 
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."poll_votes WHERE poll_id = '".$this->intTableKeyValue."' AND member_id = '".$memberID."'");
-				if($result->num_rows > 0) {
+				if ($result->num_rows > 0) {
 					$returnVal = true;
 				}
 
@@ -371,16 +371,16 @@
 
 			$pollError = "";
 			$returnArr = array("result"=>"fail");
-			if($this->intTableKeyValue != "" && $pollOptionInfo['poll_id'] == $this->intTableKeyValue && in_array($pollOptionInfo['polloption_id'], $this->getPollOptions())) {
+			if ($this->intTableKeyValue != "" && $pollOptionInfo['poll_id'] == $this->intTableKeyValue && in_array($pollOptionInfo['polloption_id'], $this->getPollOptions())) {
 
 				$columnName = ($memberID == "") ? "ipaddress" : "member_id";
 				$columnValue = ($memberID == "") ? $this->MySQL->real_escape_string($_SERVER['REMOTE_ADDR']) : $memberID;
 
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."poll_votes WHERE poll_id = '".$this->intTableKeyValue."' AND ".$columnName." = '".$columnValue."'");
-				if($result->num_rows > 0) {
+				if ($result->num_rows > 0) {
 					$countVotes = 0;
-					while($row = $result->fetch_assoc()) {
-						if($row['polloption_id'] == $pollOptionInfo['polloption_id']) {
+					while ($row = $result->fetch_assoc()) {
+						if ($row['polloption_id'] == $pollOptionInfo['polloption_id']) {
 							$selectedPollVote = $row['pollvote_id'];
 						}
 						$countVotes += $row['votecount'];
@@ -388,9 +388,9 @@
 
 					$pollEndCheck = ($this->arrObjInfo['pollend'] == 0 || $this->arrObjInfo['pollend'] > time());
 					$maxVotesCheck = ($this->arrObjInfo['maxvotes'] == 0 || $this->arrObjInfo['maxvotes'] > $countVotes);
-					if($maxVotesCheck && $pollEndCheck) {
+					if ($maxVotesCheck && $pollEndCheck) {
 
-						if($this->objPollVote->select($selectedPollVote)) {
+						if ($this->objPollVote->select($selectedPollVote)) {
 							$newVoteCount = $this->objPollVote->get_info("votecount")+1;
 							$this->objPollVote->update(array("datevoted", "votecount", "ipaddress"), array(time(), $newVoteCount, $_SERVER['REMOTE_ADDR']));
 						}
@@ -401,7 +401,7 @@
 						$returnArr['result'] = "success";
 
 					}
-					elseif(!$pollEndCheck) {
+					elseif (!$pollEndCheck) {
 						$pollError = "This poll has ended.";
 					}
 					else {
@@ -426,7 +426,7 @@
 
 		public function delete() {
 
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 				$pollInfo = $this->arrObjInfo;
 
 				$dbprefix = $this->MySQL->get_tablePrefix();
@@ -451,7 +451,7 @@
 		public function totalVotes() {
 
 			$returnVal = 0;
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."poll_votes WHERE poll_id = '".$this->intTableKeyValue."'");
 

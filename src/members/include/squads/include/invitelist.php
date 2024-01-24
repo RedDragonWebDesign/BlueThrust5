@@ -40,13 +40,13 @@ $squadObj = new Squad($mysqli);
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$LOGIN_FAIL = false;
 	$memberInfo = $member->get_info_filtered();
 
 	$counter = 0;
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."squadinvites WHERE receiver_id = '".$memberInfo['member_id']."' AND status = '0' ORDER BY datesent DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 		$member->select($row['sender_id']);
 		$squadMemberInfo = $member->get_info_filtered();
@@ -54,14 +54,14 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		$squadObj->select($row['squad_id']);
 		$squadInfo = $squadObj->get_info_filtered();
 
-		if($squadMemberInfo['avatar'] == "") {
+		if ($squadMemberInfo['avatar'] == "") {
 			$squadMemberInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 		}
 		else {
 			$squadMemberInfo['avatar'] = $MAIN_ROOT.$squadMemberInfo['avatar'];
 		}
 
-		if(trim($row['message']) == "") {
+		if (trim($row['message']) == "") {
 			$row['message'] = "None";
 		}
 		$squadObj->objSquadRank->select($row['startingrank_id']);
@@ -94,7 +94,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	}
 
 
-	if($counter == 0) {
+	if ($counter == 0) {
 
 		echo "
 			<div class='shadedBox' style='width: 300px; margin-top: 50px; margin-left: auto; margin-right: auto; font-style: italic'>

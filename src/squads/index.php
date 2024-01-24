@@ -26,10 +26,10 @@ require_once($prevFolder."classes/rank.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -65,10 +65,10 @@ require_once($prevFolder."include/breadcrumb.php");
 		$memberObj = new Member($mysqli);
 		$counter = 0;
 		$result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."squads ORDER BY name");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 
 
-			if($row['recruitingstatus'] == 1) {
+			if ($row['recruitingstatus'] == 1) {
 				$dispRecruiting = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/bluedot.png' title='Recruiting Open'>";
 			}
 			else {
@@ -78,7 +78,7 @@ require_once($prevFolder."include/breadcrumb.php");
 			$memberObj->select($row['member_id']);
 			$dispMemberLink = $memberObj->getMemberLink();
 
-			if($counter == 1) {
+			if ($counter == 1) {
 				$addCSS = " alternateBGColor";
 				$counter = 0;
 			}
@@ -97,7 +97,7 @@ require_once($prevFolder."include/breadcrumb.php");
 			";
 		}
 
-		if($result->num_rows == 0) {
+		if ($result->num_rows == 0) {
 
 			echo "
 				<tr>

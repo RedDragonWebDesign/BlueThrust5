@@ -12,18 +12,18 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
 
-if(trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
+if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
 }
 else {
@@ -36,18 +36,18 @@ require_once("../plugins/twitter/twitter.php");
 
 $twitterObj = new Twitter($mysqli);
 
-if(isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oauth_token'] == $_SESSION['btOauth_Token'] && !$twitterObj->hasTwitter($memberInfo['member_id'])) {
+if (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oauth_token'] == $_SESSION['btOauth_Token'] && !$twitterObj->hasTwitter($memberInfo['member_id'])) {
 	// CALLBACK
 	$twitterObj->oauthTokenSecret = $_SESSION['btOauth_Token_Secret'];
 	$response = $twitterObj->getAccessToken($_GET['oauth_token'], $_GET['oauth_verifier']);
 
-	if($twitterObj->httpCode == 200) {
+	if ($twitterObj->httpCode == 200) {
 		parse_str($response, $oauthArray);
 		$arrColumns = array("member_id", "oauth_token", "oauth_tokensecret", "loginhash");
 		$arrValues = array($memberInfo['member_id'], $oauthArray['oauth_token'], $oauthArray['oauth_token_secret'], md5($oauthArray['oauth_token']));
 
 
-		if(!$twitterObj->authorizeLogin($oauthArray['oauth_token'], $oauthArray['oauth_token_secret'])) {
+		if (!$twitterObj->authorizeLogin($oauthArray['oauth_token'], $oauthArray['oauth_token_secret'])) {
 
 			$twitterObj->addNew($arrColumns, $arrValues);
 
@@ -90,7 +90,7 @@ if(isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oauth
 
 
 }
-elseif(isset($_GET['denied'])) {
+elseif (isset($_GET['denied'])) {
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."members';
@@ -98,12 +98,12 @@ elseif(isset($_GET['denied'])) {
 	";
 	exit();
 }
-elseif(!$twitterObj->hasTwitter($memberInfo['member_id'])) {
+elseif (!$twitterObj->hasTwitter($memberInfo['member_id'])) {
 	// CONNECT
 
 	$response = $twitterObj->getRequestToken($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 	$twitterObj->hasTwitter($memberInfo['member_id']);
-	if($response !== false) {
+	if ($response !== false) {
 		parse_str($response, $arrOutput);
 
 		$_SESSION['btOauth_Token'] = $arrOutput['oauth_token'];
@@ -137,7 +137,7 @@ elseif(!$twitterObj->hasTwitter($memberInfo['member_id'])) {
 	}
 
 }
-elseif($twitterObj->hasTwitter($memberInfo['member_id'])) {
+elseif ($twitterObj->hasTwitter($memberInfo['member_id'])) {
 
 
 	$dispSuccess = false;
@@ -297,7 +297,7 @@ elseif($twitterObj->hasTwitter($memberInfo['member_id'])) {
 	";
 
 
-	if($dispSuccess) {
+	if ($dispSuccess) {
 
 		echo "
 			<div id='successDiv' style='display: none'>

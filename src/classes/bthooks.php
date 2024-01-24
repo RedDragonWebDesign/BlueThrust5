@@ -23,9 +23,9 @@
 		}
 
 		function removeHook($hookName, $function) {
-			foreach($this->data[$hookName] as $key => $hookInfo) {
+			foreach ($this->data[$hookName] as $key => $hookInfo) {
 
-				if($hookInfo['function'] == $function) {
+				if ($hookInfo['function'] == $function) {
 					unset($this->data[$hookName][$key]);
 				}
 			}
@@ -36,9 +36,9 @@
 				return;
 			}
 
-			foreach($this->data[$hookName] as $hookInfo) {
-				if(function_exists($hookInfo['function'])) {
-					if($hookInfo['args'] == "") {
+			foreach ($this->data[$hookName] as $hookInfo) {
+				if (function_exists($hookInfo['function'])) {
+					if ($hookInfo['args'] == "") {
 						call_user_func($hookInfo['function']);
 					}
 					else {

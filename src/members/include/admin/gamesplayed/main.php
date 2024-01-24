@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member)) {
+if (!isset($member)) {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -38,7 +38,7 @@ echo "
 $cOptObj = new ConsoleOption($mysqli);
 $intAddGamesPlayedCID = $cOptObj->findConsoleIDByName("Add Games Played");
 
-if($cID == "") {
+if ($cID == "") {
 	$cID = $cOptObj->findConsoleIDByName("Manage Games Played");
 }
 
@@ -46,8 +46,8 @@ $intHighestOrder = $gameObj->getHighestOrderNum();
 $counter = 0;
 $x = 1;
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."gamesplayed ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
-	if($counter == 1) {
+while ($row = $result->fetch_assoc()) {
+	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
 	}
@@ -56,14 +56,14 @@ while($row = $result->fetch_assoc()) {
 		$counter = 1;
 	}
 
-	if($x == 1) {
+	if ($x == 1) {
 		$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 	}
 	else {
 		$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveGame('up', '".$row['gamesplayed_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 	}
 
-	if($x == $intHighestOrder) {
+	if ($x == $intHighestOrder) {
 		$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 	}
 	else {
@@ -85,7 +85,7 @@ while($row = $result->fetch_assoc()) {
 }
 
 
-if($x == 1) {
+if ($x == 1) {
 	$dispGames = "<tr><td colspan='5'><br><p align='center' class='main'><i>No games added yet!</i></p></td></tr>";
 }
 

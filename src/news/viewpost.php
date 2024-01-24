@@ -25,10 +25,10 @@ require_once($prevFolder."classes/news.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -41,7 +41,7 @@ $member = new Member($mysqli);
 $newsObj = new News($mysqli);
 $consoleObj = new ConsoleOption($mysqli);
 
-if(isset($_GET['nID']) && $newsObj->select($_GET['nID'])) {
+if (isset($_GET['nID']) && $newsObj->select($_GET['nID'])) {
 
 	$newsInfo = $newsObj->get_info_filtered();
 
@@ -51,16 +51,16 @@ if(isset($_GET['nID']) && $newsObj->select($_GET['nID'])) {
 	$consoleObj->select($privateNewsCID);
 	// Check Login
 	$LOGIN_FAIL = true;
-	if($member->authorizeLogin($_SESSION['btPassword'])) {
+	if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		$LOGIN_FAIL = false;
 		// Check Private News
-		if($newsInfo['newstype'] == 2 && !$member->hasAccess($consoleObj)) {
+		if ($newsInfo['newstype'] == 2 && !$member->hasAccess($consoleObj)) {
 			die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 		}
 
 	}
-	elseif($newsInfo['newstype'] == 2) {
+	elseif ($newsInfo['newstype'] == 2) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 	}
 
@@ -77,7 +77,7 @@ $dispBreadCrumb = "";
 require_once($prevFolder."themes/".$THEME."/_header.php");
 
 $memberInfo = "";
-if(!$LOGIN_FAIL) {
+if (!$LOGIN_FAIL) {
 	$memberInfo = $member->get_info_filtered();
 }
 
@@ -97,8 +97,8 @@ echo "
 $postCommentCID = $consoleObj->findConsoleIDByName("Post Comment");
 $consoleObj->select($postCommentCID);
 
-if($member->select($memberInfo['member_id'])) {
-	if($member->hasAccess($consoleObj)) {
+if ($member->select($memberInfo['member_id'])) {
+	if ($member->hasAccess($consoleObj)) {
 
 		echo "
 	

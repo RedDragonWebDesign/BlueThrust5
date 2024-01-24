@@ -12,20 +12,20 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
 
 $boardObj = new ForumBoard($mysqli);
 
-if(!$boardObj->objTopic->select($_GET['topicID'])) {
+if (!$boardObj->objTopic->select($_GET['topicID'])) {
 
 	echo "
 		<script type='text/javascript'>
@@ -47,18 +47,18 @@ $postInfo = $boardObj->objPost->get_info_filtered();
 $boardIDs = $boardObj->getAllBoards();
 $catName = "";
 $nonSelectableItems = array();
-foreach($boardIDs as $id) {
+foreach ($boardIDs as $id) {
 	$boardObj->select($id);
 	$forumCatID = $boardObj->get_info("forumcategory_id");
 	$forumCatObj->select($forumCatID);
-	if($forumCatObj->get_info_filtered("name") != $catName) {
+	if ($forumCatObj->get_info_filtered("name") != $catName) {
 		$catName = $forumCatObj->get_info_filtered("name");
 		$catKey = "category_".$forumCatID;
 		$forumBoardOptions[$catKey] = $catName;
 		$nonSelectableItems[] = $catKey;
 	}
 
-	if(($member->hasAccess($consoleObj) || $boardObj->memberIsMod($memberInfo['member_id'])) && $id != $topicInfo['forumboard_id']) {
+	if (($member->hasAccess($consoleObj) || $boardObj->memberIsMod($memberInfo['member_id'])) && $id != $topicInfo['forumboard_id']) {
 		$spacing = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $boardObj->calcBoardDepth());
 		$forumBoardOptions[$id] = $spacing.$boardObj->get_info_filtered("name");
 	}
@@ -134,7 +134,7 @@ $setupFormArgs = array(
 function post_topic_redirect() {
 	global $mysqli, $boardObj, $postInfo, $MAIN_ROOT, $topicInfo, $member;
 
-	if($_POST['postredirect'] == 1) {
+	if ($_POST['postredirect'] == 1) {
 		$boardObj->select($_POST['moveto']);
 
 		$arrColumns = array("forumboard_id", "lockstatus");

@@ -29,7 +29,7 @@ $member->select($_SESSION['btUsername']);
 $eventObj = new Event($mysqli);
 
 // Check Login
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$memberInfo = $member->get_info();
 }
 else {
@@ -37,7 +37,7 @@ else {
 }
 
 
-if($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMember->get_info("member_id") == $memberInfo['member_id']) {
+if ($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMember->get_info("member_id") == $memberInfo['member_id']) {
 
 	$eventMemberInfo = $eventObj->objEventMember->get_info_filtered();
 	$eventObj->select($eventMemberInfo['event_id']);
@@ -46,7 +46,7 @@ if($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMembe
 	$arrColumns = array();
 	$dispAction = "";
 
-	if($_SESSION['btCountMindChanges'][$_POST['emID']] == "") {
+	if ($_SESSION['btCountMindChanges'][$_POST['emID']] == "") {
 		$_SESSION['btCountMindChanges'][$_POST['emID']] == 1;
 	}
 	else {
@@ -54,28 +54,28 @@ if($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMembe
 	}
 
 
-	if($_POST['rsvpNum'] == 1 && time() < $eventInfo['startdate']) {
+	if ($_POST['rsvpNum'] == 1 && time() < $eventInfo['startdate']) {
 		$arrColumns = array("status");
 		$arrValues = array("1");
 		$dispAction = "going";
 	}
-	elseif($_POST['rsvpNum'] == 2 && time() < $eventInfo['startdate']) {
+	elseif ($_POST['rsvpNum'] == 2 && time() < $eventInfo['startdate']) {
 		$arrColumns = array("status");
 		$arrValues = array("2");
 		$dispAction = "not going";
 	}
 
 
-	if(count($arrColumns) > 0) {
-		if($eventObj->objEventMember->update($arrColumns, $arrValues)) {
+	if (count($arrColumns) > 0) {
+		if ($eventObj->objEventMember->update($arrColumns, $arrValues)) {
 			$dispEventMemberLink = $member->getMemberLink();
 
-			if($_SESSION['btCountMindChanges'][$_POST['emID']] < 5) {
-				if($member->select($eventMemberInfo['invitedbymember_id'])) {
+			if ($_SESSION['btCountMindChanges'][$_POST['emID']] < 5) {
+				if ($member->select($eventMemberInfo['invitedbymember_id'])) {
 					$member->postNotification($dispEventMemberLink." is ".$dispAction." to your <a href='".$MAIN_ROOT."events/info.php?eID=".$eventInfo['event_id']."'>event</a>.");
 				}
 
-				if($eventInfo['member_id'] != $eventMemberInfo['invitedbymember_id'] && $member->select($eventInfo['member_id'])) {
+				if ($eventInfo['member_id'] != $eventMemberInfo['invitedbymember_id'] && $member->select($eventInfo['member_id'])) {
 					$member->postNotification($dispEventMemberLink." is ".$dispAction." to your <a href='".$MAIN_ROOT."events/info.php?eID=".$eventInfo['event_id']."'>event</a>.");
 				}
 			}

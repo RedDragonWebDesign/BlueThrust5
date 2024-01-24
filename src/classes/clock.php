@@ -27,14 +27,14 @@
 		public function getClockInfo($forceOffset=false) {
 
 			$returnVal = false;
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 				$dateObj = new DateTime(date("Y-m-d"), new DateTimeZone($this->arrObjInfo['timezone']));
 				$dateOffset = $dateObj->getOffset();
 				$dateTime = ($this->getUTCTime()+$dateOffset);
 				$dateHour = gmdate("G", $dateTime);
 				$dateMinutes = gmdate("i", $dateTime);
 
-				if(!$forceOffset && date("nj") == gmdate("nj", $dateTime)) {
+				if (!$forceOffset && date("nj") == gmdate("nj", $dateTime)) {
 					$dateOffset = "''";
 				}
 
@@ -55,7 +55,7 @@
 			$clockArray = array();
 			$clocksJS = "";
 			$result = $this->MySQL->query("SELECT clock_id FROM ".$this->strTableName." ORDER BY ordernum DESC");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$this->select($row['clock_id']);
 				$clockInfo = $this->getClockInfo();
 				$info = $this->get_info_filtered();
@@ -67,7 +67,7 @@
 
 			}
 
-			if(!$return) {
+			if (!$return) {
 				echo implode(" ".$this->clockSeparator." ", $clockArray)."
 				
 					<script type='text/javascript'>
@@ -96,7 +96,7 @@
 
 			$arrTimezoneOptions = array();
 			$arrTimezones = DateTimeZone::listIdentifiers();
-			foreach($arrTimezones as $timeZone) {
+			foreach ($arrTimezones as $timeZone) {
 
 				$tz = new DateTimeZone($timeZone);
 				$dispOffset = ((($tz->getOffset(new DateTime("now", $tz)))/60)/60);

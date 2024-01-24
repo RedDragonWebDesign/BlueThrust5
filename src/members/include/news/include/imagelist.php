@@ -36,7 +36,7 @@ $imageSliderObj = new ImageSlider($mysqli);
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."imageslider ORDER BY ordernum DESC");
 
@@ -47,7 +47,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 	$intHighestOrderNum = $imageSliderObj->getHighestOrderNum();
 	$counter = 1;
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 		$dispUpArrow = ($counter == 1) ? "<img src='".$MAIN_ROOT."images/transparent.png' class='manageListActionButton'>" : "<a href='javascript:void(0)' onclick=\"moveImg('".$row['imageslider_id']."', 'up')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' class='manageListActionButton'></a>";
 		$dispDownArrow = ($counter == $intHighestOrderNum) ? "<img src='".$MAIN_ROOT."images/transparent.png' class='manageListActionButton'>" : "<a href='javascript:void(0)' onclick=\"moveImg('".$row['imageslider_id']."', 'down')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' class='manageListActionButton'></a>";
@@ -67,7 +67,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 	echo "</table>";
 
-	if($result->num_rows == 0) {
+	if ($result->num_rows == 0) {
 		echo "
 
 			<div class='shadedBox' style='width: 50%; margin: 20px auto'>

@@ -27,7 +27,7 @@
 	$member->select($_SESSION['btUsername']);
 
 
-	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info_filtered();
 	}
 	else {
@@ -38,14 +38,14 @@
 	$arrErrors = array();
 	// Check IP
 
-	if(trim($_POST['ipaddress']) == "") {
+	if (trim($_POST['ipaddress']) == "") {
 		$countErrors++;
 		$arrErrors[] = "IP address may not be blank.";
 	}
 
-	if(isset($_POST['customExp'])) {
+	if (isset($_POST['customExp'])) {
 
-		switch($_POST['banLengthUnit']) {
+		switch ($_POST['banLengthUnit']) {
 			case "minute":
 				$_POST['expTime'] = $_POST['banLength'];
 				break;
@@ -71,18 +71,18 @@
 
 
 
-	if(!is_numeric($_POST['expTime']) || (is_numeric($_POST['expTime']) && $_POST['expTime'] < 0)) {
+	if (!is_numeric($_POST['expTime']) || (is_numeric($_POST['expTime']) && $_POST['expTime'] < 0)) {
 		$countErrors++;
 		$arrErrors[] = "You entered an invalid expire time.";
 	}
 
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 		$setExpTime = ($_POST['expTime'] == 0) ? $setExpTime = 0 : ($_POST['expTime']*60)+time();
 
-		if($ipbanObj->addNew(array("ipaddress", "exptime", "dateadded"), array($_POST['ipaddress'], $setExpTime, time()))) {
+		if ($ipbanObj->addNew(array("ipaddress", "exptime", "dateadded"), array($_POST['ipaddress'], $setExpTime, time()))) {
 			$arrReturn = array("result"=>"success", "settime"=>$setExpTime);
 		}
 		else {
@@ -93,7 +93,7 @@
 	}
 
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$arrReturn = array("result"=>"fail", "errors"=>$arrErrors);
 	}
 

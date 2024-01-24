@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -35,12 +35,12 @@ $cID = $_GET['cID'];
 	$dispManageNews = "";
 
 
-	if($consoleObj->select($postNewsCID) && $member->hasAccess($consoleObj)) {
+	if ($consoleObj->select($postNewsCID) && $member->hasAccess($consoleObj)) {
 
 		$dispPostNews = "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$postNewsCID."'>Post News</a> &laquo; &nbsp; ";
 	}
 
-	if($consoleObj->select($manageNewsCID) && $member->hasAccess($consoleObj)) {
+	if ($consoleObj->select($manageNewsCID) && $member->hasAccess($consoleObj)) {
 		$dispManageNews = "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$manageNewsCID."'>Manage News</a> &laquo;";
 	}
 
@@ -56,8 +56,8 @@ $cID = $_GET['cID'];
 
 	$arrPosts = $newsObj->getPosts(2);
 
-	if(count($arrPosts) > 0) {
-		foreach($arrPosts as $post) {
+	if (count($arrPosts) > 0) {
+		foreach ($arrPosts as $post) {
 
 			$newsObj->select($post['news_id']);
 			$newsObj->show();

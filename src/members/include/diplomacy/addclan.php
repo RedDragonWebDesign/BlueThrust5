@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -31,7 +31,7 @@ $countErrors = 0;
 
 $arrDiplomacyStatus = array();
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$arrDiplomacyStatus[$row['diplomacystatus_id']] = filterText($row['name']);
 }
 
@@ -41,7 +41,7 @@ if ( ! empty($_POST['submit']) ) {
 	$diplomacyStatusObj = new Basic($mysqli, "diplomacy_status", "diplomacystatus_id");
 	// Check for clan name
 
-	if(trim($_POST['clanname']) == "") {
+	if (trim($_POST['clanname']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Clan name may not be blank.<br>";
 		$countErrors++;
 	}
@@ -49,7 +49,7 @@ if ( ! empty($_POST['submit']) ) {
 	// Check Status
 
 	$allowedStatuses = array_keys($arrDiplomacyStatus);
-	if(!in_array($_POST['status'], $allowedStatuses) || !$diplomacyStatusObj->select($_POST['status'])) {
+	if (!in_array($_POST['status'], $allowedStatuses) || !$diplomacyStatusObj->select($_POST['status'])) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid status.<br>";
 		$countErrors++;
 	}
@@ -57,13 +57,13 @@ if ( ! empty($_POST['submit']) ) {
 	// Check Clan Size
 
 	$allowedSizes = array("large", "medium", "small");
-	if(!in_array($_POST['clansize'], $allowedSizes)) {
+	if (!in_array($_POST['clansize'], $allowedSizes)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid clan size.<br>";
 		$countErrors++;
 	}
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 		$diplomacyObj = new Basic($mysqli, "diplomacy", "diplomacy_id");
 
@@ -71,7 +71,7 @@ if ( ! empty($_POST['submit']) ) {
 		$arrColumns = array("member_id", "dateadded", "clanname", "diplomacystatus_id", "website", "clansize", "clantag", "skill", "gamesplayed", "extrainfo", "leaders");
 		$arrValues = array($memberInfo['member_id'], time(), $_POST['clanname'], $_POST['status'], $_POST['website'], $_POST['clansize'], $_POST['tag'], $_POST['skill'], $_POST['gamesplayed'], $_POST['extrainfo'], $_POST['leaders']);
 
-		if($diplomacyObj->addNew($arrColumns, $arrValues)) {
+		if ($diplomacyObj->addNew($arrColumns, $arrValues)) {
 
 			echo "
 			
@@ -91,7 +91,7 @@ if ( ! empty($_POST['submit']) ) {
 
 			$member->logAction("Added ".$_POST['clanname']." to the diplomacy page with ".$diplomacyStatusObj->get_info_filtered("name")." status.");
 
-			if(isset($_POST['reqID']) && $diplomacyRequestObj->select($_POST['reqID'])) {
+			if (isset($_POST['reqID']) && $diplomacyRequestObj->select($_POST['reqID'])) {
 
 				$diplomacyRequestInfo = $diplomacyRequestObj->get_info_filtered();
 				$dispStatus = $arrDiplomacyStatus[$_POST['status']];
@@ -120,7 +120,7 @@ Thanks,\n
 	}
 
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
@@ -143,7 +143,7 @@ if ( empty($_POST['submit']) ) {
 	$arrSelectSize['small'] = "";
 
 	$dispReqID = "";
-	if(isset($_GET['reqID']) && $diplomacyRequestObj->select($_GET['reqID'])) {
+	if (isset($_GET['reqID']) && $diplomacyRequestObj->select($_GET['reqID'])) {
 		$diplomacyRequestInfo = $diplomacyRequestObj->get_info_filtered();
 
 
@@ -164,7 +164,7 @@ if ( empty($_POST['submit']) ) {
 	echo "
 		<div class='formDiv'>
 		";
-		if($dispError != "") {
+		if ($dispError != "") {
 			echo "
 			<div class='errorDiv'>
 			<strong>Unable to add new clan because the following errors occurred:</strong><br><br>
@@ -187,10 +187,10 @@ if ( empty($_POST['submit']) ) {
 							<select name='status' class='textBox'>
 							";
 
-								foreach($arrDiplomacyStatus as $key=>$value) {
+								foreach ($arrDiplomacyStatus as $key=>$value) {
 
 									$dispSelected = "";
-									if($_POST['status'] == $key) {
+									if ($_POST['status'] == $key) {
 										$dispSelected = " selected";
 									}
 

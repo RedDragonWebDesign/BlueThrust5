@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -30,7 +30,7 @@ $cID = $_GET['cID'];
 
 
 
-if(isset($_GET['fID']) && !in_array($_GET['fID'], $arrSpecialFolders) && $pmFolderObj->select($_GET['fID'])) {
+if (isset($_GET['fID']) && !in_array($_GET['fID'], $arrSpecialFolders) && $pmFolderObj->select($_GET['fID'])) {
 	// Edit Folder page
 	define("EDIT_FOLDER", true);
 	require_once("include/edit.php");

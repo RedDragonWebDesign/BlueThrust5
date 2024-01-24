@@ -40,11 +40,11 @@ $pID = "managenews";
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$LOGIN_FAIL = false;
 	$memberInfo = $member->get_info_filtered();
 	$squadNewsObj = new Basic($mysqli, "squadnews", "squadnews_id");
-	if($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], "managenews") && $squadNewsObj->select($_POST['nID'])) {
+	if ($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], "managenews") && $squadNewsObj->select($_POST['nID'])) {
 
 
 
@@ -57,7 +57,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			//	1 - Public
 			// 	2 - Private
 
-			if($_POST['newstype'] != 1 && $_POST['newstype'] != 2) {
+			if ($_POST['newstype'] != 1 && $_POST['newstype'] != 2) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid news type.<br>";
 			}
@@ -65,25 +65,25 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 			// Check Subject
 
-			if(trim($_POST['subject']) == "") {
+			if (trim($_POST['subject']) == "") {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a news subject.<br>";
 			}
 
 			// Check Message
 
-			if(trim($_POST['message']) == "") {
+			if (trim($_POST['message']) == "") {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not make a blank news post.<br>";
 			}
 
-			if($countErrors == 0) {
+			if ($countErrors == 0) {
 				$time = time();
 				$arrColumns = array("newstype", "postsubject", "newspost", "lasteditmember_id", "lasteditdate");
 				$arrValues = array($_POST['newstype'], $_POST['subject'], $_POST['message'], $memberInfo['member_id'], $time);
 
 
-				if($squadNewsObj->update($arrColumns, $arrValues)) {
+				if ($squadNewsObj->update($arrColumns, $arrValues)) {
 
 					$_POST['cancel'] = true;
 
@@ -96,7 +96,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 			}
 
-			if($countErrors > 0) {
+			if ($countErrors > 0) {
 				$_POST = filterArray($_POST);
 				$_POST['submit'] = false;
 			}
@@ -111,10 +111,10 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 
 
-		if(!$_POST['submit'] && !$_POST['cancel']) {
+		if (!$_POST['submit'] && !$_POST['cancel']) {
 			$squadNewsInfo = $squadNewsObj->get_info_filtered();
 
-			if($dispError != "") {
+			if ($dispError != "") {
 				echo "
 				<div class='errorDiv'>
 				<strong>Unable to edit squad news because the following errors occurred:</strong><br><br>
@@ -176,18 +176,18 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 
 
-		if($_POST['cancel']) {
+		if ($_POST['cancel']) {
 			$squadNewsInfo = $squadNewsObj->get_info_filtered();
 
 
 			$member->select($squadNewsInfo['member_id']);
 			$squadMemberInfo = $member->get_info_filtered();
 
-			if($squadMemberInfo['avatar'] == "") {
+			if ($squadMemberInfo['avatar'] == "") {
 				$squadMemberInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 			}
 
-			if($squadNewsInfo['newstype'] == 1) {
+			if ($squadNewsInfo['newstype'] == 1) {
 				$dispNewsType = "<span class='publicNewsColor' style='font-style: italic'>public</span>";
 			}
 			else {
@@ -195,7 +195,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			}
 
 			$dispLastEdit = "";
-			if($member->select($squadNewsInfo['lasteditmember_id'])) {
+			if ($member->select($squadNewsInfo['lasteditmember_id'])) {
 				$dispLastEditTime = getPreciseTime($squadNewsInfo['lasteditdate']);
 				$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";
 			}

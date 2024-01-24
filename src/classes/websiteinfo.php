@@ -25,10 +25,10 @@ class WebsiteInfo extends Basic {
 		$temp = $this->arrObjInfo;
 		$returnVal = parent::select($intIDNum, $numericIDOnly);
 
-		if($this->blnRefreshInfo) {
+		if ($this->blnRefreshInfo) {
 			$this->arrObjInfo = array();
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName);
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$this->arrObjInfo[$row['name']] = $row['value'];
 				$this->arrKeys[$row['name']] = $row['websiteinfo_id'];
 			}
@@ -46,17 +46,17 @@ class WebsiteInfo extends Basic {
 	public function multiUpdate($arrSettings, $arrValues) {
 
 		$countErrors = 0;
-		foreach($arrSettings as $key => $settingName) {
-			if($this->select($this->arrKeys[$settingName])) {
+		foreach ($arrSettings as $key => $settingName) {
+			if ($this->select($this->arrKeys[$settingName])) {
 
-				if(!$this->update(array("value"), array($arrValues[$key]))) {
+				if (!$this->update(array("value"), array($arrValues[$key]))) {
 					$countErrors++;
 				}
 
 			}
 			else {
 
-				if(!$this->addNew(array("name", "value"), array($settingName, $arrValues[$key]))) {
+				if (!$this->addNew(array("name", "value"), array($settingName, $arrValues[$key]))) {
 					$countErrors++;
 				}
 

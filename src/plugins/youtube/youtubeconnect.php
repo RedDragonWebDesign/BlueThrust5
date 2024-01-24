@@ -13,7 +13,7 @@
 	 */
 
 	$accessedByConsole = false;
-	if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+	if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 		$prevFolder = "../../";
 		require_once("../../_setup.php");
@@ -41,7 +41,7 @@
 		$memberInfo = $member->get_info_filtered();
 		// Check Login
 		$LOGIN_FAIL = true;
-		if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+		if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 			$LOGIN_FAIL = false;
 		}
 		else {
@@ -57,7 +57,7 @@
 
 		require_once("../plugins/youtube/youtube.php");
 
-		if(!$member->hasAccess($consoleObj)) {
+		if (!$member->hasAccess($consoleObj)) {
 			exit();
 		}
 
@@ -68,7 +68,7 @@
 
 
 
-	if(trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
+	if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 		$dispHTTP = "http://";
 	}
 	else {
@@ -78,11 +78,11 @@
 
 	$ytObj = new Youtube($mysqli);
 
-	if(!$ytObj->hasYoutube($memberInfo['member_id'])) {
+	if (!$ytObj->hasYoutube($memberInfo['member_id'])) {
 		$countErrors = 0;
 		$dispError = "";
 
-		if($accessedByConsole && !isset($_GET['error'])) {
+		if ($accessedByConsole && !isset($_GET['error'])) {
 
 			echo "
 				<script type='text/javascript'>
@@ -93,12 +93,12 @@
 			exit();
 		}
 
-		if(isset($_GET['code']) && $_GET['state'] == $_SESSION['btYoutubeNonce'] && !isset($_GET['error'])) {
+		if (isset($_GET['code']) && $_GET['state'] == $_SESSION['btYoutubeNonce'] && !isset($_GET['error'])) {
 			$arrURLInfo = parse_url($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 
 			$response = $ytObj->getAccessToken($_GET['code'], $arrURLInfo['scheme']."://".$arrURLInfo['host'].$arrURLInfo['path']);
 
-			if(isset($response['access_token'])) {
+			if (isset($response['access_token'])) {
 
 				$ytObj->accessToken = $response['access_token'];
 				$ytObj->refreshToken = $response['refresh_token'];
@@ -135,13 +135,13 @@
 
 
 		}
-		elseif(isset($_GET['error'])) {
+		elseif (isset($_GET['error'])) {
 
 			$countErrors++;
 			$dispError = "Unable to connect to Youtube! Please try again.";
 
 		}
-		elseif(!isset($_GET['error']) && !isset($_GET['code'])) {
+		elseif (!isset($_GET['error']) && !isset($_GET['code'])) {
 
 			$loginLink = $ytObj->getConnectLink($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 			$_SESSION['btYoutubeNonce'] = $ytObj->tokenNonce;
@@ -160,7 +160,7 @@
 		}
 
 
-		if($dispError != "") {
+		if ($dispError != "") {
 
 			echo "	
 			
@@ -190,17 +190,17 @@
 
 			// Check Video Display
 			$arrVideoDisplayCheck = array(0,1,2,3,4,5);
-			if(!in_array($_POST['showvideos'], $arrVideoDisplayCheck) || !is_numeric($_POST['showvideos'])) {
+			if (!in_array($_POST['showvideos'], $arrVideoDisplayCheck) || !is_numeric($_POST['showvideos'])) {
 				$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid video display amount.<br>";
 				$countErrors++;
 			}
 
 
-			if($countErrors == 0) {
+			if ($countErrors == 0) {
 				$setShowInfoCard = ($_POST['showinfocard'] == 1) ? 1 : 0;
 				$setAllowLogin = ($_POST['allowlogin'] == 1) ? 1 : 0;
 
-				if($ytObj->update(array("allowlogin", "showsubscribe", "showvideos"), array($_POST['allowlogin'], $_POST['showinfocard'], $_POST['showvideos']))) {
+				if ($ytObj->update(array("allowlogin", "showsubscribe", "showvideos"), array($_POST['allowlogin'], $_POST['showinfocard'], $_POST['showvideos']))) {
 					$dispSuccess = true;
 				}
 				else {
@@ -216,10 +216,10 @@
 		$ytInfo = $ytObj->get_info_filtered();
 
 		$checkVideos = array();
-		if($ytInfo['showvideos'] == 0) {
+		if ($ytInfo['showvideos'] == 0) {
 			$checkVideos[0] = " selected";
 		}
-		elseif($ytInfo['showvideos'] == 1) {
+		elseif ($ytInfo['showvideos'] == 1) {
 			$checkVideos[1] = " selected";
 		}
 
@@ -238,7 +238,7 @@
 			<div class='formDiv'>
 			";
 
-		if($dispError != "") {
+		if ($dispError != "") {
 			echo "
 			<div class='errorDiv'>
 			<strong>Unable to save Youtube settings because the following errors occurred:</strong><br><br>
@@ -292,9 +292,9 @@
 								<option value='0'".$checkVideos[0].">Don't Show Videos</option>
 								<option value='1'".$checkVideos[1].">Most Recent Video</option>
 								";
-					for($i=2; $i<=5; $i++) {
+					for ($i=2; $i<=5; $i++) {
 						$dispChecked = "";
-						if($ytInfo['showvideos'] == $i) {
+						if ($ytInfo['showvideos'] == $i) {
 							$dispChecked = " selected";
 						}
 						echo "<option value='".$i."'".$dispChecked.">".$i." Most Recent Videos</option>";
@@ -380,7 +380,7 @@
 		";
 
 
-		if((time()-$ytInfo['lastupdate']) > 1800) {
+		if ((time()-$ytInfo['lastupdate']) > 1800) {
 
 			echo "
 				
@@ -417,7 +417,7 @@
 		}
 
 
-		if($dispSuccess) {
+		if ($dispSuccess) {
 
 			echo "
 				<div id='successDiv' style='display: none'>

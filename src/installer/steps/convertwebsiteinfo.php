@@ -1,6 +1,6 @@
 <?php
 
-	if(!defined("CONVERT_WEBSITEINFO")) {
+	if (!defined("CONVERT_WEBSITEINFO")) {
 		exit();
 	}
 
@@ -20,9 +20,9 @@
 	$mysqli->query($newWebsiteInfoSQL);
 	$skipColumns = array("websiteinfo_id", "name", "value");
 
-	foreach($websiteInfo as $key => $value) {
+	foreach ($websiteInfo as $key => $value) {
 
-		if(!in_array($key, $skipColumns)) {
+		if (!in_array($key, $skipColumns)) {
 			$websiteInfoObj->addNew(array("name", "value"), array($key, $value));
 		}
 

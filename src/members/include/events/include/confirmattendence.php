@@ -30,7 +30,7 @@ $member->select($_SESSION['btUsername']);
 $eventObj = new Event($mysqli);
 
 // Check Login
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$memberInfo = $member->get_info();
 }
 else {
@@ -38,13 +38,13 @@ else {
 }
 
 
-if($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMember->get_info("member_id") == $memberInfo['member_id']) {
+if ($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMember->get_info("member_id") == $memberInfo['member_id']) {
 
 	$eventMemberInfo = $eventObj->objEventMember->get_info_filtered();
 	$eventObj->select($eventMemberInfo['event_id']);
 	$eventInfo = $eventObj->get_info_filtered();
 
-	if($eventInfo['startdate'] <= time() && $eventMemberInfo['status'] == 1) {
+	if ($eventInfo['startdate'] <= time() && $eventMemberInfo['status'] == 1) {
 		$eventObj->objEventMember->update(array("attendconfirm_member"), array("1"));
 	}
 

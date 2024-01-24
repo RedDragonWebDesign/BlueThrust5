@@ -20,7 +20,7 @@ require_once($prevFolder."_setup.php");
 require_once("classes/campaign.php");
 require_once("breadcrumb_functions.php");
 
-switch($_GET['p']) {
+switch ($_GET['p']) {
 	case "history":
 
 		break;
@@ -29,7 +29,7 @@ switch($_GET['p']) {
 		$hooksObj->addHook("breadcrumb", "setThankYouPageBreadcrumb");
 		break;
 	default:
-		if(isset($_GET['custom']) && isset($_GET['payment_status'])) {
+		if (isset($_GET['custom']) && isset($_GET['payment_status'])) {
 			$customVars = json_decode($_GET['custom'], true);
 			header("Location: ".FULL_SITE_URL."plugins/donations/?campaign_id=".$customVars['campaign_id']."&p=thankyou");
 		}
@@ -42,11 +42,11 @@ switch($_GET['p']) {
 $campaignObj = new DonationCampaign($mysqli);
 $donationPlugin = new btPlugin($mysqli);
 
-if(!$donationPlugin->selectByName("Donations") || !$campaignObj->select($_GET['campaign_id'])) {
+if (!$donationPlugin->selectByName("Donations") || !$campaignObj->select($_GET['campaign_id'])) {
 	echo "<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>";
 	exit();
 }
-elseif($donationPlugin->selectByName("Donations") && $donationPlugin->getConfigInfo("email") == "") {
+elseif ($donationPlugin->selectByName("Donations") && $donationPlugin->getConfigInfo("email") == "") {
 	echo "
 		<script type='text/javascript'>
 			alert('Please complete the plugin configuration before continuing!');

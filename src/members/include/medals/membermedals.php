@@ -26,12 +26,12 @@ $medalObj = new Medal($mysqli);
 
 $medalOptions = "<option value=''>Select</option>";
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $memberObj->select($_POST['mID'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $memberObj->select($_POST['mID'])) {
 
 
 	$arrMedals = $memberObj->getMedalList();
 
-	foreach($arrMedals as $medalID) {
+	foreach ($arrMedals as $medalID) {
 
 		$medalObj->select($medalID);
 		$medalInfo = $medalObj->get_info_filtered();

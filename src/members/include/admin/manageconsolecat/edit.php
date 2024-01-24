@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -28,7 +28,7 @@ $cID = $_GET['cID'];
 $consoleCatObj = new ConsoleCategory($mysqli);
 
 
-if(!$consoleCatObj->select($_GET['catID'])) {
+if (!$consoleCatObj->select($_GET['catID'])) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");
 }
 
@@ -49,7 +49,7 @@ if ( ! empty($_POST['submit']) ) {
 	$resortOrder = false;
 	// Check Category Name
 
-	if(trim($_POST['catname']) == "") {
+	if (trim($_POST['catname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a Category Name.<br>";
 	}
@@ -60,17 +60,17 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	$intNewOrderSpot = "";
-	if(!$consoleCatObj->select($_POST['catorder']) AND $_POST['catorder'] != "first") {
+	if (!$consoleCatObj->select($_POST['catorder']) AND $_POST['catorder'] != "first") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (category)<br>";
 	}
-	elseif($_POST['catorder'] == "first") {
+	elseif ($_POST['catorder'] == "first") {
 		// "(no other categories)" selected, check to see if there are actually no other categories
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory WHERE adminoption = '0'");
 		$num_rows = $result->num_rows;
 
-		if($num_rows > 1) {
+		if ($num_rows > 1) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (category)<br>";
 		}
@@ -81,7 +81,7 @@ if ( ! empty($_POST['submit']) ) {
 	}
 	else {
 
-		if($_POST['beforeafter'] != "before" AND $_POST['beforeafter'] != "after") {
+		if ($_POST['beforeafter'] != "before" AND $_POST['beforeafter'] != "after") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (before/after)<br>";
 		}
@@ -90,12 +90,12 @@ if ( ! empty($_POST['submit']) ) {
 			$catOrderOrderNum = $consoleCatObj->get_info("ordernum");
 
 			$addTo = -1;
-			if($_POST['beforeafter'] == "before") {
+			if ($_POST['beforeafter'] == "before") {
 				$addTo = 1;
 			}
 
 			$checkOrderNum = $catOrderOrderNum+$addTo;
-			if($checkOrderNum != $consoleCatInfo['ordernum']) {
+			if ($checkOrderNum != $consoleCatInfo['ordernum']) {
 				$intNewOrderSpot = $consoleCatObj->makeRoom($_POST['beforeafter']);
 			}
 
@@ -106,13 +106,13 @@ if ( ! empty($_POST['submit']) ) {
 
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 
 		$updateColumns = array("name");
 		$updateValues = array($_POST['catname']);
 
-		if($intNewOrderSpot != "") {
+		if ($intNewOrderSpot != "") {
 			$resortOrder = true;
 
 			$updateColumns[] = "ordernum";
@@ -121,7 +121,7 @@ if ( ! empty($_POST['submit']) ) {
 		}
 
 		$consoleCatObj->select($consoleCatInfo['consolecategory_id']);
-		if($consoleCatObj->update($updateColumns, $updateValues)) {
+		if ($consoleCatObj->update($updateColumns, $updateValues)) {
 
 
 			echo "
@@ -136,7 +136,7 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 			";
 
-			if($resortOrder) {
+			if ($resortOrder) {
 				$consoleCatObj->resortOrder();
 			}
 
@@ -160,7 +160,7 @@ if ( empty($_POST['submit']) ) {
 	$intHighestOrderNum = $consoleCatObj->getHighestOrderNum();
 	$afterSelected = "";
 
-	if($consoleCatInfo['ordernum'] == 1) {
+	if ($consoleCatInfo['ordernum'] == 1) {
 		$selectCat = $consoleCatInfo['ordernum']+1;
 		$afterSelected = "selected";
 	}
@@ -169,10 +169,10 @@ if ( empty($_POST['submit']) ) {
 	}
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory WHERE adminoption = '0' AND consolecategory_id != '".$consoleCatInfo['consolecategory_id']."' ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 		$strSelected = "";
-		if($selectCat == $row['ordernum']) {
+		if ($selectCat == $row['ordernum']) {
 			$strSelected = "selected";
 		}
 
@@ -180,7 +180,7 @@ if ( empty($_POST['submit']) ) {
 		$countCategories++;
 	}
 
-	if($countCategories == 0) {
+	if ($countCategories == 0) {
 		$catOrderOptions = "<option value='first'>(no other categories)</option>";
 	}
 
@@ -191,7 +191,7 @@ if ( empty($_POST['submit']) ) {
 		";
 
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to edit console category because the following errors occurred:</strong><br><br>

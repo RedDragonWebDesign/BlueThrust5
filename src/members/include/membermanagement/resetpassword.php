@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -26,10 +26,10 @@ else {
 
 
 $rankInfo = $memberRank->get_info_filtered();
-if($memberInfo['promotepower'] != 0) {
+if ($memberInfo['promotepower'] != 0) {
 	$rankInfo['promotepower'] = $memberInfo['promotepower'];
 }
-elseif($memberInfo['promotepower'] == -1) {
+elseif ($memberInfo['promotepower'] == -1) {
 	$rankInfo['promotepower'] = 0;
 }
 
@@ -37,12 +37,12 @@ $cID = $_GET['cID'];
 
 $dispError = "";
 $countErrors = 0;
-if($memberInfo['rank_id'] == 1) {
+if ($memberInfo['rank_id'] == 1) {
 
 	$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 	$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
 
-	if($maxOrderNum->num_rows > 0) {
+	if ($maxOrderNum->num_rows > 0) {
 		$result = $mysqli->query("SELECT rank_id FROM ".$dbprefix."ranks WHERE ordernum = '".$arrMaxOrderNum[0]."'");
 		$row = $result->fetch_assoc();
 		$rankInfo['promotepower'] = $row['rank_id'];
@@ -56,7 +56,7 @@ $maxRankInfo = $rankObj->get_info_filtered();
 
 $arrRanks = array();
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$arrRanks[] = $row['rank_id'];
 }
 
@@ -65,11 +65,11 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check Member
 
-	if(!$member->select($_POST['member'])) {
+	if (!$member->select($_POST['member'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member.<br>";
 	}
-	elseif($member->select($_POST['member']) && !in_array($member->get_info("rank_id"), $arrRanks)) {
+	elseif ($member->select($_POST['member']) && !in_array($member->get_info("rank_id"), $arrRanks)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not change that member's password.<br>";
 	}
@@ -78,23 +78,23 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check Password
 
-	if(strlen($_POST['newpassword']) < 4) {
+	if (strlen($_POST['newpassword']) < 4) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Your password must be at least 4 characters long.<br>";
 	}
 
 
-	if($_POST['newpassword'] != $_POST['newpassword1']) {
+	if ($_POST['newpassword'] != $_POST['newpassword1']) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Your passwords did not match.<br>";
 	}
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 		$logMessage = "Changed ".$member->getMemberLink()."'s password.";
 
-		if($member->set_password($_POST['newpassword'])) {
+		if ($member->set_password($_POST['newpassword'])) {
 
 			echo "
 				<div style='display: none' id='successBox'>
@@ -120,7 +120,7 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST['submit'] = false;
 	}
 
@@ -138,7 +138,7 @@ if ( empty($_POST['submit']) ) {
 	$sqlRanks = "('".implode("','", $arrRanks)."')";
 	$memberoptions = "<option value=''>Select</option>";
 	$result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.* FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id IN ".$sqlRanks." ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 
 		$memberoptions .= "<option value='".$row['member_id']."'>".filterText($row['name'])." ".filterText($row['username'])."</option>";
@@ -154,7 +154,7 @@ if ( empty($_POST['submit']) ) {
 			
 			";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to reset password because the following errors occurred:</strong><br><br>

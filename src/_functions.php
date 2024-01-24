@@ -17,7 +17,7 @@
 // General functions to filter out all <, >, ", and ' symbols
 function filterArray($arrValues) {
 	$newArray = array();
-	foreach($arrValues as $key => $value) {
+	foreach ($arrValues as $key => $value) {
 		$temp = str_replace("<", "&lt;", $value);
 		$value = str_replace(">", "&gt;", $temp);
 		$temp = str_replace("'", "&#39;", $value);
@@ -45,25 +45,25 @@ function filterText($strText) {
 function getPreciseTime($intTime, $timeFormat="", $bypassTimeDiff=false) {
 	$timeDiff = (!$bypassTimeDiff) ? time() - $intTime : 99999;
 
-	if($timeDiff < 3) {
+	if ($timeDiff < 3) {
 		$dispLastDate = "just now";
 	}
-	elseif($timeDiff < 60) {
+	elseif ($timeDiff < 60) {
 		$dispLastDate = "$timeDiff seconds ago";
 	}
-	elseif($timeDiff < 3600) {
+	elseif ($timeDiff < 3600) {
 		$minDiff = round($timeDiff/60);
 		$dispMinute = "minutes";
-		if($minDiff == 1) {
+		if ($minDiff == 1) {
 			$dispMinute = "minute";
 		}
 
 		$dispLastDate = "$minDiff $dispMinute ago";
 	}
-	elseif($timeDiff < 86400) {
+	elseif ($timeDiff < 86400) {
 		$hourDiff = round($timeDiff/3600);
 		$dispHour = "hours";
-		if($hourDiff == 1) {
+		if ($hourDiff == 1) {
 			$dispHour = "hour";
 		}
 
@@ -71,7 +71,7 @@ function getPreciseTime($intTime, $timeFormat="", $bypassTimeDiff=false) {
 	}
 	else {
 
-		if($timeFormat == "") {
+		if ($timeFormat == "") {
 			$timeFormat = "D M j, Y g:i a";
 		}
 
@@ -110,7 +110,7 @@ function parseBBCode($strText) {
 
 	$arrBBCodes['Poll'] = array("bbOpenTag" => "[poll]", "bbCloseTag" => "[/poll]", "htmlOpenTag" => "<div id='".$randPollDiv."'></div><script type='text/javascript'>embedPoll('".$MAIN_ROOT."', '".$randPollDiv."', '", "htmlCloseTag" => "');</script>");
 
-	foreach($arrBBCodes as $bbCode) {
+	foreach ($arrBBCodes as $bbCode) {
 
 		$strText = str_ireplace($bbCode['bbOpenTag'],$bbCode['htmlOpenTag'],$strText);
 		$strText = str_ireplace($bbCode['bbCloseTag'],$bbCode['htmlCloseTag'],$strText);
@@ -122,7 +122,7 @@ function parseBBCode($strText) {
 	$arrEmoticonCodes = array(":)", ":(", ":D", ";)", ":p");
 	$arrEmoticonImg = array("smile.png", "sad.png", "grin.png", "wink.png", "cheeky.png");
 
-	foreach($arrEmoticonCodes as $key => $value) {
+	foreach ($arrEmoticonCodes as $key => $value) {
 
 		$imgURL = "<img src='".$MAIN_ROOT."images/emoticons/".$arrEmoticonImg[$key]."' width='15' height='15'>";
 		$strText = str_ireplace($value, $imgURL, $strText);
@@ -158,7 +158,7 @@ function autoLinkImage($strText) {
 
 function deleteFile($filename) {
 	$returnVal = false;
-	if(file_exists($filename)) {
+	if (file_exists($filename)) {
 		$returnVal = unlink($filename);
 	}
 
@@ -166,7 +166,7 @@ function deleteFile($filename) {
 }
 
 function getHTTP() {
-	if(!isset($_SERVER['HTTPS']) || (isset($_SERVER['HTTPS']) && (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off"))) {
+	if (!isset($_SERVER['HTTPS']) || (isset($_SERVER['HTTPS']) && (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off"))) {
 		$dispHTTP = "http://";
 	}
 	else {
@@ -179,11 +179,11 @@ function getHTTP() {
 function addArraySpace($arr, $space, $atSpot) {
 	$newArr = array();
 	$i=0;
-	foreach($arr as $key => $value) {
+	foreach ($arr as $key => $value) {
 
-		if($atSpot == $key) {
+		if ($atSpot == $key) {
 
-			for($x=0; $x<$space; $x++) {
+			for ($x=0; $x<$space; $x++) {
 				$newArr[$i] = "";
 				$i++;
 			}
@@ -202,7 +202,7 @@ function addArraySpace($arr, $space, $atSpot) {
 
 
 function pluralize($word, $num) {
-	if($num == 1) {
+	if ($num == 1) {
 		$returnVal = $word;
 	}
 	else {
@@ -215,7 +215,7 @@ function pluralize($word, $num) {
 function encryptPassword($password) {
 	$randomString = substr(md5(uniqid("", true)),0,22);
 	$randomNum = rand(4,10);
-	if($randomNum < 10) {
+	if ($randomNum < 10) {
 		$randomNum = "0".$randomNum;
 	}
 
@@ -229,7 +229,7 @@ function encryptPassword($password) {
 
 function getSelected($arrValues, $selectedValue) {
 	$returnArr = array();
-	foreach($arrValues as $value) {
+	foreach ($arrValues as $value) {
 		$returnArr[$value] = ($value == $selectedValue) ? " selected" : "";
 	}
 	return $returnArr;

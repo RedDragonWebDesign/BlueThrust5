@@ -12,7 +12,7 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 	$prevFolder = "../../../../";
 	require_once($prevFolder."_setup.php");
@@ -28,7 +28,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);
 
-	if(!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
+	if (!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
 		exit();
 	}
 
@@ -42,11 +42,11 @@ echo "
 	$pluginsDir = scandir($prevFolder."plugins");
 	$addCSS = "";
 	$x = 0;
-	foreach($pluginsDir as $dir) {
+	foreach ($pluginsDir as $dir) {
 
-		if(is_dir($prevFolder."plugins/".$dir) && $dir != "." && $dir != ".." && !in_array($dir, $pluginObj->getPlugins("filepath")) && (file_exists($prevFolder."plugins/".$dir."/install.php") || file_exists($prevFolder."plugins/".$dir."/install_setup.php"))) {
+		if (is_dir($prevFolder."plugins/".$dir) && $dir != "." && $dir != ".." && !in_array($dir, $pluginObj->getPlugins("filepath")) && (file_exists($prevFolder."plugins/".$dir."/install.php") || file_exists($prevFolder."plugins/".$dir."/install_setup.php"))) {
 
-			if($x == 0) {
+			if ($x == 0) {
 				$x = 1;
 				$addCSS = "";
 			}
@@ -56,12 +56,12 @@ echo "
 			}
 
 			$pluginName = file_get_contents($prevFolder."plugins/".$dir."/PLUGINNAME.txt");
-			if($pluginName === false) {
+			if ($pluginName === false) {
 				$pluginName = ucfirst($dir);
 			}
 
 			$installJSData = "";
-			if(file_exists(BASE_DIRECTORY."plugins/".$dir."/install_setup.php")) {
+			if (file_exists(BASE_DIRECTORY."plugins/".$dir."/install_setup.php")) {
 				$installJSData = " data-install='1'";
 			}
 
@@ -75,7 +75,7 @@ echo "
 
 	}
 
-	if($dispPlugins != "") {
+	if ($dispPlugins != "") {
 
 		echo $dispPlugins;
 

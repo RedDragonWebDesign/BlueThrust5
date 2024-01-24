@@ -42,11 +42,11 @@ if ( ! empty($_POST['submit']) ) {
 
 	$usernameExists = ($memberInfo['username'] ?? '') != "";
 
-	if( $usernameExists ) {
+	if ( $usernameExists ) {
 
 		$passwordMatches = $checkMember->authorizeLogin($login_password, 1);
 
-		if( $passwordMatches ) {
+		if ( $passwordMatches ) {
 			$_SESSION['btUsername'] = $memberInfo['username'];
 			$_SESSION['btPassword'] = $memberInfo['password'];
 			$_SESSION['btRememberMe'] = $_POST['rememberme'] ?? '';
@@ -81,9 +81,9 @@ if ( ! empty($_POST['submit']) ) {
 }
 
 
-if( empty($_POST['submit']) && ! constant("LOGGED_IN")) {
+if ( empty($_POST['submit']) && ! constant("LOGGED_IN")) {
 
-	if( $fail ) {
+	if ( $fail ) {
 		$errorMessage = "You entered an incorrect username/password combination!";
 	}
 	else {
@@ -130,7 +130,7 @@ echo "
 ";
 
 }
-elseif(constant("LOGGED_IN")) {
+elseif (constant("LOGGED_IN")) {
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."members/console.php'

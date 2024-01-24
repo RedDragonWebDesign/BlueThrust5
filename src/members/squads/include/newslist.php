@@ -40,13 +40,13 @@ $counter = 0;
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$LOGIN_FAIL = false;
 	$memberInfo = $member->get_info_filtered();
 
-	if($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], $pID)) {
+	if ($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], $pID)) {
 
-		if(!$_POST['filterShoutbox']) {
+		if (!$_POST['filterShoutbox']) {
 			$filterNewsType = "(newstype = '1' OR newstype = '2')";
 		}
 		else {
@@ -57,26 +57,26 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		$squadInfo = $squadObj->get_info_filtered();
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."squadnews WHERE squad_id = '".$squadInfo['squad_id']."' AND ".$filterNewsType." ORDER BY dateposted DESC");
 
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$member->select($row['member_id']);
 			$squadMemberInfo = $member->get_info_filtered();
 
-			if($squadMemberInfo['avatar'] == "") {
+			if ($squadMemberInfo['avatar'] == "") {
 				$squadMemberInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 			}
 
-			if($row['newstype'] == 1) {
+			if ($row['newstype'] == 1) {
 				$dispNewsType = " - <span class='publicNewsColor' style='font-style: italic'>public</span>";
 			}
-			elseif($row['newstype'] == 2) {
+			elseif ($row['newstype'] == 2) {
 				$dispNewsType = " - <span class='privateNewsColor' style='font-style: italic'>private</span>";
 			}
-			elseif($row['newstype'] == 3) {
+			elseif ($row['newstype'] == 3) {
 				$dispNewsType = "";
 			}
 
 			$dispLastEdit = "";
-			if($member->select($row['lasteditmember_id'])) {
+			if ($member->select($row['lasteditmember_id'])) {
 
 				$dispLastEditTime = getPreciseTime($row['lasteditdate']);
 				$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";
@@ -106,7 +106,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 		}
 
-		if($counter == 0) {
+		if ($counter == 0) {
 			echo "
 				<div class='shadedBox' style='width: 300px; font-style: italic; margin-left: auto; margin-right: auto; margin-bottom: 20px'>
 					<p class='main' align='center'>

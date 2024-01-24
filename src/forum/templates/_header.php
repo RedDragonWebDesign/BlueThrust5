@@ -12,7 +12,8 @@
  */
 
 
-if(!defined("MAIN_ROOT")) { exit(); }
+if (!defined("MAIN_ROOT")) {
+exit(); }
 
 $consoleObj = new ConsoleOption($mysqli);
 $boardObj = new ForumBoard($mysqli);
@@ -26,7 +27,7 @@ require_once(BASE_DIRECTORY."themes/".$THEME."/_header.php");
 $memberInfo = array();
 
 $LOGGED_IN = false;
-if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 	$LOGGED_IN = true;
 }

@@ -22,7 +22,7 @@ require_once("twitter.php");
 require_once($prevFolder."classes/member.php");
 
 
-if(trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
+if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
 }
 else {
@@ -32,12 +32,12 @@ else {
 $twitterObj = new Twitter($mysqli);
 
 
-if(!isset($_GET['oauth_token']) || !isset($_GET['oauth_verifier']) || $_GET['oauth_token'] != $_SESSION['btOauth_Token']) {
+if (!isset($_GET['oauth_token']) || !isset($_GET['oauth_verifier']) || $_GET['oauth_token'] != $_SESSION['btOauth_Token']) {
 
 	// CONNECT
 
 	$response = $twitterObj->getRequestToken($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
-	if($response !== false) {
+	if ($response !== false) {
 		parse_str($response, $arrOutput);
 
 		$_SESSION['btOauth_Token'] = $arrOutput['oauth_token'];
@@ -50,19 +50,19 @@ if(!isset($_GET['oauth_token']) || !isset($_GET['oauth_verifier']) || $_GET['oau
 
 
 }
-elseif(isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oauth_token'] == $_SESSION['btOauth_Token']) {
+elseif (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oauth_token'] == $_SESSION['btOauth_Token']) {
 	// CALLBACK
 
 
 	$twitterObj->oauthTokenSecret = $_SESSION['btOauth_Token_Secret'];
 	$response = $twitterObj->getAccessToken($_GET['oauth_token'], $_GET['oauth_verifier']);
 
-	if($twitterObj->httpCode == 200) {
+	if ($twitterObj->httpCode == 200) {
 		parse_str($response, $oauthArray);
 
-		if($twitterObj->authorizeLogin($oauthArray['oauth_token'], $oauthArray['oauth_token_secret'])) {
+		if ($twitterObj->authorizeLogin($oauthArray['oauth_token'], $oauthArray['oauth_token_secret'])) {
 			$twitterInfo = $twitterObj->get_info();
-			if($twitterInfo['allowlogin'] == 1) {
+			if ($twitterInfo['allowlogin'] == 1) {
 				// LOGGED IN!
 
 				// Update Twitter Stats
@@ -127,7 +127,7 @@ else {
 $dispBreadCrumb = "<a href='".$MAIN_ROOT."'>Home</a> > Log In";
 require_once($prevFolder."themes/".$THEME."/_header.php");
 
-if(constant("LOGGED_IN")) {
+if (constant("LOGGED_IN")) {
 
 	echo "
 		<script type='text/javascript'>

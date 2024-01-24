@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member)) {
+if (!isset($member)) {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -35,7 +35,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 ";
 
 
-if($cID == "") {
+if ($cID == "") {
 	$cID = $consoleObj->findConsoleIDByName("Manage Profile Options");
 }
 
@@ -48,11 +48,11 @@ $intManageProfileCatCID = $consoleObj->findConsoleIDByName("Manage Profile Categ
 
 $arrProfileCatIDs = array();
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$arrProfileCatIDs[] = $row['profilecategory_id'];
 }
 
-foreach($arrProfileCatIDs as $profileCatID) {
+foreach ($arrProfileCatIDs as $profileCatID) {
 	$profileCatObj->select($profileCatID);
 	$profileCatInfo = $profileCatObj->get_info_filtered();
 	$catAssoc = $profileCatObj->getAssociateIDs("ORDER BY sortnum");
@@ -61,11 +61,11 @@ foreach($arrProfileCatIDs as $profileCatID) {
 	$intHighestOrder = count($catAssoc);
 	$counter = 0;
 	$x = 1;
-	foreach($catAssoc as $profileID) {
+	foreach ($catAssoc as $profileID) {
 		$profileOptionObj->select($profileID);
 		$profileInfo = $profileOptionObj->get_info_filtered();
 
-		if($counter == 1) {
+		if ($counter == 1) {
 			$addCSS = " alternateBGColor";
 			$counter = 0;
 		}
@@ -74,14 +74,14 @@ foreach($arrProfileCatIDs as $profileCatID) {
 			$counter = 1;
 		}
 
-		if($x == 1) {
+		if ($x == 1) {
 			$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 		}
 		else {
 			$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveOption('up', '".$profileInfo['profileoption_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 		}
 
-		if($x == $intHighestOrder) {
+		if ($x == $intHighestOrder) {
 			$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 		}
 		else {

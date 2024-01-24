@@ -14,13 +14,13 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -53,13 +53,13 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 
 
 $displayOrderOptions = array();
-if(isset($_POST['menucategory'])) {
+if (isset($_POST['menucategory'])) {
 	$arrMenuItems = $menuItemObj->get_entries(array("menucategory_id" => $_POST['menucategory'], "menuitem_id" => $menuItemInfo['menuitem_id']), "sortnum", true, array("menuitem_id" => "!="));
-	foreach($arrMenuItems as $eachMenuItem) {
+	foreach ($arrMenuItems as $eachMenuItem) {
 		$displayOrderOptions[$eachMenuItem['menuitem_id']] = $eachMenuItem['name'];
 	}
 
-	if(count($displayOrderOptions) == 0) {
+	if (count($displayOrderOptions) == 0) {
 		$displayOrderOptions['first'] = "(first item)";
 	}
 }
@@ -97,7 +97,7 @@ $textAlignOptions = array("left" => "Left", "center" => "Center", "right" => "Ri
 
 $menuCatOptions = array();
 $arrMenuCats = $menuCatObj->get_entries(array(), "sortnum");
-foreach($arrMenuCats as $menuCatInfo) {
+foreach ($arrMenuCats as $menuCatInfo) {
 	$menuCatOptions[$menuCatInfo['menucategory_id']] = $menuCatInfo['name'];
 }
 
@@ -173,8 +173,8 @@ $arrComponents = array(
 $arrExtraComponentSection = array();
 $arrExtraComponents = "";
 
-foreach($itemTypeInclude as $key => $itemTypeInfo) {
-	if($key == $menuItemInfo['itemtype']) {
+foreach ($itemTypeInclude as $key => $itemTypeInfo) {
+	if ($key == $menuItemInfo['itemtype']) {
 		require_once("include/".$itemTypeInfo['file']);
 
 		$arrExtraComponentSection['extra_info'] = array(
@@ -191,7 +191,7 @@ foreach($itemTypeInclude as $key => $itemTypeInfo) {
 
 $globalLinkOptionsNeeded = array("link", "custompage", "customform", "downloads");
 
-if(in_array($menuItemInfo['itemtype'], $globalLinkOptionsNeeded)) {
+if (in_array($menuItemInfo['itemtype'], $globalLinkOptionsNeeded)) {
 	$optionName = $menuItemInfo['itemtype'];
 
 	$globalLinkOptions = array(
@@ -222,7 +222,7 @@ if(in_array($menuItemInfo['itemtype'], $globalLinkOptionsNeeded)) {
 }
 
 $arrAfterSave = "";
-switch($menuItemInfo['itemtype']) {
+switch ($menuItemInfo['itemtype']) {
 	case "link":
 		$menuItemObj->objLink->select($menuItemInfo['itemtype_id']);
 		$menuItemExtraInfo = $menuItemObj->objLink->get_info_filtered();
@@ -441,7 +441,7 @@ switch($menuItemInfo['itemtype']) {
 		break;
 }
 
-if(is_array($arrExtraComponents)) {
+if (is_array($arrExtraComponents)) {
 	$arrExtraComponentSection['extra_info']['components'] = $arrExtraComponents;
 }
 
@@ -482,7 +482,7 @@ $afterJS = "
 		$('#btnFakeSubmit').click(function() {
 	";
 
-	if($menuItemInfo['itemtype'] == "customcode") {
+	if ($menuItemInfo['itemtype'] == "customcode") {
 
 		$afterJS .= "$('#menuCodeEditor_code').val(menuCodeEditor.getValue());";
 
@@ -494,7 +494,7 @@ $afterJS .= "
 
 });";
 
-if($menuItemInfo['itemtype'] == "shoutbox") {
+if ($menuItemInfo['itemtype'] == "shoutbox") {
 
 	$afterJS .= "
 	

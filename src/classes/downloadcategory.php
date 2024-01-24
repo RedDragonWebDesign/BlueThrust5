@@ -36,7 +36,7 @@ class DownloadCategory extends Rank {
 		$specialKey = $this->MySQL->real_escape_string($specialKey);
 
 		$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE specialkey = '".$specialKey."'");
-		if($result->num_rows > 0) {
+		if ($result->num_rows > 0) {
 			$this->arrObjInfo = $result->fetch_assoc();
 			$returnVal = true;
 			$this->intTableKeyValue = $this->arrObjInfo[$this->strTableKey];
@@ -50,21 +50,21 @@ class DownloadCategory extends Rank {
 
 	public function delete() {
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$countErrors = 0;
 			$result = $this->MySQL->query("DELETE FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 
-			if($this->MySQL->error) {
+			if ($this->MySQL->error) {
 				$countErrors++;
 			}
 
 			$result = $this->MySQL->query("DELETE FROM ".$this->get_tablePrefix()."download_extensions WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 
-			if($this->MySQL->error) {
+			if ($this->MySQL->error) {
 				$countErrors++;
 			}
 
-			if($countErrors == 0) {
+			if ($countErrors == 0) {
 				$returnVal = true;
 			}
 			$this->resortOrder();
@@ -79,10 +79,10 @@ class DownloadCategory extends Rank {
 	public function getExtensions($returnIDs=true) {
 
 		$arrExtensions = array();
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."download_extensions WHERE downloadcategory_id = '".$this->intTableKeyValue."' ORDER BY extension_id");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
 				$arrExtensions[] = ($returnIDs) ? $row['extension_id'] : $row['extension'];
 

@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -30,7 +30,7 @@ $cID = $_GET['cID'];
 $gameObj = new Game($mysqli);
 $gameStatsObj = new Basic($mysqli, "gamestats", "gamestats_id");
 
-if($_GET['gID'] == "") {
+if ($_GET['gID'] == "") {
 
 	echo "
 		<div id='loadingSpiral' class='loadingSpiral'>
@@ -112,6 +112,6 @@ if($_GET['gID'] == "") {
 	";
 
 }
-elseif($_GET['gID'] != "" AND $_GET['action'] == "edit") {
+elseif ($_GET['gID'] != "" AND $_GET['action'] == "edit") {
 	require_once("gamesplayed/edit.php");
 }

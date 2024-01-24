@@ -1,7 +1,7 @@
 <?php
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
 
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
@@ -23,7 +23,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !iss
 
 
 	// Check Login
-	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $customFormPageObj->select($_POST['cfID'])) {
+	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $customFormPageObj->select($_POST['cfID'])) {
 		$memberInfo = $member->get_info();
 	}
 	else {
@@ -34,7 +34,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !iss
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($consoleObj->findConsoleIDByName("View Custom Form Submissions"));
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -43,10 +43,10 @@ else {
 $arrSubmissions = $customFormPageObj->getSubmissions();
 
 
-foreach($arrSubmissions as $submissionID) {
+foreach ($arrSubmissions as $submissionID) {
 
 	$customFormPageObj->objSubmission->select($submissionID);
-	if($customFormPageObj->objSubmission->get_info("seenstatus") == 0) {
+	if ($customFormPageObj->objSubmission->get_info("seenstatus") == 0) {
 		$customFormPageObj->objSubmission->update(array("seenstatus"), array("1"));
 	}
 
@@ -67,16 +67,16 @@ foreach($arrSubmissions as $submissionID) {
 		";
 
 
-	foreach($arrSubmissionDetail['components'] as $componentID => $formValue) {
+	foreach ($arrSubmissionDetail['components'] as $componentID => $formValue) {
 
 		$customFormPageObj->objComponent->select($componentID);
 		$componentInfo = $customFormPageObj->objComponent->get_info_filtered();
 
-		if($componentInfo['componenttype'] != "separator") {
+		if ($componentInfo['componenttype'] != "separator") {
 			echo "
 				<tr>
 					<td class='formLabel' valign='top'>".$componentInfo['name'].":</td>";
-			if(!is_array($formValue)) {
+			if (!is_array($formValue)) {
 
 				echo "
 					<td class='main' valign='top'>".nl2br($formValue)."</td>
@@ -90,7 +90,7 @@ foreach($arrSubmissions as $submissionID) {
 					<td class='main' valign='top'>
 					";
 				$counter = 1;
-				foreach($formValue as $multiValue) {
+				foreach ($formValue as $multiValue) {
 
 					echo $counter.". ".nl2br($multiValue)."<br>";
 
@@ -131,7 +131,7 @@ foreach($arrSubmissions as $submissionID) {
 }
 
 
-if(count($arrSubmissions) == 0) {
+if (count($arrSubmissions) == 0) {
 
 	echo "
 	

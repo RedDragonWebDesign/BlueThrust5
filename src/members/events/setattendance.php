@@ -12,7 +12,7 @@
  *
  */
 
-if(!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
+if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 
 	exit();
 }
@@ -24,7 +24,7 @@ else {
 
 	$eventObj->select($eID);
 
-	if(!$member->hasAccess($consoleObj) || (!$eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm") && $memberInfo['rank_id'] != 1)) {
+	if (!$member->hasAccess($consoleObj) || (!$eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm") && $memberInfo['rank_id'] != 1)) {
 		exit();
 	}
 }
@@ -71,11 +71,11 @@ $statusSelectBox->setOptions(array("Unconfirmed", "Attended", "Excused Absence",
 
 			$arrColumns = array("attendconfirm_admin");
 			$arrValues = array($_POST['status']);
-			foreach($_POST as $value) {
+			foreach ($_POST as $value) {
 
-				if(is_numeric($value) && $eventObj->objEventMember->select($value)) {
+				if (is_numeric($value) && $eventObj->objEventMember->select($value)) {
 					$checkEventID = $eventObj->objEventMember->get_info("event_id");
-					if($checkEventID == $eventInfo['event_id']) {
+					if ($checkEventID == $eventInfo['event_id']) {
 						$eventObj->objEventMember->update($arrColumns, $arrValues);
 					}
 				}
@@ -91,9 +91,9 @@ $statusSelectBox->setOptions(array("Unconfirmed", "Attended", "Excused Absence",
 
 		$counter = 0;
 		$eventMemberObj = new Member($mysqli);
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 
-			if($counter == 1) {
+			if ($counter == 1) {
 				$addCSS = " alternateBGColor";
 				$counter = 0;
 			}

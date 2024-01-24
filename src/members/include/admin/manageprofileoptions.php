@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -32,7 +32,7 @@ require_once($prevFolder."classes/profileoption.php");
 $profileCatObj = new ProfileCategory($mysqli);
 $profileOptionObj = new ProfileOption($mysqli);
 
-if($_GET['oID'] == "") {
+if ($_GET['oID'] == "") {
 
 	echo "
 	<div id='loadingSpiral' class='loadingSpiral'>
@@ -116,6 +116,6 @@ if($_GET['oID'] == "") {
 
 
 }
-elseif($_GET['oID'] != "" && $_GET['action'] == "edit") {
+elseif ($_GET['oID'] != "" && $_GET['action'] == "edit") {
 	require_once("manageprofileoptions/edit.php");
 }

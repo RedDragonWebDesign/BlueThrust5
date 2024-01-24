@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -40,14 +40,14 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check Page Title
 
-	if(trim($_POST['pagetitle']) == "") {
+	if (trim($_POST['pagetitle']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must give the console option a page title.<br>";
 	}
 
 	// Check Console Category
 
-	if(!$consoleCatObj->select($_POST['consolecat'])) {
+	if (!$consoleCatObj->select($_POST['consolecat'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid console category.<br>";
 	}
@@ -55,25 +55,25 @@ if ( ! empty($_POST['submit']) ) {
 
 		$arrConsoleIDs = $consoleCatObj->getAssociateIDs();
 
-		if($_POST['consoleorder'] == "first" && count($arrConsoleIDs) > 0) {
+		if ($_POST['consoleorder'] == "first" && count($arrConsoleIDs) > 0) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
 		}
-		elseif(!in_array($_POST['consoleorder'], $arrConsoleIDs) && $_POST['consoleorder'] != "first") {
+		elseif (!in_array($_POST['consoleorder'], $arrConsoleIDs) && $_POST['consoleorder'] != "first") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order. (console option/console cat)<br>";
 		}
-		elseif(!$consoleObj->select($_POST['consoleorder']) && $_POST['consoleorder'] != "first") {
+		elseif (!$consoleObj->select($_POST['consoleorder']) && $_POST['consoleorder'] != "first") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order. (console option)<br>";
 		}
-		elseif($_POST['consoleorder'] == "first") {
+		elseif ($_POST['consoleorder'] == "first") {
 			$intNewSortNum = 1;
 		}
 		else {
 			// Check Before/After Then Make Room
 
-			if($_POST['consolebeforeafter'] == "before" OR $_POST['consolebeforeafter'] == "after") {
+			if ($_POST['consolebeforeafter'] == "before" OR $_POST['consolebeforeafter'] == "after") {
 				$intNewSortNum = $consoleObj->makeRoom($_POST['consolebeforeafter']);
 			}
 			else {
@@ -87,7 +87,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check Security Code
 
-	if(constant('ADMIN_KEY') != $_POST['checkadmin']) {
+	if (constant('ADMIN_KEY') != $_POST['checkadmin']) {
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."failban WHERE ipaddress = '".$IP_ADDRESS."' AND pagename = 'addconsoleoption'");
 		$countFails = $result->num_rows;
@@ -95,7 +95,7 @@ if ( ! empty($_POST['submit']) ) {
 
 		$failbanObj->addNew(array("ipaddress", "pagename"), array($IP_ADDRESS, "addconsoleoption"));
 
-		if($adminKeyFails <= 0) {
+		if ($adminKeyFails <= 0) {
 			$ipbanObj->set_tableKey("ipban_id");
 			$ipbanObj->addNew(array("ipaddress"), array($IP_ADDRESS));
 
@@ -138,19 +138,19 @@ if ( ! empty($_POST['submit']) ) {
 
 	}
 
-	if($_FILES['consolefile'] == "") {
+	if ($_FILES['consolefile'] == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must upload a file for the console option.<br>";
 	}
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		// No Errors Try uploading Console File
 
 		$newFileName = strtolower(str_replace(" ","",$_POST['pagetitle']))."_";
 
 		$btUpload = new BTUpload($_FILES['consolefile'], $newFileName, "include/customconsole/", array(".php"));
 
-		if($btUpload->uploadFile()) {
+		if ($btUpload->uploadFile()) {
 
 			$consoleFileURL = "customconsole/".$btUpload->getUploadedFileName();
 
@@ -163,19 +163,19 @@ if ( ! empty($_POST['submit']) ) {
 
 	}
 
-	if($_POST['hideoption'] != 1) {
+	if ($_POST['hideoption'] != 1) {
 		$_POST['hideoption'] = 0;
 	}
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		// Still no errors after Uploading ---> Add to DB
 
 		$arrColumns = array("consolecategory_id", "pagetitle", "filename", "sortnum", "hide");
 		$arrValues = array($_POST['consolecat'], $_POST['pagetitle'], $consoleFileURL, $intNewSortNum, $_POST['hideoption']);
 
 
-		if($consoleObj->addNew($arrColumns, $arrValues)) {
+		if ($consoleObj->addNew($arrColumns, $arrValues)) {
 
 			// Added new Console Option, now add permissions
 			$consolePrivObj = new Basic($mysqli, "rank_privileges", "privilege_id");
@@ -183,10 +183,10 @@ if ( ! empty($_POST['submit']) ) {
 			$newConsoleInfo = $consoleObj->get_info_filtered();
 			$arrColumns = array("rank_id", "console_id");
 			$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1'");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$checkBoxName = "rankaccess_".$row['rank_id'];
 
-				if($_POST[$checkBoxName] == 1) {
+				if ($_POST[$checkBoxName] == 1) {
 					$arrValues = array($row['rank_id'], $newConsoleInfo['console_id']);
 					$consolePrivObj->addNew($arrColumns, $arrValues);
 				}
@@ -195,15 +195,15 @@ if ( ! empty($_POST['submit']) ) {
 
 			$memberConsoleObj = new Basic($mysqli, "console_members", "privilege_id");
 			$arrColumns = array("member_id", "console_id", "allowdeny");
-			foreach($_SESSION['btAccessRules'] as $memAccessInfo) {
-				if($memAccessInfo['accessRule'] == "allow") {
+			foreach ($_SESSION['btAccessRules'] as $memAccessInfo) {
+				if ($memAccessInfo['accessRule'] == "allow") {
 					$intAllowDeny = 1;
 				}
 				else {
 					$intAllowDeny = 0;
 				}
 
-				if($member->select($memAccessInfo['mID'])) {
+				if ($member->select($memAccessInfo['mID'])) {
 					$memberConsoleObj->addNew($arrColumns, array($memAccessInfo['mID'], $newConsoleInfo['console_id'], $intAllowDeny));
 				}
 
@@ -238,25 +238,25 @@ if ( ! empty($_POST['submit']) ) {
 if ( empty($_POST['submit']) ) {
 	$_SESSION['btAccessRules'] = array();
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory WHERE adminoption != '1' ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$consoleCatOptions .= "<option value='".$row['consolecategory_id']."'>".filterText($row['name'])."</option>";
 	}
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."rankcategory ORDER BY ordernum DESC");
 	$counter = 1;
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$arrRankCats[] = $row['rankcategory_id'];
 	}
 
-	foreach($arrRankCats as $rankCat) {
+	foreach ($arrRankCats as $rankCat) {
 		$rankCatObj->select($rankCat);
 		$arrRanks = $rankCatObj->getAssociateIDs();
-		if(count($arrRanks) > 0) {
+		if (count($arrRanks) > 0) {
 			$sqlRanks = "('".implode("','", $arrRanks)."')";
 			$rankOptions .= "<span style='font-weight: bold; text-decoration: underline'>".$rankCatObj->get_info_filtered("name")."</span> - <a href='javascript:void(0)' onclick=\"selectAllCheckboxes('ranksection_".$rankCat."', 1)\">Check All</a> - <a href='javascript:void(0)' onclick=\"selectAllCheckboxes('ranksection_".$rankCat."', 0)\">Uncheck All</a><br>";
 			$rankOptions .= "<div id='ranksection_".$rankCat."'>";
 			$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1' AND rank_id IN ".$sqlRanks." ORDER BY ordernum DESC");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$rankOptions .= "<input type='checkbox' name='rankaccess_".$row['rank_id']."' value='1' class='textBox'> ".filterText($row['name'])."<br>";
 				$counter++;
 			}
@@ -269,12 +269,13 @@ if ( empty($_POST['submit']) ) {
 
 	$rankOptionsHeight = $counter*20;
 
-	if($rankOptionsHeight > 300) { $rankOptionsHeight = 300; }
+	if ($rankOptionsHeight > 300) {
+$rankOptionsHeight = 300; }
 
 
 	$memberOptions = "<option value='select'>[SELECT]</option>";
 	$result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.ordernum FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id != '1' AND ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id AND ".$dbprefix."members.disabled = '0' ORDER BY ".$dbprefix."ranks.ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 		$memberRank->select($row['rank_id']);
 		$dispRankName = $memberRank->get_info_filtered("name");
@@ -290,7 +291,7 @@ if ( empty($_POST['submit']) ) {
 		";
 
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to add new console option because the following errors occurred:</strong><br><br>

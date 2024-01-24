@@ -15,9 +15,9 @@
 
 			$menuCatInfo = $this->menuCatObj->get_info();
 
-			if($loc == "top" && $this->intMenuSection != 2) {
+			if ($loc == "top" && $this->intMenuSection != 2) {
 
-				if($menuCatInfo['headertype'] == "image") {
+				if ($menuCatInfo['headertype'] == "image") {
 					echo "<img src='".MAIN_ROOT.$menuCatInfo['headercode']."'>";
 				}
 				else {
@@ -28,7 +28,7 @@
 				echo "<div class='menuItems'>";
 
 			}
-			elseif($this->intMenuSection != 2) {
+			elseif ($this->intMenuSection != 2) {
 
 				echo "</div>";
 
@@ -39,12 +39,12 @@
 
 		public function displayLink() {
 
-			if($this->intMenuSection == 2) {
+			if ($this->intMenuSection == 2) {
 
 				$menuLinkInfo = $this->menuItemObj->objLink->get_info();
 				$checkURL = parse_url($menuLinkInfo['link']);
 
-				if(!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
+				if (!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
 					$menuLinkInfo['link'] = MAIN_ROOT.$menuLinkInfo['link'];
 				}
 
@@ -61,11 +61,11 @@
 
 		public function displayImage() {
 
-			if($this->intMenuSection == 2) {
+			if ($this->intMenuSection == 2) {
 
 				$menuImageInfo = $this->menuItemObj->objImage->get_info();
 				$checkURL = parse_url($menuItemInfo['imageurl']);
-				if(!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
+				if (!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
 					$menuImageInfo['imageurl'] = MAIN_ROOT.$menuImageInfo['imageurl'];
 				}
 
@@ -76,10 +76,10 @@
 					<div style='text-align: ".$menuImageInfo['imagealign']."; display: inline-block; margin: 0px 1.42%; padding: 5px'>
 				";
 
-				if($menuImageInfo['link'] != "") {
+				if ($menuImageInfo['link'] != "") {
 
 					$checkURL = parse_url($menuImageInfo['link']);
-					if(!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
+					if (!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
 						$menuImageInfo['link'] = MAIN_ROOT.$menuImageInfo['link'];
 					}
 

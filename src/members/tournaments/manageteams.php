@@ -13,7 +13,7 @@
  */
 
 
-if(!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
+if (!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
 
 	exit();
 }
@@ -26,13 +26,13 @@ else {
 	$tournamentObj->select($tID);
 
 
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 
 		exit();
 	}
 }
 
-if($tournamentInfo['playersperteam'] == 1) {
+if ($tournamentInfo['playersperteam'] == 1) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManagePlayers';</script>");
 }
 
@@ -57,25 +57,25 @@ $arrTeams = $tournamentObj->getTeams(true);
 
 $maxPlayers = $tournamentInfo['playersperteam'];
 
-if($tournamentInfo['seedtype'] == 2) {
+if ($tournamentInfo['seedtype'] == 2) {
 	$dispRandomSeedMessage = "Teams were given random seeds when the tournament was created.  To change a team's seed, simply click the change team seed link.";
 }
 
 $dispClanOnly = "";
-if($tournamentInfo['access'] == 1) {
+if ($tournamentInfo['access'] == 1) {
 	$dispClanOnly = "This is a clan only tournament.  You may only add clan members to this tournament.";
 }
 
 
 $teamCounter = 1;
-foreach($arrTeams as $teamID) {
+foreach ($arrTeams as $teamID) {
 
 	$tournamentObj->objTeam->select($teamID);
 	$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 
 
 	$dispTeamName = $teamInfo['name'];
-	if($teamInfo['name'] == "") {
+	if ($teamInfo['name'] == "") {
 		$dispTeamName = "Team ".$teamCounter;
 	}
 
@@ -87,7 +87,7 @@ foreach($arrTeams as $teamID) {
 
 // Get Squads
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."squads ORDER BY name");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$squadoptions .= "<option value='".$row['squad_id']."'>".filterText($row['name'])."</option>";
 }
 

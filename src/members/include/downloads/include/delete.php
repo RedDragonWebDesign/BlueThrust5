@@ -30,7 +30,7 @@ $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
 
 // Check Login
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$memberInfo = $member->get_info();
 }
 else {
@@ -42,7 +42,7 @@ $downloadCatObj = new DownloadCategory($mysqli);
 
 
 
-if($downloadObj->select($_POST['dlID']) && isset($_POST['confirm'])) {
+if ($downloadObj->select($_POST['dlID']) && isset($_POST['confirm'])) {
 	$downloadInfo = $downloadObj->get_info_filtered();
 	$downloadObj->delete();
 
@@ -53,7 +53,7 @@ if($downloadObj->select($_POST['dlID']) && isset($_POST['confirm'])) {
 	require_once("downloadlist.php");
 
 }
-elseif($downloadObj->select($_POST['dlID'])) {
+elseif ($downloadObj->select($_POST['dlID'])) {
 
 	$downloadInfo = $downloadObj->get_info_filtered();
 	echo "

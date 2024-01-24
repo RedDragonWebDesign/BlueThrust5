@@ -1,6 +1,7 @@
 <?php
 
-	if(!defined("MAIN_ROOT")) { exit(); }
+	if (!defined("MAIN_ROOT")) {
+exit(); }
 
 
 	// Types of application components
@@ -51,9 +52,9 @@
 	$profileOptionTable = $dbprefix."profileoptions";
 	$query = "SELECT ".$profileCatTable.".name AS catName, ".$profileCatTable.".profilecategory_id, ".$profileOptionTable.".name, ".$profileOptionTable.".profileoption_id FROM ".$profileOptionTable.", ".$profileCatTable." WHERE ".$profileOptionTable.".profilecategory_id = ".$profileCatTable.".profilecategory_id ORDER BY ".$profileCatTable.".ordernum DESC, ".$profileOptionTable.".sortnum";
 	$result = $mysqli->query($query);
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$checkCat = "profilecat_".$row['profilecategory_id'];
-		if($currentCat != $checkCat) {
+		if ($currentCat != $checkCat) {
 
 			$profileSelectOptions[$checkCat] = filterText($row['catName']);
 			$profileCatOptions[] = $checkCat;

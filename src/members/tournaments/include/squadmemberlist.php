@@ -34,13 +34,13 @@ $tournamentObj = new Tournament($mysqli);
 $squadObj = new Squad($mysqli);
 
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $squadObj->select($_POST['squadID']) && $tournamentObj->objTeam->select($_POST['teamID']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $squadObj->select($_POST['squadID']) && $tournamentObj->objTeam->select($_POST['teamID']) && $member->hasAccess($consoleObj)) {
 
 	$memberInfo = $member->get_info_filtered();
 	$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 	$tournamentObj->select($teamInfo['tournament_id']);
 	$tournamentInfo = $tournamentObj->get_info();
-	if($tournamentInfo['member_id'] == $memberInfo['member_id'] || $memberInfo['rank_id'] == 1 || $tournamentObj->isManager($memberInfo['member_id'])) {
+	if ($tournamentInfo['member_id'] == $memberInfo['member_id'] || $memberInfo['rank_id'] == 1 || $tournamentObj->isManager($memberInfo['member_id'])) {
 
 		$arrSquadMembers = $squadObj->getMemberListSorted();
 
@@ -56,8 +56,8 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $squadObj->select($_POST[
 				</tr>
 			";
 
-		foreach($arrSquadMembers as $value) {
-			if($member->select($value)) {
+		foreach ($arrSquadMembers as $value) {
+			if ($member->select($value)) {
 				$tempMemberInfo = $member->get_info_filtered();
 				echo "
 					<tr>

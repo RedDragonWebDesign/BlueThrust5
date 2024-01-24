@@ -13,7 +13,7 @@
  */
 
 
-if(!isset($member)) {
+if (!isset($member)) {
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/download.php");
@@ -28,7 +28,7 @@ if(!isset($member)) {
 
 
 	// Check Login
-	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
 	}
 	else {
@@ -47,7 +47,7 @@ echo "
 ";
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."downloadcategory WHERE specialkey = '' ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$arrDownloadCat[$row['downloadcategory_id']] = filterText($row['name']);
 }
 
@@ -60,11 +60,11 @@ $editCatCID = $consoleObj->findConsoleIDByName("Manage Download Categories");
 $addDLCID = $consoleObj->findConsoleIDByName("Add Download");
 
 $totalDownloads = 0;
-foreach($arrDownloadCat as $catID => $catName) {
+foreach ($arrDownloadCat as $catID => $catName) {
 	$downloadCatObj->select($catID);
 	$arrDownloads = $downloadCatObj->getAssociateIDs($dispOrderBY);
 
-	if(count($arrDownloads) > 0) {
+	if (count($arrDownloads) > 0) {
 
 		echo "
 			<tr>
@@ -75,11 +75,11 @@ foreach($arrDownloadCat as $catID => $catName) {
 		";
 
 		$altBGCount = 0;
-		foreach($arrDownloads as $dlID) {
+		foreach ($arrDownloads as $dlID) {
 			$downloadObj->select($dlID);
 			$dlInfo = $downloadObj->get_info_filtered();
 
-			if($altBGCount == 0) {
+			if ($altBGCount == 0) {
 				$addCSS = "";
 				$altBGCount = 1;
 			}
@@ -110,7 +110,7 @@ foreach($arrDownloadCat as $catID => $catName) {
 echo "</table>";
 
 
-if($totalDownloads == 0) {
+if ($totalDownloads == 0) {
 
 	echo "
 	

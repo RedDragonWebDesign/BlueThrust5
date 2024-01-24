@@ -33,9 +33,9 @@
 		function getBreadcrumb() {
 
 			$breadcrumbs = array();
-			foreach($this->arrBreadcrumb as $breadcrumbInfo) {
+			foreach ($this->arrBreadcrumb as $breadcrumbInfo) {
 
-				if($breadcrumbInfo['link'] != "") {
+				if ($breadcrumbInfo['link'] != "") {
 					$breadcrumbs[] = "<a href='".$breadcrumbInfo['link']."'>".$breadcrumbInfo['value']."</a>";
 				}
 				else {

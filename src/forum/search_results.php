@@ -14,7 +14,7 @@
 
  $pageOptions = '';
 
-	if(!defined("SHOW_SEARCHRESULTS")) {
+	if (!defined("SHOW_SEARCHRESULTS")) {
 		exit();
 	}
 
@@ -73,10 +73,10 @@
 
 	// Filter By Keyword
 	$filterKeyword = array();
-	if(trim($_POST['keyword']) != "") {
+	if (trim($_POST['keyword']) != "") {
 		$_POST['keyword'] = str_replace("%", "\%", $_POST['keyword']);
 
-		if($_POST['filterkeyword'] == 0) {
+		if ($_POST['filterkeyword'] == 0) {
 			$filterKeyword = array("message" => $_POST['keyword'], "title" => $_POST['keyword']);
 
 			$filterResults[] = " (".$postTable.".message LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%' OR ".$postTable.".title LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%') ";
@@ -92,23 +92,23 @@
 	// Filter By Username
 	$filterByUsername = "";
 	$memberIDList = array();
-	if(trim($_POST['fakesearchuser']) != "") {
+	if (trim($_POST['fakesearchuser']) != "") {
  		$_POST['fakesearchuser'] = str_replace("*", "%", $_POST['fakesearchuser']);
 
  		$memberList = $member->get_entries(array("username" => $_POST['fakesearchuser']), "username", true, array("username" => "Like"));
  		$memberIDList = array();
 
- 		foreach($memberList as $searchMemberInfo) {
+ 		foreach ($memberList as $searchMemberInfo) {
  			$memberIDList[] = $searchMemberInfo['member_id'];
  		}
 
  		$memberListSQL = "('".implode("','", $memberIDList)."')";
  		$filterResults[] = " ".$postTable.".member_id IN ".$memberListSQL;
 
- 		if($_POST['filterusername'] == 1) {
+ 		if ($_POST['filterusername'] == 1) {
  			$topicList = array();
  			$result = $mysqli->query("SELECT DISTINCT ".$topicTable.".forumpost_id FROM ".$topicTable.", ".$postTable." WHERE ".$topicTable.".forumpost_id = ".$postTable.".forumpost_id AND ".$postTable.".member_id IN ".$memberListSQL);
- 			while($row = $result->fetch_assoc()) {
+ 			while ($row = $result->fetch_assoc()) {
  				$topicList[] = $row['forumpost_id'];
  			}
 
@@ -120,7 +120,7 @@
 
 	// Filter By Reply Count
 	$filterTopicGTLT = "<=";
-	if($_POST['filtertopics'] == 0) {
+	if ($_POST['filtertopics'] == 0) {
 		$filterTopicGTLT = ">=";
 	}
 	$filterResults[] = " ".$topicTable.".replies ".$filterTopicGTLT." ".$_POST['filtertopics_replies']." ";
@@ -140,10 +140,10 @@
 	];
 
 
-	if($arrFilterDates[$_POST['filterposts']] != "" || $arrFilterDates[$_POST['filterposts']] != 0) {
+	if ($arrFilterDates[$_POST['filterposts']] != "" || $arrFilterDates[$_POST['filterposts']] != 0) {
 
 		$filterByDateGTLT = "<=";
-		if($_POST['filterposts_newold'] == 0) {
+		if ($_POST['filterposts_newold'] == 0) {
 			$filterByDateGTLT = ">=";
 		}
 
@@ -153,12 +153,12 @@
 
 	// Filter Board
 	$arrFilterBoards = array();
-	if(!in_array(0, $_POST['filterboards'])) {
+	if (!in_array(0, $_POST['filterboards'])) {
 
 		$arrFilterBoards = $_POST['filterboards'];
 
-		if($_POST['include_subforums'] == 1) {
-			foreach($_POST['filterboards'] as $value) {
+		if ($_POST['include_subforums'] == 1) {
+			foreach ($_POST['filterboards'] as $value) {
 				$boardObj->select($value);
 				$arrFilterBoards = array_merge($arrFilterBoards, $boardObj->getAllSubForums());
 			}
@@ -169,7 +169,7 @@
 
 	// Filter by Topic
 
-	if(isset($_GET['topic']) && $boardObj->objTopic->select($_GET['topic'])) {
+	if (isset($_GET['topic']) && $boardObj->objTopic->select($_GET['topic'])) {
 		$filterResults[] = " ".$postTable.".forumtopic_id = '".$_GET['topic']."' ";
 	}
 
@@ -187,10 +187,10 @@
 
 
 
-	if($arrOrderBy[$_POST['sortresults']] != "" && $_POST['sortresults_ascdesc'] == 0) {
+	if ($arrOrderBy[$_POST['sortresults']] != "" && $_POST['sortresults_ascdesc'] == 0) {
 		$orderBY = " ORDER BY ".$arrOrderBy[$_POST['sortresults']]." DESC";
 	}
-	elseif($arrOrderBy[$_POST['sortresults']] != "" && $_POST['sortresults_ascdesc'] == 1) {
+	elseif ($arrOrderBy[$_POST['sortresults']] != "" && $_POST['sortresults_ascdesc'] == 1) {
 		$orderBY = " ORDER BY ".$arrOrderBy[$_POST['sortresults']]." ASC";
 	}
 
@@ -208,14 +208,14 @@
 
 	// Pages
 	$numPerPage = LOGGED_IN ? $memberInfo['postsperpage'] : $websiteInfo['forum_postsperpage'];
-	if($numPerPage == 0) {
+	if ($numPerPage == 0) {
 		$numPerPage = $websiteInfo['forum_postsperpage'];
 	}
 
 	$totalPages = $numPerPage ? ceil($totalResults/$numPerPage) : 1;
 
 
-	if(!isset($_GET['page']) || !is_numeric($_GET['page']) || $totalPages < $_GET['page'] || $_GET['page'] < 1) {
+	if (!isset($_GET['page']) || !is_numeric($_GET['page']) || $totalPages < $_GET['page'] || $_GET['page'] < 1) {
 		$sqlLimit = " LIMIT 0, ".$numPerPage;
 		$_POST['page'] = 1;
 
@@ -228,12 +228,12 @@
 	$query = "SELECT DISTINCT ".$postTable.".* FROM ".$postTable.", ".$topicTable.", ".$membersTable.", ".$ranksTable." WHERE ".$ranksTable.".rank_id = ".$membersTable.".rank_id AND ".$membersTable.".member_id = ".$postTable.".member_id AND ".$filterResultsSQL.$orderBY.$sqlLimit;
 	$result = $mysqli->query($query);
 
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
-		if(in_array($_POST['sortresults'], $arrCustomSort)) {
+		if (in_array($_POST['sortresults'], $arrCustomSort)) {
 			// Requires additional sorting
 			$blnResort = true;
-			switch($_POST['sortresults']) {
+			switch ($_POST['sortresults']) {
 				case 1:
 					$boardObj->objTopic->select($row['forumtopic_id']);
 					$boardObj->objPost->select($boardObj->objTopic->get_info("forumpost_id"));
@@ -258,9 +258,9 @@
 
 	}
 
-	if($blnResort) {
+	if ($blnResort) {
 
-		if($_POST['sortresults_ascdesc'] == 0) {
+		if ($_POST['sortresults_ascdesc'] == 0) {
 			arsort($arrSearchResults);
 		}
 		else {
@@ -271,12 +271,12 @@
 	}
 
 	// Filter Out Based on Board
-	if(count($arrFilterBoards) > 0) {
-		foreach($arrSearchResults as $key => $value) {
+	if (count($arrFilterBoards) > 0) {
+		foreach ($arrSearchResults as $key => $value) {
 			$boardObj->objPost->select($value);
 			$boardObj->objTopic->select($boardObj->objPost->get_info("forumtopic_id"));
 			$tempTopicInfo = $boardObj->objTopic->get_info();
-			if(!in_array($tempTopicInfo['forumboard_id'], $arrFilterBoards)) {
+			if (!in_array($tempTopicInfo['forumboard_id'], $arrFilterBoards)) {
 				unset($arrSearchResults[$key]);
 			}
 
@@ -298,20 +298,20 @@
 	unset($postVars['submit']);
 	unset($postVars['page']);
 	$postVars['searchuser'] = 1;
-	foreach($postVars as $key => $value) {
-		if($value == "") {
+	foreach ($postVars as $key => $value) {
+		if ($value == "") {
 			unset($postVars[$key]);
 		}
 
 
-		if($key == "fakesearchuser") {
+		if ($key == "fakesearchuser") {
 			$postVars['searchuser'] = $value;
 		}
 	}
 
 	unset($postVars['fakesearchuser']);
 
-	for($i = 1; $i<=$totalPages; $i++) {
+	for ($i = 1; $i<=$totalPages; $i++) {
 
 		$dispSelected = ($i == ($_GET['page'] ?? '')) ? " selected" : "";
 
@@ -322,14 +322,14 @@
 	$urlArgs = http_build_query($postVars);
 
 	$prevPageLink = "";
-	if($_POST['page'] > 1 && $totalPages > 1) {
+	if ($_POST['page'] > 1 && $totalPages > 1) {
 		$prevPageLink = "<a href='".$MAIN_ROOT."forum/search.php?page=".($_POST['page']-1)."&".$urlArgs."'>&laquo; Previous</a>";
 	}
 
 	$nextPageLink = "";
-	if($_POST['page'] < $totalPages) {
+	if ($_POST['page'] < $totalPages) {
 		$nextPageLink = "<a href='".$MAIN_ROOT."forum/search.php?page=".($_POST['page']+1)."&".$urlArgs."'>Next &raquo;</a>";
-		if($prevPageLink != "") {
+		if ($prevPageLink != "") {
 			$nextPageLink = " | ".$nextPageLink;
 		}
 	}
@@ -341,17 +341,17 @@
 		</p>
 	";
 
-	if($totalPages > 1) {
+	if ($totalPages > 1) {
 		echo "<p class='main' align='right'>Page: <select id='pickPageTop' class='textBox'>".$pageOptions."</select> <input type='button' onclick=\"choosePage('pickPageTop')\" class='submitButton' value='GO' style='margin-left: 5px; padding: 3px 10px'><br><br>".$prevPageLink.$nextPageLink."</p>";
 	}
 
-	foreach($arrSearchResults as $postID) {
+	foreach ($arrSearchResults as $postID) {
 
 		$boardObj->objPost->select($postID);
 		$topicInfo = $boardObj->objPost->getTopicInfo(true);
 		$boardObj->select($topicInfo['forumboard_id']);
 
-		if($boardObj->memberIsMod($memberInfo['member_id']) || $member->hasAccess($consoleObj)) {
+		if ($boardObj->memberIsMod($memberInfo['member_id']) || $member->hasAccess($consoleObj)) {
 			$boardObj->objPost->blnManageable = true;
 		}
 
@@ -362,12 +362,12 @@
 		$searchCounter++;
 	}
 
-	if($totalPages > 1) {
+	if ($totalPages > 1) {
 		echo "<p class='main' align='right'>Page: <select id='pickPageBottom' class='textBox'>".$pageOptions."</select> <input type='button' onclick=\"choosePage('pickPageBottom')\" class='submitButton' value='GO' style='margin-left: 5px; padding: 3px 10px'><br><br>".$prevPageLink.$nextPageLink."</p>";
 	}
 
 
-	if($totalResults == 0) {
+	if ($totalResults == 0) {
 
 		echo "
 		

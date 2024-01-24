@@ -34,12 +34,12 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 
 
 $rank = new Rank($mysqli);
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($checkAccess1 || $checkAccess2) {
+	if ($checkAccess1 || $checkAccess2) {
 
 
 		echo "
@@ -54,14 +54,14 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			";
 
 		$counter=0;
-		foreach($_SESSION['btAccessRules'] as $key => $accessInfo) {
-			if($member->select($accessInfo['mID']) AND ($accessInfo['accessRule'] == "allow" OR $accessInfo['accessRule'] == "deny")) {
+		foreach ($_SESSION['btAccessRules'] as $key => $accessInfo) {
+			if ($member->select($accessInfo['mID']) AND ($accessInfo['accessRule'] == "allow" OR $accessInfo['accessRule'] == "deny")) {
 
 				$tempMemInfo = $member->get_info_filtered();
 				$rank->select($tempMemInfo['rank_id']);
 				$dispRankName = $rank->get_info_filtered("name");
 
-				if($accessInfo['accessRule'] == "allow") {
+				if ($accessInfo['accessRule'] == "allow") {
 					$dispAccess = "<span class='allowText'>Allow</span>";
 				}
 				else {
@@ -79,7 +79,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			}
 		}
 
-		if($counter == 0) {
+		if ($counter == 0) {
 			echo "
 				<tr>
 					<td class='main' colspan='3'>

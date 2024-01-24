@@ -13,13 +13,13 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -58,12 +58,12 @@ $textAlignOptions = array("left" => "Left", "center" => "Center", "right" => "Ri
 
 $menuCatOptions = array();
 $arrMenuCats = $menuCatObj->get_entries(array(), "sortnum");
-foreach($arrMenuCats as $menuCatInfo) {
+foreach ($arrMenuCats as $menuCatInfo) {
 	$menuCatOptions[$menuCatInfo['menucategory_id']] = $menuCatInfo['name'];
 }
 
 
-if(count($arrMenuCats) == 0) {
+if (count($arrMenuCats) == 0) {
 	echo "
 	<div style='display: none' id='errorBox'>
 		<p align='center'>
@@ -81,13 +81,13 @@ if(count($arrMenuCats) == 0) {
 
 $selectMenuCat = isset($_GET['mcID']) ? $_GET['mcID'] : "";
 $displayOrderOptions = array();
-if(isset($_POST['menucategory'])) {
+if (isset($_POST['menucategory'])) {
 	$arrMenuItems = $menuItemObj->get_entries(array("menucategory_id" => $_POST['menucategory']), "sortnum");
-	foreach($arrMenuItems as $eachMenuItem) {
+	foreach ($arrMenuItems as $eachMenuItem) {
 		$displayOrderOptions[$eachMenuItem['menuitem_id']] = $eachMenuItem['name'];
 	}
 
-	if(count($displayOrderOptions) == 0) {
+	if (count($displayOrderOptions) == 0) {
 		$displayOrderOptions['first'] = "(first item)";
 	}
 }
@@ -131,7 +131,7 @@ require_once("managemenu/include/customcodeformatoptions.php");
 
 // Global Link Options - Target Window, Text Align and Prefix
 $globalLinkOptionsNeeded = array("link", "custompage", "customform", "downloads");
-foreach($globalLinkOptionsNeeded as $optionName) {
+foreach ($globalLinkOptionsNeeded as $optionName) {
 	$globalLinkOptions[$optionName] = array(
 		"targetwindow_".$optionName => array(
 			"type" => "select",
@@ -392,7 +392,7 @@ $afterJS = "
 	$(document).ready(function() {
 	";
 
-	foreach($arrAfterJS as $value) {
+	foreach ($arrAfterJS as $value) {
 
 		$afterJS .= $value."\n";
 

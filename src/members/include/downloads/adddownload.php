@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -37,7 +37,7 @@ $dispError = "";
 $countErrors = 0;
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."downloadcategory WHERE specialkey = '' ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$arrDownloadCat[] = $row['downloadcategory_id'];
 
 	$dispSelected = (isset($_GET['catID']) && $_GET['catID'] == $row['downloadcategory_id']) ? " selected" : "";
@@ -45,7 +45,7 @@ while($row = $result->fetch_assoc()) {
 	$downloadcatoptions .= "<option value='".$row['downloadcategory_id']."'".$dispSelected.">".$row['name']."</option>";
 	$downloadCatObj->select($row['downloadcategory_id']);
 	$arrExtensions = array();
-	foreach($downloadCatObj->getExtensions() as $downloadExtID) {
+	foreach ($downloadCatObj->getExtensions() as $downloadExtID) {
 		$downloadExtObj->select($downloadExtID);
 		$arrExtensions[] = $downloadExtObj->get_info_filtered("extension");
 	}
@@ -54,7 +54,7 @@ while($row = $result->fetch_assoc()) {
 	";
 }
 
-if(count($arrDownloadCat) == 0) {
+if (count($arrDownloadCat) == 0) {
 
 	echo "
 		<div style='display: none' id='errorBox'>
@@ -77,7 +77,7 @@ if(count($arrDownloadCat) == 0) {
 if ( ! empty($_POST['submit']) ) {
 
 	// Check Name
-	if(trim($_POST['title']) == "") {
+	if (trim($_POST['title']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must give your download a title.<br>";
 	}
@@ -85,7 +85,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check Section
 
-	if(!in_array($_POST['section'], $arrDownloadCat)) {
+	if (!in_array($_POST['section'], $arrDownloadCat)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid download section.<br>";
 	}
@@ -94,11 +94,11 @@ if ( ! empty($_POST['submit']) ) {
 
 	$blnUploaded = false;
 	// Check Upload
-	if(trim($_FILES['uploadfile']['name']) == "") {
+	if (trim($_FILES['uploadfile']['name']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must select a file to upload.<br>";
 	}
-	elseif($countErrors == 0 && $downloadObj->uploadFile($_FILES['uploadfile'], $prevFolder."downloads/files/", $_POST['section'])) {
+	elseif ($countErrors == 0 && $downloadObj->uploadFile($_FILES['uploadfile'], $prevFolder."downloads/files/", $_POST['section'])) {
 
 		$blnUploaded = true;
 		$arrDLColumns = array("downloadcategory_id", "member_id", "dateuploaded", "filename", "mimetype", "filesize", "splitfile1", "splitfile2", "name", "description");
@@ -108,7 +108,7 @@ if ( ! empty($_POST['submit']) ) {
 
 		$arrDLValues = array($_POST['section'], $memberInfo['member_id'], time(), $_FILES['uploadfile']['name'], $mimeType, $fileSize, "downloads/files/".$splitFiles[0], "downloads/files/".$splitFiles[1], $_POST['title'], $_POST['description']);
 
-		if($downloadObj->addNew($arrDLColumns, $arrDLValues)) {
+		if ($downloadObj->addNew($arrDLColumns, $arrDLValues)) {
 
 			echo "
 			
@@ -136,13 +136,13 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
-	if(!$blnUploaded) {
+	if (!$blnUploaded) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload file.  Make sure the file is not too big and has a valid extension.<br>";
 	}
 
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
@@ -162,7 +162,7 @@ if ( empty($_POST['submit']) ) {
 			
 			";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to add download because the following errors occurred:</strong><br><br>

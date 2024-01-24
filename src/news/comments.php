@@ -22,19 +22,19 @@ $consoleObj->select($manageNewsCID);
 
 
 
-if(isset($memberInfo['member_id']) && $member->hasAccess($consoleObj)) {
+if (isset($memberInfo['member_id']) && $member->hasAccess($consoleObj)) {
 	$blnShowDeleteComment = true;
 }
 
 
-foreach($arrComments as $commentID) {
+foreach ($arrComments as $commentID) {
 
 	$newsObj->objComment->select($commentID);
 	$commentInfo = $newsObj->objComment->get_info_filtered();
 
 	$member->select($commentInfo['member_id']);
 	$dispDelete = "";
-	if($blnShowDeleteComment) {
+	if ($blnShowDeleteComment) {
 		$dispDelete = " - <a href='javascript:void(0)' onclick=\"deleteComment('".$commentID."')\">DELETE</a>";
 	}
 
@@ -52,7 +52,7 @@ foreach($arrComments as $commentID) {
 
 }
 
-if(count($arrComments) == 0) {
+if (count($arrComments) == 0) {
 	echo "
 		<p class='main' align='center'><br><i>No Comments!</i></p>
 	";

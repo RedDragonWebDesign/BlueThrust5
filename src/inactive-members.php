@@ -27,10 +27,10 @@ require_once($prevFolder."classes/game.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -65,7 +65,7 @@ $gameObj = new Game($mysqli);
 <?php
 
 	$result = $mysqli->query("SELECT ".$dbprefix."members.member_id, ".$dbprefix."ranks.ordernum FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id AND ".$dbprefix."members.onia = '1' AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id != '1' ORDER BY ".$dbprefix."ranks.ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$member->select($row['member_id']);
 		$rankObj->select($member->get_info("rank_id"));
 
@@ -73,7 +73,7 @@ $gameObj = new Game($mysqli);
 		$rankListInfo = $rankObj->get_info_filtered();
 
 		$dispMainGame = "Not Set";
-		if($gameObj->select($memberListInfo['maingame_id'])) {
+		if ($gameObj->select($memberListInfo['maingame_id'])) {
 			$gameObj->refreshImageSize();
 			$gameInfo = $gameObj->get_info_filtered();
 			$dispMainGame = "<img src='".$gameInfo['imageurl']."' width='".$gameInfo['imagewidth']."' height='".$gameInfo['imageheight']."' onmouseover=\"showToolTip('".$gameInfo['name']."')\" onmouseout='hideToolTip()'>";
@@ -99,7 +99,7 @@ $gameObj = new Game($mysqli);
 
 <?php
 
-if($result->num_rows > 0) {
+if ($result->num_rows > 0) {
 	echo "
 		<p align='center'>
 			<b>Total Inactive Members:</b>	<?php echo $result->num_rows; ?>

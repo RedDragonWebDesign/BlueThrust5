@@ -30,7 +30,7 @@ $member->select($_SESSION['btUsername']);
 
 $tournamentObj = new Tournament($mysqli);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->select($_POST['teamID']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->select($_POST['teamID']) && $member->hasAccess($consoleObj)) {
 
 	$memberInfo = $member->get_info();
 
@@ -40,7 +40,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->
 	$tmemberID = $tournamentInfo['member_id'];
 
 
-	if($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
+	if ($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
 
 
 		$arrAllPlayers = $tournamentObj->getPlayers();
@@ -50,16 +50,16 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->
 		$teamPlayerCount = count($arrTeamPlayers);
 		$blnErrorDuplicatePlayer = false;
 		$blnErrorFullTeam = false;
-		foreach($arrNewPlayers as $newPlayer) {
+		foreach ($arrNewPlayers as $newPlayer) {
 
 			$newPlayer = urldecode($newPlayer);
-			if($teamPlayerCount < $tournamentInfo['playersperteam']) {
-				if($member->select($newPlayer)) {
+			if ($teamPlayerCount < $tournamentInfo['playersperteam']) {
+				if ($member->select($newPlayer)) {
 					$checkMemberID = $member->get_info("member_id");
 
-					if(!in_array($checkMemberID, $arrAllPlayers)) {
+					if (!in_array($checkMemberID, $arrAllPlayers)) {
 
-						if($tournamentObj->objPlayer->addNew(array("tournament_id", "team_id", "member_id"), array($tournamentInfo['tournament_id'], $_POST['teamID'], $checkMemberID))) {
+						if ($tournamentObj->objPlayer->addNew(array("tournament_id", "team_id", "member_id"), array($tournamentInfo['tournament_id'], $_POST['teamID'], $checkMemberID))) {
 
 							$teamPlayerCount++;
 
@@ -76,9 +76,9 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->
 
 
 				}
-				elseif(!$member->select($newPlayer) && $tournamentInfo['access'] != 1) {
+				elseif (!$member->select($newPlayer) && $tournamentInfo['access'] != 1) {
 
-					if($tournamentObj->objPlayer->addNew(array("tournament_id", "team_id", "displayname"), array($tournamentInfo['tournament_id'], $_POST['teamID'], $newPlayer))) {
+					if ($tournamentObj->objPlayer->addNew(array("tournament_id", "team_id", "displayname"), array($tournamentInfo['tournament_id'], $_POST['teamID'], $newPlayer))) {
 
 						$teamPlayerCount++;
 
@@ -111,7 +111,7 @@ echo "
 	</script>
 ";
 
-if($blnErrorDuplicatePlayer) {
+if ($blnErrorDuplicatePlayer) {
 
 	echo "
 	
@@ -153,7 +153,7 @@ if($blnErrorDuplicatePlayer) {
 
 }
 
-if($blnErrorFullTeam) {
+if ($blnErrorFullTeam) {
 
 	echo "
 

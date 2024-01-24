@@ -1,5 +1,5 @@
 <?php
-	if(!defined("SHOW_PROFILE_MAIN")) {
+	if (!defined("SHOW_PROFILE_MAIN")) {
 		exit();
 	}
 
@@ -11,18 +11,18 @@
 			$gameStatObj = new Basic($mysqli, "gamestats", "gamestats_id");
 			$dispGamesPlayed = "";
 			$arrGames = $gameObj->getGameList();
-			foreach($arrGames as $gameID) {
-				if($member->playsGame($gameID)) {
+			foreach ($arrGames as $gameID) {
+				if ($member->playsGame($gameID)) {
 					$gameObj->select($gameID);
 
 					$dispGameStats = "";
 					$arrGameStats = $gameObj->getAssociateIDs("ORDER BY ordernum");
-					foreach($arrGameStats as $gameStatID) {
+					foreach ($arrGameStats as $gameStatID) {
 						$gameStatObj->select($gameStatID);
-						if($gameStatObj->get_info_filtered("hidestat") == 0) {
+						if ($gameStatObj->get_info_filtered("hidestat") == 0) {
 
 
-							if($gameStatObj->get_info_filtered("stattype") == "calculate") {
+							if ($gameStatObj->get_info_filtered("stattype") == "calculate") {
 								$dispGameStats .= "<b>".$gameStatObj->get_info_filtered("name").":</b> ".$gameObj->calcStat($gameStatID, $member)."<br>";
 							}
 							else {
@@ -47,7 +47,7 @@
 			}
 
 
-			if($dispGamesPlayed != "") {
+			if ($dispGamesPlayed != "") {
 
 				echo "
 

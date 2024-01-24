@@ -25,9 +25,9 @@
 
 
 
-		if(!file_exists("_config.php")) {
+		if (!file_exists("_config.php")) {
 
-			if(file_put_contents("_config.php", "") === false) {
+			if (file_put_contents("_config.php", "") === false) {
 
 				echo "
 					<div class='noteDiv'>
@@ -38,7 +38,7 @@
 			}
 
 		}
-		elseif(file_exists("_config.php") && !is_writable("_config.php")) {
+		elseif (file_exists("_config.php") && !is_writable("_config.php")) {
 
 			echo "
 				<div class='noteDiv'>
@@ -50,13 +50,13 @@
 
 
 
-		if($_GET['step'] == "" || $_GET['step'] == 1) {
+		if ($_GET['step'] == "" || $_GET['step'] == 1) {
 			require_once("steps/step1.php");
 		}
-		elseif($_GET['step'] == 2) {
+		elseif ($_GET['step'] == 2) {
 			require_once("steps/step2.php");
 		}
-		elseif($_GET['step'] == 3) {
+		elseif ($_GET['step'] == 3) {
 			require_once("steps/step3.php");
 		}
 		?>

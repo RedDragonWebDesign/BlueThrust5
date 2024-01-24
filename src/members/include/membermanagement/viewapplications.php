@@ -14,13 +14,13 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -30,7 +30,7 @@ $cID = $_GET['cID'];
 $regOptionsCID = $consoleObj->findConsoleIDByName("Registration Options");
 $regMessage = "You must approve member applications before the applicant becomes a full member on the website.  In order to use member applications, you must have open registration.  You can change this setting on the <a href='".$MAIN_ROOT."members/console.php?cID=".$regOptionsCID."'>Registration Options</a> page.";
 
-if($websiteInfo['memberapproval'] == 0) {
+if ($websiteInfo['memberapproval'] == 0) {
 	$regMessage = "All member applications are currently set to be automatically accepted, however you can still view the applications.  You can change this setting on the <a href='".$MAIN_ROOT."members/console.php?cID=".$regOptionsCID."'>Registration Options</a> page.";
 }
 

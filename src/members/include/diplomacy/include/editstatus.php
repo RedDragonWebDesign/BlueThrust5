@@ -15,7 +15,7 @@
 
 $diplomacyStatusObj = new BasicOrder($mysqli, "diplomacy_status", "diplomacystatus_id");
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !$diplomacyStatusObj->select($_GET['sID'])) {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !$diplomacyStatusObj->select($_GET['sID'])) {
 	echo "hi";
 	exit();
 }
@@ -27,26 +27,26 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check Name
 
-	if(trim($_POST['statusname']) == "") {
+	if (trim($_POST['statusname']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Status name may not be blank.<br>";
 		$countErrors++;
 	}
 
 	// Check Display Order
 	$intNewOrderNum = $diplomacyStatusObj->validateOrder($_POST['displayorder'], $_POST['beforeafter'], true, $diplomacyStatusInfo['ordernum']);
-	if($intNewOrderNum === false) {
+	if ($intNewOrderNum === false) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
 		$countErrors++;
 	}
 
 
 	$statusImageURL = "";
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		// If no errors, check for image upload and try to upload the image
-		if($_FILES['statusimagefile']['name'] != "") {
+		if ($_FILES['statusimagefile']['name'] != "") {
 
 			$uploadImg = new BTUpload($_FILES['statusimagefile'], "status_", "../images/diplomacy/", array(".jpg", ".png", ".gif", ".bmp"));
-			if(!$uploadImg->uploadFile()) {
+			if (!$uploadImg->uploadFile()) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload status image. Please make sure the file size is not too big and it has an acceptable file extension.<br>";
 			}
@@ -56,10 +56,10 @@ if ( ! empty($_POST['submit']) ) {
 
 
 		}
-		elseif($_POST['statusimageurl'] != "" && $_POST['statusimageurl'] != $diplomacyStatusInfo['imageurl']) {
+		elseif ($_POST['statusimageurl'] != "" && $_POST['statusimageurl'] != $diplomacyStatusInfo['imageurl']) {
 
 			$uploadImg = new BTUpload($_POST['statusimageurl'], "status_", "../images/diplomacy/", array(".jpg", ".png", ".gif", ".bmp"), 4, true);
-			if(!$uploadImg->uploadFile()) {
+			if (!$uploadImg->uploadFile()) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to download status image from remote url. You may need to first download the image and upload normally.<br>";
 			}
@@ -74,14 +74,14 @@ if ( ! empty($_POST['submit']) ) {
 
 
 		// If there are still no errors after uploading the image, add to db
-		if($countErrors == 0) {
+		if ($countErrors == 0) {
 
 			$arrColumns = array("name", "imageurl", "imagewidth", "imageheight", "ordernum");
 			$arrValues = array($_POST['statusname'], $statusImageURL, $_POST['imagewidth'], $_POST['imageheight'], $intNewOrderNum);
 
 			$diplomacyStatusObj->select($diplomacyStatusInfo['diplomacystatus_id']);
 
-			if($diplomacyStatusObj->update($arrColumns, $arrValues)) {
+			if ($diplomacyStatusObj->update($arrColumns, $arrValues)) {
 
 				echo "
 				
@@ -115,7 +115,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	}
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST['submit'] = false;
 	}
 
@@ -129,16 +129,16 @@ if ( empty($_POST['submit']) ) {
 	$arrBeforeAfter = $diplomacyStatusObj->findBeforeAfter();
 
 	$afterSelected = "";
-	if($arrBeforeAfter[1] == "after") {
+	if ($arrBeforeAfter[1] == "after") {
 		$afterSelected = " selected";
 	}
 
 	$orderoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status WHERE diplomacystatus_id != '".$diplomacyStatusInfo['diplomacystatus_id']."' ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 		$dispSelected = "";
-		if($arrBeforeAfter[0] == $row['diplomacystatus_id']) {
+		if ($arrBeforeAfter[0] == $row['diplomacystatus_id']) {
 			$dispSelected = " selected";
 		}
 
@@ -147,34 +147,34 @@ if ( empty($_POST['submit']) ) {
 
 	}
 
-	if($orderoptions == "") {
+	if ($orderoptions == "") {
 		$orderoptions = "<option value='first'>No other statuses</option>";
 	}
 
 
-	if(strpos($diplomacyStatusInfo['imageurl'], "http://") === false) {
+	if (strpos($diplomacyStatusInfo['imageurl'], "http://") === false) {
 
 		$arrImageInfo = getimagesize("../".$diplomacyStatusInfo['imageurl']);
 
-		if($diplomacyStatusInfo['imagewidth'] == 0) {
+		if ($diplomacyStatusInfo['imagewidth'] == 0) {
 			$diplomacyStatusInfo['imagewidth'] = $arrImageInfo[0];
 		}
 
-		if($diplomacyStatusInfo['imageheight'] == 0) {
+		if ($diplomacyStatusInfo['imageheight'] == 0) {
 			$diplomacyStatusInfo['imageheight'] = $arrImageInfo[1];
 		}
 
 
 
 	}
-	elseif($diplomacyStatusInfo['imagewidth'] == 0) {
+	elseif ($diplomacyStatusInfo['imagewidth'] == 0) {
 		$popupWidth = 400;
 	}
 
 
 	echo "<div class='formDiv'>";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to edit diplomacy status because the following errors occurred:</strong><br><br>
@@ -186,7 +186,7 @@ if ( empty($_POST['submit']) ) {
 
 
 
-	if(!isset($popupWidth)) {
+	if (!isset($popupWidth)) {
 			$popupWidth = $diplomacyStatusInfo['imagewidth']+50;
 	}
 

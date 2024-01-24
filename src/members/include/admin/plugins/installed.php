@@ -12,7 +12,7 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 
 	require_once("../../../../_setup.php");
@@ -28,7 +28,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);
 
-	if(!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
+	if (!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
 		exit();
 	}
 
@@ -40,7 +40,7 @@ echo "<table class='formTable' style='margin-top: 0px; border-spacing: 0px'>";
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."plugins ORDER BY name");
 
-	if($result->num_rows == 0) {
+	if ($result->num_rows == 0) {
 
 		echo "
 			<tr>
@@ -57,9 +57,9 @@ echo "<table class='formTable' style='margin-top: 0px; border-spacing: 0px'>";
 	}
 
 	$x = 0;
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
-		if($x == 0) {
+		if ($x == 0) {
 			$x = 1;
 			$addCSS = "";
 		}
@@ -72,7 +72,7 @@ echo "<table class='formTable' style='margin-top: 0px; border-spacing: 0px'>";
 
 		$dispPluginName = filterText($row['name']);
 
-		if(file_exists(BASE_DIRECTORY."plugins/".$row['filepath']."/settings.php")) {
+		if (file_exists(BASE_DIRECTORY."plugins/".$row['filepath']."/settings.php")) {
 			$settingsLink = $MAIN_ROOT."plugins/".$row['filepath']."/settings.php";
 		}
 		else {
@@ -80,7 +80,7 @@ echo "<table class='formTable' style='margin-top: 0px; border-spacing: 0px'>";
 		}
 
 		$installJSData = "";
-		if(file_exists(BASE_DIRECTORY."plugins/".$row['filepath']."/install_setup.php")) {
+		if (file_exists(BASE_DIRECTORY."plugins/".$row['filepath']."/install_setup.php")) {
 			$installJSData = " data-install='1'";
 		}
 

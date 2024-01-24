@@ -1,5 +1,5 @@
 <?php
-	if(!defined("SHOW_PROFILE_MAIN")) {
+	if (!defined("SHOW_PROFILE_MAIN")) {
 		exit();
 	}
 ?>

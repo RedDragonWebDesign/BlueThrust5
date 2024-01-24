@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -33,7 +33,7 @@ $profileOptionObj = new ProfileOption($mysqli);
 $profileCatObj = new ProfileCategory($mysqli);
 
 
-if(!$profileOptionObj->select($_GET['oID'])) {
+if (!$profileOptionObj->select($_GET['oID'])) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");
 }
 
@@ -55,7 +55,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check Option Name
 
-	if(trim($_POST['optionname']) == "") {
+	if (trim($_POST['optionname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must give the profile option a name.<br>";
 	}
@@ -63,7 +63,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check Category
 
-	if(!$profileCatObj->select($_POST['optioncategory'])) {
+	if (!$profileCatObj->select($_POST['optioncategory'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile category.<br>";
 	}
@@ -78,16 +78,16 @@ if ( ! empty($_POST['submit']) ) {
 		$blnOrderCheck4 = $_POST['optionorder'] == "first" && $_POST['optioncategory'] != $profileOptionInfo['profilecategory_id'] && count($arrProfileOptionIDs) > 0;
 
 
-		if($blnOrderCheck1 || $blnOrderCheck2 || $blnOrderCheck3 || $blnOrderCheck4) {
+		if ($blnOrderCheck1 || $blnOrderCheck2 || $blnOrderCheck3 || $blnOrderCheck4) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile option order.<br>";
 		}
-		elseif($_POST['optionorder'] == "first") {
+		elseif ($_POST['optionorder'] == "first") {
 			$intNewSortNum = 1;
 		}
 		else {
 
-			if($_POST['beforeafter'] == "before" || $_POST['beforeafter'] == "after") {
+			if ($_POST['beforeafter'] == "before" || $_POST['beforeafter'] == "after") {
 
 				$intNewSortNum = $profileOptionObj->makeRoom($_POST['beforeafter']);
 
@@ -104,9 +104,9 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
-		if($_POST['optiontype'] != "select") {
+		if ($_POST['optiontype'] != "select") {
 			$_POST['optiontype'] = "input";
 		}
 
@@ -116,15 +116,15 @@ if ( ! empty($_POST['submit']) ) {
 		$arrColumnValues = array($_POST['optioncategory'], $_POST['optionname'], $_POST['optiontype'], $intNewSortNum);
 
 		$profileOptionObj->select($profileOptionInfo['profileoption_id']);
-		if($profileOptionObj->update($arrColumnNames, $arrColumnValues)) {
+		if ($profileOptionObj->update($arrColumnNames, $arrColumnValues)) {
 
-			if($_POST['optiontype'] == "select" && $_SESSION['btProfileCacheRefresh']) {
+			if ($_POST['optiontype'] == "select" && $_SESSION['btProfileCacheRefresh']) {
 
 				$counter = 1;
 
 				$result = $mysqli->query("DELETE FROM ".$dbprefix."profileoptions_select WHERE profileoption_id = '".$profileOptionInfo['profileoption_id']."'");
 
-				foreach($_SESSION['btProfileCache'] as $selectValue) {
+				foreach ($_SESSION['btProfileCache'] as $selectValue) {
 
 					$profileOptionObj->addNewSelectValue($selectValue, $counter);
 					$counter++;
@@ -163,7 +163,7 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
@@ -176,17 +176,17 @@ if ( empty($_POST['submit']) ) {
 	$_SESSION['btProfileCacheRefresh'] = false;
 	$catoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 		$selectCat = "";
-		if($profileOptionInfo['profilecategory_id'] == $row['profilecategory_id']) {
+		if ($profileOptionInfo['profilecategory_id'] == $row['profilecategory_id']) {
 			$selectCat = "selected";
 		}
 
 		$catoptions .= "<option value='".$row['profilecategory_id']."' ".$selectCat.">".$row['name']."</option>";
 	}
 
-	if($result->num_rows == 0) {
+	if ($result->num_rows == 0) {
 		$catoptions = "<option value='none'>No Categories Added!</option>";
 	}
 
@@ -196,15 +196,15 @@ if ( empty($_POST['submit']) ) {
 	$arrOptions = $profileCatObj->getAssociateIDs("ORDER BY sortnum");
 	$highestIndex = count($arrOptions)-1;
 
-	if($arrOptions[$highestIndex] == $profileOptionInfo['profileoption_id']) {
+	if ($arrOptions[$highestIndex] == $profileOptionInfo['profileoption_id']) {
 		$afterSelected = "selected";
 	}
 
 	$selectSelected = "";
-	if($profileOptionInfo['optiontype'] == "select") {
+	if ($profileOptionInfo['optiontype'] == "select") {
 		$selectSelected = "selected";
 		$arrSelectValues = $profileOptionObj->getSelectValues();
-		foreach($arrSelectValues as $strSelectValue) {
+		foreach ($arrSelectValues as $strSelectValue) {
 			$tempArr[] = $strSelectValue;
 		}
 
@@ -221,7 +221,7 @@ if ( empty($_POST['submit']) ) {
 	<div class='formDiv'>
 	";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to add new profile option because the following errors occurred:</strong><br><br>

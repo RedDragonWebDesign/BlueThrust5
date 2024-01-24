@@ -34,12 +34,12 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 
 $checkAccess = $checkAccess1 || $checkAccess2;
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($checkAccess) {
+	if ($checkAccess) {
 
 
 		if ( ! empty($_POST['submit']) ) {
@@ -47,14 +47,14 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			$countErrors = 0;
 
 			// Check Stat Name
-			if(trim($_POST['statName'] == "")) {
+			if (trim($_POST['statName'] == "")) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;<b>middot;</b> You must enter a stat name.<br>";
 			}
 
 			// Check Stat type
-			if($_POST['statType'] == "calculate") {
-				if(count($_SESSION['btStatCache']) < 2) {
+			if ($_POST['statType'] == "calculate") {
+				if (count($_SESSION['btStatCache']) < 2) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp<b>&middot;</b> You must have at least two input stats before having a calculated stat.<br>";
 				}
@@ -64,20 +64,20 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 					// Check operation
 					$possibleOps = array("add", "sub", "mul", "div");
-					if(!in_array($_POST['calcOperation'], $possibleOps)) {
+					if (!in_array($_POST['calcOperation'], $possibleOps)) {
 						$countErrors++;
 						$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid operation. - ".$_POST['calcOperation']."<br>";
 					}
 
 					//Check First Stat
-					if(trim($_SESSION['btStatCache'][$_POST['firstStat']]['statName']) == "") {
+					if (trim($_SESSION['btStatCache'][$_POST['firstStat']]['statName']) == "") {
 						$countErrors++;
 						$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid first calculation statistic.";
 					}
 
 
 					//Check Second Stat
-					if(trim($_SESSION['btStatCache'][$_POST['secondStat']]['statName']) == "") {
+					if (trim($_SESSION['btStatCache'][$_POST['secondStat']]['statName']) == "") {
 						$countErrors++;
 						$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid second calculation statistic.";
 					}
@@ -87,44 +87,44 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 				}
 			}
-			elseif($_POST['statType'] != "inputnum" AND $_POST['statType'] != "inputtext") {
+			elseif ($_POST['statType'] != "inputnum" AND $_POST['statType'] != "inputtext") {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid stat type.<br>";
 			}
 
 
 			// Check Rounding
-			if($_POST['rounding'] != "" AND !is_numeric($_POST['rounding'])) {
+			if ($_POST['rounding'] != "" AND !is_numeric($_POST['rounding'])) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You may only enter a number for rounding.<br>";
 			}
 
-			if($_POST['rounding'] < 0) {
+			if ($_POST['rounding'] < 0) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You may not enter a negative value for rounding.<br>";
 			}
 
-			if($_POST['hideStat'] != 1) {
+			if ($_POST['hideStat'] != 1) {
 				$_POST['hideStat'] = 0;
 			}
 
 
-			if($countErrors == 0) {
+			if ($countErrors == 0) {
 
 				$_POST = filterArray($_POST);
 
-				if($_POST['statType'] == "inputnum" OR $_POST['statType'] == "inputtext") {
+				if ($_POST['statType'] == "inputnum" OR $_POST['statType'] == "inputtext") {
 					$_POST['firstStat'] = "";
 					$_POST['secondStat'] = "";
 					$_POST['calcOperation'] = "";
 				}
 
 				$intInputText = 0;
-				if($_POST['statType'] == "inputtext") {
+				if ($_POST['statType'] == "inputtext") {
 					$intInputText = 1;
 					$_POST['statType'] = "input";
 				}
-				elseif($_POST['statType'] == "inputnum") {
+				elseif ($_POST['statType'] == "inputnum") {
 					$_POST['statType'] = "input";
 				}
 
@@ -177,19 +177,19 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 			$statOptions = "<option value='inputnum'>Input (Number)</option><option value='inputtext'>Input (Text)</option>";
 			$onChange = "";
-			if(is_array($_SESSION['btStatCache'])) {
-				if(count($_SESSION['btStatCache']) > 1) {
+			if (is_array($_SESSION['btStatCache'])) {
+				if (count($_SESSION['btStatCache']) > 1) {
 
 					$countStats = 0;
-					foreach($_SESSION['btStatCache'] as $key => $statInfo) {
-						if($statInfo['textInput'] == 0) {
+					foreach ($_SESSION['btStatCache'] as $key => $statInfo) {
+						if ($statInfo['textInput'] == 0) {
 							$statIDOptions .= "<option value='".$key."'>".filterText($statInfo['statName'])."</option>";
 							$countStats++;
 						}
 					}
 
 
-					if($countStats > 1) {
+					if ($countStats > 1) {
 						$statOptions .= "<option value='calculate'>Auto-Calculate</option>";
 					}
 
@@ -201,7 +201,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 
-			if($dispError != "") {
+			if ($dispError != "") {
 				echo "
 				<div class='errorDiv' style='width: 400px'>
 				<strong>Unable to add new stat because the following errors occurred:</strong><br><br>

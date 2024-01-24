@@ -40,7 +40,7 @@ $appComponentObj = $customFormObj->objComponent;
 
 $_SESSION['btFormComponent'] = array_values($_SESSION['btFormComponent']);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
 
 
 	echo "
@@ -52,25 +52,25 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 
 	$totalComponents = count($_SESSION['btFormComponent'])-1;
 	$counter = 0;
-	foreach($_SESSION['btFormComponent'] as $key => $value) {
+	foreach ($_SESSION['btFormComponent'] as $key => $value) {
 
 		$dispUpArrow = "";
-		if($counter != 0) {
+		if ($counter != 0) {
 			$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveComponent('".$key."', 'up')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' style='width: 24px; height: 24px; border: 0px'></a>";
 		}
 
 		$dispDownArrow = "";
-		if($counter != $totalComponents) {
+		if ($counter != $totalComponents) {
 			$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveComponent('".$key."', 'down')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' style='width: 24px; height: 24px; border: 0px'></a>";
 		}
 
 		$counter++;
 
 		$dispType = ucfirst($value['type']);
-		if($value['type'] == "multiselect") {
+		if ($value['type'] == "multiselect") {
 			$dispType = "Multi-Select";
 		}
-		elseif($value['type'] == "largeinput") {
+		elseif ($value['type'] == "largeinput") {
 			$dispType = "Large-Input";
 		}
 
@@ -93,7 +93,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 		</table>
 	";
 
-	if(count($_SESSION['btFormComponent']) == 0) {
+	if (count($_SESSION['btFormComponent']) == 0) {
 		echo "
 			<p class='main' align='center'>
 				<i>You have not added any components!</i>

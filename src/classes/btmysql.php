@@ -64,17 +64,17 @@ class btMySQL extends MySQLi {
 	}
 
 	public function displayError($pageName="") {
-		if($this->bt_TestingMode) {
+		if ($this->bt_TestingMode) {
 			die($pageName." - ".$this->error);
 		}
 	}
 
 	public function getParamTypes($arrValues) {
 		$strParamTypes = "";
-		if(is_array($arrValues)) {
-			foreach($arrValues as $value) {
+		if (is_array($arrValues)) {
+			foreach ($arrValues as $value) {
 				$valuetype = gettype($value);
-				switch($valuetype) {
+				switch ($valuetype) {
 					case "integer":
 						$strParamTypes .= "i";
 						break;
@@ -96,11 +96,11 @@ class btMySQL extends MySQLi {
 
 		$tmpParams = array_merge(array($strParamTypes), $arrValues);
 		$arrParams = array();
-		foreach($tmpParams as $key=>$value) {
+		foreach ($tmpParams as $key=>$value) {
 			$arrParams[$key] = &$tmpParams[$key];
 		}
 
-		if(!call_user_func_array(array($objMySQLiStmt, "bind_param"), $arrParams)) {
+		if (!call_user_func_array(array($objMySQLiStmt, "bind_param"), $arrParams)) {
 			$returnVal = false;
 			echo $objMySQLiStmt->error;
 			echo "<br><br>";
@@ -117,13 +117,13 @@ class btMySQL extends MySQLi {
 	public function optimizeTables() {
 		$tables = array();
 		$result = $this->query("SHOW TABLE STATUS WHERE Data_free > 0");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$tables[] = "`".$row['Name']."`";
 		}
 
 		$optimizeTables = implode(", ", $tables);
 
-		if(count($tables) > 0) {
+		if (count($tables) > 0) {
 			$this->query("OPTIMIZE TABLE ".$optimizeTables);
 		}
 

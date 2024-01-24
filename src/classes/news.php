@@ -50,14 +50,14 @@ class News extends Basic {
 
 		$returnArr = array();
 
-		if($orderBY == "") {
+		if ($orderBY == "") {
 			$orderBY = " ORDER BY dateposted DESC";
 		}
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strCommentTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'".$orderBY);
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$returnArr[] = $row[$this->strCommentTableKey];
 			}
 
@@ -72,7 +72,7 @@ class News extends Basic {
 
 		$returnVal = 0;
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strCommentTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 
@@ -90,9 +90,9 @@ class News extends Basic {
 
 		$returnVal = false;
 
-		if(is_numeric($intMemberID) && $this->intTableKeyValue != "" && trim($strMessage) != "") {
+		if (is_numeric($intMemberID) && $this->intTableKeyValue != "" && trim($strMessage) != "") {
 
-			if($this->objComment->addNew(array($this->strTableKey, "member_id", "message", "dateposted"), array($this->intTableKeyValue, $intMemberID, $strMessage, time()))) {
+			if ($this->objComment->addNew(array($this->strTableKey, "member_id", "message", "dateposted"), array($this->intTableKeyValue, $intMemberID, $strMessage, time()))) {
 				$returnVal = true;
 			}
 
@@ -106,12 +106,12 @@ class News extends Basic {
 	public function delete() {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$result1 = $this->MySQL->query("DELETE FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 			$result2 = $this->MySQL->query("DELETE FROM ".$this->strCommentTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 
-			if($result1 && $result2) {
+			if ($result1 && $result2) {
 				$returnVal = true;
 			}
 
@@ -124,22 +124,22 @@ class News extends Basic {
 
 	public function show() {
 		global $hooksObj;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$member = new Member($this->MySQL);
 			$postInfo = $this->arrObjInfo;
 
 			$checkHTMLAccess = "";
-			if($member->select($postInfo['lasteditmember_id'])) {
+			if ($member->select($postInfo['lasteditmember_id'])) {
 				$checkHTMLAccess = $member->hasAccess($this->consoleObj);
 				$dispLastEditTime = getPreciseTime($postInfo['lasteditdate']);
 				$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";
 			}
 
 			$dispNewsType = "";
-			if($postInfo['newstype'] == 1) {
+			if ($postInfo['newstype'] == 1) {
 				$dispNewsType = " - <span class='publicNewsColor' style='font-style: italic'>public</span>";
 			}
-			elseif($postInfo['newstype'] == 2) {
+			elseif ($postInfo['newstype'] == 2) {
 				$dispNewsType = " - <span class='privateNewsColor' style='font-style: italic'>private</span>";
 			}
 
@@ -184,7 +184,7 @@ class News extends Basic {
 	public function calcPages($postType="") {
 		global $websiteInfo;
 
-		if($postType != "") {
+		if ($postType != "") {
 			$newsPostSQL = "newstype = '".$postType."'";
 		}
 		else {
@@ -206,7 +206,8 @@ class News extends Basic {
 
 	public function displayPageSelector($postType="", $pageURL="") {
 
-		if(!isset($_GET['page'])) { $_GET['page'] = 1; }
+		if (!isset($_GET['page'])) {
+$_GET['page'] = 1; }
 		$totalPages = $this->calcPages($postType);
 
 		$dispLink = ($pageURL == "") ? MAIN_ROOT."news/?page=" : $pageURL;
@@ -247,7 +248,7 @@ class News extends Basic {
 
 		$totalPages = $this->calcPages($postType);
 
-		if($postType != "") {
+		if ($postType != "") {
 			$newsPostSQL = "newstype = '".$postType."'";
 		}
 		else {
@@ -255,7 +256,7 @@ class News extends Basic {
 			$newsPostSQL = "newstype = '1'".$showPrivateSQL;
 		}
 
-		if(!isset($_GET['page']) || $_GET['page'] > $totalPages) {
+		if (!isset($_GET['page']) || $_GET['page'] > $totalPages) {
 			$sqlLimit = " LIMIT 0, ".$websiteInfo['news_postsperpage'];
 			$_GET['page'] = 1;
 		}
@@ -265,7 +266,7 @@ class News extends Basic {
 
 		$returnArr = array();
 		$result = $this->MySQL->query("SELECT news_id FROM ".$this->strTableName." WHERE ".$newsPostSQL." ORDER BY dateposted DESC ".$sqlLimit);
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$returnArr[] = $row;
 		}
 

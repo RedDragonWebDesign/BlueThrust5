@@ -41,10 +41,10 @@ class RankCategory extends Rank {
 
 		$arrRanks = array();
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."ranks WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."' ORDER BY ordernum DESC");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
 				$arrRanks[] = $row['rank_id'];
 
@@ -59,10 +59,10 @@ class RankCategory extends Rank {
 
 	public function delete() {
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("DELETE FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 			$this->resortOrder();
-			if(!$this->MySQL->error) {
+			if (!$this->MySQL->error) {
 				$returnVal = true;
 			}
 			else {

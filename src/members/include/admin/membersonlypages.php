@@ -15,13 +15,13 @@
 
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -45,7 +45,7 @@ echo "
 		";
 
 
-		if(isset($_SESSION['btMembersOnlyTagger']) && $_SESSION['btMembersOnlyTagger'] == 1) {
+		if (isset($_SESSION['btMembersOnlyTagger']) && $_SESSION['btMembersOnlyTagger'] == 1) {
 			echo "
 				The member's only page tagger is currently <b>on</b>.<br><br>
 			
@@ -63,12 +63,12 @@ echo "
 		}
 
 		$selectPrivateForum = "";
-		if($websiteInfo['privateforum'] == 1) {
+		if ($websiteInfo['privateforum'] == 1) {
 			$selectPrivateForum = " selected";
 		}
 
 		$selectPrivateProfile = "";
-		if($websiteInfo['privateprofile'] == 1) {
+		if ($websiteInfo['privateprofile'] == 1) {
 			$selectPrivateProfile = " selected";
 		}
 

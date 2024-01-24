@@ -13,13 +13,13 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -42,21 +42,21 @@ $memberGameStatObj = new Basic($mysqli, "gamestats_members", "gamestatmember_id"
 function saveGameStats() {
 	global $mysqli, $dbprefix, $memberInfo, $member, $arrGames, $gameObj, $memberGameStatObj, $gameStatsObj;
 	$mysqli->query("DELETE FROM ".$dbprefix."gamestats_members WHERE member_id = '".$memberInfo['member_id']."'");
-	foreach($arrGames as $gameID) {
+	foreach ($arrGames as $gameID) {
 
-		if($member->playsGame($gameID)) {
+		if ($member->playsGame($gameID)) {
 
 			$gameObj->select($gameID);
 
 			$arrGameStats = $gameObj->getAssociateIDs("ORDER BY ordernum");
-			foreach($arrGameStats as $gameStatsID) {
+			foreach ($arrGameStats as $gameStatsID) {
 
 				$gameStatsObj->select($gameStatsID);
 
-				if($gameStatsObj->get_info("stattype") == "input") {
+				if ($gameStatsObj->get_info("stattype") == "input") {
 
 					$statType = "statvalue";
-					if($gameStatsObj->get_info("textinput") == 1) {
+					if ($gameStatsObj->get_info("textinput") == 1) {
 						$statType = "stattext";
 					}
 
@@ -79,24 +79,24 @@ function saveGameStats() {
 $i = 1;
 $arrComponents = array();
 
-foreach($arrGames as $gameID) {
+foreach ($arrGames as $gameID) {
 	$gameObj->select($gameID);
 	$arrGameStats = $gameObj->getAssociateIDs("ORDER BY ordernum");
 
-	if($member->playsGame($gameID) && count($arrGameStats) > 0) {
+	if ($member->playsGame($gameID) && count($arrGameStats) > 0) {
 		$arrComponents['customsection_'.$gameID] = array(
 			"type" => "section",
 			"options" => array("section_title" => $gameObj->get_info_filtered("name")),
 			"sortorder" => $i++
 		);
 
-		foreach($arrGameStats as $gameStatsID) {
+		foreach ($arrGameStats as $gameStatsID) {
 			$gameStatsObj->select($gameStatsID);
 			$gameStatsInfo = $gameStatsObj->get_info_filtered();
-			if($gameStatsInfo['stattype'] == "input") {
+			if ($gameStatsInfo['stattype'] == "input") {
 				$textBoxWidth = array("style" => "width: 5%");
 				$blnText = false;
-				if($gameStatsInfo['textinput'] == 1) {
+				if ($gameStatsInfo['textinput'] == 1) {
 					$textBoxWidth = array();
 					$blnText = true;
 				}
@@ -117,7 +117,7 @@ foreach($arrGames as $gameID) {
 
 
 $additionalNote = "";
-if($i == 1) {
+if ($i == 1) {
 	$customHTML = "
 		<div class='shadedBox' style='margin-top: 40px; margin-left: auto; margin-right: auto; width: 45%'>
 			<p align='center'>

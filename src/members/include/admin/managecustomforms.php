@@ -13,19 +13,19 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
 $cID = $_GET['cID'];
 $intAddCustomPageID = $consoleObj->findConsoleIDByName("Add Custom Form Page");
-if($_GET['cfID'] == "") {
+if ($_GET['cfID'] == "") {
 
 
 	echo "
@@ -107,7 +107,7 @@ if($_GET['cfID'] == "") {
 
 
 }
-elseif($_GET['cfID'] != "" && $_GET['action'] == "edit") {
+elseif ($_GET['cfID'] != "" && $_GET['action'] == "edit") {
 
 	require_once("custompages/edit_customforms.php");
 }

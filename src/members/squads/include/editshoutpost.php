@@ -40,11 +40,11 @@ $pID = "manageshoutbox";
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$LOGIN_FAIL = false;
 	$memberInfo = $member->get_info_filtered();
 	$squadNewsObj = new Basic($mysqli, "squadnews", "squadnews_id");
-	if($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], "manageshoutbox") && $squadNewsObj->select($_POST['nID'])) {
+	if ($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], "manageshoutbox") && $squadNewsObj->select($_POST['nID'])) {
 
 
 
@@ -54,18 +54,18 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 			// Check Message
 
-			if(trim($_POST['message']) == "") {
+			if (trim($_POST['message']) == "") {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not make a blank shoutbox post.<br>";
 			}
 
-			if($countErrors == 0) {
+			if ($countErrors == 0) {
 				$time = time();
 				$arrColumns = array("newspost", "lasteditmember_id", "lasteditdate");
 				$arrValues = array($_POST['message'], $memberInfo['member_id'], $time);
 
 
-				if($squadNewsObj->update($arrColumns, $arrValues)) {
+				if ($squadNewsObj->update($arrColumns, $arrValues)) {
 
 					$_POST['cancel'] = true;
 
@@ -78,7 +78,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 			}
 
-			if($countErrors > 0) {
+			if ($countErrors > 0) {
 				$_POST = filterArray($_POST);
 				$_POST['submit'] = false;
 			}
@@ -93,10 +93,10 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 
 
-		if(!$_POST['submit'] && !$_POST['cancel']) {
+		if (!$_POST['submit'] && !$_POST['cancel']) {
 			$squadNewsInfo = $squadNewsObj->get_info_filtered();
 
-			if($dispError != "") {
+			if ($dispError != "") {
 				echo "
 				<div class='errorDiv'>
 				<strong>Unable to edit shoutbox post because the following errors occurred:</strong><br><br>
@@ -130,20 +130,20 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 
 
-		if($_POST['cancel']) {
+		if ($_POST['cancel']) {
 			$squadNewsInfo = $squadNewsObj->get_info_filtered();
 
 
 			$member->select($squadNewsInfo['member_id']);
 			$squadMemberInfo = $member->get_info_filtered();
 
-			if($squadMemberInfo['avatar'] == "") {
+			if ($squadMemberInfo['avatar'] == "") {
 				$squadMemberInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 			}
 
 
 			$dispLastEdit = "";
-			if($member->select($squadNewsInfo['lasteditmember_id'])) {
+			if ($member->select($squadNewsInfo['lasteditmember_id'])) {
 				$dispLastEditTime = getPreciseTime($squadNewsInfo['lasteditdate']);
 				$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";
 			}

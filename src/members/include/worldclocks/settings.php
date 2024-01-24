@@ -1,6 +1,7 @@
 <?php
 
-	if(!defined("MAIN_ROOT")) { exit(); }
+	if (!defined("MAIN_ROOT")) {
+exit(); }
 
 
 	$arrTimezoneOptions = $clockObj->getTimezones();

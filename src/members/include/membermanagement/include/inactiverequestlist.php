@@ -20,8 +20,8 @@ function dispIAMessages($iaID) {
 	$counter = 0;
 	$iaMessages = "";
 	$iaMessagesQuery = $mysqli->query("SELECT * FROM ".$dbprefix."iarequest_messages WHERE iarequest_id = '".$iaID."' ORDER BY messagedate DESC");
-	while($iaMessageRow = $iaMessagesQuery->fetch_assoc()) {
-		if($counter == 1) {
+	while ($iaMessageRow = $iaMessagesQuery->fetch_assoc()) {
+		if ($counter == 1) {
 			$addCSS = "";
 			$counter = 0;
 		}
@@ -39,7 +39,7 @@ function dispIAMessages($iaID) {
 		";
 	}
 
-	if($iaMessagesQuery->num_rows == 0) {
+	if ($iaMessagesQuery->num_rows == 0) {
 		$iaMessages = "<i>No Messages</i>";
 	}
 
@@ -48,7 +48,7 @@ function dispIAMessages($iaID) {
 
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
@@ -61,7 +61,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	$consoleObj->select($cID);
 
 
-	if(!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
+	if (!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
 
 		exit();
 
@@ -70,7 +70,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	$memberInfo = $member->get_info_filtered();
 	$iaRequestObj = new Basic($mysqli, "iarequest", "iarequest_id");
 	$checkRequestID = $iaRequestObj->select($_POST['iaRequestID']);
-	if($_POST['action'] == "postmessage" && trim($_POST['message']) != "" && $checkRequestID) {
+	if ($_POST['action'] == "postmessage" && trim($_POST['message']) != "" && $checkRequestID) {
 
 		$iaRequestMessageObj = new Basic($mysqli, "iarequest_messages", "iamessage_id");
 
@@ -87,13 +87,13 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 		exit();
 	}
-	elseif(($_POST['action'] == "approve" || $_POST['action'] == "deny")  && $checkRequestID) {
+	elseif (($_POST['action'] == "approve" || $_POST['action'] == "deny")  && $checkRequestID) {
 
 		$requestStatus = ($_POST['action'] == "approve") ? 1 : 2;
 
 		$iaRequestObj->update(array("reviewer_id", "reviewdate", "requeststatus"), array($memberInfo['member_id'], time(), $requestStatus));
 
-		if($requestStatus == 1) {
+		if ($requestStatus == 1) {
 			$member->select($iaRequestObj->get_info("member_id"));
 			$member->update(array("onia", "inactivedate"), array(1, time()));
 			$member->postNotification("Your inactive request was approved!");
@@ -106,7 +106,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 		$member->select($memberInfo['member_id']);
 	}
-	elseif($_POST['action'] == "delete" && $checkRequestID) {
+	elseif ($_POST['action'] == "delete" && $checkRequestID) {
 
 		$member->select($iaRequestObj->get_info("member_id"));
 		$dispIAMemberName = $member->getMemberLink();
@@ -125,19 +125,19 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 $iaMember = new Member($mysqli);
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."iarequest ORDER BY requestdate DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 
 		$iaMessages = dispIAMessages($row['iarequest_id']);
 
 		$iaMember->select($row['member_id']);
 
-		if(trim($row['reason']) == "") {
+		if (trim($row['reason']) == "") {
 			$row['reason'] = "None";
 		}
 
 		$dispActions = "";
-		if($row['requeststatus'] == 0) {
+		if ($row['requeststatus'] == 0) {
 			$dispActions = "<a href='javascript:void(0)' id='iaRequestAction' data-iarequest='".$row['iarequest_id']."' data-action='approve'>Approve</a> - <a href='javascript:void(0)' id='iaRequestAction' data-iarequest='".$row['iarequest_id']."' data-action='deny'>Deny</a> - ";
 		}
 
@@ -145,12 +145,12 @@ $result = $mysqli->query("SELECT * FROM ".$dbprefix."iarequest ORDER BY requestd
 
 
 		$dispRequestStatus = "<span class='pendingFont'>Pending</span>";
-		if($row['requeststatus'] == 1) {
+		if ($row['requeststatus'] == 1) {
 			$member->select($row['reviewer_id']);
 			$dispRequestStatus = "<span class='allowText'>Approved</span> by ".$member->getMemberLink()." - ".getPreciseTime($row['reviewdate']);
 			$member->select($memberInfo['member_id']);
 		}
-		elseif($row['requeststatus'] == 2) {
+		elseif ($row['requeststatus'] == 2) {
 			$member->select($row['reviewer_id']);
 			$dispRequestStatus = "<span class='denyText'>Denied</span> by ".$member->getMemberLink()." - ".getPreciseTime($row['reviewdate']);
 			$member->select($memberInfo['member_id']);
@@ -205,7 +205,7 @@ $result = $mysqli->query("SELECT * FROM ".$dbprefix."iarequest ORDER BY requestd
 
 	}
 
-	if($result->num_rows == 0) {
+	if ($result->num_rows == 0) {
 
 		echo "
 			<div class='shadedBox' style='width: 50%; margin: 20px auto;'>

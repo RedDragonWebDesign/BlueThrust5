@@ -24,16 +24,16 @@ $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage PM Folders");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 	$memberInfo = $member->get_info_filtered();
 	$arrSpecialFolders = array(0, -1, -2);
 	$pmFolderObj->intMemberID = $memberInfo['member_id'];
-	if($member->hasAccess($consoleObj) && $pmFolderObj->select($_POST['folder']) && $pmFolderObj->isMemberFolder() && !in_array($_POST['folder'], $arrSpecialFolders)) {
+	if ($member->hasAccess($consoleObj) && $pmFolderObj->select($_POST['folder']) && $pmFolderObj->isMemberFolder() && !in_array($_POST['folder'], $arrSpecialFolders)) {
 		$folderInfo = $pmFolderObj->get_info_filtered();
 		// Check if folder has contents
 		$arrFolderContents = $pmFolderObj->getFolderContents();
-		if(count($arrFolderContents[0]) > 0) {
+		if (count($arrFolderContents[0]) > 0) {
 
 			echo "
 				<div id='showFolderError'>

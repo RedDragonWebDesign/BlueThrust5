@@ -12,7 +12,7 @@
  *
  */
 
-if(!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
+if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 
 	exit();
 }
@@ -25,7 +25,7 @@ else {
 	$squadObj->select($sID);
 	$arrSquadMembers = $squadObj->getMemberList();
 
-	if(!$member->hasAccess($consoleObj) || $squadInfo['member_id'] == $memberInfo['member_id'] || !in_array($memberInfo['member_id'], $arrSquadMembers)) {
+	if (!$member->hasAccess($consoleObj) || $squadInfo['member_id'] == $memberInfo['member_id'] || !in_array($memberInfo['member_id'], $arrSquadMembers)) {
 
 		exit();
 	}
@@ -47,13 +47,13 @@ $countErrors = 0;
 
 
 
-if($_POST['submitted']) {
+if ($_POST['submitted']) {
 
 
 	$squadMemberID = $squadObj->getSquadMemberID($memberInfo['member_id']);
 	$squadObj->objSquadMember->select($squadMemberID);
 
-	if($squadObj->objSquadMember->delete()) {
+	if ($squadObj->objSquadMember->delete()) {
 
 		$dispMessage = "Successfully left squad: <b>".$squadInfo['name']."</b>";
 
@@ -82,7 +82,7 @@ if($_POST['submitted']) {
 
 
 
-if(!$_POST['submitted']) {
+if (!$_POST['submitted']) {
 
 	echo "
 		

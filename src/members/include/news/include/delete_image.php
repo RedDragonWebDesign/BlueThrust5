@@ -25,16 +25,16 @@ $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage Home Page Images");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $imageSliderObj->select($_POST['imgID'])) {
+	if ($member->hasAccess($consoleObj) && $imageSliderObj->select($_POST['imgID'])) {
 
 		$imageSliderInfo = $imageSliderObj->get_info_filtered();
 
-		if(isset($_POST['confirm'])) {
+		if (isset($_POST['confirm'])) {
 
 			unlink("../../../../".$imageSliderInfo['imageurl']);
 			$imageSliderObj->delete();

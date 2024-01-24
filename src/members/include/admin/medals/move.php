@@ -24,12 +24,12 @@ $cID = $consoleObj->findConsoleIDByName("Manage Medals");
 $consoleObj->select($cID);
 $_GET['cID'] = $cID;
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $medalObj->select($_POST['itemID'])) {
+	if ($member->hasAccess($consoleObj) && $medalObj->select($_POST['itemID'])) {
 
 		define("LOGGED_IN", true);
 

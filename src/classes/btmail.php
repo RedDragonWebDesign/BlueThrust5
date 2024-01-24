@@ -14,7 +14,7 @@
 			$from = $this->getFrom($additional);
 
 			// Check if the from has both email and name
-			if(is_array($from)) {
+			if (is_array($from)) {
 				$mail->setFrom($from['email'], $from['name']);
 			}
 			else {
@@ -36,9 +36,9 @@
 
 		private function getFrom($args) {
 
-			if(!isset($args['from']) || trim($from) == "") {
+			if (!isset($args['from']) || trim($from) == "") {
 				$siteDomain = $_SERVER['SERVER_NAME'];
-				if(substr($siteDomain,0,strlen("www.")) == "www.") {
+				if (substr($siteDomain,0,strlen("www.")) == "www.") {
 					$siteDomain = substr($siteDomain, strlen("www."));
 				}
 
@@ -56,7 +56,7 @@
 
 			$mail = $this->objPHPMailer;
 
-			switch($type) {
+			switch ($type) {
 				case "bcc":
 					$func = "addBCC";
 					break;
@@ -67,10 +67,10 @@
 					$func = "addAddress";
 			}
 
-			if(isset($args[$type]) && is_array($args[$type])) {
+			if (isset($args[$type]) && is_array($args[$type])) {
 
-				foreach($args[$type] as $info) {
-					if(is_array($info)) {
+				foreach ($args[$type] as $info) {
+					if (is_array($info)) {
 						call_user_func_array(array($mail, $func), array($info['email'], $info['name']));
 					}
 					else {
@@ -79,7 +79,7 @@
 				}
 
 			}
-			elseif(isset($args[$type])) {
+			elseif (isset($args[$type])) {
 				call_user_func_array(array($mail, $func), array($args[$type]));
 			}
 

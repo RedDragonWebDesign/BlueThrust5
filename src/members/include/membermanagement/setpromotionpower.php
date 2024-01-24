@@ -13,13 +13,13 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -48,7 +48,7 @@ $arrCIDs[] = $consoleObj->findConsoleIDByName("Revoke Medal");
 $sqlCID = "('".implode("','", $arrCIDs)."')";
 $memberoptions = "";
 $result = $mysqli->query("SELECT ".$dbprefix."members.member_id, ".$dbprefix."members.username, ".$dbprefix."ranks.name FROM ".$dbprefix."console_members, ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."console_members.member_id = ".$dbprefix."members.member_id AND ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id AND ".$dbprefix."console_members.console_id IN ".$sqlCID." AND ".$dbprefix."console_members.allowdeny = '1' AND ".$dbprefix."members.disabled = '0' ORDER BY ".$dbprefix."ranks.ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 
 	$member->select($row['member_id']);
 	$rankObj->select($row['rank_id']);
@@ -56,7 +56,7 @@ while($row = $result->fetch_assoc()) {
 	$rankInfo = $rankObj->get_info();
 
 	$dispDefaultPower = "Can't Promote";
-	if($rankInfo['promotepower'] != 0 && $rankObj->select($rankInfo['promotepower'])) {
+	if ($rankInfo['promotepower'] != 0 && $rankObj->select($rankInfo['promotepower'])) {
 		$dispDefaultPower = $rankObj->get_info_filtered("name");
 	}
 
@@ -66,7 +66,7 @@ while($row = $result->fetch_assoc()) {
 
 }
 
-if($memberoptions == "") {
+if ($memberoptions == "") {
 	$_POST['submit'] = false;
 }
 
@@ -76,7 +76,7 @@ if($memberoptions == "") {
 if ( ! empty($_POST['submit']) ) {
 
 	// Check Member
-	if(!$member->select($_POST['member'])) {
+	if (!$member->select($_POST['member'])) {
 		$countErrors++;
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member.<br>";
 	}
@@ -85,20 +85,20 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	// Check Maximum Rank
-	if($_POST['maximumrank'] != -1 && $_POST['maximumrank'] != 0 && !$rankObj->select($_POST['maximumrank'])) {
+	if ($_POST['maximumrank'] != -1 && $_POST['maximumrank'] != 0 && !$rankObj->select($_POST['maximumrank'])) {
 		$countErrors++;
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid rank.<br>";
 	}
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
-		if($member->update(array("promotepower"), array($_POST['maximumrank']))) {
+		if ($member->update(array("promotepower"), array($_POST['maximumrank']))) {
 			$dispMemberName = $member->getMemberLink();
 			$dispRankName = "Default";
-			if($_POST['maximumrank'] == -1) {
+			if ($_POST['maximumrank'] == -1) {
 				$dispRankName = "(Can't Promote)";
 			}
-			elseif($_POST['maximumrank'] != 0 && $rankObj->select($_POST['maximumrank'])) {
+			elseif ($_POST['maximumrank'] != 0 && $rankObj->select($_POST['maximumrank'])) {
 				$dispRankName = $rankObj->get_info_filtered("name");
 			}
 
@@ -128,7 +128,7 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$member->select($memberInfo['member_id']);
 		$_POST['submit'] = false;
 	}
@@ -142,7 +142,7 @@ if ( empty($_POST['submit']) ) {
 
 	$rankoptions = "<option value='0' id='defaultPower'>Default</option><option value='-1'>(Can't Promote)</option>";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1' ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$rankoptions .= "<option value='".$row['rank_id']."'>".filterText($row['name'])."</option>";
 	}
 
@@ -153,7 +153,7 @@ if ( empty($_POST['submit']) ) {
 			
 			";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to set promotion power because the following errors occurred:</strong><br><br>

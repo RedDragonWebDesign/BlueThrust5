@@ -40,7 +40,7 @@
 
 		public function getGameImageURL($game, $size="small") {
 			$arrSizes = array_keys($this->arrGameImageSizes);
-			if(!in_array($size, $arrSizes)) {
+			if (!in_array($size, $arrSizes)) {
 				$size = "small";
 			}
 
@@ -52,14 +52,14 @@
 
 			$returnVal = array();
 			$arrMembers = $this->getMembers();
-			if(in_array($memberID, $arrMembers)) {
+			if (in_array($memberID, $arrMembers)) {
 
 				$twitchName = $this->getTwitchName($memberID);
 
-				if(substr($twitchName,0,strlen("http://twitch.tv/")) == "http://twitch.tv/") {
+				if (substr($twitchName,0,strlen("http://twitch.tv/")) == "http://twitch.tv/") {
 					$twitchName = substr($twitchName, strlen("http://twitch.tv/"));
 				}
-				elseif(substr($twitchName,0,strlen("http://www.twitch.tv/")) == "http://www.twitch.tv/") {
+				elseif (substr($twitchName,0,strlen("http://www.twitch.tv/")) == "http://www.twitch.tv/") {
 					$twitchName = substr($twitchName, strlen("http://www.twitch.tv/"));
 				}
 
@@ -76,11 +76,11 @@
 			$arrSocialMembers = $this->socialObj->getAssociateIDs("ORDER BY value");
 			$arrMembers = array();
 
-			foreach($arrSocialMembers as $socialMemberID) {
+			foreach ($arrSocialMembers as $socialMemberID) {
 				$this->socialObj->objSocialMember->select($socialMemberID);
 				$selectMember = $this->memberObj->select($this->socialObj->objSocialMember->get_info("member_id"));
 
-				if($selectMember && $this->socialObj->objSocialMember->get_info("value") != "" && $this->memberObj->get_info("disabled") == 0) {
+				if ($selectMember && $this->socialObj->objSocialMember->get_info("value") != "" && $this->memberObj->get_info("disabled") == 0) {
 					$memberID = $this->socialObj->objSocialMember->get_info("member_id");
 					$arrMembers[$socialMemberID] = $memberID;
 				}
@@ -91,10 +91,11 @@
 
 		public function isOnline($memberID, $resetStreamInfo=true) {
 
-			if($resetStreamInfo) { $this->getStreamInfo($memberID); }
+			if ($resetStreamInfo) {
+$this->getStreamInfo($memberID); }
 
 			$returnVal = false;
-			if($this->data['streamInfo']['stream'] != null) {
+			if ($this->data['streamInfo']['stream'] != null) {
 				$returnVal = true;
 			}
 
@@ -131,7 +132,7 @@
 		public function displayAllMemberCards() {
 
 			$counter = 0;
-			foreach($this->getMembers() as $memberID) {
+			foreach ($this->getMembers() as $memberID) {
 
 				$this->displayMemberCard($memberID);
 				$counter++;
@@ -145,7 +146,7 @@
 			$returnVal = "None";
 			$socialMemberID = array_search($memberID, $this->getMembers());
 
-			if($this->socialObj->objSocialMember->select($socialMemberID)) {
+			if ($this->socialObj->objSocialMember->select($socialMemberID)) {
 
 				$returnVal = $this->socialObj->objSocialMember->get_info_filtered("value");
 
@@ -157,7 +158,7 @@
 		public function hasTwitch($memberID) {
 
 			$returnVal = false;
-			if($this->memberObj->select($memberID)) {
+			if ($this->memberObj->select($memberID)) {
 				$memberInfo = $this->memberObj->get_info_filtered();
 				$returnVal = in_array($this->memberObj->get_info("member_id"), $this->getMembers());
 				$this->data['memberID'] = $memberInfo['member_id'];
@@ -174,11 +175,11 @@
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-			if($method == "POST") {
+			if ($method == "POST") {
 				curl_setopt($ch, CURLOPT_POST, true);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
 			}
-			elseif($method == "DELETE") {
+			elseif ($method == "DELETE") {
 				curl_setopt($ch, CURLOPT_POST, true);
 				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);

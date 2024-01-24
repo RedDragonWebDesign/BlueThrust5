@@ -16,15 +16,15 @@
 		public function getHTML($componentName="", $componentValue="", $attributes=array()) {
 			$displayForm = '';
 
-			if($componentName != "") {
+			if ($componentName != "") {
 				$this->setComponentName($componentName);
 			}
 
-			if($componentValue != "") {
+			if ($componentValue != "") {
 				$this->setComponentValue($componentValue);
 			}
 
-			if(count($attributes) > 0) {
+			if (count($attributes) > 0) {
 				$this->setAttributes($attributes);
 			}
 
@@ -32,13 +32,13 @@
 			$dispAttributes = $form->convertAttributes($this->arrAttributes);
 
 			$displayForm .= "<select name='".$this->componentName."' ".$dispAttributes.">";
-			foreach($this->arrOptions as $optionValue => $displayValue) {
+			foreach ($this->arrOptions as $optionValue => $displayValue) {
 				$dispSelected = "";
-				if($optionValue == $this->componentValue) {
+				if ($optionValue == $this->componentValue) {
 					$dispSelected = " selected";
 				}
 
-				if( is_array($this->nonSelectableItems) && in_array($optionValue, $this->nonSelectableItems)) {
+				if ( is_array($this->nonSelectableItems) && in_array($optionValue, $this->nonSelectableItems)) {
 					$dispSelected = " disabled class='disabledSelectItem'";
 				}
 

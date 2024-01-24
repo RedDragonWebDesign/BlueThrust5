@@ -36,10 +36,10 @@ $newsObj = new News($mysqli);
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $newsObj->select($_POST['nID'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $newsObj->select($_POST['nID'])) {
 
 
-	if($_POST['confirm'] == 1) {
+	if ($_POST['confirm'] == 1) {
 
 		$newsObj->delete();
 		require_once("newslist.php");

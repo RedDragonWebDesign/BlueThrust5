@@ -10,7 +10,7 @@
 	$websiteInfoObj = new Basic($mysqli, "websiteinfo", "websiteinfo_id");
 
 	$member->select($_POST['user']);
-	if($member->authorizeLogin($_POST['pass'], 1) && $member->get_info("rank_id") == "1") {
+	if ($member->authorizeLogin($_POST['pass'], 1) && $member->get_info("rank_id") == "1") {
 
 		$memberInfo = $member->get_info_filtered();
 		$websiteInfoObj->select(1);
@@ -30,16 +30,16 @@
 	}
 	else {
 
-		if(!$member->select($_POST['user'])) {
+		if (!$member->select($_POST['user'])) {
 			echo "Unable to select user ".$_POST['user']."<br>";
 		}
 
 
-		if(!$member->authorizeLogin($_POST['pass'], 1)) {
+		if (!$member->authorizeLogin($_POST['pass'], 1)) {
 			echo "Not Authorized<br>";
 		}
 
-		if(!$member->get_info("rank_id") == "1") {
+		if (!$member->get_info("rank_id") == "1") {
 			echo "Not Admin<br>";
 		}
 

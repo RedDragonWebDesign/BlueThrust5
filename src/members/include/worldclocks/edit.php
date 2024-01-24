@@ -12,7 +12,8 @@
 	 *
 	 */
 
-	if(!defined("LOGGED_IN") || !LOGGED_IN) { die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."'</script>"); }
+	if (!defined("LOGGED_IN") || !LOGGED_IN) {
+die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."'</script>"); }
 
 
 	$breadcrumbObj->popCrumb();
@@ -23,7 +24,7 @@
 
 	require_once(BASE_DIRECTORY."members/include/worldclocks/clock_form.php");
 
-	if(count($arrClocks) == 1) {
+	if (count($arrClocks) == 1) {
 		$arrClocks['first'] = "(first clock)";
 	}
 

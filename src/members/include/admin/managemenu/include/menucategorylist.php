@@ -12,7 +12,7 @@
  *
  */
 
-if(!isset($menuXML)) {
+if (!isset($menuXML)) {
 	$prevFolder = "../../../../../";
 	require_once($prevFolder."_setup.php");
 
@@ -24,7 +24,7 @@ if(!isset($menuXML)) {
 
 	$menuCatObj = new MenuCategory($mysqli);
 
-	if(trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
+	if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 		$dispHTTP = "http://";
 	}
 	else {
@@ -36,7 +36,7 @@ if(!isset($menuXML)) {
 	try {
 		$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", NULL, true);
 	}
-	catch(Exception $e) {
+	catch (Exception $e) {
 		$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", NULL, true);
 	}
 }
@@ -50,12 +50,12 @@ $checkAccess1 = $member->hasAccess($consoleObj);
 $consoleObj->select($intEditMenuCatCID);
 $checkAccess2 = $member->hasAccess($consoleObj);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
 
-	if(isset($_POST['section']) && is_numeric($_POST['section'])) {
+	if (isset($_POST['section']) && is_numeric($_POST['section'])) {
 		$orderoptions = "";
 		$selectCatID = "";
-		if(!isset($_POST['mcID'])) {
+		if (!isset($_POST['mcID'])) {
 			$_POST['mcID'] = "";
 		}
 		else {
@@ -66,11 +66,11 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 
 		$lastCategory = "";
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_category WHERE section = '".$_POST['section']."' ORDER BY sortnum");
-		while($row = $result->fetch_assoc()) {
-			if($_POST['mcID'] != $row['menucategory_id']) {
+		while ($row = $result->fetch_assoc()) {
+			if ($_POST['mcID'] != $row['menucategory_id']) {
 
 				$dispSelected = "";
-				if($selectCatID == $row['menucategory_id']) {
+				if ($selectCatID == $row['menucategory_id']) {
 					$dispSelected = " selected";
 				}
 
@@ -80,16 +80,16 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 			$lastCategory = $row['menucategory_id'];
 		}
 
-		if($result->num_rows == 0 || ($result->num_rows == 1 && $_POST['mcID'] != "" && $_POST['mcID'] == $lastCategory)) {
+		if ($result->num_rows == 0 || ($result->num_rows == 1 && $_POST['mcID'] != "" && $_POST['mcID'] == $lastCategory)) {
 			$orderoptions = "<option value='first'>(first category)</option>";
 		}
 
 		echo $orderoptions;
 	}
-	elseif(isset($_POST['manage'])) {
+	elseif (isset($_POST['manage'])) {
 
 		$arrDispSectionNames = array();
-		for($x=0; $x<$menuXML->info->section->count(); $x++) {
+		for ($x=0; $x<$menuXML->info->section->count(); $x++) {
 
 			$arrDispSectionNames[$x] = $menuXML->info->section[$x];
 
@@ -99,9 +99,9 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 
 		$intSection = "";
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_category ORDER BY section, sortnum");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 
-			if($intSection != $row['section']) {
+			if ($intSection != $row['section']) {
 				$intSection = $row['section'];
 				$counter = 0;
 
@@ -118,21 +118,21 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 
 			$addCSS = "";
 
-			if(($counter%2) == 1) {
+			if (($counter%2) == 1) {
 				$addCSS = " alternateBGColor";
 			}
 
 			$menuCatObj->setCategoryKeyValue($intSection);
 			$intHighestSortNum = $menuCatObj->getHighestSortNum();
 
-			if($counter == 0) {
+			if ($counter == 0) {
 				$dispUpArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' class='manageListActionButton'>";
 			}
 			else {
 				$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveCat('up', '".$row['menucategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' class='manageListActionButton' title='Move Up'></a>";
 			}
 
-			if(($counter+1) == $intHighestSortNum) {
+			if (($counter+1) == $intHighestSortNum) {
 				$dispDownArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' class='manageListActionButton'>";
 			}
 			else {
@@ -155,7 +155,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 			$counter++;
 		}
 
-		if($result->num_rows == 0) {
+		if ($result->num_rows == 0) {
 			$orderoptions = "
 			<div class='shadedBox' style='width: 40%'>
 				<p class='main' align='center'>

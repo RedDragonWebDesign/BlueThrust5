@@ -1,12 +1,12 @@
 <?php
 
-	if($_POST['step2submit']) {
+	if ($_POST['step2submit']) {
 
 		// Check Connection Again
 		$mysqli = new btmysql($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass'], $_POST['dbname']);
 		$mysqli->set_tablePrefix($_POST['tableprefix']);
 
-		if($mysqli->connect_errno !== 0) {
+		if ($mysqli->connect_errno !== 0) {
 			$dispError = "
 			&nbsp;&nbsp;<b>&middot;</b> Unable to connect to database!  Make sure you entered the correct information.<br><br>
 			&nbsp;&nbsp;<b>MySQL Response:</b> ".$mysqli->connect_error."<br>";
@@ -16,24 +16,24 @@
 		else {
 
 
-			if($_POST['installType'] == 1) {
+			if ($_POST['installType'] == 1) {
 				// Fresh Install
 
 				// Check Username
 
-				if(trim($_POST['adminusername']) == "") {
+				if (trim($_POST['adminusername']) == "") {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> The admin username may not be blank.<br>";
 				}
 
 				// Check Password
 
-				if($_POST['adminpassword'] != $_POST['adminpassword_repeat']) {
+				if ($_POST['adminpassword'] != $_POST['adminpassword_repeat']) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> Your passwords did not match.<br>";
 				}
 
-				if(strlen(trim($_POST['adminpassword'])) < 6) {
+				if (strlen(trim($_POST['adminpassword'])) < 6) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> The admin password must be at least 6 characters long.<br>";
 				}
@@ -47,11 +47,11 @@
 				$member->select($_POST['adminusername']);
 
 
-				if(!$member->authorizeLogin($_POST['adminpassword'], 1)) {
+				if (!$member->authorizeLogin($_POST['adminpassword'], 1)) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> The admin username/password combination was incorrect.<br>";
 				}
-				elseif($member->authorizeLogin($_POST['adminpassword'], 1) && $member->get_info("rank_id") != 1) {
+				elseif ($member->authorizeLogin($_POST['adminpassword'], 1) && $member->get_info("rank_id") != 1) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You entered incorrect admin login information.<br>";
 				}
@@ -61,18 +61,18 @@
 
 			// Check Admin Key
 
-			if(strlen(trim($_POST['adminkey'])) < 3) {
+			if (strlen(trim($_POST['adminkey'])) < 3) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;<b>&middot;</b> The admin key must be at least 3 characters long.<br>";
 			}
 
-			if($_POST['adminkey'] != $_POST['adminkey_repeat']) {
+			if ($_POST['adminkey'] != $_POST['adminkey_repeat']) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;<b>&middot;</b> Your admin keys did not match.<br>";
 			}
 
 
-			if($countErrors == 0) {
+			if ($countErrors == 0) {
 
 				echo "
 					<table class='mainTable'>
@@ -92,7 +92,7 @@
 
 
 
-				if(file_put_contents("../_config.php", $configInput)) {
+				if (file_put_contents("../_config.php", $configInput)) {
 					echo "Config File Created!<br><br>";
 				}
 				else {
@@ -110,16 +110,16 @@
 				$result = $mysqli->query("SHOW TABLES");
 				$arrTestTables = array();
 
-				while($row = $result->fetch_array()) {
+				while ($row = $result->fetch_array()) {
 					$arrTestTables[] = $row[0];
 				}
 
 				$arrTableMatches = array();
 				$countTableMatches = 0;
-				foreach($arrTableNames as $tableName) {
+				foreach ($arrTableNames as $tableName) {
 					$tempTableName = $_POST['tableprefix'].$tableName;
 
-					if(in_array($tempTableName, $arrTestTables)) {
+					if (in_array($tempTableName, $arrTestTables)) {
 						$countTableMatches++;
 						$arrTableMatches[] = $tempTableName;
 					}
@@ -127,16 +127,16 @@
 				}
 
 
-				if($_POST['installType'] == 2) {
+				if ($_POST['installType'] == 2) {
 					require_once("steps/backupinserts.php");
 				}
 
 				$blnConvertWebsiteInfo = false;
-				if($countTableMatches > 0) {
+				if ($countTableMatches > 0) {
 
 					// Check if using the old websiteinfo table
 					$result = $mysqli->query("SELECT websiteinfo_id FROM ".$_POST['tableprefix']."websiteinfo");
-					if($result->num_rows < 60) {
+					if ($result->num_rows < 60) {
 						$blnConvertWebsiteInfo = true;
 					}
 
@@ -146,14 +146,14 @@
 
 				// Install New SQL
 
-				if($_POST['installType'] == 1) {
+				if ($_POST['installType'] == 1) {
 					$fullSQL = file_get_contents("cs4.sql");
 				}
 				else {
 					$fullSQL = file_get_contents("cs4update.sql");
 				}
 
-				if($_POST['tableprefix'] != "") {
+				if ($_POST['tableprefix'] != "") {
 					$fullSQL = str_replace("CREATE TABLE IF NOT EXISTS `", "[SWAPCREATEWITHTABLEPREFIX]", $fullSQL);
 					$fullSQL = str_replace("INSERT INTO `", "[SWAPINSERTWITHTABLEPREFIX]", $fullSQL);
 
@@ -165,7 +165,7 @@
 				}
 
 
-				if($_POST['installType'] == 2) {
+				if ($_POST['installType'] == 2) {
 					// $oldInsertSSQL and $alterSQL --> from backupinserts.php
 
 					$fullSQL .= $alterSQL;
@@ -174,25 +174,25 @@
 
 
 
-				if($mysqli->multi_query($fullSQL)) {
+				if ($mysqli->multi_query($fullSQL)) {
 
 
 					do {
-						if($result = $mysqli->store_result()) {
+						if ($result = $mysqli->store_result()) {
 							$result->free();
 						}
 					}
-					while($mysqli->next_result());
+					while ($mysqli->next_result());
 
 
 					echo "Successfully set up database!<br><br>";
 
 
-					if($_POST['installType'] == 1) {
+					if ($_POST['installType'] == 1) {
 						// Generate New Salt
 						$randomString = substr(md5(uniqid("", true)),0,22);
 						$randomNum = rand(4,10);
-						if($randomNum < 10) {
+						if ($randomNum < 10) {
 							$randomNum = "0".$randomNum;
 						}
 
@@ -205,7 +205,7 @@
 					}
 					else {
 
-						if($blnConvertWebsiteInfo) {
+						if ($blnConvertWebsiteInfo) {
 							// Convert websiteinfo table for people updating
 							define("CONVERT_WEBSITEINFO", true);
 							require_once("steps/convertwebsiteinfo.php");
@@ -220,10 +220,10 @@
 						$arrConsoleCategoryIDs = array();
 						$arrCheckConsoleCategories = array();
 						$result = $mysqli->query("SELECT * FROM ".$_POST['tableprefix']."consolecategory ORDER BY ordernum DESC");
-						while($row = $result->fetch_assoc()) {
+						while ($row = $result->fetch_assoc()) {
 							$arrCheckConsoleCategories[] = $row['name'];
 
-							if(in_array($row['name'], $arrConsoleCategories)) {
+							if (in_array($row['name'], $arrConsoleCategories)) {
 								$tempCatID = array_search($row['name'], $arrConsoleCategories);
 								$arrConsoleCategoryIDs[$tempCatID] = $row['consolecategory_id'];
 							}
@@ -232,8 +232,8 @@
 
 						$pmCatID = "";
 
-						foreach($arrConsoleCategories as $consoleCategory) {
-							if(!in_array($consoleCategory, $arrCheckConsoleCategories)) {
+						foreach ($arrConsoleCategories as $consoleCategory) {
+							if (!in_array($consoleCategory, $arrCheckConsoleCategories)) {
 								$consoleCatObj->selectByOrder(1);
 								$newOrderNum = $consoleCatObj->makeRoom("after");
 
@@ -242,7 +242,7 @@
 								$arrConsoleCategoryIDs[$tempCatID] = $consoleCatObj->get_info("consolecategory_id");
 								$consoleCatObj->resortOrder();
 
-								if($consoleCategory == "Private Messages") {
+								if ($consoleCategory == "Private Messages") {
 									$pmCatID = $arrConsoleCategoryIDs[$tempCatID];
 								}
 
@@ -253,10 +253,10 @@
 
 						// Checking Console Options
 						$arrColumns = array("consolecategory_id", "pagetitle", "filename", "sortnum", "defaultconsole", "hide", "sep");
-						foreach($arrConsoleOptionNames as $key => $consoleOptionName) {
+						foreach ($arrConsoleOptionNames as $key => $consoleOptionName) {
 							$checkConsole = $consoleOptionObj->findConsoleIDByName($consoleOptionName);
 
-							if($checkConsole === false) {
+							if ($checkConsole === false) {
 								$tempCatID = $arrConsoleCategoryIDs[$arrConsoleOptionInfo[$key]['category']];
 								$consoleOptionObj->setCategoryKeyValue($tempCatID);
 								$consoleOptionObj->resortOrder();
@@ -265,7 +265,7 @@
 
 								$newOrderNum = $highestSortNum+1;
 
-								if($arrConsoleOptionInfo[$key]['addsep'] == "1") {
+								if ($arrConsoleOptionInfo[$key]['addsep'] == "1") {
 									$arrValues = array($tempCatID, "-separator-", "", ($newOrderNum), "1", "", "1");
 									$consoleOptionObj->addNew($arrColumns, $arrValues);
 
@@ -278,7 +278,7 @@
 
 								$consoleOptionObj->resortOrder();
 							}
-							elseif($consoleOptionName == "Private Messages" && $checkConsole !== false && $pmCatID != "") {
+							elseif ($consoleOptionName == "Private Messages" && $checkConsole !== false && $pmCatID != "") {
 
 								$consoleOptionObj->select($checkConsole);
 								$consoleOptionObj->update(array("consolecategory_id", "sortnum"), array($pmCatID, 0));
@@ -306,24 +306,24 @@
 						$_SESSION['btPassword'] =  $member->get_info("password");
 
 
-						if(!$verifyTheme) {
+						if (!$verifyTheme) {
 
 							$arrThemes = scandir("../themes");
 							$themeOptions = "";
 
 
-							foreach($arrThemes as $themeName) {
+							foreach ($arrThemes as $themeName) {
 
 								$themeURL = "../themes/".$themeName;
 
-								if(is_dir($themeURL) && $themeName != "." && $themeName != ".." && is_readable($themeURL."/THEMENAME.txt") && file_exists("../themes/".$themeName."/themeinfo.xml")) {
+								if (is_dir($themeURL) && $themeName != "." && $themeName != ".." && is_readable($themeURL."/THEMENAME.txt") && file_exists("../themes/".$themeName."/themeinfo.xml")) {
 									$arrValidThemes[] = $themeName;
 									$dispThemeName = file_get_contents($themeURL."/THEMENAME.txt");
 									$themeOptions .= "<option value='".$themeName."'".$dispSelected.">".$dispThemeName."</option>";
 								}
 							}
 
-							if(count($arrValidThemes) == 0) {
+							if (count($arrValidThemes) == 0) {
 								$themeMessage = "You don't have any supported themes installed.  Please install an updated theme and re-run the updater.";
 
 								$jqDialogButton = "
@@ -421,7 +421,7 @@
 			}
 
 
-			if($countErrors > 0) {
+			if ($countErrors > 0) {
 
 				$_POST['step2submit'] = false;
 
@@ -435,7 +435,7 @@
 	}
 
 
-	if(!$_POST['step2submit']) {
+	if (!$_POST['step2submit']) {
 
 		$_POST['step1submit'] = true;
 

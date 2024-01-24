@@ -13,13 +13,13 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -46,20 +46,20 @@ $arrCheckType = array("image", "customcode", "customformat");
 if ( ! empty($_POST['submit']) ) {
 
 	// Check Name
-	if(trim($_POST['categoryname']) == "") {
+	if (trim($_POST['categoryname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not enter a blank category name.<br>";
 	}
 
 	// Check Section
 
-	if(!is_numeric($_POST['section']) || $_POST['section'] >= $menuXML->info->section->count() || $_POST['section'] < 0) {
+	if (!is_numeric($_POST['section']) || $_POST['section'] >= $menuXML->info->section->count() || $_POST['section'] < 0) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid menu section.<br>";
 	}
 
 	// Check Header Type
-	if(!in_array($_POST['headertype'], $arrCheckType)) {
+	if (!in_array($_POST['headertype'], $arrCheckType)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid header type.<br>";
 	}
@@ -68,45 +68,45 @@ if ( ! empty($_POST['submit']) ) {
 	// Check Display Order
 	$menuCatObj->setCategoryKeyValue($_POST['section']);
 	$intNewOrderNum = $menuCatObj->validateOrder($_POST['displayorder'], $_POST['beforeafter'], true, $menuCatInfo['sortnum']);
-	if($intNewOrderNum === false) {
+	if ($intNewOrderNum === false) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
 	}
 
 
-	if($_POST['accesstype'] != "0" && $_POST['accesstype'] != "1" && $_POST['accesstype'] != "2") {
+	if ($_POST['accesstype'] != "0" && $_POST['accesstype'] != "1" && $_POST['accesstype'] != "2") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid access type.<br>";
 	}
 
-	if($_POST['hidecategory'] != "1") {
+	if ($_POST['hidecategory'] != "1") {
 		$_POST['hidecategory'] = 0;
 	}
 
 
-	if($_POST['headertype'] == "customcode") {
+	if ($_POST['headertype'] == "customcode") {
 		$headerImageURL = $_POST['headercustomcode'];
 	}
-	elseif($_POST['headertype'] == "customformat") {
+	elseif ($_POST['headertype'] == "customformat") {
 		$headerImageURL = $_POST['wysiwygHTML'];
 	}
 
 	$newImage = false;
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
-		if($_POST['headertype'] == "image" && $_FILES['headerimagefile']['name'] != "") {
+		if ($_POST['headertype'] == "image" && $_FILES['headerimagefile']['name'] != "") {
 			$newImage = true;
 			$btUploadObj = new BTUpload($_FILES['headerimagefile'], "menuheader_", "../images/menu/", array(".jpg", ".png", ".bmp", ".gif"));
 		}
-		elseif($_POST['headertype'] == "image" && $_POST['headerimageurl'] != "") {
+		elseif ($_POST['headertype'] == "image" && $_POST['headerimageurl'] != "") {
 			$newImage = true;
 			$btUploadObj = new BTUpload($_POST['headerimageurl'], "menuheader_", "../images/menu/", array(".jpg", ".png", ".bmp", ".gif"), 4, true);
 		}
 
-		if($newImage && $_POST['headertype'] == "image" && $btUploadObj->uploadFile()) {
+		if ($newImage && $_POST['headertype'] == "image" && $btUploadObj->uploadFile()) {
 			$headerImageURL = "images/menu/".$btUploadObj->getUploadedFileName();
 		}
-		elseif($newImage && $_POST['headertype'] == "image") {
+		elseif ($newImage && $_POST['headertype'] == "image") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload selected image.  Make sure it's the correct file extension and not too big.<br>";
 		}
@@ -114,12 +114,12 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
-		if(($newImage || $_POST['headertype'] != "image") && $menuCatInfo['headertype'] == "image") {
+		if (($newImage || $_POST['headertype'] != "image") && $menuCatInfo['headertype'] == "image") {
 			unlink($prevFolder.$menuCatInfo['headercode']);
 		}
-		elseif(!$newImage && $menuCatInfo['headertype'] == "image" && $_POST['headertype'] == "image") {
+		elseif (!$newImage && $menuCatInfo['headertype'] == "image" && $_POST['headertype'] == "image") {
 			$headerImageURL = $menuCatInfo['headercode'];
 		}
 
@@ -127,7 +127,7 @@ if ( ! empty($_POST['submit']) ) {
 		$arrValues = array($_POST['section'], $_POST['categoryname'], $intNewOrderNum, $_POST['headertype'], $headerImageURL, $_POST['accesstype'], $_POST['hidecategory']);
 
 		$menuCatObj->select($menuCatInfo['menucategory_id']);
-		if($menuCatObj->update($arrColumns, $arrValues)) {
+		if ($menuCatObj->update($arrColumns, $arrValues)) {
 
 			$menuCatInfo = $menuCatObj->get_info_filtered();
 
@@ -148,7 +148,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	}
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
@@ -158,9 +158,9 @@ if ( ! empty($_POST['submit']) ) {
 
 if ( empty($_POST['submit']) ) {
 
-	for($i=0; $i<$menuXML->info->section->count(); $i++) {
+	for ($i=0; $i<$menuXML->info->section->count(); $i++) {
 		$dispSelected = "";
-		if($menuCatInfo['section'] == $i) {
+		if ($menuCatInfo['section'] == $i) {
 			$dispSelected = " selected";
 		}
 		$sectionoptions .= "<option value='".$i."'".$dispSelected.">".$menuXML->info->section[$i]."</option>";
@@ -168,13 +168,13 @@ if ( empty($_POST['submit']) ) {
 
 	$afterSelected = "";
 	$dispBeforeAfter = $menuCatObj->findBeforeAfter();
-	if($dispBeforeAfter[1] == "after") {
+	if ($dispBeforeAfter[1] == "after") {
 		$afterSelected = " selected";
 	}
 
 
-	foreach($arrCheckType as $typeName) {
-		if($menuCatInfo['headertype'] == $typeName) {
+	foreach ($arrCheckType as $typeName) {
+		if ($menuCatInfo['headertype'] == $typeName) {
 			$arrMenuTypes[$typeName] = " selected";
 		}
 		else {
@@ -186,10 +186,10 @@ if ( empty($_POST['submit']) ) {
 	$arrShowWhen[1] = "";
 	$arrShowWhen[2] = "";
 
-	if($menuCatInfo['accesstype'] == 1) {
+	if ($menuCatInfo['accesstype'] == 1) {
 		$arrShowWhen[1] = " selected";
 	}
-	elseif($menuCatInfo['accesstype'] == 2) {
+	elseif ($menuCatInfo['accesstype'] == 2) {
 		$arrShowWhen[2] = " selected";
 	}
 
@@ -197,10 +197,10 @@ if ( empty($_POST['submit']) ) {
 
 	$dispCustomFormat = "";
 	$dispCustomCode = "";
-	if($menuCatInfo['headertype'] == "customformat") {
+	if ($menuCatInfo['headertype'] == "customformat") {
 		$dispCustomFormat = $menuCatInfo['headercode'];
 	}
-	elseif($menuCatInfo['headertype'] == "customcode") {
+	elseif ($menuCatInfo['headertype'] == "customcode") {
 		$dispCustomCode = filterText($menuCatInfo['headercode']);
 	}
 
@@ -210,7 +210,7 @@ if ( empty($_POST['submit']) ) {
 	
 	";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to edit menu category because the following errors occurred:</strong><br><br>
@@ -254,7 +254,7 @@ if ( empty($_POST['submit']) ) {
 								File:<br><input type='file' name='headerimagefile' class='textBox' style='width: 250px; border: 0px'><br>
 								<span style='font-size: 10px'>File Types: .jpg, .gif, .png, .bmp | <a href='javascript:void(0)' onmouseover=\"showToolTip('The file size upload limit is controlled by your PHP settings in the php.ini file.')\" onmouseout='hideToolTip()'>File Size: ".ini_get("upload_max_filesize")."B or less</a></span>
 								";
-								if($menuCatInfo['headertype'] == "image") {
+								if ($menuCatInfo['headertype'] == "image") {
 									echo "<br><i>Current Image: <a href='javascript:void(0)' id='previewImageLink'>View Image</a></i>";
 								}
 							echo "
@@ -290,12 +290,12 @@ if ( empty($_POST['submit']) ) {
 		
 		";
 
-	if($menuCatInfo['headertype'] == "image") {
+	if ($menuCatInfo['headertype'] == "image") {
 
 		$checkURL = parse_url($menuCatInfo['headercode']);
 		$dispImgWidth = 400;
 		$dispImgHeight = 200;
-		if($checkURL['scheme'] == "") {
+		if ($checkURL['scheme'] == "") {
 			$imageSize = getimagesize($prevFolder.$menuCatInfo['headercode']);
 			$menuCatInfo['headercode'] = $MAIN_ROOT.$menuCatInfo['headercode'];
 			$dispImgWidth = $imageSize[0]+25;

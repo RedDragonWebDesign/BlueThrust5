@@ -13,7 +13,7 @@
  */
 
 
-if(!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
+if (!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
 
 	exit();
 }
@@ -26,7 +26,7 @@ else {
 	$tournamentObj->select($tID);
 
 
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 
 		exit();
 	}
@@ -51,13 +51,13 @@ $countErrors = 0;
 // Get Rounds with Matches that are settable
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentmatch WHERE tournament_id='".$tournamentInfo['tournament_id']."' AND (team1_id != '0' OR team2_id != '0') ORDER BY round");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$arrRounds[] = $row['round'];
 }
 
 $arrRounds = array_unique($arrRounds);
 
-foreach($arrRounds as $roundNum) {
+foreach ($arrRounds as $roundNum) {
 	$roundoptions .= "<option value='".$roundNum."'>Round ".$roundNum."</option>";
 }
 
@@ -115,7 +115,7 @@ foreach($arrRounds as $roundNum) {
 
 	<?php
 
-		if($tournamentInfo['playersperteam'] == 1) {
+		if ($tournamentInfo['playersperteam'] == 1) {
 			$dispTeamOrPlayer = "Player";
 		}
 		else {

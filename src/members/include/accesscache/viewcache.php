@@ -12,13 +12,13 @@
 	 *
 	 */
 
-	if(defined("SHOW_ACCESSCACHE")) {
+	if (defined("SHOW_ACCESSCACHE")) {
 
 
 		$accessObj->arrAccessTables = json_decode($_SESSION['btAccessCacheTables'][$_POST['cacheID']], true);
 		$accessObj->arrAccessTypes = json_decode($_SESSION['btAccessCacheTypes'][$_POST['cacheID']], true);
 
-		if($_POST['accessType'] == "rank") {
+		if ($_POST['accessType'] == "rank") {
 			$accessObj->dispSetRankAccess(false);
 		}
 		else {

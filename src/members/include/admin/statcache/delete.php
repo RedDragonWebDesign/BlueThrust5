@@ -36,22 +36,22 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 $checkAccess = $checkAccess1 || $checkAccess2;
 
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($checkAccess) {
+	if ($checkAccess) {
 
 
-		if(isset($_SESSION['btStatCache'][$_POST['sID']])) {
+		if (isset($_SESSION['btStatCache'][$_POST['sID']])) {
 
 
 			$countErrors = 0;
-			if($_SESSION['btStatCache'][$_POST['sID']]['statType'] == "input") {
+			if ($_SESSION['btStatCache'][$_POST['sID']]['statType'] == "input") {
 
-				foreach($_SESSION['btStatCache'] as $statInfo) {
-					if($statInfo['statType'] == "calculate" AND ($statInfo['firstStat'] == $_POST['sID'] OR $statInfo['secondStat'] == $_POST['sID'])) {
+				foreach ($_SESSION['btStatCache'] as $statInfo) {
+					if ($statInfo['statType'] == "calculate" AND ($statInfo['firstStat'] == $_POST['sID'] OR $statInfo['secondStat'] == $_POST['sID'])) {
 						$countErrors++;
 					}
 				}
@@ -59,9 +59,9 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			}
 
 
-			if($countErrors == 0) {
+			if ($countErrors == 0) {
 
-				if($gameStatsObj->select($_SESSION['btStatCache'][$_POST['sID']]['gamestatsID'])) {
+				if ($gameStatsObj->select($_SESSION['btStatCache'][$_POST['sID']]['gamestatsID'])) {
 					$gameStatsObj->delete();
 				}
 
@@ -70,7 +70,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 				$x = 0;
 				$tempArray = array();
-				foreach($_SESSION['btStatCache'] as $statInfo) {
+				foreach ($_SESSION['btStatCache'] as $statInfo) {
 					$tempArray[$x] = $statInfo;
 					$x++;
 				}

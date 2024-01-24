@@ -5,7 +5,7 @@
 
 		$tournamentObj = new Tournament($mysqli);
 
-		if(!$tournamentObj->select($_POST['tournament'])) {
+		if (!$tournamentObj->select($_POST['tournament'])) {
 			$formObj->errors[] = "You selected an invalid tournament.";
 		}
 		else {
@@ -14,7 +14,7 @@
 
 			// Check Password
 
-			if($tournamentInfo['password'] != "" && $tournamentInfo['password'] != md5($_POST['tournamentpassword'])) {
+			if ($tournamentInfo['password'] != "" && $tournamentInfo['password'] != md5($_POST['tournamentpassword'])) {
 				$formObj->errors[] = "You entered an incorrect password for the tournament.";
 			}
 
@@ -22,13 +22,13 @@
 
 			$arrPlayers = $tournamentObj->getPlayers();
 			$maxPlayers = $tournamentInfo['playersperteam']*$tournamentInfo['maxteams'];
-			if($maxPlayers == count($arrPlayers)) {
+			if ($maxPlayers == count($arrPlayers)) {
 				$formObj->errors[] = "This tournament is currently full.";
 			}
 
 			// Check if already in tournament
 
-			if(in_array($memberInfo['member_id'], $arrTournaments)) {
+			if (in_array($memberInfo['member_id'], $arrTournaments)) {
 				$formObj->errors[] = "You are already in this tournament.";
 			}
 
@@ -42,10 +42,10 @@
 
 		$tournamentInfo = $tournamentObj->get_info();
 
-		if($tournamentInfo['playersperteam'] == 1) {
+		if ($tournamentInfo['playersperteam'] == 1) {
 
 			$arrUnfilledTeams = $tournamentObj->getUnfilledTeams();
-			if(count($arrUnfilledTeams) > 0) {
+			if (count($arrUnfilledTeams) > 0) {
 
 				$newTeam = $arrUnfilledTeams[0];
 

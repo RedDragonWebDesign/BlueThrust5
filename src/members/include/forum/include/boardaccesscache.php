@@ -30,7 +30,7 @@ $consoleObj = new ConsoleOption($mysqli);
 
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 	/*
 	 * 0 - No Access
@@ -39,11 +39,11 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	 */
 
 
-	if(isset($_POST['action']) &&  $accessMemberObj->select($_POST['mID'])) {
-		if($_POST['action'] == "add" && ($_POST['accessRule'] == "1" || $_POST['accessRule'] == "0" || $_POST['accessRule'] == "2")) {
+	if (isset($_POST['action']) &&  $accessMemberObj->select($_POST['mID'])) {
+		if ($_POST['action'] == "add" && ($_POST['accessRule'] == "1" || $_POST['accessRule'] == "0" || $_POST['accessRule'] == "2")) {
 			$_SESSION['btMemberAccessCache'][$_POST['mID']] = $_POST['accessRule'];
 		}
-		elseif($_POST['action'] == "delete") {
+		elseif ($_POST['action'] == "delete") {
 			$_SESSION['btMemberAccessCache'][$_POST['mID']] = "";
 		}
 	}
@@ -63,18 +63,18 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			";
 
 	$countRules = 0;
-	foreach($_SESSION['btMemberAccessCache'] as $memID => $accessRule) {
-		if($accessRule != "" &&  $accessMemberObj->select($memID)) {
+	foreach ($_SESSION['btMemberAccessCache'] as $memID => $accessRule) {
+		if ($accessRule != "" &&  $accessMemberObj->select($memID)) {
 			$tempMemInfo = $accessMemberObj->get_info_filtered();
 			$rankObj->select($tempMemInfo['rank_id']);
 
 			$dispRankName = $rankObj->get_info_filtered("name");
 
 			$dispAccess = "<span class='denyText'>Deny</span>";
-			if($accessRule == 1) {
+			if ($accessRule == 1) {
 				$dispAccess = "<span class='pendingFont'>Full</span>";
 			}
-			elseif($accessRule == 2) {
+			elseif ($accessRule == 2) {
 				$dispAccess = "<span class='allowText'>Read-Only</span>";
 			}
 
@@ -93,7 +93,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	}
 
 
-	if($countRules == 0) {
+	if ($countRules == 0) {
 
 		echo "
 			<tr>

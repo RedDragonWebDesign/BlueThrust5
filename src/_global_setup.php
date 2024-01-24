@@ -26,7 +26,7 @@ $SHOUTBOX_RELOAD_MS = 20000;
 $COOKIE_EXP_TIME = time()+((60*60*24)*3); // Remember Me cookie. Expires in 3 days.
 
 // Check PHP Version
-if(version_compare(phpversion(), "7.0") < 0) {
+if (version_compare(phpversion(), "7.0") < 0) {
 	die("You must be using at least PHP version 7.0 in order to run BlueThrust Clan Scripts.  Your current PHP Version: ".phpversion().". You can usually change your PHP version in your website control panel. For example, cPanel.");
 }
 

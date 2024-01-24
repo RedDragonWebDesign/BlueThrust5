@@ -28,10 +28,10 @@ require_once($prevFolder."classes/game.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -43,7 +43,7 @@ if($ipbanObj->select($IP_ADDRESS, false)) {
 
 $gameObj = new Game($mysqli);
 
-if($gameObj->select($_GET['gID'])) {
+if ($gameObj->select($_GET['gID'])) {
 	$gameObj->refreshImageSize();
 	$gameInfo = $gameObj->get_info_filtered();
 }
@@ -69,10 +69,10 @@ require_once($prevFolder."include/breadcrumb.php");
 	$arrGameStats = $gameObj->getAssociateIDs("ORDER BY ordernum");
 
 
-	if(count($arrGameStats) > 0) {
+	if (count($arrGameStats) > 0) {
 
 
-		if(isset($_GET['sID']) && in_array($_GET['sID'], $arrGameStats) && $gameStatObj->select($_GET['sID'])) {
+		if (isset($_GET['sID']) && in_array($_GET['sID'], $arrGameStats) && $gameStatObj->select($_GET['sID'])) {
 			$gameStatObj->select($_GET['sID']);
 		}
 		else {
@@ -84,11 +84,11 @@ require_once($prevFolder."include/breadcrumb.php");
 
 		$arrMemberList = $gameObj->getMembersWhoPlayThisGame();
 		$arrTopPlayers = array();
-		foreach($arrMemberList as $memberID) {
+		foreach ($arrMemberList as $memberID) {
 			$member->select($memberID);
 
 
-			if($gameStatInfo['stattype'] == "calculate") {
+			if ($gameStatInfo['stattype'] == "calculate") {
 				$arrTopPlayers[$memberID] = $gameObj->calcStat($_GET['sID'], $member);
 
 			}
@@ -101,7 +101,7 @@ require_once($prevFolder."include/breadcrumb.php");
 
 
 
-		if( isset($_GET['sort']) && $_GET['sort'] != "up") {
+		if ( isset($_GET['sort']) && $_GET['sort'] != "up") {
 			$dispSort = "<a href='".$MAIN_ROOT."top-players/game.php?gID=".$_GET['gID']."&sID=".$_GET['sID']."&sort=up'><img src='".$MAIN_ROOT."themes/".$THEME."/images/downarrow.png'></a>";
 			$_GET['sort'] = "down";
 			arsort($arrTopPlayers);
@@ -113,10 +113,10 @@ require_once($prevFolder."include/breadcrumb.php");
 		}
 
 
-		foreach($arrGameStats as $gameStatID) {
+		foreach ($arrGameStats as $gameStatID) {
 			$gameStatObj->select($gameStatID);
 			$dispSelected = "";
-			if($gameStatID == $_GET['sID']) {
+			if ($gameStatID == $_GET['sID']) {
 				$dispSelected = " selected";
 			}
 
@@ -144,11 +144,11 @@ require_once($prevFolder."include/breadcrumb.php");
 
 
 		$counter = 0;
-		foreach($arrTopPlayers as $memberID => $statValue) {
+		foreach ($arrTopPlayers as $memberID => $statValue) {
 			$counter++;
 
 			$addCSS = "";
-			if($counter%2 == 0) {
+			if ($counter%2 == 0) {
 				$addCSS = " alternateBGColor";
 			}
 
@@ -163,15 +163,15 @@ require_once($prevFolder."include/breadcrumb.php");
 			";
 
 
-			if($counter >= 10) {
+			if ($counter >= 10) {
 				break;
 			}
 		}
 
-		if($counter < 10) {
-			for($i=($counter+1); $i<=10; $i++) {
+		if ($counter < 10) {
+			for ($i=($counter+1); $i<=10; $i++) {
 				$addCSS = "";
-				if($i%2 == 0) {
+				if ($i%2 == 0) {
 					$addCSS = " alternateBGColor";
 				}
 

@@ -11,13 +11,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -34,7 +34,7 @@ $emailNotificationInfo = $emailNotification->get_info_filtered();
 $cID = $_GET['cID'];
 
 $timeBefore = array(0 => "Never");
-for($i=1; $i<=60; $i++) {
+for ($i=1; $i<=60; $i++) {
 	$timeBefore[$i] = $i;
 }
 

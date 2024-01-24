@@ -30,17 +30,17 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 
 $checkAccess = $checkAccess1 || $checkAccess2;
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($checkAccess) {
+	if ($checkAccess) {
 
 
-		if(is_array($_SESSION['btProfileCache']) && count($_SESSION['btProfileCache']) > 0) {
+		if (is_array($_SESSION['btProfileCache']) && count($_SESSION['btProfileCache']) > 0) {
 
-			if($_SESSION['btProfileCacheRefresh']) {
+			if ($_SESSION['btProfileCacheRefresh']) {
 				echo "
 					<p class='failedFont' align='center'><b>Select Values Modified!  Your member's currently saved information will be reset.</b></p>
 				";
@@ -57,18 +57,18 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			";
 			$counter = 0;
 			$totalOptions = count($_SESSION['btProfileCache']);
-			foreach($_SESSION['btProfileCache'] as $key => $selectValue) {
+			foreach ($_SESSION['btProfileCache'] as $key => $selectValue) {
 
 				$counter++;
 
 
 				$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveOption('up', '".$key."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' title='Move Up' width='24' height='24'></a>";
-				if($counter == 1) {
+				if ($counter == 1) {
 					$dispUpArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' width='24' height='24'>";
 				}
 
 				$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveOption('down', '".$key."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' title='Move Down' width='24' height='24'></a>";
-				if($totalOptions == $counter) {
+				if ($totalOptions == $counter) {
 					$dispDownArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' width='24' height='24'>";
 				}
 
@@ -88,7 +88,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 			echo "</table>";
 
-			if($counter == 0) {
+			if ($counter == 0) {
 
 				echo "
 					<script type='text/javascript'>

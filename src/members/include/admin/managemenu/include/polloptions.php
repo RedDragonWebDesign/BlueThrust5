@@ -4,11 +4,11 @@
 $pollObj = new Poll($mysqli);
 $arrPolls = $pollObj->get_entries();
 $pollOptions = array();
-foreach($arrPolls as $eachPoll) {
+foreach ($arrPolls as $eachPoll) {
 	$pollOptions[$eachPoll['poll_id']] = $eachPoll['question'];
 }
 
-if(count($pollOptions) == 0) {
+if (count($pollOptions) == 0) {
 	$pollOptions = array("No Polls Added");
 }
 

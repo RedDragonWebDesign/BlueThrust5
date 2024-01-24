@@ -7,7 +7,7 @@
 		global $mysqli, $hooksObj;
 		$memberObj = new Member($mysqli);
 		$returnVal = false;
-		if($memberObj->select($_GET['user'])) {
+		if ($memberObj->select($_GET['user'])) {
 
 			$streamTitle = $memberObj->get_info_filtered("username")."'s Stream";
 			$hooksObj->addHook("breadcrumb", "setStreamPageBreadcrumb", array($streamTitle));

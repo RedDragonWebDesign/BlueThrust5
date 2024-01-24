@@ -40,7 +40,7 @@ class ForumPost extends Basic {
 		$returnVal = false;
 		$addNew = parent::addNew($arrColumns, $arrValues);
 
-		if($addNew) {
+		if ($addNew) {
 			$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."forum_topicseen WHERE forumtopic_id = '".$this->arrObjInfo['forumtopic_id']."'");
 			$this->MySQL->query("OPTIMIZE TABLE `".$this->MySQL->get_tablePrefix()."forum_topicseen`");
 			$returnVal = true;
@@ -61,10 +61,10 @@ class ForumPost extends Basic {
 
 		$returnArr = array();
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$result = $this->MySQL->query("SELECT download_id FROM ".$this->MySQL->get_tablePrefix()."forum_attachments WHERE forumpost_id = '".$this->intTableKeyValue."'");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$returnArr[] = $row['download_id'];
 			}
 
@@ -77,7 +77,7 @@ class ForumPost extends Basic {
 	public function show($showReplyLink=false, $template="") {
 		global $websiteInfo, $MAIN_ROOT, $dbprefix, $mysqli, $member;
 
-		if($template == "") {
+		if ($template == "") {
 
 			require(BASE_DIRECTORY."forum/templates/post.php");
 
@@ -90,7 +90,7 @@ class ForumPost extends Basic {
 
 	public function getTopicInfo($filtered=false) {
 		$returnArr = array();
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$temp = $this->intTableKeyValue;
 			$tempManage = $this->blnManageable;
@@ -114,7 +114,7 @@ class ForumPost extends Basic {
 		global $websiteInfo, $memberInfo, $setPostsPerPage;
 
 		$returnVal = "";
-		if($this->intTableKeyValue != "" && !$individualPost) {
+		if ($this->intTableKeyValue != "" && !$individualPost) {
 
 			// Figure out num of posts
 			$query = "SELECT * FROM ".$this->strTableName." WHERE forumtopic_id = '".$this->arrObjInfo['forumtopic_id']."' ORDER BY dateposted";
@@ -126,10 +126,10 @@ class ForumPost extends Basic {
 			$postRanking = $findDepthResult->num_rows;
 
 			// Figure out posts per page
-			if($setPostsPerPage > 0) {
+			if ($setPostsPerPage > 0) {
 				$postsPerPage = $setPostsPerPage;
 			}
-			elseif($websiteInfo['forum_postsperpage'] > 0) {
+			elseif ($websiteInfo['forum_postsperpage'] > 0) {
 				$postsPerPage = $websiteInfo['forum_postsperpage'];
 			}
 			else {
@@ -141,24 +141,24 @@ class ForumPost extends Basic {
 
 			$returnVal = FULL_SITE_URL."forum/viewtopic.php?tID=".$this->arrObjInfo['forumtopic_id'];
 
-			if($totalPages > 1) {
+			if ($totalPages > 1) {
 				$pageNumber = ceil($postRanking/$postsPerPage);
 				$returnVal .= "&pID=".$pageNumber;
 			}
 
 			$returnVal .= "#".$this->intTableKeyValue;
 
-			if($fullLink) {
+			if ($fullLink) {
 				$topicInfo = $this->getTopicInfo(true);
 				$returnVal = "<a href='".$returnVal."'>".$topicInfo['title']."</a>";
 			}
 
 		}
-		elseif($this->intTableKeyValue != "" && $individualPost) {
+		elseif ($this->intTableKeyValue != "" && $individualPost) {
 
 			$returnVal = FULL_SITE_URL."forum/viewpost.php?post=".$this->intTableKeyValue;
 
-			if($fullLink) {
+			if ($fullLink) {
 				$topicInfo = $this->getTopicInfo(true);
 				$returnVal = "<a href='".$returnVal."'>".$topicInfo['title']."</a>";
 			}
@@ -170,12 +170,12 @@ class ForumPost extends Basic {
 
 	public function delete() {
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$returnVal = parent::delete();
 			$downloadObj = new Download($this->MySQL);
 			$arrAttachments = $this->getPostAttachments();
 
-			foreach($arrAttachments as $attachment) {
+			foreach ($arrAttachments as $attachment) {
 				$downloadObj->select($attachment);
 				$downloadObj->delete();
 			}
@@ -191,7 +191,7 @@ class ForumPost extends Basic {
 		$query = "SELECT DISTINCT member_id FROM ".$this->strTableName." WHERE forumtopic_id = '".$this->arrObjInfo['forumtopic_id']."'";
 		$result = $this->MySQL->query($query);
 
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$arrReturn[] = $row['member_id'];
 		}
 
@@ -199,7 +199,7 @@ class ForumPost extends Basic {
 
 	public function sendNotifications() {
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$mailObj = new btMail();
 			$member = new Member($this->MySQL);
@@ -212,16 +212,16 @@ class ForumPost extends Basic {
 			$subject = "New Post: ".$topicInfo['title'];
 			$message = "A new post has been made in the topic: ".$topicInfo['title']."<br><br><a href='".$this->getLink(false, true)."'>View Post</a>";
 
-			if($member->select($topicInfo['member_id']) && $member->getEmailNotificationSetting("forum_topic") == 1) {
+			if ($member->select($topicInfo['member_id']) && $member->getEmailNotificationSetting("forum_topic") == 1) {
 				$member->email($subject, $message);
 				$sentTopicMember = true;
 			}
 
-			foreach($this->getTopicPosters() ?? [] as $memberID) {
+			foreach ($this->getTopicPosters() ?? [] as $memberID) {
 
-				if($member->select($memberID) && $member->getEmailNotificationSetting("forum_post") == 1 && $member->get_info("email") != "") {
+				if ($member->select($memberID) && $member->getEmailNotificationSetting("forum_post") == 1 && $member->get_info("email") != "") {
 
-					if(($topicInfo['member_id'] == $memberID && !$sentTopicMember) || $topicInfo['member_id'] != $memberID) {
+					if (($topicInfo['member_id'] == $memberID && !$sentTopicMember) || $topicInfo['member_id'] != $memberID) {
 						$arrBCC[] = $member->get_info("email");
 					}
 
@@ -229,7 +229,7 @@ class ForumPost extends Basic {
 
 			}
 
-			if(count($arrBCC) > 0) {
+			if (count($arrBCC) > 0) {
 				$mailObj->sendMail("", $subject, $message, array("bcc" => $arrBCC));
 			}
 

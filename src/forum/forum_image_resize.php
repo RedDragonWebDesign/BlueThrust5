@@ -1,6 +1,6 @@
 <?php
 
-	if(!defined("RESIZE_FORUM_IMAGES")) {
+	if (!defined("RESIZE_FORUM_IMAGES")) {
 		exit();
 	}
 
@@ -19,7 +19,7 @@
 
 	$editForumCSS = "";
 
-	if($setMaxImageWidth != "" || $setMaxImageHeight != "") {
+	if ($setMaxImageWidth != "" || $setMaxImageHeight != "") {
 		$editForumCSS .= "
 			.boardPostInfo img {
 				".$setMaxImageWidth.";
@@ -33,7 +33,7 @@
 		";
 	}
 
-	if($setMaxSigWidth != "" || $setMaxSigHeight != "") {
+	if ($setMaxSigWidth != "" || $setMaxSigHeight != "") {
 		$editForumCSS .= "
 			.forumSignatureContainer img {
 				".$setMaxSigWidth.";
@@ -43,7 +43,7 @@
 	}
 
 
-	if($editForumCSS != "") {
+	if ($editForumCSS != "") {
 		$EXTERNAL_JAVASCRIPT .= "	
 			<style>
 				".$editForumCSS."		

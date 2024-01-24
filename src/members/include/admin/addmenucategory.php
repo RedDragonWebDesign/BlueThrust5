@@ -13,13 +13,13 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -40,20 +40,20 @@ $arrCheckType = array("image", "customcode", "customformat");
 if ( ! empty($_POST['submit']) ) {
 
 	// Check Name
-	if(trim($_POST['categoryname']) == "") {
+	if (trim($_POST['categoryname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not enter a blank category name.<br>";
 	}
 
 	// Check Section
 
-	if(!is_numeric($_POST['section']) || $_POST['section'] >= $menuXML->info->section->count() || $_POST['section'] < 0) {
+	if (!is_numeric($_POST['section']) || $_POST['section'] >= $menuXML->info->section->count() || $_POST['section'] < 0) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid menu section.<br>";
 	}
 
 	// Check Header Type
-	if(!in_array($_POST['headertype'], $arrCheckType)) {
+	if (!in_array($_POST['headertype'], $arrCheckType)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid header type.<br>";
 	}
@@ -62,55 +62,55 @@ if ( ! empty($_POST['submit']) ) {
 	// Check Display Order
 	$menuCatObj->setCategoryKeyValue($_POST['section']);
 	$intNewOrderNum = $menuCatObj->validateOrder($_POST['displayorder'], $_POST['beforeafter']);
-	if($intNewOrderNum === false) {
+	if ($intNewOrderNum === false) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid header type.<br>";
 	}
 
 
-	if($_POST['accesstype'] != "0" && $_POST['accesstype'] != "1" && $_POST['accesstype'] != "2") {
+	if ($_POST['accesstype'] != "0" && $_POST['accesstype'] != "1" && $_POST['accesstype'] != "2") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid access type.<br>";
 	}
 
-	if($_POST['hidecategory'] != "1") {
+	if ($_POST['hidecategory'] != "1") {
 		$_POST['hidecategory'] = 0;
 	}
 
 
-	if($_POST['headertype'] == "customcode") {
+	if ($_POST['headertype'] == "customcode") {
 		$headerImageURL = $_POST['headercustomcode'];
 	}
-	elseif($_POST['headertype'] == "customformat") {
+	elseif ($_POST['headertype'] == "customformat") {
 		$headerImageURL = $_POST['wysiwygHTML'];
 	}
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
-		if($_POST['headertype'] == "image" && $_FILES['headerimagefile']['name'] != "") {
+		if ($_POST['headertype'] == "image" && $_FILES['headerimagefile']['name'] != "") {
 			$btUploadObj = new BTUpload($_FILES['headerimagefile'], "menuheader_", "../images/menu/", array(".jpg", ".png", ".bmp", ".gif"));
 		}
-		elseif($_POST['headertype'] == "image") {
+		elseif ($_POST['headertype'] == "image") {
 			$btUploadObj = new BTUpload($_POST['headerimageurl'], "menuheader_", "../images/menu/", array(".jpg", ".png", ".bmp", ".gif"), 4, true);
 		}
 
-		if($_POST['headertype'] == "image" && $btUploadObj->uploadFile()) {
+		if ($_POST['headertype'] == "image" && $btUploadObj->uploadFile()) {
 			$headerImageURL = "images/menu/".$btUploadObj->getUploadedFileName();
 		}
-		elseif($_POST['headertype'] == "image") {
+		elseif ($_POST['headertype'] == "image") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload selected image.  Make sure it's the correct file extension and not too big.<br>";
 		}
 
 	}
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 		$arrColumns = array("section", "name", "sortnum", "headertype", "headercode", "accesstype", "hide");
 		$arrValues = array($_POST['section'], $_POST['categoryname'], $intNewOrderNum, $_POST['headertype'], $headerImageURL, $_POST['accesstype'], $_POST['hidecategory']);
 
-		if($menuCatObj->addNew($arrColumns, $arrValues)) {
+		if ($menuCatObj->addNew($arrColumns, $arrValues)) {
 
 			$menuCatInfo = $menuCatObj->get_info_filtered();
 
@@ -131,7 +131,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	}
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
@@ -142,11 +142,11 @@ if ( ! empty($_POST['submit']) ) {
 if ( empty($_POST['submit']) ) {
 
 	$selectSection = array();
-	if(isset($_GET['sectionID'])) {
+	if (isset($_GET['sectionID'])) {
 		$selectSection[$_GET['sectionID']] = " selected";
 	}
 
-	for($i=0; $i<$menuXML->info->section->count(); $i++) {
+	for ($i=0; $i<$menuXML->info->section->count(); $i++) {
 		$sectionoptions .= "<option value='".$i."'".$selectSection[$i].">".$menuXML->info->section[$i]."</option>";
 	}
 
@@ -156,7 +156,7 @@ if ( empty($_POST['submit']) ) {
 			<div class='formDiv'>
 			";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to add new menu category because the following errors occurred:</strong><br><br>

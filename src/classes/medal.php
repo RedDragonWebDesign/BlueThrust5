@@ -39,7 +39,7 @@ class Medal extends Rank {
 
 		$num_rows = 0;
 
-		if(isset($this->intTableKeyValue)) {
+		if (isset($this->intTableKeyValue)) {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."medals_members WHERE medal_id = '".$this->intTableKeyValue."'");
 			$num_rows = $result->num_rows;
 		}
@@ -57,23 +57,23 @@ class Medal extends Rank {
 	*/
 	public function delete() {
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$info = $this->arrObjInfo;
 			$countErrors = 0;
 			$result = $this->MySQL->query("DELETE FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 
-			if($this->MySQL->error) {
+			if ($this->MySQL->error) {
 				$countErrors++;
 			}
 
 			$result = $this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."medals_members WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 
-			if($this->MySQL->error) {
+			if ($this->MySQL->error) {
 				$countErrors++;
 			}
 			$this->resortOrder();
 
-			if($countErrors == 0) {
+			if ($countErrors == 0) {
 				$returnVal = true;
 				deleteFile(BASE_DIRECTORY.$info['imageurl']);
 			}
@@ -87,10 +87,10 @@ class Medal extends Rank {
 	public function getFrozenMembersList() {
 
 		$returnArr = array();
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."freezemedals_members WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
 				$returnArr[$row['freezemedal_id']] = $row['member_id'];
 

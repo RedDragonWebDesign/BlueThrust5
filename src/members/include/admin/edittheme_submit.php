@@ -30,16 +30,16 @@ $submitSuccess = false;
 $scrollTop = true;
 
 $consoleObj->select($cID);
-if(!$member->hasAccess($consoleObj)) {
+if (!$member->hasAccess($consoleObj)) {
 	exit();
 }
 
-foreach($_POST as $key=>$value) {
+foreach ($_POST as $key=>$value) {
 	$_POST[$key] = utf8_decode($_POST[$key]);
 }
 
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info();
@@ -47,7 +47,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 	// Check Security Code
 
-	if($_POST['checkadmin'] != constant('ADMIN_KEY')) {
+	if ($_POST['checkadmin'] != constant('ADMIN_KEY')) {
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."failban WHERE ipaddress = '".$IP_ADDRESS."' AND pagename = 'edittheme'");
 		$countFails = $result->num_rows;
@@ -55,7 +55,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		$failbanObj->addNew(array("ipaddress", "pagename"), array($IP_ADDRESS, "edittheme"));
 
-		if($adminKeyFails <= 0) {
+		if ($adminKeyFails <= 0) {
 			$ipbanObj->set_tableKey("ipban_id");
 			$ipbanObj->addNew(array("ipaddress"), array($IP_ADDRESS));
 
@@ -98,10 +98,10 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 	}
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		// Update Header
 
-		if(!is_writable("../../../themes/".$THEME."/_header.php")) {
+		if (!is_writable("../../../themes/".$THEME."/_header.php")) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save header information.<br>";
 		}
@@ -114,7 +114,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 			$themeFile = fopen("../../../themes/".$THEME."/_header.php", "w");
-			if(!fwrite($themeFile, $headerCode)) {
+			if (!fwrite($themeFile, $headerCode)) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save header information.<br>";
 			}
@@ -123,7 +123,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		// Update Footer
 
-		if(!is_writable("../../../themes/".$THEME."/_footer.php")) {
+		if (!is_writable("../../../themes/".$THEME."/_footer.php")) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save footer information.<br>";
 		}
@@ -135,7 +135,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			$footerCode = str_replace("&38#;", ">", $footerCode);
 
 			$themeFile = fopen("../../../themes/".$THEME."/_footer.php", "w");
-			if(!fwrite($themeFile, $footerCode)) {
+			if (!fwrite($themeFile, $footerCode)) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save footer information.<br>";
 			}
@@ -144,13 +144,13 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		// Update Theme CSS
 
-		if(!is_writable("../../../themes/".$THEME."/style.css")) {
+		if (!is_writable("../../../themes/".$THEME."/style.css")) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save theme css information.<br>";
 		}
 		else {
 			$themeFile = fopen("../../../themes/".$THEME."/style.css", "w");
-			if(!fwrite($themeFile, htmlspecialchars_decode($_POST['themeCSSCode']))) {
+			if (!fwrite($themeFile, htmlspecialchars_decode($_POST['themeCSSCode']))) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save theme css information.<br>";
 			}
@@ -175,7 +175,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	*/
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		$submitSuccess = true;
 	}
 
@@ -183,7 +183,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 }
 
 
-if($submitSuccess) {
+if ($submitSuccess) {
 	$dispTime = date("l F j, Y g:i:s A");
 	echo "
 		<script type='text/javascript'>
@@ -206,7 +206,7 @@ else {
 				$('#saveMessage').fadeIn(400);
 				";
 
-		if($scrollTop) {
+		if ($scrollTop) {
 			echo "$('html, body').animate({ scrollTop: 0 });";
 		}
 

@@ -34,13 +34,13 @@ class MenuCategory extends BasicSort {
 		$returnArr = array();
 
 		$accessTypeSQL = " OR accesstype = '".$intAccessType."'";
-		if($intAccessType == 3) {
+		if ($intAccessType == 3) {
 			$accessTypeSQL = " OR accesstype = '1' OR accesstype = '2'";
 		}
 
-		if(is_numeric($intAccessType) && is_numeric($intHide) && is_numeric($intSection)) {
+		if (is_numeric($intAccessType) && is_numeric($intHide) && is_numeric($intSection)) {
 			$result = $this->MySQL->query("SELECT menucategory_id FROM ".$this->strTableName." WHERE (accesstype = '0'".$accessTypeSQL.") AND hide = '".$intHide."' AND section = '".$intSection."' ORDER BY sortnum");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$returnArr[] = $row['menucategory_id'];
 			}
 		}
@@ -50,10 +50,10 @@ class MenuCategory extends BasicSort {
 
 	public function delete() {
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$info = $this->arrObjInfo;
 			$returnVal = parent::delete();
-			if($info['headertype'] == "image" && $info['headercode'] != "") {
+			if ($info['headertype'] == "image" && $info['headercode'] != "") {
 				deleteFile(BASE_DIRECTORY.$info['headercode']);
 			}
 		}

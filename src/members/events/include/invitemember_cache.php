@@ -33,25 +33,25 @@ $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage My Events");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESSION['btEventID'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESSION['btEventID'])) {
 
 	$eventID = $eventObj->get_info("event_id");
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && ($eventObj->memberHasAccess($memberInfo['member_id'], "invitemembers") || $memberInfo['rank_id'] == 1)) {
+	if ($member->hasAccess($consoleObj) && ($eventObj->memberHasAccess($memberInfo['member_id'], "invitemembers") || $memberInfo['rank_id'] == 1)) {
 
 		$arrInviteList = $eventObj->getInvitedMembers(true);
 		$arrInviteList = array_merge($arrInviteList, $_SESSION['btInviteList']);
 
-		switch($_POST['action']) {
+		switch ($_POST['action']) {
 
 			case "add":
 
-				if($objInviteMember->select($_POST['memberID'])) {
+				if ($objInviteMember->select($_POST['memberID'])) {
 					$inviteMemberInfo = $objInviteMember->get_info_filtered();
 
-					if(!in_array($inviteMemberInfo['member_id'], $arrInviteList)) {
+					if (!in_array($inviteMemberInfo['member_id'], $arrInviteList)) {
 						$_SESSION['btInviteList'][] = $inviteMemberInfo['member_id'];
 					}
 					else {
@@ -108,7 +108,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESSI
 		}
 
 
-		foreach($_SESSION['btInviteList'] as $key => $value) {
+		foreach ($_SESSION['btInviteList'] as $key => $value) {
 			$objInviteMember->select($value);
 
 			echo "
@@ -117,7 +117,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESSI
 
 		}
 
-		if(count($_SESSION['btInviteList']) == 0) {
+		if (count($_SESSION['btInviteList']) == 0) {
 			echo "<p align='center'><i>- Empty -</i></p>";
 		}
 
@@ -128,7 +128,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESSI
 		$sqlInvitedMembers = "('".implode("','", $arrInvitedMembers)."')";
 		$memberoptions = "<option value=''>Select</option>";
 		$result = $mysqli->query("SELECT m.username,m.member_id,r.ordernum,r.name FROM ".$dbprefix."members m, ".$dbprefix."ranks r WHERE m.rank_id = r.rank_id AND m.member_id NOT IN ".$sqlInvitedMembers." AND m.disabled = '0' AND m.rank_id != '1' ORDER BY r.ordernum DESC");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$memberoptions .= "<option value='".$row['member_id']."'>".filterText($row['name'])." ".filterText($row['username'])."</option>";
 		}
 

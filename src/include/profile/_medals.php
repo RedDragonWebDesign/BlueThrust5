@@ -1,6 +1,6 @@
 <?php
 
-	if(!defined("SHOW_PROFILE_MAIN")) {
+	if (!defined("SHOW_PROFILE_MAIN")) {
 		exit();
 	}
 
@@ -9,19 +9,19 @@
 	$arrMedals = $member->getMedalList(false, $websiteInfo['medalorder']);
 	$medalObj = new Medal($mysqli);
 
-	if(count($arrMedals) > 0) {
+	if (count($arrMedals) > 0) {
 
-		foreach($arrMedals as $medalID) {
+		foreach ($arrMedals as $medalID) {
 
 			$medalObj->select($medalID);
 			$medalInfo = $medalObj->get_info_filtered();
 
-			if($medalInfo['imagewidth'] == 0) {
+			if ($medalInfo['imagewidth'] == 0) {
 				$imgInfo = getimagesize($medalObj->getLocalImageURL());
 				$medalInfo['imagewidth'] = $imgInfo[0];
 			}
 
-			if($medalInfo['imageheight'] == 0) {
+			if ($medalInfo['imageheight'] == 0) {
 				$imgInfo = getimagesize($medalObj->getLocalImageURL());
 				$medalInfo['imageheight'] = $imgInfo[1];
 			}
@@ -32,7 +32,7 @@
 			$dispDateAwarded = "<b>Date Awarded:</b><br>".getPreciseTime($row['dateawarded']);
 
 			$dispReason = "";
-			if($row['reason'] != "") {
+			if ($row['reason'] != "") {
 				$dispReason = "<br><br><b>Awarded for:</b><br>".filterText($row['reason']);
 			}
 

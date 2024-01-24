@@ -1,8 +1,9 @@
 <?php
 
-	if(!defined("MAIN_ROOT")) { exit(); }
+	if (!defined("MAIN_ROOT")) {
+exit(); }
 
-	if(!isset($tournamentObj)) {
+	if (!isset($tournamentObj)) {
 		$tournamentObj = new Tournament($mysqli);
 	}
 
@@ -22,13 +23,13 @@
 
 	// Game Options
 	$gameOptions = array();
-	foreach($gameObj->getGameList() as $gameID) {
+	foreach ($gameObj->getGameList() as $gameID) {
 		$gameObj->select($gameID);
 
 		$gameOptions[$gameID] = $gameObj->get_info_filtered("name");
 	}
 
-	if(count($gameOptions) == 0) {
+	if (count($gameOptions) == 0) {
 		$gameOptions[0] = "No Games";
 	}
 
@@ -44,7 +45,7 @@
 
 	$maxTeamsPlayers = array(4 => 4, 8 => 8, 16 => 16, 32 => 32, 64 => 64);
 	$playersPerTeam = array();
-	for($i=1; $i<=16; $i++) {
+	for ($i=1; $i<=16; $i++) {
 		$playersPerTeam[$i] = $i;
 	}
 

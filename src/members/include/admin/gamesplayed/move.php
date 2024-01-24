@@ -27,12 +27,12 @@ $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage Games Played");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $gameObj->select($_POST['gID'])) {
+	if ($member->hasAccess($consoleObj) && $gameObj->select($_POST['gID'])) {
 
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 

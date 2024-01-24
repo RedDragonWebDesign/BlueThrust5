@@ -30,13 +30,13 @@ $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage My Events");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventPosition->select($_POST['posID'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventPosition->select($_POST['posID'])) {
 
 	$eventID = $eventObj->objEventPosition->get_info("event_id");
 
 	$memberInfo = $member->get_info_filtered();
 
-	if(($memberInfo['rank_id'] == 1 || ($member->hasAccess($consoleObj)) && $eventObj->select($eventID) && ($eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions") || $memberInfo['rank_id'] == 1))) {
+	if (($memberInfo['rank_id'] == 1 || ($member->hasAccess($consoleObj)) && $eventObj->select($eventID) && ($eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions") || $memberInfo['rank_id'] == 1))) {
 
 
 		$eventObj->objEventPosition->move($_POST['pDir']);

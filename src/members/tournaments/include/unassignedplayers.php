@@ -13,7 +13,7 @@
  */
 
 
-if(!defined("SHOW_UNASSIGNEDPLAYERS")) {
+if (!defined("SHOW_UNASSIGNEDPLAYERS")) {
 
 
 	require_once("../../../_setup.php");
@@ -33,7 +33,7 @@ if(!defined("SHOW_UNASSIGNEDPLAYERS")) {
 
 	$tournamentObj = new Tournament($mysqli);
 
-	if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($_POST['tournamentID']) && $member->hasAccess($consoleObj)) {
+	if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($_POST['tournamentID']) && $member->hasAccess($consoleObj)) {
 
 		$memberInfo = $member->get_info();
 
@@ -41,7 +41,7 @@ if(!defined("SHOW_UNASSIGNEDPLAYERS")) {
 		$tmemberID = $tournamentInfo['member_id'];
 		$tID = $tournamentInfo['tournament_id'];
 
-		if($memberInfo['member_id'] != $tmemberID && $memberInfo['rank_id'] != "1" && !$tournamentObj->isManager($memberInfo['member_id'])) {
+		if ($memberInfo['member_id'] != $tmemberID && $memberInfo['rank_id'] != "1" && !$tournamentObj->isManager($memberInfo['member_id'])) {
 			exit();
 		}
 
@@ -50,29 +50,29 @@ if(!defined("SHOW_UNASSIGNEDPLAYERS")) {
 
 	$arrTeams = $tournamentObj->getTeams();
 
-	if(isset($_POST['action']) && $_POST['action'] == "remove") {
+	if (isset($_POST['action']) && $_POST['action'] == "remove") {
 
 		$arrRemovePlayers = json_decode($_POST['playerList'], true);
 
-		foreach($arrRemovePlayers as $playerID) {
+		foreach ($arrRemovePlayers as $playerID) {
 
-			if($tournamentObj->objPlayer->select($playerID)) {
+			if ($tournamentObj->objPlayer->select($playerID)) {
 				$tournamentObj->objPlayer->delete();
 			}
 		}
 
 	}
-	elseif(isset($_POST['action']) && $_POST['action'] == "add" && in_array($_POST['teamID'], $arrTeams)) {
+	elseif (isset($_POST['action']) && $_POST['action'] == "add" && in_array($_POST['teamID'], $arrTeams)) {
 		$arrUnableToAddPlayer = array();
 		$arrAddPlayers = json_decode($_POST['playerList'], true);
-		foreach($arrAddPlayers as $playerID) {
+		foreach ($arrAddPlayers as $playerID) {
 
 			$arrUnfilledTeams = $tournamentObj->getUnfilledTeams();
 			$blnBasicChecks = $tournamentObj->objPlayer->select($playerID) && $tournamentObj->objPlayer->get_info("tournament_id") == $_POST['tournamentID'];
-			if($blnBasicChecks && in_array($_POST['teamID'], $arrUnfilledTeams)) {
+			if ($blnBasicChecks && in_array($_POST['teamID'], $arrUnfilledTeams)) {
 				$tournamentObj->objPlayer->update(array("team_id"), array($_POST['teamID']));
 			}
-			elseif($blnBasicChecks && !in_array($_POST['teamID'], $arrUnfilledTeams)) {
+			elseif ($blnBasicChecks && !in_array($_POST['teamID'], $arrUnfilledTeams)) {
 				$arrUnableToAddPlayer[] = $playerID;
 			}
 		}
@@ -89,11 +89,11 @@ echo "
 
 	$arrUnassignedPlayers = array();
 	$result = $mysqli->query("SELECT tournamentplayer_id FROM ".$dbprefix."tournamentplayers WHERE tournament_id = '".$tID."' AND team_id = '0'");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$tournamentObj->objPlayer->select($row['tournamentplayer_id']);
 		$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
 
-		if($member->select($playerInfo['member_id']) && $playerInfo['member_id'] != 0) {
+		if ($member->select($playerInfo['member_id']) && $playerInfo['member_id'] != 0) {
 			$arrUnassignedPlayers[$row['tournamentplayer_id']] = $member->getMemberLink();
 		}
 		else {
@@ -107,15 +107,15 @@ echo "
 	asort($arrUnassignedPlayers);
 
 	$counter = 0;
-	foreach($arrUnassignedPlayers as $playerID => $playerName) {
+	foreach ($arrUnassignedPlayers as $playerID => $playerName) {
 
 		$tournamentObj->objPlayer->select($playerID);
 		$plainTextUsername = "";
-		if($member->select($tournamentObj->objPlayer->get_info("member_id"))) {
+		if ($member->select($tournamentObj->objPlayer->get_info("member_id"))) {
 			$plainTextUsername = $member->get_info_filtered("username");
 		}
 
-		if($counter == 1) {
+		if ($counter == 1) {
 			$addCSS = " alternateBGColor";
 			$counter = 0;
 		}
@@ -138,7 +138,7 @@ echo "
 		";
 
 
-	if($result->num_rows == 0) {
+	if ($result->num_rows == 0) {
 
 		echo "
 		
@@ -152,7 +152,7 @@ echo "
 
 	$member->select($memberInfo['member_id']);
 
-	if(isset($arrUnableToAddPlayer) && count($arrUnableToAddPlayer) > 0) {
+	if (isset($arrUnableToAddPlayer) && count($arrUnableToAddPlayer) > 0) {
 		echo "
 			<div id='unassignedPlayersMessage' class='main' style='display: none'>
 				<p align='center' class='main'>
@@ -160,8 +160,8 @@ echo "
 				</p>
 				<ul>
 					";
-				foreach($arrUnableToAddPlayer as $playerID) {
-					if($tournamentObj->objPlayer->select($playerID) && $member->select($tournamentObj->objPlayer->get_info("member_id"))) {
+				foreach ($arrUnableToAddPlayer as $playerID) {
+					if ($tournamentObj->objPlayer->select($playerID) && $member->select($tournamentObj->objPlayer->get_info("member_id"))) {
 						echo "
 							<li>".$member->getMemberLink()."</li>
 						";

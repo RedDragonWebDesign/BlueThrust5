@@ -38,37 +38,37 @@ $pmFolderObj->intMemberID = $memberInfo['member_id'];
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && ($checkFolder || $pmFolderObj->isMemberFolder())) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && ($checkFolder || $pmFolderObj->isMemberFolder())) {
 
 	$pmObj = new PrivateMessage($mysqli);
 
 	$arrPMIDS = json_decode($_POST['movePMs']);
 
-	foreach($arrPMIDS as $pmID) {
+	foreach ($arrPMIDS as $pmID) {
 
 		$pmMID = "";
-		if(strpos($pmID, "_") !== false) {
+		if (strpos($pmID, "_") !== false) {
 			$tempPMID = substr($pmID, 0, strpos($pmID, "_"));
 			$pmMID = str_replace($tempPMID."_", "", $pmID);
 			$pmID = $tempPMID;
 		}
 
-		if($pmObj->select($pmID)) {
+		if ($pmObj->select($pmID)) {
 			$tempPMInfo = $pmObj->get_info_filtered();
 			$arrRecipients = $pmObj->getRecipients();
 
 
 
-			if($tempPMInfo['sender_id']  == $memberInfo['member_id'] && $pmMID == "") {
+			if ($tempPMInfo['sender_id']  == $memberInfo['member_id'] && $pmMID == "") {
 				// Sender
 				echo "hi";
 				$pmObj->update(array("senderfolder_id"), array($_POST['newFolder']));
 			}
-			elseif($tempPMInfo['receiver_id'] == $memberInfo['member_id']) {
+			elseif ($tempPMInfo['receiver_id'] == $memberInfo['member_id']) {
 				// Receiver
 				$pmObj->update(array("receiverfolder_id"), array($_POST['newFolder']));
 			}
-			elseif(in_array($memberInfo['member_id'], $arrRecipients)) {
+			elseif (in_array($memberInfo['member_id'], $arrRecipients)) {
 				// Receiver - Multi Member PM
 
 				$tempKey = array_search($memberInfo['member_id'], $arrRecipients);

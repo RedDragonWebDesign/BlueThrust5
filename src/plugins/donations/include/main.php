@@ -1,6 +1,7 @@
 <?php
 
-	if(!defined("MAIN_ROOT")) { exit(); }
+	if (!defined("MAIN_ROOT")) {
+exit(); }
 	global $donationPlugin, $campaignInfo, $campaignObj;
 
 
@@ -9,7 +10,7 @@
 
 	require_once("include/donate_form.php");
 
-	if($donationPlugin->getConfigInfo("mode") != "live") {
+	if ($donationPlugin->getConfigInfo("mode") != "live") {
 
 		echo "
 			<div class='errorDiv'><p><strong>NOTE:</strong> This plugin is currently set to sandbox mode!  In order to properly receive donations it must be set to Live mode.</p></div>
@@ -24,7 +25,7 @@
 	$donationsFormatted = $campaignObj->formatAmount($campaignObj->getTotalDonationAmount());
 
 	$dispGoal = "";
-	if($campaignInfo['goalamount'] > 0) {
+	if ($campaignInfo['goalamount'] > 0) {
 		$dispGoal = " of ".$campaignObj->formatAmount($campaignInfo['goalamount'], 2)." goal";
 
 		// Graph
@@ -35,7 +36,7 @@
 
 	$daysLeft = "";
 	$dispEndDate = "";
-	if(($campaignInfo['dateend'] != 0) || ($campaignInfo['dateend'] == 0 && $campaignInfo['currentperiod'] != 0)) {
+	if (($campaignInfo['dateend'] != 0) || ($campaignInfo['dateend'] == 0 && $campaignInfo['currentperiod'] != 0)) {
 
 		$currentEndDate = $campaignObj->getCurrentEndDate();
 		$daysLeft = $campaignObj->getDaysLeft();
@@ -71,7 +72,7 @@
 	<p class='numberCounts'><?php echo $donationsFormatted ?></p>
 	<p class='main'>raised<?php echo $dispGoal; ?></p>
 	<?php
-		if($dispGoal != "") {
+		if ($dispGoal != "") {
 
 			$dispDaysLeft = ($daysLeft != "") ? "<div class='donationsDaysLeft'>".$campaignObj->getFormattedEndDate()." left</div>" : "";
 
@@ -87,7 +88,7 @@
 			";
 
 		}
-		elseif($daysLeft != "") {
+		elseif ($daysLeft != "") {
 			echo "
 				<br>		
 				<p class='numberCounts'>".$daysLeft."</p>		
@@ -96,7 +97,7 @@
 		}
 
 
-		if($campaignInfo['description'] != "") {
+		if ($campaignInfo['description'] != "") {
 			echo "
 				<br>
 				<div class='dottedLine largeFont' style='margin-top: 15px'><b>Campaign Description:</b></div>
@@ -105,7 +106,7 @@
 		}
 
 		$medalObj = new Medal($mysqli);
-		if($campaignInfo['awardmedal'] != 0 && $medalObj->select($campaignInfo['awardmedal'])) {
+		if ($campaignInfo['awardmedal'] != 0 && $medalObj->select($campaignInfo['awardmedal'])) {
 			$medalInfo = $medalObj->get_info_filtered();
 
 			$dispStyle = $medalInfo['imagewidth'] != 0 ? "width: ".$medalInfo['imagewidth']."px;" : "";

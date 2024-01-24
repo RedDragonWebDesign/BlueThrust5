@@ -21,10 +21,10 @@ require_once("facebook.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -68,7 +68,7 @@ $dispBreadCrumb
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 
 	$fbObj = new Facebook($mysqli);
@@ -82,7 +82,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		);
 
 		$jsonAPIKey = json_encode($arrAPIKey);
-		if($pluginObj->update(array("apikey"), array($jsonAPIKey))) {
+		if ($pluginObj->update(array("apikey"), array($jsonAPIKey))) {
 
 			echo "
 				<div style='display: none' id='successBox'>
@@ -114,9 +114,9 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 		$arrFacebookAPIKeys = array("App ID"=>$fbObj->getAppID(), "App Secret"=>$fbObj->getAppSecret());
 
-		foreach($arrFacebookAPIKeys as $key=>$value) {
+		foreach ($arrFacebookAPIKeys as $key=>$value) {
 
-			if($value == "") {
+			if ($value == "") {
 				$dispNote .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> ".$key."<br>";
 			}
 
@@ -133,7 +133,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		
 			";
 
-			if($dispError != "") {
+			if ($dispError != "") {
 				echo "
 				<div class='errorDiv'>
 				<strong>Unable to save Facebook Login settings because the following errors occurred:</strong><br><br>
@@ -142,7 +142,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				";
 			}
 
-			if($dispNote != "") {
+			if ($dispNote != "") {
 				echo "
 					<div class='errorDiv'>
 						<strong><u>NOTE:</u> In order for Facebook Login to work you must set the following variables in the facebook.php plugin file.</strong><br><br>

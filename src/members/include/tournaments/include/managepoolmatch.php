@@ -1,6 +1,6 @@
 <?php
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 
@@ -12,7 +12,7 @@ $matchInfo = $tournamentObj->objTournamentPool->objTournamentPoolMatch->get_info
 $arrTeam1 = $tournamentObj->getTeamPlayers($matchInfo['team1_id']);
 $arrTeam2 = $tournamentObj->getTeamPlayers($matchInfo['team2_id']);
 
-if(in_array($memberInfo['member_id'], $arrTeam1)) {
+if (in_array($memberInfo['member_id'], $arrTeam1)) {
 	$checkApprove = $matchInfo['team2approve'];
 	$checkMyApprove = $matchInfo['team1approve'];
 	$dispMyTeamApprove = "team1approve";
@@ -24,7 +24,7 @@ if(in_array($memberInfo['member_id'], $arrTeam1)) {
 	$dispMatchReplay = $matchInfo['replayteam1url'];
 	$dispReplayColumn = "replayteam1url";
 }
-elseif(in_array($memberInfo['member_id'], $arrTeam2)) {
+elseif (in_array($memberInfo['member_id'], $arrTeam2)) {
 	$checkApprove = $matchInfo['team1approve'];
 	$checkMyApprove = $matchInfo['team2approve'];
 	$dispMyTeamApprove = "team2approve";
@@ -50,7 +50,7 @@ $dispTeam1 = $tournamentObj->getPlayerName($matchInfo['team1_id']);
 $dispTeam2 = $tournamentObj->getPlayerName($matchInfo['team2_id']);
 
 
-if($tournamentInfo['playersperteam'] == 1) {
+if ($tournamentInfo['playersperteam'] == 1) {
 	$dispTeamOrPlayer = "Player";
 }
 else {
@@ -59,27 +59,27 @@ else {
 
 
 $dispApproved = "";
-if($checkApprove == 1) {
+if ($checkApprove == 1) {
 	$dispApproved = "<br><br><b><u>NOTE:</u></b> ".$dispOpponent." has already submitted results for this match.  You can approve the submission by clicking the Approve button below or you can enter in different results.";
 }
-elseif($checkMyApprove == 1) {
+elseif ($checkMyApprove == 1) {
 	$dispApproved = "<br><br><b><u>NOTE:</u></b> You have already submitted results for this match.  The results will show as pending on the tournament profile page and bracket until ".$dispOpponent." or the tournament manager approves your submission.";
 }
 
 
 
-if($_POST['submit'] && !$_POST['approve']) {
+if ($_POST['submit'] && !$_POST['approve']) {
 	$arrColumns = array();
 	$arrValues = array();
 
 	// Check Winner
 	$arrWinners = array(0,1,2);
-	if(!in_array($_POST['matchwinner'], $arrWinners)) {
+	if (!in_array($_POST['matchwinner'], $arrWinners)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid match winner.<br>";
 		$countErrors++;
 	}
 
-	if($_POST['matchwinner'] != 0) {
+	if ($_POST['matchwinner'] != 0) {
 		$arrColumns[] = $dispMyTeamApprove;
 		$arrValues[] = 1;
 		$arrColumns[] = $dispOpponentTeamApprove;
@@ -89,11 +89,11 @@ if($_POST['submit'] && !$_POST['approve']) {
 
 	// Upload Replay
 
-	if($_FILES['uploadfile']['name'] != "") {
+	if ($_FILES['uploadfile']['name'] != "") {
 
 		$uploadReplayObj = new BTUpload($_FILES['uploadfile'], "replay_", "../../downloads/replays/", array(".zip"));
 
-		if(!$uploadReplayObj->uploadFile()) {
+		if (!$uploadReplayObj->uploadFile()) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload the replay. Please make sure the file extension is .zip and that the file size is not too big.<br>";
 		}
@@ -106,13 +106,13 @@ if($_POST['submit'] && !$_POST['approve']) {
 		$matchReplayURL = $_POST['uploadurl'];
 	}
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		$arrColumns[] = "winner";
 		$arrValues[] = $_POST['matchwinner'];
 		$arrColumns[] = $dispReplayColumn;
 		$arrValues[] = $matchReplayURL;
 
-		if($tournamentObj->objTournamentPool->objTournamentPoolMatch->update($arrColumns, $arrValues)) {
+		if ($tournamentObj->objTournamentPool->objTournamentPoolMatch->update($arrColumns, $arrValues)) {
 
 			echo "
 			
@@ -128,7 +128,7 @@ if($_POST['submit'] && !$_POST['approve']) {
 			
 			";
 
-			foreach($arrOpponent as $value) {
+			foreach ($arrOpponent as $value) {
 				$tMemberObj->select($value);
 				$tMemberObj->postNotification($member->getMemberLink()." has updated the match results for <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&pID=".$_GET['pID']."'>".$dispTeam1." vs. ".$dispTeam2."</a>");
 			}
@@ -143,15 +143,15 @@ if($_POST['submit'] && !$_POST['approve']) {
 
 
 }
-elseif(!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
+elseif (!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
 
 	// Upload Replay
 
-	if($_FILES['uploadfile']['name'] != "") {
+	if ($_FILES['uploadfile']['name'] != "") {
 
 		$uploadReplayObj = new BTUpload($_FILES['uploadfile'], "replay_", "../downloads/replays/", array(".zip"));
 
-		if(!$uploadReplayObj->uploadFile()) {
+		if (!$uploadReplayObj->uploadFile()) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload the replay. Please make sure the file extension is .zip and that the file size is not too big.<br>";
 		}
@@ -165,7 +165,7 @@ elseif(!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
 	}
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 		$arrColumns[] = $dispReplayColumn;
 		$arrValues[] = $matchReplayURL;
@@ -177,7 +177,7 @@ elseif(!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
 		$arrValues[] = $_POST['team2score'];
 
 
-		if($tournamentObj->objTournamentPool->objTournamentPoolMatch->update($arrColumns, $arrValues)) {
+		if ($tournamentObj->objTournamentPool->objTournamentPoolMatch->update($arrColumns, $arrValues)) {
 
 			echo "
 			
@@ -194,7 +194,7 @@ elseif(!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
 			
 			";
 
-			foreach($arrOpponent as $value) {
+			foreach ($arrOpponent as $value) {
 				$tMemberObj->select($value);
 				$tMemberObj->postNotification($member->getMemberLink()." has approved the match results for <a href='".$MAIN_ROOT."tournaments/view.php?tID=".$matchInfo['tournament_id']."'>".$dispTeam1." vs. ".$dispTeam2."</a>");
 			}
@@ -221,7 +221,7 @@ echo "
 
 ";
 
-if($dispError != "") {
+if ($dispError != "") {
 	echo "
 	<div class='errorDiv'>
 	<strong>Unable to edit match because the following errors occurred:</strong><br><br>
@@ -273,7 +273,7 @@ if($dispError != "") {
 						<div class='dottedLine' style='width: 90%; padding-top: 3px'></div>
 						";
 
-				if($checkApprove == 1) {
+				if ($checkApprove == 1) {
 					echo "<p style='margin: 2px; padding-left: 5px'>* Clicking the Approve Results button will also upload your replay.</p><br>";
 				}
 
@@ -298,7 +298,7 @@ if($dispError != "") {
 					
 						";
 
-					if($checkApprove == 1) {
+					if ($checkApprove == 1) {
 
 						echo "<input type='submit' name='approve' value='Approve Results' class='submitButton' style='width: 125px'><br><br>";
 

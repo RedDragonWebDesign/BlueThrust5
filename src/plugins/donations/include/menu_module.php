@@ -4,7 +4,7 @@
 		global $mysqli, $formObj;
 		$menuItemObj = $formObj->objSave;
 
-		if(isset($_GET['action']) && $_GET['action'] == "edit" && $menuItemObj->get_info("itemtype") == "donation") {
+		if (isset($_GET['action']) && $_GET['action'] == "edit" && $menuItemObj->get_info("itemtype") == "donation") {
 
 			$_POST['itemtype'] = "donation";
 			$arrComponents = $formObj->components;
@@ -19,11 +19,11 @@
 			// Donation Section Options
 			$donationOptions = array();
 			$result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."donations_campaign WHERE dateend > '".time()."' OR dateend = '0' ORDER BY title");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$donationOptions[$row['donationcampaign_id']] = filterText($row['title']);
 			}
 
-			if(count($donationOptions) == 0) {
+			if (count($donationOptions) == 0) {
 				$donationOptions['none'] = "No Campaigns Running";
 			}
 
@@ -71,11 +71,11 @@
 		// Donation Section Options
 		$donationOptions = array();
 		$result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."donations_campaign WHERE dateend > '".time()."' OR dateend = '0' ORDER BY title");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$donationOptions[$row['donationcampaign_id']] = filterText($row['title']);
 		}
 
-		if(count($donationOptions) == 0) {
+		if (count($donationOptions) == 0) {
 			$donationOptions['none'] = "No Campaigns Running";
 		}
 
@@ -107,7 +107,7 @@
 			$(document).ready(function() {
 			";
 
-			foreach($arrAfterJS as $value) {
+			foreach ($arrAfterJS as $value) {
 				$afterJS .= $value."\n";
 			}
 
@@ -126,7 +126,8 @@
 
 	function saveDonationMenuItem() {
 
-		if($_POST['itemtype'] != "donation") { return false; }
+		if ($_POST['itemtype'] != "donation") {
+return false; }
 
 		global $menuItemObj;
 
@@ -136,17 +137,18 @@
 
 	function displayDonationMenuModule() {
 		$menuItemInfo = $GLOBALS['menu_item_info'];
-		if($menuItemInfo['itemtype'] != "donation") { return false; }
+		if ($menuItemInfo['itemtype'] != "donation") {
+return false; }
 
 		global $mysqli;
-		if(!class_exists("DonationCampaign")) {
+		if (!class_exists("DonationCampaign")) {
 			require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
 		}
 
 		$campaignObj = new DonationCampaign($mysqli);
 		$donationObj = new btPlugin($mysqli);
 
-		if($campaignObj->select($menuItemInfo['itemtype_id']) && $donationObj->selectByName("Donations")) {
+		if ($campaignObj->select($menuItemInfo['itemtype_id']) && $donationObj->selectByName("Donations")) {
 			$progressBarColor = $donationObj->getConfigInfo("goalprogresscolor");
 			$progressBarBackColor = $donationObj->getConfigInfo("goalprogressbackcolor");
 			$campaignInfo = $campaignObj->get_info_filtered();
@@ -157,12 +159,12 @@
 			$dispCampaignDesc = nl2br(parseBBCode(filterText($dispCampaignDesc)));
 
 			$daysLeft = "";
-			if(($campaignInfo['dateend'] != 0) || ($campaignInfo['dateend'] == 0 && $campaignInfo['currentperiod'] != 0)) {
+			if (($campaignInfo['dateend'] != 0) || ($campaignInfo['dateend'] == 0 && $campaignInfo['currentperiod'] != 0)) {
 				$daysLeft = $campaignObj->getDaysLeft();
 			}
 
 			$dispGoal = "";
-			if($campaignInfo['goalamount'] > 0) {
+			if ($campaignInfo['goalamount'] > 0) {
 
 				// Graph
 				$goalCompletePercent = round(($campaignObj->getTotalDonationAmount()/$campaignInfo['goalamount'])*100);
@@ -184,7 +186,7 @@
 
 			$currentEndDate = $campaignObj->getCurrentEndDate();
 			$dispEndingDate = "";
-			if($currentEndDate != 0) {
+			if ($currentEndDate != 0) {
 				$dispExclaimation = ($daysLeft < 3) ? "!" : "";
 				$dispEndingDate = "<div class='donateMenuItemStat'><b>".$campaignObj->getFormattedEndDate()." left".$dispExclaimation."</b></div>";
 			}
@@ -206,7 +208,7 @@
 					</div>
 			";
 
-				if(count($donationsInfo) > 0) {
+				if (count($donationsInfo) > 0) {
 
 					echo "<p class='donateMenuItemTitle'><b>Latest Donators:</b></p>";
 					$campaignObj->showDonatorList(false, 2);

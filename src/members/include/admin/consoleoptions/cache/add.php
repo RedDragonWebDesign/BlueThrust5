@@ -35,21 +35,21 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 $checkAccess = ($checkAccess1 || $checkAccess2);
 
 $blnSuccess = false;
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($checkAccess && is_numeric($_POST['mID'])) {
+	if ($checkAccess && is_numeric($_POST['mID'])) {
 
 
-		if($member->select($_POST['mID']) && ($_POST['accessrule'] == "allow" || $_POST['accessrule'] == "deny")) {
+		if ($member->select($_POST['mID']) && ($_POST['accessrule'] == "allow" || $_POST['accessrule'] == "deny")) {
 
 			$intAlreadyAdded = "no";
 			$counter = 0;
-			foreach($_SESSION['btAccessRules'] as $key => $accessInfo) {
+			foreach ($_SESSION['btAccessRules'] as $key => $accessInfo) {
 
-				if($accessInfo['mID'] == $_POST['mID']) {
+				if ($accessInfo['mID'] == $_POST['mID']) {
 					$intAlreadyAdded = $key;
 				}
 
@@ -62,7 +62,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					'accessRule' => $_POST['accessrule']
 					);
 
-			if(is_numeric($intAlreadyAdded)) {
+			if (is_numeric($intAlreadyAdded)) {
 				$_SESSION['btAccessRules'][$intAlreadyAdded] = $arrSaveInfo;
 			}
 			else {
@@ -76,10 +76,11 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 	}
 
-	if($checkAccess) { require_once("view.php"); }
+	if ($checkAccess) {
+require_once("view.php"); }
 
 
-	if(!$blnSuccess && $checkAccess) {
+	if (!$blnSuccess && $checkAccess) {
 
 
 

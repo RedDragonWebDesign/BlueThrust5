@@ -32,7 +32,7 @@ $pluginObj = new btPlugin($mysqli);
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && isset($_GET['plugin'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && isset($_GET['plugin'])) {
 
 	$pluginInstaller = new PluginInstaller($mysqli);
 
@@ -40,7 +40,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 	$pluginInstaller->install();
 
-	if($pluginInstaller->isInstalled()) {
+	if ($pluginInstaller->isInstalled()) {
 		$member->logAction("Installed ".$pluginInstaller->pluginName." Plugin.");
 	}
 

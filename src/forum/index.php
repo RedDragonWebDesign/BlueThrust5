@@ -33,7 +33,7 @@ require_once(BASE_DIRECTORY."themes/".$THEME."/_header.php");
 
 // Check Private Forum
 
-if($websiteInfo['privateforum'] == 1 && !constant("LOGGED_IN")) {
+if ($websiteInfo['privateforum'] == 1 && !constant("LOGGED_IN")) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
 }
 
@@ -43,7 +43,7 @@ $memberInfo = array();
 
 
 $LOGGED_IN = false;
-if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 	$LOGGED_IN = true;
 }
@@ -62,31 +62,31 @@ echo "
 $arrLatestPostInfo = array("time" => 0, "id" => 0);
 
 $result = $mysqli->query("SELECT forumcategory_id FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$arrForumCats[] = $row['forumcategory_id'];
 
 	$categoryObj->select($row['forumcategory_id']);
 	$catInfo = $categoryObj->get_info_filtered();
 	$arrBoards = $categoryObj->getAssociateIDs("AND subforum_id = '0' ORDER BY sortnum", true);
 	$dispBoards = "";
-	foreach($arrBoards as $boardID) {
+	foreach ($arrBoards as $boardID) {
 
 		$boardObj->select($boardID);
 
-		if($boardObj->memberHasAccess($memberInfo)) {
+		if ($boardObj->memberHasAccess($memberInfo)) {
 			$boardInfo = $boardObj->get_info_filtered();
 			$arrForumTopics = $boardObj->getForumTopics();
 
 			$newTopicBG = "";
 			$dispNewTopicIMG = "";
 
-			if($LOGGED_IN && $boardObj->hasNewTopics($memberInfo['member_id'])) {
+			if ($LOGGED_IN && $boardObj->hasNewTopics($memberInfo['member_id'])) {
 				$dispNewTopicIMG = " <img style='margin-left: 5px' src='".$MAIN_ROOT."themes/".$THEME."/images/forum-new.png' title='New Posts!'>";
 				$newTopicBG = " boardNewPostBG";
 			}
 
 			// Get Last Post Display Info
-			if(count($arrForumTopics) > 0) {
+			if (count($arrForumTopics) > 0) {
 				$boardObj->objPost->select($arrForumTopics[0]);
 				$firstPostInfo = $boardObj->objPost->get_info_filtered();
 
@@ -96,7 +96,7 @@ while($row = $result->fetch_assoc()) {
 				$boardObj->objPost->select($lastPostID);
 				$lastPostInfo = $boardObj->objPost->get_info_filtered();
 
-				if($lastPostInfo['dateposted'] > $arrLatestPostInfo['time']) {
+				if ($lastPostInfo['dateposted'] > $arrLatestPostInfo['time']) {
 					$arrLatestPostInfo['time'] = $lastPostInfo['dateposted'];
 					$arrLatestPostInfo['id'] = $lastPostInfo['forumpost_id'];
 				}
@@ -116,7 +116,7 @@ while($row = $result->fetch_assoc()) {
 			$arrDispSubForums = array();
 			$arrSubForums = $boardObj->getSubForums();
 
-			foreach($arrSubForums as $value) {
+			foreach ($arrSubForums as $value) {
 				$subForumObj->select($value);
 				$subForumInfo = $subForumObj->get_info_filtered();
 
@@ -125,7 +125,7 @@ while($row = $result->fetch_assoc()) {
 
 
 			$dispSubForums = "";
-			if(count($arrDispSubForums) > 0) {
+			if (count($arrDispSubForums) > 0) {
 				$dispSubForums = "<br><br><b>Sub-Forums:</b><br>&nbsp;&nbsp;".implode("&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;", $arrDispSubForums);
 			}
 
@@ -145,7 +145,7 @@ while($row = $result->fetch_assoc()) {
 	}
 
 
-	if($dispBoards != "") {
+	if ($dispBoards != "") {
 
 		echo "
 			<tr>
@@ -169,7 +169,7 @@ while($row = $result->fetch_assoc()) {
 
 }
 
-if($result->num_rows == 0) {
+if ($result->num_rows == 0) {
 	echo "
 		
 		<div class='shadedBox' style='width: 40%; margin: 20px auto'>

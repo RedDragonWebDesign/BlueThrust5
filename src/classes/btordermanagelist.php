@@ -31,7 +31,7 @@
 
 		public function select($id) {
 			$returnVal = false;
-			if($this->objManage->select($id)) {
+			if ($this->objManage->select($id)) {
 				$this->intSelectedID = $id;
 				$returnVal = true;
 			}
@@ -53,14 +53,14 @@
 			$arrItems = array();
 			$arrInfo = ($customInfo == "") ? $this->objManage->get_entries(array(), $this->orderBy) : $customInfo;
 			$x = 0;
-			foreach($arrInfo as $info) {
+			foreach ($arrInfo as $info) {
 
 				$actionsInfo = array();
-				if($x != 0) {
+				if ($x != 0) {
 					$actionsInfo[] = "moveup";
 				}
 
-				if($x != (count($arrInfo)-1)) {
+				if ($x != (count($arrInfo)-1)) {
 					$actionsInfo[] = "movedown";
 				}
 
@@ -80,7 +80,7 @@
 			}
 
 			$arrAddNewLink = array();
-			if($this->objConsole->select($this->intAddCID)) {
+			if ($this->objConsole->select($this->intAddCID)) {
 				$arrAddNewLink = array("url" => MAIN_ROOT."members/console.php?cID=".$this->intAddCID, "name" => $this->objConsole->get_info_filtered("pagetitle"));
 			}
 

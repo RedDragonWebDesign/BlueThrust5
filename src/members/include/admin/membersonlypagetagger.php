@@ -27,12 +27,12 @@ $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);
 
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 
-	if($_POST['setTaggerStatus'] == 1) {
+	if ($_POST['setTaggerStatus'] == 1) {
 
-		if(isset($_SESSION['btMembersOnlyTagger']) && $_SESSION['btMembersOnlyTagger'] == 1) {
+		if (isset($_SESSION['btMembersOnlyTagger']) && $_SESSION['btMembersOnlyTagger'] == 1) {
 			$_SESSION['btMembersOnlyTagger'] = 0;
 
 			echo "
@@ -58,12 +58,12 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		}
 
 	}
-	elseif($_POST['setPageStatus'] == 1 && !isset($_POST['pageID']) && $_SESSION['btMembersOnlyTagger'] == 1) {
+	elseif ($_POST['setPageStatus'] == 1 && !isset($_POST['pageID']) && $_SESSION['btMembersOnlyTagger'] == 1) {
 
 
 		$taggerObj = new Basic($mysqli, "membersonlypage", "pageurl");
 
-		if(!$taggerObj->select($_POST['tagURL'], false)) {
+		if (!$taggerObj->select($_POST['tagURL'], false)) {
 
 			$taggerObj->addNew(array("pagename", "pageurl", "dateadded"), array($_POST['pageName'], $_POST['tagURL'], time()));
 
@@ -103,23 +103,23 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 
 	}
-	elseif($_POST['setPageStatus'] == 1 && isset($_POST['pageID'])) {
+	elseif ($_POST['setPageStatus'] == 1 && isset($_POST['pageID'])) {
 
 		$taggerObj = new Basic($mysqli, "membersonlypage", "page_id");
-		if($taggerObj->select($_POST['pageID'])) {
+		if ($taggerObj->select($_POST['pageID'])) {
 
 			$taggerObj->delete();
 			require_once("membersonlypageslist.php");
 
 		}
 	}
-	elseif($_POST['setSectionStatus'] == 1 && ($_POST['pageID'] == "profile" || $_POST['pageID'] == "forum") && ($_POST['pageStatusValue'] == 1 || $_POST['pageStatusValue'] == 0)) {
+	elseif ($_POST['setSectionStatus'] == 1 && ($_POST['pageID'] == "profile" || $_POST['pageID'] == "forum") && ($_POST['pageStatusValue'] == 1 || $_POST['pageStatusValue'] == 0)) {
 
 		$settingName = "private".$_POST['pageID'];
 		$arrColumn = array("value");
 		$arrValue = array($_POST['pageStatusValue']);
 		$webInfoObj->select($webInfoObj->get_key($settingName));
-		if($webInfoObj->update($arrColumn, $arrValue)) {
+		if ($webInfoObj->update($arrColumn, $arrValue)) {
 			echo "<span class='successFont'><i>section privacy updated!</i></span>";
 		}
 		else {

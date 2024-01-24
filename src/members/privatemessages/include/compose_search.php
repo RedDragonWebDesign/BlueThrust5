@@ -25,7 +25,7 @@ $member->select($_SESSION['btUsername']);
 $cID = $consoleObj->findConsoleIDByName("Private Messages");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 	$memberInfo = $member->get_info_filtered();
 	$searchTerm = $mysqli->real_escape_string($_GET['term']);
@@ -33,13 +33,13 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 	$filterMembers = "('')";
 	$checkFilterList = implode("", $_SESSION['btComposeList'][$pmSessionID]['member']);
-	if(is_numeric($checkFilterList)) {
+	if (is_numeric($checkFilterList)) {
 		$filterMembers = "('".implode("','", $_SESSION['btComposeList'][$pmSessionID]['member'])."')";
 	}
 
 	$rankObj = new Rank($mysqli);
 	$result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.name FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id AND ".$dbprefix."members.username LIKE '".$searchTerm."%' AND ".$dbprefix."members.member_id NOT IN ".$filterMembers." ORDER BY ".$dbprefix."members.username");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 		$rankObj->select($row['rank_id']);
 		$displayName = $rankObj->get_info_filtered("name")." ".filterText($row['username']);
@@ -68,11 +68,11 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$arrQuery['tournament']['append'] = " Players";
 
 
-	foreach($arrQuery as $key => $arr) {
+	foreach ($arrQuery as $key => $arr) {
 
 		$filterList = "('')";
 		$checkFilterList = implode("", $_SESSION['btComposeList'][$pmSessionID][$key]);
-		if(is_numeric($checkFilterList)) {
+		if (is_numeric($checkFilterList)) {
 			$filterList = "('".implode("','", $_SESSION['btComposeList'][$pmSessionID][$key])."')";
 		}
 
@@ -83,7 +83,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 		//echo $arr['query'].$arr['orderby'];
 		$result = $mysqli->query($arr['query'].$arr['orderby']);
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 
 			$arrComposeList[] = array("id" => $sessionPrefix.$row[$arr['id']], "value" => filterText($row['name']).$arr['append']);
 

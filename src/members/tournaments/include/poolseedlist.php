@@ -32,19 +32,19 @@ $tournamentObj = new Tournament($mysqli);
 $tID = $_POST['tID'];
 $arrMembers = array();
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID) && $member->hasAccess($consoleObj)) {
 
 	$memberInfo = $member->get_info();
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 
-	if($tournamentInfo['playersperteam'] == 1) {
+	if ($tournamentInfo['playersperteam'] == 1) {
 		$dispTeamOrPlayer = "Player";
 	}
 	else {
 		$dispTeamOrPlayer = "Team";
 	}
 
-	if(($memberInfo['member_id'] == $tournamentInfo['member_id'] || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) && $tournamentInfo['seedtype'] == 3) {
+	if (($memberInfo['member_id'] == $tournamentInfo['member_id'] || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) && $tournamentInfo['seedtype'] == 3) {
 
 		echo "
 		
@@ -58,7 +58,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 
 
 				$arrTeams = $tournamentObj->getTeams(true, "ORDER BY seed");
-				foreach($arrTeams as $teamID) {
+				foreach ($arrTeams as $teamID) {
 					$dispName = $tournamentObj->getPlayerName($teamID);
 					$tournamentObj->objTeam->select($teamID);
 					$dispSeed = $tournamentObj->objTeam->get_info("seed");

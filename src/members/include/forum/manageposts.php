@@ -18,12 +18,12 @@ $countErrors = 0;
 require_once("../classes/forumboard.php");
 $boardObj = new ForumBoard($mysqli);
 
-if(isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {
+if (isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {
 	$boardID = $boardObj->objTopic->get_info("forumboard_id");
 	$boardObj->select($boardID);
 
 }
-elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID'])) {
+elseif (isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID'])) {
 	$topicID = $boardObj->objPost->get_info("forumtopic_id");
 	$postMemberID = $boardObj->objPost->get_info("member_id");
 	$boardObj->objTopic->select($topicID);
@@ -31,13 +31,13 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID'])) {
 	$boardObj->select($boardID);
 }
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj) && !$boardObj->memberIsMod($memberInfo['member_id']) && $memberInfo['member_id'] != $postMemberID) {
+	if (!$member->hasAccess($consoleObj) && !$boardObj->memberIsMod($memberInfo['member_id']) && $memberInfo['member_id'] != $postMemberID) {
 		echo "
 			<script type='text/javascript'>
 				window.location = '".$MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&noaccess=1'
@@ -55,7 +55,7 @@ $cID = $_GET['cID'];
 
 $arrActions = array("sticky", "lock", "delete");
 
-if(
+if (
 	isset($_GET['tID']) &&
 	$boardObj->objTopic->select($_GET['tID']) &&
 	in_array($_GET['action'], $arrActions) &&
@@ -69,10 +69,10 @@ if(
 	$boardObj->objPost->select($topicInfo['forumpost_id']);
 	$topicName = $boardObj->objPost->get_info_filtered("title");
 
-	switch($_GET['action']) {
+	switch ($_GET['action']) {
 		case "sticky":
 			$newStickyStatus = 0;
-			if($topicInfo['stickystatus'] == 0) {
+			if ($topicInfo['stickystatus'] == 0) {
 				$newStickyStatus = 1;
 			}
 
@@ -82,7 +82,7 @@ if(
 			break;
 		case "lock":
 			$newLockStatus = 0;
-			if($topicInfo['lockstatus'] == 0) {
+			if ($topicInfo['lockstatus'] == 0) {
 				$newLockStatus = 1;
 			}
 
@@ -108,7 +108,7 @@ if(
 			break;
 	}
 
-	if($redirectURL != "") {
+	if ($redirectURL != "") {
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$redirectURL."';
@@ -116,7 +116,7 @@ if(
 	";
 	}
 }
-elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET['action'] ?? '') == "delete") {
+elseif (isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET['action'] ?? '') == "delete") {
 // DELETE POST
 
 	$postInfo = $boardObj->objPost->get_info_filtered();
@@ -124,7 +124,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 
 	$topicInfo = $boardObj->objTopic->get_info_filtered();
 	$dialogMessage = "";
-	if($postInfo['forumpost_id'] != $topicInfo['forumpost_id']) {
+	if ($postInfo['forumpost_id'] != $topicInfo['forumpost_id']) {
 		// Not First Post
 		$boardObj->objPost->delete();
 
@@ -137,7 +137,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 	else {
 		// Topics First Post
 		$arrPosts = $boardObj->objTopic->getAssociateIDs();
-		if(count($arrPosts) > 1) {
+		if (count($arrPosts) > 1) {
 
 			$dialogMessage = "You cannot delete this post with out deleting the entire topic!<br><br>Ask a mod to delete the topic.";
 
@@ -168,7 +168,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 	$member->logAction("Deleted post in topic: <a href='".$MAIN_ROOT."forum/viewtopic.php?tID=".$topicInfo['forumtopic_id']."'>".$boardObj->objPost->get_info_filtered("title")."</a>");
 
 }
-elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET['action'] ?? '') != "delete") {
+elseif (isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET['action'] ?? '') != "delete") {
 // EDIT POST
 
 	$postInfo = $boardObj->objPost->get_info();
@@ -194,28 +194,28 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 
 
 		// Check Topic Title
-		if($topicPostInfo['forumpost_id'] == $postInfo['forumpost_id'] && trim($_POST['topicname']) == "") {
+		if ($topicPostInfo['forumpost_id'] == $postInfo['forumpost_id'] && trim($_POST['topicname']) == "") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not enter a blank topic title.<br>";
 		}
 
 		// Check Post
 
-		if(trim($_POST['wysiwygHTML']) == "") {
+		if (trim($_POST['wysiwygHTML']) == "") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not make a blank post.<br>";
 		}
 
-		if($countErrors == 0) {
+		if ($countErrors == 0) {
 
 			$arrValues = array($_POST['wysiwygHTML'], time(), $memberInfo['member_id']);
 
-			if($topicPostInfo['forumpost_id'] == $postInfo['forumpost_id']) {
+			if ($topicPostInfo['forumpost_id'] == $postInfo['forumpost_id']) {
 				$arrColumns[] = "title";
 				$arrValues[] = $_POST['topicname'];
 			}
 
-			if($boardObj->objPost->update($arrColumns, $arrValues)) {
+			if ($boardObj->objPost->update($arrColumns, $arrValues)) {
 				echo "
 				
 					<div style='display: none' id='successBox'>
@@ -235,7 +235,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 
 		}
 
-		if($countErrors > 0) {
+		if ($countErrors > 0) {
 			$_POST = filterArray($_POST);
 			$_POST['submit'] = false;
 		}
@@ -245,7 +245,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 
 	if ( empty($_POST['submit']) ) {
 
-		if($topicPostInfo['forumpost_id'] == $postInfo['forumpost_id']) {
+		if ($topicPostInfo['forumpost_id'] == $postInfo['forumpost_id']) {
 			$dispEditTitle = "<input type='text' id='postSubject' name='topicname' value='".$topicPostInfo['title']."' class='textBox' style='width: 250px'>";
 		}
 		else {
@@ -258,7 +258,7 @@ elseif(isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET
 		<div class='formDiv'>
 		";
 
-		if($dispError != "") {
+		if ($dispError != "") {
 			echo "
 			<div class='errorDiv'>
 			<strong>Unable to edit post because the following errors occurred:</strong><br><br>

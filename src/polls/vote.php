@@ -29,7 +29,7 @@
 
 	$arrReturn = array("result" => "fail");
 	$pollOptionSelector = "poll_".$_POST['pollID'];
-	if($pollObj->select($_POST['pollID'])) {
+	if ($pollObj->select($_POST['pollID'])) {
 
 		$pollInfo = $pollObj->get_info_filtered();
 		$pollObj->objAccess->arrAccessFor = array("keyName" => "poll_id", "keyValue" => $pollInfo['poll_id']);
@@ -37,23 +37,23 @@
 		$blnVote = false;
 		$member->select($_SESSION['btUsername']);
 		$memberID = "";
-		if($pollInfo['accesstype'] == "members" && $member->authorizeLogin($_SESSION['btPassword'])) {
+		if ($pollInfo['accesstype'] == "members" && $member->authorizeLogin($_SESSION['btPassword'])) {
 			$memberID = $member->get_info("member_id");
 			$blnVote = true;
 		}
-		elseif($pollInfo['accesstype'] == "memberslimited" && $member->authorizeLogin($_SESSION['btPassword']) && $pollObj->hasAccess($member)) {
+		elseif ($pollInfo['accesstype'] == "memberslimited" && $member->authorizeLogin($_SESSION['btPassword']) && $pollObj->hasAccess($member)) {
 			$memberID = $member->get_info("member_id");
 			$blnVote = true;
 		}
-		elseif($pollInfo['accesstype'] == "public") {
+		elseif ($pollInfo['accesstype'] == "public") {
 			$memberID = ($member->authorizeLogin($_SESSION['btPassword'])) ? $member->get_info("member_id") : "";
 			$blnVote = true;
 		}
 
 
 
-		if($blnVote) {
-			foreach(json_decode($_POST['pollOptionID'],true) as $pollOptionID) {
+		if ($blnVote) {
+			foreach (json_decode($_POST['pollOptionID'],true) as $pollOptionID) {
 				$pollObj->objPollOption->select($pollOptionID);
 				$pollOptionInfo = $pollObj->objPollOption->get_info_filtered();
 				$arrReturn = $pollObj->vote($memberID, $pollOptionInfo);

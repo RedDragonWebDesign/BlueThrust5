@@ -25,10 +25,10 @@ require_once($prevFolder."_setup.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -67,29 +67,29 @@ $breadcrumbObj->addCrumb("Diplomacy");
 	<?php
 		$counter = 0;
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy ORDER BY clanname");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$diplomacyStatusObj->select($row['diplomacystatus_id']);
 
 			$statusInfo = $diplomacyStatusObj->get_info_filtered();
 
 
-			if($statusInfo['imageurl'] == "") {
+			if ($statusInfo['imageurl'] == "") {
 				$dispStatus = $statusInfo['name'];
 			}
 			else {
 
-				if(strpos($statusInfo['imageurl'], "http://") === false) {
+				if (strpos($statusInfo['imageurl'], "http://") === false) {
 					$statusInfo['imageurl'] = "../".$statusInfo['imageurl'];
 				}
 
 
 				$dispImgWidth = "";
 				$dispImgHeight = "";
-				if($statusInfo['imagewidth'] != 0) {
+				if ($statusInfo['imagewidth'] != 0) {
 					$dispImgWidth = " width = '".$statusInfo['imagewidth']."' ";
 				}
 
-				if($statusInfo['imageheight'] != 0) {
+				if ($statusInfo['imageheight'] != 0) {
 					$dispImgWidth = " height = '".$statusInfo['imageheight']."' ";
 				}
 
@@ -98,7 +98,7 @@ $breadcrumbObj->addCrumb("Diplomacy");
 			}
 
 			$addCSS = "";
-			if($counter%2 == 0) {
+			if ($counter%2 == 0) {
 				$addCSS = " alternateBGColor";
 			}
 			$counter++;
@@ -121,7 +121,7 @@ $breadcrumbObj->addCrumb("Diplomacy");
 <?php
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status WHERE imageurl != '' ORDER BY ordernum DESC");
 	$counter = 0;
-	if($result->num_rows > 0) {
+	if ($result->num_rows > 0) {
 
 		echo "
 		
@@ -133,26 +133,26 @@ $breadcrumbObj->addCrumb("Diplomacy");
 					</tr>
 			";
 
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 
 
-			if(strpos($row['imageurl'], "http://") === false) {
+			if (strpos($row['imageurl'], "http://") === false) {
 				$row['imageurl'] = "../".$row['imageurl'];
 			}
 
 			$dispImgWidth = "";
 			$dispImgHeight = "";
-			if( isset($statusInfo['imagewidth']) && $statusInfo['imagewidth'] != 0) {
+			if ( isset($statusInfo['imagewidth']) && $statusInfo['imagewidth'] != 0) {
 				$dispImgWidth = " width = '".$statusInfo['imagewidth']."' ";
 			}
 
-			if( isset($statusInfo['imageheight']) && $statusInfo['imageheight'] != 0) {
+			if ( isset($statusInfo['imageheight']) && $statusInfo['imageheight'] != 0) {
 				$dispImgWidth = " height = '".$statusInfo['imageheight']."' ";
 			}
 
 
 			$addCSS = "";
-			if($counter%2 == 0) {
+			if ($counter%2 == 0) {
 				$addCSS = " alternateBGColor";
 			}
 			$counter++;

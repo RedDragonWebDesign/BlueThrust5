@@ -35,15 +35,15 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 $checkAccess = $checkAccess1 || $checkAccess2;
 
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($checkAccess) {
+	if ($checkAccess) {
 
 
-		if(isset($_SESSION['btStatCache'][$_POST['sID']])) {
+		if (isset($_SESSION['btStatCache'][$_POST['sID']])) {
 
 
 			if ( ! empty($_POST['submit']) ) {
@@ -51,14 +51,14 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				$countErrors = 0;
 
 				// Check Stat Name
-				if(trim($_POST['statName'] == "")) {
+				if (trim($_POST['statName'] == "")) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You must enter a stat name.<br>";
 				}
 
 				// Check Stat type
-				if($_POST['statType'] == "calculate") {
-					if(count($_SESSION['btStatCache']) < 2) {
+				if ($_POST['statType'] == "calculate") {
+					if (count($_SESSION['btStatCache']) < 2) {
 						$countErrors++;
 						$dispError .= "&nbsp;&nbsp<b>&middot;</b> You must have at least two input stats before having a calculated stat.<br>";
 					}
@@ -68,62 +68,62 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 						// Check operation
 						$possibleOps = array("add", "sub", "mul", "div");
-						if(!in_array($_POST['calcOperation'], $possibleOps)) {
+						if (!in_array($_POST['calcOperation'], $possibleOps)) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid operation. - ".$_POST['calcOperation']."<br>";
 						}
 
 						//Check First Stat
-						if(trim($_SESSION['btStatCache'][$_POST['firstStat']]['statName']) == "" OR $_POST['firstStat'] == $_POST['sID'] OR $_SESSION['btStatCache'][$_POST['firstStat']]['textInput'] == 1) {
+						if (trim($_SESSION['btStatCache'][$_POST['firstStat']]['statName']) == "" OR $_POST['firstStat'] == $_POST['sID'] OR $_SESSION['btStatCache'][$_POST['firstStat']]['textInput'] == 1) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid first calculation statistic.";
 						}
 
-						if(trim($_SESSION['btStatCache'][$_POST['secondStat']]['statName']) == "" OR $_POST['secondStat'] == $_POST['sID'] OR $_SESSION['btStatCache'][$_POST['secondStat']]['textInput'] == 1) {
+						if (trim($_SESSION['btStatCache'][$_POST['secondStat']]['statName']) == "" OR $_POST['secondStat'] == $_POST['sID'] OR $_SESSION['btStatCache'][$_POST['secondStat']]['textInput'] == 1) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid second calculation statistic.";
 						}
 
 					}
 				}
-				elseif($_POST['statType'] != "inputnum" AND $_POST['statType'] != "inputtext") {
+				elseif ($_POST['statType'] != "inputnum" AND $_POST['statType'] != "inputtext") {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid stat type.<br>";
 				}
 
 
 				// Check Rounding
-				if($_POST['rounding'] != "" AND !is_numeric($_POST['rounding'])) {
+				if ($_POST['rounding'] != "" AND !is_numeric($_POST['rounding'])) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You may only enter a number for rounding.<br>";
 				}
-				elseif($_POST['rounding'] < 0) {
+				elseif ($_POST['rounding'] < 0) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You may not enter a negative value for rounding.<br>";
 				}
 
 
 
-				if($_POST['hideStat'] != 1) {
+				if ($_POST['hideStat'] != 1) {
 					$_POST['hideStat'] = 0;
 				}
 
 
 
-				if($countErrors == 0) {
+				if ($countErrors == 0) {
 
-					if($_POST['statType'] == "inputnum" OR $_POST['statType'] == "inputtext") {
+					if ($_POST['statType'] == "inputnum" OR $_POST['statType'] == "inputtext") {
 						$_POST['firstStat'] = "";
 						$_POST['secondStat'] = "";
 						$_POST['calcOperation'] = "";
 					}
 
 					$intInputText = 0;
-					if($_POST['statType'] == "inputtext") {
+					if ($_POST['statType'] == "inputtext") {
 						$intInputText = 1;
 						$_POST['statType'] = "input";
 					}
-					elseif($_POST['statType'] == "inputnum") {
+					elseif ($_POST['statType'] == "inputnum") {
 						$_POST['statType'] = "input";
 					}
 
@@ -178,17 +178,17 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				$statInfo = filterArray($_SESSION['btStatCache'][$_POST['sID']]);
 
 				$selectTextInput = "";
-				if($statInfo['textInput'] == 1) {
+				if ($statInfo['textInput'] == 1) {
 					$selectTextInput = "selected";
 				}
 
 
 				$statOptions = "<option value='inputnum'>Input (Number)</option><option value='inputtext' ".$selectTextInput.">Input (Text)</option>";
 				$onChange = "";
-				if(is_array($_SESSION['btStatCache'])) {
-					if(count($_SESSION['btStatCache']) > 1) {
+				if (is_array($_SESSION['btStatCache'])) {
+					if (count($_SESSION['btStatCache']) > 1) {
 
-						if($statInfo['statType'] == "calculate") {
+						if ($statInfo['statType'] == "calculate") {
 							$statOptions .= "<option value='calculate' selected>Auto-Calculate</option>";
 						}
 						else {
@@ -199,19 +199,19 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					}
 				}
 
-				foreach($_SESSION['btStatCache'] as $key => $arrStats) {
+				foreach ($_SESSION['btStatCache'] as $key => $arrStats) {
 
-					if($statInfo['firstStat'] == $key AND is_numeric($statInfo['firstStat'])) {
+					if ($statInfo['firstStat'] == $key AND is_numeric($statInfo['firstStat'])) {
 						$firstStatOptions .= "<option value='".$key."' selected>".filterText($arrStats['statName'])."</option>";
 					}
-					elseif($key != $_POST['sID'] AND $arrStats['textInput'] == 0) {
+					elseif ($key != $_POST['sID'] AND $arrStats['textInput'] == 0) {
 						$firstStatOptions .= "<option value='".$key."'>".filterText($arrStats['statName'])."</option>";
 					}
 
-					if($statInfo['secondStat'] == $key AND is_numeric($statInfo['secondStat'])) {
+					if ($statInfo['secondStat'] == $key AND is_numeric($statInfo['secondStat'])) {
 						$secondStatOptions .= "<option value='".$key."' selected>".filterText($arrStats['statName'])."</option>";
 					}
-					elseif($key != $_POST['sID'] AND $arrStats['textInput'] == 0) {
+					elseif ($key != $_POST['sID'] AND $arrStats['textInput'] == 0) {
 						$secondStatOptions .= "<option value='".$key."'>".filterText($arrStats['statName'])."</option>";
 					}
 
@@ -221,8 +221,8 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 				$calcOps = array("add" => "Plus", "sub" => "Minus", "mul" => "Multiplied By", "div" => "Divided By");
 
-				foreach($calcOps as $key => $value) {
-					if($statInfo['calcOperation'] == $key) {
+				foreach ($calcOps as $key => $value) {
+					if ($statInfo['calcOperation'] == $key) {
 						$calcOpsOptions .= "<option value='".$key."' selected>".$value."</option>";
 					}
 					else {
@@ -230,7 +230,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					}
 				}
 
-				if($dispError != "") {
+				if ($dispError != "") {
 					echo "
 					<div class='errorDiv' style='width: 400px'>
 					<strong>Unable to edit stat because the following errors occurred:</strong><br><br>
@@ -240,7 +240,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				}
 
 				$hideStatsChecked = "";
-				if($statInfo['hideStat'] == 1) {
+				if ($statInfo['hideStat'] == 1) {
 					$hideStatsChecked = "checked";
 				}
 

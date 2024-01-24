@@ -1,6 +1,7 @@
 <?php
 
-	if(!defined("MAIN_ROOT")) { exit(); }
+	if (!defined("MAIN_ROOT")) {
+exit(); }
 
 	global $pluginObj;
 
@@ -16,7 +17,7 @@
 
 	$totalTwitchUsers = $twitchObj->displayAllMemberCards();
 
-	if($totalTwitchUsers == 0) {
+	if ($totalTwitchUsers == 0) {
 
 		echo "
 			

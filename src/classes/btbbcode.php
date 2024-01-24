@@ -39,7 +39,7 @@ class btBBCode {
 
 		$arrCheckKeys = array_keys($newBBCode);
 
-		if(in_array("bbOpenTag", $arrCheckKeys) && in_array("bbCloseTag", $arrCheckKeys) && in_array("htmlOpenTag", $arrCheckKeys) && in_array("htmlCloseTag", $arrCheckKeys)) {
+		if (in_array("bbOpenTag", $arrCheckKeys) && in_array("bbCloseTag", $arrCheckKeys) && in_array("htmlOpenTag", $arrCheckKeys) && in_array("htmlCloseTag", $arrCheckKeys)) {
 
 			$this->arrBBCodes[] = $newBBCode;
 
@@ -49,9 +49,9 @@ class btBBCode {
 
 	public function parse($strText) {
 
-		foreach($this->arrBBCodes as $bbCodes) {
+		foreach ($this->arrBBCodes as $bbCodes) {
 
-			if($bbCodes['type'] == "simple") {
+			if ($bbCodes['type'] == "simple") {
 
 				$strText = str_replace($bbCodes['bbOpenTag'],$bbCodes['htmlOpenTag'],$strText);
 				$strText = str_replace($bbCodes['bbCloseTag'],$bbCodes['htmlCloseTag'],$strText);

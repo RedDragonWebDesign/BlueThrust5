@@ -19,13 +19,13 @@
 
 			$returnVal = false;
 
-			if($this->select($ip, false)) {
+			if ($this->select($ip, false)) {
 
-				if($this->arrObjInfo['exptime'] == -1) {
+				if ($this->arrObjInfo['exptime'] == -1) {
 					$this->arrObjInfo['exptime'] = 0;
 				}
 
-				if(time() < $this->arrObjInfo['exptime'] || $this->arrObjInfo['exptime'] == 0) {
+				if (time() < $this->arrObjInfo['exptime'] || $this->arrObjInfo['exptime'] == 0) {
 					$returnVal = true;
 				}
 				else {
@@ -39,18 +39,18 @@
 
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."ipban WHERE ipaddress LIKE '%*%' AND (exptime > '".time()."' OR exptime = '0')");
 
-				if($result !== false) {
-					while($row = $result->fetch_assoc()) {
+				if ($result !== false) {
+					while ($row = $result->fetch_assoc()) {
 
 						$arrBannedIP = explode(".", $row['ipaddress']);
 						$checkIP = 0;
-						foreach($arrBannedIP as $key=>$ipPart) {
-							if($arrCheckIP[$key] == $ipPart || $ipPart == "*") {
+						foreach ($arrBannedIP as $key=>$ipPart) {
+							if ($arrCheckIP[$key] == $ipPart || $ipPart == "*") {
 								$checkIP++;
 							}
 						}
 
-						if($checkIP == count($arrBannedIP)) {
+						if ($checkIP == count($arrBannedIP)) {
 							$returnVal = true;
 						}
 

@@ -13,7 +13,7 @@
  */
 
 
-if(!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
+if (!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
 
 	exit();
 }
@@ -26,13 +26,13 @@ else {
 	$tournamentObj->select($tID);
 
 
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 
 		exit();
 	}
 }
 
-if($tournamentInfo['seedtype'] != 3) {
+if ($tournamentInfo['seedtype'] != 3) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManagePlayers';</script>");
 }
 
@@ -52,14 +52,14 @@ $dispError = "";
 $countErrors = 0;
 $blnShowPoolList = true;
 
-if(isset($_GET['poolID']) && isset($_GET['teamID']) && $tournamentObj->objTournamentPool->select($_GET['poolID']) && $tournamentObj->objTeam->select($_GET['teamID'])) {
+if (isset($_GET['poolID']) && isset($_GET['teamID']) && $tournamentObj->objTournamentPool->select($_GET['poolID']) && $tournamentObj->objTeam->select($_GET['teamID'])) {
 
 	$poolInfo = $tournamentObj->objTournamentPool->get_info();
 	$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 
 	$dispTeamName = $tournamentObj->getPlayerName();
 
-	if(trim($dispTeamName) != "" && $tournamentInfo['tournament_id'] == $poolInfo['tournament_id'] && $tournamentInfo['tournament_id'] == $teamInfo['tournament_id']) {
+	if (trim($dispTeamName) != "" && $tournamentInfo['tournament_id'] == $poolInfo['tournament_id'] && $tournamentInfo['tournament_id'] == $teamInfo['tournament_id']) {
 		$blnShowPoolList = false;
 
 		echo "
@@ -110,9 +110,9 @@ if(isset($_GET['poolID']) && isset($_GET['teamID']) && $tournamentObj->objTourna
 }
 
 
-if($blnShowPoolList) {
+if ($blnShowPoolList) {
 
-	if($tournamentInfo['playersperteam'] == 1) {
+	if ($tournamentInfo['playersperteam'] == 1) {
 		$dispTeamOrPlayer = "Player";
 	}
 	else {
@@ -135,7 +135,7 @@ if($blnShowPoolList) {
 			$arrPoolTeams = array();
 			$startingPoolLetter = "A";
 
-			foreach($arrPools as $poolID) {
+			foreach ($arrPools as $poolID) {
 				$tournamentObj->objTournamentPool->select($poolID);
 
 				$arrPoolTeams = $tournamentObj->objTournamentPool->getTeamsInPool();
@@ -157,9 +157,9 @@ if($blnShowPoolList) {
 					";
 
 				$counter = 0;
-				foreach($arrPoolTeams as $teamID) {
+				foreach ($arrPoolTeams as $teamID) {
 					$addCSS = " alternateBGColor";
-					if($counter%2 == 0) {
+					if ($counter%2 == 0) {
 						$addCSS = "";
 					}
 
@@ -167,11 +167,11 @@ if($blnShowPoolList) {
 					$tournamentObj->objTeam->select($teamID);
 					$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 
-					if($tournamentInfo['playersperteam'] == 1) {
+					if ($tournamentInfo['playersperteam'] == 1) {
 
 						$dispTeamName = $tournamentObj->getPlayerName($teamID);
 
-						if($dispTeamName == "") {
+						if ($dispTeamName == "") {
 							$dispTeamName = "<i>Empty Spot</i>";
 						}
 						else {

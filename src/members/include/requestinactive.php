@@ -12,7 +12,7 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 	// Posted Message?
 
@@ -27,7 +27,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	$consoleObj->select($cID);
 
 
-	if(!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj) || !$member->requestedIA()) {
+	if (!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj) || !$member->requestedIA()) {
 		exit();
 	}
 
@@ -39,7 +39,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	$requestInfo = $iaRequestObj->get_info_filtered();
 
 
-	if(trim($_POST['message']) != "" && $requestInfo['requeststatus'] == 0) {
+	if (trim($_POST['message']) != "" && $requestInfo['requeststatus'] == 0) {
 		$iaRequestMessageObj = new Basic($mysqli, "iarequest_messages", "iamessage_id");
 
 		$arrColumns = array("iarequest_id", "member_id", "messagedate", "message");
@@ -54,9 +54,9 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	$iaMember = new Member($mysqli);
 	$counter = 1;
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."iarequest_messages WHERE iarequest_id = '".$requestInfo['iarequest_id']."' ORDER BY messagedate DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
-		if($counter == 0) {
+		if ($counter == 0) {
 			$addCSS = "";
 			$counter = 1;
 		}
@@ -76,7 +76,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	}
 
 
-	if($result->num_rows == 0) {
+	if ($result->num_rows == 0) {
 
 		echo "
 			<div class='shadedBox' style='margin: 20px auto; width: 50%'>
@@ -94,14 +94,14 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
 
 
 
-if(!$member->requestedIA()) {
+if (!$member->requestedIA()) {
 
 	$i = 1;
 	$arrComponents = array(
@@ -142,13 +142,13 @@ else {
 
 	$dispRequestStatus = "<span class='pendingFont'>Pending</span>";
 	$dispSendMessages = " You may send additional messages using the form below.";
-	if($requestInfo['requeststatus'] == 1) {
+	if ($requestInfo['requeststatus'] == 1) {
 		$member->select($requestInfo['reviewer_id']);
 		$dispRequestStatus = "<span class='allowText'>Approved</span> by ".$member->getMemberLink()." - ".getPreciseTime($requestInfo['reviewdate']);
 		$member->select($memberInfo['member_id']);
 		$dispSendMessages = "  A higher ranking member must delete the request before you can issue another request.";
 	}
-	elseif($requestInfo['requeststatus'] == 2) {
+	elseif ($requestInfo['requeststatus'] == 2) {
 		$member->select($requestInfo['reviewer_id']);
 		$dispRequestStatus = "<span class='denyText'>Denied</span> by ".$member->getMemberLink()." - ".getPreciseTime($requestInfo['reviewdate']);
 		$member->select($memberInfo['member_id']);
@@ -193,7 +193,7 @@ else {
 
 	);
 
-	if($requestInfo['requeststatus'] == 0) {
+	if ($requestInfo['requeststatus'] == 0) {
 		$arrSendMesssageComponents = array(
 			"txtmessage" => array(
 				"display_name" => "Leave Message",

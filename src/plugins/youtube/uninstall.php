@@ -40,7 +40,7 @@ $pluginObj = new btPlugin($mysqli);
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 
 	$countErrors = 0;
@@ -48,7 +48,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 	// Check if installed
 
-	if(!in_array($_POST['pluginDir'], $pluginObj->getPlugins("filepath"))) {
+	if (!in_array($_POST['pluginDir'], $pluginObj->getPlugins("filepath"))) {
 		$countErrors++;
 		$dispError[] = "The selected plugin is not installed!";
 	}
@@ -60,7 +60,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$sql = "DROP TABLE `".$PLUGIN_TABLE_NAME."`";
 	$sql2 = "DROP TABLE `".$dbprefix."youtube_videos`";
 
-	if($mysqli->query($sql) && $mysqli->query($sql2)) {
+	if ($mysqli->query($sql) && $mysqli->query($sql2)) {
 		// Remove Plugin from plugin table
 		$pluginID = array_search($_POST['pluginDir'], $pluginObj->getPlugins("filepath"));
 
@@ -69,7 +69,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 		// Remove Console Option
 		$ytConnectCID = $consoleObj->findConsoleIDByName($PLUGIN_NAME);
-		if($ytConnectCID !== false) {
+		if ($ytConnectCID !== false) {
 			$consoleObj->select($ytConnectCID);
 			$checkDeleteConsole = $consoleObj->delete();
 		}
@@ -77,12 +77,12 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			$checkDeleteConsole = false;
 		}
 
-		if(!$checkDeletePlugin) {
+		if (!$checkDeletePlugin) {
 			$countErrors++;
 			$dispError[] = "Unable to delete plugin from database table.  You will have to manually delete it. - ".$pluginID;
 		}
 
-		if(!$checkDeleteConsole) {
+		if (!$checkDeleteConsole) {
 			$countErrors++;
 			$dispError[] = "Unable to delete ".$PLUGIN_NAME." console option.  You will have to manually delete it.";
 		}
@@ -95,7 +95,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 
 	$arrReturn = array();
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		$arrReturn['result'] = "success";
 		$member->logAction("Uninstalled ".$PLUGIN_NAME." Plugin.");
 	}

@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -32,14 +32,14 @@ $medalObj = new Medal($mysqli);
 
 	$getMedals = $mysqli->query("SELECT * FROM ".$dbprefix."medals ORDER BY ordernum DESC");
 	$medalOptions = array();
-	while($arrMedals = $getMedals->fetch_assoc()) {
+	while ($arrMedals = $getMedals->fetch_assoc()) {
 		$medalName = filterText($arrMedals['name']);
 		$medalOptions[$arrMedals['medal_id']] = $medalName;
 
 	}
 
 
-	if(count($medalOptions) == 0) {
+	if (count($medalOptions) == 0) {
 		$medalOptions['first'] = "(first medal)";
 	}
 

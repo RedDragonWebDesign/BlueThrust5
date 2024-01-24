@@ -14,13 +14,13 @@
 
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -38,14 +38,14 @@ if ( ! empty($_POST['submit']) ) {
 
 	$checkArr = array(1,2,3,4,5,6);
 
-	if(!in_array($_POST['clearlogs'], $checkArr)) {
+	if (!in_array($_POST['clearlogs'], $checkArr)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an delete option.<br>";
 		$countErrors++;
 	}
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
-		switch($_POST['clearlogs']) {
+		switch ($_POST['clearlogs']) {
 			case 1:
 				$deleteDate = time()-(60*60*24*15);
 				$query = "DELETE FROM ".$dbprefix."logs WHERE logdate < '".$deleteDate."'";
@@ -77,7 +77,7 @@ if ( ! empty($_POST['submit']) ) {
 				break;
 		}
 
-		if($mysqli->query($query)) {
+		if ($mysqli->query($query)) {
 
 			echo "
 			
@@ -107,7 +107,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	}
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST['submit'] = false;
 	}
 
@@ -121,7 +121,7 @@ if ( empty($_POST['submit']) ) {
 			
 			";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to clear logs because the following errors occurred:</strong><br><br>

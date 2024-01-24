@@ -13,7 +13,8 @@
  */
 
 
-if(!isset($pluginObj)) { exit(); }
+if (!isset($pluginObj)) {
+exit(); }
 
 $configInfo = $pluginObj->getConfigInfo();
 
@@ -22,18 +23,18 @@ $selectedSocialID = "";
 $addTwitchInfo = "<div class='formInput formInputSideText'><img id='addTwitchLoading' src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral.gif' style='width: 18px; height: 18px; margin: 0px 5px; display: none'> <a id='addTwitch' href='javascript:void(0)'>Haven't added Twitch yet? Click Here!</a></div>";
 $socialObj = new Social($mysqli);
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."social WHERE name LIKE '%Twitch%'");
-if($result->num_rows > 0) {
+if ($result->num_rows > 0) {
 	$row = $result->fetch_assoc();
 	$selectedSocialID = $row['social_id'];
 	$addTwitchInfo = "";
 }
 
 $result = $mysqli->query("SELECT social_id,name FROM ".$dbprefix."social ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$arrSocialOptions[$row['social_id']] = $row['name'];
 }
 
-if($configInfo['twitchsocial_id'] != "") {
+if ($configInfo['twitchsocial_id'] != "") {
 	$selectedSocialID = $configInfo['twitchsocial_id'];
 }
 
@@ -123,7 +124,7 @@ $arrComponents = array(
 
 $additionalTwitchInfo = "";
 $embedJS = "";
-if($addTwitchInfo != "") {
+if ($addTwitchInfo != "") {
 	$addSocialMediaConsole = new ConsoleOption($mysqli);
 	$addSocialMediaConsole->findConsoleIDByName("Add Social Media Icon");
 	$additionalTwitchInfo = " If you haven't <a href='".$addSocialMediaConsole->getLink()."'>added</a> a Twitch social media icon to user profiles, you can click the \"Haven't added Twitch?\" link below.";

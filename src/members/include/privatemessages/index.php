@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -32,7 +32,7 @@ $pmFolderObj = new PMFolder($mysqli);
 $arrFolders = $pmFolderObj->listFolders($memberInfo['member_id']);
 
 $folderList = "";
-foreach($arrFolders as $folderID => $folderName) {
+foreach ($arrFolders as $folderID => $folderName) {
 	$folderList .= "<option value='".$folderID."'>".filterText($folderName)."</option>";
 }
 
@@ -89,7 +89,7 @@ foreach($arrFolders as $folderID => $folderName) {
 
 		<?php
 
-			if(isset($_GET['folder']) && is_numeric($_GET['folder'])) {
+			if (isset($_GET['folder']) && is_numeric($_GET['folder'])) {
 				echo "$('#selectFolder').val('".$_GET['folder']."');";
 			}
 

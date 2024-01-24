@@ -13,7 +13,7 @@
  */
 
 
-if(!isset($member) || !isset($downloadObj) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !$downloadObj->select($_GET['dlID'])) {
+if (!isset($member) || !isset($downloadObj) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !$downloadObj->select($_GET['dlID'])) {
 	exit();
 }
 
@@ -32,17 +32,17 @@ $dispError = "";
 if ( ! empty($_POST['submit']) ) {
 
 	// Check Name
-	if(trim($_POST['title']) == "") {
+	if (trim($_POST['title']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must give your download a title.<br>";
 	}
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 
 		$arrColumns = array("name", "description");
 		$arrValues = array($_POST['title'], $_POST['description']);
-		if($downloadObj->update($arrColumns, $arrValues)) {
+		if ($downloadObj->update($arrColumns, $arrValues)) {
 
 			$downloadInfo = $downloadObj->get_info_filtered();
 			echo "
@@ -75,7 +75,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;

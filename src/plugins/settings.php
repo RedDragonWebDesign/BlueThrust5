@@ -15,7 +15,8 @@ $prevFolder = "../";
 require_once("../_setup.php");
 $pluginObj = new btPlugin($mysqli);
 
-if(!isset($_GET['plugin']) || !$pluginObj->selectByName($_GET['plugin'])) { echo "<script type='text/javascript'>window.location = '".$MAIN_ROOT."';"; exit(); }
+if (!isset($_GET['plugin']) || !$pluginObj->selectByName($_GET['plugin'])) {
+echo "<script type='text/javascript'>window.location = '".$MAIN_ROOT."';"; exit(); }
 
 $pluginInfo = $pluginObj->get_info_filtered();
 
@@ -57,11 +58,11 @@ require_once(BASE_DIRECTORY."include/breadcrumb.php");
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 	$formObj->buildForm($setupFormArgs);
 
-	if($_POST['submit'] && $formObj->save()) {
+	if ($_POST['submit'] && $formObj->save()) {
 		$formObj->saveMessageTitle = $pluginInfo['name']." Plugin Settings";
 		$formObj->showSuccessDialog();
 	}

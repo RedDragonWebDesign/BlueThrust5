@@ -43,14 +43,14 @@ $pluginObj = new btPlugin($mysqli);
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 	$countErrors = 0;
 	$dispError = array();
 
 	// Check if already installed
 
-	if(in_array($_POST['pluginDir'], $pluginObj->getPlugins("filepath"))) {
+	if (in_array($_POST['pluginDir'], $pluginObj->getPlugins("filepath"))) {
 		$countErrors++;
 		$dispError[] = "The selected plugin is already installed!";
 	}
@@ -59,8 +59,8 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 	$result = $mysqli->query("SHOW TABLES");
 
-	while($row = $result->fetch_array()) {
-		if(in_array($row[0], $arrPluginTables)) {
+	while ($row = $result->fetch_array()) {
+		if (in_array($row[0], $arrPluginTables)) {
 			$countErrors++;
 			$dispError[] = "There is database table that conflicts with this plugin. - ".$row[0];
 		}
@@ -68,18 +68,18 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		// $sql variable
 		require_once(BASE_DIRECTORY."plugins/donations/sql.php");
 
-		if($mysqli->multi_query($sql)) {
+		if ($mysqli->multi_query($sql)) {
 
 			do {
-				if($result = $mysqli->store_result()) {
+				if ($result = $mysqli->store_result()) {
 					$result->free();
 				}
 			}
-			while($mysqli->next_result());
+			while ($mysqli->next_result());
 
 			$pluginObj->addNew(array("name", "filepath", "dateinstalled"), array($PLUGIN_NAME, $_POST['pluginDir'], time()));
 
@@ -91,7 +91,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			// Check if need to add new console category
 
 			$result = $mysqli->query("SELECT consolecategory_id FROM ".$dbprefix."consolecategory WHERE name = 'Donations'");
-			if($result->num_rows == 0) {
+			if ($result->num_rows == 0) {
 				$consoleCatObj = new ConsoleCategory($mysqli);
 				$newOrderNum = $consoleCatObj->getHighestOrderNum()+1;
 				$consoleCatObj->addNew(array("name", "ordernum"), array("Donations", $newOrderNum));
@@ -118,7 +118,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 
 	$arrReturn = array();
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		$arrReturn['result'] = "success";
 		$member->logAction("Installed ".$PLUGIN_NAME." Plugin.");
 	}

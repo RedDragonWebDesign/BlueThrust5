@@ -14,7 +14,7 @@
 
 
 
-	if(!isset($member)|| substr($_SERVER['PHP_SELF'], -strlen("console.php")) != "console.php") {
+	if (!isset($member)|| substr($_SERVER['PHP_SELF'], -strlen("console.php")) != "console.php") {
 
 		exit();
 	}
@@ -24,7 +24,7 @@
 		$memberInfo = $member->get_info();
 		$consoleObj->select($cID);
 
-		if(!$member->hasAccess($consoleObj)) {
+		if (!$member->hasAccess($consoleObj)) {
 
 			exit();
 		}
@@ -45,11 +45,11 @@
 
 	$tournamentOptions[''] = "Select";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournaments WHERE tournament_id NOT IN ".$tournamentSQL." ORDER BY name");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$tournamentOptions[$row['tournament_id']] = filterText($row['name']);
 	}
 
-	if($result->num_rows > 0) {
+	if ($result->num_rows > 0) {
 
 
 		$arrComponents = array(

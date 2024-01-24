@@ -1,6 +1,6 @@
 <?php
 
-if(!defined("SHOW_POLLLIST")) {
+if (!defined("SHOW_POLLLIST")) {
 
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
@@ -15,7 +15,7 @@ if(!defined("SHOW_POLLLIST")) {
 
 
 	// Check Login
-	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
 	}
 	else {
@@ -30,9 +30,9 @@ echo "
 
 $counter = 0;
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."polls ORDER BY dateposted DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 
-	if($counter == 0) {
+	if ($counter == 0) {
 		$addCSS = "";
 		$counter = 1;
 	}
@@ -56,7 +56,7 @@ while($row = $result->fetch_assoc()) {
 
 echo "</table>";
 
-if($result->num_rows == 0) {
+if ($result->num_rows == 0) {
 
 	echo "
 		<div class='shadedBox' style='margin: 20px auto; width: 40%'>

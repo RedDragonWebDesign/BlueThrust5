@@ -16,10 +16,10 @@
 
 	// Check Login
 	$LOGIN_FAIL = true;
-	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 		$socialObj = new Social($mysqli);
-		if(!$_POST['confirm'] && $socialObj->selectByMulti(array("name" => "Twitch"))) {
+		if (!$_POST['confirm'] && $socialObj->selectByMulti(array("name" => "Twitch"))) {
 
 			echo "
 				<div id='addTwitchInfo'></div>
@@ -64,7 +64,7 @@
 		else {
 
 			$saveName = "Twitch";
-			if($socialObj->selectByMulti(array("name" => "Twitch"))) {
+			if ($socialObj->selectByMulti(array("name" => "Twitch"))) {
 
 				$result = $mysqli->query("SELECT social_id FROM ".$dbprefix."social WHERE name LIKE '%Twitch%'");
 
@@ -80,7 +80,7 @@
 
 			$socialOptions = "";
 			$result = $mysqli->query("SELECT social_id,name FROM ".$dbprefix."social ORDER BY ordernum DESC");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$socialOptions .= "<option value='".$row['social_id']."'>".$row['name']."</option>";
 			}
 

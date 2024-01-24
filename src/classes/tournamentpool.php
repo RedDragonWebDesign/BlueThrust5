@@ -38,16 +38,16 @@ class TournamentPool extends Basic {
 	public function getTeamsInPool() {
 
 		$returnArr = array();
-		if($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
+		if ($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
 
 			$result = $this->MySQL->query("SELECT team1_id,team2_id FROM ".$this->MySQL->get_tablePrefix()."tournamentpools_teams WHERE pool_id = '".$this->intTableKeyValue."'");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
-				if(!in_array($row['team1_id'], $returnArr)) {
+				if (!in_array($row['team1_id'], $returnArr)) {
 					$returnArr[] = $row['team1_id'];
 				}
 
-				if(!in_array($row['team2_id'], $returnArr)) {
+				if (!in_array($row['team2_id'], $returnArr)) {
 					$returnArr[] = $row['team2_id'];
 				}
 
@@ -65,7 +65,7 @@ class TournamentPool extends Basic {
 
 		$returnVal = "0 - 0";
 
-		if($this->intTableKeyValue != "" && is_numeric($teamID)) {
+		if ($this->intTableKeyValue != "" && is_numeric($teamID)) {
 			$resultWins = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentpools_teams WHERE pool_id = '".$this->intTableKeyValue."' AND ((team1_id = '".$teamID."' AND winner = '1') || (team2_id = '".$teamID."' AND winner = '2'))");
 			$countWins = $resultWins->num_rows;
 

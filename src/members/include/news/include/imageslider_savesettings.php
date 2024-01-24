@@ -36,7 +36,7 @@ $imageSliderObj = new ImageSlider($mysqli);
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 	$countErrors = 0;
 	$dispErrors = "";
@@ -44,20 +44,20 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$heightUnit = ($_POST['containerHeightUnit'] == 1) ? "px" : "%";
 	$displayType = ($_POST['displayStyle'] == "slider") ? "slider" : "random";
 
-	if(!is_numeric($_POST['containerWidth'])) {
+	if (!is_numeric($_POST['containerWidth'])) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Display width must be a numeric value.<br>";
 		$countErrors++;
 	}
 
-	if(!is_numeric($_POST['containerHeight'])) {
+	if (!is_numeric($_POST['containerHeight'])) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Display height must be a numeric value.<br>";
 		$countErrors++;
 	}
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		$arrColumns = array("hpimagetype", "hpimagewidth", "hpimageheight", "hpimagewidthunit", "hpimageheightunit");
 		$arrValues = array($displayType, $_POST['containerWidth'], $_POST['containerHeight'], $widthUnit, $heightUnit);
-		if($webInfoObj->multiUpdate($arrColumns, $arrValues)) {
+		if ($webInfoObj->multiUpdate($arrColumns, $arrValues)) {
 			echo "
 				
 				<script type='text/javascript'>
@@ -73,7 +73,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		}
 	}
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 
 		echo "
 			

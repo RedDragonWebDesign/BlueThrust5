@@ -12,7 +12,7 @@
  *
  */
 
-if(!isset($prevFolder) || $prevFolder == "") {
+if (!isset($prevFolder) || $prevFolder == "") {
 	$prevFolder = "../../../../";
 }
 
@@ -29,11 +29,11 @@ $member = new Member($mysqli);
 
 $checkMember = $member->select($_SESSION['btUsername']);
 
-if($checkMember) {
+if ($checkMember) {
 
-	if($member->authorizeLogin($_SESSION['btPassword'])) {
+	if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$cOptObj = new ConsoleOption($mysqli);
-		if(!isset($_GET['cID'])) {
+		if (!isset($_GET['cID'])) {
 			$_GET['cID'] = 	$cOptObj->findConsoleIDByName("Manage Ranks");
 		}
 
@@ -43,7 +43,7 @@ if($checkMember) {
 
 		$memberInfo = $member->get_info();
 
-		if($member->hasAccess($cOptObj)) {
+		if ($member->hasAccess($cOptObj)) {
 
 			echo "
 			<script type='text/javascript'>
@@ -63,8 +63,8 @@ if($checkMember) {
 			$counter = 0;
 			$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1' ORDER BY ordernum DESC");
 			$dispRanks = "";
-            while($row = $result->fetch_assoc()) {
-				if($counter == 1) {
+            while ($row = $result->fetch_assoc()) {
+				if ($counter == 1) {
 					$addCSS = " alternateBGColor";
 					$counter = 0;
 				}
@@ -85,7 +85,7 @@ if($checkMember) {
 			}
 
 
-			if($x == 0) {
+			if ($x == 0) {
 				$dispRanks = "<tr><td colspan='3' align='center'><br><p class='main'><i>No ranks added yet!</i></p></td></tr>";
 			}
 

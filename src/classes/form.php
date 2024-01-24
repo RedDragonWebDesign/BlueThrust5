@@ -83,20 +83,20 @@
 			$this->attachmentForm = false;
 			$this->prefillValues = isset($args['prefillValues']) ? $args['prefillValues'] : false;
 
-			if(isset($args['wrapper'])) {
+			if (isset($args['wrapper'])) {
 				$this->wrapper = $args['wrapper'];
 			}
 
-			if(isset($args['beforeAfter'])) {
+			if (isset($args['beforeAfter'])) {
 				$this->beforeAfter = $args['beforeAfter'];
 			}
 
-			if(isset($args['mysql'])) {
+			if (isset($args['mysql'])) {
 				$this->attachmentObj = new Download($args['mysql']);
 				$this->attachmentForm = true;
 			}
 
-			if($args['prefill'] ?? '') {
+			if ($args['prefill'] ?? '') {
 				$this->arrSkipPrefill = $args['skipPrefill'];
 				$this->prefillDBValues();
 			}
@@ -125,14 +125,14 @@
 			$displayForm = "";
 			$afterJS = $this->embedJS;
 
-			foreach($this->components as $componentName => $componentInfo) {
+			foreach ($this->components as $componentName => $componentInfo) {
 
 				$dispAttributes = $this->convertAttributes($componentInfo['attributes'] ?? '');
 
 				$displayForm .= $componentInfo['before_html'] ?? '';
 
 				// Output Component Name
-				if(($componentInfo['display_name'] ?? '') != "") {
+				if (($componentInfo['display_name'] ?? '') != "") {
 					$addValignComponents = array("file", "textarea", "beforeafter", "checkbox");
 					$addVAlign = in_array($componentInfo['type'], $addValignComponents) ? " formVAlignTop" : "";
 					$dispToolTip = (($componentInfo['tooltip'] ?? '') != "") ? " <a href='javascript:void(0)' onmouseover=\"showToolTip('".addslashes($componentInfo['tooltip'])."')\" onmouseout='hideToolTip()'>(?)</a>" : "";
@@ -142,7 +142,7 @@
 				}
 
 				// Output input
-				switch($componentInfo['type']) {
+				switch ($componentInfo['type']) {
 					case "autocomplete":
 						$afterJS .= $this->autocompleteJS($componentInfo['options']['list'], $componentInfo['options']['real_id'], $componentInfo['options']['fake_id']);
 						$fakeComponentName = "fake".$componentName;
@@ -199,9 +199,9 @@
 									<option value='0'>12</option>
 								";
 
-						for($i=1; $i<12; $i++) {
+						for ($i=1; $i<12; $i++) {
 							$selected = "";
-							if($selectedHour == $i) {
+							if ($selectedHour == $i) {
 								$selected = " selected";
 							}
 							$displayForm .= "<option value='".$i."'".$selected.">".$i."</option>";
@@ -212,11 +212,11 @@
 								<select name='".$componentName."_minute' ".$dispAttributes.">
 								";
 
-						for($i=0; $i<=59; $i++) {
+						for ($i=0; $i<=59; $i++) {
 							$selected = "";
 
 							$dispMinute = ($i<10) ? "0".$i : $i;
-							if($selectedMinute == $i) {
+							if ($selectedMinute == $i) {
 								$selected = " selected";
 							}
 							$displayForm .= "<option value='".$i."'".$selected.">".$dispMinute."</option>";
@@ -229,18 +229,18 @@
 								</select>
 						";
 
-						if($componentInfo['options']['show_timezone'] == 1) {
+						if ($componentInfo['options']['show_timezone'] == 1) {
 							$displayForm .= "
 								<select name='".$componentName."_timezone' ".$dispAttributes.">
 									<option value=''>[Use Default]</option>
 								";
-							foreach($arrTimezones as $timeZone) {
+							foreach ($arrTimezones as $timeZone) {
 								$tz = new DateTimeZone($timeZone);
 								$dispOffset = ((($tz->getOffset(new DateTime("now", $tz)))/60)/60);
 								$dispSign = ($dispOffset < 0) ? "" : "+";
 
 								$selected = "";
-								if($componentInfo['options']['selected_timezone'] == $timeZone) {
+								if ($componentInfo['options']['selected_timezone'] == $timeZone) {
 									$selected = " selected";
 								}
 
@@ -269,23 +269,23 @@
 						break;
 					case "checkbox": // Checkbox and radio are basically same thing, so checkbox falls through to radio section
 					case "radio":
-						if(is_array($componentInfo['options'] ?? '')) {
+						if (is_array($componentInfo['options'] ?? '')) {
 							$componentCounter = 1;
-							foreach($componentInfo['options'] as $optionValue => $displayValue) {
+							foreach ($componentInfo['options'] as $optionValue => $displayValue) {
 								$dispSelected = "";
 
 								$newComponentName = $componentName;
-								if(count($componentInfo['options']) > 1) {
+								if (count($componentInfo['options']) > 1) {
 									$newComponentName .= "_".$componentCounter;
 
-									if($componentCounter > 1) {
+									if ($componentCounter > 1) {
 										$displayForm .= "<label class='formLabel' style='display: inline-block'></label> ";
 									}
 
 									$componentCounter++;
 								}
 
-								if($optionValue == $componentInfo['value']) {
+								if ($optionValue == $componentInfo['value']) {
 									$dispSelected = " checked";
 								}
 
@@ -297,7 +297,7 @@
 						else {
 
 							$dispChecked = "";
-							if($componentInfo['checked'] ?? '') {
+							if ($componentInfo['checked'] ?? '') {
 								$dispChecked = " checked";
 							}
 
@@ -312,11 +312,11 @@
 								File:<br>
 								<input type='file' name='".$componentName."_file' ".$dispAttributes.">
 								<ul class='tinyFont' style='margin-top: 0px'>";
-						if(is_array($componentInfo['options']['file_types'])) {
+						if (is_array($componentInfo['options']['file_types'])) {
 							$displayForm .= "<li>File Types: ".implode(", ", $componentInfo['options']['file_types'])."</li>";
 						}
 
-						if(($componentInfo['options']['default_dimensions'] ?? '') != "") {
+						if (($componentInfo['options']['default_dimensions'] ?? '') != "") {
 							$displayForm .= "<li>Dimensions: ".$componentInfo['options']['default_dimensions']."</li>";
 						}
 
@@ -326,7 +326,7 @@
 
 						$displayForm .= "URL:<br><input type='text' name='".$componentName."_url' ".$dispAttributes.">";
 
-						if(($componentInfo['value'] ?? '') != "") {
+						if (($componentInfo['value'] ?? '') != "") {
 
 							$displayForm .= "<br><a href='".$MAIN_ROOT.$componentInfo['value']."' target='_blank'>View Saved File</a>";
 
@@ -337,15 +337,15 @@
 					case "section":
 
 						$displayForm .= "<div ".$dispAttributes.">";
-						if($componentInfo['options']['section_title'] != "") {
+						if ($componentInfo['options']['section_title'] != "") {
 							$displayForm .= "<p class='dottedLine' style='margin: 0px; margin-top: 25px; padding-bottom: 2px'><b>".$componentInfo['options']['section_title']."</b></p>";
 						}
 
-						if(($componentInfo['options']['section_description'] ?? '') != "") {
+						if (($componentInfo['options']['section_description'] ?? '') != "") {
 							$displayForm .= "<p>".$componentInfo['options']['section_description']."</p>";
 						}
 
-						if(isset($componentInfo['components']) && $componentInfo['components'] != "" && is_array($componentInfo['components'])) {
+						if (isset($componentInfo['components']) && $componentInfo['components'] != "" && is_array($componentInfo['components'])) {
 
 							$sectionFormObj = new Form();
 							$sectionFormObj->isContainer = true;
@@ -358,13 +358,13 @@
 						break;
 					case "beforeafter":
 						$this->beforeAfter = true;
-						foreach($componentInfo['options'] as $optionValue => $displayValue) {
+						foreach ($componentInfo['options'] as $optionValue => $displayValue) {
 							$dispSelected = "";
-							if($optionValue == ($componentInfo['before_after_value'] ?? '')) {
+							if ($optionValue == ($componentInfo['before_after_value'] ?? '')) {
 								$dispSelected = " selected";
 							}
 
-							if($optionValue != ($componentInfo['value'] ?? '')) {
+							if ($optionValue != ($componentInfo['value'] ?? '')) {
 								$displayOptions .= "<option value='".$optionValue."'".$dispSelected.">".$displayValue."</option>";
 							}
 
@@ -399,29 +399,30 @@
 
 				$displayForm .= $componentInfo['html'] ?? '';
 
-				if($componentInfo['type'] != "section" && !isset($componentInfo['hidden'])) {
+				if ($componentInfo['type'] != "section" && !isset($componentInfo['hidden'])) {
 					$displayForm .= "<br>";
 				}
 
 			}
 
 			$dispFormAttributes = $this->convertAttributes($this->attributes);
-			if($blnFileUploadForm) { $dispFormAttributes .= "  enctype='multipart/form-data'"; }
+			if ($blnFileUploadForm) {
+$dispFormAttributes .= "  enctype='multipart/form-data'"; }
 
 			$dispErrors = "";
-			if(count($this->errors) > 0) {
+			if (count($this->errors) > 0) {
 				$dispErrors = "<div class='errorDiv'><strong>The following errors occurred:</strong><ul>";
-				foreach($this->errors as $dispError) {
+				foreach ($this->errors as $dispError) {
 					$dispErrors .= "<li>".$dispError."</li>";
 				}
 				$dispErrors .= "</ul></div>";
 			}
 
-			if(!$this->isContainer) {
+			if (!$this->isContainer) {
 				echo "<form ".$dispFormAttributes.">".($this->wrapper[0] ?? '').$dispErrors.$this->description."<div class='formTable'>".$displayForm."</div>".($this->wrapper[1] ?? '')."<input type='hidden' name='checkCSRF' value='".$_SESSION['csrfKey']."'></form>";
 			}
 
-			if($afterJS != "" && !$this->isContainer) {
+			if ($afterJS != "" && !$this->isContainer) {
 				echo "
 					<script type='text/javascript'>
 						".$afterJS."
@@ -429,9 +430,9 @@
 				";
 			}
 
-			if($this->isContainer) {
+			if ($this->isContainer) {
 				$js = "";
-				if($afterJS != "") {
+				if ($afterJS != "") {
 					$js = "<script type='text/javascript'>
 							".$afterJS."
 						</script>";
@@ -446,8 +447,8 @@
 
 			$filterTypes = array("file", "beforeafter", "button");
 
-			foreach($this->components as $componentName => $componentInfo) {
-				if(!in_array($componentInfo['type'], $filterTypes)) {
+			foreach ($this->components as $componentName => $componentInfo) {
+				if (!in_array($componentInfo['type'], $filterTypes)) {
 					$this->components[$componentName]['value'] = $_POST[$componentName];
 				}
 			}
@@ -456,10 +457,10 @@
 
 		public function prefillDBValues() {
 
-			if($this->saveType == "update") {
+			if ($this->saveType == "update") {
 				$info = $this->objSave->get_info_filtered();
-				foreach($this->components as $key => $value) {
-					if($this->components[$key]['db_name'] != "" && !in_array($this->components[$key]['db_name'], $this->arrSkipPrefill)) {
+				foreach ($this->components as $key => $value) {
+					if ($this->components[$key]['db_name'] != "" && !in_array($this->components[$key]['db_name'], $this->arrSkipPrefill)) {
 						$this->components[$key]['value'] = $info[$this->components[$key]['db_name']];
 					}
 				}
@@ -482,7 +483,7 @@
 		 */
 		public function validate() {
 			$returnVal = false;
-			foreach($this->components as $componentName => $componentInfo) {
+			foreach ($this->components as $componentName => $componentInfo) {
 
 				// Turn on RESTRICT_TO_OPTIONS by default for select, check boxes, radio buttons
 				if (
@@ -499,83 +500,83 @@
 					}
 				}
 
-				foreach(($componentInfo['validate'] ?? []) as $validateMethod) {
+				foreach (($componentInfo['validate'] ?? []) as $validateMethod) {
 
 					$arrValidate = array();
-					if(is_array($validateMethod)) {
+					if (is_array($validateMethod)) {
 						$arrValidate = $validateMethod;
 						$validateMethod = $arrValidate['name'];
 					}
 
-					switch($validateMethod) {
+					switch ($validateMethod) {
 						case "NOT_BLANK":
-							if(($componentInfo['type'] == "checkbox" || $componentInfo['type'] == "radio") && count($componentInfo['options']) > 1) {
+							if (($componentInfo['type'] == "checkbox" || $componentInfo['type'] == "radio") && count($componentInfo['options']) > 1) {
 								$componentCounter = 1;
 								$countBlanks = 0;
-								foreach($componentInfo['options'] as $optionName => $optionValue) {
+								foreach ($componentInfo['options'] as $optionName => $optionValue) {
 
 									$fullComponentName = $componentName."_".$componentCounter;
-									if(trim($_POST[$fullComponentName]) == "") {
+									if (trim($_POST[$fullComponentName]) == "") {
 										$countBlanks++;
 									}
 
 									$componentCounter++;
 								}
 
-								if($countBlanks == count($componentInfo['options'])) {
+								if ($countBlanks == count($componentInfo['options'])) {
 									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You must select at least one value for ".$componentInfo['display_name'].".";
 								}
 
 							}
-							elseif($componentInfo['type'] != "file" && trim($_POST[$componentName]) == "") {
+							elseif ($componentInfo['type'] != "file" && trim($_POST[$componentName]) == "") {
 								$this->errors[] = (($arrValidate['customMessage'] ?? '') != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." may not be blank.";
 							}
 							break;
 						case "NUMBER_ONLY":
-							if(!is_numeric($_POST[$componentName]) && $componentInfo['type'] != "datepicker") {
+							if (!is_numeric($_POST[$componentName]) && $componentInfo['type'] != "datepicker") {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." may only be a numeric value.";
 							}
-							elseif($componentInfo['type'] == "datepicker") {
+							elseif ($componentInfo['type'] == "datepicker") {
 								$checkDate = explode("-", $_POST[$componentName]);
-								if(!is_numeric($checkDate[0]) || !is_numeric($checkDate[1]) || !is_numeric($checkDate[2])) {
+								if (!is_numeric($checkDate[0]) || !is_numeric($checkDate[1]) || !is_numeric($checkDate[2])) {
 									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." may only be a date value.";
 								}
 
 							}
 							break;
 						case "POSITIVE_NUMBER":
-							if($_POST[$componentName] < 0) {
+							if ($_POST[$componentName] < 0) {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." must be a positive number.";
 							}
 							break;
 						case "RESTRICT_TO_OPTIONS":
 
-							if( isset($componentInfo['options']) && is_array($componentInfo['options'])) {
+							if ( isset($componentInfo['options']) && is_array($componentInfo['options'])) {
 								$arrPostNames = array();
 								$arrPossibleValues = array();
 								$postCounter = 1;
-								foreach($componentInfo['options'] as $optionValue => $displayValue) {
+								foreach ($componentInfo['options'] as $optionValue => $displayValue) {
 									$arrPossibleValues[] = $optionValue;
 									$arrPostNames[] = $componentName."_".$postCounter;
 									$postCounter++;
 								}
 
-								if(($componentInfo['type'] == "checkbox" || $componentInfo['type'] == "radio") && count($componentInfo['options']) > 1) {
+								if (($componentInfo['type'] == "checkbox" || $componentInfo['type'] == "radio") && count($componentInfo['options']) > 1) {
 									$countErrors = 0;
-									foreach($arrPostNames as $postName) {
+									foreach ($arrPostNames as $postName) {
 
-										if(isset($_POST[$postName]) && !in_array($_POST[$postName], $arrPossibleValues)) {
+										if (isset($_POST[$postName]) && !in_array($_POST[$postName], $arrPossibleValues)) {
 											$countErrors++;
 										}
 
 									}
 
-									if($countErrors > 0) {
+									if ($countErrors > 0) {
 										$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid value for ".$componentInfo['display_name'].".";
 									}
 
 								}
-								elseif( isset($_POST[$componentName]) && !in_array($_POST[$componentName], $arrPossibleValues)) {
+								elseif ( isset($_POST[$componentName]) && !in_array($_POST[$componentName], $arrPossibleValues)) {
 									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid value for ".$componentInfo['display_name'].".";
 								}
 
@@ -586,7 +587,7 @@
 
 							$selectBackID = isset($arrValidate['select_back']) ? $arrValidate['selectObj']->get_info($arrValidate['select_back']) : "";
 
-							if(!$arrValidate['selectObj']->select($_POST[$componentName])) {
+							if (!$arrValidate['selectObj']->select($_POST[$componentName])) {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid value for ".$componentInfo['display_name'].".";
 							}
 
@@ -596,7 +597,7 @@
 						case "IS_NOT_SELECTABLE":
 							$selectBackID = isset($arrValidate['select_back']) ? $arrValidate['selectObj']->get_info($arrValidate['select_back']) : "";
 
-							if($arrValidate['selectObj']->select($_POST[$componentName])) {
+							if ($arrValidate['selectObj']->select($_POST[$componentName])) {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "The value selected for ".$componentInfo['display_name']." is already in use.";
 							}
 
@@ -605,47 +606,47 @@
 							break;
 						case "CHECK_LENGTH":
 
-							if($arrValidate['min_length'] != "" && strlen(trim($_POST[$componentName])) < $arrValidate['min_length']) {
+							if ($arrValidate['min_length'] != "" && strlen(trim($_POST[$componentName])) < $arrValidate['min_length']) {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "The value for ".$componentInfo['display_name']." must be at least ".$arrValidate['min_length']." characters long.";
 							}
 
-							if($arrValidate['max_length'] != "" && strlen(trim($_POST[$componentName])) > $arrValidate['max_length']) {
+							if ($arrValidate['max_length'] != "" && strlen(trim($_POST[$componentName])) > $arrValidate['max_length']) {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] :  "The value for ".$componentInfo['display_name']." can be a max of ".$arrValidate['min_length']." characters long.";
 							}
 
 							break;
 						case "EQUALS_VALUE":
 
-							if($arrValidate['value'] != $_POST[$componentName]) {
+							if ($arrValidate['value'] != $_POST[$componentName]) {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You entered an incorrect value for ".$componentInfo['display_name'].".";
 							}
 
 							break;
 						case "NOT_EQUALS_VALUE":
-							if($arrValidate['value'] == $_POST[$componentName]) {
+							if ($arrValidate['value'] == $_POST[$componentName]) {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You entered an incorrect value for ".$componentInfo['display_name'].".";
 							}
 							break;
 						case "GREATER_THAN":
-							if($arrValidate['value'] > strlen(trim($_POST[$componentName]))) {
+							if ($arrValidate['value'] > strlen(trim($_POST[$componentName]))) {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." must be a value greater than ".$arrValidate['value'].".";
 							}
 							break;
 						case "LESS_THAN":
-							if($arrValidate['value'] < strlen(trim($_POST[$componentName]))) {
+							if ($arrValidate['value'] < strlen(trim($_POST[$componentName]))) {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." must be a value less than ".$arrValidate['value'].".";
 							}
 							break;
 						case "VALIDATE_ORDER":
 
-							if($arrValidate['orderObject'] != "") {
+							if ($arrValidate['orderObject'] != "") {
 
-								if(($arrValidate['set_category'] ?? '') != "") {
+								if (($arrValidate['set_category'] ?? '') != "") {
 									$arrValidate['orderObject']->setCategoryKeyValue($arrValidate['set_category']);
 								}
 
 								$checkOrder = $arrValidate['orderObject']->validateOrder($_POST[$componentName], $_POST[$componentName."_beforeafter"], $arrValidate['edit'] ?? '', $arrValidate['edit_ordernum'] ?? '');
-								if($checkOrder === false) {
+								if ($checkOrder === false) {
 									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid ".$componentInfo['display_name'].".";
 								}
 								else {
@@ -654,7 +655,7 @@
 
 								}
 
-								if(isset($arrValidate['select_back'])) {
+								if (isset($arrValidate['select_back'])) {
 									$arrValidate['orderObject']->select($arrValidate['select_back']);
 								}
 
@@ -662,7 +663,7 @@
 
 							break;
 						default:
-							if(!is_array($validateMethod)) {
+							if (!is_array($validateMethod)) {
 								call_user_func($validateMethod);
 							}
 							else {
@@ -672,25 +673,25 @@
 
 				}
 
-				if($componentInfo['type'] == "file" && $_POST[$componentName] == "") {
+				if ($componentInfo['type'] == "file" && $_POST[$componentName] == "") {
 					// Check Upload
 					$uploadFile = "noupload";
 					$outsideLink = false;
-					if($_FILES[$componentName."_file"]['name'] != "") {
+					if ($_FILES[$componentName."_file"]['name'] != "") {
 						$uploadFile = new BTUpload($_FILES[$componentName."_file"], $componentInfo['options']['file_prefix'], $componentInfo['options']['save_loc'], $componentInfo['options']['file_types']);
 					}
-					elseif($_POST[$componentName."_url"] != "") {
+					elseif ($_POST[$componentName."_url"] != "") {
 						$uploadFile = new BTUpload($_POST[$componentName."_url"], $componentInfo['options']['file_prefix'], $componentInfo['options']['save_loc'], $componentInfo['options']['file_types'], $componentInfo['options']['ext_length'], true);
 						$outsideLink = true;
 					}
 
-					if($uploadFile != "noupload") {
+					if ($uploadFile != "noupload") {
 
-						if($this->attachmentForm) {
+						if ($this->attachmentForm) {
 							$this->attachmentObj->setUploadObj($uploadFile);
 							$this->attachmentObj->setCategory($componentInfo['options']['download_category']);
 
-							if(!$this->attachmentObj->uploadFile()) {
+							if (!$this->attachmentObj->uploadFile()) {
 								$this->errors[] = "Unable to upload ".$componentInfo['display_name'].". Make sure that the file is not too big and correct extension.";
 							}
 							else {
@@ -699,14 +700,14 @@
 
 						}
 						else {
-							if(!$uploadFile->uploadFile()) {
+							if (!$uploadFile->uploadFile()) {
 								$this->errors[] = "Unable to upload ".$componentInfo['display_name'].". Make sure that the file is not too big and correct extension.";
 							}
 							else {
 								$_POST[$componentName] = $componentInfo['options']['append_db_value'].$uploadFile->getUploadedFileName();
 								// Check if updating, and delete old file
 
-								if($this->saveType != "add" && $componentInfo['db_name'] != "" && $this->objSave->get_info($componentInfo['db_name']) != "") {
+								if ($this->saveType != "add" && $componentInfo['db_name'] != "" && $this->objSave->get_info($componentInfo['db_name']) != "") {
 									$this->arrDeleteFiles[] = $this->objSave->get_info($componentInfo['db_name']);
 								}
 
@@ -714,25 +715,25 @@
 						}
 
 					}
-					elseif($componentInfo['value'] != "") {
+					elseif ($componentInfo['value'] != "") {
 						$_POST[$componentName] = $componentInfo['value'];
 					}
 
-					if(in_array("NOT_BLANK", $componentInfo['validate'])) {
-						if($_POST[$componentName] == "") {
+					if (in_array("NOT_BLANK", $componentInfo['validate'])) {
+						if ($_POST[$componentName] == "") {
 							$this->errors[] = $componentInfo['display_name']." may not be blank.";
 						}
 					}
 
 				}
-				elseif($componentInfo['type'] == "datepicker") {
+				elseif ($componentInfo['type'] == "datepicker") {
 
 					$formatDate = explode("-", $_POST[$componentName]);
 					$datePick = new DateTime();
 					$datePick->setTimezone(new DateTimeZone("UTC"));
 					$datePick->setDate($formatDate[2], $formatDate[0], $formatDate[1]);
 
-					if(isset($componentInfo['usetime'])) {
+					if (isset($componentInfo['usetime'])) {
 						$useTimeComponent = $componentInfo['usetime'];
 						$hour = $useTimeComponent."_hour";
 						$minute = $useTimeComponent."_minute";
@@ -751,11 +752,11 @@
 
 			}
 
-			if($_POST['checkCSRF'] != $_SESSION['csrfKey']) {
+			if ($_POST['checkCSRF'] != $_SESSION['csrfKey']) {
 				$this->errors[] = "Invalid CSRF Token.  Possible Hacking attempt?";
 			}
 
-			if(count($this->errors) == 0) {
+			if (count($this->errors) == 0) {
 				$returnVal = true;
 			}
 
@@ -777,44 +778,44 @@
 			$this->blnSaveResult = false;
 
 			$arrResortOrder = array();
-			if($this->validate()) {
+			if ($this->validate()) {
 
 				$arrColumns = array();
 				$arrValues = array();
-				foreach($this->components as $componentName => $componentInfo) {
+				foreach ($this->components as $componentName => $componentInfo) {
 
-					if(isset($componentInfo['db_name']) && $componentInfo['db_name'] != "") {
+					if (isset($componentInfo['db_name']) && $componentInfo['db_name'] != "") {
 						$arrColumns[] = $componentInfo['db_name'];
 						$arrValues[] = $_POST[$componentName];
 					}
 
-					if($componentInfo['type'] == "beforeafter") {
+					if ($componentInfo['type'] == "beforeafter") {
 						$this->beforeAfter = true;
 					}
 
 				}
 
 				if ( is_array($this->saveAdditional) ) {
-					foreach($this->saveAdditional as $dbName => $dbValue) {
+					foreach ($this->saveAdditional as $dbName => $dbValue) {
 						$arrColumns[] = $dbName;
 						$arrValues[] = $dbValue;
 					}
 				}
 
-				if($this->objSave != "" && $this->saveType == "add") {
+				if ($this->objSave != "" && $this->saveType == "add") {
 					$this->blnSaveResult = $this->objSave->addNew($arrColumns, $arrValues);
 				}
-				elseif($this->objSave != "" && $this->saveType == "update") {
+				elseif ($this->objSave != "" && $this->saveType == "update") {
 					$this->blnSaveResult = $this->objSave->update($arrColumns, $arrValues);
 
-					if(count($this->arrDeleteFiles) > 0) {
-						foreach($this->arrDeleteFiles as $file) {
+					if (count($this->arrDeleteFiles) > 0) {
+						foreach ($this->arrDeleteFiles as $file) {
 							unlink(BASE_DIRECTORY.$file);
 						}
 					}
 
 				}
-				elseif($this->objSave != "" && $this->saveType != "") {
+				elseif ($this->objSave != "" && $this->saveType != "") {
 					//echo $this->saveType;
 					$this->blnSaveResult = $this->objSave->{$this->saveType}($arrColumns, $arrValues);
 
@@ -823,14 +824,14 @@
 					$this->blnSaveResult = true;
 				}
 
-				if(!$this->blnSaveResult) {
+				if (!$this->blnSaveResult) {
 					$this->errors[] = "Unable to save information to the database.  Please contact the website administrator.";
 				}
 				else {
 
-					if(is_array($this->afterSave)) {
-						foreach($this->afterSave as $saveFunction) {
-							if(!is_array($saveFunction)) {
+					if (is_array($this->afterSave)) {
+						foreach ($this->afterSave as $saveFunction) {
+							if (!is_array($saveFunction)) {
 								call_user_func($saveFunction);
 							}
 							else {
@@ -840,11 +841,11 @@
 						}
 					}
 
-					if($this->beforeAfter) {
-						foreach($this->components as $componentName => $componentInfo) {
+					if ($this->beforeAfter) {
+						foreach ($this->components as $componentName => $componentInfo) {
 
 							// Check for Display Order input types, need to resort order
-							if($componentInfo['type'] == "beforeafter" && $componentInfo['resortOrderObject'] != "") {
+							if ($componentInfo['type'] == "beforeafter" && $componentInfo['resortOrderObject'] != "") {
 								$componentInfo['resortOrderObject']->resortOrder();
 							}
 
@@ -861,10 +862,10 @@
 
 		static function sortForm($a, $b) {
 			$returnVal = 1;
-			if($a['sortorder'] == $b['sortorder']) {
+			if ($a['sortorder'] == $b['sortorder']) {
 				$returnVal = 0;
 			}
-			elseif($a['sortorder'] < $b['sortorder']) {
+			elseif ($a['sortorder'] < $b['sortorder']) {
 				$returnVal = -1;
 			}
 
@@ -873,7 +874,7 @@
 
 		public function addComponentSortSpace($spaceAmount=2, $components = array()) {
 
-			if(count($components) > 0) {
+			if (count($components) > 0) {
 				$this->components = $components;
 			}
 
@@ -881,7 +882,7 @@
 
 			$nextSpot = 1;
 
-			foreach($this->components as $componentName => $componentInfo) {
+			foreach ($this->components as $componentName => $componentInfo) {
 				$this->components[$componentName]['sortorder'] = $nextSpot;
 				$nextSpot += $nextSpot+$spaceAmount;
 			}
@@ -897,9 +898,9 @@
 		 */
 		public function convertAttributes($attr) {
 
-			if(is_array($attr)) {
+			if (is_array($attr)) {
 				$returnVal = "";
-				foreach($attr as $attrName => $attrValue) {
+				foreach ($attr as $attrName => $attrValue) {
 					$returnVal .= $attrName."='".$attrValue."' ";
 				}
 
@@ -918,7 +919,7 @@
 
 			$dispDialogTitle = ($this->saveMessageTitle == "") ? "Confirmation" : $this->saveMessageTitle;
 
-			if($this->saveMessage != "") {
+			if ($this->saveMessage != "") {
 				echo "
 				
 					<div style='display: none' id='successBox'>

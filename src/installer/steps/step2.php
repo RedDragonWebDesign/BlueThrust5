@@ -1,11 +1,11 @@
 <?php
 
 	$countErrors = 0;
-	if($_POST['step1submit']) {
+	if ($_POST['step1submit']) {
 
 		$mysqli = new btmysql($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass'], $_POST['dbname']);
 
-		if($mysqli->connect_errno !== 0) {
+		if ($mysqli->connect_errno !== 0) {
 			$dispError .= "
 				&nbsp;&nbsp;<b>&middot;</b> Unable to connect to database!  Make sure you entered the correct information.<br><br>
 				&nbsp;&nbsp;<b>MySQL Response:</b> ".$mysqli->connect_error."<br>";
@@ -13,13 +13,13 @@
 			$countErrors++;
 		}
 
-		if($countErrors == 0) {
+		if ($countErrors == 0) {
 
 			echo "
 				<div class='pageTitle'>Step 2</div>
 				";
 
-			if($dispError != "") {
+			if ($dispError != "") {
 				echo "
 				<div class='errorDiv'>
 				<b>Unable to continue installation because of the following error:</b><br><br>
@@ -29,7 +29,7 @@
 			}
 
 			$selectUpdateInstall = "";
-			if($_POST['installType'] == 2) {
+			if ($_POST['installType'] == 2) {
 				$selectUpdateInstall = " selected";
 			}
 
@@ -117,7 +117,7 @@
 
 	}
 
-	if(!$_POST['step1submit']) {
+	if (!$_POST['step1submit']) {
 
 		require_once("step1.php");
 	}

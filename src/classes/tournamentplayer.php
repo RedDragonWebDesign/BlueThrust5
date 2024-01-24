@@ -25,10 +25,10 @@ class TournamentPlayer extends Basic {
 
 		$this->tournamentObj->select($this->get_info("tournament_id"));
 
-		if($returnVal && $this->tournamentObj->get_info("playersperteam") == 1) {
+		if ($returnVal && $this->tournamentObj->get_info("playersperteam") == 1) {
 
 			$arrUnfilledTeams = $this->tournamentObj->getUnfilledTeams();
-			if(count($arrUnfilledTeams) > 0) {
+			if (count($arrUnfilledTeams) > 0) {
 				$newTeam = $arrUnfilledTeams[0];
 				$this->update(array("team_id"), array($newTeam));
 			}
@@ -47,7 +47,7 @@ class TournamentPlayer extends Basic {
 
 		$returnVal = false;
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$tournamentReminderTable = $this->MySQL->get_tablePrefix()."tournament_reminder";
 			$emailQueueTable = $this->MySQL->get_tablePrefix()."emailnotifications_queue";
@@ -58,7 +58,7 @@ class TournamentPlayer extends Basic {
 			$result = $this->MySQL->query($mainQuery);
 			$row = $result->fetch_assoc();
 
-			if($result->num_rows > 0 && $row['sent'] == 0) {
+			if ($result->num_rows > 0 && $row['sent'] == 0) {
 				$returnVal = $row['emailnotificationsqueue_id'];
 			}
 		}
@@ -70,12 +70,12 @@ class TournamentPlayer extends Basic {
 
 		$member = new Member($this->MySQL);
 
-		if($member->select($this->arrObjInfo['member_id']) && $member->getEmailNotificationSetting("tournament_time") != 0) {
+		if ($member->select($this->arrObjInfo['member_id']) && $member->getEmailNotificationSetting("tournament_time") != 0) {
 
 			$timeBefore = $member->getEmailNotificationSetting("tournament_time");
 			$unitBefore = $member->getEmailNotificationSetting("tournament_unit");
 
-			switch($unitBefore) {
+			switch ($unitBefore) {
 				case "minutes":
 					$timeDiff = $timeBefore*60;
 					break;
@@ -93,7 +93,7 @@ class TournamentPlayer extends Basic {
 			$message = "This is a reminder that the tournament, ".$this->tournamentObj->get_info_filtered("name")." will be starting at ".getDateUTC($sendReminder).".<br><br>".$tournamentLink;
 
 			$tournamentReminderID = $this->getTournamentReminderID();
-			if($tournamentReminderID !== false) {
+			if ($tournamentReminderID !== false) {
 				// A reminder has already been set, need to update the time!
 				// Update reminder
 				$member->setEmailReminder($sendReminder, "Tournament Starting!", $message, $tournamentReminderID);
@@ -114,7 +114,7 @@ class TournamentPlayer extends Basic {
 
 		$tournamentReminderID = $this->getTournamentReminderID();
 
-		if($tournamentReminderID !== false) {
+		if ($tournamentReminderID !== false) {
 
 			$tournamentReminderTable = $this->MySQL->get_tablePrefix()."tournament_reminder";
 			$emailQueueTable = $this->MySQL->get_tablePrefix()."emailnotifications_queue";

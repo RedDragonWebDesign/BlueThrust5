@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -30,7 +30,7 @@ $cID = $_GET['cID'];
 
 $pollObj = new Poll($mysqli);
 
-if(isset($_GET['pID']) && $pollObj->select($_GET['pID'])) {
+if (isset($_GET['pID']) && $pollObj->select($_GET['pID'])) {
 	define("SHOW_EDITPOLL", true);
 	$pollInfo = $pollObj->get_info_filtered();
 	require_once("include/edit.php");

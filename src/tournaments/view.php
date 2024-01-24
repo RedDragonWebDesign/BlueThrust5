@@ -29,17 +29,17 @@ $tournamentObj = new Tournament($mysqli);
 $consoleObj = new ConsoleOption($mysqli);
 $gameObj = new Game($mysqli);
 
-if(!isset($member)) {
+if (!isset($member)) {
 	$member = new Member($mysqli);
 
-	if(isset($_SESSION['btUsername']) AND isset($_SESSION['btPassword']) && $member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
+	if (isset($_SESSION['btUsername']) AND isset($_SESSION['btPassword']) && $member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
 
 		$memberInfo = $member->get_info_filtered();
 
 	}
 }
 
-if(!$tournamentObj->select($_GET['tID'])) {
+if (!$tournamentObj->select($_GET['tID'])) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 }
 else {
@@ -49,10 +49,10 @@ else {
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -76,13 +76,13 @@ echo "
 // Get Rounds with Matches that are settable
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentmatch WHERE tournament_id='".$tournamentInfo['tournament_id']."' AND (team1_id != '0' OR team2_id != '0') ORDER BY round");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$arrRounds[] = $row['round'];
 }
 
 $arrRounds = array_unique($arrRounds);
 
-foreach($arrRounds as $roundNum) {
+foreach ($arrRounds as $roundNum) {
 	$roundoptions .= "<option value='".$roundNum."'>Round ".$roundNum."</option>";
 }
 
@@ -90,8 +90,8 @@ $member->select($tournamentInfo['member_id']);
 $dispManager = $member->getMemberLink();
 $pluralManagers = "";
 $arrManagers = $tournamentObj->getManagers();
-foreach($arrManagers as $tMemberID) {
-	if($member->select($tMemberID)) {
+foreach ($arrManagers as $tMemberID) {
+	if ($member->select($tMemberID)) {
 		$dispManager .= "<br>".$member->getMemberLink();
 		$pluralManagers = "s";
 	}
@@ -102,7 +102,7 @@ $dateTimeObj->setTimestamp($tournamentInfo['startdate']);
 $includeTimezone = "";
 $dispTimezone = "";
 
-if($tournamentInfo['timezone'] != "") {
+if ($tournamentInfo['timezone'] != "") {
 	$timeZoneObj = new DateTimeZone($tournamentInfo['timezone']);
 	$dateTimeObj->setTimezone($timeZoneObj);
 	$includeTimezone = " T";
@@ -116,35 +116,35 @@ $dateTimeObj->setTimezone(new DateTimeZone("UTC"));
 
 $dispStartDate = $dateTimeObj->format("M j, Y g:i A").$dispTimezone;
 
-if($tournamentInfo['startdate'] < time() && $tournamentObj->getTournamentWinner() == 0) {
+if ($tournamentInfo['startdate'] < time() && $tournamentObj->getTournamentWinner() == 0) {
 	$dispStatus = "<span class='successFont'>Started</span>";
 }
-elseif($tournamentInfo['startdate'] > time()) {
+elseif ($tournamentInfo['startdate'] > time()) {
 	$dispStatus = "<span class='pendingFont'>Forming</span>";
 }
-elseif($tournamentInfo['startdate'] < time() && $tournamentObj->getTournamentWinner() != 0) {
+elseif ($tournamentInfo['startdate'] < time() && $tournamentObj->getTournamentWinner() != 0) {
 	$dispStatus = "<span class='failedFont'>Finished</span>";
 }
 
 
-if($tournamentInfo['access'] == 1) {
+if ($tournamentInfo['access'] == 1) {
 	$dispAccess = "Clan Only";
 }
-elseif($tournamentInfo['access'] == 2) {
+elseif ($tournamentInfo['access'] == 2) {
 	$dispAccess = "Multi-Clan";
 }
 else {
 	$dispAccess = "Everyone";
 }
 
-if($tournamentInfo['description'] == "") {
+if ($tournamentInfo['description'] == "") {
 	$tournamentInfo['description'] = "None";
 }
 
-if($tournamentInfo['seedtype'] == 1 && !$tournamentObj->checkForPools()) {
+if ($tournamentInfo['seedtype'] == 1 && !$tournamentObj->checkForPools()) {
 	$dispSeedType = "Manual";
 }
-elseif($tournamentInfo['seedtype'] == 2) {
+elseif ($tournamentInfo['seedtype'] == 2) {
 	$dispSeedType = "Random";
 }
 else {
@@ -152,7 +152,7 @@ else {
 }
 
 
-if($tournamentInfo['eliminations'] == 1) {
+if ($tournamentInfo['eliminations'] == 1) {
 	$dispEliminations = "Single Elimination";
 }
 else {
@@ -218,18 +218,18 @@ echo "
 
 
 
-		if($tournamentInfo['playersperteam'] == 1) {
+		if ($tournamentInfo['playersperteam'] == 1) {
 			$dispPlayerOrTeam = "Player";
 		}
 		else {
 			$dispPlayerOrTeam = "Team";
 		}
 
-		if($tournamentInfo['seedtype'] == 3) {
+		if ($tournamentInfo['seedtype'] == 3) {
 			$arrPools = $tournamentObj->getPoolList();
 			$dispPools = "";
 			$dispPoolLetter = "A";
-			foreach($arrPools as $poolID) {
+			foreach ($arrPools as $poolID) {
 				$tournamentObj->objTournamentPool->select($poolID);
 
 
@@ -238,15 +238,15 @@ echo "
 				$dispPools .= "<tr><td colspan='2' class='main'><b><u>Pool ".$dispPoolLetter.":</u></b></td></tr>";
 				$dispPools .= "<tr><td class='tinyFont' style='width: 65%'><b>".$dispPlayerOrTeam.":</b></td><td class='tinyFont' style='width: 35%'><b>Record:</b></td></tr>";
 				$counter = 0;
-				foreach($arrPoolTeams as $teamID) {
+				foreach ($arrPoolTeams as $teamID) {
 					$addCSS = " alternateBGColor";
-					if($counter%2 == 0) {
+					if ($counter%2 == 0) {
 						$addCSS = "";
 					}
 					$counter++;
 					$tournamentObj->objTeam->select($teamID);
 					$dispTeamName = $tournamentObj->getPlayerName();
-					if($dispTeamName == "") {
+					if ($dispTeamName == "") {
 						$dispTeamName = "<i>Empty Spot</i>";
 					}
 
@@ -284,7 +284,7 @@ echo "
 		}
 
 
-		if($tournamentInfo['seedtype'] != 3) {
+		if ($tournamentInfo['seedtype'] != 3) {
 			echo "
 			<span class='tournamentProfileTitle'>MATCHES</span>
 			<div class='dashedBox main' style='height: 400px; overflow-y: auto; padding: 5px'>
@@ -309,7 +309,7 @@ echo "
 			
 			";
 
-			if($tournamentObj->checkForPools()) {
+			if ($tournamentObj->checkForPools()) {
 				echo "
 					<p class='tournamentProfileTitle' align='center'>
 						<a href='".$MAIN_ROOT."tournaments/poolmatches.php?tID=".$tID."' target='_blank'>View Pool Matches</a>
@@ -317,7 +317,7 @@ echo "
 				";
 			}
 
-			if($tournamentObj->memberCanJoin($memberInfo['member_id'])) {
+			if ($tournamentObj->memberCanJoin($memberInfo['member_id'])) {
 
 				$tConsoleObj = new ConsoleOption($mysqli);
 				$joinTournamentLink = $tConsoleObj->getConsoleLinkByName("Join a Tournament", false);

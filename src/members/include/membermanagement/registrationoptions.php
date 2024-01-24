@@ -14,13 +14,13 @@
 
 $dispError = '';
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -35,9 +35,9 @@ if ( ! empty($_POST['submit']) ) {
 
 	$setRegistration = 1;
 	$setMemberApproval = 0;
-	if($_POST['registrationstatus'] != 1) {
+	if ($_POST['registrationstatus'] != 1) {
 		$setRegistration = 0;
-		if($_POST['memberapproval'] == 1) {
+		if ($_POST['memberapproval'] == 1) {
 			$setMemberApproval = 1;
 		}
 	}
@@ -47,7 +47,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 
-	if($webInfoObj->multiUpdate($updateColumns, $updateValues)) {
+	if ($webInfoObj->multiUpdate($updateColumns, $updateValues)) {
 
 		$member->logAction("Modified website registration options.");
 
@@ -80,9 +80,9 @@ if ( empty($_POST['submit']) ) {
 
 	$selectOpen = "";
 	$checkApproval = "";
-	if($websiteInfo['memberregistration'] != 1) {
+	if ($websiteInfo['memberregistration'] != 1) {
 		$selectOpen = " selected";
-		if($websiteInfo['memberapproval'] == 1) {
+		if ($websiteInfo['memberapproval'] == 1) {
 			$checkApproval = " checked";
 		}
 	}
@@ -92,7 +92,7 @@ if ( empty($_POST['submit']) ) {
 	
 		<div class='formDiv'>
 		";
-		if($dispError != "") {
+		if ($dispError != "") {
 			echo "
 				<div class='errorDiv'>
 					<strong>Unable to save registration options because the following errors occurred:</strong><br><br>

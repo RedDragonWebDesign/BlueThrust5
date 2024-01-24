@@ -13,7 +13,7 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
@@ -29,7 +29,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	$consoleObj->select($cID);
 
 
-	if(!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
+	if (!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
 
 		exit();
 
@@ -50,7 +50,7 @@ $setupMemberAppForm = array(
 );
 
 $result = $mysqli->query("SELECT memberapp_id FROM ".$dbprefix."memberapps ORDER BY applydate DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 
 	$memberAppObj->select($row['memberapp_id']);
 	$memberAppInfo = $memberAppObj->get_info_filtered();
@@ -91,20 +91,20 @@ while($row = $result->fetch_assoc()) {
 	$customAppInfo = $memberAppObj->getAppValues();
 
 	$arrCompInfo = array();
-	foreach($customAppInfo as $componentID => $customInfo) {
+	foreach ($customAppInfo as $componentID => $customInfo) {
 		$appComponentObj->select($componentID);
 		$appCompName = $appComponentObj->get_info_filtered("name");
 		$compName = "appcomponent_".$componentID;
 
 		$dispCompValue = "";
-		if(count($customInfo['display_values']) > 1) {
+		if (count($customInfo['display_values']) > 1) {
 			$displayValueCounter = 1;
-			foreach($customInfo['display_values'] as $value) {
+			foreach ($customInfo['display_values'] as $value) {
 				$dispCompValue .= $displayValueCounter.". ".$value."<br>";
 				$displayValueCounter++;
 			}
 		}
-		elseif(isset($customInfo['display_values'][0]) && $customInfo['display_values'][0] != "") {
+		elseif (isset($customInfo['display_values'][0]) && $customInfo['display_values'][0] != "") {
 			$dispCompValue = $customInfo['display_values'][0];
 		}
 		else {
@@ -123,10 +123,10 @@ while($row = $result->fetch_assoc()) {
 
 	$setRankOptions = memberAppSetRank();
 
-	if($memberAppInfo['memberadded'] == 0) {
+	if ($memberAppInfo['memberadded'] == 0) {
 
 		$addJS = "";
-		if(count($setRankOptions) > 0) {
+		if (count($setRankOptions) > 0) {
 			$addJS = ", $('#newRankID_".$memberAppInfo['memberapp_id']."').val()";
 		}
 
@@ -156,7 +156,7 @@ while($row = $result->fetch_assoc()) {
 
 
 
-if($result->num_rows == 0) {
+if ($result->num_rows == 0) {
 
 	echo "
 		<div class='shadedBox' style='width: 400px; margin-top: 50px; margin-left: auto; margin-right: auto'>

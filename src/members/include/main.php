@@ -22,9 +22,9 @@ $checkMember = $member->select($_SESSION['btUsername']);
 
 $LOGIN_FAIL = true;
 
-if($checkMember) {
+if ($checkMember) {
 
-	if($member->authorizeLogin($_SESSION['btPassword'])) {
+	if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$LOGIN_FAIL = false;
 
 		$memberInfo = $member->get_info();
@@ -38,14 +38,14 @@ if($checkMember) {
 
 		$result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."consolecategory ORDER BY ordernum");
 
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$arrConsoleCats[] = $row['consolecategory_id'];
 		}
 
 
 		$arrFullySortedConsole = array();
 		$consoleObj = new ConsoleOption($mysqli);
-		foreach($rankPrivileges as $consoleoption) {
+		foreach ($rankPrivileges as $consoleoption) {
 
 			$consoleObj->select($consoleoption);
 			$consoleInfo = $consoleObj->get_info();
@@ -57,7 +57,7 @@ if($checkMember) {
 		}
 		$consoleCatObj = new basic($mysqli, "consolecategory", "consolecategory_id");
 
-		foreach($arrConsoleCats as $key => $categoryID) {
+		foreach ($arrConsoleCats as $key => $categoryID) {
 
 			$consoleCatObj->select($categoryID);
 			$consoleCatInfo = $consoleCatObj->get_info();
@@ -66,7 +66,7 @@ if($checkMember) {
 
 			$arrConsoleOptions = $arrFullySortedConsole[$key];
 
-				foreach($arrConsoleOptions as $consoleOptionID) {
+				foreach ($arrConsoleOptions as $consoleOptionID) {
 
 					$consoleObj->select($consoleOptionID);
 					$consoleInfo = $consoleObj->get_info();
@@ -86,6 +86,6 @@ if($checkMember) {
 }
 
 
-if($LOGIN_FAIL) {
+if ($LOGIN_FAIL) {
 die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."index.php?p=Login';</script>");
 }

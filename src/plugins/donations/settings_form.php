@@ -13,7 +13,8 @@
  */
 
 
-if(!isset($pluginObj)) { exit(); }
+if (!isset($pluginObj)) {
+exit(); }
 require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
 
 
@@ -98,7 +99,7 @@ function saveDonationSettings() {
 	global $pluginObj;
 
 	$arrFilter = array("<?", "?>", "<script>", "</script>");
-	foreach($arrFilter as $filterOut) {
+	foreach ($arrFilter as $filterOut) {
 		$_POST['thankyou'] = str_replace($filterOut, "", $_POST['thankyou']);
 	}
 

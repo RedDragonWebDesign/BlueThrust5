@@ -13,7 +13,7 @@
  */
 
 
-if(!defined("CUSTOM_PAGE")) {
+if (!defined("CUSTOM_PAGE")) {
 	// Config File
 	$prevFolder = "";
 
@@ -25,7 +25,7 @@ if(!defined("CUSTOM_PAGE")) {
 
 	$customPageObj = new Basic($mysqli, "custompages", "custompage_id");
 
-	if(!$customPageObj->select($_GET['pID'])) {
+	if (!$customPageObj->select($_GET['pID'])) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 	}
 

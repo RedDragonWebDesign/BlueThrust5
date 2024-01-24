@@ -24,7 +24,7 @@ require_once($prevFolder."classes/customform.php");
 
 $customFormObj = new CustomForm($mysqli);
 
-if(!$customFormObj->select($_GET['pID'])) {
+if (!$customFormObj->select($_GET['pID'])) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 }
 
@@ -33,10 +33,10 @@ $customPageInfo = $customFormObj->get_info();
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -66,26 +66,26 @@ if ( ! empty($_POST['submit']) ) {
 	// Check for multi submissions
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."customform_submission WHERE ipaddress = '".$IP_ADDRESS."' ORDER BY submitdate DESC LIMIT 1");
-	if($result->num_rows > 0) {
+	if ($result->num_rows > 0) {
 		$row = $result->fetch_assoc();
-		if((time()-$row['submitdate']) < 120) {
+		if ((time()-$row['submitdate']) < 120) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> To prevent abuse you must wait 2 minutes before submitting again.<br>";
 		}
 	}
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 		$arrColumns = array("submitdate", "ipaddress", "customform_id");
 		$arrValues = array(time(), $IP_ADDRESS, $customPageInfo['customform_id']);
 
-		if($customFormObj->objSubmission->addNew($arrColumns, $arrValues)) {
+		if ($customFormObj->objSubmission->addNew($arrColumns, $arrValues)) {
 			$submissionInfo = $customFormObj->objSubmission->get_info();
-			foreach($arrComponents as $componentID) {
+			foreach ($arrComponents as $componentID) {
 				$customFormObj->objComponent->select($componentID);
 				$componentInfo = $customFormObj->objComponent->get_info_filtered();
 
-				if($componentInfo['componenttype'] == "separator") {
+				if ($componentInfo['componenttype'] == "separator") {
 					continue;
 				}
 
@@ -95,20 +95,20 @@ if ( ! empty($_POST['submit']) ) {
 				$arrSelectValues = $customFormObj->getSelectValues($componentID);
 
 				// Check if required
-				if($componentInfo['required'] == 1 && $componentInfo['componenttype'] != "multiselect" && trim($_POST[$formComponentName]) == "") {
+				if ($componentInfo['required'] == 1 && $componentInfo['componenttype'] != "multiselect" && trim($_POST[$formComponentName]) == "") {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> ".$componentInfo['name']." may not be blank.<br>";
 				}
-				elseif($componentInfo['required'] == 1 && $componentInfo['componenttype'] == "multiselect") {
+				elseif ($componentInfo['required'] == 1 && $componentInfo['componenttype'] == "multiselect") {
 					$countMultiSelect = 0;
-					foreach($arrSelectValues as $selectValueID) {
+					foreach ($arrSelectValues as $selectValueID) {
 						$multiSelectName = $formComponentName."_".$selectValueID;
-						if($_POST[$multiSelectName] == 1) {
+						if ($_POST[$multiSelectName] == 1) {
 							$countMultiSelect++;
 						}
 					}
 
-					if($countMultiSelect == 0) {
+					if ($countMultiSelect == 0) {
 						$countErrors++;
 						$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> ".$componentInfo['name']." may not be blank.<br>";
 					}
@@ -116,36 +116,36 @@ if ( ! empty($_POST['submit']) ) {
 
 				// Check Select Value
 
-				if($componentInfo['componenttype'] == "select" && !in_array($_POST[$formComponentName], $arrSelectValues)) {
+				if ($componentInfo['componenttype'] == "select" && !in_array($_POST[$formComponentName], $arrSelectValues)) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid value for ".$componentInfo['name'].".<br>";
 				}
 
 
-				if($countErrors == 0) {
+				if ($countErrors == 0) {
 					$arrColumns = array("submission_id", "component_id", "formvalue");
-					if($componentInfo['componenttype'] == "multiselect") {
-						foreach($arrSelectValues as $selectValueID) {
+					if ($componentInfo['componenttype'] == "multiselect") {
+						foreach ($arrSelectValues as $selectValueID) {
 							$multiSelectName = $formComponentName."_".$selectValueID;
 							$customFormObj->objSelectValue->select($selectValueID);
 							$selectValue = $customFormObj->objSelectValue->get_info_filtered("componentvalue");
-							if($_POST[$multiSelectName] == 1 && !$customFormObj->objFormValue->addNew($arrColumns, array($submissionInfo['submission_id'], $componentID, $selectValue))) {
+							if ($_POST[$multiSelectName] == 1 && !$customFormObj->objFormValue->addNew($arrColumns, array($submissionInfo['submission_id'], $componentID, $selectValue))) {
 								$countErrors++;
 								$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 							}
 
 						}
 					}
-					elseif($componentInfo['componenttype'] == "select") {
+					elseif ($componentInfo['componenttype'] == "select") {
 						$customFormObj->objSelectValue->select($_POST[$formComponentName]);
 						$selectValue = $customFormObj->objSelectValue->get_info_filtered("componentvalue");
-						if(!$customFormObj->objFormValue->addNew($arrColumns, array($submissionInfo['submission_id'], $componentID, $selectValue))) {
+						if (!$customFormObj->objFormValue->addNew($arrColumns, array($submissionInfo['submission_id'], $componentID, $selectValue))) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 						}
 
 					}
-					elseif(($componentInfo['componenttype'] == "input" || $componentInfo['componenttype'] == "largeinput") && !$customFormObj->objFormValue->addNew($arrColumns, array($submissionInfo['submission_id'], $componentID, $_POST[$formComponentName]))) {
+					elseif (($componentInfo['componenttype'] == "input" || $componentInfo['componenttype'] == "largeinput") && !$customFormObj->objFormValue->addNew($arrColumns, array($submissionInfo['submission_id'], $componentID, $_POST[$formComponentName]))) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 					}
@@ -174,18 +174,18 @@ if ( ! empty($_POST['submit']) ) {
 
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
-		if($customPageInfo['submitmessage'] == "") {
+		if ($customPageInfo['submitmessage'] == "") {
 			$customPageInfo['submitmessage'] = "<p align='center'>Success!</p>";
 		}
 
-		if($customPageInfo['submitlink'] == "") {
+		if ($customPageInfo['submitlink'] == "") {
 			$customPageInfo['submitlink'] = $MAIN_ROOT;
 		}
 
 
-		if($customPageInfo['specialform'] == "") {
+		if ($customPageInfo['specialform'] == "") {
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -205,7 +205,7 @@ if ( ! empty($_POST['submit']) ) {
 					<form action='".$customPageInfo['submitlink']."' method='post'>
 						";
 
-					foreach($arrComponents as $value) {
+					foreach ($arrComponents as $value) {
 
 						$tempName = "customform_".$value;
 						echo "	
@@ -260,7 +260,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	}
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 
@@ -271,7 +271,7 @@ if ( ! empty($_POST['submit']) ) {
 if ( empty($_POST['submit']) ) {
 	echo "<div class='formDiv'>";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to submit form because the following errors occurred:</strong><br><br>
@@ -289,20 +289,20 @@ if ( empty($_POST['submit']) ) {
 			<table class='formTable'>
 			";
 
-			foreach($arrComponents as $componentID) {
+			foreach ($arrComponents as $componentID) {
 
 				$customFormObj->objComponent->select($componentID);
 				$componentInfo = $customFormObj->objComponent->get_info_filtered();
 				$dispInput = "";
 				$componentFormName = "customform_".$componentID;
-				switch($componentInfo['componenttype']) {
+				switch ($componentInfo['componenttype']) {
 					case "largeinput":
 						$dispInput = "<textarea name='customform_".$componentID."' class='textBox' rows='4' style='width: 250px'>".$_POST[$componentFormName]."</textarea>";
 						break;
 					case "select":
 						$selectoptions = "";
 						$arrSelectValues = $customFormObj->getSelectValues($componentID);
-						foreach($arrSelectValues as $selectValueID) {
+						foreach ($arrSelectValues as $selectValueID) {
 							$customFormObj->objSelectValue->select($selectValueID);
 							$selectValue = $customFormObj->objSelectValue->get_info_filtered("componentvalue");
 							$selectoptions .= "<option value='".$selectValueID."'>".$selectValue."</option>";
@@ -313,7 +313,7 @@ if ( empty($_POST['submit']) ) {
 					case "multiselect":
 						$selectoptions = "";
 						$arrSelectValues = $customFormObj->getSelectValues($componentID);
-						foreach($arrSelectValues as $selectValueID) {
+						foreach ($arrSelectValues as $selectValueID) {
 							$customFormObj->objSelectValue->select($selectValueID);
 							$selectValue = $customFormObj->objSelectValue->get_info_filtered("componentvalue");
 							$dispInput .= "<input type='checkbox' value='1' name='".$componentFormName."_".$selectValueID."'> ".$selectValue."<br>";
@@ -325,17 +325,17 @@ if ( empty($_POST['submit']) ) {
 				}
 
 				$dispRequired = "";
-				if($componentInfo['required'] == 1) {
+				if ($componentInfo['required'] == 1) {
 					$dispRequired = "<span class='failFont' title='Required' style='cursor: default'>*</span>";
 				}
 
 				$dispToolTip = "";
-				if($componentInfo['tooltip'] != "") {
+				if ($componentInfo['tooltip'] != "") {
 					$dispToolTip = "<div style='display: none' id='tooltip_".$componentID."'>".nl2br($componentInfo['tooltip'])."</div> <a href='javascript:void(0)' onmouseover=\"showToolTip($('#tooltip_".$componentID."').html())\" onmouseout='hideToolTip()'><b>(?)</b></a>";
 				}
 
 
-				if($componentInfo['componenttype'] != "separator") {
+				if ($componentInfo['componenttype'] != "separator") {
 					echo "
 						<tr>
 							<td class='formLabel' valign='top'>".$componentInfo['name'].": ".$dispRequired.$dispToolTip."</td>

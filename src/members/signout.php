@@ -17,11 +17,11 @@ require_once("../_setup.php");
 
 $memberObj = new Member($mysqli);
 
-if($memberObj->select($_SESSION['btUsername']) && $memberObj->authorizeLogin($_SESSION['btPassword'])) {
+if ($memberObj->select($_SESSION['btUsername']) && $memberObj->authorizeLogin($_SESSION['btPassword'])) {
 	$memberObj->update(array("loggedin"), array(0));
 }
 
-if(isset($_COOKIE['btUsername']) || isset($_COOKIE['btPassword'])) {
+if (isset($_COOKIE['btUsername']) || isset($_COOKIE['btPassword'])) {
 	setcookie("btUsername", "", time()-3600, $MAIN_ROOT);
 	setcookie("btPassword", "", time()-3600, $MAIN_ROOT);
 }

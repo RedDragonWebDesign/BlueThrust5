@@ -35,7 +35,7 @@
 
 		public function setSQL($strSQL) {
 
-			if(is_file($strSQL)) {
+			if (is_file($strSQL)) {
 				require_once($strSQL);
 			}
 			else {
@@ -47,7 +47,7 @@
 		public function isInstalled() {
 			$returnVal = false;
 
-			if($this->pluginDir != "") {
+			if ($this->pluginDir != "") {
 				$returnVal = in_array($this->pluginDir, $this->objPlugin->getPlugins("filepath"));
 			}
 
@@ -61,8 +61,8 @@
 
 			$result = $this->MySQL->query("SHOW TABLES");
 
-			while($row = $result->fetch_array()) {
-				if(in_array($row[0], $this->arrPluginTables)) {
+			while ($row = $result->fetch_array()) {
+				if (in_array($row[0], $this->arrPluginTables)) {
 					$returnVal = true;
 					$this->error[] = "The table, <b>".$row[0]."</b> is already used in your database.";
 				}
@@ -84,9 +84,9 @@
 		public function addConsoleCategory() {
 
 			$consoleCatID = "";
-			if($this->pluginConsoleCategory != "") {
+			if ($this->pluginConsoleCategory != "") {
 				$result = $this->MySQL->query("SELECT consolecategory_id FROM ".$this->MySQL->get_tablePrefix()."consolecategory WHERE name = '".$this->pluginConsoleCategory."'");
-				if($result->num_rows == 0) {
+				if ($result->num_rows == 0) {
 					$consoleCatObj = new ConsoleCategory($this->MySQL);
 					$newOrderNum = $consoleCatObj->getHighestOrderNum()+1;
 					$consoleCatObj->addNew(array("name", "ordernum"), array($this->pluginConsoleCategory, $newOrderNum));
@@ -107,7 +107,7 @@
 			$consoleObj->setCategoryKeyValue($consoleCatID);
 			$newSortNum = $consoleObj->getHighestSortNum()+1;
 
-			foreach($this->pluginConsoleOptions as $consoleOptionInfo) {
+			foreach ($this->pluginConsoleOptions as $consoleOptionInfo) {
 				$consoleObj->addNew(array("consolecategory_id", "pagetitle", "filename", "sortnum"), array($consoleCatID, $consoleOptionInfo['pagetitle'], $consoleOptionInfo['filename'], $newSortNum++));
 			}
 
@@ -115,7 +115,7 @@
 
 		public function addPluginPages() {
 
-			foreach($this->pluginPages as $pluginPageInfo) {
+			foreach ($this->pluginPages as $pluginPageInfo) {
 
 				$this->objPlugin->pluginPage->addNew(array("plugin_id", "page", "pagepath"), array($this->pluginID, $pluginPageInfo['page'], $pluginPageInfo['pagepath']));
 
@@ -126,15 +126,15 @@
 		public function importSQL() {
 
 			$returnVal = true;
-			if($this->sql != "") {
-				if($this->MySQL->multi_query($this->sql)) {
+			if ($this->sql != "") {
+				if ($this->MySQL->multi_query($this->sql)) {
 
 					do {
-						if($result = $this->MySQL->store_result()) {
+						if ($result = $this->MySQL->store_result()) {
 							$result->free();
 						}
 					}
-					while($this->MySQL->next_result());
+					while ($this->MySQL->next_result());
 
 				}
 				else {
@@ -160,7 +160,7 @@
 		public function install() {
 
 			$returnVal['result'] = "fail";
-			if($this->pluginName != "" && $this->pluginDir != "" && !$this->checkTableConflicts() && !$this->isInstalled() && $this->importSQL()) {
+			if ($this->pluginName != "" && $this->pluginDir != "" && !$this->checkTableConflicts() && !$this->isInstalled() && $this->importSQL()) {
 
 				$this->addPlugin();
 
@@ -172,7 +172,7 @@
 
 			}
 
-			if(count($this->errors) > 0) {
+			if (count($this->errors) > 0) {
 
 				$returnVal['result'] = "fail";
 				$returnVal['errors'] = $this->errors;
@@ -185,10 +185,10 @@
 
 		public function dropPluginPageTables() {
 
-			foreach($this->arrPluginTables as $tableName) {
+			foreach ($this->arrPluginTables as $tableName) {
 
 				$dropSQL = "DROP TABLE `".$tableName."`";
-				if($this->MySQL->query($dropSQL)) {
+				if ($this->MySQL->query($dropSQL)) {
 					$countDrops++;
 				}
 
@@ -198,9 +198,9 @@
 
 		public function removeConsoleOptions() {
 			$consoleObj = new ConsoleOption($this->MySQL);
-			foreach($this->pluginConsoleOptions as $consoleOptionInfo) {
+			foreach ($this->pluginConsoleOptions as $consoleOptionInfo) {
 				$consoleOptionID = $consoleObj->findConsoleIDByName($consoleOptionInfo['pagetitle']);
-				if($consoleObj->select($consoleOptionID)) {
+				if ($consoleObj->select($consoleOptionID)) {
 
 					$consoleObj->delete();
 
@@ -214,7 +214,7 @@
 			$this->pluginID = array_search($this->pluginDir, $this->objPlugin->getPlugins("filepath"));
 			$this->objPlugin->select($this->pluginID);
 
-			if($this->objPlugin->delete()) {
+			if ($this->objPlugin->delete()) {
 
 				$this->dropPluginPageTables();
 				$this->removeConsoleOptions();

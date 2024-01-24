@@ -20,7 +20,7 @@ require_once($prevFolder."_setup.php");
 
 $member = new Member($mysqli);
 
-if($member->select($_GET['mID'])) {
+if ($member->select($_GET['mID'])) {
 
 	$memberInfo = $member->get_info_filtered();
 	$member->addProfileView();
@@ -41,7 +41,7 @@ require_once($prevFolder."themes/".$THEME."/_header.php");
 
 // Check Private Profiles
 
-if($websiteInfo['privateprofile'] == 1 && !constant("LOGGED_IN")) {
+if ($websiteInfo['privateprofile'] == 1 && !constant("LOGGED_IN")) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
 }
 
@@ -55,7 +55,7 @@ $rankObj->select($memberInfo['rank_id']);
 
 $rankInfo = $rankObj->get_info_filtered();
 
-if($memberInfo['profilepic'] == "") {
+if ($memberInfo['profilepic'] == "") {
 	$dispProfileImage = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
 }
 else {
@@ -63,7 +63,7 @@ else {
 }
 
 $dispSendPM = "";
-if(constant("LOGGED_IN")) {
+if (constant("LOGGED_IN")) {
 	$dispSendPM = "
 		<div class='dottedLine' style='padding: 3px 0px'></div>
 		
@@ -79,17 +79,17 @@ $dispSocialMedia = "";
 
 $memberSocialInfo = $member->objSocial->getMemberSocialInfo(true);
 
-foreach($memberSocialInfo as $socialID => $socialInfo) {
+foreach ($memberSocialInfo as $socialID => $socialInfo) {
 
 	$dispSocialIconDimensions = "";
 	$member->objSocial->select($socialID);
 	$tempSocialInfo = $member->objSocial->get_info_filtered();
 
-	if($tempSocialInfo['iconwidth'] != 0) {
+	if ($tempSocialInfo['iconwidth'] != 0) {
 		$dispSocialIconDimensions .= "width: ".$tempSocialInfo['iconwidth']."px;";
 	}
 
-	if($tempSocialInfo['iconheight'] != 0) {
+	if ($tempSocialInfo['iconheight'] != 0) {
 		$dispSocialIconDimensions .= "height: ".$tempSocialInfo['iconheight']."px;";
 	}
 
@@ -101,7 +101,7 @@ foreach($memberSocialInfo as $socialID => $socialInfo) {
 
 
 
-if($dispSocialMedia != "") {
+if ($dispSocialMedia != "") {
 
 	$addBar = "<div class='dottedLine' style='padding: 3px 0px; margin-bottom: 3px'></div><b>Follow Me:</b><br><p align='center'>";
 	$dispSocialMedia = $addBar.$dispSocialMedia."</p>";
@@ -110,10 +110,10 @@ if($dispSocialMedia != "") {
 
 
 $dispRecruiter = "Unknown";
-if($member->select($memberInfo['recruiter'])) {
+if ($member->select($memberInfo['recruiter'])) {
 	$dispRecruiter = $member->getMemberLink();
 }
-elseif($memberInfo['recruiter'] == 0) {
+elseif ($memberInfo['recruiter'] == 0) {
 	$dispRecruiter = "Website Admin";
 }
 
@@ -121,7 +121,7 @@ $member->select($memberInfo['member_id']);
 $arrRecruits = $member->countRecruits(true);
 $totalRecruits = count($arrRecruits);
 
-foreach($arrRecruits as $recruitID) {
+foreach ($arrRecruits as $recruitID) {
 
 	$member->select($recruitID);
 	$arrDispRecruits[] = $member->getMemberLink();
@@ -135,22 +135,22 @@ $dispRecruits = implode(", ", $arrDispRecruits ?? []);
 $dispLastLogin = "Never Logged In";
 
 
-if($memberInfo['lastlogin'] != 0) {
+if ($memberInfo['lastlogin'] != 0) {
 	$dispLastLogin = getPreciseTime($memberInfo['lastlogin']);
 }
 
 $dispLastSeen = "Never Logged In";
-if($memberInfo['lastseen'] != 0) {
+if ($memberInfo['lastseen'] != 0) {
 	$dispLastSeen = getPreciseTime($memberInfo['lastseen']);
 }
 
 $dispLastPromotion = "Never Promoted";
-if($memberInfo['lastpromotion'] != 0) {
+if ($memberInfo['lastpromotion'] != 0) {
 	$dispLastPromotion = getPreciseTime($memberInfo['lastpromotion']);
 }
 
 $dispLastDemotion = "Never Demoted";
-if($memberInfo['lastdemotion'] != 0) {
+if ($memberInfo['lastdemotion'] != 0) {
 	$dispLastDemotion = getPreciseTime($memberInfo['lastdemotion']);
 }
 
@@ -158,13 +158,13 @@ if($memberInfo['lastdemotion'] != 0) {
 $dispDaysInClan = round((time()-$memberInfo['datejoined'])/86400);
 
 
-if((time()-$memberInfo['lastseen']) < 600) {
+if ((time()-$memberInfo['lastseen']) < 600) {
 	$dispOnlineStatus = "<span style='margin-top: 1px'><img src='".$MAIN_ROOT."themes/".$THEME."/images/onlinedot.png' title='Online!'></span>";
 }
 else {
 	$dispOnlineStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/offlinedot.png' title='Offline'>";
 
-	if($memberInfo['loggedin'] == 1) {
+	if ($memberInfo['loggedin'] == 1) {
 		$member->select($memberInfo['member_id']);
 		$member->update(array("loggedin"), array(0));
 	}
@@ -172,7 +172,7 @@ else {
 }
 
 $dispRankImg = "";
-if($rankInfo['imageurl'] != "") {
+if ($rankInfo['imageurl'] != "") {
 	$dispRankImg = "
 		<div id='profilePageRankPic' class='main' style='margin-left: auto; margin-right: auto; text-align: center; margin-top: 5px; width: 150px; padding: 0px'>
 			<img src='".$rankInfo['imageurl']."' width='".$rankInfo['imagewidth']."' height='".$rankInfo['imageheight']."'>
@@ -182,7 +182,7 @@ if($rankInfo['imageurl'] != "") {
 
 
 $dispBirthday = "";
-if($memberInfo['birthday'] != 0) {
+if ($memberInfo['birthday'] != 0) {
 
 	$bdayDate = new DateTime();
 	$bdayDate->setTimestamp($memberInfo['birthday']);
@@ -197,7 +197,7 @@ if($memberInfo['birthday'] != 0) {
 
 }
 
-if($memberInfo['lastseenlink'] == "") {
+if ($memberInfo['lastseenlink'] == "") {
 	$dispLastSeenLink = "No Where";
 }
 else {
@@ -206,7 +206,7 @@ else {
 }
 
 $dispInactive = "";
-if($memberInfo['onia'] == 1) {
+if ($memberInfo['onia'] == 1) {
 	$dispInactive = "<div style='display: inline-block; vertical-align: middle' class='failedFont tinyFont'>&nbsp;&nbsp;&nbsp;INACTIVE</div>";
 }
 
@@ -268,17 +268,17 @@ require_once($prevFolder."include/breadcrumb.php");
 
 			$x = 0;
 
-			foreach($arrSections as $section) {
+			foreach ($arrSections as $section) {
 
-				foreach($arrPlugins as $pluginInfo) {
+				foreach ($arrPlugins as $pluginInfo) {
 
-					if($pluginInfo['sortnum'] == $x) {
+					if ($pluginInfo['sortnum'] == $x) {
 						require_once($pluginInfo['pagepath']);
 					}
 
 				}
 
-				if($section != "") {
+				if ($section != "") {
 					require_once($section);
 				}
 

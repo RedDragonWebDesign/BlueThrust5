@@ -12,7 +12,7 @@
  *
  */
 
-if(!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
+if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 	exit();
 }
 else {
@@ -24,7 +24,7 @@ else {
 	$squadObj->select($sID);
 
 
-	if(!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "postnews")) {
+	if (!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "postnews")) {
 		exit();
 	}
 }
@@ -43,13 +43,13 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 $countErrors = 0;
 $dispError = "";
-if($_POST['submit']){
+if ($_POST['submit']) {
 
 	// Check News Type
 	//	1 - Public
 	// 	2 - Private
 
-	if($_POST['newstype'] != 1 && $_POST['newstype'] != 2) {
+	if ($_POST['newstype'] != 1 && $_POST['newstype'] != 2) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid news type.<br>";
 	}
@@ -57,26 +57,26 @@ if($_POST['submit']){
 
 	// Check Subject
 
-	if(trim($_POST['subject']) == "") {
+	if (trim($_POST['subject']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a news subject.<br>";
 	}
 
 	// Check Message
 
-	if(trim($_POST['message']) == "") {
+	if (trim($_POST['message']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not make a blank news post.<br>";
 	}
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		$time = time();
 		$arrColumns = array("squad_id", "member_id", "newstype", "dateposted", "postsubject", "newspost");
 		$arrValues = array($squadInfo['squad_id'], $memberInfo['member_id'], $_POST['newstype'], $time, $_POST['subject'], $_POST['message']);
 
 		$newsPost = new Basic($mysqli, "squadnews", "squadnews_id");
-		if($newsPost->addNew($arrColumns, $arrValues)) {
+		if ($newsPost->addNew($arrColumns, $arrValues)) {
 
 			echo "
 				<div style='display: none' id='successBox'>
@@ -100,7 +100,7 @@ if($_POST['submit']){
 
 	}
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
@@ -118,7 +118,7 @@ if ( empty($_POST['submit']) ) {
 			
 			";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to post squad news because the following errors occurred:</strong><br><br>

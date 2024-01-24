@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -65,7 +65,7 @@ function validateUsername() {
 	global $formObj, $mysqli;
 
 	$checkMemberObj = new Member($mysqli);
-	if($checkMemberObj->select($_POST['newusername'])) {
+	if ($checkMemberObj->select($_POST['newusername'])) {
 		$formObj->errors[] = "There is already a member with that username.";
 	}
 

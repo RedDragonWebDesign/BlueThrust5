@@ -44,16 +44,16 @@ class Download extends Basic {
 	function uploadFile($uploadfile="", $fileloc="", $downloadCatID="", $outsidelink=false) {
 
 		$returnVal = false;
-		if($this->setCategory($downloadCatID)) {
+		if ($this->setCategory($downloadCatID)) {
 			$this->intFileSize = 0;
 
 			$allowableExt = $this->objDownloadCategory->getExtensions(false);
 
-			if($uploadfile != "") {
+			if ($uploadfile != "") {
 				$this->objUpload = new BTUpload($uploadfile, "", $fileloc, $allowableExt, 4, $outsidelink);
 			}
 
-			if($this->objUpload->uploadFile() && $this->splitFile()) {
+			if ($this->objUpload->uploadFile() && $this->splitFile()) {
 				$returnVal = true;
 
 			}
@@ -71,45 +71,45 @@ class Download extends Basic {
 		$countErrors = 0;
 		$fullFileName = $this->objUpload->getFileLoc().$this->objUpload->getUploadedFileName();
 
-		if($websiteInfo['split_downloads']) {
+		if ($websiteInfo['split_downloads']) {
 			$finfo = finfo_open(FILEINFO_MIME_TYPE);
 			$this->strMIMEType = finfo_file($finfo, $fullFileName);
 
 			$this->arrSplitFileNames = array();
 			$handle = fopen($fullFileName, 'rb');
-			if($handle) {
+			if ($handle) {
 				$file_size = filesize($fullFileName);
 				$this->intFileSize = $file_size;
 				$parts_size = floor($file_size/2);
 				$modulus=$file_size % 2;
-				for($i=0;$i<2;$i++) {
-					if($modulus!=0 && $i==1) {
+				for ($i=0;$i<2;$i++) {
+					if ($modulus!=0 && $i==1) {
 						$parts[$i] = fread($handle,$parts_size+$modulus);
 					}
 					else {
 						$parts[$i] = fread($handle,$parts_size);
 					}
 
-					if($parts[$i] === false) {
+					if ($parts[$i] === false) {
 						$countErrors++;
 					}
 
 				}
 
-				if(fclose($handle) && $countErrors == 0) {
+				if (fclose($handle) && $countErrors == 0) {
 
-					for($i=0;$i<2;$i++) {
+					for ($i=0;$i<2;$i++) {
 						$filePrefix[$i] = uniqid(time());
 						$this->arrSplitFileNames[] = "split_".$filePrefix[$i];
 						$tempFileName = $this->objUpload->getFileLoc()."split_".$filePrefix[$i];
 						$handle = fopen($tempFileName, 'wb');
 
-						if(!$handle || fwrite($handle,$parts[$i]) === false) {
+						if (!$handle || fwrite($handle,$parts[$i]) === false) {
 							$countErrors++;
 						}
 					}
 
-					if(fclose($handle) && $countErrors == 0 && unlink($fullFileName)) {
+					if (fclose($handle) && $countErrors == 0 && unlink($fullFileName)) {
 						$returnVal = true;
 					}
 
@@ -119,7 +119,7 @@ class Download extends Basic {
 		else {
 			// Do not split downloads
 			$newName = $this->objUpload->getUploadedFileName().".download";
-			if($this->renameFile($newName)) {
+			if ($this->renameFile($newName)) {
 				$this->intFileSize = filesize($this->objUpload->getFileLoc().$newName);
 				$this->arrSplitFileNames[0] = $newName;
 				$this->arrSplitFileNames[1] = "";
@@ -155,7 +155,7 @@ class Download extends Basic {
 	public function delete() {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$info = $this->arrObjInfo;
 			$returnVal = parent::delete();
 

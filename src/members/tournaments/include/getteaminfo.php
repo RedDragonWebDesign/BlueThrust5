@@ -30,7 +30,7 @@ $member->select($_SESSION['btUsername']);
 
 $tournamentObj = new Tournament($mysqli);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->select($_POST['teamID']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->select($_POST['teamID']) && $member->hasAccess($consoleObj)) {
 
 	$memberInfo = $member->get_info();
 
@@ -40,24 +40,24 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->
 	$tmemberID = $tournamentInfo['member_id'];
 
 
-	if($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
+	if ($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
 
-		if($_POST['getWhat'] == "name") {
+		if ($_POST['getWhat'] == "name") {
 
 			echo $teamInfo['name'];
 
 		}
-		elseif($_POST['getWhat'] == "playerlist") {
+		elseif ($_POST['getWhat'] == "playerlist") {
 
 			$arrPlayers = $tournamentObj->getTeamPlayers($teamInfo['tournamentteam_id'], true);
 
 			$playerCount = 1;
-			foreach($arrPlayers as $playerID) {
+			foreach ($arrPlayers as $playerID) {
 
 				$tournamentObj->objPlayer->select($playerID);
 				$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
 
-				if(is_numeric($playerInfo['member_id']) && $member->select($playerInfo['member_id'])) {
+				if (is_numeric($playerInfo['member_id']) && $member->select($playerInfo['member_id'])) {
 					$dispPlayerName = $member->get_info_filtered("username");
 				}
 				else {
@@ -76,7 +76,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->
 
 			}
 
-			for($i=$playerCount; $i<=$tournamentInfo['playersperteam']; $i++) {
+			for ($i=$playerCount; $i<=$tournamentInfo['playersperteam']; $i++) {
 				echo "<div class='mttPlayerSlot main'>".$i.". <span style='font-style: italic'>Empty Player Slot</span></div>";
 			}
 

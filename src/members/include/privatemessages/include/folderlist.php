@@ -12,7 +12,7 @@
  *
  */
 
-if(!defined("SHOW_FOLDERLIST")) {
+if (!defined("SHOW_FOLDERLIST")) {
 	exit();
 }
 
@@ -27,10 +27,10 @@ $intHighestOrder = $pmFolderObj->getHighestSortNum();
 $arrFolderList = $pmFolderObj->listFolders($memberInfo['member_id']);
 $x = 0;
 $counter = 0;
-foreach($arrFolderList as $folderID => $folderName) {
+foreach ($arrFolderList as $folderID => $folderName) {
 	$pmFolderObj->select($folderID);
 	$pmFolderInfo = $pmFolderObj->get_info();
-	if($counter == 1) {
+	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
 	}
@@ -42,12 +42,12 @@ foreach($arrFolderList as $folderID => $folderName) {
 	$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveFolder('up', '".$folderID."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' class='manageListActionButton' title='Move Up'></a>";
 	$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveFolder('down', '".$folderID."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' class='manageListActionButton' title='Move Down'></a>";
 
-	if($x == 0) {
+	if ($x == 0) {
 		$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height='24'>";
 	}
 
 
-	if($intHighestOrder == $pmFolderInfo['sortnum']) {
+	if ($intHighestOrder == $pmFolderInfo['sortnum']) {
 		$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height='24'>";
 	}
 
@@ -70,7 +70,7 @@ echo "
 ";
 
 
-if($x == 0) {
+if ($x == 0) {
 
 	echo "
 		<div class='shadedBox' style='margin-top: 20px; width: 45%; margin-left: auto; margin-right: auto'>

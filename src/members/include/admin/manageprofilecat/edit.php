@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -31,7 +31,7 @@ $cID = $_GET['cID'];
 $profileCatObj = new ProfileCategory($mysqli);
 
 
-if(!$profileCatObj->select($_GET['catID'])) {
+if (!$profileCatObj->select($_GET['catID'])) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");
 }
 
@@ -55,7 +55,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check Cat Name
 
-	if(trim($_POST['catname']) == "") {
+	if (trim($_POST['catname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a Category Name.<br>";
 	}
@@ -66,19 +66,19 @@ if ( ! empty($_POST['submit']) ) {
 	$intNewOrderSpot = $profileCatObj->validateOrder($_POST['catorder'], $_POST['beforeafter'], true, $profileCatInfo['ordernum']);
 
 
-	if($intNewOrderSpot === false) {
+	if ($intNewOrderSpot === false) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order.<br>";
 	}
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 		$arrUpdateColumn = array("name");
 		$arrUpdateValues = array($_POST['catname']);
 
 		$resortOrder = false;
-		if($intNewOrderSpot != $profileCatInfo['ordernum']) {
+		if ($intNewOrderSpot != $profileCatInfo['ordernum']) {
 			$arrUpdateColumn[] = "ordernum";
 			$arrUpdateValues[] = $intNewOrderSpot;
 			$resortOrder = true;
@@ -86,7 +86,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 		$profileCatObj->select($profileCatInfo['profilecategory_id']);
-		if($profileCatObj->update($arrUpdateColumn, $arrUpdateValues)) {
+		if ($profileCatObj->update($arrUpdateColumn, $arrUpdateValues)) {
 
 			echo "
 			<div style='display: none' id='successBox'>
@@ -117,7 +117,7 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
-	if($countErrors == 1) {
+	if ($countErrors == 1) {
 
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
@@ -133,7 +133,7 @@ if ( empty($_POST['submit']) ) {
 	$countCategories = 0;
 
 	$afterSelected = "";
-	if($profileCatInfo['ordernum'] == 1) {
+	if ($profileCatInfo['ordernum'] == 1) {
 		$selectCat = $profileCatInfo['ordernum']+1;
 		$afterSelected = "selected";
 	}
@@ -142,10 +142,10 @@ if ( empty($_POST['submit']) ) {
 	}
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory WHERE profilecategory_id != '".$profileCatInfo['profilecategory_id']."' ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 		$strSelected = "";
-		if($selectCat == $row['ordernum']) {
+		if ($selectCat == $row['ordernum']) {
 			$strSelected = "selected";
 		}
 
@@ -153,7 +153,7 @@ if ( empty($_POST['submit']) ) {
 		$countCategories++;
 	}
 
-	if($countCategories == 0) {
+	if ($countCategories == 0) {
 		$catOrderOptions = "<option value='first'>(no other categories)</option>";
 	}
 
@@ -164,7 +164,7 @@ if ( empty($_POST['submit']) ) {
 	
 	";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to edit profile category because the following errors occurred:</strong><br><br>

@@ -29,12 +29,12 @@ $consoleObj->select($cID);
 $consoleCatObj = new ConsoleCategory($mysqli);
 
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $consoleCatObj->select($_POST['catID'])) {
+	if ($member->hasAccess($consoleObj) && $consoleCatObj->select($_POST['catID'])) {
 
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 

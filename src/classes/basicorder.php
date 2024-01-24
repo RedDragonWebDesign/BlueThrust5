@@ -41,9 +41,9 @@ class BasicOrder extends Basic {
 	function selectByOrder($intOrderNum) {
 
 		$returnVal = false;
-		if(is_numeric($intOrderNum)) {
+		if (is_numeric($intOrderNum)) {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ordernum = '".$intOrderNum."'");
-			if($result->num_rows > 0) {
+			if ($result->num_rows > 0) {
 				$this->arrObjInfo = $result->fetch_assoc();
 				$returnVal = true;
 				$this->intTableKeyValue = $this->arrObjInfo[$this->strTableKey];
@@ -88,23 +88,23 @@ class BasicOrder extends Basic {
 	function makeRoom($strBeforeAfter) {
 
 		$intRankID = $this->intTableKeyValue;
-		if($intRankID != null) {
+		if ($intRankID != null) {
 
 			$intNewRankOrderNum = 0;
 			$arrRanks = array();
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." ORDER BY ordernum");
 			$x = 1;
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
-				if($row[$this->strTableKey] == $intRankID) {
+				if ($row[$this->strTableKey] == $intRankID) {
 
-					if($strBeforeAfter == "after") {
+					if ($strBeforeAfter == "after") {
 						$intNewRankOrderNum = $x;
 						$x++;
 						$arrRanks[$x] = $row[$this->strTableKey];
 						$x++;
 					}
-					elseif($strBeforeAfter == "before") {
+					elseif ($strBeforeAfter == "before") {
 						$arrRanks[$x] = $row[$this->strTableKey];
 						$x++;
 						$intNewRankOrderNum = $x;
@@ -118,17 +118,17 @@ class BasicOrder extends Basic {
 				}
 			}
 
-			if($intNewRankOrderNum == 0) {
+			if ($intNewRankOrderNum == 0) {
 				// intNewRank should not equal 0 after the above loop.
 				// The test will be if a numeric value is returned, so if it returns this string, something went wrong.
 				$intNewRankOrderNum = "false";
 			}
 
-			if(is_numeric($intNewRankOrderNum)) {
+			if (is_numeric($intNewRankOrderNum)) {
 
 				$intOriginalRank = $this->intTableKeyValue;
 
-				foreach($arrRanks as $key => $value) {
+				foreach ($arrRanks as $key => $value) {
 
 					$arrColumns[0] = "ordernum";
 					$arrValues[0] = $key;
@@ -163,29 +163,29 @@ class BasicOrder extends Basic {
 
 		$returnVal = false;
 
-		if($intOrderNumID == "first") {
+		if ($intOrderNumID == "first") {
 			// "(no other categories)" selected, check to see if there are actually no other categories
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName);
 			$num_rows = $result->num_rows;
 
-			if($num_rows == 0 || ($num_rows == 1 && $blnEdit)) {
+			if ($num_rows == 0 || ($num_rows == 1 && $blnEdit)) {
 
 				$returnVal = 1;
 			}
 
 		}
-		elseif($this->select($intOrderNumID) && ($strBeforeAfter == "before" || $strBeforeAfter == "after")) {
+		elseif ($this->select($intOrderNumID) && ($strBeforeAfter == "before" || $strBeforeAfter == "after")) {
 
 			// Check first to see if we are editing or adding a new rank
 
-			if($blnEdit) {
+			if ($blnEdit) {
 
 				// Editing...
 				// Check to see if the rank's order is being changed or if its staying the same
 
 				$addTo = 1; // Add 1 if we chose "before"
-				if($strBeforeAfter == "after") {
+				if ($strBeforeAfter == "after") {
 					$addTo = -1; // Minus 1 if we chose "after"
 				}
 
@@ -195,7 +195,7 @@ class BasicOrder extends Basic {
 				$checkOrderNum = $intEditOrderNum+$addTo; // This is the new ordernum of the rank we are editing
 
 				// If checkOrderNum is the same as intEditOrderNum then the order hasn't changed
-				if($checkOrderNum != $intEditOrderNum) {
+				if ($checkOrderNum != $intEditOrderNum) {
 					$returnVal = $this->makeRoom($strBeforeAfter);
 				}
 				else {
@@ -231,14 +231,14 @@ class BasicOrder extends Basic {
 		$x = 0; // array counter
 		$arrUpdateID = array();
 		$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." ORDER BY ordernum");
-		if($result) {
-			while($row = $result->fetch_assoc()) {
+		if ($result) {
+			while ($row = $result->fetch_assoc()) {
 				$arrUpdateID[] = $row[$this->strTableKey];
 				$x++;
 			}
 
 			$intOriginalRank = $this->intTableKeyValue;
-			foreach($arrUpdateID as $intUpdateID) {
+			foreach ($arrUpdateID as $intUpdateID) {
 				$arrUpdateCol[0] = "ordernum";
 				$arrUpdateVal[0] = $counter;
 				$this->select($intUpdateID);
@@ -267,7 +267,7 @@ class BasicOrder extends Basic {
 
 		$returnVal = false;
 
-		if($this->intTableKeyValue != "" AND ($strDir == "up" OR $strDir == "down")) {
+		if ($this->intTableKeyValue != "" AND ($strDir == "up" OR $strDir == "down")) {
 			$intOriginalRank = $this->intTableKeyValue;
 			$intOrderNum = $this->arrObjInfo['ordernum'];
 
@@ -276,17 +276,17 @@ class BasicOrder extends Basic {
 
 			$makeMove = "";
 
-			if($strDir == "up" AND $this->selectByOrder($moveUp)) {
+			if ($strDir == "up" AND $this->selectByOrder($moveUp)) {
 				$makeMove = "before";
 			}
-			elseif($strDir == "down" AND $this->selectByOrder($moveDown)) {
+			elseif ($strDir == "down" AND $this->selectByOrder($moveDown)) {
 				$makeMove = "after";
 			}
 
-			if($makeMove != "") {
+			if ($makeMove != "") {
 				$newSpot = $this->makeRoom($makeMove);
 
-				if(is_numeric($newSpot)) {
+				if (is_numeric($newSpot)) {
 					$this->select($intOriginalRank);
 					$this->update(array("ordernum"), array($newSpot));
 					$returnVal = true;
@@ -313,7 +313,7 @@ class BasicOrder extends Basic {
 	 */
 	function findBeforeAfter() {
 		$returnArr = "";
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$intHighestOrderNum = $this->getHighestOrderNum();
 			$intOriginalRank = $this->intTableKeyValue;
 
@@ -321,17 +321,17 @@ class BasicOrder extends Basic {
 			$intNextOrderID = 0;
 			$addTo = -1;
 
-			if($this->arrObjInfo['ordernum'] == 1 && $intHighestOrderNum != 1) {
+			if ($this->arrObjInfo['ordernum'] == 1 && $intHighestOrderNum != 1) {
 				$strBeforeAfter = "after";
 				$addTo = 1;
 			}
-			elseif($intHighestOrderNum == 1) {
+			elseif ($intHighestOrderNum == 1) {
 				$strBeforeAfter = "first";
 			}
 
 			$checkNextOrder = $this->arrObjInfo['ordernum']+$addTo;
 
-			if($this->selectByOrder($checkNextOrder)) {
+			if ($this->selectByOrder($checkNextOrder)) {
 				$intNextOrderID = $this->arrObjInfo[$this->strTableKey];
 			}
 
@@ -362,13 +362,13 @@ class BasicOrder extends Basic {
 	function getAssociateIDs($sqlOrderBY = "", $bypassFilter=false) {
 
 		$arrReturn = array();
-		if(!$bypassFilter) {
+		if (!$bypassFilter) {
 			$sqlOrderBY = $this->MySQL->real_escape_string($sqlOrderBY);
 		}
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strAssociateTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."' ".$sqlOrderBY);
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$arrReturn[] = $row[$this->strAssociateKeyName];
 			}
 		}
@@ -391,11 +391,11 @@ class BasicOrder extends Basic {
 	function delete() {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$blnDelete1 = $this->MySQL->query("DELETE FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 
-			if($this->strAssociateTableName != "") {
+			if ($this->strAssociateTableName != "") {
 				$blnDelete2 = $this->MySQL->query("DELETE FROM ".$this->strAssociateTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 				$this->MySQL->query("OPTIMIZE TABLE `".$this->strAssociateTableName."`");
 			}
@@ -403,7 +403,7 @@ class BasicOrder extends Basic {
 				$blnDelete2 = true;
 			}
 
-			if($blnDelete1 && $blnDelete2) {
+			if ($blnDelete1 && $blnDelete2) {
 				$returnVal = true;
 			}
 

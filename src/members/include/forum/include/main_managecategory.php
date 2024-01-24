@@ -13,7 +13,7 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
 
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
@@ -36,7 +36,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !iss
 	$categoryObj->set_assocTableKey("forumboard_id");
 
 	// Check Login
-	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
 	}
 	else {
@@ -47,7 +47,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !iss
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($consoleObj->findConsoleIDByName("Manage Forum Categories"));
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -60,11 +60,11 @@ echo "
 
 $counter = 0;
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 
 	$categoryObj->select($row['forumcategory_id']);
 	$addCSS = "";
-	if($counter == 1) {
+	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
 	}
@@ -75,12 +75,12 @@ while($row = $result->fetch_assoc()) {
 	$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveCat('up', '".$row['forumcategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 	$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveCat('down', '".$row['forumcategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' width='24' height='24' title='Move Down'></a>";
 
-	if($categoryObj->getHighestOrderNum() == $row['ordernum']) {
+	if ($categoryObj->getHighestOrderNum() == $row['ordernum']) {
 		$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height='24'>";
 	}
 
 
-	if($row['ordernum'] == 1) {
+	if ($row['ordernum'] == 1) {
 		$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height='24'>";
 	}
 
@@ -101,7 +101,7 @@ while($row = $result->fetch_assoc()) {
 
 echo "</table>";
 
-if($result->num_rows == 0) {
+if ($result->num_rows == 0) {
 
 	echo "
 	

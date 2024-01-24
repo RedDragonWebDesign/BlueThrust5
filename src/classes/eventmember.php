@@ -19,20 +19,20 @@
 
 			$result = parent::update($arrTableColumns, $arrTableValues);
 
-			if($result) {
+			if ($result) {
 
-				if(in_array("status", $arrTableColumns)) {
+				if (in_array("status", $arrTableColumns)) {
 
 					$eventReminderID = $this->getEventReminderID();
 					$statusKey = array_search("status", $arrTableColumns);
 
-					if($arrTableValues[$statusKey] == 1) {
+					if ($arrTableValues[$statusKey] == 1) {
 						// Set Reminder
 
 						$this->setReminder();
 
 					}
-					elseif($eventReminderID !== false) {
+					elseif ($eventReminderID !== false) {
 
 						$eventReminderTable = $this->MySQL->get_tablePrefix()."event_reminder";
 						$emailQueueTable = $this->MySQL->get_tablePrefix()."emailnotifications_queue";
@@ -51,7 +51,7 @@
 
 			$returnVal = false;
 
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 				$eventReminderTable = $this->MySQL->get_tablePrefix()."event_reminder";
 				$emailQueueTable = $this->MySQL->get_tablePrefix()."emailnotifications_queue";
 
@@ -61,7 +61,7 @@
 				$result = $this->MySQL->query($mainQuery);
 				$row = $result->fetch_assoc();
 
-				if($result->num_rows > 0 && $row['sent'] == 0) {
+				if ($result->num_rows > 0 && $row['sent'] == 0) {
 					$returnVal = $row['emailnotificationsqueue_id'];
 				}
 			}
@@ -74,12 +74,12 @@
 
 			$member = new Member($this->MySQL);
 
-			if($this->arrObjInfo['status'] == 1 && $member->select($this->arrObjInfo['member_id']) && $member->getEmailNotificationSetting("event_time") != 0) {
+			if ($this->arrObjInfo['status'] == 1 && $member->select($this->arrObjInfo['member_id']) && $member->getEmailNotificationSetting("event_time") != 0) {
 
 				$timeBefore = $member->getEmailNotificationSetting("event_time");
 				$unitBefore = $member->getEmailNotificationSetting("event_unit");
 
-				switch($unitBefore) {
+				switch ($unitBefore) {
 					case "minutes":
 						$timeDiff = $timeBefore*60;
 						break;
@@ -98,7 +98,7 @@
 
 				$eventReminderID = $this->getEventReminderID();
 
-				if($eventReminderID !== false) {
+				if ($eventReminderID !== false) {
 					// A reminder has already been set, need to update the time!
 					// Update reminder
 					$member->setEmailReminder($sendReminder, "Event Starting!", $message, $eventReminderID);
@@ -120,7 +120,7 @@
 
 			$eventReminderID = $this->getEventReminderID();
 
-			if($eventReminderID !== false) {
+			if ($eventReminderID !== false) {
 
 				$eventReminderTable = $this->MySQL->get_tablePrefix()."event_reminder";
 				$emailQueueTable = $this->MySQL->get_tablePrefix()."emailnotifications_queue";

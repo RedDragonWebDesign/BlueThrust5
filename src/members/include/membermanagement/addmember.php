@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -27,12 +27,12 @@ else {
 $rankInfo = $memberRank->get_info_filtered();
 $cID = $_GET['cID'];
 
-if($memberInfo['rank_id'] == 1) {
+if ($memberInfo['rank_id'] == 1) {
 
 	$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 	$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
 
-	if($maxOrderNum->num_rows > 0) {
+	if ($maxOrderNum->num_rows > 0) {
 		$result = $mysqli->query("SELECT rank_id FROM ".$dbprefix."ranks WHERE ordernum = '".$arrMaxOrderNum[0]."'");
 		$row = $result->fetch_assoc();
 		$rankInfo['promotepower'] = $row['rank_id'];
@@ -46,21 +46,21 @@ $maxRankInfo = $rankObj->get_info_filtered();
 
 $arrRanks = array();
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$arrRanks[] = $row['rank_id'];
 }
 
 $setRankCID = $consoleObj->findConsoleIDByName("Set Member's Rank");
 $consoleObj->select($setRankCID);
 $dispSetRank = false;
-if($member->hasAccess($consoleObj)) {
+if ($member->hasAccess($consoleObj)) {
 
 	// Get Ranks
 	$sqlRanks = "('".implode("','", $arrRanks)."')";
 
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id IN ".$sqlRanks." AND rank_id != '1' ORDER BY ordernum");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$rankOptions[$row['rank_id']] = filterText($row['name']);
 	}
 
@@ -108,7 +108,7 @@ $arrComponents = array(
 );
 
 
-if($dispSetRank) {
+if ($dispSetRank) {
 	$arrComponents['set_rank'] = array(
 		"type" => "select",
 		"display_name" => "Starting Rank",

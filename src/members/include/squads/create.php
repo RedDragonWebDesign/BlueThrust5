@@ -13,13 +13,13 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -33,17 +33,17 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	// Check Squad Name
-	if(trim($_POST['squadname']) == "") {
+	if (trim($_POST['squadname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a squad name.<br>";
 	}
 
 
-	if($_FILES['uploadlogo']['name'] != "") {
+	if ($_FILES['uploadlogo']['name'] != "") {
 
 		$uploadLogoObj = new BTUpload($_FILES['uploadlogo'], "squad_", "../images/squads/", array(".png", ".jpg", ".gif", ".bmp"));
 
-		if(!$uploadLogoObj->uploadFile()) {
+		if (!$uploadLogoObj->uploadFile()) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload the squad logo. Please make sure the file extension is either .jpg, .png, .gif or .bmp and that the file size is not too big.<br>";
 		}
@@ -57,14 +57,14 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		$newSquadObj = new Squad($mysqli);
 
-		if($_POST['recruiting'] != 0) {
+		if ($_POST['recruiting'] != 0) {
 			$_POST['recruiting'] = 1;
 		}
 
-		if($_POST['shoutbox'] != 0) {
+		if ($_POST['shoutbox'] != 0) {
 			$_POST['shoutbox'] = 1;
 		}
 
@@ -72,7 +72,7 @@ if ( ! empty($_POST['submit']) ) {
 		$arrColumns = array("member_id", "name", "description", "logourl", "recruitingstatus", "datecreated", "privateshoutbox", "website");
 		$arrValues = array($memberInfo['member_id'], $_POST['squadname'], $_POST['squaddesc'], $logoImageURL, $_POST['recruiting'], $time, $_POST['shoutbox'], $_POST['squadsite']);
 
-		if($newSquadObj->addNew($arrColumns, $arrValues)) {
+		if ($newSquadObj->addNew($arrColumns, $arrValues)) {
 
 			$newSquadInfo = $newSquadObj->get_info_filtered();
 
@@ -84,7 +84,7 @@ if ( ! empty($_POST['submit']) ) {
 
 			$checkAddMember = $newSquadObj->objSquadMember->addNew(array("squad_id", "member_id", "squadrank_id", "datejoined"), array($newSquadInfo['squad_id'], $memberInfo['member_id'], $squadRankInfo['squadrank_id'], $time));
 
-			if($checkAddRank && $checkAddMember) {
+			if ($checkAddRank && $checkAddMember) {
 
 				echo "
 				
@@ -117,7 +117,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	}
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
@@ -133,7 +133,7 @@ if ( empty($_POST['submit']) ) {
 			
 		";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to create squad because the following errors occurred:</strong><br><br>

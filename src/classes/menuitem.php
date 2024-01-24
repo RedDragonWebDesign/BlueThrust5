@@ -43,13 +43,13 @@ class MenuItem extends BasicSort {
 		$returnArr = array();
 
 		$accessTypeSQL = " OR accesstype = '".$intAccessType."'";
-		if($intAccessType == 3) {
+		if ($intAccessType == 3) {
 			$accessTypeSQL = " OR accesstype = '1' OR accesstype = '2'";
 		}
 
-		if(is_numeric($intAccessType) && is_numeric($intHide) && is_numeric($intCategory)) {
+		if (is_numeric($intAccessType) && is_numeric($intHide) && is_numeric($intCategory)) {
 			$result = $this->MySQL->query("SELECT menuitem_id FROM ".$this->strTableName." WHERE (accesstype = '0'".$accessTypeSQL.") AND hide = '".$intHide."' AND menucategory_id = '".$intCategory."' ORDER BY sortnum");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$returnArr[] = $row['menuitem_id'];
 			}
 		}
@@ -60,8 +60,8 @@ class MenuItem extends BasicSort {
 
 	public function delete() {
 
-		if($this->intTableKeyValue != "") {
-			switch($this->arrObjInfo['itemtype']) {
+		if ($this->intTableKeyValue != "") {
+			switch ($this->arrObjInfo['itemtype']) {
 				case "link":
 					$this->objLink->select($this->arrObjInfo['itemtype_id']);
 					$this->objLink->delete();

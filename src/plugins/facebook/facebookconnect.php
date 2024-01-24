@@ -12,19 +12,19 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
 
 
-if(trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
+if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
 }
 else {
@@ -37,15 +37,15 @@ require_once("../plugins/facebook/facebook.php");
 $fbObj = new Facebook($mysqli);
 $blnCheckForFacebook = $fbObj->hasFacebook($memberInfo['member_id']);
 
-if($blnCheckForFacebook) {
+if ($blnCheckForFacebook) {
 	$fbInfo = $fbObj->get_info_filtered();
 	$fbID = $fbInfo['fbconnect_id'];
-	if((time()-$fbInfo['lastupdate']) > 1800) {
+	if ((time()-$fbInfo['lastupdate']) > 1800) {
 
 		$fbObj->accessToken = $fbInfo['access_token'];
 		$fbInfo = $fbObj->getFBInfo();
 
-		if($fbInfo == "") {
+		if ($fbInfo == "") {
 			// User revoked access through Facebook, refresh page and re-ask for access
 
 			$fbObj->delete();
@@ -162,7 +162,7 @@ if($blnCheckForFacebook) {
 	";
 
 }
-elseif(!$blnCheckForFacebook && isset($_GET['code'])) {
+elseif (!$blnCheckForFacebook && isset($_GET['code'])) {
 
 	$fbObj->tokenNonce = $_SESSION['btFacebookNonce'];
 
@@ -172,7 +172,7 @@ elseif(!$blnCheckForFacebook && isset($_GET['code'])) {
 
 	$_SESSION['btFBAccessToken'] = $arrAccessToken['access_token'];
 
-	if($fbObj->checkAccessToken()) {
+	if ($fbObj->checkAccessToken()) {
 		$fbInfo = $fbObj->getFBInfo();
 
 		// Save in DB
@@ -205,7 +205,7 @@ elseif(!$blnCheckForFacebook && isset($_GET['code'])) {
 	}
 
 }
-elseif(!$blnCheckForFacebook && isset($_GET['error_reason'])) {
+elseif (!$blnCheckForFacebook && isset($_GET['error_reason'])) {
 	echo "
 	
 		<script type='text/javascript'>
@@ -213,7 +213,7 @@ elseif(!$blnCheckForFacebook && isset($_GET['error_reason'])) {
 		</script>
 	";
 }
-elseif(!$blnCheckForFacebook) {
+elseif (!$blnCheckForFacebook) {
 
 	$loginURL = $fbObj->getFBConnectLink($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 	$_SESSION['btFacebookNonce'] = $fbObj->tokenNonce;

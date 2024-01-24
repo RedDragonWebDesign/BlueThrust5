@@ -29,12 +29,12 @@ $cID = $consoleObj->findConsoleIDByName("Manage Console Options");
 $consoleObj->select($cID);
 $_GET['cID'] = $cID;
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $consoleCatObj->select($_POST['cID'])) {
+	if ($member->hasAccess($consoleObj) && $consoleCatObj->select($_POST['cID'])) {
 
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 		$consoleCatInfo = $consoleCatObj->get_info();
@@ -42,7 +42,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		$arrAssociates = $consoleCatObj->getAssociateIDs("ORDER BY sortnum");
 
 		$resortOrder = false;
-		if(count($arrAssociates) > 0) {
+		if (count($arrAssociates) > 0) {
 			$consoleObj->select($arrAssociates[0]);
 			$intSpot = $consoleObj->makeRoom("before");
 			$resortOrder = true;

@@ -32,21 +32,21 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 $checkAccess = $checkAccess1 || $checkAccess2;
 
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($checkAccess && isset($_SESSION['btProfileCache'][$_POST['editKey']])) {
+	if ($checkAccess && isset($_SESSION['btProfileCache'][$_POST['editKey']])) {
 
 
 
 		if ( ! empty($_POST['submit']) ) {
 
 
-			if(trim($_POST['editValue']) != "") {
+			if (trim($_POST['editValue']) != "") {
 
-				if($_SESSION['btProfileCache'][$_POST['editKey']] != $_POST['editValue']) {
+				if ($_SESSION['btProfileCache'][$_POST['editKey']] != $_POST['editValue']) {
 					$_SESSION['btProfileCacheRefresh'] = true;
 				}
 

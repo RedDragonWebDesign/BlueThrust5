@@ -12,7 +12,7 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
 
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
@@ -39,7 +39,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !iss
 
 
 	// Check Login
-	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
 	}
 	else {
@@ -50,7 +50,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !iss
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($consoleObj->findConsoleIDByName("Manage Boards"));
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -62,22 +62,22 @@ function dispManageTable($arrBoards, $indent=0) {
 	$boardObj = new ForumBoard($mysqli);
 	$counter = 0;
 	$x = 0;
-	foreach($arrBoards as $boardID) {
+	foreach ($arrBoards as $boardID) {
 		$boardObj->select($boardID);
 		$boardInfo = $boardObj->get_info_filtered();
 
 		$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveBoard('up', '".$boardInfo['forumboard_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 		$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveBoard('down', '".$boardInfo['forumboard_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' width='24' height='24' title='Move Down'></a>";
 
-		if($x == 0) {
+		if ($x == 0) {
 			$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height='24'>";
 		}
 
-		if($boardObj->getHighestSortNum() == $boardInfo['sortnum']) {
+		if ($boardObj->getHighestSortNum() == $boardInfo['sortnum']) {
 			$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height='24'>";
 		}
 
-		if($counter == 1) {
+		if ($counter == 1) {
 			$addCSS = " alternateBGColor";
 			$counter = 0;
 		}
@@ -99,7 +99,7 @@ function dispManageTable($arrBoards, $indent=0) {
 		$x++;
 
 		$arrSubForums = $boardObj->getSubForums();
-		if(count($arrSubForums) > 0) {
+		if (count($arrSubForums) > 0) {
 			dispManageTable($arrSubForums, ($indent+1));
 		}
 
@@ -118,9 +118,9 @@ echo "
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."forum_board WHERE subforum_id = '0'");
 $totalBoards = $result->num_rows;
 
-if($totalBoards > 0) {
+if ($totalBoards > 0) {
 	$result = $mysqli->query("SELECT forumcategory_id FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 		$categoryObj->select($row['forumcategory_id']);
 		$arrBoards = $categoryObj->getAssociateIDs("AND subforum_id = '0' ORDER BY sortnum", true);
@@ -143,7 +143,7 @@ if($totalBoards > 0) {
 }
 echo "</table>";
 
-if($totalBoards == 0) {
+if ($totalBoards == 0) {
 
 	echo "
 	

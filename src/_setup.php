@@ -19,12 +19,12 @@ require_once('_global_setup.php');
 ini_set('session.use_only_cookies', 1);
 ini_set('session.gc_maxlifetime', 60*60*24*3);
 
-if(!isset($prevFolder)) {
+if (!isset($prevFolder)) {
 	$prevFolder = "";
 }
 
 
-if(isset($_COOKIE['btUsername']) && isset($_COOKIE['btPassword'])) {
+if (isset($_COOKIE['btUsername']) && isset($_COOKIE['btPassword'])) {
 	session_start();
 	$_SESSION['btUsername'] = $_COOKIE['btUsername'];
 	$_SESSION['btPassword'] = $_COOKIE['btPassword'];
@@ -33,7 +33,7 @@ else {
 	session_start();
 }
 
-if(!isset($_SESSION['csrfKey'])) {
+if (!isset($_SESSION['csrfKey'])) {
 	$_SESSION['csrfKey'] = md5(uniqid());
 }
 
@@ -50,10 +50,10 @@ require_once(BASE_DIRECTORY."_functions.php");
 
 // Class Loaders
 function BTCS4Loader($class_name) {
-	if(file_exists(BASE_DIRECTORY."classes/".strtolower($class_name).".php")) {
+	if (file_exists(BASE_DIRECTORY."classes/".strtolower($class_name).".php")) {
 		require_once(BASE_DIRECTORY."classes/".strtolower($class_name).".php");
 	}
-	elseif(file_exists(require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php"))) {
+	elseif (file_exists(require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php"))) {
 		require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php");
 	}
 }
@@ -82,7 +82,7 @@ $THEME = $websiteInfo['theme'];
 define("THEME", $THEME);
 
 $arrWebsiteLogoURL = parse_url($websiteInfo['logourl']);
-if(!isset($arrWebsiteLogoURL['scheme']) || $arrWebsiteLogoURL['scheme'] == "") {
+if (!isset($arrWebsiteLogoURL['scheme']) || $arrWebsiteLogoURL['scheme'] == "") {
 	$websiteInfo['logourl'] = $MAIN_ROOT."themes/".$THEME."/".$websiteInfo['logourl'];
 }
 
@@ -90,20 +90,20 @@ if(!isset($arrWebsiteLogoURL['scheme']) || $arrWebsiteLogoURL['scheme'] == "") {
 require_once(BASE_DIRECTORY."include/websiteinfo_defaults.php");
 
 
-if(!isset($_SESSION['appendIP'])) {
+if (!isset($_SESSION['appendIP'])) {
 	$_SESSION['appendIP'] = substr(md5(uniqid().time()),0,10);
 }
 
 $IP_ADDRESS = $_SERVER['REMOTE_ADDR'];
 
 // Check Debug Mode
-if($websiteInfo['debugmode'] == 1) {
+if ($websiteInfo['debugmode'] == 1) {
 	debug();
 }
 
 // Check for Ban
 $ipbanObj = new IPBan($mysqli);
-if($ipbanObj->isBanned($IP_ADDRESS)) {
+if ($ipbanObj->isBanned($IP_ADDRESS)) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 }
 

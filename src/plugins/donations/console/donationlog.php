@@ -1,6 +1,7 @@
 <?php
 
-	if(!defined("MAIN_ROOT")) { exit(); }
+	if (!defined("MAIN_ROOT")) {
+exit(); }
 	require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
 
 	$campaignInfo = $campaignObj->get_info_filtered();
@@ -14,12 +15,12 @@
 
 
 	$addToPageSelectorLink = "";
-	if(!isset($_GET['start']) || !isset($_GET['end'])) {
+	if (!isset($_GET['start']) || !isset($_GET['end'])) {
 		$period = $campaignObj->getCurrentPeriodRange(true);
 		$_GET['start'] = $period['current'];
 		$_GET['end'] = $period['next']-(60*60*24);
 	}
-	elseif(is_numeric($_GET['start']) && is_numeric($_GET['end']) && $_GET['start'] > $_GET['end']) {
+	elseif (is_numeric($_GET['start']) && is_numeric($_GET['end']) && $_GET['start'] > $_GET['end']) {
 		$temp = $_GET['start'];
 		$_GET['start'] = $_GET['end'];
 		$_GET['end'] = $temp;
@@ -68,13 +69,13 @@
 
 	$counter = 0;
 	$i = ($_GET['pageNum']-1)*$donationsPerPage;
-	while($counter < $donationsPerPage && $i < $totalDonations) {
+	while ($counter < $donationsPerPage && $i < $totalDonations) {
 		$info = $donationInfo[$i];
 
 		$dispDate = getPreciseTime($info['datesent'], "", true);
 
 		$dispFrom = ($info['name'] == "") ? "Anonymous" : $info['name'];
-		if($donateMember->select($info['member_id'])) {
+		if ($donateMember->select($info['member_id'])) {
 			$dispFrom = $donateMember->getMemberLink();
 		}
 
@@ -95,7 +96,7 @@
 
 	echo "</table>";
 
-	if($totalDonations == 0) {
+	if ($totalDonations == 0) {
 
 		echo "
 		

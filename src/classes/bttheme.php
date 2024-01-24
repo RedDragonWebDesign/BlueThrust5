@@ -38,13 +38,13 @@
 
 			$hooksObj->run("head");
 
-			foreach($this->arrHeadOrder as $value) {
+			foreach ($this->arrHeadOrder as $value) {
 
 				echo $this->arrHead[$value]."\n";
 
 			}
 
-			if(isset($EXTERNAL_JAVASCRIPT) && $EXTERNAL_JAVASCRIPT != "") {
+			if (isset($EXTERNAL_JAVASCRIPT) && $EXTERNAL_JAVASCRIPT != "") {
 				echo $EXTERNAL_JAVASCRIPT;
 			}
 
@@ -71,7 +71,7 @@
 
 		public function updateHeadItem($itemName, $itemValue) {
 
-			if(isset($this->arrHead[$itemName])) {
+			if (isset($this->arrHead[$itemName])) {
 
 				$this->arrHead[$itemName] = $itemValue;
 
@@ -83,23 +83,23 @@
 			unset($this->arrHead[$itemName]);
 
 			$key = array_search($itemName);
-			if($key !== false) {
+			if ($key !== false) {
 				unset($this->arrHeadOrder[$key]);
 			}
 		}
 
 		public function moveHeadItem($itemName, $newPosition) {
 
-			if(isset($this->arrHead[$itemName])) {
+			if (isset($this->arrHead[$itemName])) {
 
-				if(isset($this->arrHeadOrder[$newPosition])) {
+				if (isset($this->arrHeadOrder[$newPosition])) {
 					$newOrderArray = array();
-					foreach($this->arrHeadOrder as $key => $value) {
-						if($key == $newPosition) {
+					foreach ($this->arrHeadOrder as $key => $value) {
+						if ($key == $newPosition) {
 							$newOrderArray[] = $itemName;
 							$newOrderArray[] = $value;
 						}
-						elseif($value != $itemName) {
+						elseif ($value != $itemName) {
 							$newOrderArray[] = $value;
 						}
 					}
@@ -120,7 +120,7 @@
 
 		public function setTitle($title) {
 
-			if(!isset($this->arrHead['title'])) {
+			if (!isset($this->arrHead['title'])) {
 				$this->addHeadItem("title", "<title>".$title."</title>");
 			}
 			else {

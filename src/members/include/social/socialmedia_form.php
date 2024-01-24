@@ -1,15 +1,16 @@
 <?php
 
-	if(!defined("SOCIALMEDIA_FORM")) { exit(); }
+	if (!defined("SOCIALMEDIA_FORM")) {
+exit(); }
 
 	$socialOrderObj = new Social($mysqli);
 	$socialOptions = array();
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."social ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$socialOptions[$row['social_id']] = filterText($row['name']);
 	}
 
-	if(count($socialOptions) == 0) {
+	if (count($socialOptions) == 0) {
 		$socialOptions['first'] = "(first icon)";
 	}
 

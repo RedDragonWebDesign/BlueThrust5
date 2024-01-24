@@ -1,6 +1,7 @@
 <?php
 
-	if(!defined("CAMPAIGN_FORM")) { exit(); }
+	if (!defined("CAMPAIGN_FORM")) {
+exit(); }
 
 	$arrPaypalCurrencyCodes = $campaignObj->getCurrencyCodes();
 	$arrPaypalCurrencyInfo = $campaignObj->getCurrencyCodeInfo();
@@ -156,11 +157,11 @@
 	$awardMedalCID = $consoleObj->findConsoleIDByName("Award Medal");
 	$consoleObj->select($awardMedalCID);
 	$hasAwardMedalAccess = false;
-	if($member->hasAccess($consoleObj)) {
+	if ($member->hasAccess($consoleObj)) {
 		$hasAwardMedalAccess = true;
 		$medalOptions[0] = "None";
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."medals ORDER BY ordernum DESC");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$medalOptions[$row['medal_id']] = filterText($row['name']);
 		}
 
@@ -179,12 +180,12 @@
 
 	$consoleObj->select($cID);
 
-	if(!is_array($arrSelectRecur)) {
+	if (!is_array($arrSelectRecur)) {
 		$arrSelectRecur['months'] = "selected";
 	}
 
 	$arrRecurUnits = array("days"=>"Days", "weeks"=>"Weeks", "months"=>"Months", "years"=>"Years");
-	foreach($arrRecurUnits as $key => $value) {
+	foreach ($arrRecurUnits as $key => $value) {
 		$recurOptions .= "<option value='".$key."'".$arrSelectRecur[$key].">".$value."</option>";
 	}
 
@@ -239,27 +240,27 @@
 	function validateCreateCampaignForm() {
 		global $hasAwardMedalAccess, $formObj, $arrRecurUnits;
 
-		if(!$hasAwardMedalAccess) {
+		if (!$hasAwardMedalAccess) {
 			$formObj->errors[] = "You don't have access to the award medal privilege.";
 		}
 
 		$validRecurringUnits = array_keys($arrRecurUnits);
-		if(!in_array($_POST['recurringunit'], $validRecurringUnits) && $_POST['recurring'] == 1) {
+		if (!in_array($_POST['recurringunit'], $validRecurringUnits) && $_POST['recurring'] == 1) {
 			$formObj->errors[] = "You selected an invalid recurring unit.";
 		}
 
-		if($_POST['recurringamount'] <= 0 && $_POST['recurring'] == 1) {
+		if ($_POST['recurringamount'] <= 0 && $_POST['recurring'] == 1) {
 			$formObj->errors[] = "The recurring amount must be greater than zero.";
 		}
 
-		if($_POST['recurring'] != 1) {
+		if ($_POST['recurring'] != 1) {
 			$_POST['recurringunit'] = "";
 			$_POST['recurringamount'] = 0;
 			$_POST['recurring'] = 0;
 		}
 		else {
 
-			switch($_POST['recurringunit']) {
+			switch ($_POST['recurringunit']) {
 				case "days":
 					$_POST['recurring'] = date($formObj->objSave->DAY);
 					break;
@@ -276,14 +277,14 @@
 
 		}
 
-		if($_POST['rununtil'] == "forever") {
+		if ($_POST['rununtil'] == "forever") {
 			$_POST['enddate'] = 0;
 		}
 
-		if($formObj->saveType == "update") {
+		if ($formObj->saveType == "update") {
 			global $campaignInfo;
 
-			if($campaignInfo['recurringunit'] == $_POST['recurringunit'] && $campaignInfo['recurringamount'] == $_POST['recurringamount']) {
+			if ($campaignInfo['recurringunit'] == $_POST['recurringunit'] && $campaignInfo['recurringamount'] == $_POST['recurringamount']) {
 				$_POST['recurring'] = $campaignInfo['currentperiod'];
 			}
 

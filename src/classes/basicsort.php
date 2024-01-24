@@ -47,22 +47,22 @@ class BasicSort extends Basic {
 
 		$strBeforeAfter = strtolower($strBeforeAfter);
 		$newSortNum = "false";
-		if($this->intTableKeyValue != "" AND ($strBeforeAfter == "before" OR $strBeforeAfter == "after")) {
+		if ($this->intTableKeyValue != "" AND ($strBeforeAfter == "before" OR $strBeforeAfter == "after")) {
 			$consoleInfo = $this->arrObjInfo;
 			$startSaving = false;
 			$x = 1;
 			$arrConsoleOptions = array();
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strCategoryKey." = '".$consoleInfo[$this->strCategoryKey]."' ORDER BY sortnum");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
-				if($strBeforeAfter == "before" AND $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
+				if ($strBeforeAfter == "before" AND $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
 					$newSortNum = $x;
 					$x++;
 					$arrConsoleOptions[$x][0] = $row[$this->strTableKey];
 					$arrConsoleOptions[$x][1] = $row['sortnum'];
 					$x++;
 				}
-				elseif($strBeforeAfter == "after" AND $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
+				elseif ($strBeforeAfter == "after" AND $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
 					$arrConsoleOptions[$x][0] = $row[$this->strTableKey];
 					$arrConsoleOptions[$x][1] = $row['sortnum'];
 					$x++;
@@ -83,11 +83,11 @@ class BasicSort extends Basic {
 			$updateArray = array();
 
 			$updateRowName = array("sortnum");
-			if(is_numeric($newSortNum)) {
+			if (is_numeric($newSortNum)) {
 				$intOriginalCID = $this->intTableKeyValue;
-				foreach($arrConsoleOptions as $key => $value) {
+				foreach ($arrConsoleOptions as $key => $value) {
 
-					if($key != $value[1]) {
+					if ($key != $value[1]) {
 
 						$this->select($value[0]);
 						$this->update(array("sortnum"), array($key));
@@ -123,13 +123,13 @@ class BasicSort extends Basic {
 		$x = 0; // array counter
 		$arrUpdateID = array();
 		$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strCategoryKey." = '".$consoleInfo[$this->strCategoryKey]."' ORDER BY sortnum");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$arrUpdateID[] = $row[$this->strTableKey];
 			$x++;
 		}
 
 		$intOriginalConsole = $this->intTableKeyValue;
-		foreach($arrUpdateID as $intUpdateID) {
+		foreach ($arrUpdateID as $intUpdateID) {
 			$arrUpdateCol[0] = "sortnum";
 			$arrUpdateVal[0] = $counter;
 			$this->select($intUpdateID);
@@ -146,7 +146,7 @@ class BasicSort extends Basic {
 	public function getHighestSortNum() {
 
 		$returnVal = false;
-		if($this->arrObjInfo[$this->strCategoryKey] != "") {
+		if ($this->arrObjInfo[$this->strCategoryKey] != "") {
 			$catKeyValue = $this->arrObjInfo[$this->strCategoryKey];
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strCategoryKey." = '".$catKeyValue."'");
 			$returnVal = $result->num_rows;
@@ -177,28 +177,28 @@ class BasicSort extends Basic {
 
 		$catKeyValue = $this->get_info($this->strCategoryKey);
 
-		if($intOrderNumID == "first") {
+		if ($intOrderNumID == "first") {
 			// "(no other categories)" selected, check to see if there are actually no other categories
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strCategoryKey." = '".$catKeyValue."'");
 			$num_rows = $result->num_rows;
 
-			if($num_rows == 0 || ($num_rows == 1 && $blnEdit)) {
+			if ($num_rows == 0 || ($num_rows == 1 && $blnEdit)) {
 				$returnVal = 1;
 			}
 
 		}
-		elseif($this->select($intOrderNumID) && ($strBeforeAfter == "before" || $strBeforeAfter == "after")) {
+		elseif ($this->select($intOrderNumID) && ($strBeforeAfter == "before" || $strBeforeAfter == "after")) {
 
 			// Check first to see if we are editing or adding a new rank
 
-			if($blnEdit) {
+			if ($blnEdit) {
 
 				// Editing...
 				// Check to see if the rank's order is being changed or if its staying the same
 
 				$addTo = -1; // Minus 1 if we chose "before"
-				if($strBeforeAfter == "after") {
+				if ($strBeforeAfter == "after") {
 					$addTo = 1; // Add 1 if we chose "after"
 				}
 
@@ -208,7 +208,7 @@ class BasicSort extends Basic {
 				$checkOrderNum = $intEditOrderNum+$addTo; // This is the new ordernum of the rank we are editing
 
 				// If checkOrderNum is the same as intEditOrderNum then the order hasn't changed
-				if($checkOrderNum != $intEditOrderNum) {
+				if ($checkOrderNum != $intEditOrderNum) {
 					$returnVal = $this->makeRoom($strBeforeAfter);
 				}
 				else {
@@ -243,7 +243,7 @@ class BasicSort extends Basic {
 
 		$returnVal = false;
 
-		if($this->intTableKeyValue != "" AND ($strDir == "up" OR $strDir == "down")) {
+		if ($this->intTableKeyValue != "" AND ($strDir == "up" OR $strDir == "down")) {
 			$intOriginalRank = $this->intTableKeyValue;
 			$intOrderNum = $this->arrObjInfo['sortnum'];
 
@@ -252,17 +252,17 @@ class BasicSort extends Basic {
 
 			$makeMove = "";
 
-			if($strDir == "up" AND $this->selectByOrder($moveUp)) {
+			if ($strDir == "up" AND $this->selectByOrder($moveUp)) {
 				$makeMove = "before";
 			}
-			elseif($strDir == "down" AND $this->selectByOrder($moveDown)) {
+			elseif ($strDir == "down" AND $this->selectByOrder($moveDown)) {
 				$makeMove = "after";
 			}
 
-			if($makeMove != "") {
+			if ($makeMove != "") {
 				$newSpot = $this->makeRoom($makeMove);
 
-				if(is_numeric($newSpot)) {
+				if (is_numeric($newSpot)) {
 					$this->select($intOriginalRank);
 					$this->update(array("sortnum"), array($newSpot));
 					$returnVal = true;
@@ -290,9 +290,9 @@ class BasicSort extends Basic {
 	function selectByOrder($intOrderNum) {
 
 		$returnVal = false;
-		if(is_numeric($intOrderNum) && $this->arrObjInfo[$this->strCategoryKey] != "") {
+		if (is_numeric($intOrderNum) && $this->arrObjInfo[$this->strCategoryKey] != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE sortnum = '".$intOrderNum."' AND ".$this->strCategoryKey." = '".$this->arrObjInfo[$this->strCategoryKey]."'");
-			if($result->num_rows > 0) {
+			if ($result->num_rows > 0) {
 				$this->arrObjInfo = $result->fetch_assoc();
 				$returnVal = true;
 				$this->intTableKeyValue = $this->arrObjInfo[$this->strTableKey];
@@ -316,7 +316,7 @@ class BasicSort extends Basic {
 	*/
 	function findBeforeAfter() {
 		$returnArr = "";
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$intHighestOrderNum = $this->getHighestSortNum();
 			$intOriginalRank = $this->intTableKeyValue;
 
@@ -324,17 +324,17 @@ class BasicSort extends Basic {
 			$intNextOrderID = 0;
 			$addTo = 1;
 
-			if($this->arrObjInfo['sortnum'] == $intHighestOrderNum && $intHighestOrderNum != 1) {
+			if ($this->arrObjInfo['sortnum'] == $intHighestOrderNum && $intHighestOrderNum != 1) {
 				$strBeforeAfter = "after";
 				$addTo = -1;
 			}
-			elseif($intHighestOrderNum == 1) {
+			elseif ($intHighestOrderNum == 1) {
 				$strBeforeAfter = "first";
 			}
 
 			$checkNextOrder = $this->arrObjInfo['sortnum']+$addTo;
 
-			if($this->selectByOrder($checkNextOrder)) {
+			if ($this->selectByOrder($checkNextOrder)) {
 				$intNextOrderID = $this->arrObjInfo[$this->strTableKey];
 			}
 
@@ -352,7 +352,7 @@ class BasicSort extends Basic {
 	 * certain methods/functions can work.
 	 */
 	function setCategoryKeyValue($intCatKeyValue) {
-		if(is_numeric($intCatKeyValue)) {
+		if (is_numeric($intCatKeyValue)) {
 			$this->arrObjInfo[$this->strCategoryKey] = $intCatKeyValue;
 		}
 
@@ -361,7 +361,7 @@ class BasicSort extends Basic {
 
 	function delete() {
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$blnDelete = parent::delete();
 			$this->resortOrder();
 		}

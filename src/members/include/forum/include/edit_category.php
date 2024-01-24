@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -42,7 +42,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 if ( ! empty($_POST['submit']) ) {
 
 	// Check Name
-	if(trim($_POST['catname']) == "") {
+	if (trim($_POST['catname']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Category name may not be blank.<br>";
 		$countErrors++;
 	}
@@ -52,18 +52,18 @@ if ( ! empty($_POST['submit']) ) {
 
 	$intNewOrderSpot = $categoryObj->validateOrder($_POST['displayorder'], $_POST['beforeafter'], true, $categoryInfo['ordernum']);
 
-	if($intNewOrderSpot === false) {
+	if ($intNewOrderSpot === false) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
 		$countErrors++;
 	}
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 		$arrColumns = array("name", "ordernum");
 		$arrValues = array($_POST['catname'], $intNewOrderSpot);
 		$categoryObj->select($categoryInfo['forumcategory_id']);
-		if($categoryObj->update($arrColumns, $arrValues)) {
+		if ($categoryObj->update($arrColumns, $arrValues)) {
 
 			$forumCatInfo = $categoryObj->get_info_filtered();
 			echo "
@@ -87,7 +87,7 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
@@ -101,22 +101,22 @@ if ( empty($_POST['submit']) ) {
 
 	$arrDisplayOrder = $categoryObj->findBeforeAfter();
 	$dispSelected = "";
-	if($arrDisplayOrder[1] == "after") {
+	if ($arrDisplayOrder[1] == "after") {
 		$dispSelected = " selected";
 	}
 
 	$orderoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$selectCat = "";
-		if($arrDisplayOrder[0] == $row['forumcategory_id']) {
+		if ($arrDisplayOrder[0] == $row['forumcategory_id']) {
 			$selectCat = " selected";
 		}
 		$orderoptions .= "<option value='".$row['forumcategory_id']."'".$selectCat.">".filterText($row['name'])."</option>";
 	}
 
 
-	if($result->num_rows == 0) {
+	if ($result->num_rows == 0) {
 		$orderoptions = "<option value='first'>(first category)</option>";
 	}
 
@@ -126,7 +126,7 @@ if ( empty($_POST['submit']) ) {
 		<div class='formDiv'>
 		";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to edit forum category because the following errors occurred:</strong><br><br>

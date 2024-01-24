@@ -20,10 +20,10 @@ require_once("../../classes/tournament.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -71,12 +71,12 @@ $dispBreadCrumb
 ";
 
 
-if(isset($_GET['match'])) {
+if (isset($_GET['match'])) {
 	echo "
 	<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManageMatches'>Go Back</a></p>
 	";
 }
-elseif($_GET['pID'] == "ManagePools" && isset($_GET['poolID'])) {
+elseif ($_GET['pID'] == "ManagePools" && isset($_GET['poolID'])) {
 	echo "
 	<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManagePools'>Go Back</a></p>
 	";
@@ -90,15 +90,15 @@ else {
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID)) {
 
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 	$memberInfo = $member->get_info_filtered();
 
-	if($memberInfo['member_id'] == $tournamentInfo['member_id'] || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
+	if ($memberInfo['member_id'] == $tournamentInfo['member_id'] || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
 
 		$formObj = new Form();
-		switch($pID) {
+		switch ($pID) {
 			case "manageplayers":
 				require_once("manageplayers.php");
 				break;
@@ -109,7 +109,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 				require_once("managepools.php");
 				break;
 			case "deletetournament":
-				if($memberInfo['member_id'] == $tournamentInfo['member_id']) {
+				if ($memberInfo['member_id'] == $tournamentInfo['member_id']) {
 					require_once("deletetournament.php");
 				}
 				else {
@@ -125,7 +125,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 			case "managematches":
 
 
-				if(!isset($_GET['match'])) {
+				if (!isset($_GET['match'])) {
 					require_once("managematches.php");
 				}
 				else {
@@ -137,7 +137,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 				require_once("editinfo.php");
 				break;
 			case "setmanagers":
-				if($memberInfo['member_id'] == $tournamentInfo['member_id']) {
+				if ($memberInfo['member_id'] == $tournamentInfo['member_id']) {
 					require_once("setmanagers.php");
 				}
 				else {
@@ -153,18 +153,18 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 		}
 
 
-		if(isset($setupFormArgs)) {
+		if (isset($setupFormArgs)) {
 			require_once(BASE_DIRECTORY."members/console.form.php");
 		}
 
 
 
-		if(isset($_GET['match'])) {
+		if (isset($_GET['match'])) {
 			echo "
 			<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'><br><br>&laquo; <a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManageMatches'>Go Back</a></p></div>
 			";
 		}
-		elseif($_GET['pID'] == "ManagePools" && isset($_GET['poolID'])) {
+		elseif ($_GET['pID'] == "ManagePools" && isset($_GET['poolID'])) {
 			echo "
 			<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'><br><br>&laquo; <a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManagePools'>Go Back</a></p></div>
 			";

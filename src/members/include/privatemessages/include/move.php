@@ -25,12 +25,12 @@ $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage PM Folders");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 	$memberInfo = $member->get_info_filtered();
 	$arrSpecialFolders = array(0, -1, -2);
 	$pmFolderObj->intMemberID = $memberInfo['member_id'];
-	if($member->hasAccess($consoleObj) && $pmFolderObj->select($_POST['folder']) && $pmFolderObj->isMemberFolder() && !in_array($_POST['folder'], $arrSpecialFolders)) {
+	if ($member->hasAccess($consoleObj) && $pmFolderObj->select($_POST['folder']) && $pmFolderObj->isMemberFolder() && !in_array($_POST['folder'], $arrSpecialFolders)) {
 
 		define('SHOW_FOLDERLIST', true);
 		$pmFolderObj->setCategoryKeyValue($memberInfo['member_id']);

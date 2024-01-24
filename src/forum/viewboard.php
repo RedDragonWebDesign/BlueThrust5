@@ -34,10 +34,10 @@ $categoryObj->set_assocTableKey("forumboard_id");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -47,7 +47,7 @@ if($ipbanObj->select($IP_ADDRESS, false)) {
 }
 
 
-if(!$boardObj->select($_GET['bID'])) {
+if (!$boardObj->select($_GET['bID'])) {
 	echo "
 		<script type='text/javascript'>window.location = 'index.php';</script>
 	";
@@ -63,7 +63,7 @@ require_once($prevFolder."themes/".$THEME."/_header.php");
 
 // Check Private Forum
 
-if($websiteInfo['privateforum'] == 1 && !constant("LOGGED_IN")) {
+if ($websiteInfo['privateforum'] == 1 && !constant("LOGGED_IN")) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
 }
 
@@ -72,17 +72,17 @@ $memberInfo = array();
 
 $LOGGED_IN = false;
 $NUM_PER_PAGE = 25;
-if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 	$LOGGED_IN = true;
 	$NUM_PER_PAGE = $memberInfo['topicsperpage'];
 }
 
-if($NUM_PER_PAGE == 0) {
+if ($NUM_PER_PAGE == 0) {
 	$NUM_PER_PAGE = 25;
 }
 
-if(!$boardObj->memberHasAccess($memberInfo)) {
+if (!$boardObj->memberHasAccess($memberInfo)) {
 	echo "
 	<script type='text/javascript'>window.location = 'index.php';</script>
 	";
@@ -91,7 +91,7 @@ if(!$boardObj->memberHasAccess($memberInfo)) {
 
 $arrTopics = $boardObj->getForumTopics();
 
-if(!isset($_GET['pID']) || !is_numeric($_GET['pID'])) {
+if (!isset($_GET['pID']) || !is_numeric($_GET['pID'])) {
 	$intOffset = 0;
 	$_GET['pID'] = 1;
 }
@@ -104,11 +104,11 @@ $blnPageSelect = false;
 // Count Pages
 $NUM_OF_PAGES = ceil(count($arrTopics)/$NUM_PER_PAGE);
 
-if($NUM_OF_PAGES == 0) {
+if ($NUM_OF_PAGES == 0) {
 	$NUM_OF_PAGES = 1;
 }
 
-if($_GET['pID'] > $NUM_OF_PAGES) {
+if ($_GET['pID'] > $NUM_OF_PAGES) {
 
 	echo "
 	<script type='text/javascript'>window.location = 'viewboard.php?bID=".$_GET['bID']."';</script>
@@ -119,22 +119,22 @@ if($_GET['pID'] > $NUM_OF_PAGES) {
 
 // Check for Next button
 $dispNextPage = "";
-if($_GET['pID'] < $NUM_OF_PAGES) {
+if ($_GET['pID'] < $NUM_OF_PAGES) {
 	$dispNextPage = "<span style='padding-left: 10px'><b><a href='viewboard.php?bID=".$_GET['bID']."&pID=".($_GET['pID']+1)."'>Next</a> &raquo;</b></span>";
 	$blnPageSelect = true;
 }
 
 // Check for Previous button
 $dispPreviousPage = "";
-if(($_GET['pID']-1) > 0) {
+if (($_GET['pID']-1) > 0) {
 	$dispPreviousPage = "<b>&laquo; <a href='viewboard.php?bID=".$_GET['bID']."&pID=".($_GET['pID']-1)."'>Previous</a></b>";
 	$blnPageSelect = true;
 }
 
 
-for($i=1; $i<=$NUM_OF_PAGES; $i++) {
+for ($i=1; $i<=$NUM_OF_PAGES; $i++) {
 	$selectPage = "";
-	if($i == $_GET['pID']) {
+	if ($i == $_GET['pID']) {
 		$selectPage = " selected";
 	}
 	$pageoptions .= "<option value='".$i."'".$selectPage.">".$i."</option>";
@@ -142,7 +142,7 @@ for($i=1; $i<=$NUM_OF_PAGES; $i++) {
 
 $dispPageSelectTop = "";
 $dispPageSelectBottom = "";
-if($blnPageSelect) {
+if ($blnPageSelect) {
 	$dispPageSelectTop = "
 	<p style='margin-top: 0px'><b>Page:</b> <select id='pageSelectTop' class='textBox'>".$pageoptions."</select> <input type='button' id='btnPageSelectTop' class='submitButton' value='GO' style='width: 40px'></p>
 	<p style='margin-top: 0px'>".$dispPreviousPage.$dispNextPage."</p>
@@ -160,24 +160,24 @@ if($blnPageSelect) {
 $subForumObj = new ForumBoard($mysqli);
 $arrSubForums = $boardObj->getSubForums();
 $dispSubForums = "";
-foreach($arrSubForums as $boardID) {
+foreach ($arrSubForums as $boardID) {
 
 	$subForumObj->select($boardID);
 
-	if($subForumObj->memberHasAccess($memberInfo)) {
+	if ($subForumObj->memberHasAccess($memberInfo)) {
 		$subForumInfo = $subForumObj->get_info_filtered();
 		$arrForumTopics = $subForumObj->getForumTopics();
 
 		$newTopicBG = "";
 		$dispNewTopicIMG = "";
 
-		if($LOGGED_IN && $subForumObj->hasNewTopics($memberInfo['member_id'])) {
+		if ($LOGGED_IN && $subForumObj->hasNewTopics($memberInfo['member_id'])) {
 			$dispNewTopicIMG = " <img style='margin-left: 5px' src='".$MAIN_ROOT."themes/".$THEME."/images/forum-new.png' title='New Posts!'>";
 			$newTopicBG = " boardNewPostBG";
 		}
 
 		// Get Last Post Display Info
-		if(count($arrForumTopics) > 0) {
+		if (count($arrForumTopics) > 0) {
 			$subForumObj->objPost->select($arrForumTopics[0]);
 			$firstPostInfo = $subForumObj->objPost->get_info_filtered();
 
@@ -201,7 +201,7 @@ foreach($arrSubForums as $boardID) {
 		$arrDispMoreSubForums = array();
 		$arrMoreSubForums = $subForumObj->getSubForums();
 
-		foreach($arrMoreSubForums as $value) {
+		foreach ($arrMoreSubForums as $value) {
 			$subForumObj->select($value);
 			$subForumInfo = $subForumObj->get_info_filtered();
 
@@ -210,7 +210,7 @@ foreach($arrSubForums as $boardID) {
 
 
 		$dispMoreSubForums = "";
-		if(count($arrDispMoreSubForums) > 0) {
+		if (count($arrDispMoreSubForums) > 0) {
 			$dispMoreSubForums = "<br><br><b>Sub-Forums:</b><br>&nbsp;&nbsp;".implode("&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;", $arrDispMoreSubForums);
 		}
 
@@ -234,10 +234,10 @@ $breadcrumbObj->setTitle($boardInfo['name']);
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Forum", $MAIN_ROOT."forum");
 $dispBreadCrumbChain = "";
-if($boardInfo['subforum_id'] != 0) {
+if ($boardInfo['subforum_id'] != 0) {
 	$subForumID = $boardInfo['subforum_id'];
 	$submForumBC = array();
-	while($subForumID != 0) {
+	while ($subForumID != 0) {
 		$subForumObj->select($subForumID);
 		$subForumInfo = $subForumObj->get_info_filtered();
 		$subForumID = $subForumInfo['subforum_id'];
@@ -246,7 +246,7 @@ if($boardInfo['subforum_id'] != 0) {
 	}
 
 	krsort($subForumBC);
-	foreach($subForumBC as $bcInfo) {
+	foreach ($subForumBC as $bcInfo) {
 		$breadcrumbObj->addCrumb($bcInfo['value'], $bcInfo['link']);
 	}
 
@@ -259,7 +259,7 @@ echo "
 <table class='forumTable'>
 ";
 
-if($dispSubForums != "") {
+if ($dispSubForums != "") {
 
 	echo "	
 	
@@ -288,7 +288,7 @@ echo "
 	<tr>
 		<td colspan='2' class='main' valign='bottom'>
 			";
-			if(LOGGED_IN && $boardObj->memberHasAccess($memberInfo, true)) {
+			if (LOGGED_IN && $boardObj->memberHasAccess($memberInfo, true)) {
 				echo "<p style='margin-top: 0px'><b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$boardInfo['forumboard_id']."'>NEW TOPIC</a> &laquo;</b></p>";
 			}
 		echo "
@@ -314,7 +314,7 @@ echo "
 
 $arrPageTopics = $boardObj->getForumTopics(" ft.stickystatus DESC, fp.dateposted DESC", " LIMIT ".$intOffset.", ".$NUM_PER_PAGE);
 
-foreach($arrPageTopics as $postID) {
+foreach ($arrPageTopics as $postID) {
 
 	$boardObj->objPost->select($postID);
 	$postInfo = $boardObj->objPost->get_info_filtered();
@@ -335,21 +335,21 @@ foreach($arrPageTopics as $postID) {
 	$newTopicBG = "";
 
 	$showNewTopic = true;
-	if($websiteInfo['forum_newindicator'] != 0) {
+	if ($websiteInfo['forum_newindicator'] != 0) {
 		$showNewTopic = ($lastPostInfo['dateposted']+(60*60*24*$websiteInfo['forum_newindicator'])) > time();
 	}
 
-	if($LOGGED_IN && !$member->hasSeenTopic($topicInfo['forumtopic_id']) && $showNewTopic) {
+	if ($LOGGED_IN && !$member->hasSeenTopic($topicInfo['forumtopic_id']) && $showNewTopic) {
 		$newTopicBG = " boardNewPostBG";
 		$dispTopicIconsIMG = " <img style='margin-left: 5px' src='".$MAIN_ROOT."themes/".$THEME."/images/forum-new.png' title='New Posts!'>";
 	}
 
-	if($topicInfo['stickystatus'] == 1) {
+	if ($topicInfo['stickystatus'] == 1) {
 		$newTopicBG = " boardNewPostBG";
 		$dispTopicIconsIMG .= " <img src='".$MAIN_ROOT."themes/".$THEME."/images/forum-sticky.png' title='Sticky' style='margin-left: 5px'>";
 	}
 
-	if($topicInfo['lockstatus'] == 1) {
+	if ($topicInfo['lockstatus'] == 1) {
 		$newTopicBG = " boardNewPostBG";
 		$dispTopicIconsIMG .= " <img src='".$MAIN_ROOT."themes/".$THEME."/images/forum-locked.png' title='Locked' style='margin-left: 5px'>";
 	}
@@ -371,7 +371,7 @@ echo "
 		<td colspan='2' style='padding-top: 15px' class='main' valign='top'>
 		";
 
-		if(LOGGED_IN) {
+		if (LOGGED_IN) {
 			echo "
 				<p style='margin-top: 0px'><b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$boardInfo['forumboard_id']."'>NEW TOPIC</a> &laquo;</b></p>
 			";
@@ -388,7 +388,7 @@ echo "
 </table>
 ";
 
-if(count($arrTopics) == 0) {
+if (count($arrTopics) == 0) {
 
 	echo "
 		<div class='shadedBox' style='width: 40%; margin: 20px auto'>
@@ -401,7 +401,7 @@ if(count($arrTopics) == 0) {
 
 }
 
-if($blnPageSelect) {
+if ($blnPageSelect) {
 	echo "
 		<script type='text/javascript'>
 			$(document).ready(function() {

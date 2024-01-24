@@ -28,7 +28,7 @@
 
 		public function validatePageNumber($pageNum) {
 
-			if(!isset($pageNum) || !is_numeric($pageNum) || $pageNum > $this->numOfPages || $pageNum < 1) {
+			if (!isset($pageNum) || !is_numeric($pageNum) || $pageNum > $this->numOfPages || $pageNum < 1) {
 				$pageNum = 1;
 			}
 
@@ -41,32 +41,32 @@
 
 			$midAmount = floor(($this->amountToShow/2));
 
-			for($i=$this->currentPage; $i<=($this->currentPage+$midAmount); $i++) {
+			for ($i=$this->currentPage; $i<=($this->currentPage+$midAmount); $i++) {
 				$arrReturn[] = $i;
 			}
 
-			for($i=($this->currentPage-$midAmount); $i<$this->currentPage; $i++) {
+			for ($i=($this->currentPage-$midAmount); $i<$this->currentPage; $i++) {
 				$arrReturn[] = $i;
 			}
 
 			$arrReturn = array_unique($arrReturn);
 
-			foreach($arrReturn as $key => $value) {
+			foreach ($arrReturn as $key => $value) {
 				$maxValue = max($arrReturn) <= $this->numOfPages ? max($arrReturn) : $this->numOfPages;
 				$minValue = min($arrReturn) > 0 ? min($arrReturn) : 1;
 
-				if($value < 1 && $maxValue != $this->numOfPages) {
+				if ($value < 1 && $maxValue != $this->numOfPages) {
 					$arrReturn[$key] = $maxValue+1;
 
 				}
-				elseif($value < 1 && $maxValue == $this->numOfPages) {
+				elseif ($value < 1 && $maxValue == $this->numOfPages) {
 					unset($arrReturn[$key]);
 				}
 
-				if($value > $this->numOfPages && $minValue != 1) {
+				if ($value > $this->numOfPages && $minValue != 1) {
 					$arrReturn[$key] = $minValue-1;
 				}
-				elseif($value > $this->numOfPages && $minValue == 1) {
+				elseif ($value > $this->numOfPages && $minValue == 1) {
 					unset($arrReturn[$key]);
 				}
 			}
@@ -79,7 +79,7 @@
 
 		public function show() {
 
-			if($this->numOfPages > 1) {
+			if ($this->numOfPages > 1) {
 
 				$arrPages = $this->getPageNumbersShown();
 
@@ -93,9 +93,9 @@
 
 				echo "<div class='pageSelectorDiv'>";
 				echo $dispPrevButton.$dispFirstPageButton;
-				foreach($arrPages as $pageNum) {
+				foreach ($arrPages as $pageNum) {
 
-					if($pageNum == $this->currentPage) {
+					if ($pageNum == $this->currentPage) {
 						echo "<div class='pageNum currentPage'>".$pageNum."</div>";
 					}
 					else {

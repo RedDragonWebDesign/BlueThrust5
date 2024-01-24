@@ -51,9 +51,9 @@ class ImageSlider extends BasicOrder {
 	function getLocalImageURL() {
 		global $MAIN_ROOT;
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
-			if(strpos($this->arrObjInfo['imageurl'], "http://") === false) {
+			if (strpos($this->arrObjInfo['imageurl'], "http://") === false) {
 
 				$returnVal = $this->arrObjInfo['imageurl'];
 
@@ -71,7 +71,7 @@ class ImageSlider extends BasicOrder {
 		$filterSQL = ($this->blnLoggedIn) ? " OR membersonly = '1' " : " OR membersonly = '2' ";
 
 		$result = $this->MySQL->query("SELECT imageslider_id FROM ".$this->strTableName." WHERE membersonly = '0'".$filterSQL."ORDER BY ordernum DESC");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$this->arrImageIDs[] = $row['imageslider_id'];
 		}
 
@@ -94,13 +94,13 @@ class ImageSlider extends BasicOrder {
 		global $websiteInfo;
 		$this->getImageIDs();
 
-		if(count($this->arrImageIDs) == 0) {
+		if (count($this->arrImageIDs) == 0) {
 			echo "";
 		}
-		elseif(count($this->arrImageIDs) == 1 && $this->select($this->arrImageIDs[0]) && $this->arrObjInfo['fillstretch'] == "stretch") {
+		elseif (count($this->arrImageIDs) == 1 && $this->select($this->arrImageIDs[0]) && $this->arrObjInfo['fillstretch'] == "stretch") {
 
 			$addOverlay = "";
-			if($this->arrObjInfo['message'] != "" || $this->arrObjInfo['messagetitle'] != "") {
+			if ($this->arrObjInfo['message'] != "" || $this->arrObjInfo['messagetitle'] != "") {
 				$addOverlay = "
 					<div class='hp_imageScrollerOverlay'>
 						<div class='hp_imageScrollerOverlayTitle'>
@@ -125,12 +125,12 @@ class ImageSlider extends BasicOrder {
 			";
 
 		}
-		elseif(count($this->arrImageIDs) == 1 && $this->select($this->arrImageIDs[0]) && $this->arrObjInfo['fillstretch'] == "fill") {
+		elseif (count($this->arrImageIDs) == 1 && $this->select($this->arrImageIDs[0]) && $this->arrObjInfo['fillstretch'] == "fill") {
 
 			$this->select($this->arrImageIDs[0]);
 
 			$addOverlay = "";
-			if($this->arrObjInfo['message'] != "" || $this->arrObjInfo['messagetitle'] != "") {
+			if ($this->arrObjInfo['message'] != "" || $this->arrObjInfo['messagetitle'] != "") {
 				$addOverlay = "
 				<div class='hp_imageScrollerOverlay'>
 					<div class='hp_imageScrollerOverlayTitle'>
@@ -153,12 +153,12 @@ class ImageSlider extends BasicOrder {
 			";
 
 		}
-		elseif($this->strDisplayStyle == "random" && count($this->arrImageIDs) > 1) {
+		elseif ($this->strDisplayStyle == "random" && count($this->arrImageIDs) > 1) {
 
 			$this->selectRandomImage();
 
 			$addOverlay = "";
-			if($this->arrObjInfo['message'] != "" || $this->arrObjInfo['messagetitle'] != "") {
+			if ($this->arrObjInfo['message'] != "" || $this->arrObjInfo['messagetitle'] != "") {
 				$addOverlay = "
 					<div class='hp_imageScrollerOverlay'>
 						<div class='hp_imageScrollerOverlayTitle'>
@@ -174,7 +174,7 @@ class ImageSlider extends BasicOrder {
 			$addLink = ($this->arrObjInfo['link'] != "") ? "<a href='".$this->arrObjInfo['link']."' target='".$this->arrObjInfo['linktarget']."'>" : "";
 			$closeLinkTag = ($addLink != "") ? "</a>" : "";
 
-			if($this->arrObjInfo['fillstretch'] == "stretch") {
+			if ($this->arrObjInfo['fillstretch'] == "stretch") {
 			echo "
 				<div class='hp_imgScrollContainer'>
 					".$addLink.$addOverlay."<img src='".$this->arrObjInfo['imageurl']."' style='width: ".$this->intDisplayWidth.$this->strDisplayWidthUnit."; height: ".$this->intDisplayHeight.$this->strDisplayHeightUnit."'>".$closeLinkTag."
@@ -189,9 +189,9 @@ class ImageSlider extends BasicOrder {
 			}
 
 		}
-		elseif($this->strDisplayStyle == "slider" && count($this->arrImageIDs) > 1) {
+		elseif ($this->strDisplayStyle == "slider" && count($this->arrImageIDs) > 1) {
 
-			foreach($this->arrImageIDs as $imgID) {
+			foreach ($this->arrImageIDs as $imgID) {
 
 				$this->select($imgID);
 				$arrImages[] = $this->arrObjInfo['imageurl'];
@@ -254,7 +254,7 @@ class ImageSlider extends BasicOrder {
 	public function delete() {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$info = $this->arrObjInfo;
 			$returnVal = parent::delete();

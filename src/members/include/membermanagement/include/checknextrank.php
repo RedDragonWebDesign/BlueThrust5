@@ -22,21 +22,21 @@ $member->select($_SESSION['btUsername']);
 
 $rankObj = new Rank($mysqli);
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 	$blnDispNone = true;
-	if(($_POST['action'] == "promote" || $_POST['action'] == "demote") && $member->select($_POST['mID'])) {
+	if (($_POST['action'] == "promote" || $_POST['action'] == "demote") && $member->select($_POST['mID'])) {
 
 		$rankObj->select($member->get_info("rank_id"));
 
-		if($_POST['action'] == "promote") {
+		if ($_POST['action'] == "promote") {
 			$nextRank = $rankObj->get_info("ordernum")+1;
 		}
 		else {
 			$nextRank = $rankObj->get_info("ordernum")-1;
 		}
 
-		if($nextRank != 1 && $rankObj->selectByOrder($nextRank)) {
+		if ($nextRank != 1 && $rankObj->selectByOrder($nextRank)) {
 			$blnDispNone = false;
 			echo $rankObj->get_info_filtered("name");
 		}
@@ -44,7 +44,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	}
 
 
-	if($blnDispNone) {
+	if ($blnDispNone) {
 		echo "None";
 	}
 

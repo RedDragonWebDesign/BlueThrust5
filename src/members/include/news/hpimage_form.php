@@ -1,15 +1,16 @@
 <?php
 
-	if(!defined("HPIMAGE_FORM")) { exit(); }
+	if (!defined("HPIMAGE_FORM")) {
+exit(); }
 
 	$imageOrderObj = new ImageSlider($mysqli);
 	$imageOptions = array();
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."imageslider ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$imageOptions[$row['imageslider_id']] = $row['name'];
 	}
 
-	if(count($imageOptions) == 0) {
+	if (count($imageOptions) == 0) {
 		$imageOptions['first'] = "(first image)";
 	}
 

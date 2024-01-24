@@ -31,7 +31,7 @@ $consoleObj->select($cID);
 $_GET['cID'] = $cID;
 
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
@@ -39,24 +39,24 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	$addSQL = "";
 
 
-	if($member->hasAccess($consoleObj) && $profileCatObj->select($_POST['catID'])) {
+	if ($member->hasAccess($consoleObj) && $profileCatObj->select($_POST['catID'])) {
 
 
 
-		if($_POST['oID'] != "" AND $profileObj->SELECT($_POST['oID'])) {
+		if ($_POST['oID'] != "" AND $profileObj->SELECT($_POST['oID'])) {
 			$addSQL = " AND profileoption_id != '".$_POST['oID']."'";
 
 			$profileOptionInfo = $profileObj->get_info_filtered();
 
-			if($profileOptionInfo['profilecategory_id'] == $_POST['catID']) {
+			if ($profileOptionInfo['profilecategory_id'] == $_POST['catID']) {
 
 				$arrAssociates = $profileCatObj->getAssociateIDs("ORDER BY sortnum");
 				$highestIndex = count($arrAssociates) - 1;
 				$arrFlipped = array_flip($arrAssociates);
-				if($highestIndex > 0) {
+				if ($highestIndex > 0) {
 
 
-					if($arrFlipped[$_POST['oID']] == $highestIndex) {
+					if ($arrFlipped[$_POST['oID']] == $highestIndex) {
 						$temp = $highestIndex-1;
 						$selectedOption = $arrAssociates[$temp];
 					}
@@ -78,9 +78,9 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		$profileCatInfo = $profileCatObj->get_info_filtered();
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."profileoptions WHERE profilecategory_id = '".$profileCatInfo['profilecategory_id']."'".$addSQL." ORDER BY sortnum");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$strSelect = "";
-			if($row['profileoption_id'] == $selectedOption) {
+			if ($row['profileoption_id'] == $selectedOption) {
 				$strSelect = "selected";
 			}
 
@@ -89,7 +89,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		}
 
 
-		if($result->num_rows == 0) {
+		if ($result->num_rows == 0) {
 			$dispOptions = "<option value='first'>(no other profile options)</option>";
 		}
 

@@ -163,7 +163,7 @@ class paypal_class {
 
       // open the connection to paypal
       $fp = fsockopen("ssl://".$url_parsed[host],"443",$err_num,$err_str,30);
-      if(!$fp) {
+      if (!$fp) {
 
          // could not open the connection.  If loggin is on, the error message
          // will be in the log.
@@ -183,10 +183,10 @@ class paypal_class {
 
          // loop through the response from the server and append to variable
 
-         while(!feof($fp)) {
+         while (!feof($fp)) {
          	$res = fgets($fp, 1024);
 
-         	if(trim($res) == "VERIFIED") {
+         	if (trim($res) == "VERIFIED") {
          		$returnVal = true;
          	}
 
@@ -262,7 +262,7 @@ class paypal_class {
 
 
    public function setMode($mode) {
-   		if($mode == "live") {
+   		if ($mode == "live") {
 			$this->paypal_url = "https://www.paypal.com/cgi-bin/webscr";
    		}
    		else {

@@ -40,7 +40,7 @@ $downloadCatObj->selectBySpecialKey("forumattachments");
 
 $moveTopicCID = $consoleObj->findConsoleIDByName("Move Topic");
 
-if(!$boardObj->objTopic->select($_GET['tID'])) {
+if (!$boardObj->objTopic->select($_GET['tID'])) {
 	echo "
 	<script type='text/javascript'>window.location = 'index.php';</script>
 	";
@@ -76,13 +76,13 @@ require_once($prevFolder."themes/".$THEME."/_header.php");
 
 // Check Private Forum
 
-if($websiteInfo['privateforum'] == 1 && !constant("LOGGED_IN")) {
+if ($websiteInfo['privateforum'] == 1 && !constant("LOGGED_IN")) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
 }
 
 
 $blnShowAttachments = false;
-if((constant('LOGGED_IN') == true && $downloadCatObj->get_info("accesstype") == 1) || $downloadCatObj->get_info("accesstype") == 0) {
+if ((constant('LOGGED_IN') == true && $downloadCatObj->get_info("accesstype") == 1) || $downloadCatObj->get_info("accesstype") == 0) {
 	$blnShowAttachments = true;
 }
 
@@ -91,23 +91,23 @@ $memberInfo = array();
 
 $LOGGED_IN = false;
 $NUM_PER_PAGE = $websiteInfo['forum_postsperpage'];
-if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 	$LOGGED_IN = true;
 	$NUM_PER_PAGE = $memberInfo['postsperpage'];
 
-	if(!$member->hasSeenTopic($topicInfo['forumtopic_id'])) {
+	if (!$member->hasSeenTopic($topicInfo['forumtopic_id'])) {
 		$mysqli->query("INSERT INTO ".$dbprefix."forum_topicseen (member_id, forumtopic_id) VALUES ('".$memberInfo['member_id']."', '".$topicInfo['forumtopic_id']."')");
 	}
 
 }
 
-if($NUM_PER_PAGE == 0) {
+if ($NUM_PER_PAGE == 0) {
 	$NUM_PER_PAGE = 25;
 }
 
 
-if(!$boardObj->memberHasAccess($memberInfo)) {
+if (!$boardObj->memberHasAccess($memberInfo)) {
 	echo "
 	<script type='text/javascript'>window.location = 'index.php';</script>
 	";
@@ -124,7 +124,7 @@ $totalPostsSQL = $mysqli->query("SELECT forumpost_id FROM ".$dbprefix."forum_pos
 $totalPosts = $totalPostsSQL->num_rows;
 
 
-if(!isset($_GET['pID']) || !is_numeric($_GET['pID'])) {
+if (!isset($_GET['pID']) || !is_numeric($_GET['pID'])) {
 	$intOffset = 0;
 	$_GET['pID'] = 1;
 }
@@ -137,11 +137,11 @@ $blnPageSelect = false;
 // Count Pages
 $NUM_OF_PAGES = ceil($totalPosts/$NUM_PER_PAGE);
 
-if($NUM_OF_PAGES == 0) {
+if ($NUM_OF_PAGES == 0) {
 	$NUM_OF_PAGES = 1;
 }
 
-if($_GET['pID'] > $NUM_OF_PAGES) {
+if ($_GET['pID'] > $NUM_OF_PAGES) {
 
 	echo "
 	<script type='text/javascript'>window.location = 'viewtopic.php?tID=".$_GET['tID']."';</script>
@@ -153,11 +153,11 @@ if($_GET['pID'] > $NUM_OF_PAGES) {
 $breadcrumbObj->setTitle($postInfo['title']);
 $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Forum", $MAIN_ROOT."forum");
-if($boardInfo['subforum_id'] != 0) {
+if ($boardInfo['subforum_id'] != 0) {
 	$subForumObj = new ForumBoard($mysqli);
 	$subForumID = $boardInfo['subforum_id'];
 	$submForumBC = array();
-	while($subForumID != 0) {
+	while ($subForumID != 0) {
 		$subForumObj->select($subForumID);
 		$subForumInfo = $subForumObj->get_info_filtered();
 		$subForumID = $subForumInfo['subforum_id'];
@@ -166,7 +166,7 @@ if($boardInfo['subforum_id'] != 0) {
 	}
 
 	krsort($subForumBC);
-	foreach($subForumBC as $bcInfo) {
+	foreach ($subForumBC as $bcInfo) {
 		$breadcrumbObj->addCrumb($bcInfo['value'], $bcInfo['link']);
 	}
 
@@ -178,8 +178,8 @@ require_once($prevFolder."include/breadcrumb.php");
 
 $blnManagePosts = false;
 $dispManagePosts = "";
-if($LOGGED_IN) {
-	if($topicInfo['lockstatus'] == 0) {
+if ($LOGGED_IN) {
+	if ($topicInfo['lockstatus'] == 0) {
 		$dispPostReply = "<b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$topicInfo['forumboard_id']."&tID=".$topicInfo['forumtopic_id']."'>POST REPLY</a> &laquo;</b>";
 	}
 	else {
@@ -187,10 +187,10 @@ if($LOGGED_IN) {
 	}
 
 	$consoleObj->select($intManagePostsCID);
-	if($boardObj->memberIsMod($memberInfo['member_id']) || $member->hasAccess($consoleObj)) {
+	if ($boardObj->memberIsMod($memberInfo['member_id']) || $member->hasAccess($consoleObj)) {
 		$blnManagePosts = true;
 
-		if($topicInfo['stickystatus'] == 0) {
+		if ($topicInfo['stickystatus'] == 0) {
 			$dispManagePosts .= "<b>&raquo <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&tID=".$topicInfo['forumtopic_id']."&action=sticky'>STICKY TOPIC</a> &laquo;</b>&nbsp;&nbsp;&nbsp;";
 		}
 		else {
@@ -198,7 +198,7 @@ if($LOGGED_IN) {
 		}
 
 
-		if($topicInfo['lockstatus'] == 0) {
+		if ($topicInfo['lockstatus'] == 0) {
 			$dispManagePosts .= "<b>&raquo <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&tID=".$topicInfo['forumtopic_id']."&action=lock'>LOCK TOPIC</a> &laquo;</b>&nbsp;&nbsp;&nbsp;";
 		}
 		else {
@@ -230,11 +230,11 @@ $pageSelector->show();
 $countManagablePosts = 0;
 define("SHOW_FORUMPOST", true);
 $result = $mysqli->query("SELECT forumpost_id FROM ".$dbprefix."forum_post WHERE forumtopic_id = '".$topicInfo['forumtopic_id']."' ORDER BY dateposted LIMIT ".$intOffset.", ".$NUM_PER_PAGE);
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$boardObj->objPost->select($row['forumpost_id']);
 	$boardObj->objPost->blnManageable = $blnManagePosts;
 
-	if($boardObj->objPost->get_info("member_id") == $memberInfo['member_id'] || $blnManagePosts) {
+	if ($boardObj->objPost->get_info("member_id") == $memberInfo['member_id'] || $blnManagePosts) {
 		$countManagablePosts++;
 		$boardObj->objPost->blnManageable = true;
 	}
@@ -251,7 +251,7 @@ echo "
 
 ";
 
-if(LOGGED_IN && $topicInfo['lockstatus'] == 0) {
+if (LOGGED_IN && $topicInfo['lockstatus'] == 0) {
 
 	$forumConsoleObj = new ConsoleOption($mysqli);
 	$postCID = $forumConsoleObj->findConsoleIDByName("Post Topic");
@@ -299,7 +299,7 @@ if(LOGGED_IN && $topicInfo['lockstatus'] == 0) {
 }
 
 
-if($blnPageSelect) {
+if ($blnPageSelect) {
 	echo "
 		<script type='text/javascript'>
 	
@@ -323,7 +323,7 @@ if($blnPageSelect) {
 	";
 }
 
-if($blnManagePosts) {
+if ($blnManagePosts) {
 	echo "
 		<div id='confirmDeleteTopicDiv' style='display: none'>
 			<p align='center' class='main'>
@@ -363,7 +363,7 @@ if($blnManagePosts) {
 }
 
 
-if($countManagablePosts > 0) {
+if ($countManagablePosts > 0) {
 	echo "
 	
 	<div id='confirmDeleteDiv' style='display: none'>

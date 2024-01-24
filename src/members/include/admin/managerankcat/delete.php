@@ -30,19 +30,19 @@ $consoleObj->select($cID);
 $_GET['cID'] = $cID;
 
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $rankCatObj->select($_POST['rID'])) {
+	if ($member->hasAccess($consoleObj) && $rankCatObj->select($_POST['rID'])) {
 
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 		$rankCatInfo = $rankCatObj->get_info_filtered();
 
 		$arrRanks = $rankCatObj->getAssociateIDs();
 
-		if(count($arrRanks) > 0) {
+		if (count($arrRanks) > 0) {
 
 			echo "<div id='newDeleteMessage' style='display: none'><p align='center'>There are currently ranks under the rank category <b>".$rankCatInfo['name']."</b>.  Please change all ranks with this category before deleting it.</p></div>";
 
@@ -71,7 +71,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 		}
-		elseif(isset($_POST['confirm']) && $_POST['confirm'] == "1") {
+		elseif (isset($_POST['confirm']) && $_POST['confirm'] == "1") {
 
 			$rankCatObj->delete();
 			require_once("main.php");
@@ -82,7 +82,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		}
 
 	}
-	elseif(!$rankCatObj->select($_POST['rID'])) {
+	elseif (!$rankCatObj->select($_POST['rID'])) {
 
 		echo "<p align='center'>Unable find the selected rank category.  Please try again or contact the website administrator.</p>";
 

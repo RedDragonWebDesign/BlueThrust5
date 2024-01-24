@@ -30,12 +30,12 @@ $menuCatObj = new MenuCategory($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage Menu Items");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $menuItemObj->select($_POST['itemID'])) {
+	if ($member->hasAccess($consoleObj) && $menuItemObj->select($_POST['itemID'])) {
 
 
 

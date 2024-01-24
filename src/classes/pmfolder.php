@@ -28,7 +28,7 @@
 		public function select($intIDNum, $numericIDOnly = true) {
 			$returnVal = false;
 			$arrSpecialFolders = array("Inbox" => self::INBOX_ID, "Sent Messages" => self::SENTBOX_ID, "Trash" => self::TRASH_ID);
-			if(in_array($intIDNum, $arrSpecialFolders)) {
+			if (in_array($intIDNum, $arrSpecialFolders)) {
 				$this->arrObjInfo['name'] = array_search($intIDNum, $arrSpecialFolders);
 				$this->intTableKeyValue = $intIDNum;
 
@@ -43,7 +43,7 @@
 		function isMemberFolder() {
 
 			$returnVal = false;
-			if(($this->intTableKeyValue != "" && $this->arrObjInfo['member_id'] == $this->intMemberID) || ($this->intTableKeyValue == 0 || $this->intTableKeyValue == -1 || $this->intTableKeyValue == -2)) {
+			if (($this->intTableKeyValue != "" && $this->arrObjInfo['member_id'] == $this->intMemberID) || ($this->intTableKeyValue == 0 || $this->intTableKeyValue == -1 || $this->intTableKeyValue == -2)) {
 				$returnVal = true;
 			}
 
@@ -53,15 +53,15 @@
 
 		function listFolders($memberID=0) {
 
-			if($memberID != 0) {
+			if ($memberID != 0) {
 				$this->intMemberID = $memberID;
 			}
 
 			$returnArr = array();
-			if(isset($this->intMemberID) && is_numeric($this->intMemberID)) {
+			if (isset($this->intMemberID) && is_numeric($this->intMemberID)) {
 
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."privatemessage_folders WHERE member_id = '".$this->intMemberID."' ORDER BY sortnum");
-				while($row = $result->fetch_assoc()) {
+				while ($row = $result->fetch_assoc()) {
 					$returnArr[$row['pmfolder_id']] = $row['name'];
 				}
 
@@ -76,11 +76,11 @@
 			$arrPM = array();
 			$arrMultiPM = array();
 
-			if($this->intTableKeyValue !== "" && $this->intMemberID != 0) {
+			if ($this->intTableKeyValue !== "" && $this->intMemberID != 0) {
 				$pmTable = $this->MySQL->get_tablePrefix()."privatemessages";
 				$pmMultiTable = $this->MySQL->get_tablePrefix()."privatemessage_members";
 
-				if($this->intTableKeyValue == -1) {
+				if ($this->intTableKeyValue == -1) {
 					$filterSQL = "senderfolder_id = '".$this->intTableKeyValue."' AND sender_id = '".$this->intMemberID."' AND deletesender = '0'";
 				}
 				else {
@@ -89,12 +89,12 @@
 
 				//echo "SELECT pm_id, datesent FROM ".$pmTable." WHERE (senderfolder_id = '".$this->intTableKeyValue."' AND sender_id = '".$this->intMemberID."' AND deletesender = '0') OR (receiver_id = '".$this->intMemberID."' AND receiverfolder_id = '".$this->intTableKeyValue."' AND deletereceiver = '0')";
 				$result = $this->MySQL->query("SELECT pm_id, datesent FROM ".$pmTable." WHERE ".$filterSQL);
-				while($row = $result->fetch_assoc()) {
+				while ($row = $result->fetch_assoc()) {
 					$arrPM[$row['pm_id']] = $row['datesent'];
 				}
 
 				$result = $this->MySQL->query("SELECT ".$pmMultiTable.".pmmember_id, ".$pmMultiTable.".pm_id, ".$pmTable.".datesent FROM ".$pmTable.", ".$pmMultiTable." WHERE ".$pmMultiTable.".pm_id = ".$pmTable.".pm_id AND ".$pmMultiTable.".pmfolder_id = '".$this->intTableKeyValue."' AND ".$pmMultiTable.".deletestatus = '0' AND ".$pmMultiTable.".member_id = '".$this->intMemberID."'");
-				while($row = $result->fetch_assoc()) {
+				while ($row = $result->fetch_assoc()) {
 
 					$arrPM[$row['pm_id']] = $row['datesent'];
 					$arrMultiPM[$row['pm_id']] = $row['pmmember_id'];
@@ -113,7 +113,7 @@
 
 		/** Used to select special folders (Inbox, Sent, Trash) */
 		function setFolder($folderID) {
-			if(is_numeric($folderID)) {
+			if (is_numeric($folderID)) {
 				$this->intTableKeyValue = $folderID;
 			}
 		}

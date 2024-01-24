@@ -45,7 +45,7 @@ $eventObj = new Event($mysqli);
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
 
 
 	$arrTypes = array("news", "tournament", "event");
@@ -64,9 +64,9 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 
 
 
-	if(in_array($_POST['attachtype'], $arrTypes)) {
+	if (in_array($_POST['attachtype'], $arrTypes)) {
 		$checkInfo = false;
-		switch($_POST['attachtype']) {
+		switch ($_POST['attachtype']) {
 			case "news":
 				$checkInfo = $newsObj->select($_POST['attachID']);
 				$linkURL = $MAIN_ROOT."news/viewpost.php?nID=".$_POST['attachID'];
@@ -82,7 +82,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 		}
 
 
-		if($checkInfo) {
+		if ($checkInfo) {
 
 			$attachObj = $arrTypeObj[$_POST['attachtype']]['obj'];
 			$attachTitle = $arrTypeObj[$_POST['attachtype']]['title'];
@@ -116,4 +116,5 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 
 	}
 
-} else { echo "no"; }
+} else {
+echo "no"; }

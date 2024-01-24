@@ -44,13 +44,13 @@ $shoutboxObj->intDispWidth = 140;
 $shoutboxObj->intDispHeight = 300;
 $shoutboxObj->blnUpdateShoutbox = true;
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 	$manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
 
 	$consoleObj->select($manageNewsCID);
 
-	if($member->hasAccess($consoleObj)) {
+	if ($member->hasAccess($consoleObj)) {
 		$shoutboxObj->strEditLink = $MAIN_ROOT."members/console.php?cID=".$manageNewsCID."&newsID=";
 		$shoutboxObj->strDeleteLink = $MAIN_ROOT."members/include/news/include/deleteshoutpost.php";
 
@@ -64,9 +64,9 @@ echo $shoutboxObj->dispShoutbox();
 
 $checkNewsUpdates = $dbprefix."news_update";
 $result = $mysqli->query("SELECT updatetime FROM ".$dbprefix."tableupdates WHERE tablename = '".$dbprefix."news'");
-if($result->num_rows > 0) {
+if ($result->num_rows > 0) {
 	$row = $result->fetch_assoc();
-	if(!isset($_SESSION[$checkNewsUpdates]) || (isset($_SESSION[$checkNewsUpdates]) && $_SESSION[$checkNewsUpdates] != $row['updatetime'])) {
+	if (!isset($_SESSION[$checkNewsUpdates]) || (isset($_SESSION[$checkNewsUpdates]) && $_SESSION[$checkNewsUpdates] != $row['updatetime'])) {
 		echo "
 			<script type='text/javascript'>
 				$(document).ready(function() {

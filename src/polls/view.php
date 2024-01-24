@@ -26,7 +26,7 @@ $consoleObj = new ConsoleOption($mysqli);
 $pollObj = new Poll($mysqli);
 $member = new Member($mysqli);
 
-if(!$pollObj->select($_GET['pID'])) {
+if (!$pollObj->select($_GET['pID'])) {
 	echo "
 		<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>
 	";
@@ -41,27 +41,27 @@ $pollInfo = $pollObj->get_info_filtered();
 
 $member->select($_SESSION['btUsername']);
 $blnMemberVoted = false;
-if($member->authorizeLogin($_SESSION['btPassword']) && $pollObj->hasVoted($member->get_info("member_id"))) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $pollObj->hasVoted($member->get_info("member_id"))) {
 	$blnMemberVoted = true;
 }
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 }
 
 $blnShowResults = false;
-if($pollObj->totalVotes() > 0 && ($member->hasAccess($consoleObj) || $pollInfo['member_id'] == $memberInfo['member_id'] || $pollInfo['resultvisibility'] == "open" || ($pollInfo['resultvisibility'] == "votedonly" && $blnMemberVoted) || ($pollInfo['resultvisibility'] == "pollend" && $pollInfo['pollend'] < time()))) {
+if ($pollObj->totalVotes() > 0 && ($member->hasAccess($consoleObj) || $pollInfo['member_id'] == $memberInfo['member_id'] || $pollInfo['resultvisibility'] == "open" || ($pollInfo['resultvisibility'] == "votedonly" && $blnMemberVoted) || ($pollInfo['resultvisibility'] == "pollend" && $pollInfo['pollend'] < time()))) {
 	$blnShowResults = true;
 }
 
 
 
-if($blnShowResults) {
+if ($blnShowResults) {
 	$arrResults = array("['Option', 'Votes']");
 	$arrOptions = array();
 	$x = 0;
 	$countTotalVotes = 0;
-	foreach($pollObj->getPollResults() as $pollOptionID => $votes) {
+	foreach ($pollObj->getPollResults() as $pollOptionID => $votes) {
 		$pollObj->objPollOption->select($pollOptionID);
 		$pollOptionInfo = $pollObj->objPollOption->get_info_filtered();
 		$arrResults[] = "['".$pollOptionInfo['optionvalue']."', ".$votes."]";
@@ -112,7 +112,7 @@ $memberInfo = array();
 
 
 $LOGGED_IN = false;
-if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 	$LOGGED_IN = true;
 
@@ -129,10 +129,10 @@ $dispPollCreator = $member->getMemberLink();
 $dispPollEnd = ($pollInfo['pollend'] == 0) ? "Never" : date("D M j, Y g:i a", $pollInfo['pollend']);
 
 $dispPollAccess = "<span class='publicNewsColor'>Public</span>";
-if($pollInfo['accesstype'] == "members") {
+if ($pollInfo['accesstype'] == "members") {
 	$dispPollAccess = "<span class='pendingFont'>Members Only</span>";
 }
-elseif($pollInfo['accesstype'] == "memberslimited") {
+elseif ($pollInfo['accesstype'] == "memberslimited") {
 	$dispPollAccess = "<span class='failedFont'>Limited</span>";
 }
 
@@ -143,7 +143,7 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 </p>
 
 <?php
-	if($blnShowResults) {
+	if ($blnShowResults) {
 ?>
 
 <div class='pollContainer'>
@@ -153,7 +153,7 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 		<b>Legend:</b><br><br>
 		<?php
 
-			foreach($pollObj->getPollOptions() as $pollOptionID) {
+			foreach ($pollObj->getPollOptions() as $pollOptionID) {
 				$pollObj->objPollOption->select($pollOptionID);
 				$pollOptionInfo = $pollObj->objPollOption->get_info_filtered();
 				echo "
@@ -192,7 +192,7 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 				<td class='main'><?php echo $countTotalVotes; ?></td>
 			</tr>
 		<?php
-			if($pollInfo['lastedit_date'] != 0 && $member->select($pollInfo['lastedit_memberid'])) {
+			if ($pollInfo['lastedit_date'] != 0 && $member->select($pollInfo['lastedit_memberid'])) {
 				echo "
 					<tr>
 						<td class='pollInfoLabel' valign='top'>Last edited by:</td>
@@ -206,7 +206,7 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 	<?php
 
 
-		if($pollInfo['displayvoters'] == 1 || ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword']) && ($member->hasAccess($consoleObj) || $member->get_info("member_id") == $pollInfo['member_id']))) {
+		if ($pollInfo['displayvoters'] == 1 || ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword']) && ($member->hasAccess($consoleObj) || $member->get_info("member_id") == $pollInfo['member_id']))) {
 			echo "
 				<br><br>
 				<b>Voter Info:</b>
@@ -216,10 +216,10 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 
 			$memberVoters = 0;
 			$counter = 0;
-			foreach($pollObj->getVoterInfo() as $memberID => $voteInfo) {
-				if($member->select($memberID)) {
+			foreach ($pollObj->getVoterInfo() as $memberID => $voteInfo) {
+				if ($member->select($memberID)) {
 					$memberVoters++;
-					if($counter == 0) {
+					if ($counter == 0) {
 						$addCSS = "";
 						$counter = 1;
 					}
@@ -230,7 +230,7 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 
 					$pollMemberInfo = $member->get_info_filtered();
 
-					if($pollMemberInfo['profilepic'] == "") {
+					if ($pollMemberInfo['profilepic'] == "") {
 						$pollMemberInfo['profilepic'] = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
 					}
 					else {
@@ -240,7 +240,7 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 					$dispVoteDetails = "";
 					$dispTimesVoted = 0;
 					$dispLastVoted = 0;
-					foreach($voteInfo as $pollOptionID => $info) {
+					foreach ($voteInfo as $pollOptionID => $info) {
 						$pollObj->objPollOption->select($pollOptionID);
 
 						$addS = ($info['votes'] > 1) ? "s" : "";
@@ -271,7 +271,7 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 				}
 			}
 
-			if($memberVoters == 0) {
+			if ($memberVoters == 0) {
 
 				echo "
 				
@@ -298,11 +298,11 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 	}
 	else {
 
-		if($pollObj->totalVotes() == 0) {
+		if ($pollObj->totalVotes() == 0) {
 			$pollInfo['resultvisibility'] = "novotes";
 		}
 
-		switch($pollInfo['resultvisibility']) {
+		switch ($pollInfo['resultvisibility']) {
 			case "votedonly":
 				$dispReason = ", you must vote first!";
 				break;

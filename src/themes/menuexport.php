@@ -10,16 +10,16 @@
 	$websiteSettingsCID = $consoleObj->findConsoleIDByName("Website Settings");
 	$consoleObj->select($websiteSettingsCID);
 
-	if(!isset($_SESSION['btUsername']) || !isset($_SESSION['btPassword']) || !$member->select($_SESSION['btUsername']) || ($member->select($_SESSION['btUsername']) && !$member->authorizeLogin($_SESSION['btPassword'])) || ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword']) && !$member->hasAccess($consoleObj))) {
+	if (!isset($_SESSION['btUsername']) || !isset($_SESSION['btPassword']) || !$member->select($_SESSION['btUsername']) || ($member->select($_SESSION['btUsername']) && !$member->authorizeLogin($_SESSION['btPassword'])) || ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword']) && !$member->hasAccess($consoleObj))) {
 		header("HTTP/1.0 404 Not Found");
 		exit();
 	}
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_category ORDER BY section, sortnum");
-	while($catInfo = $result->fetch_assoc()) {
+	while ($catInfo = $result->fetch_assoc()) {
 
 
-		foreach($catInfo as $key=>$value) {
+		foreach ($catInfo as $key=>$value) {
 			$catInfo[$key] = $mysqli->real_escape_string($value);
 		}
 
@@ -30,9 +30,9 @@
 
 	$saveMenuSQL .= "\n";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_item ORDER BY menucategory_id, sortnum");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
-		foreach($row as $key=>$value) {
+		foreach ($row as $key=>$value) {
 			$row[$key] = $mysqli->real_escape_string($value);
 		}
 
@@ -42,9 +42,9 @@
 	$saveMenuSQL .= "\n";
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_customblock");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
-		foreach($row as $key=>$value) {
+		foreach ($row as $key=>$value) {
 			$row[$key] = $mysqli->real_escape_string($value);
 		}
 
@@ -54,9 +54,9 @@
 	$saveMenuSQL .= "\n";
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_custompage");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
-		foreach($row as $key=>$value) {
+		foreach ($row as $key=>$value) {
 			$row[$key] = $mysqli->real_escape_string($value);
 		}
 
@@ -66,9 +66,9 @@
 	$saveMenuSQL .= "\n";
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_image");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
-		foreach($row as $key=>$value) {
+		foreach ($row as $key=>$value) {
 			$row[$key] = $mysqli->real_escape_string($value);
 		}
 
@@ -78,9 +78,9 @@
 	$saveMenuSQL .= "\n";
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_link");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
-		foreach($row as $key=>$value) {
+		foreach ($row as $key=>$value) {
 			$row[$key] = $mysqli->real_escape_string($value);
 		}
 
@@ -90,9 +90,9 @@
 	$saveMenuSQL .= "\n";
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_shoutbox");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
-		foreach($row as $key=>$value) {
+		foreach ($row as $key=>$value) {
 			$row[$key] = $mysqli->real_escape_string($value);
 		}
 
@@ -101,7 +101,7 @@
 	}
 
 
-	if(file_put_contents($websiteInfo['theme']."/savemenu.sql", $saveMenuSQL)) {
+	if (file_put_contents($websiteInfo['theme']."/savemenu.sql", $saveMenuSQL)) {
 		echo "1";
 	}
 	else {

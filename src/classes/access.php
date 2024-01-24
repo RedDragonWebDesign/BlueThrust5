@@ -56,25 +56,25 @@
 
 			$arrBasicObj = array();
 
-			foreach($this->arrAccessTables as $key => $accessTableInfo) {
+			foreach ($this->arrAccessTables as $key => $accessTableInfo) {
 				$accessTableInfo['tableName'] = filterText($accessTableInfo['tableName']);
 				$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix().$accessTableInfo['tableName']." WHERE ".$this->arrAccessFor['keyName']." = '".$this->arrAccessFor['keyValue']."'");
 				$this->MySQL->query("OPTIMIZE TABLE `".$this->MySQL->get_tablePrefix().$accessTableInfo['tableName']."`");
 			}
 
-			foreach($_SESSION['btMemberAccess'][$this->cacheID] as $memberID => $accessTypeValue) {
+			foreach ($_SESSION['btMemberAccess'][$this->cacheID] as $memberID => $accessTypeValue) {
 
-				if(is_numeric($memberID) && is_numeric($accessTypeValue)) {
+				if (is_numeric($memberID) && is_numeric($accessTypeValue)) {
 					$arrColumns = array($this->arrAccessFor['keyName'], "member_id", "accesstype");
 					$arrValues = array($this->arrAccessFor['keyValue'], $memberID, $accessTypeValue);
 					$this->objMemberAccess->addNew($arrColumns, $arrValues);
 				}
 			}
 
-			foreach($_SESSION['btAccessCache'][$this->cacheID] as $checkBoxName => $accessTypeValue) {
+			foreach ($_SESSION['btAccessCache'][$this->cacheID] as $checkBoxName => $accessTypeValue) {
 				$rankID = str_replace("rankaccess_", "", $checkBoxName);
 
-				if($this->objRank->select($rankID) && is_numeric($accessTypeValue)) {
+				if ($this->objRank->select($rankID) && is_numeric($accessTypeValue)) {
 					$arrColumns = array($this->arrAccessFor['keyName'], "rank_id", "accesstype");
 					$arrValues = array($this->arrAccessFor['keyValue'], $rankID, $accessTypeValue);
 					$this->objRankAccess->addNew($arrColumns, $arrValues);
@@ -90,22 +90,22 @@
 			$rankoptions = "";
 
 			$result = $this->MySQL->query("SELECT rankcategory_id FROM ".$this->MySQL->get_tablePrefix()."rankcategory ORDER BY ordernum DESC");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
 				$this->objRankCat->select($row['rankcategory_id']);
 				$arrRanks = $this->objRankCat->getRanks();
 				$rankCatName = $this->objRankCat->get_info_filtered("name");
 
-				if(count($arrRanks) > 0) {
+				if (count($arrRanks) > 0) {
 					$rankoptions .= "<b><u>".$rankCatName."</u></b> - <a href='javascript:void(0)' onclick=\"selectAllCheckboxes('rankcat_".$row['rankcategory_id']."', 1)\">Check All</a> - <a href='javascript:void(0)' onclick=\"selectAllCheckboxes('rankcat_".$row['rankcategory_id']."', 0)\">Uncheck All</a><br>";
 					$rankoptions .= "<div id='rankcat_".$row['rankcategory_id']."'>";
-					foreach($arrRanks as $rankID) {
+					foreach ($arrRanks as $rankID) {
 
 						$dispRankAccess = "";
 
-						foreach($this->arrAccessTypes as $accessTypeInfo) {
+						foreach ($this->arrAccessTypes as $accessTypeInfo) {
 
-							if($_SESSION['btAccessCache'][$this->cacheID]["rankaccess_".$rankID] == $accessTypeInfo['value']) {
+							if ($_SESSION['btAccessCache'][$this->cacheID]["rankaccess_".$rankID] == $accessTypeInfo['value']) {
 								$dispRankAccess = " - <span class='".$accessTypeInfo['css']."' style='font-style: italic'>".$accessTypeInfo['displayValue']."</span>";
 							}
 
@@ -124,11 +124,11 @@
 
 			$rankOptionsHeight = $rankCounter*20;
 
-			if($rankOptionsHeight > 300) {
+			if ($rankOptionsHeight > 300) {
 				$rankOptionsHeight = 300;
 			}
 
-			if($blnShowFull) {
+			if ($blnShowFull) {
 				echo "
 					<div id='loadingSpiralRankAccess' class='loadingSpiral'>
 						<p align='center'>
@@ -141,7 +141,7 @@
 
 			echo $rankoptions;
 
-			if($blnShowFull) {
+			if ($blnShowFull) {
 				echo "</div>
 					<div class='main' style='overflow: auto; position: relative; margin-left: auto; margin-right: auto; margin-top: 20px; width: 95%'>
 						<div style='display: inline-block; margin-right: 80px'><b>With Selected:</b></div>
@@ -194,13 +194,13 @@
 		public function dispSetMemberAccess($blnShowFull=true) {
 			global $MAIN_ROOT, $THEME;
 
-			if($blnShowFull) {
+			if ($blnShowFull) {
 				$membersTable = $this->MySQL->get_tablePrefix()."members";
 				$ranksTable = $this->MySQL->get_tablePrefix()."ranks";
 				$query = "SELECT ".$membersTable.".member_id FROM ".$membersTable.", ".$ranksTable." WHERE ".$membersTable.".rank_id = ".$ranksTable.".rank_id AND ".$membersTable.".disabled = '0' AND ".$membersTable.".rank_id != '1' ORDER BY ".$ranksTable.".ordernum DESC";
 
 				$result = $this->MySQL->query($query);
-				while($row = $result->fetch_assoc()) {
+				while ($row = $result->fetch_assoc()) {
 
 					$this->objMember->select($row['member_id']);
 					$this->objRank->select($this->objMember->get_info("rank_id"));
@@ -252,18 +252,18 @@
 						</tr>
 						";
 
-				foreach($_SESSION['btMemberAccess'][$this->cacheID] as $memberID => $accessTypeValue) {
+				foreach ($_SESSION['btMemberAccess'][$this->cacheID] as $memberID => $accessTypeValue) {
 
-					if($this->objMember->select($memberID)) {
+					if ($this->objMember->select($memberID)) {
 
 						$this->objRank->select($this->objMember->get_info("rank_id"));
 
 						$memberName = $this->objMember->get_info_filtered("username");
 						$rankName = $this->objRank->get_info_filtered("name");
 
-						foreach($this->arrAccessTypes as $accessTypeInfo) {
+						foreach ($this->arrAccessTypes as $accessTypeInfo) {
 
-							if($_SESSION['btMemberAccess'][$this->cacheID][$memberID] == $accessTypeInfo['value']) {
+							if ($_SESSION['btMemberAccess'][$this->cacheID][$memberID] == $accessTypeInfo['value']) {
 								$dispAccessValue = "<span class='".$accessTypeInfo['css']."'>".$accessTypeInfo['displayValue']."</span>";
 							}
 
@@ -284,7 +284,7 @@
 					</table>
 				";
 
-			if(count($_SESSION['btMemberAccess'][$this->cacheID]) == 0) {
+			if (count($_SESSION['btMemberAccess'][$this->cacheID]) == 0) {
 				echo "
 					<p class='main' align='center'>
 						<i>No special member access rules set!</i>
@@ -292,7 +292,7 @@
 				";
 			}
 
-			if($blnShowFull) {
+			if ($blnShowFull) {
 				echo "
 					</div>	
 				
@@ -344,7 +344,7 @@
 
 		public function dispAccessOptions() {
 
-			foreach($this->arrAccessTypes as $accessTypeInfo) {
+			foreach ($this->arrAccessTypes as $accessTypeInfo) {
 				echo "<option value='".$accessTypeInfo['value']."'>".$accessTypeInfo['displayValue']."</option>";
 			}
 
@@ -357,13 +357,13 @@
 			$returnArr = array("member" => "", "rank" => "");
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->arrAccessTables['member']['tableName']." WHERE ".filterText($this->arrAccessFor['keyName'])." = '".filterText($this->arrAccessFor['keyValue'])."' AND member_id = '".$memberInfo['member_id']."'");
-			if($result->num_rows > 0) {
+			if ($result->num_rows > 0) {
 				$row = $result->fetch_assoc();
 				$returnArr['member'] = $row['accesstype'];
 			}
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->arrAccessTables['rank']['tableName']." WHERE ".filterText($this->arrAccessFor['keyName'])." = '".filterText($this->arrAccessFor['keyValue'])."' AND rank_id = '".$memberInfo['rank_id']."'");
-			if($result->num_rows > 0) {
+			if ($result->num_rows > 0) {
 				$row = $result->fetch_assoc();
 				$returnArr['rank'] = $row['accesstype'];
 			}
@@ -375,12 +375,12 @@
 		public function loadCache() {
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix().$this->arrAccessTables['member']['tableName']." WHERE ".filterText($this->arrAccessFor['keyName'])." = '".filterText($this->arrAccessFor['keyValue'])."'");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$_SESSION['btMemberAccess'][$this->cacheID][$row['member_id']] = $row['accesstype'];
 			}
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix().$this->arrAccessTables['rank']['tableName']." WHERE ".filterText($this->arrAccessFor['keyName'])." = '".filterText($this->arrAccessFor['keyValue'])."'");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$sessionName = "rankaccess_".$row['rank_id'];
 				$_SESSION['btAccessCache'][$this->cacheID][$sessionName] = $row['accesstype'];
 			}

@@ -27,7 +27,7 @@
 	$member->select($_SESSION['btUsername']);
 
 
-	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info_filtered();
 	}
 	else {
@@ -35,7 +35,7 @@
 	}
 
 
-	if($ipbanObj->select($_POST['ipaddress'])) {
+	if ($ipbanObj->select($_POST['ipaddress'])) {
 
 		$ipbanObj->delete();
 		$arrReturn = array("result" => "success");

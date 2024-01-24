@@ -12,7 +12,7 @@ $appComponentObj = new BasicOrder($mysqli, "app_components", "appcomponent_id");
 $appComponentObj->set_assocTableName("app_selectvalues");
 $appComponentObj->set_assocTableKey("appselectvalue_id");
 
-if(
+if (
 	(
 		$_GET['appCompID'] != -1 &&
 		! $appComponentObj->select($_GET['appCompID'])
@@ -30,14 +30,14 @@ if(
 
 // Do they want HTML, or the actual image?
 // HTML
-if(isset($_GET['display'])) {
+if (isset($_GET['display'])) {
 	echo "<img src='".$MAIN_ROOT."images/captcha.php?appCompID=".$_GET['appCompID']."&new=".time()."' width='440' height='90'>";
 }
 // Actual image
 else {
 	header('Content-Type: image/png');
 
-	if($_GET['appCompID'] == -1) {
+	if ($_GET['appCompID'] == -1) {
 		$appCompInfo['appcomponent_id'] = -1;
 	}
 	else {
@@ -77,7 +77,7 @@ else {
 	$counter = 0;
 
 	// foreach letter
-	foreach($arrCaptcha as $value) {
+	foreach ($arrCaptcha as $value) {
 		// Font Locations
 		$arrFonts = array();
 		$arrFonts[0] = $BASE_DIRECTORY."images/captcha-fonts/AnonymousClippings.ttf";
@@ -87,28 +87,28 @@ else {
 
 		$char = $value;
 
-		if(is_numeric($value) && rand(1, 10) > 2) {
+		if (is_numeric($value) && rand(1, 10) > 2) {
 			$char = (rand(1,10) > 5) ? strtoupper($arrABC[$value]) : $value;
 		}
-		elseif(!is_numeric($value) && rand(1, 10) > 5) {	// randomly uppercase some of the letters
+		elseif (!is_numeric($value) && rand(1, 10) > 5) {	// randomly uppercase some of the letters
 			$char = strtoupper($value);
 		}
 
-		if(is_numeric($char)) {
+		if (is_numeric($char)) {
 			unset($arrFonts[1]);
 
-			if($char == 0) {
+			if ($char == 0) {
 				unset($arrFonts[0]);
 			}
-			elseif($char == 3) {
+			elseif ($char == 3) {
 				unset($arrFonts[3]);
 			}
-			elseif($char == 9) {
+			elseif ($char == 9) {
 				unset($arrFonts[2]);
 			}
 
 		}
-		elseif(strtolower($char) == "s") {
+		elseif (strtolower($char) == "s") {
 			unset($arrFonts[3]);
 		}
 
@@ -119,7 +119,7 @@ else {
 		$randNum2 = rand(0,8);
 
 		// if component type is "captchaextra", add lots of splats and noise using the special font RFX Splatz
-		if($appComponentObj->get_info("componenttype") == "captchaextra") {
+		if ($appComponentObj->get_info("componenttype") == "captchaextra") {
 			$xCoord = ($counter == 0) ? 10 : (55*$counter);
 			imagettftext($im, 70, rand(0,20), $xCoord, 80, $blackAlpha, $distortFont, $arrDistort[$randNum2]);
 		}

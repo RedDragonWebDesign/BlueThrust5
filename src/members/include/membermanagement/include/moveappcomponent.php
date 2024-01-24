@@ -28,11 +28,11 @@ $consoleObj->select($cID);
 $appComponentObj = new BasicOrder($mysqli, "app_components", "appcomponent_id");
 
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($appComponentObj->select($_POST['acID'])) {
+	if ($appComponentObj->select($_POST['acID'])) {
 
 		$member->logAction("Modified the member application component order.");
 

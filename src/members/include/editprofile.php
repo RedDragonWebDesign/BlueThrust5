@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -41,10 +41,10 @@ $arrPrivileges = $memberRank->get_privileges();
 $arrConsoleCats = array();
 $consoleSettingObj = new ConsoleOption($mysqli);
 
-foreach($arrPrivileges as $consoleOptionID) {
+foreach ($arrPrivileges as $consoleOptionID) {
 	$consoleSettingObj->select($consoleOptionID);
 	$consoleCatID = $consoleSettingObj->get_info("consolecategory_id");
-	if(!in_array($consoleCatID, $arrConsoleCats)) {
+	if (!in_array($consoleCatID, $arrConsoleCats)) {
 		$consoleCatSettingObj->select($consoleCatID);
 		$consoleCatOrder = $consoleCatSettingObj->get_info("ordernum");
 		$arrConsoleCats[$consoleCatOrder] = $consoleCatID;
@@ -54,7 +54,7 @@ foreach($arrPrivileges as $consoleOptionID) {
 
 krsort($arrConsoleCats);
 
-foreach($arrConsoleCats as $value) {
+foreach ($arrConsoleCats as $value) {
 	$consoleCatSettingObj->select($value);
 	$defaultConsoleOptions[$value] = $consoleCatSettingObj->get_info_filtered("name");
 }
@@ -74,7 +74,7 @@ $maxDate = mktime(0,0,0,12,31,$maxBirthdayYear);
 $maxBirthdayDate = "new Date(".date("Y", $maxDate).",12,31)";
 $defaultBirthdayDate = "";
 
-if($memberInfo['birthday'] != 0) {
+if ($memberInfo['birthday'] != 0) {
 	$bdayDate = new DateTime();
 	$bdayDate->setTimestamp($memberInfo['birthday']);
 	$bdayDate->setTimezone(new DateTimeZone("UTC"));
@@ -104,7 +104,7 @@ function saveCustomValues() {
 
 	// Save Custom Profile Options
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."profileoptions ORDER BY sortnum");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 		$postVal = "custom_".$row['profileoption_id'];
 		$member->setProfileValue($row['profileoption_id'], $_POST[$postVal]);
@@ -113,9 +113,9 @@ function saveCustomValues() {
 
 	// Save Social Media Info
 
-	foreach($arrSocialMediaInfo as $socialMediaInfo) {
+	foreach ($arrSocialMediaInfo as $socialMediaInfo) {
 		$postVal = "socialmedia_".$socialMediaInfo['social_id'];
-		if($member->objSocial->objSocialMember->selectByMulti(array("member_id" => $memberInfo['member_id'], "social_id" => $socialMediaInfo['social_id']))) {
+		if ($member->objSocial->objSocialMember->selectByMulti(array("member_id" => $memberInfo['member_id'], "social_id" => $socialMediaInfo['social_id']))) {
 			$arrColumns = array("value");
 			$arrValues = array($_POST[$postVal]);
 			$member->objSocial->objSocialMember->update($arrColumns, $arrValues);
@@ -132,16 +132,16 @@ function saveCustomValues() {
 
 	$mysqli->query("DELETE FROM ".$dbprefix."gamesplayed_members WHERE member_id = '".$memberInfo['member_id']."'");
 	$gameMemberObj = new Basic($mysqli, "gamesplayed_members", "gamemember_id");
-	foreach($arrGames as $gameID) {
+	foreach ($arrGames as $gameID) {
 
 		$postVal = "game_".$gameID;
-		if($_POST[$postVal] == 1) {
+		if ($_POST[$postVal] == 1) {
 			$gameMemberObj->addNew(array("member_id", "gamesplayed_id"), array($memberInfo['member_id'], $gameID));
 		}
 
 	}
 
-	if(!$member->playsGame($_POST['maingame'])) {
+	if (!$member->playsGame($_POST['maingame'])) {
 		$gameMemberObj->addNew(array("member_id", "gamesplayed_id"), array($memberInfo['member_id'], $_POST['maingame']));
 	}
 }
@@ -269,7 +269,7 @@ $arrComponents = array(
 
 $arrSocialMediaComponents = array();
 $memberSocialInfo = $member->objSocial->getMemberSocialInfo();
-foreach($arrSocialMediaInfo as $socialMediaInfo) {
+foreach ($arrSocialMediaInfo as $socialMediaInfo) {
 
 	$dispSocialMediaValue = (isset($memberSocialInfo[$socialMediaInfo['social_id']])) ? $memberSocialInfo[$socialMediaInfo['social_id']] : "";
 
@@ -313,7 +313,7 @@ $arrBirthdayComponents = array(
 );
 
 
-if(count($arrGames) > 0) {
+if (count($arrGames) > 0) {
 
 
 	// Setup Games Played Section
@@ -341,7 +341,7 @@ if(count($arrGames) > 0) {
 	);
 
 
-	foreach($arrGames as $gameID) {
+	foreach ($arrGames as $gameID) {
 
 		$gameObj->select($gameID);
 
@@ -370,7 +370,7 @@ if(count($arrGames) > 0) {
 $customCount = 1;
 $arrCustomOptions = array();
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 
 	$profileCategoryObj->select($row['profilecategory_id']);
 	$arrProfileOptions = $profileCategoryObj->getAssociateIDs("ORDER BY sortnum");
@@ -383,14 +383,14 @@ while($row = $result->fetch_assoc()) {
 	);
 
 	$customCount++;
-	foreach($arrProfileOptions as $profileOptionID) {
+	foreach ($arrProfileOptions as $profileOptionID) {
 
 		$profileOptionObj->select($profileOptionID);
 
 		$profileOptionValue = $member->getProfileValue($profileOptionID, true);
 
 		$arrSelectOptions = array();
-		if($profileOptionObj->isSelectOption()) {
+		if ($profileOptionObj->isSelectOption()) {
 			$arrSelectOptions = $profileOptionObj->getSelectValues();
 			$inputType = "select";
 		}

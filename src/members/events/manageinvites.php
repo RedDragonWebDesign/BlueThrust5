@@ -14,7 +14,7 @@
 
 
 
-if(!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
+if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 
 	exit();
 }
@@ -26,7 +26,7 @@ else {
 
 	$eventObj->select($eID);
 
-	if(!$member->hasAccess($consoleObj) || (!$eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites") && !$eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm") && $memberInfo['rank_id'] != 1)) {
+	if (!$member->hasAccess($consoleObj) || (!$eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites") && !$eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm") && $memberInfo['rank_id'] != 1)) {
 		exit();
 	}
 }
@@ -49,10 +49,10 @@ $sqlInvitedMembers = "('".implode("','", $arrInvitedMembers)."')";
 
 $memberoptions = "<option value=''>Select</option>";
 $result = $mysqli->query("SELECT m.member_id, m.username, r.ordernum, r.name FROM ".$dbprefix."members m, ".$dbprefix."ranks r WHERE m.rank_id = r.rank_id AND m.member_id IN ".$sqlInvitedMembers." AND m.disabled = '0' AND m.rank_id != '1' ORDER BY r.ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$row = filterArray($row);
 	$eventMemberID = $eventObj->getEventMemberID($row['member_id']);
-	if($eventMemberID !== false) {
+	if ($eventMemberID !== false) {
 
 		$memberoptions .= "<option value='".$eventMemberID."'>".$row['name']." ".$row['username']."</option>";
 

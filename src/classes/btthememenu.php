@@ -51,7 +51,7 @@
 			$memberInfo = $this->memberObj->get_info();
 
 			$result = $this->MySQL->query("SELECT forumpost_id FROM ".$this->MySQL->get_tablePrefix()."forum_post ORDER BY dateposted DESC");
-			while(count($arrReturn) < $amountToShow && $row = $result->fetch_assoc()) {
+			while (count($arrReturn) < $amountToShow && $row = $result->fetch_assoc()) {
 				$forumPostID = $row['forumpost_id'];
 				$forumObj->objPost->select($forumPostID);
 
@@ -62,10 +62,10 @@
 				$forumObj->select($boardID);
 				$boardAccessType = $forumObj->get_info("accesstype");
 
-				if(!in_array($forumPostID, $arrReturn) && $boardAccessType == 0) {
+				if (!in_array($forumPostID, $arrReturn) && $boardAccessType == 0) {
 					$arrReturn[] = $forumPostID;
 				}
-				elseif(!in_array($forumPostID, $arrReturn) && $boardAccessType == 1 && $this->blnLoggedIn && $forumObj->memberHasAccess($memberInfo)) {
+				elseif (!in_array($forumPostID, $arrReturn) && $boardAccessType == 1 && $this->blnLoggedIn && $forumObj->memberHasAccess($memberInfo)) {
 					$arrReturn[] = $forumPostID;
 				}
 
@@ -82,8 +82,9 @@
 
 			$member = new Member($this->MySQL);
 
-			if(file_exists(BASE_DIRECTORY."themes/".$this->dir."/menus/forumactivity.php")) {
-				if(!defined("FORUMACTIVITY_MENUITEM")) { define("FORUMACTIVITY_MENUITEM", true); }
+			if (file_exists(BASE_DIRECTORY."themes/".$this->dir."/menus/forumactivity.php")) {
+				if (!defined("FORUMACTIVITY_MENUITEM")) {
+define("FORUMACTIVITY_MENUITEM", true); }
 				require_once(BASE_DIRECTORY."themes/".$this->dir."/menus/forumactivity.php");
 			}
 			else {
@@ -93,7 +94,7 @@
 				";
 
 				$altColorSwitch = 0;
-				foreach($arrForumActivity as $forumPostID) {
+				foreach ($arrForumActivity as $forumPostID) {
 
 					$forumObj->objPost->select($forumPostID);
 					$postInfo = $forumObj->objPost->get_info_filtered();
@@ -105,7 +106,7 @@
 
 					$member->select($postInfo['member_id']);
 
-					if($altColorSwitch == 1) {
+					if ($altColorSwitch == 1) {
 						$addCSS = "";
 						$altColorSwitch = 0;
 					}
@@ -151,8 +152,9 @@
 			$member = new Member($this->MySQL);
 			$rank = new Rank($this->MySQL);
 
-			if(file_exists(BASE_DIRECTORY."themes/".$this->dir."/menus/newmembers.php")) {
-				if(!defined("NEWMEMBERS_MENUITEM")) { define("NEWMEMBERS_MENUITEM", true); }
+			if (file_exists(BASE_DIRECTORY."themes/".$this->dir."/menus/newmembers.php")) {
+				if (!defined("NEWMEMBERS_MENUITEM")) {
+define("NEWMEMBERS_MENUITEM", true); }
 				require_once(BASE_DIRECTORY."themes/".$this->dir."/menus/newmembers.php");
 			}
 			else {
@@ -163,11 +165,11 @@
 				$altColorSwitch = 0;
 
 				$result = $this->MySQL->query("SELECT member_id FROM ".$this->MySQL->get_tablePrefix()."members WHERE rank_id != '1' AND disabled = '0' ORDER BY datejoined DESC LIMIT ".$amountToShow);
-				while($row = $result->fetch_assoc()) {
+				while ($row = $result->fetch_assoc()) {
 					$member->select($row['member_id']);
 					$rank->select($member->get_info("rank_id"));
 
-					if($altColorSwitch == 1) {
+					if ($altColorSwitch == 1) {
 						$addCSS = "";
 						$altColorSwitch = 0;
 					}
@@ -211,7 +213,7 @@
 			";
 			$hpGameObj = new Game($this->MySQL);
 			$arrGames = $hpGameObj->getGameList();
-			foreach($arrGames as $gameID) {
+			foreach ($arrGames as $gameID) {
 				$hpGameObj->select($gameID);
 				echo "
 					<span class='menuLinks'>
@@ -226,7 +228,7 @@
 			$menuLinkInfo = $this->menuItemObj->objLink->get_info();
 			$checkURL = parse_url($menuLinkInfo['link']);
 
-			if(!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
+			if (!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
 				$menuLinkInfo['link'] = MAIN_ROOT.$menuLinkInfo['link'];
 			}
 
@@ -317,7 +319,7 @@
 
 			$menuImageInfo = $this->menuItemObj->objImage->get_info();
 			$checkURL = parse_url($menuItemInfo['imageurl']);
-			if(!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
+			if (!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
 				$menuImageInfo['imageurl'] = MAIN_ROOT.$menuImageInfo['imageurl'];
 			}
 
@@ -328,10 +330,10 @@
 				<div style='text-align: ".$menuImageInfo['imagealign'].";' class='menusImageItemWrapper'>
 			";
 
-			if($menuImageInfo['link'] != "") {
+			if ($menuImageInfo['link'] != "") {
 
 				$checkURL = parse_url($menuImageInfo['link']);
-				if(!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
+				if (!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
 					$menuImageInfo['link'] = MAIN_ROOT.$menuImageInfo['link'];
 				}
 
@@ -360,7 +362,7 @@
 				"customblock" :
 				$this->menuItemInfo['itemtype'];
 
-			switch($this->menuItemInfo['itemtype']) {
+			switch ($this->menuItemInfo['itemtype']) {
 				case "link":
 					$this->menuItemObj->objLink->select($this->menuItemInfo['itemtype_id']);
 					$this->displayLink();
@@ -432,13 +434,13 @@
 				<div id='menuSection_".$menuSection."'>
 			";
 
-			foreach($arrCategories as $menuCatID) {
+			foreach ($arrCategories as $menuCatID) {
 				$this->menuCatObj->select($menuCatID);
 				$this->arrMenuItems = $this->menuItemObj->getItems($menuCatID, $this->intAccessType);
 
 				$this->displayMenuCategory("top");
 
-				foreach($this->arrMenuItems as $menuItemID) {
+				foreach ($this->arrMenuItems as $menuItemID) {
 					$this->menuItemObj->select($menuItemID);
 					$this->menuItemInfo = $this->menuItemObj->get_info();
 					$this->displayMenuItem();
@@ -461,7 +463,7 @@
 			// bottom = bottom portion of menu
 
 			$menuCatInfo = $this->menuCatObj->get_info();
-			if($loc == "top") {
+			if ($loc == "top") {
 				echo $this->getHeaderCode($menuCatInfo);
 			}
 			else {
@@ -483,7 +485,7 @@
 
 		public function getHeaderCode($info) {
 
-			if($info['headertype'] == "image") {
+			if ($info['headertype'] == "image") {
 				$returnVal = "<img src='".MAIN_ROOT.$info['headercode']."' class='menuHeaderImg'>";
 			}
 			else {
@@ -497,7 +499,7 @@
 
 		public function displayLogin() {
 
-			if($this->blnLoggedIn) {
+			if ($this->blnLoggedIn) {
 				$this->displayLoggedIn();
 			}
 			else {
@@ -509,7 +511,7 @@
 
 		public function prepareAdditionalMemberInfo() {
 
-			if($this->blnLoggedIn) {
+			if ($this->blnLoggedIn) {
 
 				// Private Message Info
 				$consoleOptionObj = new ConsoleOption($this->MySQL);
@@ -520,7 +522,7 @@
 
 				$alertPM = 0;
 
-				if($totalNewPMs > 0) {
+				if ($totalNewPMs > 0) {
 					$dispPMCount = "<b>(".$totalNewPMs.")</b> <img src='".MAIN_ROOT."themes/".THEME."/images/pmalert.gif'>";
 					$intPMCount = $totalNewPMs;
 					$alertPM = 1;
@@ -560,7 +562,7 @@
 
 			);
 
-			foreach($arrFilter as $find => $replace) {
+			foreach ($arrFilter as $find => $replace) {
 				$value = str_replace($find, $replace, $value);
 			}
 

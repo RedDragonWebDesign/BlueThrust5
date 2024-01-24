@@ -25,12 +25,12 @@ $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage Home Page Images");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $imageSliderObj->select($_POST['imgID'])) {
+	if ($member->hasAccess($consoleObj) && $imageSliderObj->select($_POST['imgID'])) {
 
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 

@@ -41,7 +41,7 @@ $pollObj = new Poll($mysqli);
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 
 	$pollObj->cacheID = $_POST['cacheID'];
 
@@ -53,23 +53,23 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 
 
 		// Check Value
-		if(trim($_POST['optionValue']) == "") {
+		if (trim($_POST['optionValue']) == "") {
 			$arrErrors[] = "Option value may not be blank.";
 		}
 
 
 		// Check Color
-		if(trim($_POST['optionColor']) == "") {
+		if (trim($_POST['optionColor']) == "") {
 			$_POST['optionColor'] = "#FFFFFF";
 		}
 
 		// Check Display Order
 
-		if(count($_SESSION['btPollOptionCache'][$pollObj->cacheID]) > 1 && (!is_numeric($_POST['optionOrder']) || !isset($_POST['optionOrder']) || ($_POST['optionOrderBeforeAfter'] != "before" && $_POST['optionOrderBeforeAfter'] != "after"))) {
+		if (count($_SESSION['btPollOptionCache'][$pollObj->cacheID]) > 1 && (!is_numeric($_POST['optionOrder']) || !isset($_POST['optionOrder']) || ($_POST['optionOrderBeforeAfter'] != "before" && $_POST['optionOrderBeforeAfter'] != "after"))) {
 			$arrErrors[] = "You selected an invalid display order.";
 		}
 
-		if(count($arrErrors) == 0) {
+		if (count($arrErrors) == 0) {
 
 			$arrOptionInfo = $_SESSION['btPollOptionCache'][$pollObj->cacheID][$_POST['pollOption']];
 
@@ -89,7 +89,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 
 		}
 
-		if(count($arrErrors) > 0) {
+		if (count($arrErrors) > 0) {
 
 			$arrReturn['result'] = "fail";
 			$arrReturn['errors'] = $arrErrors;
@@ -126,23 +126,23 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 				
 			";
 
-		if(count($_SESSION['btPollOptionCache'][$pollObj->cacheID]) > 1) {
+		if (count($_SESSION['btPollOptionCache'][$pollObj->cacheID]) > 1) {
 
 
 			// Find Before After
 
 			$selectKey = $_POST['pollOption']+1;
 			$afterSelected = "";
-			if($selectKey == count($_SESSION['btPollOptionCache'][$pollObj->cacheID])) {
+			if ($selectKey == count($_SESSION['btPollOptionCache'][$pollObj->cacheID])) {
 				$selectKey = $_POST['pollOption']-1;
 				$afterSelected = " selected";
 			}
 
-			foreach($_SESSION['btPollOptionCache'][$pollObj->cacheID] as $key=>$optionInfo) {
+			foreach ($_SESSION['btPollOptionCache'][$pollObj->cacheID] as $key=>$optionInfo) {
 
 				$selectOption = ($key == $selectKey) ? " selected" : "";
 
-				if($key != $_POST['pollOption']) {
+				if ($key != $_POST['pollOption']) {
 					$displayOrder .= "<option value='".$key."'".$selectOption.">".$optionInfo['value']."</option>";
 				}
 			}

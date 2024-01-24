@@ -14,7 +14,7 @@
 
 
 
-if(!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
+if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 
 	exit();
 }
@@ -26,7 +26,7 @@ else {
 
 	$eventObj->select($eID);
 
-	if(!$member->hasAccess($consoleObj) || !$eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions")) {
+	if (!$member->hasAccess($consoleObj) || !$eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions")) {
 
 		exit();
 	}
@@ -50,34 +50,34 @@ $dispError = "";
 if ( ! empty($_POST['submit']) ) {
 
 	// Check position name
-	if(trim($_POST['positionname']) == "") {
+	if (trim($_POST['positionname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not enter a blank position name.<br>";
 	}
 
 	// Check display order
 	$intNewOrderNum = $eventObj->objEventPosition->validateOrder($_POST['displayorder'], $_POST['beforeafter'], true, $eventPositionInfo['sortnum']);
-	if($intNewOrderNum === false) {
+	if ($intNewOrderNum === false) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
 	}
 
 	// Filter Position Options
 	$arrPositionOptions = $eventObj->arrPositionOptions;
-	foreach($arrPositionOptions as $positionOptionName) {
-		if($_POST[$positionOptionName] != 0) {
+	foreach ($arrPositionOptions as $positionOptionName) {
+		if ($_POST[$positionOptionName] != 0) {
 			$_POST[$positionOptionName] = 1;
 		}
 	}
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 		$arrColumns = array("name", "sortnum", "modchat", "invitemembers", "manageinvites", "postmessages", "managemessages", "attendenceconfirm", "editinfo", "eventpositions", "description");
 		$arrValues = array($_POST['positionname'], $intNewOrderNum, $_POST['modchat'], $_POST['invitemembers'], $_POST['manageinvites'], $_POST['postmessages'], $_POST['managemessages'], $_POST['attendenceconfirm'], $_POST['editinfo'], $_POST['eventpositions'], $_POST['description']);
 		$eventObj->objEventPosition->select($eventPositionInfo['position_id']);
 
-		if($eventObj->objEventPosition->update($arrColumns, $arrValues)) {
+		if ($eventObj->objEventPosition->update($arrColumns, $arrValues)) {
 
 			echo "
 			
@@ -103,7 +103,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	}
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
@@ -119,12 +119,12 @@ if ( empty($_POST['submit']) ) {
 
 	$findBeforeAfter = $eventObj->objEventPosition->findBeforeAfter();
 
-	foreach($arrPositions as $positionID) {
+	foreach ($arrPositions as $positionID) {
 
-		if($positionID != $eventPositionInfo['position_id']) {
+		if ($positionID != $eventPositionInfo['position_id']) {
 
 			$dispSelected = "";
-			if($findBeforeAfter[0] == $positionID) {
+			if ($findBeforeAfter[0] == $positionID) {
 				$dispSelected = " selected";
 			}
 
@@ -135,16 +135,16 @@ if ( empty($_POST['submit']) ) {
 	}
 
 	$afterSelected = "";
-	if($findBeforeAfter[1] == "first") {
+	if ($findBeforeAfter[1] == "first") {
 		$orderoptions = "<option value='first'>(first position)</option>";
 	}
-	elseif($findBeforeAfter[1] == "after") {
+	elseif ($findBeforeAfter[1] == "after") {
 		$afterSelected = " selected";
 	}
 
 
-	foreach($eventObj->arrPositionOptions as $optionName) {
-		if($eventPositionInfo[$optionName] == 1) {
+	foreach ($eventObj->arrPositionOptions as $optionName) {
+		if ($eventPositionInfo[$optionName] == 1) {
 			$arrCheckOption[$optionName] = " checked";
 		}
 		else {
@@ -153,7 +153,7 @@ if ( empty($_POST['submit']) ) {
 	}
 
 	$postMessages = "";
-	if($eventInfo['messages'] == 1) {
+	if ($eventInfo['messages'] == 1) {
 		$postMessages = " onmouseover=\"showToolTip('You have allowed all invited members to post messages on the event page.  Uncheck this box to create a position that will prevent members posting messages.')\" onmouseout='hideToolTip()'";
 	}
 
@@ -163,7 +163,7 @@ if ( empty($_POST['submit']) ) {
 			<div class='formDiv'>
 			";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to edit event position because the following errors occurred:</strong><br><br>

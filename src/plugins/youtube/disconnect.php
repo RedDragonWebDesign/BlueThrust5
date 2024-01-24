@@ -23,7 +23,7 @@ $member->select($_SESSION['btUsername']);
 
 $ytObj = new Youtube($mysqli);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $ytObj->hasYoutube($member->get_info("member_id"))) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $ytObj->hasYoutube($member->get_info("member_id"))) {
 
 	$ytObj->delete();
 

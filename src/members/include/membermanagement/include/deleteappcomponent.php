@@ -31,15 +31,15 @@ $appComponentObj = new BasicOrder($mysqli, "app_components", "appcomponent_id");
 $appComponentObj->set_assocTableName("app_selectvalues");
 $appComponentObj->set_assocTableKey("appselectvalue_id");
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 
-	if($appComponentObj->select($_POST['acID'])) {
+	if ($appComponentObj->select($_POST['acID'])) {
 
 		$arrCompInfo = $appComponentObj->get_info_filtered();
 
 
-		if(!$_POST['confirmDelete']) {
+		if (!$_POST['confirmDelete']) {
 
 			echo "
 				<p align='center' class='main'>
@@ -48,10 +48,10 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			";
 
 		}
-		elseif($_POST['confirmDelete']) {
+		elseif ($_POST['confirmDelete']) {
 
 
-			if($appComponentObj->delete()) {
+			if ($appComponentObj->delete()) {
 
 				$appComponentObj->resortOrder();
 				$member->logAction("Deleted a member application component.");

@@ -39,7 +39,7 @@ class ConsoleOption extends BasicSort {
 		global $sqlCache;
 
 		$returnVal = false;
-		if(is_numeric($intRankID) && is_numeric($this->intTableKeyValue)) {
+		if (is_numeric($intRankID) && is_numeric($this->intTableKeyValue)) {
 
 			if ( isset($sqlCache['rank_privileges']) ) {
 				$result = sql_array_select_where(
@@ -55,10 +55,10 @@ class ConsoleOption extends BasicSort {
 				$countRows = $result->num_rows;
 			}
 
-			if($countRows > 0) {
+			if ($countRows > 0) {
 				$returnVal = true;
 			}
-			elseif($intRankID == 1) {
+			elseif ($intRankID == 1) {
 				$returnVal = true;
 			}
 
@@ -84,9 +84,9 @@ class ConsoleOption extends BasicSort {
 			}
 		} else {
 			$result = $this->MySQL->query("SELECT console_id FROM ".$this->strTableName." WHERE pagetitle = '".$strConsoleName."'");
-			if($result->num_rows == 1) {
+			if ($result->num_rows == 1) {
 				$row = $result->fetch_assoc();
-				if($this->select($row[$this->strTableKey])) {
+				if ($this->select($row[$this->strTableKey])) {
 					$returnVal = $row[$this->strTableKey];
 				}
 			}
@@ -98,20 +98,20 @@ class ConsoleOption extends BasicSort {
 	function getConsoleLinkByName($strConsolePageTitle, $htmlLink=true) {
 
 		$temp = 0;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$temp = $this->intTableKeyValue;
 		}
 
 		$cID = $this->findConsoleIDByName($strConsolePageTitle);
 		$returnVal = MAIN_ROOT."members/console.php?cID=".$cID;
-		if($htmlLink) {
+		if ($htmlLink) {
 
 			$this->select($cID);
 			$pageTitle = $this->get_info_filtered("pagetitle");
 
 			$returnVal = "<a href='".$returnVal."'>".$pageTitle."</a>";
 
-			if($temp != 0) {
+			if ($temp != 0) {
 				$this->select($temp);
 			}
 
@@ -137,10 +137,10 @@ class ConsoleOption extends BasicSort {
 	function countMembers() {
 
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 
 			$result = $this->MySQL->query("SELECT rank_id FROM ".$this->MySQL->get_tablePrefix()."rank_privileges WHERE console_id = '".$this->intTableKeyValue."'");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
 				$arrRanks[] = $row['rank_id'];
 
@@ -148,7 +148,7 @@ class ConsoleOption extends BasicSort {
 
 			$sqlRanks = "('".implode("','", $arrRanks)."')";
 			$result = $this->MySQL->query("SELECT member_id FROM ".$this->MySQL->get_tablePrefix()."members WHER rank_id IN ".$sqlRanks);
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$arrMembers[] = $row['member_id'];
 			}
 
@@ -157,8 +157,8 @@ class ConsoleOption extends BasicSort {
 
 			$addTo = 0;
 			$result = $this->MySQL->query("SELECT allowdeny FROM ".$this->get_tablePrefix()."console_members WHERE console_id = '".$this->intTableKeyValue."' AND member_id IN ".$sqlMembers);
-			while($row = $result->fetch_assoc()) {
-				if($row['allowdeny'] == 0) {
+			while ($row = $result->fetch_assoc()) {
+				if ($row['allowdeny'] == 0) {
 					$addTo += -1;
 				}
 				else {
@@ -184,13 +184,13 @@ class ConsoleOption extends BasicSort {
 	*/
 	public function delete() {
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("DELETE FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 
 			$result = $this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."console_members WHERE console_id = '".$this->intTableKeyValue."'");
 			$result = $this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."rank_privileges WHERE console_id = '".$this->intTableKeyValue."'");
 
-			if(!$this->MySQL->error) {
+			if (!$this->MySQL->error) {
 				$returnVal = true;
 			}
 			else {

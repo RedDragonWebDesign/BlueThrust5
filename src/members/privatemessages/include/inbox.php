@@ -35,7 +35,7 @@ $multiMemPMObj = $pmObj->multiMemPMObj;
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 $memberInfo = $member->get_info_filtered();
 $arrPM = array();
@@ -54,14 +54,14 @@ $condition1 = (!$selectedFolder || ($selectedFolder && !$pmFolderObj->isMemberFo
 $arrStandardFolders = array(0, -1, -2);
 
 // Folder Checks
-if(!$isFolderSet) {
+if (!$isFolderSet) {
 	$_POST['folder'] = 0;
 	$pmFolderObj->setFolder($_POST['folder']);
 }
-elseif($isFolderSet && $condition1 && !in_array($_POST['folder'], $arrStandardFolders)) {
+elseif ($isFolderSet && $condition1 && !in_array($_POST['folder'], $arrStandardFolders)) {
 	exit();
 }
-elseif(in_array($_POST['folder'], $arrStandardFolders)) {
+elseif (in_array($_POST['folder'], $arrStandardFolders)) {
 	$pmFolderObj->setFolder($_POST['folder']);
 }
 
@@ -74,35 +74,35 @@ $arrPMMID = $arrFolderContents[1];
 
 
 echo "<table class='formTable' style='border-spacing: 0px; table-layout: fixed'>";
-foreach($arrPM as $key => $value) {
+foreach ($arrPM as $key => $value) {
 
 	$pmObj->select($key);
 	$pmInfo = $pmObj->get_info_filtered();
 
 	$useAltBG = " alternateBGColor";
 
-	if(isset($arrPMMID[$key]) && $multiMemPMObj->select($arrPMMID[$key]) && $multiMemPMObj->get_info("seenstatus") == 1) {
+	if (isset($arrPMMID[$key]) && $multiMemPMObj->select($arrPMMID[$key]) && $multiMemPMObj->get_info("seenstatus") == 1) {
 		$useAltBG = "";
 	}
-	elseif(!isset($arrPMMID[$key]) && $pmInfo['status'] == 1) {
+	elseif (!isset($arrPMMID[$key]) && $pmInfo['status'] == 1) {
 		$useAltBG = "";
 	}
 
 	$addToPMValue = "";
 	$addToPMURL = "";
-	if(isset($arrPMMID[$key])) {
+	if (isset($arrPMMID[$key])) {
 		$addToPMValue = "_".$arrPMMID[$key];
 		$addToPMURL = "&pmMID=".$arrPMMID[$key];
 	}
 
 	$member->select($pmInfo['sender_id']);
 
-	if($_POST['folder'] == "-1" && $pmInfo['receiver_id'] != 0) {
+	if ($_POST['folder'] == "-1" && $pmInfo['receiver_id'] != 0) {
 		$member->select($pmInfo['receiver_id']);
 		$dispSender = $member->getMemberLink();
 		$member->select($memberInfo['member_id']);
 	}
-	elseif($_POST['folder'] == "-1" && $pmInfo['receiver_id'] == 0) {
+	elseif ($_POST['folder'] == "-1" && $pmInfo['receiver_id'] == 0) {
 		$dispSender = $pmObj->getRecipients(true);
 	}
 	else {
@@ -121,7 +121,7 @@ foreach($arrPM as $key => $value) {
 
 }
 
-if(count($arrPM) == 0) {
+if (count($arrPM) == 0) {
 
 	echo "
 	<tr>

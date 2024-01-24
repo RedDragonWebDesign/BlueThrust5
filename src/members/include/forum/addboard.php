@@ -19,13 +19,13 @@ require_once("../classes/rankcategory.php");
 
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -40,7 +40,7 @@ $countErrors = 0;
 
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
-if($result->num_rows == 0) {
+if ($result->num_rows == 0) {
 
 	echo "
 	
@@ -67,25 +67,25 @@ $rankCatObj = new RankCategory($mysqli);
 $rankObj = new Rank($mysqli);
 $tempMemObj = new Member($mysqli);
 
-if( ! empty($_POST['submit']) ) {
+if ( ! empty($_POST['submit']) ) {
 
 	// Check Board Name
 
-	if(trim($_POST['boardname']) == "") {
+	if (trim($_POST['boardname']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Board name may not be blank.<br>";
 		$countErrors++;
 	}
 
 	// Check Category
 
-	if(!$categoryObj->select($_POST['forumcat'])) {
+	if (!$categoryObj->select($_POST['forumcat'])) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid forum category.<br>";
 		$countErrors++;
 	}
 
 	// Check Subforum
 
-	if(($_POST['subforum'] ?? '') == 1 && $boardObj->select($_POST['subforumboard'])) {
+	if (($_POST['subforum'] ?? '') == 1 && $boardObj->select($_POST['subforumboard'])) {
 		$setSubForum = $_POST['subforumboard'];
 	}
 	else {
@@ -99,7 +99,7 @@ if( ! empty($_POST['submit']) ) {
 	$boardObj->setCategoryKeyValue($categoryObj->get_info("forumcategory_id"));
 	$intNewOrderSpot = $boardObj->validateOrder($_POST['displayorder'], $_POST['beforeafter']);
 
-	if($intNewOrderSpot === false) {
+	if ($intNewOrderSpot === false) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
 		$countErrors++;
 	}
@@ -107,7 +107,7 @@ if( ! empty($_POST['submit']) ) {
 
 	// Forum Access
 
-	if($_POST['accesstype'] != 1) {
+	if ($_POST['accesstype'] != 1) {
 		$_POST['accesstype'] = 0;
 		$arrRanks = array();
 		$arrMembers = array();
@@ -115,21 +115,21 @@ if( ! empty($_POST['submit']) ) {
 	else {
 
 		$result = $mysqli->query("SELECT rank_id FROM ".$dbprefix."ranks WHERE rank_id != '1'");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 
 			$checkboxName = "rankaccess_".$row['rank_id'];
-			if(($_SESSION['btRankAccessCache'][$checkboxName] ?? '') == "1") {
+			if (($_SESSION['btRankAccessCache'][$checkboxName] ?? '') == "1") {
 				$arrRanks[$row['rank_id']] = 1;
 			}
-			elseif(($_SESSION['btRankAccessCache'][$checkboxName] ?? '') == "2") {
+			elseif (($_SESSION['btRankAccessCache'][$checkboxName] ?? '') == "2") {
 				$arrRanks[$row['rank_id']] = 0;
 			}
 
 		}
 
-		foreach($_SESSION['btMemberAccessCache'] as $memID => $accessRule) {
+		foreach ($_SESSION['btMemberAccessCache'] as $memID => $accessRule) {
 
-			if($accessRule != "" && $tempMemObj->select($memID)) {
+			if ($accessRule != "" && $tempMemObj->select($memID)) {
 				$arrMembers[$memID] = $accessRule;
 			}
 
@@ -138,12 +138,12 @@ if( ! empty($_POST['submit']) ) {
 
 	}
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 		$arrColumns = array("forumcategory_id", "name", "description", "sortnum", "accesstype", "subforum_id");
 		$arrValues = array($_POST['forumcat'], $_POST['boardname'], $_POST['boarddesc'], $intNewOrderSpot, $_POST['accesstype'], $setSubForum);
 
-		if($boardObj->addNew($arrColumns, $arrValues) && $boardObj->secureBoard($arrRanks, ($arrMembers ?? []))) {
+		if ($boardObj->addNew($arrColumns, $arrValues) && $boardObj->secureBoard($arrRanks, ($arrMembers ?? []))) {
 			$boardInfo = $boardObj->get_info_filtered();
 			echo "
 				<div style='display: none' id='successBox'>
@@ -167,7 +167,7 @@ if( ! empty($_POST['submit']) ) {
 	}
 
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
@@ -177,9 +177,9 @@ if( ! empty($_POST['submit']) ) {
 }
 
 
-if( empty($_POST['submit']) ) {
+if ( empty($_POST['submit']) ) {
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		$dispError = "
 		<div class='errorDiv'>
 		<strong>Unable to add new board because the following errors occurred:</strong><br><br>
@@ -198,10 +198,10 @@ if( empty($_POST['submit']) ) {
 	$result1 = $mysqli->query("SELECT rankcategory_id FROM ".$dbprefix."ranks ORDER BY ordernum DESC");
 	$rankCounter = $result1->num_rows;
 
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 		$selectCat = "";
-		if(isset($_GET['catID']) && $_GET['catID'] == $row['forumcategory_id']) {
+		if (isset($_GET['catID']) && $_GET['catID'] == $row['forumcategory_id']) {
 			$selectCat = " selected";
 		}
 
@@ -267,14 +267,14 @@ if( empty($_POST['submit']) ) {
 
 	$rankOptionsHeight = $rankCounter*20;
 
-	if($rankOptionsHeight > 300) {
+	if ($rankOptionsHeight > 300) {
 		$rankOptionsHeight = 300;
 	}
 
 
 	$memberOptions = "<option value='select'>[SELECT]</option>";
 	$result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.ordernum FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id != '1' AND ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id ORDER BY ".$dbprefix."ranks.ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 		$memberRank->select($row['rank_id']);
 		$dispRankName = $memberRank->get_info_filtered("name");
@@ -435,7 +435,7 @@ if( empty($_POST['submit']) ) {
 				
 				";
 
-			if($dispError != "") {
+			if ($dispError != "") {
 				echo "
 					$('#loadingSpiral').show();
 					$('#boardMemberAccess').hide();

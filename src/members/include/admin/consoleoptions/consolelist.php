@@ -29,21 +29,21 @@ $cID = $consoleObj->findConsoleIDByName("Manage Console Options");
 $consoleObj->select($cID);
 
 $counter = 0;
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $consoleCatObj->select($_POST['catID'])) {
+	if ($member->hasAccess($consoleObj) && $consoleCatObj->select($_POST['catID'])) {
 
 		$addSQL = "";
 		$selectedConsole = "";
-		if($_POST['cnID'] != "" && $consoleObj->SELECT($_POST['cnID'])) {
+		if ($_POST['cnID'] != "" && $consoleObj->SELECT($_POST['cnID'])) {
 			$addSQL = " AND console_id != '".$_POST['cnID']."'";
 
 			$consoleInfo = $consoleObj->get_info_filtered();
 
-			if($consoleInfo['consolecategory_id'] == $_POST['catID']) {
+			if ($consoleInfo['consolecategory_id'] == $_POST['catID']) {
 
 				$arrBeforeAfter = $consoleObj->findBeforeAfter();
 				$selectedConsole = $arrBeforeAfter[0];
@@ -60,9 +60,9 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		$sqlConsoles = "('".implode("','", $arrConsoles)."')";
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."console WHERE console_id IN ".$sqlConsoles.$addSQL." ORDER BY sortnum");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$strSelect = "";
-			if($row['console_id'] == $selectedConsole) {
+			if ($row['console_id'] == $selectedConsole) {
 				$strSelect = "selected";
 			}
 			echo "<option value='".$row['console_id']."' ".$strSelect.">".filterText($row['pagetitle'])."</option>";
@@ -75,6 +75,6 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 }
 
-if($counter == 0) {
+if ($counter == 0) {
 	echo "<option value='first'>(no other options in category)</option>";
 }

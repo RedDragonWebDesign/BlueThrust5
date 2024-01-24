@@ -49,35 +49,35 @@ class ShoutBox {
 
 	public function dispShoutbox($setWidth=0, $setHeight=0, $blnPercentWidth=false, $txtBoxWidth=0, $blnPercentHeight=false) {
 		global $MAIN_ROOT, $THEME;
-		if($setWidth > 0) {
+		if ($setWidth > 0) {
 			$this->intDispWidth = $setWidth;
 		}
 
-		if($setHeight > 0) {
+		if ($setHeight > 0) {
 			$this->intDispHeight = $setHeight;
 		}
 
 		$dispWidthPX = "px";
-		if($blnPercentWidth) {
+		if ($blnPercentWidth) {
 			$dispWidthPX = "%";
 		}
 
 		$dispHeightPX = "px";
-		if($blnPercentHeight) {
+		if ($blnPercentHeight) {
 			$dispHeightPX = "%";
 		}
 
 		$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE newstype = '3'".$this->strSQLSort." ORDER BY dateposted");
 		$shoutBoxInfo = '';
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 
-			if($this->memberObj->select($row['member_id'])) {
+			if ($this->memberObj->select($row['member_id'])) {
 				$memberLink = $this->memberObj->getMemberLink();
 				$dispPost = nl2br(parseBBCode(wordwrap(filterText($row['newspost']), $this->intWordWrap)));
 				$dispTime = "<p align='center' style='font-size: 9px'>".getPreciseTime($row['dateposted'])."</p>";
 
 				$dispManagePost = "";
-				if($this->strEditLink != "" && $this->strDeleteLink != "") {
+				if ($this->strEditLink != "" && $this->strDeleteLink != "") {
 					$dispManagePost = "<p align='center'><span class='loadingSpiral' id='".$this->strDivID."_loading_".$row[$this->strTableKey]."'><img src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral2.gif' width='30' height='30'></span><span class='tinyFont' id='".$this->strDivID."_manage_".$row[$this->strTableKey]."'><b><a href='".$this->strEditLink.$row[$this->strTableKey]."'>EDIT</a> - <a href='javascript:void(0)' onclick=\"deleteShoutbox('".$row[$this->strTableKey]."', '".$this->strDeleteLink."', '".$this->strDivID."')\">DELETE</a></b></span></p>";
 				}
 
@@ -97,21 +97,21 @@ class ShoutBox {
 		$addToReturn2 = "";
 
 		$setMainShoutbox = "";
-		if($this->blnMainShoutbox) {
+		if ($this->blnMainShoutbox) {
 			$setMainShoutbox = " data-shoutbox='main' ";
 		}
 
-		if(!$this->blnUpdateShoutbox) {
+		if (!$this->blnUpdateShoutbox) {
 			$addToReturn = "<div class='shoutBox' id='".$this->strDivID."'".$setMainShoutbox." style='width: ".$this->intDispWidth.$dispWidthPX."; height: ".$this->intDispHeight.$dispHeightPX."'>";
 			$addToReturn2 = "</div>";
 		}
 
 		$returnVal = $addToReturn.$shoutBoxInfo.$addToReturn2;
 
-		if($this->strPostLink != "") {
+		if ($this->strPostLink != "") {
 
 			$setTxtBoxWidth = $this->intDispWidth-10;
-			if($txtBoxWidth > 0) {
+			if ($txtBoxWidth > 0) {
 				$setTxtBoxWidth = $txtBoxWidth;
 			}
 
@@ -136,7 +136,7 @@ class ShoutBox {
 		$manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
 		$consoleObj->select($manageNewsCID);
 
-		if(LOGGED_IN && $this->memberObj->hasAccess($consoleObj)) {
+		if (LOGGED_IN && $this->memberObj->hasAccess($consoleObj)) {
 			$this->strEditLink = MAIN_ROOT."members/console.php?cID=".$manageNewsCID."&newsID=";
 			$this->strDeleteLink = MAIN_ROOT."members/include/news/include/deleteshoutpost.php";
 		}
@@ -144,7 +144,7 @@ class ShoutBox {
 		$postInShoutboxCID = $consoleObj->findConsoleIDByName("Post in Shoutbox");
 		$consoleObj->select($postInShoutboxCID);
 
-		if(LOGGED_IN && $this->memberObj->hasAccess($consoleObj)) {
+		if (LOGGED_IN && $this->memberObj->hasAccess($consoleObj)) {
 			$this->strPostLink = MAIN_ROOT."members/include/news/include/postshoutbox.php";
 		}
 

@@ -12,7 +12,7 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
 
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
@@ -30,7 +30,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !iss
 	$member->select($_SESSION['btUsername']);
 
 	// Check Login
-	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
 	}
 	else {
@@ -41,7 +41,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !iss
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($consoleObj->findConsoleIDByName("Diplomacy: Manage Clans"));
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -54,9 +54,9 @@ echo "
 $counter = 0;
 $x = 1;
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy ORDER BY clanname");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 
-	if($counter == 1) {
+	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
 	}

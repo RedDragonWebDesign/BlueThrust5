@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -28,7 +28,7 @@ require_once($prevFolder."classes/profilecategory.php");
 $profileCatObj = new ProfileCategory($mysqli);
 
 
-if($_GET['action'] == "") {
+if ($_GET['action'] == "") {
 
 	echo "
 	
@@ -117,6 +117,6 @@ if($_GET['action'] == "") {
 
 
 }
-elseif($_GET['catID'] != "" && $_GET['action'] == "edit") {
+elseif ($_GET['catID'] != "" && $_GET['action'] == "edit") {
 	require_once("manageprofilecat/edit.php");
 }

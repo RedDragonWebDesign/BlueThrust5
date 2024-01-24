@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -31,7 +31,7 @@ $cID = $_GET['cID'];
 $medalObj = new Medal($mysqli);
 
 
-if(!$medalObj->select($_GET['mID'])) {
+if (!$medalObj->select($_GET['mID'])) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");
 }
 
@@ -54,14 +54,14 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 	$medalValidateObj = new Medal($mysqli);
 	$arrMedals = $medalObj->get_entries(array(), "ordernum DESC");
 	$medalOptions = array();
-	foreach($arrMedals as $eachMedalInfo) {
+	foreach ($arrMedals as $eachMedalInfo) {
 		$medalName = filterText($eachMedalInfo['name']);
 		$medalOptions[$eachMedalInfo['medal_id']] = $medalName;
 
 	}
 
 
-	if(count($medalOptions) == 0) {
+	if (count($medalOptions) == 0) {
 		$medalOptions['first'] = "(first medal)";
 	}
 

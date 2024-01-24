@@ -47,7 +47,7 @@ class Basic {
 		global $sqlCache;
 
 		$returnVal = false;
-		if(!$numericIDOnly) {
+		if (!$numericIDOnly) {
 			$intIDNum = $this->MySQL->real_escape_string($intIDNum);
 			$checkID = true;
 		}
@@ -55,7 +55,7 @@ class Basic {
 			$checkID = is_numeric($intIDNum);
 		}
 
-		if($checkID) {
+		if ($checkID) {
 			if ( isset($sqlCache[$this->strTableName]) ) {
 				$cache2 = $sqlCache[$this->strTableName];
 				if ( isset($cache2[$intIDNum]) ) {
@@ -65,7 +65,7 @@ class Basic {
 				}
 			} else {
 				$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '$intIDNum'");
-				if($result->num_rows > 0) {
+				if ($result->num_rows > 0) {
 					$this->arrObjInfo = $result->fetch_assoc();
 					$returnVal = true;
 					$this->intTableKeyValue = $intIDNum;
@@ -87,10 +87,10 @@ class Basic {
 	public function selectByMulti($arrWhats) {
 
 		$returnVal = false;
-		if(is_array($arrWhats)) {
+		if (is_array($arrWhats)) {
 
 			$arrSQL = array();
-			foreach($arrWhats as $columnName => $value) {
+			foreach ($arrWhats as $columnName => $value) {
 				$arrSQL[] = $columnName." = ?";
 			}
 
@@ -101,7 +101,7 @@ class Basic {
 			$stmt = $this->MySQL->prepare($query);
 			$returnID = "";
 
-			if($stmt) {
+			if ($stmt) {
 
 				$this->MySQL->bindParams($stmt, $arrWhats);
 				$stmt->execute();
@@ -134,15 +134,15 @@ class Basic {
 		$arrSelect = array();
 		$selectBackID = "";
 
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$selectBackID = $this->intTableKeyValue;
 		}
 
 		$setSQL = "";
-		if(count($filterArgs) > 0) {
+		if (count($filterArgs) > 0) {
 
 			$arrSQL = array();
-			foreach($filterArgs as $columnName => $value) {
+			foreach ($filterArgs as $columnName => $value) {
 
 			$setComparator = isset($filterComparators[$columnName]) ? $filterComparators[$columnName] : "=";
 
@@ -152,12 +152,12 @@ class Basic {
 
 			$setSQL = implode(" AND ", $arrSQL);
 
-			if($setSQL != "") {
+			if ($setSQL != "") {
 				$setSQL = " WHERE ".$setSQL;
 			}
 		}
 
-		if($orderBy != "") {
+		if ($orderBy != "") {
 			$orderBy = "ORDER BY ".$orderBy;
 		}
 
@@ -165,16 +165,16 @@ class Basic {
 		$stmt = $this->MySQL->prepare($query);
 		$returnID = "";
 
-		if($stmt) {
+		if ($stmt) {
 
-			if(count($filterArgs) > 0) {
+			if (count($filterArgs) > 0) {
 				$this->MySQL->bindParams($stmt, $filterArgs);
 			}
 
 			$stmt->execute();
 			$stmt->bind_result($result);
 
-			while($stmt->fetch()) {
+			while ($stmt->fetch()) {
 
 				$arrSelect[] = $result;
 
@@ -184,12 +184,12 @@ class Basic {
 
 		}
 
-		foreach($arrSelect as $selectKey) {
+		foreach ($arrSelect as $selectKey) {
 			$this->select($selectKey);
 			$returnArr[] = $blnNotFiltered ? $this->get_info_filtered() : $this->get_info();
 		}
 
-		if($selectBackID != "") {
+		if ($selectBackID != "") {
 			$this->select($selectBackID);
 		}
 
@@ -216,7 +216,7 @@ class Basic {
 	public function addNew($arrColumns, $arrValues) {
 		$returnVal = false;
 
-		if(is_array($arrColumns)) {
+		if (is_array($arrColumns)) {
 			$sqlColumns = implode(",", $arrColumns);
 			$sqlValues = rtrim(str_repeat("?, ", count($arrColumns)),", ");
 
@@ -224,8 +224,8 @@ class Basic {
 
 		$stmt = $this->MySQL->prepare("INSERT INTO ".$this->strTableName." (".$sqlColumns.") VALUES (".$sqlValues.")");
 
-		if(is_array($arrValues)) {
-			foreach($arrValues as $key=>$value) {
+		if (is_array($arrValues)) {
+			foreach ($arrValues as $key=>$value) {
 				$temp = str_replace("&gt;", ">", $value);
 				$value = str_replace("&lt;", "<", $temp);
 				$temp = str_replace('&quot;', '"', $value);
@@ -241,7 +241,7 @@ class Basic {
 
 		}
 
-		if($stmt->execute()) {
+		if ($stmt->execute()) {
 			$this->select($stmt->insert_id);
 			$returnVal = true;
 			$this->updateTableTime();
@@ -272,13 +272,13 @@ class Basic {
 	public function update($arrTableColumns, $arrColumnValues) {
 
 		$returnVal = false;
-		if(is_array($arrTableColumns) AND is_array($arrColumnValues) AND $this->intTableKeyValue != null) {
+		if (is_array($arrTableColumns) AND is_array($arrColumnValues) AND $this->intTableKeyValue != null) {
 
-			if(count($arrTableColumns) == count($arrColumnValues)) {
+			if (count($arrTableColumns) == count($arrColumnValues)) {
 
 				$combinedArray = array_combine($arrTableColumns, $arrColumnValues);
 
-				foreach($combinedArray as $key=>$value) {
+				foreach ($combinedArray as $key=>$value) {
 					$temp = str_replace("&gt;", ">", $value);
 					$value = str_replace("&lt;", "<", $temp);
 					$temp = str_replace('&quot;', '"', $value);
@@ -297,7 +297,7 @@ class Basic {
 
 				$stmt = $this->MySQL->bindParams($stmt, $arrValues);
 
-				if($stmt->execute()) {
+				if ($stmt->execute()) {
 					$this->select($this->intTableKeyValue);
 					$returnVal = true;
 
@@ -324,10 +324,10 @@ class Basic {
 	*/
 	public function delete() {
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("DELETE FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 
-			if(!$this->MySQL->error) {
+			if (!$this->MySQL->error) {
 				$returnVal = true;
 			}
 			else {
@@ -348,7 +348,7 @@ class Basic {
 	/** Use the get_info method to get the values for the table row with the selected id number. */
 	public function get_info($returnSingleValue = "") {
 		$returnVal = "";
-		if($returnSingleValue == "") {
+		if ($returnSingleValue == "") {
 			$returnVal = $this->arrObjInfo;
 		}
 		else {
@@ -365,7 +365,7 @@ class Basic {
 		}
 
 		$arrFilteredInfo = array();
-		foreach($this->arrObjInfo as $key => $value) {
+		foreach ($this->arrObjInfo as $key => $value) {
 			$temp = str_replace("<", "&lt;", $value);
 			$value = str_replace(">", "&gt;", $temp);
 			$temp = str_replace("'", "&#39;", $value);
@@ -378,7 +378,7 @@ class Basic {
 		}
 
 		$returnVal = "";
-		if($returnSingleValue == "") {
+		if ($returnSingleValue == "") {
 			$returnVal = $arrFilteredInfo;
 		}
 		else {
@@ -420,7 +420,7 @@ class Basic {
 	public function updateTableTime() {
 
 		$result = $this->MySQL->query("SELECT tablename FROM ".$this->MySQL->get_tablePrefix()."tableupdates WHERE tablename = '".$this->strTableName."'");
-		if($result->num_rows > 0) {
+		if ($result->num_rows > 0) {
 			$this->MySQL->query("UPDATE ".$this->MySQL->get_tablePrefix()."tableupdates SET updatetime = '".time()."' WHERE tablename = '".$this->strTableName."'");
 		}
 		else {

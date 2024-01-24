@@ -37,35 +37,35 @@ $appComponentObj = $customFormObj->objComponent;
 $componentIndex = $_SESSION['btFormComponentCount'];
 
 
-if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
 	$countErrors == 0;
 	$dispError = "";
 
-	if($_POST['addComponent']) {
+	if ($_POST['addComponent']) {
 
 		$arrTypes = array("input", "largeinput", "select", "multiselect", "separator");
 
 		// Check Name
 
-		if(trim($_POST['componentName']) == "") {
+		if (trim($_POST['componentName']) == "") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Component name may not be blank.<br>";
 		}
 
 		// Check Component Type
 
-		if(!in_array($_POST['componentType'], $arrTypes)) {
+		if (!in_array($_POST['componentType'], $arrTypes)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid component type.<br>";
 		}
 
 
 		$intRequired = 1;
-		if($_POST['componentRequired'] != 1) {
+		if ($_POST['componentRequired'] != 1) {
 			$intRequired = 0;
 		}
 
-		if($countErrors == 0) {
+		if ($countErrors == 0) {
 
 			$componentIndex = $_SESSION['btFormComponentCount'];
 
@@ -100,7 +100,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 
 		}
 
-		if($countErrors > 0) {
+		if ($countErrors > 0) {
 			$_POST = filterArray($_POST);
 			$_POST['addComponent'] = false;
 
@@ -121,10 +121,10 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 
 
 
-	if(!$_POST['addComponent']) {
+	if (!$_POST['addComponent']) {
 		$arrSelectedType = array();
 		$checkRequired = "";
-		if($dispError != "") {
+		if ($dispError != "") {
 			echo "
 			<div class='errorDiv' style='width: 90%'>
 			<strong>Unable to add new form component because the following errors occurred:</strong><br><br>
@@ -132,7 +132,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 			</div>
 			";
 
-			switch($_POST['componentType']) {
+			switch ($_POST['componentType']) {
 				case "largeinput":
 					$arrSelectedType['largeinput'] = " selected";
 					break;
@@ -148,7 +148,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 
 			}
 
-			if($_POST['componentRequired'] == 1) {
+			if ($_POST['componentRequired'] == 1) {
 				$checkRequired = " checked";
 			}
 			else {

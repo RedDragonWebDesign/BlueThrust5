@@ -34,12 +34,12 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 
 
 $blnSuccess = false;
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if(($checkAccess1 || $checkAccess2) && is_numeric($_POST['kID']) && isset($_SESSION['btAccessRules'][$_POST['kID']])) {
+	if (($checkAccess1 || $checkAccess2) && is_numeric($_POST['kID']) && isset($_SESSION['btAccessRules'][$_POST['kID']])) {
 
 
 		unset($_SESSION['btAccessRules'][$_POST['kID']]);

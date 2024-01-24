@@ -17,7 +17,7 @@ require_once("../../../classes/member.php");
 require_once("../../../classes/rank.php");
 require_once("../../../classes/tournament.php");
 
-if(!isset($consoleObj)) {
+if (!isset($consoleObj)) {
 $consoleObj = new ConsoleOption($mysqli);
 
 $cID = $consoleObj->findConsoleIDByName("Manage Tournaments");
@@ -30,29 +30,29 @@ $tournamentObj = new Tournament($mysqli);
 }
 
 
-if(!isset($tID)) {
+if (!isset($tID)) {
 	$tID = $_POST['tID'];
 }
 
 
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID) && $member->hasAccess($consoleObj)) {
 
 	$memberInfo = $member->get_info();
 	$tmemberID = $tournamentObj->get_info("member_id");
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 
 
-	if($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
+	if ($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
 
 
-		if(!isset($_POST['roundSelected']) || !is_numeric($_POST['roundSelected'])) {
+		if (!isset($_POST['roundSelected']) || !is_numeric($_POST['roundSelected'])) {
 			$_POST['roundSelected'] = 1;
 		}
 		$arrMatches = $tournamentObj->getMatches($_POST['roundSelected']);
 
 		$matchCount = 0;
-		foreach($arrMatches as $matchID) {
+		foreach ($arrMatches as $matchID) {
 			$matchCount++;
 			$tournamentObj->objMatch->select($matchID);
 			$matchInfo = $tournamentObj->objMatch->get_info();
@@ -62,11 +62,11 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 
 			$addStyle[1] = "";
 			$addStyle[2] = "";
-			if($matchInfo['outcome'] == 1) {
+			if ($matchInfo['outcome'] == 1) {
 				$addStyle[1] = " class='successFont' style='font-weight: bold'";
 				$addStyle[2] = " class='failedFont'";
 			}
-			elseif($matchInfo['outcome'] == 2) {
+			elseif ($matchInfo['outcome'] == 2) {
 				$addStyle[2] = " class='successFont' style='font-weight: bold'";
 				$addStyle[1] = " class='failedFont'";
 			}
@@ -76,26 +76,26 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 			";
 
 
-			if($tournamentInfo['playersperteam'] == 1) {
+			if ($tournamentInfo['playersperteam'] == 1) {
 
 
-				for($i=1; $i<=2; $i++) {
+				for ($i=1; $i<=2; $i++) {
 
 					$teamColumn = "team".$i."_id";
 					$dispName = "Empty Spot";
 					$dispSeed = "";
-					if($tournamentObj->objTeam->select($matchInfo[$teamColumn])) {
+					if ($tournamentObj->objTeam->select($matchInfo[$teamColumn])) {
 						$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 						$dispSeed = "#".$teamInfo['seed'];
 						$arrPlayers = $tournamentObj->getTeamPlayers($matchInfo[$teamColumn], true);
 
-						if($tournamentObj->objPlayer->select($arrPlayers[0])) {
+						if ($tournamentObj->objPlayer->select($arrPlayers[0])) {
 
 							$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
 
 							$dispName = "<a href='javascript:void(0)' onclick='setPlayerSeed(".$teamInfo['tournamentteam_id'].")'>";
 
-							if($member->select($playerInfo['member_id'])) {
+							if ($member->select($playerInfo['member_id'])) {
 
 								$dispName .= $member->get_info_filtered("username");
 
@@ -138,22 +138,22 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 			else {
 				// Multi-player Team Tournament
 
-				for($i=1; $i<=2; $i++) {
+				for ($i=1; $i<=2; $i++) {
 
 					$teamColumn = "team".$i."_id";
 					$dispName = "Empty Spot";
 					$dispSeed = "";
-					if($tournamentObj->objTeam->select($matchInfo[$teamColumn])) {
+					if ($tournamentObj->objTeam->select($matchInfo[$teamColumn])) {
 						$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 						$dispSeed = "#".$teamInfo['seed'];
 
 						$dispPlayerList = "";
 						$arrTeamPlayers = $tournamentObj->getTeamPlayers($teamInfo['tournamentteam_id'], true);
-						foreach($arrTeamPlayers as $playerID) {
+						foreach ($arrTeamPlayers as $playerID) {
 							$tournamentObj->objPlayer->select($playerID);
 
 							$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
-							if(is_numeric($playerInfo['member_id']) && $member->select($playerInfo['member_id'])) {
+							if (is_numeric($playerInfo['member_id']) && $member->select($playerInfo['member_id'])) {
 
 								$dispPlayerList .= "<b>&middot;</b> ".$member->getMemberLink()."<br>";
 
@@ -167,7 +167,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 
 						}
 
-						if($dispPlayerList == "") {
+						if ($dispPlayerList == "") {
 							$dispPlayerList = "No Players on Team";
 						}
 
@@ -205,7 +205,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 
 			echo "</div>";
 
-			if(($matchCount%2) == 0) {
+			if (($matchCount%2) == 0) {
 				echo "
 					<div style='clear:both'></div>
 				";

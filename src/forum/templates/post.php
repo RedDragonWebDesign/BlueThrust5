@@ -2,7 +2,7 @@
 
 	$countManagablePosts = 0;
 
-	if(!defined("MAIN_ROOT")) {
+	if (!defined("MAIN_ROOT")) {
 		exit();
 	}
 
@@ -19,7 +19,7 @@
 
 
 	$blnShowAttachments = false;
-	if((LOGGED_IN == true && $downloadCatObj->get_info("accesstype") == 1) || $downloadCatObj->get_info("accesstype") == 0) {
+	if ((LOGGED_IN == true && $downloadCatObj->get_info("accesstype") == 1) || $downloadCatObj->get_info("accesstype") == 0) {
 		$blnShowAttachments = true;
 	}
 
@@ -39,7 +39,7 @@
 	$postMessage = str_replace("</script>", "&lt;/script&gt;", $postMessage);
 
 	$dispPostedOn = "";
-	if((time()-$postInfo['dateposted']) > (60*60*24)) {
+	if ((time()-$postInfo['dateposted']) > (60*60*24)) {
 		$dispPostedOn = " on";
 	}
 
@@ -48,7 +48,7 @@
 	$posterRankInfo = $posterRankObj->get_info_filtered();
 
 	$dispLastEdit = "";
-	if($postInfo['lastedit_date'] != 0) {
+	if ($postInfo['lastedit_date'] != 0) {
 		$posterMemberObj->select($postInfo['lastedit_member_id']);
 		$dispLastEdit = "<br><br><span class='tinyFont' style='font-style: italic'>Last edited by ".$posterMemberObj->getMemberLink()." - ".getPreciseTime($postInfo['lastedit_date'])."</span>";
 		$posterMemberObj->select($postInfo['member_id']);
@@ -60,7 +60,7 @@
 	$dispRankDimensions = ($dispRankWidth != "" || $dispRankHeight != "") ? " style='".$dispRankWidth.$dispRankHeight."'" : "";
 	$dispRankIMG = ($websiteInfo['forum_showrank'] == 1 && $posterRankInfo['rank_id'] != 1) ? "<div id='forumShowRank' style='text-align: center'><img src='".$posterRankInfo['imageurl']."'".$dispRankDimensions."></div>" : "";
 	$dispMedals = "";
-	if($websiteInfo['forum_showmedal'] == 1) {
+	if ($websiteInfo['forum_showmedal'] == 1) {
 
 		$medalObj = new Medal($mysqli);
 		$medalCount = ($websiteInfo['forum_medalcount'] == 0) ? 5 : $websiteInfo['forum_medalcount'];
@@ -72,7 +72,7 @@
 		$dispMedalDimensions = ($dispMedalWidth != "" || $dispMedalHeight != "") ?  " style='".$dispMedalWidth.$dispMedalHeight."'" : "";
 
 		$i = 1;
-		foreach($arrMedals as $medalID) {
+		foreach ($arrMedals as $medalID) {
 			$medalObj->select($medalID);
 			$medalInfo = $medalObj->get_info_filtered();
 			$resultMedal = $mysqli->query("SELECT * FROM ".$dbprefix."medals_members WHERE member_id = '".$postMemberInfo['member_id']."' AND medal_id = '".$medalInfo['medal_id']."'");
@@ -81,7 +81,7 @@
 			$dispDateAwarded = "<b>Date Awarded:</b><br>".getPreciseTime($rowMedal['dateawarded']);
 
 			$dispReason = "";
-			if($rowMedal['reason'] != "") {
+			if ($rowMedal['reason'] != "") {
 				$dispReason = "<br><br><b>Awarded for:</b><br>".filterText($rowMedal['reason']);
 			}
 
@@ -91,7 +91,8 @@
 			$dispMedals .= "<div style='text-align: center; margin: 5px 0px'><img src='".$medalInfo['imageurl']."'".$dispMedalDimensions." onmouseover=\"showToolTip('".$dispMedalMessage."')\" onmouseout='hideToolTip()'></div>";
 
 			$i++;
-			if($i > $medalCount) { break; }
+			if ($i > $medalCount) {
+break; }
 		}
 
 
@@ -130,22 +131,22 @@
 
 		$arrAttachments = $this->getPostAttachments();
 
-		if(count($arrAttachments) > 0 && $blnShowAttachments) {
+		if (count($arrAttachments) > 0 && $blnShowAttachments) {
 			echo "
 				<div class='forumAttachmentsContainer'>
 					<b>Attachments:</b><br>
 					";
 
-				foreach($arrAttachments as $downloadID) {
+				foreach ($arrAttachments as $downloadID) {
 					$attachmentObj->select($downloadID);
 					$attachmentInfo = $attachmentObj->get_info_filtered();
 					$addS = ($attachmentInfo['downloadcount'] != 1) ? "s" : "";
 					$dispFileSize = $attachmentInfo['filesize']/1024;
 
-					if($dispFileSize < 1) {
+					if ($dispFileSize < 1) {
 						$dispFileSize = $attachmentInfo['filesize']."B";
 					}
-					elseif(($dispFileSize/1024) < 1) {
+					elseif (($dispFileSize/1024) < 1) {
 						$dispFileSize = round($dispFileSize, 2)."KB";
 					}
 					else {
@@ -162,14 +163,14 @@
 		}
 
 
-		if($postMemberInfo['forumsignature'] != "" && $websiteInfo['forum_hidesignatures'] == 0) {
+		if ($postMemberInfo['forumsignature'] != "" && $websiteInfo['forum_hidesignatures'] == 0) {
 			echo "
 				<div class='forumSignatureContainer'>".parseBBCode($posterMemberObj->get_info("forumsignature"))."</div>
 			";
 		}
 
 		echo "<div class='forumManageLinks'>";
-		if($this->blnManageable || $postMemberInfo['member_id'] == $memberInfo['member_id']) {
+		if ($this->blnManageable || $postMemberInfo['member_id'] == $memberInfo['member_id']) {
 
 			echo "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&pID=".$postInfo['forumpost_id']."'>EDIT POST</a> &laquo;&nbsp&nbsp;&nbsp;";
 			echo "&raquo; <a href='javascript:void(0)' onclick=\"deletePost('".$postInfo['forumpost_id']."')\">DELETE POST</a> &laquo;&nbsp&nbsp;&nbsp;";
@@ -177,9 +178,9 @@
 
 		}
 
-		if(LOGGED_IN && ($topicInfo['lockstatus'] ?? '') == 0) {
+		if (LOGGED_IN && ($topicInfo['lockstatus'] ?? '') == 0) {
 
-			if($showReplyLink) {
+			if ($showReplyLink) {
 				echo "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$topicInfo['forumboard_id']."&tID=".$topicInfo['forumtopic_id']."'>POST REPLY</a> &laquo;&nbsp&nbsp;&nbsp;";
 			}
 

@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -28,7 +28,7 @@ require_once($prevFolder."classes/rankcategory.php");
 $cID = $_GET['cID'];
 
 
-if(isset($_POST['submit']) && $_POST['submit']) {
+if (isset($_POST['submit']) && $_POST['submit']) {
 
 	$countErrors = 0;
 	$dispError = "";
@@ -36,14 +36,14 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 
 	// Check Category Name
 
-	if(trim($_POST['catname']) == "") {
+	if (trim($_POST['catname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a Category Name.<br>";
 	}
 
 	// Check Before/After
 
-	if($_POST['beforeafter'] != "before" AND $_POST['beforeafter'] != "after") {
+	if ($_POST['beforeafter'] != "before" AND $_POST['beforeafter'] != "after") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (before/after).<br>";
 	}
@@ -51,7 +51,7 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 
 	// Check image width
 
-	if($_FILES['catimagefile']['name'] == "" AND trim($_POST['catimageurl']) != "" AND $_POST['useimage'] == "1" AND (trim($_POST['catimagewidth']) == "" OR $_POST['catimagewidth'] <= 0)) {
+	if ($_FILES['catimagefile']['name'] == "" AND trim($_POST['catimageurl']) != "" AND $_POST['useimage'] == "1" AND (trim($_POST['catimagewidth']) == "" OR $_POST['catimagewidth'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a valid image width when using an external image.<br>";
 	}
@@ -59,7 +59,7 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 
 	// Check image height
 
-	if($_FILES['catimagefile']['name'] == "" AND trim($_POST['catimageurl']) != "" AND $_POST['useimage'] == "1" AND (trim($_POST['catimageheight']) == "" OR $_POST['catimageheight'] <= 0)) {
+	if ($_FILES['catimagefile']['name'] == "" AND trim($_POST['catimageurl']) != "" AND $_POST['useimage'] == "1" AND (trim($_POST['catimageheight']) == "" OR $_POST['catimageheight'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a valid image height when using an external image.<br>";
 	}
@@ -69,15 +69,15 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 
 	$rankCatObj = new RankCategory($mysqli);
 
-	if($_POST['catorder'] != "first") {
-		if(!$rankCatObj->select($_POST['catorder'])) {
+	if ($_POST['catorder'] != "first") {
+		if (!$rankCatObj->select($_POST['catorder'])) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (category).<br>";
 		}
 		else {
 
 			$intNewCatOrderNum = $rankCatObj->makeRoom($_POST['beforeafter']);
-			if($intNewCatOrderNum == "false") {
+			if ($intNewCatOrderNum == "false") {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (category).<br>";
 			}
@@ -86,7 +86,7 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 	}
 	else {
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."rankcategory ORDER BY ordernum");
-		if($result->num_rows > 0) {
+		if ($result->num_rows > 0) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (category).<br>";
 		}
@@ -98,18 +98,18 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 
 	$strCatImageURL = "";
 	// Check Image
-	if(isset($_POST['useimage']) && $_POST['useimage'] == 1) {
+	if (isset($_POST['useimage']) && $_POST['useimage'] == 1) {
 
 		// Use Image Selected, check for no errors
 
-		if($countErrors == 0) {
+		if ($countErrors == 0) {
 
-			if($_FILES['catimagefile']['name'] != "") {
+			if ($_FILES['catimagefile']['name'] != "") {
 				// Image File Selected.... Upload it
 
 				$uploadFile = new BTUpload($_FILES['catimagefile'], "rankcat_", "../images/ranks/", array(".jpg",".png",".gif",".bmp"));
 
-				if(!$uploadFile->uploadFile()) {
+				if (!$uploadFile->uploadFile()) {
 					$countErrors++;
 					$dispError .= "<b>&middot;</b> Unable to upload category image file.  Please make sure the file extension is either .jpg, .png, .gif or .bmp<br>";
 				}
@@ -127,13 +127,13 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 
 		}
 
-		if($strCatImageURL == "") {
+		if ($strCatImageURL == "") {
 			$_POST['useimage'] = 0;
 		}
 
 	}
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		// No errors... Add to DB
 
 
@@ -141,7 +141,7 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 		$arrValues = array($_POST['catname'], $strCatImageURL, $intNewCatOrderNum, $_POST['hidecat'], $_POST['useimage'], $_POST['catdesc'], $_POST['catimagewidth'], $_POST['catimageheight'], $_POST['rankcolor']);
 
 		$newCat = new RankCategory($mysqli);
-		if($newCat->addNew($arrColumns, $arrValues)) {
+		if ($newCat->addNew($arrColumns, $arrValues)) {
 
 
 			// Added New Category... Now set the ranks in this category
@@ -149,11 +149,11 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 			$newCatInfo = $newCat->get_info();
 			$rankObj = new Rank($mysqli);
 			$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1'");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$postVar = "rankid_".$row['rank_id'];
 
-				if(isset($_POST[$postVar]) && $_POST[$postVar] == 1) {
-					if($rankObj->select($row['rank_id'])) {
+				if (isset($_POST[$postVar]) && $_POST[$postVar] == 1) {
+					if ($rankObj->select($row['rank_id'])) {
 						$arrColumn = array("rankcategory_id");
 						$arrValue = array($newCatInfo['rankcategory_id']);
 						$rankObj->update($arrColumn, $arrValue);
@@ -189,17 +189,17 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 
 
 
-if(!isset($_POST['submit']) || !$_POST['submit']) {
+if (!isset($_POST['submit']) || !$_POST['submit']) {
 
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."rankcategory ORDER BY ordernum DESC");
 	$orderoptions = "";
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$rankCatName = filterText($row['name']);
 		$orderoptions .= "<option value='".$row['rankcategory_id']."'>".$rankCatName."</option>";
 	}
 
-	if($orderoptions == "") {
+	if ($orderoptions == "") {
 		$orderoptions = "<option value='first'>(first category)</option>";
 	}
 
@@ -208,16 +208,17 @@ if(!isset($_POST['submit']) || !$_POST['submit']) {
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1' ORDER BY ordernum DESC");
 
 	$rankcounter = 1;
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$rankcounter++;
 		$rankoptions .= "<input type='checkbox' value='1' class='textBox' style='cursor: pointer' name='rankid_".$row['rank_id']."'> ".$row['name']."<br>";
 	}
 
 	$rankoptionheight = 20*$rankcounter;
 
-	if($rankoptionheight > 300) { $rankoptionheight = 300; }
+	if ($rankoptionheight > 300) {
+$rankoptionheight = 300; }
 
-	if($rankoptions == "") {
+	if ($rankoptions == "") {
 		$rankoptions = "(no ranks added yet)";
 	}
 
@@ -228,7 +229,7 @@ if(!isset($_POST['submit']) || !$_POST['submit']) {
 		
 		";
 
-	if(isset($dispError) && $dispError != "") {
+	if (isset($dispError) && $dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to add new rank because the following errors occurred:</strong><br><br>

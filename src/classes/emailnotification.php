@@ -20,7 +20,7 @@
 		public function select($intIDNum, $numericIDOnly = true) {
 
 			$result = parent::select($intIDNum, $numericIDOnly);
-			if($result && !$this->memberObj->select($this->arrObjInfo['member_id'])) {
+			if ($result && !$this->memberObj->select($this->arrObjInfo['member_id'])) {
 				$this->intTableKeyValue = "";
 				$result = false;
 			}
@@ -31,7 +31,7 @@
 
 		public function send() {
 
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 
 				$this->memberObj->email($this->arrObjInfo['subject'], $this->arrObjInfo['message']);
 

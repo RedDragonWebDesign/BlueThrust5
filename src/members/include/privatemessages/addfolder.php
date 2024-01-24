@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -34,7 +34,7 @@ $countErrors = 0;
 if ( ! empty($_POST['submit']) ) {
 
 	// Check Folder Name
-	if(trim($_POST['foldername']) == "") {
+	if (trim($_POST['foldername']) == "") {
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Your folder name may not be blank.";
 		$countErrors++;
 	}
@@ -43,16 +43,16 @@ if ( ! empty($_POST['submit']) ) {
 	$pmFolderObj->setCategoryKeyValue($memberInfo['member_id']);
 	$intNewOrderSpot = $pmFolderObj->validateOrder($_POST['folderorder'], $_POST['beforeafter']);
 
-	if($intNewOrderSpot === false) {
+	if ($intNewOrderSpot === false) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid folder order.<br>";
 	}
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		$arrColumns = array("member_id", "name", "sortnum");
 		$arrValues = array($memberInfo['member_id'], $_POST['foldername'], $intNewOrderSpot);
 
-		if($pmFolderObj->addNew($arrColumns, $arrValues)) {
+		if ($pmFolderObj->addNew($arrColumns, $arrValues)) {
 
 			$folderInfo = $pmFolderObj->get_info_filtered();
 
@@ -79,7 +79,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
@@ -91,11 +91,11 @@ if ( empty($_POST['submit']) ) {
 
 	$arrFolders = $pmFolderObj->listFolders($memberInfo['member_id']);
 	$folderOptions = "";
-	foreach($arrFolders as $folderID => $folderName) {
+	foreach ($arrFolders as $folderID => $folderName) {
 		$folderOptions .= "<option value='".$folderID."'>".filterText($folderName)."</option>";
 	}
 
-	if($folderOptions == "") {
+	if ($folderOptions == "") {
 		$folderOptions = "<option value='first'>(first folder)</option>";
 	}
 
@@ -105,7 +105,7 @@ if ( empty($_POST['submit']) ) {
 			<div class='formDiv'>
 		";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to add folder because the following errors occurred:</strong><br><br>

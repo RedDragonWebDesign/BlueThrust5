@@ -1,15 +1,16 @@
 <?php
 
-	if(!defined("MAIN_ROOT")) { exit(); }
+	if (!defined("MAIN_ROOT")) {
+exit(); }
 
 	$donationMember = new Member($mysqli);
 	$dispMemberName = $donationMember->select($donationInfo['member_id']) ? $donationMember->getMemberLink() : "";
 
 	$dispName = $donationInfo['name'];
-	if($donationInfo['name'] == "" && $dispMemberName == "") {
+	if ($donationInfo['name'] == "" && $dispMemberName == "") {
 		$dispName = "Anonymous";
 	}
-	elseif($donationInfo['name'] != "" && $dispMemberName != "") {
+	elseif ($donationInfo['name'] != "" && $dispMemberName != "") {
 		$dispName = $dispMemberName." <i>(".$donationInfo['name'].")</i>";
 	}
 

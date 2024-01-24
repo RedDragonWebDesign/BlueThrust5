@@ -39,22 +39,22 @@ $squadAppObj = new Basic($mysqli, "squadapps", "squadapp_id");
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$LOGIN_FAIL = false;
 	$memberInfo = $member->get_info_filtered();
 
-	if($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], "acceptapps") && $squadAppObj->select($_POST['saID'])) {
+	if ($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], "acceptapps") && $squadAppObj->select($_POST['saID'])) {
 
 		$squadInfo = $squadObj->get_info_filtered();
 		$squadAppInfo = $squadAppObj->get_info();
 		$squadRankList = $squadObj->getRankList();
 
 
-		if($squadAppInfo['squad_id'] == $_POST['sID'] && $squadAppInfo['status'] == 0 && count($squadRankList) > 1) {
+		if ($squadAppInfo['squad_id'] == $_POST['sID'] && $squadAppInfo['status'] == 0 && count($squadRankList) > 1) {
 
 
 
-			if($_POST['action'] == "accept") {
+			if ($_POST['action'] == "accept") {
 
 				$squadRankKey = count($squadRankList)-1;
 				$newMemberSquadRank = $squadRankList[$squadRankKey];
@@ -102,7 +102,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 
 		}
-		elseif(count($squadRankList) <= 1 && $_POST['action'] == "accept") {
+		elseif (count($squadRankList) <= 1 && $_POST['action'] == "accept") {
 			echo "
 				<div style='display: none' id='errorMessage'>
 					<p align='center' class='main'>You must have at least one rank besides the founder's rank to add a new member!</p>

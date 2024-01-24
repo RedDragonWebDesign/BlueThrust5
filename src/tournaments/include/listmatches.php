@@ -18,7 +18,7 @@ require_once("../../classes/rank.php");
 require_once("../../classes/tournament.php");
 require_once("../../classes/consoleoption.php");
 
-if(!isset($tournamentObj)) {
+if (!isset($tournamentObj)) {
 $consoleObj = new ConsoleOption($mysqli);
 
 $cID = $consoleObj->findConsoleIDByName("Manage Tournaments");
@@ -32,12 +32,12 @@ $tournamentObj = new Tournament($mysqli);
 
 
 
-if(!isset($tID)) {
+if (!isset($tID)) {
 	$tID = $_POST['tID'];
 }
 
 
-if(!$tournamentObj->select($tID)) {
+if (!$tournamentObj->select($tID)) {
 	exit();
 }
 
@@ -46,13 +46,13 @@ $tournamentInfo = $tournamentObj->get_info_filtered();
 
 
 
-if(!isset($_POST['roundSelected']) || !is_numeric($_POST['roundSelected'])) {
+if (!isset($_POST['roundSelected']) || !is_numeric($_POST['roundSelected'])) {
 	$_POST['roundSelected'] = 1;
 }
 $arrMatches = $tournamentObj->getMatches($_POST['roundSelected']);
 
 $matchCount = 0;
-foreach($arrMatches as $matchID) {
+foreach ($arrMatches as $matchID) {
 	$matchCount++;
 	$tournamentObj->objMatch->select($matchID);
 	$matchInfo = $tournamentObj->objMatch->get_info();
@@ -62,11 +62,11 @@ foreach($arrMatches as $matchID) {
 
 	$addStyle[1] = "";
 	$addStyle[2] = "";
-	if($matchInfo['outcome'] == 1) {
+	if ($matchInfo['outcome'] == 1) {
 		$addStyle[1] = " class='successFont' style='font-weight: bold'";
 		$addStyle[2] = " class='failedFont'";
 	}
-	elseif($matchInfo['outcome'] == 2) {
+	elseif ($matchInfo['outcome'] == 2) {
 		$addStyle[2] = " class='successFont' style='font-weight: bold'";
 		$addStyle[1] = " class='failedFont'";
 	}
@@ -76,18 +76,18 @@ foreach($arrMatches as $matchID) {
 	";
 
 
-		for($i=1; $i<=2; $i++) {
+		for ($i=1; $i<=2; $i++) {
 
 			$teamColumn = "team".$i."_id";
 			$dispName = "Empty Spot";
 			$dispSeed = "";
-			if($tournamentObj->objTeam->select($matchInfo[$teamColumn])) {
+			if ($tournamentObj->objTeam->select($matchInfo[$teamColumn])) {
 				$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 				$dispSeed = "#".$teamInfo['seed'];
 				//$arrPlayers = $tournamentObj->getTeamPlayers($matchInfo[$teamColumn], true);
 				$dispName = $tournamentObj->getPlayerName();
 
-				if($dispName == "") {
+				if ($dispName == "") {
 					$dispName = "Bye";
 				}
 

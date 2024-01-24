@@ -12,7 +12,7 @@
  *
  */
 
-if(!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
+if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 
 	exit();
 }
@@ -24,7 +24,7 @@ else {
 
 	$squadObj->select($sID);
 
-	if(!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "managenews")) {
+	if (!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "managenews")) {
 
 		exit();
 	}
@@ -44,7 +44,7 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 
 
-if($_GET['nID'] == "") {
+if ($_GET['nID'] == "") {
 
 	echo "
 	
@@ -170,7 +170,7 @@ if($_GET['nID'] == "") {
 	";
 
 }
-elseif($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
+elseif ($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
 
 
 	echo "
@@ -191,7 +191,7 @@ elseif($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
 		//	1 - Public
 		// 	2 - Private
 
-		if($_POST['newstype'] != 1 && $_POST['newstype'] != 2) {
+		if ($_POST['newstype'] != 1 && $_POST['newstype'] != 2) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid news type.<br>";
 		}
@@ -199,24 +199,24 @@ elseif($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
 
 		// Check Subject
 
-		if(trim($_POST['subject']) == "") {
+		if (trim($_POST['subject']) == "") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a news subject.<br>";
 		}
 
 		// Check Message
 
-		if(trim($_POST['message']) == "") {
+		if (trim($_POST['message']) == "") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not make a blank news post.<br>";
 		}
 
-		if($countErrors == 0) {
+		if ($countErrors == 0) {
 			$time = time();
 			$arrColumns = array("newstype", "postsubject", "newspost", "lasteditmember_id", "lasteditdate");
 			$arrValues = array($_POST['newstype'], $_POST['subject'], $_POST['message'], $memberInfo['member_id'], $time);
 
-			if($squadNewsObj->update($arrColumns, $arrValues)) {
+			if ($squadNewsObj->update($arrColumns, $arrValues)) {
 
 				echo "
 				<div style='display: none' id='successBox'>
@@ -240,7 +240,7 @@ elseif($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
 
 		}
 
-		if($countErrors > 0) {
+		if ($countErrors > 0) {
 			$_POST = filterArray($_POST);
 			$_POST['submit'] = false;
 		}
@@ -253,7 +253,7 @@ elseif($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
 		$squadNewsInfo = $squadNewsObj->get_info_filtered();
 
 		$privateSelected = "";
-		if($squadNewsInfo['newstype'] == 2) {
+		if ($squadNewsInfo['newstype'] == 2) {
 			$privateSelected = "selected";
 		}
 
@@ -263,7 +263,7 @@ elseif($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
 		
 		";
 
-		if($dispError != "") {
+		if ($dispError != "") {
 			echo "
 			<div class='errorDiv'>
 			<strong>Unable to edit squad news because the following errors occurred:</strong><br><br>

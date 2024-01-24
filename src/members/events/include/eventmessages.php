@@ -21,7 +21,7 @@ require_once("../../../classes/rank.php");
 require_once("../../../classes/consoleoption.php");
 require_once("../../../classes/event.php");
 
-if(!isset($eventObj)) {
+if (!isset($eventObj)) {
 
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);
@@ -38,7 +38,7 @@ if(!isset($eventObj)) {
 
 }
 
-if(!$eventObj->select($eventID)) {
+if (!$eventObj->select($eventID)) {
 
 	exit();
 }
@@ -47,12 +47,12 @@ if(!$eventObj->select($eventID)) {
 echo "<ul>";
 $focusID = "";
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."eventmessages WHERE event_id = '".$eventID."' ORDER BY dateposted DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 
 	$objMember->select($row['member_id']);
 	$memInfo = $objMember->get_info_filtered();
 
-	if($memInfo['profilepic'] == "") {
+	if ($memInfo['profilepic'] == "") {
 		$dispProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
 	}
 	else {
@@ -60,7 +60,7 @@ while($row = $result->fetch_assoc()) {
 	}
 
 	$dispDeleteMessage = "";
-	if($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) {
+	if ($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) {
 		$dispDeleteMessage = " - <a href='javascript:void(0)' onclick=\"deleteMessage('".$row['eventmessage_id']."', 'm')\">Delete</a>";
 	}
 
@@ -81,15 +81,15 @@ while($row = $result->fetch_assoc()) {
 	$eventObj->objEventMessage->select($row['eventmessage_id']);
 	$arrMessageComments = $eventObj->objEventMessage->getComments(" ORDER BY dateposted ASC");
 
-	foreach($arrMessageComments as $commentID) {
-		if($eventObj->objEventMessageComment->select($commentID) && $objMember->select($row['member_id'])) {
+	foreach ($arrMessageComments as $commentID) {
+		if ($eventObj->objEventMessageComment->select($commentID) && $objMember->select($row['member_id'])) {
 			$commentInfo = $eventObj->objEventMessageComment->get_info_filtered();
 
 			$objMember->select($commentInfo['member_id']);
 
 			$memInfo = $objMember->get_info_filtered();
 
-			if($memInfo['profilepic'] == "") {
+			if ($memInfo['profilepic'] == "") {
 				$dispProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
 			}
 			else {
@@ -97,7 +97,7 @@ while($row = $result->fetch_assoc()) {
 			}
 
 			$dispDeleteMessage = "";
-			if($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) {
+			if ($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) {
 				$dispDeleteMessage = " - <a href='javascript:void(0)' onclick=\"deleteMessage('".$commentID."', 'c')\">Delete</a>";
 			}
 
@@ -125,12 +125,12 @@ while($row = $result->fetch_assoc()) {
 	</li>
 	";
 
-	if($eventObj->memberHasAccess($memberInfo['member_id'], "postmessages")) {
+	if ($eventObj->memberHasAccess($memberInfo['member_id'], "postmessages")) {
 
 		$tempTextAreaID = "txtComment_".$row['eventmessage_id'];
 
 		$dispComment = "";
-		if($_POST['commentBox'][$tempTextAreaID] != "") {
+		if ($_POST['commentBox'][$tempTextAreaID] != "") {
 			$dispComment = filterText($_POST['commentBox'][$tempTextAreaID]);
 
 			$focusID = "#".$tempTextAreaID;
@@ -155,7 +155,7 @@ while($row = $result->fetch_assoc()) {
 
 echo "</ul>";
 
-if($focusID != "") {
+if ($focusID != "") {
 
 	echo "
 		<script type='text/javascript'>

@@ -25,10 +25,10 @@ require_once($prevFolder."classes/tournament.php");
 $tournamentObj = new Tournament($mysqli);
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -67,7 +67,7 @@ require_once($prevFolder."include/breadcrumb.php");
 		$counter = 0;
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournaments ORDER BY startdate DESC");
 
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 
 
 			$tournamentObj->select($row['tournament_id']);
@@ -80,24 +80,24 @@ require_once($prevFolder."include/breadcrumb.php");
 			$dateTimeObj->setTimezone(new DateTimeZone("UTC"));
 			$dispStartDate = $dateTimeObj->format("M j, Y g:i A");
 
-			if($row['timezone'] != "") {
+			if ($row['timezone'] != "") {
 				$dateTimeObj->setTimezone(new DateTimeZone($row['timezone']));
 				$includeTimezone = " T";
 			}
 
 			$dispStartDate .= $dateTimeObj->format($includeTimezone);
 
-			if($row['startdate'] < time() && $tournamentObj->getTournamentWinner() == 0) {
+			if ($row['startdate'] < time() && $tournamentObj->getTournamentWinner() == 0) {
 				$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/bluedot.png' title='Started'>";
 			}
-			elseif($row['startdate'] > time()) {
+			elseif ($row['startdate'] > time()) {
 				$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/orangedot.png' title='Forming'>";
 			}
-			elseif($row['startdate'] < time() && $tournamentObj->getTournamentWinner() != 0) {
+			elseif ($row['startdate'] < time() && $tournamentObj->getTournamentWinner() != 0) {
 				$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/graydot.png' title='Finished'>";
 			}
 
-			if($counter == 1) {
+			if ($counter == 1) {
 				$addCSS = " alternateBGColor";
 				$counter = 0;
 			}
@@ -118,7 +118,7 @@ require_once($prevFolder."include/breadcrumb.php");
 
 		}
 
-		if($result->num_rows == 0) {
+		if ($result->num_rows == 0) {
 
 
 			echo "

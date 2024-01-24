@@ -42,7 +42,7 @@ $boardObj = new ForumBoard($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 	echo "
 	
@@ -55,16 +55,16 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	
 	";
 
-	if(isset($_POST['mID']) && $memberModObj->select($_POST['mID'])) {
+	if (isset($_POST['mID']) && $memberModObj->select($_POST['mID'])) {
 		$memberModInfo = $memberModObj->get_info_filtered();
-		if($_POST['action'] == "add") {
+		if ($_POST['action'] == "add") {
 
-			if(substr($_POST['bID'], 0, 4) == "cat_") {
+			if (substr($_POST['bID'], 0, 4) == "cat_") {
 				$catID = str_replace("cat_", "", $_POST['bID']);
-				if($categoryObj->select($catID)) {
+				if ($categoryObj->select($catID)) {
 
 					$arrBoards = $categoryObj->getAssociateIDs();
-					foreach($arrBoards as $boardID) {
+					foreach ($arrBoards as $boardID) {
 						$boardObj->select($boardID);
 						$boardObj->addMod($memberModInfo['member_id']);
 					}
@@ -72,18 +72,18 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				}
 
 			}
-			elseif(substr($_POST['bID'], 0, 6) == "board_") {
+			elseif (substr($_POST['bID'], 0, 6) == "board_") {
 
 				$boardID = str_replace("board_", "", $_POST['bID']);
-				if($boardObj->select($boardID)) {
+				if ($boardObj->select($boardID)) {
 					$boardObj->addMod($memberModInfo['member_id']);
 				}
 			}
 
 		}
-		elseif($_POST['action'] == "delete") {
+		elseif ($_POST['action'] == "delete") {
 
-			if($boardObj->select($_POST['bID'])) {
+			if ($boardObj->select($_POST['bID'])) {
 				$boardObj->removeMod($memberModInfo['member_id']);
 			}
 		}
@@ -91,7 +91,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."forum_moderator WHERE member_id = '".$memberModInfo['member_id']."' ORDER BY dateadded DESC");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 
 			$boardObj->select($row['forumboard_id']);
 			$boardInfo = $boardObj->get_info_filtered();
@@ -106,7 +106,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 		}
 
-		if($result->num_rows == 0) {
+		if ($result->num_rows == 0) {
 
 			echo "
 				<tr>

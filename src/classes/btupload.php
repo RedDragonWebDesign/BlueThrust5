@@ -32,7 +32,7 @@ class BTUpload {
 
 	function __construct($uploadfile, $prefix, $fileloc = "", $allowableExt=array(), $extlength = 4, $outsideLink = false) {
 
-		if(!$outsideLink) {
+		if (!$outsideLink) {
 			$this->arrFile = $uploadfile;
 		}
 		else {
@@ -67,7 +67,7 @@ class BTUpload {
 
 		$returnVal = false;
 
-		if($this->blnOutsideLink) {
+		if ($this->blnOutsideLink) {
 			$strFileName = $this->strOutsideFileURL;
 		}
 		else {
@@ -76,20 +76,20 @@ class BTUpload {
 
 		$checkExt = 0;
 
-		foreach($this->arrFileExtensions as $fileExt) {
+		foreach ($this->arrFileExtensions as $fileExt) {
 
-			if(strtolower(substr($strFileName,(strlen($fileExt))*-1)) == $fileExt) {
+			if (strtolower(substr($strFileName,(strlen($fileExt))*-1)) == $fileExt) {
 				$checkExt++;
 				$this->strFileExt = $fileExt;
 			}
-			elseif($fileExt == "") {
+			elseif ($fileExt == "") {
 				$this->strFileExt = strtolower(substr($strFileName,strpos($strFileName, ".")));
 				$checkExt++;
 			}
 
 		}
 
-		if($checkExt > 0 || count($this->arrFileExtensions) == 0) {
+		if ($checkExt > 0 || count($this->arrFileExtensions) == 0) {
 			$returnVal = true;
 		}
 
@@ -110,17 +110,17 @@ class BTUpload {
 	function checkFileSize() {
 		$returnVal = false;
 
-		if($this->blnOutsideLink) {
+		if ($this->blnOutsideLink) {
 
 			$arrHeaders = get_headers($this->strOutsideFileURL, 1);
-			if(isset($arrHeaders['Content-Length']) && $arrHeaders['Content-Length'] <= (self::ONE_MEGABYTE*$this->intUploadSizeLimit)) {
+			if (isset($arrHeaders['Content-Length']) && $arrHeaders['Content-Length'] <= (self::ONE_MEGABYTE*$this->intUploadSizeLimit)) {
 				$returnVal = true;
 			}
 
 		}
 		else {
 
-			if($this->arrFile['size'] <= (self::ONE_MEGABYTE*$this->intUploadSizeLimit)) {
+			if ($this->arrFile['size'] <= (self::ONE_MEGABYTE*$this->intUploadSizeLimit)) {
 				$returnVal = true;
 			}
 
@@ -133,15 +133,15 @@ class BTUpload {
 
 		$blnUploadFile = false;
 
-		if(!is_dir($this->strNewFileLoc)) {
+		if (!is_dir($this->strNewFileLoc)) {
 			mkdir($this->strNewFileLoc);
 		}
 
-		if($this->checkExtensions() && $this->checkFileSize()) {
+		if ($this->checkExtensions() && $this->checkFileSize()) {
 
 			$this->strUploadedFileName = uniqid($this->strFilePrefix).$this->strFileExt;
 
-			if(!$this->blnOutsideLink) {
+			if (!$this->blnOutsideLink) {
 				$blnUploadFile = move_uploaded_file($this->arrFile['tmp_name'], $this->strNewFileLoc.$this->strUploadedFileName);
 			}
 			else {
@@ -150,14 +150,14 @@ class BTUpload {
 
 				$createFile = file_put_contents($this->strNewFileLoc.$this->strUploadedFileName, $uploadContents);
 
-				if($createFile !== false) {
+				if ($createFile !== false) {
 					$blnUploadFile = true;
 
 				}
 
 			}
 
-			if(!$blnUploadFile) {
+			if (!$blnUploadFile) {
 				$this->arrErrors[] = "Can't Upload";
 			}
 

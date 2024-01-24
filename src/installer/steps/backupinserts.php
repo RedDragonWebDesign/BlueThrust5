@@ -5,7 +5,7 @@ $backupFileName = "dbbackupinserts_".time().".txt";
 $oldInsertSQL = "";
 $alterSQL = "";
 
-	foreach($arrTableMatches as $tableName) {
+	foreach ($arrTableMatches as $tableName) {
 
 		//if($tableName != $_POST['tableprefix']."console" && $tableName != $_POST['tableprefix']."consolecategory") {
 
@@ -17,14 +17,14 @@ $alterSQL = "";
 
 			$arrColumnNames = array();
 			$result = $mysqli->query("DESCRIBE ".$tableName);
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
-				if($row['Field'] != "privilege_id") {
+				if ($row['Field'] != "privilege_id") {
 					$arrColumnNames[] = $row['Field'];
 
 					// Check for custom table rows
 
-					if(!in_array($row['Field'], $arrTableColumns[$tableNameNoPrefix])) {
+					if (!in_array($row['Field'], $arrTableColumns[$tableNameNoPrefix])) {
 						$dispNotNull = (strtoupper($row['Null']) == "NO") ? " NOT NULL" : "";
 						$dispAutoIncrement = (strtoupper($row['Extra']) == "AUTO_INCREMENT") ? " AUTO_INCREMENT " : "";
 						$dispPrimaryKey = (strtoupper($row['Key']) == "PRI") ? " PRIMARY KEY" : "";
@@ -44,14 +44,14 @@ $alterSQL = "";
 			$arrInsertStmts = array();
 
 			$result = $mysqli->query("SELECT * FROM ".$tableName);
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$arrColumnValues = array();
 				$blnDoNotAdd = false;
-				foreach($arrColumnNames as $columnName) {
+				foreach ($arrColumnNames as $columnName) {
 
 					$arrColumnValues[] = $mysqli->real_escape_string($row[$columnName]);
 
-					if($tableName == $_POST['tableprefix']."rank_privileges" && $columnName == "rank_id" && $row[$columnName] == 1) {
+					if ($tableName == $_POST['tableprefix']."rank_privileges" && $columnName == "rank_id" && $row[$columnName] == 1) {
 						$blnDoNotAdd = true;
 					}
 
@@ -59,7 +59,7 @@ $alterSQL = "";
 
 				$sqlInsertColumnValues = implode("','", $arrColumnValues);
 
-				if(!$blnDoNotAdd) {
+				if (!$blnDoNotAdd) {
 					$arrInsertStmts[] = $insertStmt.$sqlInsertColumnValues."');";
 				}
 
@@ -67,7 +67,7 @@ $alterSQL = "";
 
 
 
-			foreach($arrInsertStmts as $insertStatement) {
+			foreach ($arrInsertStmts as $insertStatement) {
 				$oldInsertSQL .= $insertStatement;
 				file_put_contents($backupFileName, $insertStatement, FILE_APPEND);
 			}

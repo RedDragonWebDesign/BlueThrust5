@@ -32,17 +32,17 @@ $_GET['cID'] = $cID;
 
 
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $profileOptionObj->select($_POST['oID'])) {
+	if ($member->hasAccess($consoleObj) && $profileOptionObj->select($_POST['oID'])) {
 
 		define("MEMBERRANK_ID", $memberInfo['rank_id']);
 
 
-		if($_POST['confirm'] == 1) {
+		if ($_POST['confirm'] == 1) {
 			$profileOptionObj->delete();
 			require_once("main.php");
 		}
@@ -52,7 +52,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		}
 
 	}
-	elseif(!$profileOptionObj->select($_POST['oID'])) {
+	elseif (!$profileOptionObj->select($_POST['oID'])) {
 
 		echo "<p align='center'>Unable find the selected profile option.  Please try again or contact the website administrator.</p>";
 

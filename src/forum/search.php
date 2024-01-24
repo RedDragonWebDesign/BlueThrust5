@@ -35,13 +35,13 @@ require_once($prevFolder."themes/".$THEME."/_header.php");
 
 // Check Private Forum
 
-if($websiteInfo['privateforum'] == 1 && !constant("LOGGED_IN")) {
+if ($websiteInfo['privateforum'] == 1 && !constant("LOGGED_IN")) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
 }
 
 
 $LOGGED_IN = false;
-if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 	$LOGGED_IN = true;
 }
@@ -52,7 +52,7 @@ $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Forum", $MAIN_ROOT."forum");
 $breadcrumbObj->addCrumb("Search Forum");
 
-if(count($_GET) > 0) {
+if (count($_GET) > 0) {
 	$_POST['fakesearchuser'] = $_GET['searchuser'];
 	$_POST['checkCSRF'] = $_SESSION['csrfKey'];
 	$_POST['submit'] = true;
@@ -63,17 +63,17 @@ if(count($_GET) > 0) {
 	$_POST['sortresults'] = 0;
 	$_POST['sortresults_ascdesc'] = 0;
 
-	if(count($_GET['filterboards']) == 0) {
+	if (count($_GET['filterboards']) == 0) {
 		$_POST['filterboards'][] = 0;
 	}
 
-	foreach($_GET as $key => $value) {
+	foreach ($_GET as $key => $value) {
 		$_POST[$key] = $_GET[$key];
 	}
 
 }
 
-if(count($_POST) > 0) {
+if (count($_POST) > 0) {
 	$breadcrumbObj->popCrumb();
 	$breadcrumbObj->addCrumb("Search Forum", $MAIN_ROOT."forum/search.php");
 	$breadcrumbObj->addCrumb("Search Results");
@@ -85,7 +85,7 @@ require_once($prevFolder."include/breadcrumb.php");
 
 $arrMemberList = array();
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '0' AND rank_id != '1' ORDER BY username");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$arrMemberList[] = array("id" => $row['member_id'], "value" => filterText($row['username']));
 }
 
@@ -93,13 +93,13 @@ $memberList = json_encode($arrMemberList);
 
 $filterBoardOptions[0] = "Search All Boards";
 $result = $mysqli->query("SELECT ".$dbprefix."forum_board.forumboard_id FROM ".$dbprefix."forum_board, ".$dbprefix."forum_category WHERE ".$dbprefix."forum_board.forumcategory_id = ".$dbprefix."forum_category.forumcategory_id AND ".$dbprefix."forum_board.subforum_id = '0' ORDER BY ".$dbprefix."forum_category.ordernum DESC, ".$dbprefix."forum_board.sortnum");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$boardObj->select($row['forumboard_id']);
-	if($boardObj->memberHasAccess($memberInfo)) {
+	if ($boardObj->memberHasAccess($memberInfo)) {
 
 		$filterBoardOptions[$row['forumboard_id']] = $boardObj->get_info_filtered("name");
 
-		if(count($boardObj->getSubForums()) > 0) {
+		if (count($boardObj->getSubForums()) > 0) {
 
 			recurseSubForums("&nbsp;&nbsp;&nbsp;&nbsp;");
 
@@ -111,11 +111,11 @@ function recurseSubForums($spacing) {
 	global $filterBoardOptions, $boardObj, $memberInfo;
 
 	$arrSubforums = $boardObj->getSubForums();
-	foreach($arrSubforums as $boardID) {
+	foreach ($arrSubforums as $boardID) {
 		$boardObj->select($boardID);
-		if($boardObj->memberHasAccess($memberInfo)) {
+		if ($boardObj->memberHasAccess($memberInfo)) {
 			$filterBoardOptions[$boardObj->get_info("forumboard_id")] = $spacing.$boardObj->get_info_filtered("name");
-			if(count($boardObj->getSubForums()) > 0) {
+			if (count($boardObj->getSubForums()) > 0) {
 				recurseSubForums("&nbsp;&nbsp;&nbsp;&nbsp;".$spacing);
 			}
 		}
@@ -127,13 +127,13 @@ function check_filter_boards() {
 	global $boardObj, $formObj;
 
 	$countErrors = 0;
-	foreach($_POST['filterboards'] as $value) {
-		if(!$boardObj->select($value) && $value != 0) {
+	foreach ($_POST['filterboards'] as $value) {
+		if (!$boardObj->select($value) && $value != 0) {
 			$countErrors++;
 		}
 	}
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$formObj->errors[] = "You selected an invalid board filter.";
 	}
 }
@@ -256,7 +256,7 @@ $setupFormArgs = array(
 $formObj = new Form($setupFormArgs);
 
 
-if(isset($_POST['submit']) && $formObj->validate()) {
+if (isset($_POST['submit']) && $formObj->validate()) {
 	$_SESSION['btLastSearch'] = time();
 
 	define("SHOW_SEARCHRESULTS", true);
@@ -275,15 +275,15 @@ function search_checks() {
 
 	global $formObj;
 
-	if(trim($_POST['keyword']) == "" && trim($_POST['fakesearchuser']) == "") {
+	if (trim($_POST['keyword']) == "" && trim($_POST['fakesearchuser']) == "") {
 		$formObj->errors[] = "You must enter at least a search keyword or username.";
 	}
 
-	if(isset($_SESSION['btLastSearch']) && time()-$_SESSION['btLastSearch'] < 15) {
+	if (isset($_SESSION['btLastSearch']) && time()-$_SESSION['btLastSearch'] < 15) {
 		//$formObj->errors[] = "Please wait 15 seconds before searching again.";
 	}
 
-	if(!is_numeric($_POST['filtertopics_replies'])) {
+	if (!is_numeric($_POST['filtertopics_replies'])) {
 		$formObj->errors[] = "The number of topic replies must be a positive numeric value.";
 	}
 

@@ -23,7 +23,7 @@ $member->select($_SESSION['btUsername']);
 
 $twitterObj = new Twitter($mysqli);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $twitterObj->hasTwitter($member->get_info("member_id"))) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $twitterObj->hasTwitter($member->get_info("member_id"))) {
 
 	$twitterObj->delete();
 

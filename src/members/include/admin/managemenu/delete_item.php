@@ -31,16 +31,16 @@ $cID = $consoleObj->findConsoleIDByName("Manage Menu Items");
 $consoleObj->select($cID);
 $_GET['cID'] = $cID;
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $menuItemObj->select($_POST['itemID'])) {
+	if ($member->hasAccess($consoleObj) && $menuItemObj->select($_POST['itemID'])) {
 
 		$menuItemInfo = $menuItemObj->get_info_filtered();
 
-		if(($_POST['confirm'] ?? '') == "1") {
+		if (($_POST['confirm'] ?? '') == "1") {
 
 			$menuCatObj->select($menuItemInfo['menucategory_id']);
 
@@ -111,7 +111,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		}
 
 	}
-	elseif(!$menuCatObj->select($_POST['mcID'])) {
+	elseif (!$menuCatObj->select($_POST['mcID'])) {
 
 		echo "<div id='confirmDelete'><p align='center'>Unable find the selected menu category.  Please try again or contact the website administrator.</p></div>";
 

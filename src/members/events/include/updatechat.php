@@ -36,14 +36,14 @@ $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage My Events");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $eventChatObj->select($_POST['ecID'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $eventChatObj->select($_POST['ecID'])) {
 
 	$memberInfo = $member->get_info_filtered();
 	$eventChatInfo = $eventChatObj->get_info_filtered();
 
 	$eventObj->select($eventChatInfo['event_id']);
 
-	if(in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true)) || $memberInfo['member_id'] == $eventInfo['member_id']) {
+	if (in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true)) || $memberInfo['member_id'] == $eventInfo['member_id']) {
 
 
 

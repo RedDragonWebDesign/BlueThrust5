@@ -30,7 +30,7 @@ class Game extends Rank {
 	function countMembers() {
 
 		$returnVal = 0;
-		if(isset($this->intTableKeyValue)) {
+		if (isset($this->intTableKeyValue)) {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."gamesplayed_members WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 			$returnVal = $result->num_rows;
 
@@ -43,12 +43,12 @@ class Game extends Rank {
 	function getMembersWhoPlayThisGame() {
 
 		$returnArr = array();
-		if(isset($this->intTableKeyValue)) {
+		if (isset($this->intTableKeyValue)) {
 			$membersGamesTable = $this->MySQL->get_tablePrefix()."gamesplayed_members";
 			$membersTable = $this->MySQL->get_tablePrefix()."members";
 			$query = "SELECT ".$membersGamesTable.".member_id FROM ".$membersGamesTable.", ".$membersTable." WHERE ".$membersGamesTable.".member_id = ".$membersTable.".member_id AND ".$membersGamesTable.".".$this->strTableKey." = '".$this->intTableKeyValue."' AND ".$membersTable.".disabled = '0'";
 			$result = $this->MySQL->query($query);
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
 				$returnArr[] = $row['member_id'];
 
@@ -72,7 +72,7 @@ class Game extends Rank {
 		$returnArr = array();
 
 		$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." ORDER BY ordernum DESC");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$returnArr[] = $row[$this->strTableKey];
 		}
 
@@ -88,14 +88,14 @@ class Game extends Rank {
 
 		$gameStatObj = new Basic($this->MySQL, "gamestats", "gamestats_id");
 
-		if($gameStatObj->select($gameStatID) && isset($memberObj)) {
+		if ($gameStatObj->select($gameStatID) && isset($memberObj)) {
 
 			$gameStatInfo = $gameStatObj->get_info_filtered();
 
 			$gameStat1Obj = new Basic($this->MySQL, "gamestats", "gamestats_id");
 			$gameStat2Obj = new Basic($this->MySQL, "gamestats", "gamestats_id");
 
-			if($gameStatInfo['stattype'] == "calculate" && $gameStat1Obj->select($gameStatInfo['firststat_id']) && $gameStat2Obj->select($gameStatInfo['secondstat_id'])) {
+			if ($gameStatInfo['stattype'] == "calculate" && $gameStat1Obj->select($gameStatInfo['firststat_id']) && $gameStat2Obj->select($gameStatInfo['secondstat_id'])) {
 
 				$gameStats1Info = $gameStat1Obj->get_info_filtered();
 				$gameStats2Info = $gameStat2Obj->get_info_filtered();
@@ -103,23 +103,23 @@ class Game extends Rank {
 				$gameStat1Type = $gameStats1Info['stattype'];
 				$gameStat2Type = $gameStats2Info['stattype'];
 
-				if($gameStat1Type == "calculate") {
+				if ($gameStat1Type == "calculate") {
 					$gameStat1Value = $this->calcStat($gameStats1Info['gamestats_id'], $memberObj);
 				}
 				else {
 					$gameStat1Value = $memberObj->getGameStatValue($gameStats1Info['gamestats_id']);
 				}
 
-				if($gameStat2Type == "calculate") {
+				if ($gameStat2Type == "calculate") {
 					$gameStat2Value = $this->calcStat($gameStats2Info['gamestats_id'], $memberObj);
 				}
 				else {
 					$gameStat2Value = $memberObj->getGameStatValue($gameStats2Info['gamestats_id']);
 				}
 
-				switch($gameStatInfo['calcop']) {
+				switch ($gameStatInfo['calcop']) {
 					case "div":
-						if($gameStat2Value == 0) {
+						if ($gameStat2Value == 0) {
 							$gameStat2Value = 1;
 						}
 
@@ -153,18 +153,18 @@ class Game extends Rank {
 	*/
 	public function delete() {
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$countErrors = 0;
 			$info = $this->arrObjInfo;
 			// Delete Game
 
 			$result = $this->MySQL->query("DELETE FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
-			if($this->MySQL->error) {
+			if ($this->MySQL->error) {
 				$countErrors++;
 			}
 
 			$result = $this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."gamesplayed_members WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
-			if($this->MySQL->error) {
+			if ($this->MySQL->error) {
 				$countErrors++;
 			}
 
@@ -172,22 +172,22 @@ class Game extends Rank {
 
 			$gameStats = $this->getAssociateIDs();
 
-			foreach($gameStats as $gameStatID) {
+			foreach ($gameStats as $gameStatID) {
 
 				$result = $this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."gamestats_members WHERE gamestats_id = '".$gameStatID."'");
-				if($this->MySQL->error) {
+				if ($this->MySQL->error) {
 					$countErrors++;
 				}
 
 			}
 
 			$result = $this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."gamestats WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
-			if($this->MySQL->error) {
+			if ($this->MySQL->error) {
 				$countErrors++;
 			}
 			$this->resortOrder();
 
-			if($countErrors == 0) {
+			if ($countErrors == 0) {
 				$returnVal = true;
 
 				deleteFile(BASE_DIRECTORY.$info['imageurl']);

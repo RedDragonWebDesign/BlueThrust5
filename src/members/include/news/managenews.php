@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -27,7 +27,7 @@ $cID = $_GET['cID'];
 
 $newsObj = new News($mysqli);
 
-if(isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
+if (isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
 
 	$newsInfo = $newsObj->get_info_filtered();
 
@@ -36,7 +36,7 @@ if(isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
 
 	$breadcrumbObj->popCrumb();
 
-	if($newsInfo['newstype'] != 3) {
+	if ($newsInfo['newstype'] != 3) {
 		$arrComponents['newstype']['value'] = $newsInfo['newstype'];
 		$arrComponents['pintohp']['value'] = $newsInfo['hpsticky'];
 		$arrComponents['subject']['value'] = $newsInfo['postsubject'];

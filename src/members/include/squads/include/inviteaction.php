@@ -39,7 +39,7 @@ $squadInviteObj = new Basic($mysqli, "squadinvites", "squadinvite_id");
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $squadInviteObj->select($_POST['siID'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $squadInviteObj->select($_POST['siID'])) {
 
 	$memberInfo = $member->get_info();
 	$memberLink = $member->getMemberLink();
@@ -48,19 +48,19 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$squadInfo = $squadObj->get_info_filtered();
 	$squadMemberList = $squadObj->getMemberList();
 
-	if($squadInviteInfo['receiver_id'] == $memberInfo['member_id'] && $squadInviteInfo['status'] == 0 && !in_array($memberInfo['member_id'], $squadMemberList)) {
+	if ($squadInviteInfo['receiver_id'] == $memberInfo['member_id'] && $squadInviteInfo['status'] == 0 && !in_array($memberInfo['member_id'], $squadMemberList)) {
 
-		if($_POST['action'] == "accept") {
+		if ($_POST['action'] == "accept") {
 
 			$arrRankList = $squadObj->getRankList();
 
-			if(!$squadObj->objSquadRank->select($squadInviteInfo['startingrank_id']) && count($arrRankList) > 1) {
+			if (!$squadObj->objSquadRank->select($squadInviteInfo['startingrank_id']) && count($arrRankList) > 1) {
 
 				$rankKey = count($arrRankList)-1;
 				$squadInviteInfo['startingrank_id'] = $arrRankList[$rankKey];
 
 			}
-			elseif(!$squadObj->objSquadRank->select($squadInviteInfo['startingrank_id']) && count($arrRankList) <= 1) {
+			elseif (!$squadObj->objSquadRank->select($squadInviteInfo['startingrank_id']) && count($arrRankList) <= 1) {
 
 				$member->select($squadInfo['member_id']);
 				$member->postNotification("There are currently members in your squad, <b><a href='".$MAIN_ROOT."squads/profile.php?sID=".$squadInfo['squad_id']."'>".$squadInfo['name']."</a></b> without ranks!");
@@ -114,7 +114,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		}
 
 	}
-	elseif(in_array($memberInfo['member_id'], $squadMemberList)) {
+	elseif (in_array($memberInfo['member_id'], $squadMemberList)) {
 		$squadInviteObj->delete($_POST['siID']);
 	}
 

@@ -26,7 +26,7 @@ $PAGE_NAME = "View Post - ";
 require_once(BASE_DIRECTORY."forum/templates/_header.php");
 
 
-if($boardObj->objPost->select($_GET['post'])) {
+if ($boardObj->objPost->select($_GET['post'])) {
 	$topicInfo = $boardObj->objPost->getTopicInfo(true);
 	$boardObj->select($topicInfo['forumboard_id']);
 

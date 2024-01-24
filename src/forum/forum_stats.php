@@ -1,6 +1,7 @@
 <?php
 
-	if(!defined("MAIN_ROOT")) { exit(); }
+	if (!defined("MAIN_ROOT")) {
+exit(); }
 
 
 	$totalPostsQuery = "SELECT COUNT(*) as totalPosts FROM ".$dbprefix."forum_post";
@@ -18,7 +19,7 @@
 
 	// Find latest post
 	$dispLatestPost = "";
-	if($arrLatestPostInfo['id'] != 0) {
+	if ($arrLatestPostInfo['id'] != 0) {
 
 		$boardObj->objPost->select($arrLatestPostInfo['id']);
 		$postInfo = $boardObj->objPost->get_info_filtered();

@@ -37,13 +37,13 @@ $newsObj = new News($mysqli);
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 
 	if ( ! empty($_POST['submit']) ) {
 
 		// Check Image
-		if($_FILES['menuimagefile']['name'] != "") {
+		if ($_FILES['menuimagefile']['name'] != "") {
 			$btUploadObj = new BTUpload($_FILES['uploadimage'], "hpimage_", "../images/homepage/", array(".jpg", ".png", ".bmp", ".gif"));
 		}
 		else {
@@ -61,13 +61,13 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."imageslider ORDER BY ordernum DESC");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 
 			$displayoptions .= "<option value='".$row['imageslider_id']."'>".$row['name']."</option>";
 
 		}
 
-		if($result->num_rows == 0) {
+		if ($result->num_rows == 0) {
 
 			$displayoptions = "<option value='first'>(first image)</option>";
 

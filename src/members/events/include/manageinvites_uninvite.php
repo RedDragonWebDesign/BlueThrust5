@@ -28,12 +28,12 @@ $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage My Events");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember->select($_POST['eMemID'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember->select($_POST['eMemID'])) {
 
 	$eventID = $eventObj->objEventMember->get_info("event_id");
 	$memberInfo = $member->get_info_filtered();
 
-	if($eventObj->select($eventID) && $member->hasAccess($consoleObj) && ($eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites") || $memberInfo['rank_id'] == 1)) {
+	if ($eventObj->select($eventID) && $member->hasAccess($consoleObj) && ($eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites") || $memberInfo['rank_id'] == 1)) {
 
 		$eventInfo = $eventObj->get_info_filtered();
 		$eventMemberInfo = $eventObj->objEventMember->get_info_filtered();
@@ -52,10 +52,10 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 
 		$memberoptions = "<option value=''>Select</option>";
 		$result = $mysqli->query("SELECT m.member_id, m.username, r.ordernum, r.name FROM ".$dbprefix."members m, ".$dbprefix."ranks r WHERE m.rank_id = r.rank_id AND m.member_id IN ".$sqlInvitedMembers." AND m.disabled = '0' AND m.rank_id != '1' ORDER BY r.ordernum DESC");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$row = filterArray($row);
 			$eventMemberID = $eventObj->getEventMemberID($row['member_id']);
-			if($eventMemberID !== false) {
+			if ($eventMemberID !== false) {
 
 				$memberoptions .= "<option value='".$eventMemberID."'>".$row['name']." ".$row['username']."</option>";
 

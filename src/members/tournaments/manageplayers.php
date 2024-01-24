@@ -13,7 +13,7 @@
  */
 
 
-if(!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
+if (!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
 
 	exit();
 }
@@ -26,13 +26,13 @@ else {
 	$tournamentObj->select($tID);
 
 
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 
 		exit();
 	}
 }
 
-if($tournamentInfo['playersperteam'] > 1) {
+if ($tournamentInfo['playersperteam'] > 1) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManageTeams';</script>");
 }
 
@@ -57,12 +57,12 @@ $arrTeams = $tournamentObj->getTeams(true);
 
 $maxPlayers = $tournamentInfo['playersperteam']*$tournamentInfo['maxteams'];
 
-if($tournamentInfo['playersperteam'] == 1 && $tournamentInfo['seedtype'] == 2) {
+if ($tournamentInfo['playersperteam'] == 1 && $tournamentInfo['seedtype'] == 2) {
 	$dispRandomSeedMessage = "As you add new players, they will be assigned a random seed.  Click on a player to change and/or view their seed.  ";
 }
 
 $dispClanOnly = "";
-if($tournamentInfo['access'] == 1) {
+if ($tournamentInfo['access'] == 1) {
 	$dispClanOnly = "This is a clan only tournament.  You may only add clan members to this tournament.";
 }
 
@@ -86,25 +86,25 @@ echo "
 
 
 	$dispSeedChangeDiv = "";
-	if($tournamentInfo['playersperteam'] == 1) {
+	if ($tournamentInfo['playersperteam'] == 1) {
 		$dispSeedChangeDiv = "<div id='changeSeedDiv' class='main' style='display: none'></div><div id='successBox' class='main' style='display: none'></div>";
 		$i = 1;
 		$arrSortPlayers = array();
 		$arrDispPlayers = array();
 		$arrEmptySpots = array();
-		foreach($arrTeams as $teamID) {
+		foreach ($arrTeams as $teamID) {
 
 			$teamPlayer = $tournamentObj->getTeamPlayers($teamID, true);
 			$tournamentObj->objTeam->select($teamID);
 			$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 
 
-			if(count($teamPlayer) > 0) {
+			if (count($teamPlayer) > 0) {
 
 				$tournamentObj->objPlayer->select($teamPlayer[0]);
 				$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
 
-				if($member->select($playerInfo['member_id'])) {
+				if ($member->select($playerInfo['member_id'])) {
 					$dispPlayer = $member->get_info_filtered("username");
 
 				}
@@ -135,7 +135,7 @@ echo "
 		asort($arrSortPlayers);
 		$arrCombinedPlayersAndEmpty = $arrSortPlayers+$arrEmptySpots;
 		$i=1;
-		foreach($arrCombinedPlayersAndEmpty as $key=>$value) {
+		foreach ($arrCombinedPlayersAndEmpty as $key=>$value) {
 
 			echo "<div class='mttPlayerSlot main'>".$i.". ".$arrDispPlayers[$key]."</div>";
 			$i++;
@@ -214,7 +214,7 @@ echo "
 	}
 	
 	";
-	if($tournamentInfo['playersperteam'] == 1) {
+	if ($tournamentInfo['playersperteam'] == 1) {
 
 		echo "
 			function setPlayerSeed(intTeamID) {

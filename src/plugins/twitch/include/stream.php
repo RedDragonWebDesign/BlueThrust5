@@ -1,13 +1,14 @@
 <?php
 
-	if(!defined("MAIN_ROOT")) { exit(); }
+	if (!defined("MAIN_ROOT")) {
+exit(); }
 
 	$member = new Member($mysqli);
 	$twitchObj = new Twitch($mysqli);
 	$pluginObj = new btPlugin($mysqli);
 	$pluginObj->selectByName("Twitch");
 
-	if(!$member->select($_GET['user']) || !$twitchObj->hasTwitch($_GET['user'])) {
+	if (!$member->select($_GET['user']) || !$twitchObj->hasTwitch($_GET['user'])) {
 		echo "
 			<script type='text/javascript'>window.location='".MAIN_ROOT."plugins/twitch'</script>
 		";
@@ -60,7 +61,7 @@
 
 		<?php
 
-			if($pluginObj->getConfigInfo("autohidechat") == "1") {
+			if ($pluginObj->getConfigInfo("autohidechat") == "1") {
 				echo "$('#hideChatButton').click();";
 			}
 

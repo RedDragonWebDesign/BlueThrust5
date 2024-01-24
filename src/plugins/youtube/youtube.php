@@ -61,10 +61,10 @@
 		public function hasYoutube($memberID) {
 
 			$returnVal = false;
-			if(is_numeric($memberID)) {
+			if (is_numeric($memberID)) {
 
 				$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE member_id = '".$memberID."'");
-				if($result->num_rows > 0) {
+				if ($result->num_rows > 0) {
 					$row = $result->fetch_assoc();
 					$this->select($row['youtube_id']);
 					$returnVal = true;
@@ -82,9 +82,9 @@
 			$channelHash = md5($channelID);
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE loginhash = '".$channelHash."'");
-			if($result->num_rows > 0) {
+			if ($result->num_rows > 0) {
 				$row = $result->fetch_assoc();
-				if($row['channel_id'] == $channelID) {
+				if ($row['channel_id'] == $channelID) {
 					$this->select($row['youtube_id']);
 					$returnVal = true;
 				}
@@ -106,7 +106,7 @@
 
 			$response = json_decode($response, true);
 
-			if(isset($response['access_token'])) {
+			if (isset($response['access_token'])) {
 				$this->accessToken = $response['access_token'];
 			}
 
@@ -124,10 +124,10 @@
 			$response = $this->httpRequest($this->tokenURL, "POST", array("Content-Type: application/x-www-form-urlencoded"), $postData);
 			$response = json_decode($response, true);
 
-			if(isset($response['access_token'])) {
+			if (isset($response['access_token'])) {
 				$this->accessToken = $response['access_token'];
 
-				if($this->intTableKeyValue != "") {
+				if ($this->intTableKeyValue != "") {
 					$this->update(array("access_token"), array($response['access_token']));
 				}
 
@@ -139,12 +139,12 @@
 
 			$arrResponse = false;
 			$arrTypes = array("contentDetails", "snippet", "statistics");
-			if(isset($this->accessToken) && in_array($infoType, $arrTypes) && isset($this->refreshToken) && $countUsage < 2) {
+			if (isset($this->accessToken) && in_array($infoType, $arrTypes) && isset($this->refreshToken) && $countUsage < 2) {
 				$response = file_get_contents("https://www.googleapis.com/youtube/v3/channels?part=".$infoType."&mine=true&access_token=".$this->accessToken);
 
 				$arrResponse = json_decode($response, true);
 
-				if($arrResponse['error']['code'] == 401 || $response == "") {
+				if ($arrResponse['error']['code'] == 401 || $response == "") {
 					$this->refreshAccessToken();
 					$newUsage = $countUsage+1;
 					$arrResponse = $this->getChannelInfo($infoType, $newUsage);
@@ -159,12 +159,12 @@
 		public function getVideos($countUsage=0) {
 
 			$arrResponse = false;
-			if(isset($this->accessToken) && isset($this->refreshToken) && $countUsage < 2 && isset($this->arrObjInfo['uploads_id'])) {
+			if (isset($this->accessToken) && isset($this->refreshToken) && $countUsage < 2 && isset($this->arrObjInfo['uploads_id'])) {
 
 				$response = file_get_contents("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=".$this->arrObjInfo['uploads_id']."&access_token=".$this->accessToken);
 				$arrResponse = json_decode($response, true);
 
-				if($arrResponse['error']['code'] == 401 || $response == "") {
+				if ($arrResponse['error']['code'] == 401 || $response == "") {
 					$this->refreshAccessToken();
 					$newUsage = $countUsage+1;
 					$arrResponse = $this->getVideos($newUsage);
@@ -177,7 +177,7 @@
 
 		public function reloadCache() {
 
-			if(isset($this->intTableKeyValue) && isset($this->accessToken) && isset($this->refreshToken)) {
+			if (isset($this->intTableKeyValue) && isset($this->accessToken) && isset($this->refreshToken)) {
 
 				$channelInfo = $this->getChannelInfo();
 				$channelSnippet = $this->getChannelInfo("snippet");
@@ -197,7 +197,7 @@
 
 		public function updateVideos() {
 
-			if(isset($this->intTableKeyValue) && isset($this->accessToken) && isset($this->refreshToken)) {
+			if (isset($this->intTableKeyValue) && isset($this->accessToken) && isset($this->refreshToken)) {
 
 				$arrVideoInfo = $this->getVideos();
 				$result = $this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."youtube_videos WHERE youtube_id = '".$this->intTableKeyValue."'");
@@ -205,14 +205,14 @@
 
 				$videoCount = 0;
 				$arrColumns = array("youtube_id", "member_id", "video_id", "thumbnail", "title", "dateuploaded");
-				foreach($arrVideoInfo['items'] as $videoInfo) {
+				foreach ($arrVideoInfo['items'] as $videoInfo) {
 
 					$arrValues = array($this->intTableKeyValue, $this->arrObjInfo['member_id'], $videoInfo['snippet']['resourceId']['videoId'], $videoInfo['snippet']['thumbnails']['medium']['url'], $videoInfo['snippet']['title'], $videoInfo['snippet']['publishedAt']);
 
 					$this->objYTVideo->addNew($arrColumns, $arrValues);
 
 					$videoCount++;
-					if($videoCount > 4) {
+					if ($videoCount > 4) {
 						break;
 					}
 				}
@@ -241,10 +241,10 @@
 
 		public function dispSubscribeButton() {
 
-			if($this->arrObjInfo['subscribers'] >= 1000 && $this->arrObjInfo['subscribers'] < 1000000) {
+			if ($this->arrObjInfo['subscribers'] >= 1000 && $this->arrObjInfo['subscribers'] < 1000000) {
 				$dispSubscribers = floor($this->arrObjInfo['subscribers']/1000)."K";
 			}
-			elseif($this->arrObjInfo['subscribers'] >= 1000000) {
+			elseif ($this->arrObjInfo['subscribers'] >= 1000000) {
 				$dispSubscribers = floor($this->arrObjInfo['subscribers']/1000000)."M";
 			}
 			else {
@@ -294,11 +294,11 @@
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-			if($method == "POST") {
+			if ($method == "POST") {
 				curl_setopt($ch, CURLOPT_POST, true);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
 			}
-			elseif($method = "DELETE") {
+			elseif ($method = "DELETE") {
 				curl_setopt($ch, CURLOPT_POST, true);
 				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
@@ -321,10 +321,10 @@
 		public function delete() {
 
 			$returnVal = false;
-			if($this->intTableKeyValue != "" && $this->arrObjInfo['access_token'] != "") {
+			if ($this->intTableKeyValue != "" && $this->arrObjInfo['access_token'] != "") {
 
 				$blnDelete = parent::delete();
-				if($this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."youtube_videos WHERE youtube_id = '".$this->intTableKeyValue."'") && $blnDelete) {
+				if ($this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."youtube_videos WHERE youtube_id = '".$this->intTableKeyValue."'") && $blnDelete) {
 					$returnVal = true;
 					$this->MySQL->query("OPTIMIZE TABLE `".$this->MySQL->get_tablePrefix()."youtube_videos`");
 					file_get_contents("https://accounts.google.com/o/oauth2/revoke?token=".$this->arrObjInfo['access_token']);

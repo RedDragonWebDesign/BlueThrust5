@@ -6,7 +6,7 @@
 	require_once("classes/campaign.php");
 
 	$donationPlugin = new btPlugin($mysqli);
-	if($donationPlugin->selectByName("Donations")) {
+	if ($donationPlugin->selectByName("Donations")) {
 
 		$donationObj = new Donation($mysqli);
 
@@ -16,7 +16,7 @@
 		$arrColumns = array("donationcampaign_id", "member_id", "name", "message", "datesent", "amount", "paypalemail", "transaction_id", "response");
 
 		$p->setMode($donationPlugin->getConfigInfo("mode"));
-		if($p->validate_ipn() && $p->ipn_data['payment_status'] != "Failed" && $p->ipn_data['payment_status'] != "Denied") {
+		if ($p->validate_ipn() && $p->ipn_data['payment_status'] != "Failed" && $p->ipn_data['payment_status'] != "Denied") {
 
 			$member = new Member($mysqli);
 			$campaignObj = new DonationCampaign($mysqli);
@@ -27,7 +27,7 @@
 			$customVars = json_decode($arrData['custom'], true);
 
 
-			if($campaignObj->select($customVars['campaign_id']) && $member->select($customVars['member_id'])) {
+			if ($campaignObj->select($customVars['campaign_id']) && $member->select($customVars['member_id'])) {
 
 				$campaignName = $campaignObj->get_info_filtered("title");
 				$medalID = $campaignObj->get_info("awardmedal");

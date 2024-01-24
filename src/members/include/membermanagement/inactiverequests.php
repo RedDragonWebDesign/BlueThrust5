@@ -12,20 +12,20 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
 
 
 $addAutoDisableMessage = "";
-if($websiteInfo['maxdsl'] != 0) {
+if ($websiteInfo['maxdsl'] != 0) {
 	$addAutoDisableMessage = " and will not be auto-disabled for not logging in after ".$websiteInfo['maxdsl']." days";
 }
 

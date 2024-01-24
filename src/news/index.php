@@ -19,10 +19,10 @@ require_once($prevFolder."_setup.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -48,9 +48,9 @@ $totalPages = $newsObj->calcPages();
 
 $arrPosts = $newsObj->getPosts();
 
-if(count($arrPosts) > 0) {
+if (count($arrPosts) > 0) {
 
-	foreach($arrPosts as $post) {
+	foreach ($arrPosts as $post) {
 		$newsObj->select($post['news_id']);
 		$newsObj->show();
 	}

@@ -32,7 +32,7 @@ $memberInfo = $member->get_info_filtered();
 $commentObj = new Basic($mysqli, "comments", "comment_id");
 $newsObj = new News($mysqli);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $commentObj->select($_POST['commentID'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $commentObj->select($_POST['commentID'])) {
 
 	$commentInfo = $commentObj->get_info_filtered();
 

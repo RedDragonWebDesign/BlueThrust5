@@ -31,29 +31,29 @@ $member->select($_SESSION['btUsername']);
 
 $boardObj = new ForumBoard($mysqli);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 
 
-	if(isset($_POST['subforum']) && $boardObj->select($_POST['subforum'])) {
+	if (isset($_POST['subforum']) && $boardObj->select($_POST['subforum'])) {
 		$arrSubForums = $boardObj->getSubForums();
 
 
 		$arrSelectBoard = "";
-		if(isset($_POST['bID']) && $boardObj->select($_POST['bID'])) {
+		if (isset($_POST['bID']) && $boardObj->select($_POST['bID'])) {
 			$arrSelectBoard = $boardObj->findBeforeAfter();
 		}
 		else {
 			$_POST['bID'] = "";
 		}
 
-		foreach($arrSubForums as $forumID) {
-			if($forumID != $_POST['bID']) {
+		foreach ($arrSubForums as $forumID) {
+			if ($forumID != $_POST['bID']) {
 				$boardObj->select($forumID);
 				$boardInfo = $boardObj->get_info_filtered();
 
 				$selectBoard = "";
-				if($_POST['bID'] != "" && $arrSelectBoard[0] == $boardInfo['forumboard_id']) {
+				if ($_POST['bID'] != "" && $arrSelectBoard[0] == $boardInfo['forumboard_id']) {
 					$selectBoard = " selected";
 				}
 
@@ -61,7 +61,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			}
 		}
 
-		if(count($arrSubForums) == 0 || ($_POST['bID'] != "" && count($arrSubForums) == 1)) {
+		if (count($arrSubForums) == 0 || ($_POST['bID'] != "" && count($arrSubForums) == 1)) {
 			echo "<option value='first'>(first board)</option>";
 		}
 

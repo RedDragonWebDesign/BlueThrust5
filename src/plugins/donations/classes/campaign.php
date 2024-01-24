@@ -49,7 +49,7 @@
 		public function getCurrentPeriodRange($returnTimestamps=false) {
 
 			$returnVal = array();
-			if($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] != 0) {
+			if ($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] != 0) {
 
 				$recurAmount = $this->arrObjInfo['recurringamount'];
 				$currentPeriod = $this->arrObjInfo['currentperiod'];
@@ -58,7 +58,7 @@
 				$month = substr($currentPeriod, 4, 2);
 				$day = substr($currentPeriod, 6, 2);
 
-				switch($this->arrObjInfo['recurringunit']) {
+				switch ($this->arrObjInfo['recurringunit']) {
 					case "days":
 						$currentPeriodDate = mktime(0,0,0,$month,$day,$year);
 						$nextPeriodDate = mktime(0,0,0,$month,$day+$recurAmount,$year);
@@ -84,7 +84,7 @@
 				$returnVal = (!$returnTimestamps) ? array("current" => $currentPeriod, "next" => $nextPeriod) : array("current" => $currentPeriodDate, "next" => $nextPeriodDate);
 
 			}
-			elseif($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] == 0) {
+			elseif ($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] == 0) {
 				// Default Prior 30 days range
 				$x30Days = 60*60*24*30;
 				$returnVal = (!$returnTimestamps) ? array() : array("current" => 0, "next" => time());
@@ -97,18 +97,18 @@
 
 		public function updateCurrentPeriod() {
 
-			if($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] != 0) {
+			if ($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] != 0) {
 
 				$recurUnit = $this->arrObjInfo['recurringunit'];
 				$todayPeriod = date($this->arrPeriodDateCodes[$recurUnit]);
 
 				$currentPeriodRange = $this->getCurrentPeriodRange();
-				if($todayPeriod >= $currentPeriodRange['next']) {
+				if ($todayPeriod >= $currentPeriodRange['next']) {
 					$this->arrObjInfo['currentperiod'] = $currentPeriodRange['next'];
 					$this->blnUpdateCurrentPeriod = true;
 					$this->updateCurrentPeriod();
 				}
-				elseif($this->blnUpdateCurrentPeriod) {
+				elseif ($this->blnUpdateCurrentPeriod) {
 					$this->update(array("currentperiod"), array($this->arrObjInfo['currentperiod']));
 					$this->blnUpdateCurrentPeriod = false;
 				}
@@ -121,7 +121,7 @@
 		public function calcPeriodsSinceStart() {
 
 			$returnVal = 0;
-			if($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] != 0) {
+			if ($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] != 0) {
 
 				$startDate = $this->arrObjInfo['datestarted'];
 				$recurAmount = $this->arrObjInfo['recurringamount'];
@@ -142,7 +142,7 @@
 		public function populateDonationInfo($total=false, $currentPeriod=0, $nextPeriod=0) {
 
 			$donationInfo = array();
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 
 				$arrPeriod = $this->getCurrentPeriodRange(true);
 				$sqlCurrentPeriod = ($currentPeriod == 0) ? $arrPeriod['current'] : $currentPeriod;
@@ -151,7 +151,7 @@
 				$addSQL = (count($arrPeriod) == 0 || $total) ? "" : " AND datesent >= '".$sqlCurrentPeriod."' AND datesent < '".$sqlNextPeriod."'";
 
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."donations WHERE donationcampaign_id = '".$this->intTableKeyValue."' ".$addSQL." GROUP BY transaction_id ORDER BY datesent DESC");
-				while($row = $result->fetch_assoc()) {
+				while ($row = $result->fetch_assoc()) {
 					$donationInfo[] = filterArray($row);
 					$totalDonationAmount += $row['amount'];
 				}
@@ -176,10 +176,10 @@
 		public function getDonators($allTime=false) {
 
 			$returnVal = array();
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 
 				$addSQL = "";
-				if(!$allTime) {
+				if (!$allTime) {
 
 					$period = $this->getCurrentPeriodRange(true);
 
@@ -188,7 +188,7 @@
 				}
 
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."donations WHERE donationcampaign_id = '".$this->intTableKeyValue."'".$addSQL." GROUP BY transaction_id ORDER BY datesent DESC");
-				while($row = $result->fetch_assoc()) {
+				while ($row = $result->fetch_assoc()) {
 					$returnVal[] = $row;
 				}
 
@@ -201,12 +201,12 @@
 
 			$returnVal = array();
 
-			foreach($arrDonators as $arr) {
-				if($arr['member_id'] != 0) {
+			foreach ($arrDonators as $arr) {
+				if ($arr['member_id'] != 0) {
 					$returnVal[$arr['member_id']]['amount'] += $arr['amount'];
 					$returnVal[$arr['member_id']]['timesdonated'] += 1;
 
-					if($arr['datesent'] > $returnVal[$arr['member_id']]['lastdate']) {
+					if ($arr['datesent'] > $returnVal[$arr['member_id']]['lastdate']) {
 						$returnVal[$arr['member_id']]['lastdate'] = $arr['datesent'];
 						$returnVal[$arr['member_id']]['lastdonation'] = $arr['amount'];
 					}
@@ -227,14 +227,14 @@
 			$this->condenseDonators($arrDonators);
 			$arrList = array();
 			$i = 0;
-			foreach($arrDonators as $arr) {
+			foreach ($arrDonators as $arr) {
 
-				if(!in_array($arr['member_id'], $arrList)) {
+				if (!in_array($arr['member_id'], $arrList)) {
 
 					$isMember = $arr['member_id'] != 0;
 					$selectID = $isMember ? $arr['member_id'] : $arr['donation_id'];
 
-					if($i == 0) {
+					if ($i == 0) {
 						$addCSS = "";
 						$i = 1;
 					}
@@ -245,14 +245,14 @@
 
 					$this->displayDonator($selectID, $isMember, $addCSS);
 
-					if($arr['member_id'] != 0) {
+					if ($arr['member_id'] != 0) {
 						$arrList[] = $arr['member_id'];
 					}
 
 					$counter++;
 				}
 
-				if($limit != 0 && $counter == $limit) {
+				if ($limit != 0 && $counter == $limit) {
 					break;
 				}
 
@@ -264,7 +264,7 @@
 			$member = new Member($this->MySQL);
 
 			$arrSymbols = $this->getCurrencySymbol();
-			if($isMember && $member->select($selectID)) {
+			if ($isMember && $member->select($selectID)) {
 				$dispDonatorInfo['name'] = $member->getMemberLink();
 				$dispDonatorInfo['amount'] = $this->arrDonatorList[$selectID]['amount'];
 				$dispDonatorInfo['lastdate'] = getPreciseTime($this->arrDonatorList[$selectID]['lastdate']);
@@ -288,13 +288,13 @@
 
 		public function showMessagesList($allTime=false) {
 
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 				$i = 0;
 				$arrDonators = $this->getDonators($allTime);
 				$count = 0;
-				foreach($arrDonators as $donationInfo) {
-					if($donationInfo['message'] != "") {
-						if($i == 0) {
+				foreach ($arrDonators as $donationInfo) {
+					if ($donationInfo['message'] != "") {
+						if ($i == 0) {
 							$addCSS = "";
 							$i = 1;
 						}
@@ -308,7 +308,7 @@
 					}
 				}
 
-				if($count == 0) {
+				if ($count == 0) {
 
 					echo "	
 						<p align='center' class='main'>
@@ -324,11 +324,11 @@
 
 
 		public function displayMessage($donationID, $css="") {
-			if($this->donationObj->select($donationID)) {
+			if ($this->donationObj->select($donationID)) {
 				$member = new Member($this->MySQL);
 				$donationInfo = $this->donationObj->get_info_filtered();
 
-				if($member->select($donationInfo['member_id'])) {
+				if ($member->select($donationInfo['member_id'])) {
 					$extraName = $donationInfo['name'] != "" ? " <i>(".$donationInfo['name'].")</i>" : "";
 					$dispDonatorName = $member->getMemberLink().$extraName;
 				}
@@ -351,7 +351,7 @@
 		public function getCurrencySymbol() {
 
 			$returnVal = array();
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 				require_once(BASE_DIRECTORY."plugins/donations/include/currency_codes.php");
 
 				$blnSymbolLeft = $arrPaypalCurrencyInfo[$this->arrObjInfo['currency']]['position'] == "left";
@@ -366,13 +366,13 @@
 		public function getCurrentEndDate() {
 
 			$currentEndDate = 0;
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 
-				if($this->arrObjInfo['dateend'] != 0) {
+				if ($this->arrObjInfo['dateend'] != 0) {
 					$periodRange = $this->getCurrentPeriodRange(true);
 					$currentEndDate = ($periodRange['next'] > $this->arrObjInfo['dateend']) ? $this->arrObjInfo['dateend'] : $periodRange['next']-(60*60*24);
 				}
-				elseif($this->arrObjInfo['dateend'] == 0 && $this->arrObjInfo['currentperiod'] != 0) {
+				elseif ($this->arrObjInfo['dateend'] == 0 && $this->arrObjInfo['currentperiod'] != 0) {
 					$periodRange = $this->getCurrentPeriodRange(true);
 					$currentEndDate = $periodRange['next']-(60*60*24);
 				}
@@ -386,17 +386,17 @@
 
 			$currentEndDate = $this->getCurrentEndDate();
 			$returnVal = "";
-			if($currentEndDate != 0) {
+			if ($currentEndDate != 0) {
 
 				$timeDiff = $currentEndDate-time();
-				if($timeDiff < 0) {
+				if ($timeDiff < 0) {
 					$returnVal = "Campaign Ended";
 				}
-				elseif($timeDiff < 3600) {
+				elseif ($timeDiff < 3600) {
 					$timeLeft = round($timeDiff/60);
 					$returnVal = $timeLeft." ".pluralize("minute", $timeLeft);
 				}
-				elseif($timeDiff < 86400) {
+				elseif ($timeDiff < 86400) {
 					$timeLeft = round($timeDiff/3600);
 					$returnVal = $timeLeft." ".pluralize("hour", $timeLeft);
 				}
@@ -414,7 +414,7 @@
 
 			$currentEndDate = $this->getCurrentEndDate();
 			$returnVal = false;
-			if($currentEndDate != 0) {
+			if ($currentEndDate != 0) {
 				$secondsLeft = $currentEndDate-time();
 				$returnVal = ($secondsLeft > 0) ? round($secondsLeft/(60*60*24)) : 0;
 			}
@@ -425,7 +425,7 @@
 		public function __get($name) {
 
 			$arrConstants = array("DAY", "WEEK", "MONTH", "YEAR");
-			if(in_array($name, $arrConstants)) {
+			if (in_array($name, $arrConstants)) {
 				return constant("self::$name");
 			}
 

@@ -14,7 +14,7 @@
 
 require_once("../../classes/chatroom.php");
 
-if(!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
+if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 
 	exit();
 }
@@ -26,7 +26,7 @@ else {
 
 
 
-	if(!$member->hasAccess($consoleObj) || !$eventObj->select($eID)) {
+	if (!$member->hasAccess($consoleObj) || !$eventObj->select($eID)) {
 
 		exit();
 	}
@@ -35,7 +35,7 @@ else {
 }
 
 
-if($eventInfo['member_id'] != $memberInfo['member_id'] && !in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true))) {
+if ($eventInfo['member_id'] != $memberInfo['member_id'] && !in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true))) {
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."members';
@@ -50,7 +50,7 @@ $eventChatID = $eventObj->chatRoomStarted();
 
 
 
-if($eventChatID === false && $memberInfo['member_id'] != $eventInfo['member_id']) {
+if ($eventChatID === false && $memberInfo['member_id'] != $eventInfo['member_id']) {
 
 	echo "
 		<div style='display: none' id='successBox'>
@@ -67,7 +67,7 @@ if($eventChatID === false && $memberInfo['member_id'] != $eventInfo['member_id']
 
 	exit();
 }
-elseif($eventChatID === false && $memberInfo['member_id'] == $eventInfo['member_id']) {
+elseif ($eventChatID === false && $memberInfo['member_id'] == $eventInfo['member_id']) {
 
 	$eventChatObj->addNew(array("event_id", "datestarted"), array($eventInfo['event_id'], time()));
 
@@ -75,7 +75,7 @@ elseif($eventChatID === false && $memberInfo['member_id'] == $eventInfo['member_
 
 
 }
-elseif($eventChatObj->select($eventChatID)) {
+elseif ($eventChatObj->select($eventChatID)) {
 
 	$eventChatInfo = $eventChatObj->get_info_filtered();
 

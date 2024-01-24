@@ -1,6 +1,7 @@
 <?php
 
-	if(!defined("MAIN_ROOT")) { exit(); }
+	if (!defined("MAIN_ROOT")) {
+exit(); }
 
 	$donationLogForm = new Form();
 
@@ -13,7 +14,7 @@
 	$setStartValue = $_GET['start'];
 	$setEndValue = $_GET['end'];
 
-	if(is_numeric($_GET['start'])) {
+	if (is_numeric($_GET['start'])) {
 
 		$dateObj->setTimestamp($_GET['start']);
 
@@ -26,7 +27,7 @@
 
 	$defaultStartDate = $dateObj->format("M j, Y");
 
-	if(is_numeric($_GET['end'])) {
+	if (is_numeric($_GET['end'])) {
 		$dateObj->setTimestamp($_GET['end']);
 	}
 	else {

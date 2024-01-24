@@ -14,13 +14,13 @@
 
 require_once("../classes/event.php");
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -39,22 +39,23 @@ $arrTimezones = DateTimeZone::listIdentifiers();
 if ( ! empty($_POST['submit']) ) {
 
 	// Check Title
-	if(trim($_POST['eventtitle']) == "") {
+	if (trim($_POST['eventtitle']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Event title may not be blank.<br>";
 		$countErrors++;
 	}
 
 	// Check Start Time
 	$arrHours = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
-	if(!in_array($_POST['starthour'], $arrHours)) {
+	if (!in_array($_POST['starthour'], $arrHours)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid start hour.<br>";
 		$countErrors++;
 	}
 
 	$arrMinutes = array();
-	for($i=0;$i<=59;$i++) { $arrMinutes[] = $i; }
+	for ($i=0;$i<=59;$i++) {
+$arrMinutes[] = $i; }
 
-	if(!in_array($_POST['startminute'], $arrMinutes)) {
+	if (!in_array($_POST['startminute'], $arrMinutes)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid start minute.<br>";
 		$countErrors++;
 	}
@@ -73,7 +74,7 @@ if ( ! empty($_POST['submit']) ) {
 	//$startDay = date("j", ($_POST['startdate']/1000));
 	//$startYear = date("Y", ($_POST['startdate']/1000));
 
-	if($_POST['ampm'] == "pm") {
+	if ($_POST['ampm'] == "pm") {
 		$startHour = $_POST['starthour']+12;
 	}
 	else {
@@ -93,14 +94,14 @@ if ( ! empty($_POST['submit']) ) {
 	}
 	*/
 
-	if($_POST['invitetype'] != 1) {
+	if ($_POST['invitetype'] != 1) {
 		$inviteType = 0;
 	}
 	else {
 		$inviteType = 1;
 	}
 
-	if($_POST['openinvites'] != 0) {
+	if ($_POST['openinvites'] != 0) {
 		$openInvites = 1;
 	}
 	else {
@@ -108,13 +109,13 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	$arrCheckVisibility = array(0, 1, 2);
-	if(!in_array($_POST['visibility'], $arrCheckVisibility)) {
+	if (!in_array($_POST['visibility'], $arrCheckVisibility)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid visibility setting.<br>";
 		$countErrors++;
 	}
 
 
-	if($_POST['allowmessages'] != 0) {
+	if ($_POST['allowmessages'] != 0) {
 		$allowMessages = 1;
 	}
 	else {
@@ -123,14 +124,14 @@ if ( ! empty($_POST['submit']) ) {
 
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 		$eventObj = new Event($mysqli);
 
 		$arrColumns = array("member_id", "title", "description", "location", "startdate", "publicprivate", "visibility", "messages", "invitepermission", "timezone");
 		$arrValues = array($memberInfo['member_id'], $_POST['eventtitle'], $_POST['eventdetails'], $_POST['eventlocation'], $setStartTime, $inviteType, $_POST['visibility'], $allowMessages, $openInvites, $_POST['timezone']);
 
-		if($eventObj->addNew($arrColumns, $arrValues)) {
+		if ($eventObj->addNew($arrColumns, $arrValues)) {
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -155,7 +156,7 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
-	if($countErrors > 0) {
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
@@ -166,12 +167,12 @@ if ( ! empty($_POST['submit']) ) {
 if ( empty($_POST['submit']) ) {
 
 	$houroptions = "<option value='0'>12</option>";
-	for($i=1;$i<=11;$i++) {
+	for ($i=1;$i<=11;$i++) {
 		$houroptions .= "<option value='".$i."'>".$i."</option>";
 	}
 
-	for($i=0;$i<=59;$i++) {
-		if($i < 10) {
+	for ($i=0;$i<=59;$i++) {
+		if ($i < 10) {
 			$dispI = "0".$i;
 		}
 		else {
@@ -192,7 +193,7 @@ if ( empty($_POST['submit']) ) {
 			
 			";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to add new event because the following errors occurred:</strong><br><br>
@@ -202,7 +203,7 @@ if ( empty($_POST['submit']) ) {
 	}
 
 	$timezoneoptions = "<option value=''>[Use Default]</option>";
-	foreach($arrTimezones as $timeZone) {
+	foreach ($arrTimezones as $timeZone) {
 
 		$tz = new DateTimeZone($timeZone);
 		$dispOffset = ((($tz->getOffset(new DateTime("now", $tz)))/60)/60);

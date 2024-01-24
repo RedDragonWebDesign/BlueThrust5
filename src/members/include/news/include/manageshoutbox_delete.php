@@ -35,14 +35,14 @@ $newsObj = new News($mysqli);
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 	$memberInfo = $member->get_info_filtered();
 
 	$arrPostIDs = json_decode($_POST['deletePosts'], true);
 
-	foreach($arrPostIDs as $postID) {
-		if($newsObj->select($postID) && $newsObj->get_info("newstype") == 3) {
+	foreach ($arrPostIDs as $postID) {
+		if ($newsObj->select($postID) && $newsObj->get_info("newstype") == 3) {
 			$newsObj->delete();
 		}
 	}

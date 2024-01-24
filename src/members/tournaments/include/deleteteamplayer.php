@@ -30,7 +30,7 @@ $member->select($_SESSION['btUsername']);
 
 $tournamentObj = new Tournament($mysqli);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objPlayer->select($_POST['playerID']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objPlayer->select($_POST['playerID']) && $member->hasAccess($consoleObj)) {
 
 	$memberInfo = $member->get_info();
 
@@ -42,7 +42,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objPlayer
 	$tmemberID = $tournamentInfo['member_id'];
 
 
-	if($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
+	if ($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
 
 		$tournamentObj->objPlayer->update(array("team_id"), array(0));
 

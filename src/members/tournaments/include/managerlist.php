@@ -13,7 +13,7 @@
  */
 
 
-if(!defined("SHOW_MANAGERLIST")) {
+if (!defined("SHOW_MANAGERLIST")) {
 	require_once("../../../_setup.php");
 	require_once("../../../classes/member.php");
 	require_once("../../../classes/rank.php");
@@ -31,7 +31,7 @@ if(!defined("SHOW_MANAGERLIST")) {
 
 	$tournamentObj = new Tournament($mysqli);
 
-	if(!$member->authorizeLogin($_SESSION['btPassword']) || !$tournamentObj->select($_POST['tID']) || $tournamentObj->get_info("member_id") != $memberInfo['member_id'] || !$member->hasAccess($consoleObj)) {
+	if (!$member->authorizeLogin($_SESSION['btPassword']) || !$tournamentObj->select($_POST['tID']) || $tournamentObj->get_info("member_id") != $memberInfo['member_id'] || !$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -39,13 +39,13 @@ if(!defined("SHOW_MANAGERLIST")) {
 
 $arrManagers = $tournamentObj->getManagers();
 
-foreach($arrManagers as $tManagerID => $tMemberID) {
+foreach ($arrManagers as $tManagerID => $tMemberID) {
 	$member->select($tMemberID);
 	echo "<div class='mttPlayerSlot main'>".$member->getMemberLink()."<div class='mttDeletePlayer'><a href='javascript:void(0)' onclick=\"deleteManager('".$tManagerID."')\">X</a></div></div>";
 
 }
 
-if(count($arrManagers) == 0) {
+if (count($arrManagers) == 0) {
 	echo "
 		<div class='shadedBox' style='width: 75%; margin-top: 10px; margin-left: auto; margin-right: auto'>
 			<p class='main' align='center'>

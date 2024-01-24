@@ -35,16 +35,16 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 $checkAccess = $checkAccess1 || $checkAccess2;
 
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($checkAccess) {
+	if ($checkAccess) {
 
 
 
-		if(is_array($_SESSION['btStatCache']) AND count($_SESSION['btStatCache']) > 0) {
+		if (is_array($_SESSION['btStatCache']) AND count($_SESSION['btStatCache']) > 0) {
 
 			echo "
 			
@@ -59,20 +59,20 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 			$counter = 0;
 			$totalStats = count($_SESSION['btStatCache']);
-			foreach($_SESSION['btStatCache'] as $key => $statInfo) {
+			foreach ($_SESSION['btStatCache'] as $key => $statInfo) {
 				$statInfo = filterArray($statInfo);
 				$counter++;
 
 				$statType = "Input";
 				$dispFormula = "<i>none</i>";
-				if($statInfo['statType'] == "calculate") {
+				if ($statInfo['statType'] == "calculate") {
 						$statType = "Auto-Calculated";
 
 						$dispFirstStat = filterText($_SESSION['btStatCache'][$statInfo['firstStat']]['statName']);
 						$dispSecondStat = filterText($_SESSION['btStatCache'][$statInfo['secondStat']]['statName']);
 
 						$dispOp = "";
-						switch($statInfo['calcOperation']) {
+						switch ($statInfo['calcOperation']) {
 							case "add":
 								$dispOp = " + ";
 								break;
@@ -92,12 +92,12 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				}
 
 				$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveStat('up', '".$key."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' title='Move Up' width='24' height='24'></a>";
-				if($counter == 1) {
+				if ($counter == 1) {
 					$dispUpArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' width='24' height='24'>";
 				}
 
 				$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveStat('down', '".$key."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' title='Move Down' width='24' height='24'></a>";
-				if($totalStats == $counter) {
+				if ($totalStats == $counter) {
 					$dispDownArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' width='24' height='24'>";
 				}
 

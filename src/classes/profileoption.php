@@ -35,12 +35,12 @@ class ProfileOption extends BasicSort {
 	function getSelectValues() {
 		$returnVal = false;
 
-		if($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue) && $this->arrObjInfo['optiontype'] == "select") {
+		if ($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue) && $this->arrObjInfo['optiontype'] == "select") {
 
 			$returnArr = array();
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."profileoptions_select WHERE profileoption_id = '".$this->intTableKeyValue."' ORDER BY sortnum");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
 				$returnArr[$row['selectopt_id']] = $row['selectvalue'];
 
@@ -57,11 +57,11 @@ class ProfileOption extends BasicSort {
 
 		$returnVal = false;
 
-		if($this->intTableKeyValue != "" && trim($strValue) != "") {
+		if ($this->intTableKeyValue != "" && trim($strValue) != "") {
 			$arrColumns = array("profileoption_id", "selectvalue", "sortnum");
 			$arrValues = array($this->intTableKeyValue, $strValue, $intSortNum);
 
-			if($this->objProfileOptionSelect->addNew($arrColumns, $arrValues)) {
+			if ($this->objProfileOptionSelect->addNew($arrColumns, $arrValues)) {
 				$returnVal = true;
 			}
 
@@ -76,8 +76,8 @@ class ProfileOption extends BasicSort {
 
 		$returnVal = false;
 
-		if($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
-			if($this->arrObjInfo['optiontype'] == "select") {
+		if ($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
+			if ($this->arrObjInfo['optiontype'] == "select") {
 				$returnVal = true;
 			}
 		}
@@ -91,27 +91,27 @@ class ProfileOption extends BasicSort {
 
 		$returnVal = false;
 
-			if($this->intTableKeyValue != "") {
+			if ($this->intTableKeyValue != "") {
 			$countErrors = 0;
 			$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."profileoptions_select WHERE profileoption_id = '".$this->intTableKeyValue."'");
 
-			if($this->MySQL->error) {
+			if ($this->MySQL->error) {
 				$countErrors++;
 			}
 
 			$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."profileoptions_values WHERE profileoption_id = '".$this->intTableKeyValue."'");
 
-			if($this->MySQL->error) {
+			if ($this->MySQL->error) {
 				$countErrors++;
 			}
 
 			$this->MySQL->query("DELETE FROM ".$this->strTableName." WHERE profileoption_id = '".$this->intTableKeyValue."'");
 
-			if($this->MySQL->error) {
+			if ($this->MySQL->error) {
 				$countErrors++;
 			}
 
-			if($countErrors == 0) {
+			if ($countErrors == 0) {
 				$returnVal = true;
 			}
 

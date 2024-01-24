@@ -22,7 +22,7 @@ require_once("youtube.php");
 require_once($prevFolder."classes/member.php");
 
 
-if(trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
+if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
 }
 else {
@@ -38,7 +38,7 @@ $countErrors = 0;
 $dispBreadCrumb = "<a href='".$MAIN_ROOT."'>Home</a> > Log In";
 require_once($prevFolder."themes/".$THEME."/_header.php");
 
-if(constant("LOGGED_IN")) {
+if (constant("LOGGED_IN")) {
 
 	echo "
 		<script type='text/javascript'>
@@ -49,13 +49,13 @@ if(constant("LOGGED_IN")) {
 
 }
 
-if(isset($_GET['code']) && $_GET['state'] == $_SESSION['btYoutubeNonce'] && !isset($_GET['error'])) {
+if (isset($_GET['code']) && $_GET['state'] == $_SESSION['btYoutubeNonce'] && !isset($_GET['error'])) {
 
 	$arrURLInfo = parse_url($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 
 	$response = $ytObj->getAccessToken($_GET['code'], $arrURLInfo['scheme']."://".$arrURLInfo['host'].$arrURLInfo['path']);
 
-	if(isset($response['access_token'])) {
+	if (isset($response['access_token'])) {
 
 		$ytObj->accessToken = $response['access_token'];
 		$ytObj->refreshToken = ($response['refresh_token'] != "") ? $response['refresh_token'] : 1;
@@ -64,7 +64,7 @@ if(isset($_GET['code']) && $_GET['state'] == $_SESSION['btYoutubeNonce'] && !iss
 
 		$channelID = $channelInfo['items'][0]['id'];
 
-		if($ytObj->authorizeLogin($channelID)) {
+		if ($ytObj->authorizeLogin($channelID)) {
 			$ytInfo = $ytObj->get_info();
 
 			$memberObj = new Member($mysqli);
@@ -100,10 +100,10 @@ if(isset($_GET['code']) && $_GET['state'] == $_SESSION['btYoutubeNonce'] && !iss
 
 
 }
-elseif(isset($_GET['error'])) {
+elseif (isset($_GET['error'])) {
 	$dispError = "Unable to validate your Youtube account, please log in regularly through the website.";
 }
-elseif(!isset($_GET['error']) && !isset($_GET['code'])) {
+elseif (!isset($_GET['error']) && !isset($_GET['code'])) {
 
 	$loginLink = $ytObj->getConnectLink($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 	$_SESSION['btYoutubeNonce'] = $ytObj->tokenNonce;

@@ -14,13 +14,13 @@
 
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -39,13 +39,13 @@ $dispError = "";
 $countErrors = 0;
 
 
-if(isset($_GET['mID']) && $tournamentObj->objMatch->select($_GET['mID'])) {
+if (isset($_GET['mID']) && $tournamentObj->objMatch->select($_GET['mID'])) {
 
 	require_once("include/managematch.php");
 
 
 }
-elseif(isset($_GET['pID']) && $tournamentObj->objTournamentPool->objTournamentPoolMatch->select($_GET['pID'])) {
+elseif (isset($_GET['pID']) && $tournamentObj->objTournamentPool->objTournamentPoolMatch->select($_GET['pID'])) {
 
 	require_once("include/managepoolmatch.php");
 
@@ -61,7 +61,7 @@ else {
 			</tr>
 	";
 	$counter = 0;
-	foreach($arrTournaments as $tournamentID) {
+	foreach ($arrTournaments as $tournamentID) {
 
 		$tournamentObj->select($tournamentID);
 		$tournamentName = $tournamentObj->get_info_filtered("name");
@@ -74,10 +74,10 @@ else {
 		// Get matches
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentpools_teams WHERE tournament_id='".$tournamentID."' AND ((team1_id != '0' AND team2_id = '".$teamID."') OR (team2_id != '0' AND team1_id = '".$teamID."')) AND (team1approve = '0' OR team2approve = '0')");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$counter++;
 
-			if($row['team1_id'] != $teamID) {
+			if ($row['team1_id'] != $teamID) {
 				$dispOpponent = $tournamentObj->getPlayerName($row['team1_id']);
 			}
 			else {
@@ -85,7 +85,7 @@ else {
 			}
 			$tournamentObj->objPlayer->select($playerID);
 
-			if($tMemberObj->select($dispOpponent)) {
+			if ($tMemberObj->select($dispOpponent)) {
 				$dispOpponent = $tMemberObj->getMemberLink();
 			}
 
@@ -103,11 +103,11 @@ else {
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentmatch WHERE tournament_id='".$tournamentID."' AND ((team1_id != '0' AND team2_id = '".$teamID."') OR (team2_id != '0' AND team1_id = '".$teamID."')) AND (team1approve = '0' OR team2approve = '0') ORDER BY round");
 
 
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$counter++;
 
 
-			if($row['team1_id'] != $teamID) {
+			if ($row['team1_id'] != $teamID) {
 				$dispOpponent = $tournamentObj->getPlayerName($row['team1_id']);
 			}
 			else {
@@ -115,7 +115,7 @@ else {
 			}
 			$tournamentObj->objPlayer->select($playerID);
 
-			if($tMemberObj->select($dispOpponent)) {
+			if ($tMemberObj->select($dispOpponent)) {
 				$dispOpponent = $tMemberObj->getMemberLink();
 			}
 
@@ -135,7 +135,7 @@ else {
 
 	echo $dispPools;
 
-	foreach($arrDispMatches as $value) {
+	foreach ($arrDispMatches as $value) {
 		echo $value;
 	}
 
@@ -144,7 +144,7 @@ else {
 	echo "</table>";
 
 
-	if($counter == 0) {
+	if ($counter == 0) {
 
 		echo "
 			<div class='shadedBox' style='width: 40%; margin: 25px auto'>

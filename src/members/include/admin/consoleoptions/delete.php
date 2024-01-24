@@ -26,19 +26,19 @@ $consoleCatObj = new ConsoleCategory($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage Console Options");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $consoleObj->select($_POST['cID'])) {
+	if ($member->hasAccess($consoleObj) && $consoleObj->select($_POST['cID'])) {
 
 		define("MEMBERRANK_ID", $memberInfo['rank_id']);
 
 		$consoleInfo = $consoleObj->get_info();
 
 
-		if($_POST['confirm'] == 1) {
+		if ($_POST['confirm'] == 1) {
 			$consoleObj->delete();
 			$consoleObj->resortOrder();
 			$_GET['cID'] = $cID;
@@ -52,7 +52,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		}
 
 	}
-	elseif(!$consoleObj->select($_POST['cID'])) {
+	elseif (!$consoleObj->select($_POST['cID'])) {
 
 		echo "<p align='center'>Unable find the selected console option.  Please try again or contact the website administrator.</p>";
 

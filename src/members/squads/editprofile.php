@@ -13,7 +13,7 @@
  */
 
 
-if(!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
+if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 
 	exit();
 }
@@ -26,7 +26,7 @@ else {
 	$squadObj->select($sID);
 
 
-	if(!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "editprofile")) {
+	if (!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "editprofile")) {
 
 		exit();
 	}
@@ -48,17 +48,17 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 if ( ! empty($_POST['submit']) ) {
 
 	// Check Squad Name
-	if(trim($_POST['squadname']) == "") {
+	if (trim($_POST['squadname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a squad name.<br>";
 	}
 
 
-	if($_FILES['uploadlogo']['name'] != "") {
+	if ($_FILES['uploadlogo']['name'] != "") {
 
 		$uploadLogoObj = new BTUpload($_FILES['uploadlogo'], "squad_", "../../images/squads/", array(".png", ".jpg", ".gif", ".bmp"));
 
-		if(!$uploadLogoObj->uploadFile()) {
+		if (!$uploadLogoObj->uploadFile()) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload the squad logo. Please make sure the file extension is either .jpg, .png, .gif or .bmp and that the file size is not too big.<br>";
 		}
@@ -72,13 +72,13 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
-		if($_POST['recruiting'] != 0) {
+		if ($_POST['recruiting'] != 0) {
 			$_POST['recruiting'] = 1;
 		}
 
-		if($_POST['shoutbox'] != 0) {
+		if ($_POST['shoutbox'] != 0) {
 			$_POST['shoutbox'] = 1;
 		}
 
@@ -86,7 +86,7 @@ if ( ! empty($_POST['submit']) ) {
 		$arrColumns = array("name", "description", "logourl", "recruitingstatus", "privateshoutbox", "website");
 		$arrValues = array($_POST['squadname'], $_POST['squaddesc'], $logoImageURL, $_POST['recruiting'], $_POST['shoutbox'], $_POST['squadsite']);
 
-		if($squadObj->update($arrColumns, $arrValues)) {
+		if ($squadObj->update($arrColumns, $arrValues)) {
 
 			$squadInfo = $squadObj->get_info_filtered();
 
@@ -115,13 +115,13 @@ if ( ! empty($_POST['submit']) ) {
 }
 
 $privateSelected = "";
-if($squadInfo['privateshoutbox'] == 0) {
+if ($squadInfo['privateshoutbox'] == 0) {
 	$privateSelected = "selected";
 }
 
 
 $closeSelected = "";
-if($squadInfo['recruitingstatus'] == 0) {
+if ($squadInfo['recruitingstatus'] == 0) {
 	$closeSelected = "selected";
 }
 
@@ -132,7 +132,7 @@ echo "
 
 ";
 
-if($dispError != "") {
+if ($dispError != "") {
 	echo "
 	<div class='errorDiv'>
 	<strong>Unable to create squad because the following errors occurred:</strong><br><br>

@@ -12,7 +12,7 @@
 	 *
 	 */
 
-	if(!defined("SHOW_PROFILE_MAIN")) {
+	if (!defined("SHOW_PROFILE_MAIN")) {
 		exit();
 	}
 
@@ -21,7 +21,7 @@
 	$twitterObj = new Twitter($mysqli);
 
 
-	if($twitterObj->hasTwitter($memberInfo['member_id'])) {
+	if ($twitterObj->hasTwitter($memberInfo['member_id'])) {
 
 		$twitterObj->oauthToken = $twitterObj->get_info("oauth_token");
 		$twitterObj->oauthTokenSecret = $twitterObj->get_info("oauth_tokensecret");
@@ -30,7 +30,7 @@
 		$twitterInfo = $twitterObj->get_info();
 
 
-		if(($twitterInfo['infocard']+$twitterInfo['embedtweet']+$twitterInfo['showfeed']) > 0) {
+		if (($twitterInfo['infocard']+$twitterInfo['embedtweet']+$twitterInfo['showfeed']) > 0) {
 
 			echo "
 				<div class='formTitle' style='position: relative; text-align: center; margin-top: 20px'>Twitter</div>
@@ -40,14 +40,14 @@
 						<td class='main' align='center'>
 							";
 
-			if($twitterInfo['infocard'] == 1) {
+			if ($twitterInfo['infocard'] == 1) {
 
 
 				echo "<div class='shadedBox' style='margin: 20px auto; width: 70%; overflow: auto'>".$twitterObj->dispCard()."</div>";
 
 			}
 
-			if($twitterInfo['embedtweet']) {
+			if ($twitterInfo['embedtweet']) {
 
 
 				echo "<div style='position: relative; margin-left: auto; margin-right: auto; margin-top: 20px'>";
@@ -56,7 +56,7 @@
 
 			}
 
-			if($twitterInfo['showfeed']) {
+			if ($twitterInfo['showfeed']) {
 
 				echo "
 					<div style='position: relative; margin: 20px auto; width: 70%'>

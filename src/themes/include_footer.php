@@ -11,7 +11,7 @@
 	<div id='refreshMenusDiv' style='display: none'></div>
 		<?php
 
-			if(constant('LOGGED_IN')) {
+			if (constant('LOGGED_IN')) {
 
 				$memberObj = new Member($mysqli);
 				$memberObj->select($_SESSION['btUsername']);
@@ -20,7 +20,7 @@
 				echo "
 					<audio id='notificationSound'>
 				";
-				if($memberInfo['notifications'] == 0) {
+				if ($memberInfo['notifications'] == 0) {
 					echo "
 						<source src='".$MAIN_ROOT."themes/".$THEME."/notification.mp3'></source>
 						<source src='".$MAIN_ROOT."themes/".$THEME."/notification.ogg'></source>
@@ -31,7 +31,7 @@
 					</audio>
 					";
 
-				if($memberInfo['notifications'] == 0 || $memberInfo['notifications'] == 1) {
+				if ($memberInfo['notifications'] == 0 || $memberInfo['notifications'] == 1) {
 					echo "
 			
 					<script type='text/javascript'>

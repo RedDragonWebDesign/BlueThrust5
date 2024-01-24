@@ -13,7 +13,7 @@
  */
 
 
-	if(!defined("SHOW_BANLIST")) {
+	if (!defined("SHOW_BANLIST")) {
 
 
 	require_once("../../../../_setup.php");
@@ -30,7 +30,7 @@
 	$member->select($_SESSION['btUsername']);
 
 
-		if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+		if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 			$memberInfo = $member->get_info_filtered();
 		}
 		else {
@@ -45,10 +45,10 @@
 <?php
 	$counter = 0;
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ipban ORDER BY exptime");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 
 		$row = filterArray($row);
-		if($counter == 1) {
+		if ($counter == 1) {
 			$addCSS = " alternateBGColor";
 			$counter = 0;
 		}
@@ -69,7 +69,7 @@
 
 	}
 
-	if($result->num_rows == 0) {
+	if ($result->num_rows == 0) {
 		echo "
 			<div class='shadedBox' style='width: 45%; margin: 20px auto'>
 				<p class='main' align='center'>

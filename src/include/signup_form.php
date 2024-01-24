@@ -1,6 +1,7 @@
 <?php
 
-	if(!defined("MAIN_ROOT")) { exit(); }
+	if (!defined("MAIN_ROOT")) {
+exit(); }
 
 
 	$signUpForm = $memberAppObj->objSignUpForm;
@@ -10,7 +11,7 @@
 	$i = $appComponentObj->defaultCounter;
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."app_components ORDER BY ordernum DESC");
-	if($result->num_rows > 0) {
+	if ($result->num_rows > 0) {
 
 		$arrComponents['applicationquestions'] = array(
 			"type" => "section",
@@ -19,7 +20,7 @@
 		);
 
 
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$appComponentObj->select($row['appcomponent_id']);
 			$arrAppCompInfo = filterArray($row);
 			$formInputName = "appcomponent_".$arrAppCompInfo['appcomponent_id'];

@@ -29,15 +29,15 @@ function listSubForums($forumID, $filterOut, $indent=1) {
 	$boardObj->select($forumID);
 	$arrSubForums = $boardObj->getSubForums();
 
-	foreach($arrSubForums as $value) {
+	foreach ($arrSubForums as $value) {
 
-		if($filterOut != $value) {
+		if ($filterOut != $value) {
 			$boardObj->select($value);
 			$boardInfo = $boardObj->get_info_filtered();
 			echo "<option value='".$boardInfo['forumboard_id']."'>".str_repeat("&nbsp;&nbsp;&nbsp;", $indent)."&middot; ".$boardInfo['name']."</option>";
 
 			$moreSubForums = $boardObj->getSubForums();
-			if(count($moreSubForums) > 0) {
+			if (count($moreSubForums) > 0) {
 				listSubForums($value, $filterOut, ($indent+1));
 			}
 		}
@@ -72,10 +72,10 @@ $boardObj = new ForumBoard($mysqli);
 $LOGIN_FAIL = true;
 
 $arrSelectBoard = "";
-if(isset($_POST['bID']) && $boardObj->select($_POST['bID'])) {
+if (isset($_POST['bID']) && $boardObj->select($_POST['bID'])) {
 	$arrSelectBoard = $boardObj->findBeforeAfter();
 
-	if($boardObj->get_info("subforum_id") != 0) {
+	if ($boardObj->get_info("subforum_id") != 0) {
 		$arrSelectBoard[0] = $boardObj->get_info("subforum_id");
 	}
 
@@ -86,22 +86,22 @@ else {
 
 
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 
-	if($categoryObj->select($_POST['catID'])) {
+	if ($categoryObj->select($_POST['catID'])) {
 
 		$arrBoards = $categoryObj->getAssociateIDs("AND subforum_id = '0' ORDER BY sortnum", true);
 
-		foreach($arrBoards as $value) {
+		foreach ($arrBoards as $value) {
 
-			if($_POST['bID'] != $value) {
+			if ($_POST['bID'] != $value) {
 
 				$boardObj->select($value);
 				$boardInfo = $boardObj->get_info_filtered();
 
 				$selectBoard = "";
-				if($_POST['bID'] != "" && $arrSelectBoard[0] == $boardInfo['forumboard_id']) {
+				if ($_POST['bID'] != "" && $arrSelectBoard[0] == $boardInfo['forumboard_id']) {
 					$selectBoard = " selected";
 				}
 
@@ -112,7 +112,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 		}
 
-		if(count($arrBoards) == 0 || ($_POST['bID'] != "" && count($arrBoards) == 1)) {
+		if (count($arrBoards) == 0 || ($_POST['bID'] != "" && count($arrBoards) == 1)) {
 			echo "<option value='first'>(first board)</option>";
 		}
 

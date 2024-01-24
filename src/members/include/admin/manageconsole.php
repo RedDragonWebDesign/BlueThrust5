@@ -13,13 +13,13 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -34,7 +34,7 @@ $consoleCatObj = new ConsoleCategory($mysqli);
 
 
 
-if($_GET['cnID'] == "") {
+if ($_GET['cnID'] == "") {
 
 	echo "
 	<div id='loadingSpiral' class='loadingSpiral'>
@@ -130,6 +130,6 @@ if($_GET['cnID'] == "") {
 
 
 }
-elseif($_GET['cnID'] != "" AND $_GET['action'] == "edit") {
+elseif ($_GET['cnID'] != "" AND $_GET['action'] == "edit") {
 	require_once("consoleoptions/edit.php");
 }

@@ -17,11 +17,11 @@
 function deleteDir($path) {
 	$i = new DirectoryIterator($path);
 
-	foreach($i as $f) {
-		if($f->isFile()) {
+	foreach ($i as $f) {
+		if ($f->isFile()) {
 			unlink($f->getRealPath());
 		}
-		elseif(!$f->isDot() && $f->isDir()) {
+		elseif (!$f->isDot() && $f->isDir()) {
 			deleteDir($f->getRealPath());
 			rmdir($f->getRealPath());
 		}
@@ -69,7 +69,7 @@ $mysqli->query("UPDATE ".$dbprefix."members SET loggedin = '0' WHERE loggedin = 
 
 $result = $mysqli->query("SELECT member_id FROM ".$dbprefix."members WHERE loggedin = '1' AND rank_id != '1' AND disabled != '1'");
 
-if($result->num_rows > $websiteInfo['mostonline']) {
+if ($result->num_rows > $websiteInfo['mostonline']) {
 	$webInfoObj->multiUpdate(array("mostonline", "mostonlinedate"), array($result->num_rows, time()));
 }
 
@@ -79,15 +79,15 @@ $arrMembersOnline = array();
 $arrRankCatCount = array();
 $arrDispRankCat = array();
 $result2 = $mysqli->query("SELECT rankcategory_id FROM ".$dbprefix."rankcategory WHERE hidecat = '0' ORDER BY ordernum DESC");
-while($row = $result2->fetch_assoc()) {
+while ($row = $result2->fetch_assoc()) {
 	$arrDispRankCat[$row['rankcategory_id']] = "";
 	$arrRankCatCount[$row['rankcategory_id']] = 0;
 }
 
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$member->select($row['member_id']);
 	$arrMembersOnline[] = $member->getMemberLink();
-if(constant('LOGGED_IN')) {
+if (constant('LOGGED_IN')) {
 
 	$rankObj->select($member->get_info("rank_id"));
 	$rankCat = $rankObj->get_info("rankcategory_id");
@@ -113,7 +113,7 @@ $totalYourViews = $totalYourViews->fetch_assoc();
 $result = $mysqli->query("SELECT dateposted FROM ".$dbprefix."hitcounter WHERE ipaddress = '".$IP_ADDRESS."' ORDER BY dateposted DESC LIMIT 1");
 $lastVisitDate = $result->fetch_assoc();
 
-if($result->num_rows == 1) {
+if ($result->num_rows == 1) {
 	$dispLastVisitDate = "Your last visit was ".getPreciseTime($lastVisitDate['dateposted']).".";
 }
 else {
@@ -124,23 +124,23 @@ else {
 
 // Display News Ticker
 
-if($websiteInfo['newsticker'] != "") {
+if ($websiteInfo['newsticker'] != "") {
 	$blnDisplayNewsTicker = true;
 	$setNewsTickerStyle = "";
-	if($websiteInfo['newstickercolor'] != "") {
+	if ($websiteInfo['newstickercolor'] != "") {
 		$setNewsTickerStyle .= "; color: ".$websiteInfo['newstickercolor'].";";
 	}
 	$setMarqueeTickerStyle = "";
-	if($websiteInfo['newstickersize'] != 0) {
+	if ($websiteInfo['newstickersize'] != 0) {
 		$setNewsTickerStyle .= "; font-size: ".$websiteInfo['newstickersize']."px; height: ".($websiteInfo['newstickersize']+15)."px;";
 		$setMarqueeTickerStyle = " style ='height: ".($websiteInfo['newstickersize']+15)."px;'";
 	}
 
-	if($websiteInfo['newstickerbold'] == 1) {
+	if ($websiteInfo['newstickerbold'] == 1) {
 		$setNewsTickerStyle .= "; font-weight: bold;";
 	}
 
-	if($websiteInfo['newstickeritalic'] == 1) {
+	if ($websiteInfo['newstickeritalic'] == 1) {
 		$setNewsTickerStyle .= "; font-style: italic;";
 	}
 
@@ -194,19 +194,19 @@ $checkHTMLConsoleObj = new ConsoleOption($mysqli);
 $htmlNewsCID = $checkHTMLConsoleObj->findConsoleIDByName("HTML in News Posts");
 $checkHTMLConsoleObj->select($htmlNewsCID);
 $checkHTMLAccess = "";
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	unset($checkHTMLAccess);
 	$newsObj = new News($mysqli);
 	$newsInfo = filterArray($row);
 
-	if($newsInfo['newstype'] == 1 || ($newsInfo['newstype'] == 2 && constant('LOGGED_IN'))) {
+	if ($newsInfo['newstype'] == 1 || ($newsInfo['newstype'] == 2 && constant('LOGGED_IN'))) {
 
 		$newsObj->select($newsInfo['news_id']);
 
 		$member->select($newsInfo['member_id']);
 		$posterInfo = $member->get_info_filtered();
 
-		if($posterInfo['avatar'] == "") {
+		if ($posterInfo['avatar'] == "") {
 			$posterInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 		}
 		else {
@@ -214,12 +214,12 @@ while($row = $result->fetch_assoc()) {
 		}
 
 		$dispNewsType = " - <span class='publicNewsColor' style='font-style: italic'>public</span>";
-		if($newsInfo['newstype'] == 2) {
+		if ($newsInfo['newstype'] == 2) {
 			$dispNewsType = " - <span class='privateNewsColor' style='font-style: italic'>private</span>";
 		}
 
 		$dispLastEdit = "";
-		if($member->select($newsInfo['lasteditmember_id'])) {
+		if ($member->select($newsInfo['lasteditmember_id'])) {
 
 			$dispLastEditTime = getPreciseTime($newsInfo['lasteditdate']);
 			$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";
@@ -227,7 +227,8 @@ while($row = $result->fetch_assoc()) {
 
 		$member->select($newsInfo['member_id']);
 
-		if(!isset($checkHTMLAccess)) { $checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj); }
+		if (!isset($checkHTMLAccess)) {
+$checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj); }
 
 		$dispNews = ($checkHTMLAccess) ? parseBBCode($newsObj->get_info("newspost")) : nl2br(parseBBCode(filterText($newsInfo['newspost'])));
 
@@ -263,8 +264,8 @@ while($row = $result->fetch_assoc()) {
 $numOfNewsPosts = ($websiteInfo['hpnews'] == -1) ? "" : " LIMIT ".$websiteInfo['hpnews'];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."news WHERE newstype = '1' AND hpsticky = '0' ORDER BY dateposted DESC".$numOfNewsPosts);
 $checkHTMLAccess = "";
-if($result->num_rows > 0) {
-	while($row = $result->fetch_assoc()) {
+if ($result->num_rows > 0) {
+	while ($row = $result->fetch_assoc()) {
 		unset($checkHTMLAccess);
 		$newsObj = new News($mysqli);
 
@@ -274,7 +275,7 @@ if($result->num_rows > 0) {
 		$member->select($newsInfo['member_id']);
 		$posterInfo = $member->get_info_filtered();
 
-		if($posterInfo['avatar'] == "") {
+		if ($posterInfo['avatar'] == "") {
 			$posterInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 		}
 
@@ -282,7 +283,7 @@ if($result->num_rows > 0) {
 		$dispNewsType = " - <span class='publicNewsColor' style='font-style: italic'>public</span>";
 
 		$dispLastEdit = "";
-		if($member->select($newsInfo['lasteditmember_id'])) {
+		if ($member->select($newsInfo['lasteditmember_id'])) {
 
 			$dispLastEditTime = getPreciseTime($newsInfo['lasteditdate']);
 			$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";
@@ -290,7 +291,8 @@ if($result->num_rows > 0) {
 
 		$member->select($newsInfo['member_id']);
 
-		if(!isset($checkHTMLAccess)) { $checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj); }
+		if (!isset($checkHTMLAccess)) {
+$checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj); }
 
 		$dispNews = ($checkHTMLAccess) ? parseBBCode($newsObj->get_info("newspost")) : nl2br(parseBBCode(filterText($newsInfo['newspost'])));
 
@@ -319,19 +321,19 @@ if($result->num_rows > 0) {
 }
 
 
-if($dispAnnouncements != "") {
+if ($dispAnnouncements != "") {
 
 echo "<p class='main' style='font-size: 18px; font-weight: bold; padding-left: 15px'>Announcements</p>";
 echo $dispAnnouncements;
 
-	if($dispHPNews != "") {
+	if ($dispHPNews != "") {
 		echo "<br>";
 	}
 
 }
 
 
-if($dispHPNews != "") {
+if ($dispHPNews != "") {
 
 echo "<p class='main' style='font-size: 18px; font-weight: bold; padding-left: 15px'>Latest News</p>";
 echo $dispHPNews;
@@ -349,7 +351,9 @@ echo "
 		<td class='main solidBox' style='border-top-width: 0px' align='center'>
 			<b>Members Online:</b> ".$membersOnlineCount."<br>
 			<p>
-				"; if(constant('LOGGED_IN')) { echo $membersOnlineList; } else { echo "You must be logged in to view members online"; } echo"
+				"; if (constant('LOGGED_IN')) {
+echo $membersOnlineList; } else {
+echo "You must be logged in to view members online"; } echo"
 			</p>
 		</td>
 	</tr>
@@ -359,7 +363,7 @@ echo "
 
 
 
-foreach($arrRankCatCount as $key=>$value) {
+foreach ($arrRankCatCount as $key=>$value) {
 
 	$rankCatObj->select($key);
 	$rankCatColor = $rankCatObj->get_info_filtered("color");

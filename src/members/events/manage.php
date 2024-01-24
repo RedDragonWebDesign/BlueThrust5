@@ -21,10 +21,10 @@ require_once("../../classes/event.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
@@ -56,16 +56,16 @@ $eID = $_GET['eID'];
 // Check Login
 $LOGIN_FAIL = true;
 $blnShowPage = false;
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$LOGIN_FAIL = false;
 	$memberInfo = $member->get_info_filtered();
 
 	$eventObj = new Event($mysqli);
 
-	if($eventObj->select($eID)) {
+	if ($eventObj->select($eID)) {
 
 		$arrMembers = $eventObj->getInvitedMembers(true);
-		if(in_array($memberInfo['member_id'], $arrMembers) || $eventObj->get_info("member_id") == $memberInfo['member_id'] || $memberInfo['rank_id'] == 1) {
+		if (in_array($memberInfo['member_id'], $arrMembers) || $eventObj->get_info("member_id") == $memberInfo['member_id'] || $memberInfo['rank_id'] == 1) {
 			$blnShowPage = true;
 			$eventInfo = $eventObj->get_info_filtered();
 		}
@@ -75,7 +75,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 
-if($LOGIN_FAIL) {
+if ($LOGIN_FAIL) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
 }
 
@@ -97,9 +97,9 @@ $breadcrumbObj->addCrumb($consoleTitle);
 require_once($prevFolder."include/breadcrumb.php");
 
 
-if($blnShowPage) {
+if ($blnShowPage) {
 
-	if($_GET['posID'] != "") {
+	if ($_GET['posID'] != "") {
 		echo "
 		<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$_GET['eID']."&pID=ManagePositions'>Go Back</a></p>
 		";
@@ -110,7 +110,7 @@ if($blnShowPage) {
 		";
 	}
 
-	switch($pID) {
+	switch ($pID) {
 		case "addposition":
 			require_once("addposition.php");
 			break;
@@ -135,7 +135,7 @@ if($blnShowPage) {
 	}
 
 
-	if($_GET['posID'] != "") {
+	if ($_GET['posID'] != "") {
 		echo "
 			<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$_GET['eID']."&pID=ManagePositions'>Go Back</a></p></div>
 		";

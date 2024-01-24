@@ -21,6 +21,16 @@
         </properties>
     </rule>
 
-    <!-- opening brace location: ) {, not ){, not )\n{ -->
+    <!-- opening brace location and spacing -->
     <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
+
+    <!-- opening parenthesis location and spacing for if/elseif/else/for/foreach/etc type keywords -->
+    <rule ref="Squiz.ControlStructures.ControlSignature">
+        <!-- case 'a':, not case 'a' : -->
+        <properties>
+            <property name="requiredSpacesBeforeColon" value="0" />
+        </properties>
+        <!-- false positives when comments are between if/elseif/else, turning off for now -->
+        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace"/>
+    </rule>
 </ruleset>

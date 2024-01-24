@@ -26,13 +26,13 @@ $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage My Events");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember->select($_POST['eMemID'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember->select($_POST['eMemID'])) {
 
 	$eventID = $eventObj->objEventMember->get_info("event_id");
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($eventObj->select($eventID) && $member->hasAccess($consoleObj) && (($eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites") || $eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm")) || $memberInfo['rank_id'] == 1)) {
+	if ($eventObj->select($eventID) && $member->hasAccess($consoleObj) && (($eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites") || $eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm")) || $memberInfo['rank_id'] == 1)) {
 
 		$formObj = new Form();
 		$eventInfo = $eventObj->get_info_filtered();
@@ -43,7 +43,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 
 		$dispAttendenceStatus = $eventObj->arrInviteStatus[$eventMemberInfo['status']];
 		$positionOptions = array("None");
-		foreach($eventObj->getPositions() as $value) {
+		foreach ($eventObj->getPositions() as $value) {
 
 			$eventObj->objEventPosition->select($value);
 			$dispPositionName = $eventObj->objEventPosition->get_info_filtered("name");
@@ -60,17 +60,17 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 
 
 
-		if($eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm")) {
+		if ($eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm")) {
 
 			$dispSelected = "";
-			if($eventMemberInfo['attendconfirm_admin'] == 1) {
+			if ($eventMemberInfo['attendconfirm_admin'] == 1) {
 				$dispSelected = " selected";
 			}
 
 
 			$dispDisabledInfo = "";
 			$dispDisableForm = "";
-			if($eventInfo['startdate'] > time()) {
+			if ($eventInfo['startdate'] > time()) {
 				$dispDisabledInfo = "You must wait for the event to start before you can confirm a member's attendence.";
 				$dispDisableForm = "disabled";
 			}
@@ -97,7 +97,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 			)
 		);
 
-		if($eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites")) {
+		if ($eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites")) {
 
 			$arrComponents['selectposition'] = array(
 				"display_name" => "Set Position",
@@ -140,7 +140,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 
 		$formObj->show();
 
-		if(isset($_POST['submit']) && $countErrors == 0) {
+		if (isset($_POST['submit']) && $countErrors == 0) {
 
 			echo "
 				<p class='successFont' align='center'>
@@ -168,7 +168,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 					
 					";
 
-		if($eventObj->memberHasAccess($memberID, "manageinvites")) {
+		if ($eventObj->memberHasAccess($memberID, "manageinvites")) {
 			echo "
 					$('#uninviteLinkDiv').html($('#uninviteLink').html());
 					$('#uninviteLinkDiv').show();
@@ -182,7 +182,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 		";
 
 
-		if(isset($_POST['submit']) && $countErrors > 0) {
+		if (isset($_POST['submit']) && $countErrors > 0) {
 
 			echo "
 				

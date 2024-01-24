@@ -30,7 +30,7 @@
 
 			$returnVal = parent::select($intIDNum, $numericIDOnly);
 
-			if($returnVal) {
+			if ($returnVal) {
 
 				$this->arrSelectValues = $this->getAssociateIDs("ORDER BY componentvalue");
 
@@ -115,7 +115,7 @@
 			$gameObj = new Game($this->MySQL);
 			$arrGames = $gameObj->getGameList();
 			$arrSelectOptions = array();
-			foreach($arrGames as $gameID) {
+			foreach ($arrGames as $gameID) {
 				$gameObj->select($gameID);
 				$arrSelectOptions[$gameID] = $gameObj->get_info_filtered("name");
 
@@ -128,10 +128,10 @@
 		public function getSelectOptionArray() {
 
 			$arrSelectOptions = array();
-			if($this->arrObjInfo['componenttype'] != "profile") {
+			if ($this->arrObjInfo['componenttype'] != "profile") {
 
 				$arrSelectOptionIDs = $this->getAssociateIDs("ORDER BY componentvalue");
-				foreach($arrSelectOptionIDs as $selectOptionID) {
+				foreach ($arrSelectOptionIDs as $selectOptionID) {
 					$this->appSelectValueObj->select($selectOptionID);
 					$componentValue = $this->appSelectValueObj->get_info_filtered("componentvalue");
 					$arrSelectOptions[$componentValue] = $componentValue;
@@ -144,7 +144,7 @@
 
 		public function getMultiSelectInputCode($customSelectOptions=array()) {
 
-			if(count($customSelectOptions) > 0) {
+			if (count($customSelectOptions) > 0) {
 				$arrSelectOptions = $customSelectOptions;
 			}
 			else {
@@ -163,7 +163,7 @@
 		}
 
 		public function getSelectInputCode($customSelectOptions=array()) {
-			if(count($customSelectOptions) > 0) {
+			if (count($customSelectOptions) > 0) {
 				$arrSelectOptions = $customSelectOptions;
 			}
 			else {
@@ -186,7 +186,7 @@
 			$gameObj = new Game($this->MySQL);
 			$arrGames = $gameObj->getGameList();
 			$arrSelectOptions = array();
-			foreach($arrGames as $gameID) {
+			foreach ($arrGames as $gameID) {
 				$gameObj->select($gameID);
 				$arrSelectOptions[$gameID] = $gameObj->get_info_filtered("name");
 
@@ -199,7 +199,7 @@
 			$arrMemberList = array();
 			$dbprefix = $this->MySQL->get_tablePrefix();
 			$result = $this->MySQL->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '0' AND rank_id != '1' ORDER BY username");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$arrMemberList[] = array("id" => $row['member_id'], "value" => filterText($row['username']));
 			}
 
@@ -217,7 +217,7 @@
 		public function getProfileOptionInputCode() {
 
 			$arrComponent = array();
-			if($this->profileOptionObj->get_info("optiontype") == "select") {
+			if ($this->profileOptionObj->get_info("optiontype") == "select") {
 				$arrSelectOptions = $this->profileOptionObj->getSelectValues();
 
 				$arrComponent = $this->getSelectInputCode($arrSelectOptions);
@@ -232,9 +232,9 @@
 			$returnArr = array();
 
 			$formInputName = "appcomponent_".$this->intTableKeyValue;
-			if($this->arrObjInfo['componenttype'] == "profile") {
+			if ($this->arrObjInfo['componenttype'] == "profile") {
 				$this->appSelectValueObj->select($this->arrSelectValues[0]);
-				switch($this->appSelectValueObj->get_info("componentvalue")) {
+				switch ($this->appSelectValueObj->get_info("componentvalue")) {
 					case "birthday":
 						$returnArr = $this->getBirthdayInputCode();
 						break;
@@ -254,7 +254,7 @@
 				}
 			}
 			else {
-				switch($this->arrObjInfo['componenttype']) {
+				switch ($this->arrObjInfo['componenttype']) {
 					case "multiselect":
 						$returnArr = $this->getMultiSelectInputCode();
 						break;
@@ -272,7 +272,7 @@
 				}
 			}
 
-			if($this->get_info("required") == 1) {
+			if ($this->get_info("required") == 1) {
 				$returnArr['validate'][] = "NOT_BLANK";
 			}
 
@@ -289,13 +289,13 @@
 			$dbprefix = $this->MySQL->get_tablePrefix();
 			$filterIP = $this->MySQL->real_escape_string($IP_ADDRESS);
 			$result = $this->MySQL->query("SELECT * FROM ".$dbprefix."app_components WHERE componenttype = 'captcha' OR componenttype = 'captchaextra'");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 
 				$result2 = $mysqli->query("SELECT * FROM ".$dbprefix."app_captcha WHERE ipaddress = '".$filterIP."' AND appcomponent_id = '".$row['appcomponent_id']."'");
-				if($result2->num_rows > 0) {
+				if ($result2->num_rows > 0) {
 					$checkArr = $result2->fetch_assoc();
 					$postName = "appcomponent_".$row['appcomponent_id'];
-					if($checkArr['captchatext'] != strtolower($_POST[$postName])) {
+					if ($checkArr['captchatext'] != strtolower($_POST[$postName])) {
 						$countErrors++;
 						$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You entered an incorrect value for ".filterText($row['name']).".<br>";
 					}
@@ -311,14 +311,14 @@
 			$this->intMemberAppID = $memberAppID;
 			$arrSingleInputs = array("input", "largeinput", "select");
 
-			if(in_array($this->arrObjInfo['componenttype'], $arrSingleInputs)) {
+			if (in_array($this->arrObjInfo['componenttype'], $arrSingleInputs)) {
 				$this->saveSingleValue();
 			}
-			elseif($this->arrObjInfo['componenttype'] == "multiselect") {
+			elseif ($this->arrObjInfo['componenttype'] == "multiselect") {
 				// Multi-select values
 				$this->saveMultiValues();
 			}
-			elseif($this->arrObjInfo['componenttype'] == "profile") {
+			elseif ($this->arrObjInfo['componenttype'] == "profile") {
 
 				$this->saveProfileValue();
 
@@ -337,9 +337,9 @@
 
 		public function getDisplayValue($value) {
 
-			if($this->arrObjInfo['componenttype'] == "profile") {
+			if ($this->arrObjInfo['componenttype'] == "profile") {
 				$profileOptionType = $this->getProfileOptionType();
-				switch($profileOptionType) {
+				switch ($profileOptionType) {
 					case "birthday":
 						$bdayDate = new DateTime();
 						$bdayDate->setTimestamp($value);
@@ -350,25 +350,25 @@
 					case "gamesplayed":
 						$gameObj = new Game($this->MySQL);
 						$returnVal = "Unknown Game";
-						if($gameObj->select($value)) {
+						if ($gameObj->select($value)) {
 							$returnVal = $gameObj->get_info_filtered("name");
 						}
 						break;
 					case "recruiter":
 						$memberObj = new Member($this->MySQL);
 						$returnVal = "Not Set";
-						if($memberObj->select($value)) {
+						if ($memberObj->select($value)) {
 							$returnVal = $memberObj->getMemberLink();
 						}
 						break;
 					default:
 						$this->profileOptionObj->select($profileOptionType);
-						if($this->profileOptionObj->get_info("optiontype") == "input") {
+						if ($this->profileOptionObj->get_info("optiontype") == "input") {
 							$returnVal = $value;
 						}
 						else {
 							$returnVal = "Unknown Value";
-							if($this->profileOptionObj->objProfileOptionSelect->select($value)) {
+							if ($this->profileOptionObj->objProfileOptionSelect->select($value)) {
 								$returnVal = $this->profileOptionObj->objProfileOptionSelect->get_info_filtered("selectvalue");
 							}
 						}
@@ -405,14 +405,14 @@
 			$arrSelectValues = (count($arrCustomValues) > 0) ? $arrCustomValues : $this->getAssociateIDs("ORDER BY componentvalue");
 			$componentCounter = 1;
 			$returnVal = true;
-			foreach($arrSelectValues as $value) {
+			foreach ($arrSelectValues as $value) {
 				$postName = "appcomponent_".$this->intTableKeyValue."_".$componentCounter;
 				$componentCounter++;
 
-				if(isset($_POST[$postName])) {
+				if (isset($_POST[$postName])) {
 					$arrValues = array($this->intTableKeyValue, $this->intMemberAppID, $_POST[$postName]);
 
-					if(!$this->objAppValue->addNew($arrColumns, $arrValues)) {
+					if (!$this->objAppValue->addNew($arrColumns, $arrValues)) {
 						$returnVal = false;
 					}
 				}
@@ -423,7 +423,7 @@
 		}
 
 		private function saveProfileValue() {
-			if($this->getProfileOptionType() == "gamesplayed") {
+			if ($this->getProfileOptionType() == "gamesplayed") {
 
 				$gameObj = new Game($this->MySQL);
 				$arrGameList = $gameObj->getGameList();
@@ -448,7 +448,7 @@
 		global $signUpForm, $mysqli;
 		$memberObj = new Member($mysqli);
 
-		if($memberObj->select($_POST['username'])) {
+		if ($memberObj->select($_POST['username'])) {
 			$signUpForm->errors[] = "There is already a member with that username.";
 		}
 
@@ -456,18 +456,18 @@
 
 	function appCheckEMail() {
 		global $signUpForm, $mysqli, $dbprefix;
-		if(trim(str_replace("@", "", $_POST['email'])) == "" || strpos($_POST['email'], "@") === false) {
+		if (trim(str_replace("@", "", $_POST['email'])) == "" || strpos($_POST['email'], "@") === false) {
 			$signUpForm->errors[] = "You entered an invalid e-mail address.";
 		}
 
 		$filterEmail = $mysqli->real_escape_string($_POST['email']);
 		$result = $mysqli->query("SELECT email FROM ".$dbprefix."members WHERE email = '".$filterEmail."'");
-		if($result->num_rows > 0) {
+		if ($result->num_rows > 0) {
 			$signUpForm->errors[] = "There is already a member registered with that e-mail address.";
 		}
 
 		$result = $mysqli->query("SELECT email FROM ".$dbprefix."memberapps WHERE email = '".$filterEmail."'");
-		if($result->num_rows > 0) {
+		if ($result->num_rows > 0) {
 			$signUpForm->errors[] = "There is already a member application with that e-mail address.";
 		}
 
@@ -477,9 +477,9 @@
 	function appCheckIP() {
 		global $signUpForm, $mysqli, $dbprefix, $IP_ADDRESS, $websiteInfo;
 
-		if($websiteInfo['allow_multiple_ips'] == 0) {
+		if ($websiteInfo['allow_multiple_ips'] == 0) {
 			$checkIP = $mysqli->query("SELECT ipaddress FROM ".$dbprefix."memberapps WHERE ipaddress = '".$IP_ADDRESS."'");
-			if($checkIP->num_rows > 0) {
+			if ($checkIP->num_rows > 0) {
 				$signUpForm->errors[] = "You have already applied to join.";
 			}
 		}
@@ -490,13 +490,13 @@
 
 		$filterIP = $mysqli->real_escape_string($IP_ADDRESS);
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."app_components WHERE componenttype = 'captcha' OR componenttype = 'captchaextra'");
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 
 			$result2 = $mysqli->query("SELECT * FROM ".$dbprefix."app_captcha WHERE ipaddress = '".$filterIP."' AND appcomponent_id = '".$row['appcomponent_id']."'");
-			if($result2->num_rows > 0) {
+			if ($result2->num_rows > 0) {
 				$checkArr = $result2->fetch_assoc();
 				$postName = "appcomponent_".$row['appcomponent_id'];
-				if($checkArr['captchatext'] != strtolower($_POST[$postName])) {
+				if ($checkArr['captchatext'] != strtolower($_POST[$postName])) {
 					$signUpForm->errors[] = "You entered an incorrect value for ".filterText($row['name']).".";
 				}
 			}

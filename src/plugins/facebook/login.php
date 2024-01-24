@@ -22,7 +22,7 @@ require_once("facebook.php");
 require_once($prevFolder."classes/member.php");
 
 
-if(trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
+if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
 }
 else {
@@ -38,7 +38,7 @@ $countErrors = 0;
 $dispBreadCrumb = "<a href='".$MAIN_ROOT."'>Home</a> > Log In";
 require_once($prevFolder."themes/".$THEME."/_header.php");
 
-if(constant("LOGGED_IN")) {
+if (constant("LOGGED_IN")) {
 
 	echo "
 		<script type='text/javascript'>
@@ -52,7 +52,7 @@ if(constant("LOGGED_IN")) {
 
 
 
-if(isset($_GET['code'])) {
+if (isset($_GET['code'])) {
 
 	// Check if a member is connected
 
@@ -64,14 +64,14 @@ if(isset($_GET['code'])) {
 
 	$_SESSION['btFBAccessToken'] = $arrAccessToken['access_token'];
 
-	if($fbObj->checkAccessToken()) {
+	if ($fbObj->checkAccessToken()) {
 		$fbInfo = $fbObj->getFBInfo();
 
 		// Save in DB
 		$arrColumns = array("name", "lastupdate");
 		$arrValues = array($fbInfo['name'], time());
 
-		if($fbObj->authorizeLogin($fbInfo['id'])) {
+		if ($fbObj->authorizeLogin($fbInfo['id'])) {
 			$fbInfo = $fbObj->get_info();
 
 			$memberObj = new Member($mysqli);
@@ -114,12 +114,12 @@ if(isset($_GET['code'])) {
 
 
 }
-elseif(isset($_GET['error_reason'])) {
+elseif (isset($_GET['error_reason'])) {
 	$dispError = "There is no user associated with this Facebook account.  You must connect your Facebook account while logged in before using this feature.";
 }
 
 
-if(!isset($_GET['code']) || $dispError == "") {
+if (!isset($_GET['code']) || $dispError == "") {
 	// Login through facebook
 
 	$loginURL = $fbObj->getFBConnectLink($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);

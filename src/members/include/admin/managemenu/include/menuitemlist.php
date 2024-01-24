@@ -12,7 +12,7 @@
  *
  */
 
-if(!isset($member)) {
+if (!isset($member)) {
 	require_once("../../../../../_setup.php");
 	require_once("../../../../../classes/member.php");
 	require_once("../../../../../classes/menucategory.php");
@@ -27,16 +27,17 @@ if(!isset($member)) {
 
 }
 
-if(!isset($intAddNewMenuItemID)) {  $intAddNewMenuItemID = $consoleObj->findConsoleIDByName("Add Menu Item"); }
+if (!isset($intAddNewMenuItemID)) {
+$intAddNewMenuItemID = $consoleObj->findConsoleIDByName("Add Menu Item"); }
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
-	if(isset($_POST['menuCatID']) && $menuCatObj->select($_POST['menuCatID'])) {
+	if (isset($_POST['menuCatID']) && $menuCatObj->select($_POST['menuCatID'])) {
 		$orderoptions = "";
 		$menuCatInfo = $menuCatObj->get_info_filtered();
 
 		$selectItemID = "";
-		if(!isset($_POST['itemID'])) {
+		if (!isset($_POST['itemID'])) {
 			$_POST['itemID'] = "";
 		}
 		else {
@@ -49,10 +50,10 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		$lastItem = "";
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_item WHERE menucategory_id = '".$menuCatInfo['menucategory_id']."' ORDER BY sortnum");
-		while($row = $result->fetch_assoc()) {
-			if($_POST['itemID'] != $row['menuitem_id']) {
+		while ($row = $result->fetch_assoc()) {
+			if ($_POST['itemID'] != $row['menuitem_id']) {
 				$dispSelected = "";
-				if($selectItemID == $row['menuitem_id']) {
+				if ($selectItemID == $row['menuitem_id']) {
 					$dispSelected = " selected";
 				}
 				echo $selectItemID;
@@ -62,13 +63,13 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			$lastItem = $row['menuitem_id'];
 		}
 
-		if($result->num_rows == 0 || ($result->num_rows == 1 && $_POST['itemID'] != "" && $_POST['itemID'] == $lastItem)) {
+		if ($result->num_rows == 0 || ($result->num_rows == 1 && $_POST['itemID'] != "" && $_POST['itemID'] == $lastItem)) {
 			$orderoptions = "<option value='first'>(first item)</option>";
 		}
 
 		echo $orderoptions;
 	}
-	elseif(!isset($_POST['menuCatID'])) {
+	elseif (!isset($_POST['menuCatID'])) {
 
 		$intManageMenuCatCID = $consoleObj->findConsoleIDByName("Manage Menu Categories");
 		$query = "SELECT ".$dbprefix."menu_item.* FROM ".$dbprefix."menu_item, ".$dbprefix."menu_category WHERE ".$dbprefix."menu_item.menucategory_id = ".$dbprefix."menu_category.menucategory_id ORDER BY ".$dbprefix."menu_category.section, ".$dbprefix."menu_category.sortnum, ".$dbprefix."menu_item.menucategory_id, ".$dbprefix."menu_item.sortnum";
@@ -77,9 +78,9 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		$result = $mysqli->query($query);
 
 		$intMenuCatID = "";
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 
-			if($intMenuCatID != $row['menucategory_id']) {
+			if ($intMenuCatID != $row['menucategory_id']) {
 				$counter = 0;
 				$intMenuCatID = $row['menucategory_id'];
 				$menuCatObj->select($intMenuCatID);
@@ -97,20 +98,20 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			}
 
 			$addCSS = "";
-			if($counter%2 == 1) {
+			if ($counter%2 == 1) {
 				$addCSS = " alternateBGColor";
 			}
 
 			$menuItemObj->setCategoryKeyValue($intMenuCatID);
 			$intHighestSortNum = $menuItemObj->getHighestSortNum();
-			if(($counter+1) == $intHighestSortNum) {
+			if (($counter+1) == $intHighestSortNum) {
 				$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' class='manageListActionButton'>";
 			}
 			else {
 				$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveItem('down', '".$row['menuitem_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' class='manageListActionButton' title='Move Down'></a>";
 			}
 
-			if($counter == 0) {
+			if ($counter == 0) {
 				$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' class='manageListActionButton'>";
 			}
 			else {

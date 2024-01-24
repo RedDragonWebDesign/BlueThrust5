@@ -16,8 +16,8 @@ require_once("../../_setup.php");
 
 
 // Delete expired compose list sessions
-foreach($_SESSION['btComposeList'] as $key => $arr) {
-	if(time() > $arr['exptime']) {
+foreach ($_SESSION['btComposeList'] as $key => $arr) {
+	if (time() > $arr['exptime']) {
 		unset($_SESSION['btComposeList'][$key]);
 	}
 }
@@ -73,7 +73,7 @@ $pmObj->set_assocTableKey("member_id");
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 	$memberInfo = $member->get_info_filtered();
 	$formObj = new Form();
@@ -126,7 +126,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	);
 
 
-	if(isset($_GET['threadID']) && is_numeric($_GET['threadID'])) {
+	if (isset($_GET['threadID']) && is_numeric($_GET['threadID'])) {
 		$replyPMID = $_GET['threadID'];
 	}
 	else {
@@ -145,7 +145,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	// Send as Email
 	$emailPMCID = $consoleObj->findConsoleIDByName("Email Private Messages");
 	$consoleObj->select($emailPMCID);
-	if($member->hasAccess($consoleObj)) {
+	if ($member->hasAccess($consoleObj)) {
 
 		$formObj->addComponentSortSpace(2, $arrComponents);
 		$arrComponents = $formObj->components;

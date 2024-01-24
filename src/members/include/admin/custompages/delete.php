@@ -25,18 +25,18 @@ $consoleObj->select($cID);
 
 $customPageObj = new Basic($mysqli, "custompages", "custompage_id");
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $customPageObj->select($_POST['cpID'])) {
+	if ($member->hasAccess($consoleObj) && $customPageObj->select($_POST['cpID'])) {
 
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 
 		$customPageInfo = $customPageObj->get_info_filtered();
 
-		if($_POST['confirm'] == "1") {
+		if ($_POST['confirm'] == "1") {
 
 			$customPageObj->delete();
 			require_once("main.php");
@@ -47,7 +47,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		}
 
 	}
-	elseif(!$customPageObj->select($_POST['cpID'])) {
+	elseif (!$customPageObj->select($_POST['cpID'])) {
 
 		echo "<p align='center'>Unable find the selected custom page.  Please try again or contact the website administrator.</p>";
 

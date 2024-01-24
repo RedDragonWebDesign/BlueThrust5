@@ -32,22 +32,22 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 $checkAccess = $checkAccess1 || $checkAccess2;
 
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($checkAccess) {
+	if ($checkAccess) {
 
 		$deleteKey = $_POST['deleteKey'];
-		if(isset($_SESSION['btProfileCache'][$deleteKey])) {
+		if (isset($_SESSION['btProfileCache'][$deleteKey])) {
 			$_SESSION['btProfileCache'][$deleteKey] = "";
 
 			$x = 0;
 			$newProfileArr = array();
-			foreach($_SESSION['btProfileCache'] as $profileOption) {
+			foreach ($_SESSION['btProfileCache'] as $profileOption) {
 
-				if($profileOption != "") {
+				if ($profileOption != "") {
 
 					$newProfileArr[] = $profileOption;
 

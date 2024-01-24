@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -86,9 +86,9 @@ echo "
 </div>
 ";
 
-if(!isset($_GET['rID']) || $_GET['rID'] == "") {
+if (!isset($_GET['rID']) || $_GET['rID'] == "") {
 	require_once("manageranks/main.php");
 }
-elseif($_GET['rID'] != "" && $_GET['action'] == "edit") {
+elseif ($_GET['rID'] != "" && $_GET['action'] == "edit") {
 	require_once("manageranks/edit.php");
 }

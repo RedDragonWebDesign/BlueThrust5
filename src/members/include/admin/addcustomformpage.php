@@ -16,13 +16,13 @@
 
 require_once("../classes/customform.php");
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -35,14 +35,14 @@ $dispError = "";
 if ( ! empty($_POST['submit']) ) {
 
 
-	if(trim($_POST['pagename']) == "") {
+	if (trim($_POST['pagename']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a page name for your custom page.<br>";
 	}
 
 
 
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 
 		$_POST['wysiwygHTML'] = str_replace("<?", "", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("?>", "", $_POST['wysiwygHTML']);
@@ -56,7 +56,7 @@ if ( ! empty($_POST['submit']) ) {
 
 		$postResults = ($_POST['postresults'] == "yes") ? "yes" : "";
 
-		if($customFormPageObj->addNew(array("name", "pageinfo", "submitmessage", "submitlink", "specialform"), array($_POST['pagename'], $_POST['wysiwygHTML'], $_POST['submitMessageHTML'], $_POST['submitlink'], $postResults)) && $customFormPageObj->addComponents($_SESSION['btFormComponent'])) {
+		if ($customFormPageObj->addNew(array("name", "pageinfo", "submitmessage", "submitlink", "specialform"), array($_POST['pagename'], $_POST['wysiwygHTML'], $_POST['submitMessageHTML'], $_POST['submitlink'], $postResults)) && $customFormPageObj->addComponents($_SESSION['btFormComponent'])) {
 
 			$intManageCustomPagesID = $consoleObj->findConsoleIDByName("Manage Custom Form Pages");
 			$customPageInfo = $customFormPageObj->get_info_filtered();
@@ -102,7 +102,7 @@ if ( empty($_POST['submit']) ) {
 	
 	";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to add custom page because the following errors occurred:</strong><br><br>
@@ -299,7 +299,7 @@ if ( empty($_POST['submit']) ) {
 
 	";
 
-	if($dispError != "") {
+	if ($dispError != "") {
 		echo "
 			$('#wysiwygDiv').html('".$_POST['wysiwygHTML']."');
 			

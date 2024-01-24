@@ -12,13 +12,13 @@
  *
  */
 
-if(!isset($member)) {
+if (!isset($member)) {
 	exit();
 }
 else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -41,17 +41,17 @@ $intAddConsoleOptionsCID = $cOptObj->findConsoleIDByName("Add Console Option");
 $intManageConsoleCatCID = $cOptObj->findConsoleIDByName("Manage Console Categories");
 
 
-if($cID == "") {
+if ($cID == "") {
 	$cID = $cOptObj->findConsoleIDByName("Manage Console Options");
 }
 
 $arrConsoleCatIDs = array();
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$arrConsoleCatIDs[] = $row['consolecategory_id'];
 }
 
-foreach($arrConsoleCatIDs as $consoleCatID) {
+foreach ($arrConsoleCatIDs as $consoleCatID) {
 	$consoleCatObj->select($consoleCatID);
 	$consoleCatInfo = $consoleCatObj->get_info_filtered();
 	$catAssoc = $consoleCatObj->getAssociateIDs("ORDER BY sortnum");
@@ -60,11 +60,11 @@ foreach($arrConsoleCatIDs as $consoleCatID) {
 	$intHighestOrder = count($catAssoc);
 	$counter = 0;
 	$x = 1;
-	foreach($catAssoc as $consoleID) {
+	foreach ($catAssoc as $consoleID) {
 		$consoleObj->select($consoleID);
 		$consoleInfo = $consoleObj->get_info_filtered();
 
-		if($counter == 1) {
+		if ($counter == 1) {
 			$addCSS = " alternateBGColor";
 			$counter = 0;
 		}
@@ -73,14 +73,14 @@ foreach($arrConsoleCatIDs as $consoleCatID) {
 			$counter = 1;
 		}
 
-		if($x == 1) {
+		if ($x == 1) {
 			$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 		}
 		else {
 			$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveConsole('up', '".$consoleInfo['console_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 		}
 
-		if($x == $intHighestOrder) {
+		if ($x == $intHighestOrder) {
 			$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 		}
 		else {

@@ -9,7 +9,7 @@ Attempting to save backup copy...<br><br>
 $backupFileName = "dbbackup_".time().".txt";
 
 
-if(file_put_contents($backupFileName, "") === false && !isset($_POST['checkBackup'])) {
+if (file_put_contents($backupFileName, "") === false && !isset($_POST['checkBackup'])) {
 
 	echo "
 
@@ -71,9 +71,9 @@ else {
 }
 
 
-if($_POST['checkBackup']) {
+if ($_POST['checkBackup']) {
 
-	foreach($arrTableMatches as $tableName) {
+	foreach ($arrTableMatches as $tableName) {
 
 		// Get table structure
 		$result = $mysqli->query("SHOW CREATE TABLE ".$tableName);
@@ -87,7 +87,7 @@ if($_POST['checkBackup']) {
 
 		$arrColumnNames = array();
 		$result = $mysqli->query("DESCRIBE ".$tableName);
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 
 			$arrColumnNames[] = $row['Field'];
 
@@ -102,9 +102,9 @@ if($_POST['checkBackup']) {
 		$arrInsertStmts = array();
 
 		$result = $mysqli->query("SELECT * FROM ".$tableName);
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$arrColumnValues = array();
-			foreach($arrColumnNames as $columnName) {
+			foreach ($arrColumnNames as $columnName) {
 				$arrColumnValues[] = $mysqli->real_escape_string($row[$columnName]);
 			}
 
@@ -118,7 +118,7 @@ if($_POST['checkBackup']) {
 		$createTableSQL .= ";\n\n";
 		file_put_contents($backupFileName, $createTableSQL, FILE_APPEND);
 
-		foreach($arrInsertStmts as $insertStatement) {
+		foreach ($arrInsertStmts as $insertStatement) {
 			$insertStatement .= "\n";
 			file_put_contents($backupFileName, $insertStatement, FILE_APPEND);
 		}

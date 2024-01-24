@@ -12,7 +12,7 @@
  *
  */
 
-if(!defined("SHOW_SHOUTBOXLIST")) {
+if (!defined("SHOW_SHOUTBOXLIST")) {
 	exit();
 }
 
@@ -24,10 +24,10 @@ echo "
 $counter = 0;
 $manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."news WHERE newstype = '3' ORDER BY dateposted DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$dispPoster = ($member->select($row['member_id'])) ? $member->getMemberLink() : "Unknown";
 
-	if($counter == 0) {
+	if ($counter == 0) {
 		$addCSS = "";
 		$counter = 1;
 	}
@@ -47,7 +47,7 @@ while($row = $result->fetch_assoc()) {
 
 }
 
-if($result->num_rows == 0) {
+if ($result->num_rows == 0) {
 	echo "	
 		<tr>
 			<td class='main' align='center' colspan='4'>

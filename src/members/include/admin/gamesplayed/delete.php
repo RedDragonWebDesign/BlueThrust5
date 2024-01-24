@@ -28,17 +28,17 @@ $cID = $consoleObj->findConsoleIDByName("Manage Games Played");
 $consoleObj->select($cID);
 $_GET['cID'] = $cID;
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $gameObj->select($_POST['gID'])) {
+	if ($member->hasAccess($consoleObj) && $gameObj->select($_POST['gID'])) {
 
 		define("MEMBERRANK_ID", $memberInfo['rank_id']);
 
 
-		if($_POST['confirm'] == 1) {
+		if ($_POST['confirm'] == 1) {
 			$gameObj->delete();
 
 			//$gameObj->resortOrder();
@@ -51,7 +51,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		}
 
 	}
-	elseif(!$gameObj->select($_POST['gID'])) {
+	elseif (!$gameObj->select($_POST['gID'])) {
 
 		echo "<p align='center'>Unable find the selected game.  Please try again or contact the website administrator.</p>";
 

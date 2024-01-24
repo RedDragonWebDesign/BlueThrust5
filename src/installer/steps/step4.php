@@ -4,22 +4,22 @@
 $result = $mysqli->query("SHOW TABLES");
 $arrTestTables = array();
 
-while($row = $result->fetch_array()) {
+while ($row = $result->fetch_array()) {
 	$arrTestTables[] = $row[0];
 }
 
 $countTableMatches = 0;
-foreach($arrTableNames as $tableName) {
+foreach ($arrTableNames as $tableName) {
 	$tempTableName = $_POST['tableprefix'].$tableName;
 
-	if(in_array($tempTableName, $arrTestTables)) {
+	if (in_array($tempTableName, $arrTestTables)) {
 		$countTableMatches++;
 	}
 
 }
 
 
-if($countTableMatches > 0) {
+if ($countTableMatches > 0) {
 
 	echo "
 	<div class='noteDiv'>
