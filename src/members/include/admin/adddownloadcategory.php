@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -54,8 +53,7 @@ if ( ! empty($_POST['submit']) ) {
 	if (!$downloadCatObj->select($_POST['catorder']) and $_POST['catorder'] != "first") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (category)<br>";
-	}
-	elseif ($_POST['catorder'] == "first") {
+	} elseif ($_POST['catorder'] == "first") {
 		// "(no other categories)" selected, check to see if there are actually no other categories
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."downloadcategory");
@@ -64,17 +62,14 @@ if ( ! empty($_POST['submit']) ) {
 		if ($num_rows > 0) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (category)<br>";
-		}
-		else {
+		} else {
 			$intNewOrderSpot = 1;
 		}
-	}
-	else {
+	} else {
 		if ($_POST['beforeafter'] != "before" and $_POST['beforeafter'] != "after") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (before/after)<br>";
-		}
-		else {
+		} else {
 			$intNewOrderSpot = $downloadCatObj->makeRoom($_POST['beforeafter']);
 		}
 	}
@@ -104,8 +99,7 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 			";
 		}
-	}
-	else {
+	} else {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}

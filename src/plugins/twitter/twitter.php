@@ -123,8 +123,7 @@ class Twitter extends Basic {
 					$arrValues = array(time(), $twitterInfo['screen_name'], $twitterInfo['name'], $twitterInfo['description'], $twitterInfo['followers_count'], $twitterInfo['friends_count'], $twitterInfo['statuses_count'], $twitterInfo['profile_image_url_https'], $twitterInfo['status']['id_str'], $embedTweet['html']);
 
 					$this->update($arrColumns, $arrValues);
-				}
-				else {
+				} else {
 					$this->delete();
 					$this->arrObjInfo = array();
 				}
@@ -234,8 +233,7 @@ class Twitter extends Basic {
 
 		if ($this->httpCode == 200) {
 			$returnVal = $response;
-		}
-		else {
+		} else {
 			$returnVal = false;
 		}
 
@@ -270,8 +268,7 @@ class Twitter extends Basic {
 
 		if ($this->httpCode == 200) {
 			$returnVal = $response;
-		}
-		else {
+		} else {
 			$returnVal = false;
 		}
 
@@ -295,8 +292,7 @@ class Twitter extends Basic {
 
 		if ($this->httpCode == 200) {
 			$returnVal = $response;
-		}
-		else {
+		} else {
 			$returnVal = false;
 		}
 
@@ -318,8 +314,7 @@ class Twitter extends Basic {
 
 		if ($this->httpCode == 200) {
 			$returnVal = json_decode($response, true);
-		}
-		else {
+		} else {
 			$returnVal = false;
 		}
 

@@ -30,8 +30,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -86,19 +85,16 @@ require_once($prevFolder."include/breadcrumb.php");
 
 		if ($row['startdate'] < time() && $tournamentObj->getTournamentWinner() == 0) {
 			$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/bluedot.png' title='Started'>";
-		}
-		elseif ($row['startdate'] > time()) {
+		} elseif ($row['startdate'] > time()) {
 			$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/orangedot.png' title='Forming'>";
-		}
-		elseif ($row['startdate'] < time() && $tournamentObj->getTournamentWinner() != 0) {
+		} elseif ($row['startdate'] < time() && $tournamentObj->getTournamentWinner() != 0) {
 			$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/graydot.png' title='Finished'>";
 		}
 
 		if ($counter == 1) {
 			$addCSS = " alternateBGColor";
 			$counter = 0;
-		}
-		else {
+		} else {
 			$addCSS = "";
 			$counter = 1;
 		}

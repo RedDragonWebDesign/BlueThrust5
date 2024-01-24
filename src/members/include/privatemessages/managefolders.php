@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -34,8 +33,7 @@ if (isset($_GET['fID']) && !in_array($_GET['fID'], $arrSpecialFolders) && $pmFol
 	// Edit Folder page
 	define("EDIT_FOLDER", true);
 	require_once("include/edit.php");
-}
-else {
+} else {
 	$addFolderCID = $consoleObj->findConsoleIDByName("Add PM Folder");
 	echo "
 	

@@ -143,11 +143,9 @@ if (count($arrAttachments) > 0 && $blnShowAttachments) {
 
 		if ($dispFileSize < 1) {
 			$dispFileSize = $attachmentInfo['filesize']."B";
-		}
-		elseif (($dispFileSize/1024) < 1) {
+		} elseif (($dispFileSize/1024) < 1) {
 			$dispFileSize = round($dispFileSize, 2)."KB";
-		}
-		else {
+		} else {
 			$dispFileSize = round(($dispFileSize/1024), 2)."MB";
 		}
 

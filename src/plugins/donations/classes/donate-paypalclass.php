@@ -260,8 +260,7 @@ class paypal_class {
 	public function setMode($mode) {
 		if ($mode == "live") {
 			$this->paypal_url = "https://www.paypal.com/cgi-bin/webscr";
-		}
-		else {
+		} else {
 			$this->paypal_url = "https://www.sandbox.paypal.com/cgi-bin/webscr";
 		}
 	}

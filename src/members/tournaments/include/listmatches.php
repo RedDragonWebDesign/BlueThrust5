@@ -62,8 +62,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 			if ($matchInfo['outcome'] == 1) {
 				$addStyle[1] = " class='successFont' style='font-weight: bold'";
 				$addStyle[2] = " class='failedFont'";
-			}
-			elseif ($matchInfo['outcome'] == 2) {
+			} elseif ($matchInfo['outcome'] == 2) {
 				$addStyle[2] = " class='successFont' style='font-weight: bold'";
 				$addStyle[1] = " class='failedFont'";
 			}
@@ -90,14 +89,12 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 
 							if ($member->select($playerInfo['member_id'])) {
 								$dispName .= $member->get_info_filtered("username");
-							}
-							else {
+							} else {
 								$dispName .= $playerInfo['displayname'];
 							}
 
 							$dispName .= "</a>";
-						}
-						else {
+						} else {
 							$dispName = "Bye";
 						}
 					}
@@ -117,8 +114,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 						<a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManageMatches&match=".$matchID."'>Manage Match</a>
 					</div>
 				";
-			}
-			else {
+			} else {
 				// Multi-player Team Tournament
 
 				for ($i=1; $i<=2; $i++) {
@@ -137,8 +133,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 							$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
 							if (is_numeric($playerInfo['member_id']) && $member->select($playerInfo['member_id'])) {
 								$dispPlayerList .= "<b>&middot;</b> ".$member->getMemberLink()."<br>";
-							}
-							else {
+							} else {
 								$dispPlayerList .= "<b>&middot;</b> ".$playerInfo['displayname']."<br>";
 							}
 						}

@@ -33,8 +33,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -103,8 +102,7 @@ if ($tournamentInfo['seedtype'] != 3 && !$tournamentObj->checkForPools()) {
 
 				if ($row['winner'] == 1) {
 					$dispTeamOne = "<span class='successFont' style='font-weight: bold'>".$dispTeamOne."</span>";
-				}
-				elseif ($row['winner'] == 2) {
+				} elseif ($row['winner'] == 2) {
 					$dispTeamTwo = "<span class='successFont' style='font-weight: bold'>".$dispTeamTwo."</span>";
 				}
 

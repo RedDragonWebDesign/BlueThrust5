@@ -57,8 +57,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					});
 				</script>
 			";
-	}
-	else {
+	} else {
 		$saveName = "Twitch";
 		if ($socialObj->selectByMulti(array("name" => "Twitch"))) {
 			$result = $mysqli->query("SELECT social_id FROM ".$dbprefix."social WHERE name LIKE '%Twitch%'");
@@ -88,8 +87,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				</script>
 			";
 	}
-}
-else {
+} else {
 	echo "
 			<div id='errorTwitch' style='display: none'>
 				<p align='center' class='main'>

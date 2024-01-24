@@ -35,8 +35,7 @@ if ( empty($_POST['submit']) ) {
 			$('#composeTextBox').before(\"<div class='pmComposeSelection' data-composeid = 'member_".$replyPMInfo['sender_id']."'><div style='float: left'>".$member->objRank->get_info_filtered("name")." ".$member->get_info_filtered("username")."</div><div class='pmComposeSelectionDelete' data-deleteid = 'member_".$replyPMInfo['sender_id']."'>&times;</div></div>\");
 			
 			";
-		}
-		elseif ($replyPMInfo['receiver_id'] == 0 && ($replyPMInfo['sender_id'] == $memberInfo['member_id'] || in_array($memberInfo['member_id'], $arrReceivers))) {
+		} elseif ($replyPMInfo['receiver_id'] == 0 && ($replyPMInfo['sender_id'] == $memberInfo['member_id'] || in_array($memberInfo['member_id'], $arrReceivers))) {
 			if (isset($_GET['replyall'])) {
 				$pmObj->set_assocTableKey("pmmember_id");
 				$arrPMMID = $pmObj->getAssociateIDs();
@@ -81,8 +80,7 @@ if ( empty($_POST['submit']) ) {
 								";
 								break;
 						}
-					}
-					elseif ($multiMemPMInfo['grouptype'] == "") {
+					} elseif ($multiMemPMInfo['grouptype'] == "") {
 						$member->select($multiMemPMInfo['member_id']);
 						$member->objRank->select($multiMemPMInfo['rank_id']);
 						$_SESSION['btComposeList'][$pmSessionID]['member'][] = $multiMemPMInfo['member_id'];
@@ -104,8 +102,7 @@ if ( empty($_POST['submit']) ) {
 				";
 			}
 		}
-	}
-	elseif (isset($_GET['toID']) && $member->select($_GET['toID'])) {
+	} elseif (isset($_GET['toID']) && $member->select($_GET['toID'])) {
 		$member->objRank->select($member->get_info("rank_id"));
 		$_SESSION['btComposeList'][$pmSessionID]['member'][] = $_GET['toID'];
 		$dispName = $member->objRank->get_info_filtered("name")." ".$member->get_info_filtered("name");

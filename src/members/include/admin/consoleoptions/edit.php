@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -72,8 +71,7 @@ if ( ! empty($_POST['submit']) ) {
 	if (!$consoleCatObj->select($_POST['consolecat'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid console category.<br>";
-	}
-	else {
+	} else {
 		$arrConsoleIDs = $consoleCatObj->getAssociateIDs();
 
 		$blnOrderCheck1 = $_POST['consoleorder'] == "first" && count($arrConsoleIDs) > 1 && $consoleInfo['consolecategory_id'] == $_POST['consolecat'];
@@ -87,8 +85,7 @@ if ( ! empty($_POST['submit']) ) {
 		if ($blnOrderCheck1 || $blnOrderCheck2 || $blnOrderCheck3 || $blnOrderCheck4) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
-		}
-		else {
+		} else {
 			// Check Before/After Then Make Room
 
 			if ($_POST['consolebeforeafter'] == "before" or $_POST['consolebeforeafter'] == "after") {
@@ -96,8 +93,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 				$intNewSortNum = $consoleObj->makeRoom($_POST['consolebeforeafter']);
-			}
-			else {
+			} else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order. (before/after)<br>";
 			}
@@ -161,8 +157,7 @@ if ( ! empty($_POST['submit']) ) {
 
 		if ($btUpload->uploadFile()) {
 			$consoleFileURL = "customconsole/".$btUpload->getUploadedFileName();
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload console option.  Please make sure the filesize is not too big and filetype is php.<br>";
 		}
@@ -213,8 +208,7 @@ if ( ! empty($_POST['submit']) ) {
 			foreach ($_SESSION['btAccessRules'] as $memAccessInfo) {
 				if ($memAccessInfo['accessRule'] == "allow") {
 					$intAllowDeny = 1;
-				}
-				else {
+				} else {
 					$intAllowDeny = 0;
 				}
 
@@ -238,8 +232,7 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 			";
 		}
-	}
-	else {
+	} else {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
@@ -253,8 +246,7 @@ if ( empty($_POST['submit']) ) {
 	while ($row = $result->fetch_assoc()) {
 		if ($row['allowdeny'] == 0) {
 			$strAllowDeny = "deny";
-		}
-		else {
+		} else {
 			$strAllowDeny = "allow";
 		}
 
@@ -352,15 +344,13 @@ if ( empty($_POST['submit']) ) {
 		$dispFileHelp = "";
 		$dispFileOpen = "<input type='file' name='consolefile' class='textBox' style='width: 250px; border: 0px'><br>
 							<span style='font-size: 10px'>File Type: .php | <a href='javascript:void(0)' onmouseover=\"showToolTip('The file size upload limit is controlled by your PHP settings in the php.ini file.')\" onmouseout='hideToolTip()'>File Size: ".ini_get("upload_max_filesize")."B or less</a></span>";
-	}
-	elseif ($consoleInfo['sep'] == 1) {
+	} elseif ($consoleInfo['sep'] == 1) {
 		$dispPageTitle = "<b>".$consoleInfo['pagetitle']."</b>";
 		$dispPageTitleHelp = "";
 
 		$dispFileOpen = "<span style='font-style: italic; font-weight: bold'>N/A</span>";
 		$dispFileHelp = "";
-	}
-	else {
+	} else {
 		$dispPageTitle = "<b>".$consoleInfo['pagetitle']."</b>";
 		$dispPageTitleHelp = " <a href='javascript:void(0)' onmouseover=\"showToolTip('You cannot change the name of default console options through the admin section.')\" onmouseout='hideToolTip()'>(?)</a>";
 

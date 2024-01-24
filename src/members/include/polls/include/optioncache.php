@@ -42,8 +42,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 	if (isset($_POST['action']) && $_POST['action'] == "move") {
 		$pollObj->moveCache($_POST['direction'], $_POST['optionOrder']);
-	}
-	elseif (isset($_POST['action']) && $_POST['action'] == "delete") {
+	} elseif (isset($_POST['action']) && $_POST['action'] == "delete") {
 		unset($_SESSION['btPollOptionCache'][$pollObj->cacheID][$_POST['pollOption']]);
 
 		$pollObj->resortCacheOrder();

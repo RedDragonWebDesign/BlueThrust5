@@ -26,8 +26,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -122,8 +121,7 @@ require_once($prevFolder."include/breadcrumb.php");
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You entered incorrect text in the captcha box.<br>";
 			}
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> *You entered incorrect text in the captcha box.<br>";
 		}
@@ -161,8 +159,7 @@ Thanks,\n
 
 				if ($emailCode == 1) {
 					$dispConfirmMessage = "A request has been sent to the diplomacy managers.  Please wait while a decision is made.";
-				}
-				else {
+				} else {
 					$dispConfirmMessage = "Almost Done!  You need to first confirm your e-mail address before the diplomacy request can go through.  Check your spam!";
 				}
 
@@ -180,13 +177,11 @@ Thanks,\n
 						</script>
 					
 					";
-				}
-				else {
+				} else {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 				}
-			}
-			else {
+			} else {
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to send confirmation e-mail.<br>";
 				$countErrors++;
 			}

@@ -111,8 +111,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			echo "
 				</table>
 			";
-		}
-		else {
+		} else {
 			echo "<i>No Stats Added Yet!</i>";
 		}
 	}

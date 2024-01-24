@@ -14,8 +14,7 @@
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -61,8 +60,7 @@ if ($_POST['submitted']) {
 				$member->postNotification($dispFounderName." has closed the squad: <b>".$squadInfo['name']."</b>!");
 			}
 		}
-	}
-	else {
+	} else {
 		$dispMessage = "Unabled to close squad!";
 	}
 

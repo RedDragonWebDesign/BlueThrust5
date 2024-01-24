@@ -62,19 +62,16 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					
 				</script>
 				";
-			}
-			else {
+			} else {
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to edit custom page.  Please try again!<br>";
 				$countErrors++;
 			}
 		}
-	}
-	else {
+	} else {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to edit custom page.  Invalid Custom Page ID!<br>";
 		$countErrors++;
 	}
-}
-else {
+} else {
 	$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to edit custom page.  You are not authorized to edit custom pages!<br>";
 	$countErrors++;
 }

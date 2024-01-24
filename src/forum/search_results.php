@@ -80,8 +80,7 @@ if (trim($_POST['keyword']) != "") {
 		$filterKeyword = array("message" => $_POST['keyword'], "title" => $_POST['keyword']);
 
 		$filterResults[] = " (".$postTable.".message LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%' OR ".$postTable.".title LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%') ";
-	}
-	else {
+	} else {
 		$filterResults[] = " ".$postTable.".title LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%' ";
 	}
 }
@@ -182,8 +181,7 @@ if ($_POST['filtertopics'] == 0) {
 
 	if ($arrOrderBy[$_POST['sortresults']] != "" && $_POST['sortresults_ascdesc'] == 0) {
 		$orderBY = " ORDER BY ".$arrOrderBy[$_POST['sortresults']]." DESC";
-	}
-	elseif ($arrOrderBy[$_POST['sortresults']] != "" && $_POST['sortresults_ascdesc'] == 1) {
+	} elseif ($arrOrderBy[$_POST['sortresults']] != "" && $_POST['sortresults_ascdesc'] == 1) {
 		$orderBY = " ORDER BY ".$arrOrderBy[$_POST['sortresults']]." ASC";
 	}
 
@@ -211,8 +209,7 @@ if ($_POST['filtertopics'] == 0) {
 	if (!isset($_GET['page']) || !is_numeric($_GET['page']) || $totalPages < $_GET['page'] || $_GET['page'] < 1) {
 		$sqlLimit = " LIMIT 0, ".$numPerPage;
 		$_POST['page'] = 1;
-	}
-	else {
+	} else {
 		$sqlLimit = " LIMIT ".($numPerPage*($_GET['page']-1)).", ".$numPerPage;
 	}
 
@@ -241,8 +238,7 @@ if ($_POST['filtertopics'] == 0) {
 					$arrSearchResults[$row['forumpost_id']] = strtolower($boardObj->get_info("name"));
 					break;
 			}
-		}
-		else {
+		} else {
 			$arrSearchResults[] = $row['forumpost_id'];
 		}
 	}
@@ -250,8 +246,7 @@ if ($_POST['filtertopics'] == 0) {
 	if ($blnResort) {
 		if ($_POST['sortresults_ascdesc'] == 0) {
 			arsort($arrSearchResults);
-		}
-		else {
+		} else {
 			asort($arrSearchResults);
 		}
 

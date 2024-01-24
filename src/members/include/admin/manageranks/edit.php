@@ -68,8 +68,7 @@ if ($checkMember) {
 					if (!is_numeric($_POST['rankimageheight']) or trim($_POST['rankimageheight']) == "") {
 						$countErrors++;
 						$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a numeric value.<br>";
-					}
-					else {
+					} else {
 						if ($_POST['rankimageheight'] <= 0) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a value greater than 0.<br>";
@@ -81,8 +80,7 @@ if ($checkMember) {
 					if (!is_numeric($_POST['rankimagewidth']) or trim($_POST['rankimagewidth']) == "") {
 						$countErrors++;
 						$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a numeric value.<br>";
-					}
-					else {
+					} else {
 						if ($_POST['rankimagewidth'] <= 0) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a value greater than 0.<br>";
@@ -131,8 +129,7 @@ if ($checkMember) {
 						$checkRankInfo = $checkRankObj->get_info();
 						if ($_POST['beforeafter'] == "before") {
 							$intTempRankOrder = $checkRankInfo['ordernum']+1;
-						}
-						else {
+						} else {
 							$intTempRankOrder = $checkRankInfo['ordernum']-1;
 						}
 
@@ -142,8 +139,7 @@ if ($checkMember) {
 						if ($intTempRankOrder == $rankInfo['ordernum']) {
 							$intNewRankOrderNum = $rankInfo['ordernum'];
 							$resortRanks = false;
-						}
-						else {
+						} else {
 							$intNewRankOrderNum = $checkRankObj->makeRoom($_POST['beforeafter']);
 							$resortRanks = true;
 						}
@@ -152,8 +148,7 @@ if ($checkMember) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid rank order. (rank)<br>";
 						}
-					}
-					else {
+					} else {
 						$countErrors++;
 						$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid rank order.<br>";
 					}
@@ -169,11 +164,9 @@ if ($checkMember) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You cannot set a rank to promote higher than its rank order.<br>";
 						}
-					}
-					elseif ($_POST['promoterank'] == "none") {
+					} elseif ($_POST['promoterank'] == "none") {
 						$_POST['promoterank'] = 0;
-					}
-					else {
+					} else {
 						$countErrors++;
 						$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid maximum promotion rank.<br>";
 					}
@@ -193,14 +186,12 @@ if ($checkMember) {
 							if (!$uploadFile->uploadFile()) {
 								$countErrors++;
 								$dispError .= "<b>&middot;</b> Unable to upload rank image file.  Please make sure the file extension is either .jpg, .png, .gif or .bmp<br>";
-							}
-							else {
+							} else {
 								$rankImgURL = "images/ranks/".$uploadFile->getUploadedFileName();
 								$arrUpdateValues[] = $rankImgURL;
 								$arrUpdateColumns[] = "imageurl";
 							}
-						}
-						elseif ($_POST['rankimageurl'] != "") {
+						} elseif ($_POST['rankimageurl'] != "") {
 							$arrUpdateValues[] = $_POST['rankimageurl'];
 							$arrUpdateColumns[] = "imageurl";
 						}
@@ -253,12 +244,10 @@ if ($checkMember) {
 							popupDialog('Manage Ranks', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'successBox');
 							</script>
 							";
-						}
-						else {
+						} else {
 							$_POST['submit'] = false;
 						}
-					}
-					else {
+					} else {
 						$_POST['submit'] = false;
 					}
 				}
@@ -314,8 +303,7 @@ if ($checkMember) {
 						$rankCatName = filterText($row['name']);
 						if ($rankInfo['rankcategory_id'] == $row['rankcategory_id']) {
 							$rankCatOptions .= "<option value='".$row['rankcategory_id']."' selected>".$rankCatName."</option>";
-						}
-						else {
+						} else {
 							$rankCatOptions .= "<option value='".$row['rankcategory_id']."'>".$rankCatName."</option>";
 						}
 					}
@@ -328,8 +316,7 @@ if ($checkMember) {
 					if ($result->num_rows == 1) {
 						$beforeRankInfo = $result->fetch_assoc();
 						$intRankBeforeAfter = $beforeRankInfo['rank_id'];
-					}
-					else {
+					} else {
 						// Editing First Rank Need to select "After" option
 						$intRankAfter = $rankInfo['ordernum']+1;
 						$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum = '".$intRankAfter."' AND rank_id != '1'");
@@ -348,8 +335,7 @@ if ($checkMember) {
 						$rankName = filterText($row['name']);
 						if ($row['rank_id'] == $intRankBeforeAfter) {
 							$rankOrderOptions .= "<option value='".$row['rank_id']."' selected>".$rankName."</option>";
-						}
-						else {
+						} else {
 							$rankOrderOptions .= "<option value='".$row['rank_id']."'>".$rankName."</option>";
 						}
 					}
@@ -367,8 +353,7 @@ if ($checkMember) {
 
 					if ($rankInfo['promotepower'] == 0) {
 						$promotePowerOptions .= "<option value='none' selected>(Can't Promote)</option>";
-					}
-					else {
+					} else {
 						$promotePowerOptions .= "<option value='none'>(Can't Promote)</option>";
 					}
 
@@ -376,8 +361,7 @@ if ($checkMember) {
 					while ($row = $result->fetch_assoc()) {
 						if ($rankInfo['promotepower'] == $row['rank_id']) {
 							$promotePowerOptions .= "<option value='".$row['rank_id']."' selected>".filterText($row['name'])."</option>";
-						}
-						else {
+						} else {
 							$promotePowerOptions .= "<option value='".$row['rank_id']."'>".filterText($row['name'])."</option>";
 						}
 					}
@@ -554,18 +538,15 @@ if ($checkMember) {
 								if ($consoleOptionInfo['pagetitle'] != "-separator-") {
 									if ($consoleObj->hasAccess($rankInfo['rank_id'])) {
 										$dispSelected = " checked";
-									}
-									else {
+									} else {
 										$dispSelected = "";
 									}
 
 									echo "&nbsp;&nbsp;<input type='checkbox' name='consoleid_".$consoleOptionInfo['console_id']."' value='1'".$dispSelected."> ".$consoleOptionInfo['pagetitle']."<br>";
-								}
-								elseif ($consoleOptionInfo['pagetitle'] == "-separator-") {
+								} elseif ($consoleOptionInfo['pagetitle'] == "-separator-") {
 									if ($consoleObj->hasAccess($rankInfo['rank_id'])) {
 										$dispSelected = " checked";
-									}
-									else {
+									} else {
 										$dispSelected = "";
 									}
 
@@ -596,14 +577,12 @@ if ($checkMember) {
 					";
 				}
 			}
-		}
-		else {
+		} else {
 			echo "no";
 		}
 	} else {
 		echo "no1";
 	}
-}
-else {
+} else {
 	echo "no2";
 }

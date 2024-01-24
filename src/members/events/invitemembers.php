@@ -16,8 +16,7 @@
 
 if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -50,17 +49,14 @@ if ( ! empty($_POST['submit']) ) {
 		$checkInvite = $eventObj->inviteMember($value, $memberInfo['member_id']);
 		if ($objInviteMember->select($value) && $checkInvite === true) {
 			$objInviteMember->postNotification("You have been invited to the event, <b>".$eventInfo['title']."</b>!.  Go to the <a href='".$MAIN_ROOT."events/info.php?eID=".$eventInfo['event_id']."'>event</a> page to view more info.", "general");
-		}
-		elseif ($objInviteMember->select($value) && $checkInvite === false) {
+		} elseif ($objInviteMember->select($value) && $checkInvite === false) {
 			$dispInviteErrorName = $objInviteMember->get_info_filtered("username");
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to invite ".$dispInviteErrorName.".<br>";
-		}
-		elseif (!$objInviteMember->select($value)) {
+		} elseif (!$objInviteMember->select($value)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member.<br>";
-		}
-		elseif ($checkInvite == "dup") {
+		} elseif ($checkInvite == "dup") {
 			$dispInviteErrorName = $objInviteMember->get_info_filtered("username");
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to invite ".$dispInviteErrorName.". (already invited)<br>";
@@ -95,8 +91,7 @@ if ( empty($_POST['submit']) ) {
 
 	if ($countErrors == 0) {
 		$_SESSION['btInviteList'] = array();
-	}
-	else {
+	} else {
 		$_SESSION['btInviteList'] = filterArray($_SESSION['btInviteList']);
 	}
 

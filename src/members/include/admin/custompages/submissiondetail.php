@@ -24,12 +24,10 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !is
 	// Check Login
 	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $customFormPageObj->select($_POST['cfID'])) {
 		$memberInfo = $member->get_info();
-	}
-	else {
+	} else {
 		exit();
 	}
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($consoleObj->findConsoleIDByName("View Custom Form Submissions"));
 	if (!$member->hasAccess($consoleObj)) {
@@ -77,8 +75,7 @@ foreach ($arrSubmissions as $submissionID) {
 					<td class='main' valign='top'>".nl2br($formValue)."</td>
 				</tr>
 				";
-			}
-			else {
+			} else {
 				echo "
 					<td class='main' valign='top'>
 					";
@@ -91,8 +88,7 @@ foreach ($arrSubmissions as $submissionID) {
 
 				echo "</td></tr>";
 			}
-		}
-		else {
+		} else {
 			echo "
 				<tr>
 					<td colspan='2' class='main'><br>

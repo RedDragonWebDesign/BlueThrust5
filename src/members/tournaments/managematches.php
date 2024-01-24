@@ -15,8 +15,7 @@
 
 if (!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -115,8 +114,7 @@ foreach ($arrRounds as $roundNum) {
 
 	if ($tournamentInfo['playersperteam'] == 1) {
 		$dispTeamOrPlayer = "Player";
-	}
-	else {
+	} else {
 		$dispTeamOrPlayer = "Team";
 	}
 

@@ -27,8 +27,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -57,8 +56,7 @@ if ($downloadObj->select($_GET['dID'])) {
 
 	if ($accessType == 1 && $LOGGED_IN) {
 		$blnShowDownload = true;
-	}
-	elseif ($accessType == 0) {
+	} elseif ($accessType == 0) {
 		$blnShowDownload = true;
 	}
 
@@ -86,8 +84,7 @@ if ($downloadObj->select($_GET['dID'])) {
 		header("Content-Disposition: attachment; filename=".$downloadInfo['filename']);
 
 		echo $fileContents;
-	}
-	else {
+	} else {
 		echo "File Not Found!";
 	}
 }

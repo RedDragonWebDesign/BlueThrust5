@@ -6,8 +6,7 @@ if (isset($_COOKIE['btSessionID']) && $_COOKIE['btSessionID'] != "") {
 	session_id($_COOKIE['btSessionID']);
 	session_start();
 	ini_set('session.use_only_cookies', 1);
-}
-else {
+} else {
 	session_start();
 	ini_set('session.use_only_cookies', 1);
 	if (
@@ -72,8 +71,7 @@ else {
 					</div>
 				";
 			}
-		}
-		elseif (file_exists("../_config.php") && !is_writable("../_config.php")) {
+		} elseif (file_exists("../_config.php") && !is_writable("../_config.php")) {
 			echo "
 				<div class='noteDiv'>
 					<b>Note:</b> Unable to write to config file.  You can fix this by setting the file permissions on the _config.php file to 775.  Otherwise, you will need to manually create and fill out the _config.php file.
@@ -85,11 +83,9 @@ else {
 
 		if ($_GET['step'] == "" || $_GET['step'] == 1) {
 			require_once("steps/step1.php");
-		}
-		elseif ($_GET['step'] == 2) {
+		} elseif ($_GET['step'] == 2) {
 			require_once("steps/step2.php");
-		}
-		elseif ($_GET['step'] == 3) {
+		} elseif ($_GET['step'] == 3) {
 			require_once("steps/step3.php");
 		}
 		?>

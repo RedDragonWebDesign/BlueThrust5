@@ -16,8 +16,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -34,8 +33,7 @@ $rankObj->select($memberInfo['rank_id']);
 $rankInfo = $rankObj->get_info();
 if ($memberInfo['promotepower'] != 0) {
 	$rankInfo['promotepower'] = $memberInfo['promotepower'];
-}
-elseif ($memberInfo['promotepower'] == -1) {
+} elseif ($memberInfo['promotepower'] == -1) {
 	$rankInfo['promotepower'] = 0;
 }
 
@@ -43,8 +41,7 @@ if ($memberInfo['rank_id'] == 1) {
 	$highestOrderNum = $rankObj->getHighestOrderNum();
 	$rankObj->selectByOrder($highestOrderNum);
 	$powerRankInfo = $rankObj->get_info();
-}
-else {
+} else {
 	$rankObj->select($rankInfo['promotepower']);
 	$powerRankInfo = $rankObj->get_info();
 }
@@ -53,8 +50,7 @@ if ( ! empty($_POST['submit']) ) {
 	if (!$memberObj->select($_POST['member'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member.<br>";
-	}
-	elseif ($memberObj->select($_POST['member'])) {
+	} elseif ($memberObj->select($_POST['member'])) {
 		$tempMemInfo = $memberObj->get_info();
 		$rankObj->select($tempMemInfo['rank_id']);
 		$tempRankInfo = $rankObj->get_info();
@@ -93,8 +89,7 @@ if ( ! empty($_POST['submit']) ) {
 
 			$logMessage = "Changed ".$tempMemInfo['username']."'s recruit date to ".date("D M j, Y g:i a", $recruitDate).".";
 			$member->logAction($logMessage);
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}

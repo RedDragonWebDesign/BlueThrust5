@@ -24,8 +24,7 @@ require_once($prevFolder."classes/member.php");
 
 if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
-}
-else {
+} else {
 	$dispHTTP = "https://";
 }
 
@@ -46,8 +45,7 @@ if (!isset($_GET['oauth_token']) || !isset($_GET['oauth_verifier']) || $_GET['oa
 		header("Location: ".$twitterObj->authorizeURL."?oauth_token=".$arrOutput['oauth_token']);
 		exit();
 	}
-}
-elseif (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oauth_token'] == $_SESSION['btOauth_Token']) {
+} elseif (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oauth_token'] == $_SESSION['btOauth_Token']) {
 	// CALLBACK
 
 
@@ -92,20 +90,16 @@ elseif (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['
 				";
 
 				exit();
-			}
-			else {
+			} else {
 				$dispError = "You may not use twitter to log in to this account.  To change this setting, log in to your account regularly and change your Twitter Connect settings.<br><br>";
 			}
-		}
-		else {
+		} else {
 			$dispError = "There is no user associated with this Twitter account.  You must connect your Twitter account while logged in before using this feature.";
 		}
-	}
-	else {
+	} else {
 		$dispError = "Unable to connect to Twitter!  Please <a href='".$MAIN_ROOT."plugins/twitter/login.php'>Try Again</a>.";
 	}
-}
-else {
+} else {
 	$dispError = "You entered an incorrect username/password combination!";
 }
 

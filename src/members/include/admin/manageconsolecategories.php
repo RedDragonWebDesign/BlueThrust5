@@ -15,8 +15,7 @@
 $cID = $_GET['cID'];
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -111,7 +110,6 @@ if ($_GET['catID'] == "") {
 			
 	</script>
 	";
-}
-elseif ($_GET['catID'] != "" and $_GET['action'] == "edit") {
+} elseif ($_GET['catID'] != "" and $_GET['action'] == "edit") {
 	require_once("manageconsolecat/edit.php");
 }

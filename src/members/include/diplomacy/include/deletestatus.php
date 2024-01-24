@@ -69,8 +69,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $diplomacyStatusObj->sel
 			</script>
 			
 		";
-	}
-	elseif (count($arrAssociates) == 0 && !isset($_POST['confirmDelete'])) {
+	} elseif (count($arrAssociates) == 0 && !isset($_POST['confirmDelete'])) {
 		echo "
 			
 			<div id='deleteDialogBox' style='display: none'>
@@ -121,8 +120,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $diplomacyStatusObj->sel
 			
 			
 		";
-	}
-	elseif (count($arrAssociates) == 0 && isset($_POST['confirmDelete'])) {
+	} elseif (count($arrAssociates) == 0 && isset($_POST['confirmDelete'])) {
 		$diplomacyStatusObj->set_assocTableName("");
 		$diplomacyStatusObj->delete();
 

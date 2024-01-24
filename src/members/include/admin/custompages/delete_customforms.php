@@ -36,12 +36,10 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		if ($_POST['confirm'] == "1") {
 			$customPageObj->delete();
 			require_once("main_customforms.php");
-		}
-		else {
+		} else {
 			echo "<p align='center'>Are you sure you want to delete the custom form <b>".$customPageInfo['name']."</b>?<br><br>All submissions related to this form will also be deleted.";
 		}
-	}
-	elseif (!$customPageObj->select($_POST['cpID'])) {
+	} elseif (!$customPageObj->select($_POST['cpID'])) {
 		echo "<p align='center'>Unable find the selected custom form.  Please try again or contact the website administrator.</p>";
 	}
 }

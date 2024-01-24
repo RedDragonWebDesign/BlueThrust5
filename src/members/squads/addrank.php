@@ -14,8 +14,7 @@
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -66,11 +65,9 @@ if ( ! empty($_POST['submit']) ) {
 	if ($blnCheckOrder1 || $blnCheckOrder2 || $blnCheckOrder3 || $blnCheckOrder4) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid rank order.<br>";
-	}
-	elseif ($_POST['rankorder'] == "first" && count($arrRankList) == 1) {
+	} elseif ($_POST['rankorder'] == "first" && count($arrRankList) == 1) {
 		$intNewOrderNum = 2;
-	}
-	elseif ($_POST['rankorder'] != "first" && $squadObj->objSquadRank->select($_POST['rankorder'])) {
+	} elseif ($_POST['rankorder'] != "first" && $squadObj->objSquadRank->select($_POST['rankorder'])) {
 		$intNewOrderNum = $squadObj->objSquadRank->makeRoom($_POST['beforeafter']);
 
 		if ($intNewOrderNum === false) {
@@ -106,8 +103,7 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 		
 			";
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 		}

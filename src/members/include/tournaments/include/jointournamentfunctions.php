@@ -7,8 +7,7 @@ function joinTournamentChecks() {
 
 	if (!$tournamentObj->select($_POST['tournament'])) {
 		$formObj->errors[] = "You selected an invalid tournament.";
-	}
-	else {
+	} else {
 		$tournamentInfo = $tournamentObj->get_info_filtered();
 
 		// Check Password

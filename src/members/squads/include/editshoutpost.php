@@ -61,8 +61,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 				if ($squadNewsObj->update($arrColumns, $arrValues)) {
 					$_POST['cancel'] = true;
-				}
-				else {
+				} else {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 				}

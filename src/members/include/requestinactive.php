@@ -56,8 +56,7 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 		if ($counter == 0) {
 			$addCSS = "";
 			$counter = 1;
-		}
-		else {
+		} else {
 			$addCSS = " alternateBGColor";
 			$counter = 0;
 		}
@@ -78,14 +77,12 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 				<p align='center'><i>No Messages</i></p>					
 			</div>
 		";
-	}
-	else {
+	} else {
 		echo "<br><br>";
 	}
 
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -123,8 +120,7 @@ if (!$member->requestedIA()) {
 		"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
 		"description" => "Use the form below to request to be inactive.  When inactive, you will be able to log in, however you will not have access to any console options.  A higher ranking member will have to approve your request before your status is set to inactive."
 	);
-}
-else {
+} else {
 	// Already requested to be inactive
 	$iaRequestObj = new Basic($mysqli, "iarequest", "iarequest_id");
 	$iaRequestObj->select($member->requestedIA(true));
@@ -139,8 +135,7 @@ else {
 		$dispRequestStatus = "<span class='allowText'>Approved</span> by ".$member->getMemberLink()." - ".getPreciseTime($requestInfo['reviewdate']);
 		$member->select($memberInfo['member_id']);
 		$dispSendMessages = "  A higher ranking member must delete the request before you can issue another request.";
-	}
-	elseif ($requestInfo['requeststatus'] == 2) {
+	} elseif ($requestInfo['requeststatus'] == 2) {
 		$member->select($requestInfo['reviewer_id']);
 		$dispRequestStatus = "<span class='denyText'>Denied</span> by ".$member->getMemberLink()." - ".getPreciseTime($requestInfo['reviewdate']);
 		$member->select($memberInfo['member_id']);
@@ -202,8 +197,7 @@ else {
 		);
 
 		$arrComponents = array_merge($arrComponents, $arrSendMesssageComponents);
-	}
-	else {
+	} else {
 		echo "<input type='hidden' id='btnSend'>";
 	}
 

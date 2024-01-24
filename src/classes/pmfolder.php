@@ -30,8 +30,7 @@ class PMFolder extends BasicSort {
 		if (in_array($intIDNum, $arrSpecialFolders)) {
 			$this->arrObjInfo['name'] = array_search($intIDNum, $arrSpecialFolders);
 			$this->intTableKeyValue = $intIDNum;
-		}
-		else {
+		} else {
 			$returnVal = parent::select($intIDNum, $numericIDOnly);
 		}
 
@@ -77,8 +76,7 @@ class PMFolder extends BasicSort {
 
 			if ($this->intTableKeyValue == -1) {
 				$filterSQL = "senderfolder_id = '".$this->intTableKeyValue."' AND sender_id = '".$this->intMemberID."' AND deletesender = '0'";
-			}
-			else {
+			} else {
 				$filterSQL = "receiver_id = '".$this->intMemberID."' AND receiverfolder_id = '".$this->intTableKeyValue."' AND deletereceiver = '0'";
 			}
 

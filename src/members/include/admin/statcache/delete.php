@@ -67,8 +67,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				}
 
 				$_SESSION['btStatCache'] = $tempArray;
-			}
-			else {
+			} else {
 				echo "
 					<div id='errorPopup' style='display: none'><p align='center'>There is currently an auto-calculated stat using <b>".filterText($_SESSION['btStatCache'][$_POST['sID']]['statName'])."</b>.  Please delete all auto-calculated stats that are using <b>".filterText($_SESSION['btStatCache'][$_POST['sID']]['statName'])."</b> to continue.</p></div>
 				

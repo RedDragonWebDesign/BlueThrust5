@@ -96,15 +96,13 @@ class Game extends Rank {
 
 				if ($gameStat1Type == "calculate") {
 					$gameStat1Value = $this->calcStat($gameStats1Info['gamestats_id'], $memberObj);
-				}
-				else {
+				} else {
 					$gameStat1Value = $memberObj->getGameStatValue($gameStats1Info['gamestats_id']);
 				}
 
 				if ($gameStat2Type == "calculate") {
 					$gameStat2Value = $this->calcStat($gameStats2Info['gamestats_id'], $memberObj);
-				}
-				else {
+				} else {
 					$gameStat2Value = $memberObj->getGameStatValue($gameStats2Info['gamestats_id']);
 				}
 

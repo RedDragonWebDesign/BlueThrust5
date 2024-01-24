@@ -55,15 +55,13 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 
 				if ($member->select($playerInfo['member_id'])) {
 					$dispName = $member->get_info_filtered("username");
-				}
-				else {
+				} else {
 					$tournamentObj->objPlayer->select($tPlayers[0]);
 					$dispName = $tournamentObj->objPlayer->get_info_filtered("displayname");
 				}
 
 				$dispTeamOrPlayer = "Player";
-			}
-			else {
+			} else {
 				$dispName = $tournamentObj->objTeam->get_info_filtered("name");
 				$dispTeamOrPlayer = "Team";
 			}
@@ -81,12 +79,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 					</tr>
 				</table>
 			";
-		}
-		elseif (isset($_POST['newSeed']) && $_POST['newSeed'] > 0 && $_POST['newSeed'] <= $tournamentInfo['maxteams'] && $tournamentObj->getTeamIDBySeed($_POST['newSeed']) !== false) {
+		} elseif (isset($_POST['newSeed']) && $_POST['newSeed'] > 0 && $_POST['newSeed'] <= $tournamentInfo['maxteams'] && $tournamentObj->getTeamIDBySeed($_POST['newSeed']) !== false) {
 			if ($tournamentInfo['playersperteam'] == 1) {
 				$strPlayerTeam = "Player";
-			}
-			else {
+			} else {
 				$strPlayerTeam = "Team";
 			}
 
@@ -103,8 +99,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 			$teamMatchInfo = $tournamentObj->objMatch->get_info();
 			if ($teamMatchInfo['team1_id'] == $teamInfo['tournamentteam_id']) {
 				$arrUpdateColumn = array("team1_id");
-			}
-			else {
+			} else {
 				$arrUpdateColumn = array("team2_id");
 			}
 
@@ -114,8 +109,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 			$swappingTeamMatchInfo = $tournamentObj->objMatch->get_info();
 			if ($swappingTeamMatchInfo['team1_id'] == $swappingTeamInfo['tournamentteam_id']) {
 				$arrUpdateColumn = array("team1_id");
-			}
-			else {
+			} else {
 				$arrUpdateColumn = array("team2_id");
 			}
 
@@ -129,8 +123,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 						".$strPlayerTeam." Seed Changed Successfully!
 					</p>
 				";
-			}
-			else {
+			} else {
 				echo "
 				<p class='main' align='center'>
 					Unable to change ".$strPlayerTeam." Seed!

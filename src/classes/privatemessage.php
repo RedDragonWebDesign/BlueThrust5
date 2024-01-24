@@ -66,17 +66,14 @@ class PrivateMessage extends BasicOrder {
 
 					if ($dispName != "" && !$blnNameOnly) {
 						$arrGroups['list'][$row['pmmember_id']] = $row['member_id'];
-					}
-					elseif ($dispName != "") {
+					} elseif ($dispName != "") {
 						$arrGroups['list'][] = $dispName;
 					}
-				}
-				elseif ($row['grouptype'] == "") {
+				} elseif ($row['grouptype'] == "") {
 					$this->memberObj->select($row['member_id']);
 					if ($blnNameOnly) {
 						$arrGroups['list'][] = $this->memberObj->getMemberLink();
-					}
-					else {
+					} else {
 						$arrGroups['list'][] = $row['member_id'];
 					}
 				}
@@ -100,11 +97,9 @@ class PrivateMessage extends BasicOrder {
 
 			if ($this->arrObjInfo['sender_id'] == $memberID && !$multiPM) {
 				$returnVal = $this->arrObjInfo['senderfolder_id'];
-			}
-			elseif ($this->arrObjInfo['receiver_id'] == $memberID && !$multiPM) {
+			} elseif ($this->arrObjInfo['receiver_id'] == $memberID && !$multiPM) {
 				$returnVal = $this->arrObjInfo['receiverfolder_id'];
-			}
-			elseif ($this->arrObjInfo['receiver_id'] == 0 && in_array($memberID, $arrRecipients)) {
+			} elseif ($this->arrObjInfo['receiver_id'] == 0 && in_array($memberID, $arrRecipients)) {
 				$tempKey = array_search($memberID, $arrRecipients);
 				$this->multiMemPMObj->select($tempKey);
 

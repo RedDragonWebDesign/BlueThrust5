@@ -74,8 +74,7 @@ class ForumPost extends Basic {
 
 		if ($template == "") {
 			require(BASE_DIRECTORY."forum/templates/post.php");
-		}
-		else {
+		} else {
 			require(BASE_DIRECTORY."forum/templates/".$template);
 		}
 	}
@@ -117,11 +116,9 @@ class ForumPost extends Basic {
 			// Figure out posts per page
 			if ($setPostsPerPage > 0) {
 				$postsPerPage = $setPostsPerPage;
-			}
-			elseif ($websiteInfo['forum_postsperpage'] > 0) {
+			} elseif ($websiteInfo['forum_postsperpage'] > 0) {
 				$postsPerPage = $websiteInfo['forum_postsperpage'];
-			}
-			else {
+			} else {
 				$postsPerPage = 25;
 			}
 
@@ -141,8 +138,7 @@ class ForumPost extends Basic {
 				$topicInfo = $this->getTopicInfo(true);
 				$returnVal = "<a href='".$returnVal."'>".$topicInfo['title']."</a>";
 			}
-		}
-		elseif ($this->intTableKeyValue != "" && $individualPost) {
+		} elseif ($this->intTableKeyValue != "" && $individualPost) {
 			$returnVal = FULL_SITE_URL."forum/viewpost.php?post=".$this->intTableKeyValue;
 
 			if ($fullLink) {

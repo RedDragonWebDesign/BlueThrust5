@@ -37,8 +37,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	if ($checkAccess) {
 		if ($_POST['moveDir'] == "up") {
 			$addTo = -1;
-		}
-		else {
+		} else {
 			$addTo = 1;
 		}
 

@@ -15,8 +15,7 @@
 
 if (!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -106,8 +105,7 @@ if (isset($_GET['poolID']) && isset($_GET['teamID']) && $tournamentObj->objTourn
 if ($blnShowPoolList) {
 	if ($tournamentInfo['playersperteam'] == 1) {
 		$dispTeamOrPlayer = "Player";
-	}
-	else {
+	} else {
 		$dispTeamOrPlayer = "Team";
 	}
 
@@ -164,12 +162,10 @@ if ($blnShowPoolList) {
 
 				if ($dispTeamName == "") {
 					$dispTeamName = "<i>Empty Spot</i>";
-				}
-				else {
+				} else {
 					$dispTeamName = "<b><a href='managetournament.php?tID=".$tID."&pID=ManagePools&poolID=".$poolID."&teamID=".$teamID."'>".$dispTeamName."</a></b>";
 				}
-			}
-			else {
+			} else {
 				$dispTeamName = "<b><a href='managetournament.php?tID=".$tID."&pID=ManagePools&poolID=".$poolID."&teamID=".$teamID."'>".$teamInfo['name']."</a></b>";
 			}
 

@@ -38,8 +38,7 @@ class btHooks {
 			if (function_exists($hookInfo['function'])) {
 				if ($hookInfo['args'] == "") {
 					call_user_func($hookInfo['function']);
-				}
-				else {
+				} else {
 					call_user_func_array($hookInfo['function'], $hookInfo['args']);
 				}
 			}

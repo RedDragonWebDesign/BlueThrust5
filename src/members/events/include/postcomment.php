@@ -53,8 +53,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMessa
 
 				if ($memInfo['profilepic'] == "") {
 					$dispProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
-				}
-				else {
+				} else {
 					$dispProfilePic = $MAIN_ROOT.$memInfo['profilepic'];
 				}
 

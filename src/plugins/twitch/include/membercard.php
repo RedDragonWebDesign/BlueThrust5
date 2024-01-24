@@ -20,8 +20,7 @@ if (!isset($this->twitchObj->data['memberCard']['memberID'])) {
 				<div class='twitchViewers'>".number_format($twitchObj->data['memberCard']['viewers'])." ".pluralize("viewer", $twitchObj->data['memberCard']['viewers'])."</div>
 				<a href='".MAIN_ROOT."plugins/twitch/?user=".$twitchObj->data['memberCard']['memberInfo']['username']."'><img src='".$twitchObj->data['memberCard']['rawData']['stream']['preview']['medium']."'></a>
 			";
-	}
-	else {
+	} else {
 		echo "<a href='".MAIN_ROOT."plugins/twitch/?user=".$twitchObj->data['memberCard']['memberInfo']['username']."'><img src='".MAIN_ROOT."plugins/twitch/images/offlinepreview.png'></a>";
 	}
 

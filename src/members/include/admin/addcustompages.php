@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -55,14 +54,12 @@ if ( ! empty($_POST['submit']) ) {
 					popupDialog('Add Custom Pages', '".$MAIN_ROOT."members/console.php?cID=".$intManageCustomPagesID."&cpID=".$customPageInfo['custompage_id']."&action=edit', 'successBox');
 				</script>
 			";
-		}
-		else {
+		} else {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to add custom page.  Please try again!<br>";
 			$_POST['submit'] = false;
 			$_POST['wysiwygHTML'] = addslashes($_POST['wysiwygHTML']);
 		}
-	}
-	else {
+	} else {
 		$_POST['submit'] = false;
 		$_POST['wysiwygHTML'] = addslashes($_POST['wysiwygHTML']);
 	}

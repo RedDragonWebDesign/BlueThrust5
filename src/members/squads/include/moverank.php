@@ -52,8 +52,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 			if ($squadObj->objSquadRank->select($newSortNumRankID)) {
 				$squadObj->objSquadRank->update($arrColumns, array($squadRankInfo['sortnum']));
-			}
-			else {
+			} else {
 				$squadObj->objSquadRank->select($squadRankInfo['squadrank_id']);
 				$squadObj->objSquadRank->update($arrColumns, array($squadRankInfo['sortnum']));
 			}

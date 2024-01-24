@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -25,8 +24,7 @@ else {
 
 if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
-}
-else {
+} else {
 	$dispHTTP = "https://";
 }
 
@@ -55,8 +53,7 @@ if (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oaut
 					window.location = '".$MAIN_ROOT."members/console.php?cID=".$_GET['cID']."';
 				</script>
 			";
-		}
-		else {
+		} else {
 			echo "
 			
 				<div class='shadedBox' style='margin-left: auto; margin-right: auto; width: 50%'>
@@ -68,8 +65,7 @@ if (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oaut
 			
 			";
 		}
-	}
-	else {
+	} else {
 		echo "
 		
 			<div class='shadedBox' style='margin-left: auto; margin-right: auto; width: 50%'>
@@ -81,16 +77,14 @@ if (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oaut
 		
 		";
 	}
-}
-elseif (isset($_GET['denied'])) {
+} elseif (isset($_GET['denied'])) {
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."members';
 		</script>
 	";
 	exit();
-}
-elseif (!$twitterObj->hasTwitter($memberInfo['member_id'])) {
+} elseif (!$twitterObj->hasTwitter($memberInfo['member_id'])) {
 	// CONNECT
 
 	$response = $twitterObj->getRequestToken($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
@@ -111,8 +105,7 @@ elseif (!$twitterObj->hasTwitter($memberInfo['member_id'])) {
 			</script>
 
 		";
-	}
-	else {
+	} else {
 		echo "
 			
 			<div class='shadedBox' style='margin-left: auto; margin-right: auto; width: 50%'>
@@ -124,8 +117,7 @@ elseif (!$twitterObj->hasTwitter($memberInfo['member_id'])) {
 		
 		";
 	}
-}
-elseif ($twitterObj->hasTwitter($memberInfo['member_id'])) {
+} elseif ($twitterObj->hasTwitter($memberInfo['member_id'])) {
 	$dispSuccess = false;
 	if ( ! empty($_POST['submit']) ) {
 		$setShowFeed = ($_POST['showfeed'] == 1) ? 1 : 0;
@@ -315,8 +307,7 @@ elseif ($twitterObj->hasTwitter($memberInfo['member_id'])) {
 		
 		";
 	}
-}
-else {
+} else {
 	echo "
 	
 		<script type='text/javascript'>

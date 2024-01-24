@@ -62,8 +62,7 @@ if ( ! empty($_POST['submit']) ) {
 	if ($_POST['enddate'] != "forever" && $_POST['enddate'] != "choose") {
 		$countErrors++;
 		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid poll end date.<br>";
-	}
-	elseif ($_POST['enddate'] == "choose" && (!is_numeric($_POST['realenddate']) || $_POST['realenddate'] <= 0)) {
+	} elseif ($_POST['enddate'] == "choose" && (!is_numeric($_POST['realenddate']) || $_POST['realenddate'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid poll end date.<br>";
 	}
@@ -111,8 +110,7 @@ if ( ! empty($_POST['submit']) ) {
 						popupDialog('Manage Polls', '".$MAIN_ROOT."members', 'successBox');
 					</script>			
 				";
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
@@ -165,8 +163,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 		$pollOptionCacheID = $_POST['pollCacheID'];
-	}
-	else {
+	} else {
 		$pollOptionCacheID = md5(time().uniqid());
 
 		foreach ($pollObj->getPollOptions() as $pollOptionID) {

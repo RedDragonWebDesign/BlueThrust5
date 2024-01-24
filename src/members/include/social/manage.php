@@ -15,8 +15,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -32,12 +31,10 @@ $objManageList->strMainListLink = BASE_DIRECTORY."members/include/social/include
 
 if ($_GET['sID'] != "" && $socialObj->select($_GET['sID']) && $_GET['action'] == "edit") {
 	require_once("include/edit.php");
-}
-elseif ($_GET['action'] == "delete" && $socialObj->select($_POST['itemID'])) {
+} elseif ($_GET['action'] == "delete" && $socialObj->select($_POST['itemID'])) {
 	$socialInfo = $socialObj->get_info_filtered();
 	$objManageList->strDeleteName = $socialInfo['name'];
 	$objManageList->strDeletePostVarID = "sID";
-}
-elseif ($_GET['action'] != "move") {
+} elseif ($_GET['action'] != "move") {
 	require_once($objManageList->strMainListLink);
 }

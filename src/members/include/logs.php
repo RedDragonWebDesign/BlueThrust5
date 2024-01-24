@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -60,8 +59,7 @@ for ($i=1; $i<=$numOfPages; $i++) {
 
 if ($_GET['page'] == 1) {
 	$startLimit = 0;
-}
-else {
+} else {
 	$startLimit = ($_GET['page']-1)*$_GET['show'];
 }
 
@@ -69,11 +67,9 @@ else {
 $dispLinks = "";
 if ($_GET['page'] == 1 && $numOfPages > 1) {
 	$dispLinks = "<a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&page=".($_GET['page']+1)."&show=".$_GET['show']."'>Next</a> &raquo;";
-}
-elseif ($_GET['page'] != 1 && $numOfPages > $_GET['page']) {
+} elseif ($_GET['page'] != 1 && $numOfPages > $_GET['page']) {
 	$dispLinks = "&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&page=".($_GET['page']-1)."&show=".$_GET['show']."'>Previous</a> | <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&page=".($_GET['page']+1)."&show=".$_GET['show']."'>Next</a> &raquo;";
-}
-elseif ($_GET['page'] != 1 && $numOfPages == $_GET['page']) {
+} elseif ($_GET['page'] != 1 && $numOfPages == $_GET['page']) {
 	$dispLinks = "&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&page=".($_GET['page']-1)."&show=".$_GET['show']."'>Previous</a>";
 }
 

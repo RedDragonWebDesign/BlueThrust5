@@ -66,15 +66,13 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 						$boardObj->addMod($memberModInfo['member_id']);
 					}
 				}
-			}
-			elseif (substr($_POST['bID'], 0, 6) == "board_") {
+			} elseif (substr($_POST['bID'], 0, 6) == "board_") {
 				$boardID = str_replace("board_", "", $_POST['bID']);
 				if ($boardObj->select($boardID)) {
 					$boardObj->addMod($memberModInfo['member_id']);
 				}
 			}
-		}
-		elseif ($_POST['action'] == "delete") {
+		} elseif ($_POST['action'] == "delete") {
 			if ($boardObj->select($_POST['bID'])) {
 				$boardObj->removeMod($memberModInfo['member_id']);
 			}
@@ -109,8 +107,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				</tr>
 			";
 		}
-	}
-	else {
+	} else {
 		echo "
 		
 				<tr>

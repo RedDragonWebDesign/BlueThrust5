@@ -19,8 +19,7 @@ $customFormPageObj = new CustomForm($mysqli, "custompages", "custompage_id");
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -98,15 +97,13 @@ if ( ! empty($_POST['submit']) ) {
 					popupDialog('Edit Custom Form Page', '".$MAIN_ROOT."members/console.php?cID=".$intManageCustomPagesID."&cfID=".$customPageInfo['customform_id']."&action=edit', 'successBox');
 				</script>
 			";
-		}
-		else {
+		} else {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to add custom page.  Please try again!<br>";
 			$_POST['submit'] = false;
 			$_POST['wysiwygHTML'] = addslashes($_POST['wysiwygHTML']);
 			$_POST['submitMessageHTML'] = addslashes($_POST['submitMessageHTML']);
 		}
-	}
-	else {
+	} else {
 		$_POST['submit'] = false;
 		$_POST['wysiwygHTML'] = addslashes($_POST['wysiwygHTML']);
 		$_POST['submitMessageHTML'] = addslashes($_POST['submitMessageHTML']);
@@ -128,8 +125,7 @@ if ( empty($_POST['submit']) ) {
 		$dispError
 		</div>
 		";
-	}
-	else {
+	} else {
 		$_SESSION['btFormComponent'] = array();
 		$x = 0; // Form Component Counter
 		$arrFormComponents = $customFormPageObj->getComponents();

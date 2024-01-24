@@ -46,8 +46,7 @@ foreach ($pluginsDir as $dir) {
 		if ($x == 0) {
 			$x = 1;
 			$addCSS = "";
-		}
-		else {
+		} else {
 			$x = 0;
 			$addCSS = " alternateBGColor";
 		}
@@ -73,8 +72,7 @@ foreach ($pluginsDir as $dir) {
 
 if ($dispPlugins != "") {
 	echo $dispPlugins;
-}
-else {
+} else {
 	echo "
 			<tr>
 				<td>

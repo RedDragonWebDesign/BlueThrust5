@@ -56,8 +56,7 @@ while ($row = $result->fetch_assoc()) {
 	if ($x == 0) {
 		$x = 1;
 		$addCSS = "";
-	}
-	else {
+	} else {
 		$x = 0;
 		$addCSS = " alternateBGColor";
 	}
@@ -68,8 +67,7 @@ while ($row = $result->fetch_assoc()) {
 
 	if (file_exists(BASE_DIRECTORY."plugins/".$row['filepath']."/settings.php")) {
 		$settingsLink = $MAIN_ROOT."plugins/".$row['filepath']."/settings.php";
-	}
-	else {
+	} else {
 		$settingsLink = $MAIN_ROOT."plugins/settings.php?plugin=".$row['filepath'];
 	}
 

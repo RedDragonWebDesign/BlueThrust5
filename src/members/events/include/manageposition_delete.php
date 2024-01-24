@@ -42,8 +42,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventPosit
 
 			$_GET['eID'] = $eventID;
 			require_once("manageposition_main.php");
-		}
-		else {
+		} else {
 			echo "
 			
 				<div id='confirmDeleteMessage' style='display: none'>

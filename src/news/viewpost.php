@@ -30,8 +30,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -55,12 +54,10 @@ if (isset($_GET['nID']) && $newsObj->select($_GET['nID'])) {
 		if ($newsInfo['newstype'] == 2 && !$member->hasAccess($consoleObj)) {
 			die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 		}
-	}
-	elseif ($newsInfo['newstype'] == 2) {
+	} elseif ($newsInfo['newstype'] == 2) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 	}
-}
-else {
+} else {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 }
 

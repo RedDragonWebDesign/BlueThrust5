@@ -96,8 +96,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				$newOrderNum = $consoleCatObj->getHighestOrderNum()+1;
 				$consoleCatObj->addNew(array("name", "ordernum"), array("Social Media Connect", $newOrderNum));
 				$consoleCatID = $consoleCatObj->get_info("consolecategory_id");
-			}
-			else {
+			} else {
 				$row = $result->fetch_assoc();
 				$consoleCatID = $row['consolecategory_id'];
 			}
@@ -105,8 +104,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$consoleObj->setCategoryKeyValue($consoleCatID);
 			$newSortNum = $consoleObj->getHighestSortNum()+1;
 			$consoleObj->addNew(array("consolecategory_id", "pagetitle", "filename", "sortnum"), array($consoleCatID, $PLUGIN_NAME, "../plugins/facebook/facebookconnect.php", $newSortNum));
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError[] = "Unable to create plugin database table.";
 		}
@@ -115,8 +113,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$arrReturn = array();
 	if ($countErrors == 0) {
 		$arrReturn['result'] = "success";
-	}
-	else {
+	} else {
 		$arrReturn['result'] = "fail";
 		$arrReturn['errors'] = $dispError;
 	}

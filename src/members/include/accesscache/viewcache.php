@@ -18,8 +18,7 @@ if (defined("SHOW_ACCESSCACHE")) {
 
 	if ($_POST['accessType'] == "rank") {
 		$accessObj->dispSetRankAccess(false);
-	}
-	else {
+	} else {
 		$accessObj->dispSetMemberAccess(false);
 	}
 }

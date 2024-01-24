@@ -103,8 +103,7 @@ class btMySQL extends MySQLi {
 			echo $objMySQLiStmt->error;
 			echo "<br><br>";
 			$this->displayError("btmysql.php - bindParams");
-		}
-		else {
+		} else {
 			$returnVal = $objMySQLiStmt;
 		}
 

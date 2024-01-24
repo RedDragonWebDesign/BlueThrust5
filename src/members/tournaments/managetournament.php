@@ -25,8 +25,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -74,13 +73,11 @@ if (isset($_GET['match'])) {
 	echo "
 	<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManageMatches'>Go Back</a></p>
 	";
-}
-elseif ($_GET['pID'] == "ManagePools" && isset($_GET['poolID'])) {
+} elseif ($_GET['pID'] == "ManagePools" && isset($_GET['poolID'])) {
 	echo "
 	<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManagePools'>Go Back</a></p>
 	";
-}
-else {
+} else {
 	echo "
 	<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&select=".$tID."'>Go Back</a></p>
 	";
@@ -108,8 +105,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 			case "deletetournament":
 				if ($memberInfo['member_id'] == $tournamentInfo['member_id']) {
 					require_once("deletetournament.php");
-				}
-				else {
+				} else {
 					echo "
 						<script type='text/javascript'>window.location = '".$MAIN_ROOT."members/console.php?cID=".$cID."';</script>
 					";
@@ -122,8 +118,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 			case "managematches":
 				if (!isset($_GET['match'])) {
 					require_once("managematches.php");
-				}
-				else {
+				} else {
 					require_once("managematch.php");
 				}
 
@@ -134,8 +129,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 			case "setmanagers":
 				if ($memberInfo['member_id'] == $tournamentInfo['member_id']) {
 					require_once("setmanagers.php");
-				}
-				else {
+				} else {
 					echo "
 						<script type='text/javascript'>window.location = '".$MAIN_ROOT."members/console.php?cID=".$cID."';</script>
 					";
@@ -158,19 +152,16 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 			echo "
 			<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'><br><br>&laquo; <a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManageMatches'>Go Back</a></p></div>
 			";
-		}
-		elseif ($_GET['pID'] == "ManagePools" && isset($_GET['poolID'])) {
+		} elseif ($_GET['pID'] == "ManagePools" && isset($_GET['poolID'])) {
 			echo "
 			<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'><br><br>&laquo; <a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManagePools'>Go Back</a></p></div>
 			";
-		}
-		else {
+		} else {
 			echo "
 			<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'><br><br>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&select=".$tID."'>Go Back</a></p></div>
 			";
 		}
-	}
-	else {
+	} else {
 		echo "
 			<div class='shadedBox' style='width: 300px; margin-top: 50px; margin-left: auto; margin-right: auto;'>
 				<p class='main' align='center'>
@@ -180,8 +171,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 			</div>
 		";
 	}
-}
-else {
+} else {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
 }
 

@@ -24,8 +24,7 @@ function dispIAMessages($iaID) {
 		if ($counter == 1) {
 			$addCSS = "";
 			$counter = 0;
-		}
-		else {
+		} else {
 			$addCSS = " alternateBGColor";
 			$counter = 1;
 		}
@@ -82,8 +81,7 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 		$member->postNotification("A new message was posted on your inactive request!<br><br><a href='".$MAIN_ROOT."members/console.php?cID=".$requestIACID."'>View Messages</a>");
 
 		exit();
-	}
-	elseif (($_POST['action'] == "approve" || $_POST['action'] == "deny")  && $checkRequestID) {
+	} elseif (($_POST['action'] == "approve" || $_POST['action'] == "deny")  && $checkRequestID) {
 		$requestStatus = ($_POST['action'] == "approve") ? 1 : 2;
 
 		$iaRequestObj->update(array("reviewer_id", "reviewdate", "requeststatus"), array($memberInfo['member_id'], time(), $requestStatus));
@@ -92,16 +90,14 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 			$member->select($iaRequestObj->get_info("member_id"));
 			$member->update(array("onia", "inactivedate"), array(1, time()));
 			$member->postNotification("Your inactive request was approved!");
-		}
-		else {
+		} else {
 			$member->select($iaRequestObj->get_info("member_id"));
 			$member->update(array("onia", "inactivedate"), array(0, 0));
 			$member->postNotification("Your inactive request was denied!");
 		}
 
 		$member->select($memberInfo['member_id']);
-	}
-	elseif ($_POST['action'] == "delete" && $checkRequestID) {
+	} elseif ($_POST['action'] == "delete" && $checkRequestID) {
 		$member->select($iaRequestObj->get_info("member_id"));
 		$dispIAMemberName = $member->getMemberLink();
 		$iaRequestObj->delete();
@@ -138,8 +134,7 @@ while ($row = $result->fetch_assoc()) {
 		$member->select($row['reviewer_id']);
 		$dispRequestStatus = "<span class='allowText'>Approved</span> by ".$member->getMemberLink()." - ".getPreciseTime($row['reviewdate']);
 		$member->select($memberInfo['member_id']);
-	}
-	elseif ($row['requeststatus'] == 2) {
+	} elseif ($row['requeststatus'] == 2) {
 		$member->select($row['reviewer_id']);
 		$dispRequestStatus = "<span class='denyText'>Denied</span> by ".$member->getMemberLink()." - ".getPreciseTime($row['reviewdate']);
 		$member->select($memberInfo['member_id']);
@@ -201,8 +196,7 @@ if ($result->num_rows == 0) {
 				</p>
 			</div>
 		";
-}
-else {
+} else {
 	echo "
 
 			<script type='text/javascript'>

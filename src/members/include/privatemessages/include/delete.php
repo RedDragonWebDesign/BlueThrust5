@@ -57,8 +57,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					});
 				</script>
 			";
-		}
-		else {
+		} else {
 			$pmFolderObj->delete();
 		}
 

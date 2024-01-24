@@ -89,8 +89,7 @@ class ImageSlider extends BasicOrder {
 
 		if (count($this->arrImageIDs) == 0) {
 			echo "";
-		}
-		elseif (count($this->arrImageIDs) == 1 && $this->select($this->arrImageIDs[0]) && $this->arrObjInfo['fillstretch'] == "stretch") {
+		} elseif (count($this->arrImageIDs) == 1 && $this->select($this->arrImageIDs[0]) && $this->arrObjInfo['fillstretch'] == "stretch") {
 			$addOverlay = "";
 			if ($this->arrObjInfo['message'] != "" || $this->arrObjInfo['messagetitle'] != "") {
 				$addOverlay = "
@@ -115,8 +114,7 @@ class ImageSlider extends BasicOrder {
 				</div>
 			
 			";
-		}
-		elseif (count($this->arrImageIDs) == 1 && $this->select($this->arrImageIDs[0]) && $this->arrObjInfo['fillstretch'] == "fill") {
+		} elseif (count($this->arrImageIDs) == 1 && $this->select($this->arrImageIDs[0]) && $this->arrObjInfo['fillstretch'] == "fill") {
 			$this->select($this->arrImageIDs[0]);
 
 			$addOverlay = "";
@@ -141,8 +139,7 @@ class ImageSlider extends BasicOrder {
 				".$addLink."<div class='hp_imgScrollContainer' style=\"background: url('".$this->arrObjInfo['imageurl']."'); width: ".$this->intDisplayWidth.$this->strDisplayWidthUnit."; height: ".$this->intDisplayHeight.$this->strDisplayHeightUnit."\">".$addOverlay."</div>".$closeLinkTag."
 			
 			";
-		}
-		elseif ($this->strDisplayStyle == "random" && count($this->arrImageIDs) > 1) {
+		} elseif ($this->strDisplayStyle == "random" && count($this->arrImageIDs) > 1) {
 			$this->selectRandomImage();
 
 			$addOverlay = "";
@@ -168,14 +165,12 @@ class ImageSlider extends BasicOrder {
 					".$addLink.$addOverlay."<img src='".$this->arrObjInfo['imageurl']."' style='width: ".$this->intDisplayWidth.$this->strDisplayWidthUnit."; height: ".$this->intDisplayHeight.$this->strDisplayHeightUnit."'>".$closeLinkTag."
 				</div>
 			";
-			}
-			else {
+			} else {
 				echo "
 					".$addLink."<div class='hp_imgScrollContainer' style=\"background: url('".$this->arrObjInfo['imageurl']."'); width: ".$this->intDisplayWidth.$this->strDisplayWidthUnit."; height: ".$this->intDisplayHeight.$this->strDisplayHeightUnit."\">".$addOverlay."</div>".$closeLinkTag."
 				";
 			}
-		}
-		elseif ($this->strDisplayStyle == "slider" && count($this->arrImageIDs) > 1) {
+		} elseif ($this->strDisplayStyle == "slider" && count($this->arrImageIDs) > 1) {
 			foreach ($this->arrImageIDs as $imgID) {
 				$this->select($imgID);
 				$arrImages[] = $this->arrObjInfo['imageurl'];

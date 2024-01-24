@@ -51,8 +51,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		if ($_POST['oDir'] == "up" and $profileOptionObj->select($arrAssociates[$moveUp])) {
 			$makeMove = "before";
-		}
-		elseif ($_POST['oDir'] == "down" and $profileOptionObj->select($arrAssociates[$moveDown])) {
+		} elseif ($_POST['oDir'] == "down" and $profileOptionObj->select($arrAssociates[$moveDown])) {
 			$makeMove = "after";
 		}
 

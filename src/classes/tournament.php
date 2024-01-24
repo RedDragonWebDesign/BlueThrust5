@@ -82,8 +82,7 @@ class Tournament extends Basic {
 
 			if ($this->arrObjInfo['seedtype'] == 2) {
 				shuffle($arrSeeds);
-			}
-			elseif ($this->arrObjInfo['seedtype'] == 3) {
+			} elseif ($this->arrObjInfo['seedtype'] == 3) {
 				$arrSeeds = array_fill(0, $this->arrObjInfo['maxteams'], 0);
 			}
 
@@ -136,8 +135,7 @@ class Tournament extends Basic {
 						}
 					}
 				}
-			}
-			else {
+			} else {
 				// Non-Pools
 
 				$this->resetMatches();
@@ -149,8 +147,7 @@ class Tournament extends Basic {
 
 			if ($countErrors == 0) {
 				$returnVal = true;
-			}
-			else {
+			} else {
 				// Unable to add complete tournament - Delete everything with the tournament's ID
 
 				$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."tournamentpools_teams WHERE tournament_id = '".$this->arrObjInfo['tournament_id']."'");
@@ -204,8 +201,7 @@ class Tournament extends Basic {
 				$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."tournamentmatch WHERE tournament_id = '".$this->intTableKeyValue."'");
 
 				$this->resetMatches();
-			}
-			elseif ($arrOriginalInfo['maxteams'] < $arrNewInfo['maxteams']) {
+			} elseif ($arrOriginalInfo['maxteams'] < $arrNewInfo['maxteams']) {
 				// More teams than originally
 
 				$numToAdd = $arrNewInfo['maxteams'] - $arrOriginalInfo['maxteams'];
@@ -250,8 +246,7 @@ class Tournament extends Basic {
 				if ($i == 1) {
 					// Last Round only 1 match
 					$totalMatches = 1;
-				}
-				else {
+				} else {
 					$totalMatches *= 2;
 				}
 				$nextMatchIndex = 1;
@@ -263,8 +258,7 @@ class Tournament extends Basic {
 					if ($i != 1 && ($totalMatches/2) == 1) {
 						$arrColumns[] = "nextmatch_id";
 						$arrValues[] = $nextMatchID[$i-1][1];
-					}
-					elseif ($i != 1) {
+					} elseif ($i != 1) {
 						$arrColumns[] = "nextmatch_id";
 						$arrValues[] = $nextMatchID[$i-1][$nextMatchIndex];
 					}
@@ -348,12 +342,10 @@ class Tournament extends Basic {
 			while ($row = $result->fetch_array()) {
 				if ($getPlayerIDs) {
 					$returnArr[] = $row['tournamentplayer_id'];
-				}
-				else {
+				} else {
 					if ($row['member_id'] != 0) {
 						$returnArr[] = $row['member_id'];
-					}
-					else {
+					} else {
 						$returnArr[] = $row['displayname'];
 					}
 				}
@@ -369,8 +361,7 @@ class Tournament extends Basic {
 			if (is_numeric($memberID)) {
 				$query = "SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentplayers WHERE tournament_id = '".$this->intTableKeyValue."' AND member_id = '".$memberID."'";
 				$result = $this->MySQL->query($query);
-			}
-			else {
+			} else {
 				$memberID = $this->MySQL->real_escape_string($memberID);
 				$query = "SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentplayers WHERE tournament_id = '".$this->intTableKeyValue."' AND displayname = '".$memberID."'";
 				$result = $this->MySQL->query($query);
@@ -393,8 +384,7 @@ class Tournament extends Basic {
 			while ($row = $result->fetch_assoc()) {
 				if ($returnPlayerID) {
 					$returnArr[] = $row['tournamentplayer_id'];
-				}
-				else {
+				} else {
 					$returnArr[] = $row['member_id'];
 				}
 			}
@@ -490,8 +480,7 @@ class Tournament extends Basic {
 
 			if ($row['tournamentmatch_id'] > $thisMatchID) {
 				$returnVal = "team1_id";
-			}
-			else {
+			} else {
 				$returnVal = "team2_id";
 			}
 		}
@@ -510,8 +499,7 @@ class Tournament extends Basic {
 
 			if ($row['outcome'] == 1) {
 				$returnVal = $row['team1_id'];
-			}
-			elseif ($row['outcome'] == 2) {
+			} elseif ($row['outcome'] == 2) {
 				$returnVal = $row['team2_id'];
 			}
 		}
@@ -559,13 +547,11 @@ class Tournament extends Basic {
 
 					if ($this->objMember->select($playerInfo['member_id'])) {
 						$returnVal = $this->objMember->get_info_filtered("username");
-					}
-					else {
+					} else {
 						$returnVal = $playerInfo['displayname'];
 					}
 				}
-			}
-			else {
+			} else {
 				$returnVal = $this->objTeam->get_info_filtered("name");
 			}
 		}

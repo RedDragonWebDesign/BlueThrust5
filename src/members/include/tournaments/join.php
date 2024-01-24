@@ -16,8 +16,7 @@
 
 if (!isset($member)|| substr($_SERVER['PHP_SELF'], -strlen("console.php")) != "console.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -128,8 +127,7 @@ if ($result->num_rows > 0) {
 			</script>
 		
 		";
-}
-else {
+} else {
 	echo "
 			<div class='shadedBox' style='width: 40%; margin: 25px auto'>
 				<p class='main' align='center'>

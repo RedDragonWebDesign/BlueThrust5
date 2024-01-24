@@ -31,8 +31,7 @@ switch ($_GET['p']) {
 		if (isset($_GET['custom']) && isset($_GET['payment_status'])) {
 			$customVars = json_decode($_GET['custom'], true);
 			header("Location: ".FULL_SITE_URL."plugins/donations/?campaign_id=".$customVars['campaign_id']."&p=thankyou");
-		}
-		else {
+		} else {
 			$webInfoObj->setPage("plugins/donations/include/main.php");
 		}
 }
@@ -44,8 +43,7 @@ $donationPlugin = new btPlugin($mysqli);
 if (!$donationPlugin->selectByName("Donations") || !$campaignObj->select($_GET['campaign_id'])) {
 	echo "<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>";
 	exit();
-}
-elseif ($donationPlugin->selectByName("Donations") && $donationPlugin->getConfigInfo("email") == "") {
+} elseif ($donationPlugin->selectByName("Donations") && $donationPlugin->getConfigInfo("email") == "") {
 	echo "
 		<script type='text/javascript'>
 			alert('Please complete the plugin configuration before continuing!');

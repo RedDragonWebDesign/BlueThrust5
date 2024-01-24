@@ -57,8 +57,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 			if (is_numeric($intAlreadyAdded)) {
 				$_SESSION['btAccessRules'][$intAlreadyAdded] = $arrSaveInfo;
-			}
-			else {
+			} else {
 				$_SESSION['btAccessRules'][] = $arrSaveInfo;
 			}
 			$blnSuccess = true;

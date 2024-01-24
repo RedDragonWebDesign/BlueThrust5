@@ -57,8 +57,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 			$member->logAction("Edited <a href='".$MAIN_ROOT."downloads/index.php?catID=".$downloadInfo['downloadcategory_id']."#".$downloadInfo['download_id']."'>".$downloadInfo['name']."</a> download information.");
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}

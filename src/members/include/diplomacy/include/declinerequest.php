@@ -48,8 +48,7 @@ Your diplomacy request has been declined.\n\n
 
 
 		$member->logAction("Declined ".$diplomacyRequestInfo['clanname']."'s diplomacy request.");
-	}
-	else {
+	} else {
 		echo "
 			<div id='confirmDialogBox' style='display: none'>
 				<p class='main' align='center'>

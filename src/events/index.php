@@ -69,11 +69,9 @@ require_once($prevFolder."include/breadcrumb.php");
 			$showEvent = false;
 			if ($eventInfo['visibility'] == 2 && (in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true)) || $memberInfo['member_id'] == $eventInfo['member_id'] || $memberInfo['rank_id'] == 1)) {
 				$showEvent == true;
-			}
-			elseif ($eventInfo['visibility'] == 1 && $LOGGED_IN) {
+			} elseif ($eventInfo['visibility'] == 1 && $LOGGED_IN) {
 				$showEvent = true;
-			}
-			elseif ($eventInfo['visibility'] == 0) {
+			} elseif ($eventInfo['visibility'] == 0) {
 				$showEvent = true;
 			}
 

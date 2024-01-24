@@ -29,8 +29,7 @@
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$memberInfo = $member->get_info_filtered();
-}
-else {
+} else {
 	exit();
 }
 
@@ -38,8 +37,7 @@ else {
 if ($ipbanObj->select($_POST['ipaddress'])) {
 	$ipbanObj->delete();
 	$arrReturn = array("result" => "success");
-}
-else {
+} else {
 	$arrReturn = array("result" => "fail");
 }
 

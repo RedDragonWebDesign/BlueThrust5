@@ -35,8 +35,7 @@ class ProfileCategory extends BasicOrder {
 			$this->resortOrder();
 			if (!$this->MySQL->error) {
 				$returnVal = true;
-			}
-			else {
+			} else {
 				$this->MySQL->displayError("basic.php");
 			}
 		}

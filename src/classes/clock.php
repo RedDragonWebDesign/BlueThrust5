@@ -73,8 +73,7 @@ class Clock extends BasicOrder {
 					
 					</script>
 				";
-		}
-		else {
+		} else {
 			return implode(" ".$this->clockSeparator." ", $clockArray)."
 				
 					<script type='text/javascript'>

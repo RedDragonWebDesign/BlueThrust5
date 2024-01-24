@@ -64,8 +64,7 @@ window.location = 'index.php'
 
 
 	exit();
-}
-else {
+} else {
 	$_POST['checkBackup'] = true;
 }
 

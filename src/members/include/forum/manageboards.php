@@ -16,8 +16,7 @@ require_once("../classes/forumboard.php");
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -40,8 +39,7 @@ $categoryObj->set_assocTableKey("forumboard_id");
 
 if ($boardObj->select($_GET['bID']) && $_GET['action'] == "edit") {
 	require_once("include/edit_board.php");
-}
-else {
+} else {
 	echo "
 	
 		<table class='formTable'>

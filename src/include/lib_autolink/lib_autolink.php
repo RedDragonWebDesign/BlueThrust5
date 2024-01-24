@@ -49,7 +49,7 @@
 			if (!$matched) {
 				$loop = 0;
 				$ok = 0;
-			}else {
+			} else {
 				$pos = $m[0][1];
 				$sub_len = strlen($m[0][0]);
 
@@ -158,7 +158,7 @@
 					$display_url_enc = HtmlSpecialChars($display_url);
 
 					$buffer .= "<a href=\"{$link_url_enc}\"$tagfill>{$display_url_enc}</a>";
-				}else {
+				} else {
 					#echo "fail 3 at $cursor<br />\n";
 
 					$ok = 0;
@@ -216,7 +216,7 @@
 			if ($pos === false) {
 				$loop = 0;
 				$ok = 0;
-			}else {
+			} else {
 				$pre = substr($text, $cursor, $pos-$cursor);
 				$hit = substr($text, $pos, 1);
 				$post = substr($text, $pos + 1);
@@ -254,7 +254,7 @@
 
 					$hit = substr($pre, $plen-$len).$hit;
 					$pre = substr($pre, 0, $plen-$len);
-				}else {
+				} else {
 					#echo "fail 2 at $cursor ($pre)<br />\n";
 
 					$ok = 0;
@@ -275,7 +275,7 @@
 
 					$hit .= substr($post, 0, $len);
 					$post = substr($post, $len);
-				}else {
+				} else {
 					#echo "fail 3 at $cursor ($post)<br />\n";
 
 					$ok = 0;

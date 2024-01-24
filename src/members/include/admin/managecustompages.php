@@ -17,8 +17,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -93,7 +92,6 @@ if ($_GET['cpID'] == "") {
 	}
 	</script>
 	";
-}
-elseif ($_GET['cpID'] != "" and $_GET['action'] == "edit") {
+} elseif ($_GET['cpID'] != "" and $_GET['action'] == "edit") {
 	require_once("custompages/edit.php");
 }

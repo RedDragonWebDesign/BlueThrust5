@@ -16,8 +16,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -35,8 +34,7 @@ $categoryObj->set_assocTableKey("forumboard_id");
 
 if ($categoryObj->select($_GET['catID']) && $_GET['action'] == "edit") {
 	require_once("include/edit_category.php");
-}
-else {
+} else {
 	echo "
 	
 		<table class='formTable'>

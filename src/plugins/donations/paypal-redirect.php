@@ -40,8 +40,7 @@ if ($donationPlugin->selectByName("Donations") && $donationPlugin->getConfigInfo
 		foreach ($_POST as $key => $value) {
 			if (in_array($key, $customVals)) {
 				$customVars[$key] = $value;
-			}
-			elseif (!in_array($key, $filterFormInputs)) {
+			} elseif (!in_array($key, $filterFormInputs)) {
 				$addToLink .= "&".$key."=".$value;
 			}
 		}
@@ -51,12 +50,10 @@ if ($donationPlugin->selectByName("Donations") && $donationPlugin->getConfigInfo
 
 		//echo $link;
 		header("Location: ".$link);
-	}
-	else {
+	} else {
 		header("Location: ".$MAIN_ROOT."plugins/donations/?campaign_id=".$campaignInfo['donationcampaign_id']."&fail=amount");
 	}
-}
-else {
+} else {
 	echo "
 		
 			<script type='text/javascript'>

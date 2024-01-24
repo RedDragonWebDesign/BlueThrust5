@@ -18,8 +18,7 @@ require_once("../classes/forumboard.php");
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -68,8 +67,7 @@ if (isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {
 	if ($topicInfo['forumboard_id'] != $boardInfo['forumboard_id']) {
 		echo "<script type='text/javascript'>window.location = '".$MAIN_ROOT."members'</script>";
 		exit();
-	}
-	elseif ($topicInfo['lockstatus'] == 1) {
+	} elseif ($topicInfo['lockstatus'] == 1) {
 		echo "
 			<div id='lockedMessage' style='display: none'>
 				<p class='main' align='center'>
@@ -128,8 +126,7 @@ if (isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {
 	</script>
 	";
 	$postActionWord = "reply";
-}
-else {
+} else {
 	echo "
 	<script type='text/javascript'>
 		$(document).ready(function() {
@@ -340,8 +337,7 @@ function saveAdditionalPostData() {
 		$boardObj->objTopic->addNew($arrColumns, $arrValues);
 
 		$boardObj->objPost->update(array("forumtopic_id"), array($boardObj->objTopic->get_info("forumtopic_id")));
-	}
-	else {
+	} else {
 		$boardObj->objPost->update(array("forumtopic_id"), array($topicInfo['forumtopic_id']));
 		$newReplies = $topicInfo['replies']+1;
 		$boardObj->objTopic->update(array("replies", "lastpost_id"), array($newReplies, $boardObj->objPost->get_info("forumpost_id")));
@@ -387,8 +383,7 @@ function checkForAttachments() {
 				if ($attachmentObj->addNew($arrDLColumns, $arrDLValues)) {
 					$arrDownloadID[] = $attachmentObj->get_info("download_id");
 				}
-			}
-			elseif ($_FILES[$tempPostName]['name'] != "") {
+			} elseif ($_FILES[$tempPostName]['name'] != "") {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload attachment #".$i.": ".$_FILES[$tempPostName]['name'].".<br>";
 			}

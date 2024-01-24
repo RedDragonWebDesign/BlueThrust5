@@ -16,8 +16,7 @@
 
 if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -96,7 +95,6 @@ if (!isset($_GET['posID']) || (isset($_GET['posID']) && !$eventObj->objEventPosi
 		
 		</script>
 	";
-}
-elseif (isset($_GET['posID']) && $_GET['action'] == "edit") {
+} elseif (isset($_GET['posID']) && $_GET['action'] == "edit") {
 	require_once("include/manageposition_edit.php");
 }

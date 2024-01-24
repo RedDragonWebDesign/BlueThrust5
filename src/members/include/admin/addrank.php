@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -51,8 +50,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 	if (!is_numeric($_POST['rankimageheight']) and trim($_POST['rankimageheight']) != "") {
 		$countErrors++;
 		$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a numeric value.<br>";
-	}
-	elseif ($_POST['rankimageheight'] <= 0 and is_numeric($_POST['rankimageheight'])) {
+	} elseif ($_POST['rankimageheight'] <= 0 and is_numeric($_POST['rankimageheight'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a value greater than 0.<br>";
 	}
@@ -67,8 +65,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 	if (!is_numeric($_POST['rankimagewidth']) and trim($_POST['rankimagewidth']) != "") {
 		$countErrors++;
 		$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a numeric value.<br>";
-	}
-	elseif ($_POST['rankimagewidth'] <= 0 and is_numeric($_POST['rankimagewidth'])) {
+	} elseif ($_POST['rankimagewidth'] <= 0 and is_numeric($_POST['rankimagewidth'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a value greater than 0.<br>";
 	}
@@ -87,8 +84,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 		if (!$rankObj->select($_POST['rankorder'])) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid rank order. (rank)<br>";
-		}
-		else {
+		} else {
 			$beforeAfterRankInfo = $rankObj->get_info();
 			$beforeAfterRankOK = true;
 
@@ -101,16 +97,14 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid rank order. (rank)<br>";
 			}
 		}
-	}
-	else {
+	} else {
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 		$num_rows = $result->num_rows;
 
 		if ($num_rows != 0) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid rank order.<br>";
-		}
-		else {
+		} else {
 			$intNewRankOrderNum = 1;
 		}
 	}
@@ -131,8 +125,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 			if (!$rankObj->select($_POST['promoterank'])) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid maximum promotion rank.<br>";
-			}
-			else {
+			} else {
 				$promoteRankInfo = $rankObj->get_info();
 				if ($promoteRankInfo['ordernum'] > $intNewRankOrderNum) {
 					$countErrors++;
@@ -169,17 +162,14 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 			if (!$uploadFile->uploadFile()) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload rank image file.  Please make sure the file extension is either .jpg, .png, .gif or .bmp<br>";
-			}
-			else {
+			} else {
 				$rankImgURL = "images/ranks/".$uploadFile->getUploadedFileName();
 			}
-		}
-		else {
+		} else {
 			if (trim($_POST['rankimageurl']) == "") {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must include a rank image.<br>";
-			}
-			else {
+			} else {
 				$rankImgURL = $_POST['rankimageurl'];
 			}
 		}
@@ -189,8 +179,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 		$_POST = filterArray($_POST);
 
 		$_POST['submit'] = false;
-	}
-	else {
+	} else {
 		// EVERYTHING IS OK
 		$newRank = new Rank($mysqli);
 		$arrColumns = array("rankcategory_id", "name", "description", "imageurl", "ordernum", "autodays", "hiderank", "promotepower", "autodisable", "color", "imagewidth", "imageheight");
@@ -233,8 +222,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 				popupDialog('Add New Rank', '".$MAIN_ROOT."members/console.php?cID=".$manageRanksCID."', 'successBox');
 			</script>
 		";
-		}
-		else {
+		} else {
 			$_POST['submit'] = false;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to add new rank.  Please try again.<br>";
 		}
@@ -419,8 +407,7 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 
 				if ($consoleOptionInfo['pagetitle'] != "-separator-") {
 					echo "&nbsp;&nbsp;<input type='checkbox' name='consoleid_".$consoleOptionInfo['console_id']."' value='1'> ".$consoleOptionInfo['pagetitle']."<br>";
-				}
-				elseif ($consoleOptionInfo['pagetitle'] == "-separator-") {
+				} elseif ($consoleOptionInfo['pagetitle'] == "-separator-") {
 					$dispSeparator = "<div class='dashedLine' style='width: 250px; margin: 6px 1px; padding: 0px; float: left'></div>";
 					echo "<div style='float: left'>&nbsp;&nbsp;<input type='checkbox' name='consoleid_".$consoleOptionInfo['console_id']."' value='1'>&nbsp;</div>".$dispSeparator;
 					echo "<div style='clear: both'></div>";

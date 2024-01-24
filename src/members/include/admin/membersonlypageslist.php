@@ -31,12 +31,10 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !is
 	// Check Login
 	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
-	}
-	else {
+	} else {
 		exit();
 	}
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($consoleObj->findConsoleIDByName("Member's Only Pages"));
 	if (!$member->hasAccess($consoleObj)) {
@@ -64,8 +62,7 @@ if ($result->num_rows > 0) {
 		if ($counter == 0) {
 			$addCSS = "";
 			$counter = 1;
-		}
-		else {
+		} else {
 			$addCSS = " alternateBGColor";
 			$counter = 0;
 		}
@@ -84,8 +81,7 @@ if ($result->num_rows > 0) {
 		</table>
 	
 	";
-}
-else {
+} else {
 	echo "
 	
 		<div class='shadedBox' style='margin: 20px auto; width: 40%'>

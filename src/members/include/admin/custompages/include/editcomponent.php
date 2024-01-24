@@ -125,8 +125,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 	if (!$_POST['editComponent']) {
 		if ($dispError != "") {
-		}
-		else {
+		} else {
 			$_SESSION['btFormComponentTempSelectValues'] = $_SESSION['btFormComponent'][$componentIndex]['cOptions'];
 			$arrComponentInfo = filterArray($_SESSION['btFormComponent'][$componentIndex]);
 		}

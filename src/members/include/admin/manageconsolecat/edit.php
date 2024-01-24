@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -62,8 +61,7 @@ if ( ! empty($_POST['submit']) ) {
 	if (!$consoleCatObj->select($_POST['catorder']) and $_POST['catorder'] != "first") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (category)<br>";
-	}
-	elseif ($_POST['catorder'] == "first") {
+	} elseif ($_POST['catorder'] == "first") {
 		// "(no other categories)" selected, check to see if there are actually no other categories
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory WHERE adminoption = '0'");
@@ -72,17 +70,14 @@ if ( ! empty($_POST['submit']) ) {
 		if ($num_rows > 1) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (category)<br>";
-		}
-		else {
+		} else {
 			$intNewOrderSpot = 1;
 		}
-	}
-	else {
+	} else {
 		if ($_POST['beforeafter'] != "before" and $_POST['beforeafter'] != "after") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (before/after)<br>";
-		}
-		else {
+		} else {
 			$catOrderOrderNum = $consoleCatObj->get_info("ordernum");
 
 			$addTo = -1;
@@ -128,8 +123,7 @@ if ( ! empty($_POST['submit']) ) {
 				$consoleCatObj->resortOrder();
 			}
 		}
-	}
-	else {
+	} else {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
@@ -147,8 +141,7 @@ if ( empty($_POST['submit']) ) {
 	if ($consoleCatInfo['ordernum'] == 1) {
 		$selectCat = $consoleCatInfo['ordernum']+1;
 		$afterSelected = "selected";
-	}
-	else {
+	} else {
 		$selectCat = $consoleCatInfo['ordernum']-1;
 	}
 

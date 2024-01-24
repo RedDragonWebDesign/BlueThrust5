@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -65,8 +64,7 @@ if ( ! empty($_POST['submit']) ) {
 	if (!$profileCatObj->select($_POST['optioncategory'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile category.<br>";
-	}
-	else {
+	} else {
 		// Check Order
 		$arrProfileOptionIDs = $profileCatObj->getAssociateIDs();
 
@@ -79,15 +77,12 @@ if ( ! empty($_POST['submit']) ) {
 		if ($blnOrderCheck1 || $blnOrderCheck2 || $blnOrderCheck3 || $blnOrderCheck4) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile option order.<br>";
-		}
-		elseif ($_POST['optionorder'] == "first") {
+		} elseif ($_POST['optionorder'] == "first") {
 			$intNewSortNum = 1;
-		}
-		else {
+		} else {
 			if ($_POST['beforeafter'] == "before" || $_POST['beforeafter'] == "after") {
 				$intNewSortNum = $profileOptionObj->makeRoom($_POST['beforeafter']);
-			}
-			else {
+			} else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile option order.<br>";
 			}
@@ -132,8 +127,7 @@ if ( ! empty($_POST['submit']) ) {
 				popupDialog('Edit Profile Option', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'successBox');
 			</script>
 			";
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database!  Please contact the website administrator.<br>";
 		}

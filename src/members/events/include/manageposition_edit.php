@@ -16,8 +16,7 @@
 
 if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -89,8 +88,7 @@ if ( ! empty($_POST['submit']) ) {
 			";
 
 			$eventObj->objEventPosition->resortOrder();
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
@@ -124,8 +122,7 @@ if ( empty($_POST['submit']) ) {
 	$afterSelected = "";
 	if ($findBeforeAfter[1] == "first") {
 		$orderoptions = "<option value='first'>(first position)</option>";
-	}
-	elseif ($findBeforeAfter[1] == "after") {
+	} elseif ($findBeforeAfter[1] == "after") {
 		$afterSelected = " selected";
 	}
 
@@ -133,8 +130,7 @@ if ( empty($_POST['submit']) ) {
 	foreach ($eventObj->arrPositionOptions as $optionName) {
 		if ($eventPositionInfo[$optionName] == 1) {
 			$arrCheckOption[$optionName] = " checked";
-		}
-		else {
+		} else {
 			$arrCheckOption[$optionName] = "";
 		}
 	}

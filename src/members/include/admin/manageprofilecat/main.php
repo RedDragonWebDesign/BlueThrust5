@@ -14,8 +14,7 @@
 
 if (!isset($member)) {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -52,23 +51,20 @@ while ($row = $result->fetch_assoc()) {
 	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
-	}
-	else {
+	} else {
 		$addCSS = "";
 		$counter = 1;
 	}
 
 	if ($x == 1) {
 		$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
-	}
-	else {
+	} else {
 		$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveProfileCat('up', '".$row['profilecategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 	}
 
 	if ($x == $intHighestOrder) {
 		$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
-	}
-	else {
+	} else {
 		$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveProfileCat('down', '".$row['profilecategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' width='24' height='24' title='Move Down'></a>";
 	}
 

@@ -50,8 +50,7 @@ class Basic {
 		if (!$numericIDOnly) {
 			$intIDNum = $this->MySQL->real_escape_string($intIDNum);
 			$checkID = true;
-		}
-		else {
+		} else {
 			$checkID = is_numeric($intIDNum);
 		}
 
@@ -231,8 +230,7 @@ class Basic {
 			$this->select($stmt->insert_id);
 			$returnVal = true;
 			$this->updateTableTime();
-		}
-		else {
+		} else {
 			echo $this->MySQL->displayError("basic.php - addNew");
 		}
 
@@ -285,8 +283,7 @@ class Basic {
 					$returnVal = true;
 
 					$this->updateTableTime();
-				}
-				else {
+				} else {
 					$this->MySQL->displayError("basic.php - update");
 				}
 			}
@@ -309,8 +306,7 @@ class Basic {
 
 			if (!$this->MySQL->error) {
 				$returnVal = true;
-			}
-			else {
+			} else {
 				$this->MySQL->displayError("basic.php");
 			}
 
@@ -329,8 +325,7 @@ class Basic {
 		$returnVal = "";
 		if ($returnSingleValue == "") {
 			$returnVal = $this->arrObjInfo;
-		}
-		else {
+		} else {
 			$returnVal = $this->arrObjInfo[$returnSingleValue] ?? '';
 		}
 
@@ -358,8 +353,7 @@ class Basic {
 		$returnVal = "";
 		if ($returnSingleValue == "") {
 			$returnVal = $arrFilteredInfo;
-		}
-		else {
+		} else {
 			$returnVal = $arrFilteredInfo[$returnSingleValue];
 		}
 
@@ -400,8 +394,7 @@ class Basic {
 		$result = $this->MySQL->query("SELECT tablename FROM ".$this->MySQL->get_tablePrefix()."tableupdates WHERE tablename = '".$this->strTableName."'");
 		if ($result->num_rows > 0) {
 			$this->MySQL->query("UPDATE ".$this->MySQL->get_tablePrefix()."tableupdates SET updatetime = '".time()."' WHERE tablename = '".$this->strTableName."'");
-		}
-		else {
+		} else {
 			$this->MySQL->query("INSERT INTO ".$this->MySQL->get_tablePrefix()."tableupdates (tablename, updatetime) VALUES ('".$this->strTableName."', '".time()."')");
 		}
 	}

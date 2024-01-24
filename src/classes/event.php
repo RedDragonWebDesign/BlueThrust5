@@ -77,8 +77,7 @@ class Event extends Basic {
 				if ($this->objEventMember->addNew($arrColumns, $arrValues)) {
 					$returnVal = true;
 				}
-			}
-			else {
+			} else {
 				$returnVal = "dup";
 			}
 		}
@@ -97,8 +96,7 @@ class Event extends Basic {
 			while ($row = $result->fetch_assoc()) {
 				if ($returnMemberIDs) {
 					$returnArr[] = $row['member_id'];
-				}
-				else {
+				} else {
 					$returnArr[] = $row['eventmember_id'];
 				}
 			}
@@ -136,8 +134,7 @@ class Event extends Basic {
 		if ($this->intTableKeyValue != "") {
 			if ($sqlOrderBy == "") {
 				$sqlOrderBy = " ORDER BY sortnum";
-			}
-			else {
+			} else {
 				$sqlOrderBy = $this->MySQL->real_escape_string($sqlOrderBy);
 			}
 
@@ -158,8 +155,7 @@ class Event extends Basic {
 			// Check if member is the creator, if so he has access.
 			if ($memberID == $this->arrObjInfo['member_id'] || $this->blnManageAllEvents) {
 				$returnVal = true;
-			}
-			else {
+			} else {
 				// Otherwise check if their position has access
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."events_members WHERE member_id = '".$memberID."' AND event_id = '".$this->intTableKeyValue."'");
 				if ($result->num_rows > 0) {
@@ -169,11 +165,9 @@ class Event extends Basic {
 						if ($this->objEventPosition->get_info($privilegeName) == 1) {
 							$returnVal = true;
 						}
-					}
-					elseif ($privilegeName == "invitemembers" && $this->arrObjInfo['invitepermission'] == 1) {
+					} elseif ($privilegeName == "invitemembers" && $this->arrObjInfo['invitepermission'] == 1) {
 						$returnVal = true;
-					}
-					elseif ($privilegeName == "postmessages" && $this->arrObjInfo['messages'] == 1) {
+					} elseif ($privilegeName == "postmessages" && $this->arrObjInfo['messages'] == 1) {
 						$returnVal;
 					}
 				}

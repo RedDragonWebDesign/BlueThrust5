@@ -90,15 +90,13 @@ class btTheme {
 					if ($key == $newPosition) {
 						$newOrderArray[] = $itemName;
 						$newOrderArray[] = $value;
-					}
-					elseif ($value != $itemName) {
+					} elseif ($value != $itemName) {
 						$newOrderArray[] = $value;
 					}
 				}
 
 				$this->arrHeadOrder = $newOrderArray;
-			}
-			else {
+			} else {
 				$this->arrHeadOrder[$newPosition] = $itemName;
 			}
 		}
@@ -112,8 +110,7 @@ class btTheme {
 
 		if (!isset($this->arrHead['title'])) {
 			$this->addHeadItem("title", "<title>".$title."</title>");
-		}
-		else {
+		} else {
 			$this->arrHead['title'] = "<title>".$title."</title>";
 		}
 	}

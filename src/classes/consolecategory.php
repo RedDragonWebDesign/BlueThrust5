@@ -34,8 +34,7 @@ class ConsoleCategory extends BasicOrder {
 			$this->resortOrder();
 			if (!$this->MySQL->error) {
 				$returnVal = true;
-			}
-			else {
+			} else {
 				$this->MySQL->displayError("basic.php");
 			}
 		}
@@ -75,15 +74,13 @@ class ConsoleCategory extends BasicOrder {
 						$x++;
 						$arrRanks[$x] = $row[$this->strTableKey];
 						$x++;
-					}
-					elseif ($strBeforeAfter == "before") {
+					} elseif ($strBeforeAfter == "before") {
 						$arrRanks[$x] = $row[$this->strTableKey];
 						$x++;
 						$intNewRankOrderNum = $x;
 						$x++;
 					}
-				}
-				else {
+				} else {
 					$arrRanks[$x] = $row[$this->strTableKey];
 					$x++;
 				}

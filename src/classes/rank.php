@@ -34,8 +34,7 @@ class Rank extends BasicOrder {
 
 		if ($this->intTableKeyValue == 1) {
 			$result = $this->MySQL->query("SELECT console_id FROM ".$this->MySQL->get_tablePrefix()."console ORDER BY sortnum");
-		}
-		else {
+		} else {
 			$result = $this->MySQL->query("SELECT rp.console_id FROM ".$this->MySQL->get_tablePrefix()."rank_privileges rp, ".$this->MySQL->get_tablePrefix()."console c WHERE rank_id = '".$this->intTableKeyValue."' AND c.console_id = rp.console_id ORDER BY c.sortnum");
 		}
 
@@ -128,8 +127,7 @@ class Rank extends BasicOrder {
 
 			if (!$this->MySQL->error) {
 				$returnVal = true;
-			}
-			else {
+			} else {
 				$this->MySQL->displayError("basic.php");
 			}
 		}
@@ -146,8 +144,7 @@ class Rank extends BasicOrder {
 			if ($returnSingleValue == "") {
 				$fullImageURL = $MAIN_ROOT.$result['imageurl'];
 				$result['imageurl'] = $fullImageURL;
-			}
-			elseif ($returnSingleValue == "imageurl") {
+			} elseif ($returnSingleValue == "imageurl") {
 				$fullImageURL = $MAIN_ROOT.$result;
 				$result = $fullImageURL;
 			}
@@ -164,8 +161,7 @@ class Rank extends BasicOrder {
 			if ($returnSingleValue == "") {
 				$fullImageURL = $MAIN_ROOT.$result['imageurl'];
 				$result['imageurl'] = $fullImageURL;
-			}
-			elseif ($returnSingleValue == "imageurl") {
+			} elseif ($returnSingleValue == "imageurl") {
 				$fullImageURL = $MAIN_ROOT.$result;
 				$result = $fullImageURL;
 			}

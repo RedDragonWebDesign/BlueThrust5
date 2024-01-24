@@ -104,8 +104,7 @@ while ($row = $result->fetch_assoc()) {
 				$postMemberObj->select($lastPostInfo['member_id']);
 
 				$dispLastPost = "<div class='boardLastPostTitle'><a href='viewtopic.php?tID=".$firstPostInfo['forumtopic_id']."#".$lastPostID."' title='".$firstPostInfo['title']."'>".$firstPostInfo['title']."</a></div>by ".$postMemberObj->getMemberLink()."<br>".getPreciseTime($lastPostInfo['dateposted']);
-			}
-			else {
+			} else {
 				$dispLastPost = "<div style='text-align: center'>No Posts</div>";
 			}
 

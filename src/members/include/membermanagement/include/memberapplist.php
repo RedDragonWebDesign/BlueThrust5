@@ -98,11 +98,9 @@ while ($row = $result->fetch_assoc()) {
 				$dispCompValue .= $displayValueCounter.". ".$value."<br>";
 				$displayValueCounter++;
 			}
-		}
-		elseif (isset($customInfo['display_values'][0]) && $customInfo['display_values'][0] != "") {
+		} elseif (isset($customInfo['display_values'][0]) && $customInfo['display_values'][0] != "") {
 			$dispCompValue = $customInfo['display_values'][0];
-		}
-		else {
+		} else {
 			$dispCompValue = "Not Set";
 		}
 
@@ -124,8 +122,7 @@ while ($row = $result->fetch_assoc()) {
 		}
 
 		$memberAppOptions = "<a href='javascript:void(0)' onclick=\"acceptApp('".$memberAppInfo['memberapp_id']."'".$addJS.")\"><b>Accept</b></a> - <a href='javascript:void(0)' onclick=\"declineApp('".$memberAppInfo['memberapp_id']."')\"><b>Decline</b></a>";
-	}
-	else {
+	} else {
 		$memberAppOptions = "<span class='successFont' style='font-weight: bold'>Member Added!</span> - <a href='javascript:void(0)' onclick=\"removeApp('".$memberAppInfo['memberapp_id']."')\"><b>Remove</b></a>";
 	}
 
@@ -157,7 +154,6 @@ if ($result->num_rows == 0) {
 			</p>
 		</div>
 	";
-}
-else {
+} else {
 	$mysqli->query("UPDATE ".$dbprefix."memberapps SET seenstatus = '1' WHERE seenstatus = '0'");
 }

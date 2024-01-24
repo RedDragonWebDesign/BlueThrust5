@@ -133,8 +133,7 @@ if ($checkMember) {
 				echo "
 				<p align='right' style='margin-bottom: 10px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."'>Go Back</a></p>
 				";
-			}
-			elseif (!isset($_GET['action'])) {
+			} elseif (!isset($_GET['action'])) {
 				echo "
 				<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/index.php?select=".$consoleInfo['consolecategory_id']."' id='consoleTopBackButton'>Go Back</a></p>
 				";
@@ -143,8 +142,7 @@ if ($checkMember) {
 
 			if (substr($consoleInfo['filename'], 0, strlen("../")) != "../") {
 				$include_file = "include/".$consoleInfo['filename'];
-			}
-			else {
+			} else {
 				$include_file = $consoleInfo['filename'];
 			}
 
@@ -152,8 +150,7 @@ if ($checkMember) {
 			require_once($include_file);
 			if (isset($setupFormArgs)) {
 				require_once("console.form.php");
-			}
-			elseif (isset($setupManageListArgs)) {
+			} elseif (isset($setupManageListArgs)) {
 				require_once("console.managelist.php");
 			}
 
@@ -162,14 +159,12 @@ if ($checkMember) {
 				echo "
 					<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."'>Go Back</a></p>				
 				";
-			}
-			elseif (!isset($_GET['action'])) {
+			} elseif (!isset($_GET['action'])) {
 				echo "
 					<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/index.php?select=".$consoleInfo['consolecategory_id']."' id='consoleBottomBackButton'>Go Back</a></p></div>
 				";
 			}
-		}
-		else {
+		} else {
 			echo "<div class='formDiv' style='width: 300px; padding: 5px; margin-top: 50px; margin-left: auto; margin-right: auto'><p align='center'><i>You don't have access to this console option!</i><br><br><a href='console.php'>Return to My Account</a></p></div>";
 		}
 	}

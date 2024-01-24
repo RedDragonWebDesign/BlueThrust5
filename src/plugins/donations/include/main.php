@@ -81,8 +81,7 @@ if (($campaignInfo['dateend'] != 0) || ($campaignInfo['dateend'] == 0 && $campai
 				<div class='main donationGoalText'>".$goalCompletePercent.$dispDaysLeft."</div>
 				".$dispEndDate."
 			";
-	}
-	elseif ($daysLeft != "") {
+	} elseif ($daysLeft != "") {
 		echo "
 				<br>		
 				<p class='numberCounts'>".$daysLeft."</p>		

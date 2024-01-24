@@ -39,8 +39,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -93,8 +92,7 @@ $arrTopics = $boardObj->getForumTopics();
 if (!isset($_GET['pID']) || !is_numeric($_GET['pID'])) {
 	$intOffset = 0;
 	$_GET['pID'] = 1;
-}
-else {
+} else {
 	$intOffset = $NUM_PER_PAGE*($_GET['pID']-1);
 }
 
@@ -186,8 +184,7 @@ foreach ($arrSubForums as $boardID) {
 			$postMemberObj->select($lastPostInfo['member_id']);
 
 			$dispLastPost = "<div class='boardLastPostTitle'><a href='viewtopic.php?tID=".$firstPostInfo['forumtopic_id']."#".$lastPostID."' title='".$firstPostInfo['title']."'>".$firstPostInfo['title']."</a></div>by ".$postMemberObj->getMemberLink()."<br>".getPreciseTime($lastPostInfo['dateposted']);
-		}
-		else {
+		} else {
 			$dispLastPost = "<div style='text-align: center'>No Posts</div>";
 		}
 

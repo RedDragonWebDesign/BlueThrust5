@@ -43,8 +43,7 @@ if ($checkMember) {
 					echo "
 						Are you sure you want to delete the rank <b>".$rankInfo['name']."?</b>
 					";
-				}
-				else {
+				} else {
 					if ($rank->countMembers() > 0) {
 						echo "
 						<script type='text/javascript'>
@@ -68,8 +67,7 @@ if ($checkMember) {
 								
 						</script>
 						";
-					}
-					else {
+					} else {
 						if ($rank->delete()) {
 							echo "";
 
@@ -112,8 +110,7 @@ if ($checkMember) {
 							
 							</script>
 							";
-						}
-						else {
+						} else {
 							echo "";
 
 							echo "

@@ -47,22 +47,18 @@ if ( ! empty($_POST['submit']) ) {
 			if (!$uploadImg->uploadFile()) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload status image. Please make sure the file size is not too big and it has an acceptable file extension.<br>";
-			}
-			else {
+			} else {
 				$statusImageURL = "images/diplomacy/".$uploadImg->getUploadedFileName();
 			}
-		}
-		elseif ($_POST['statusimageurl'] != "" && $_POST['statusimageurl'] != $diplomacyStatusInfo['imageurl']) {
+		} elseif ($_POST['statusimageurl'] != "" && $_POST['statusimageurl'] != $diplomacyStatusInfo['imageurl']) {
 			$uploadImg = new BTUpload($_POST['statusimageurl'], "status_", "../images/diplomacy/", array(".jpg", ".png", ".gif", ".bmp"), 4, true);
 			if (!$uploadImg->uploadFile()) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to download status image from remote url. You may need to first download the image and upload normally.<br>";
-			}
-			else {
+			} else {
 				$statusImageURL = "images/diplomacy/".$uploadImg->getUploadedFileName();
 			}
-		}
-		else {
+		} else {
 			$statusImageURL = $diplomacyStatusInfo['imageurl'];
 		}
 
@@ -92,8 +88,7 @@ if ( ! empty($_POST['submit']) ) {
 				$diplomacyStatusObj->resortOrder();
 
 				$member->logAction("Edited the ".$_POST['statusname']." diplomacy status.");
-			}
-			else {
+			} else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 			}
@@ -140,8 +135,7 @@ if ( empty($_POST['submit']) ) {
 		if ($diplomacyStatusInfo['imageheight'] == 0) {
 			$diplomacyStatusInfo['imageheight'] = $arrImageInfo[1];
 		}
-	}
-	elseif ($diplomacyStatusInfo['imagewidth'] == 0) {
+	} elseif ($diplomacyStatusInfo['imagewidth'] == 0) {
 		$popupWidth = 400;
 	}
 

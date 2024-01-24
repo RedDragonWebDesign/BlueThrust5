@@ -23,8 +23,7 @@ if (in_array($memberInfo['member_id'], $arrTeam1)) {
 	$dispOpponent =  $tournamentObj->getPlayerName($matchInfo['team2_id']);
 	$dispMatchReplay = $matchInfo['replayteam1url'];
 	$dispReplayColumn = "replayteam1url";
-}
-elseif (in_array($memberInfo['member_id'], $arrTeam2)) {
+} elseif (in_array($memberInfo['member_id'], $arrTeam2)) {
 	$checkApprove = $matchInfo['team1approve'];
 	$checkMyApprove = $matchInfo['team2approve'];
 	$dispMyTeamApprove = "team2approve";
@@ -35,8 +34,7 @@ elseif (in_array($memberInfo['member_id'], $arrTeam2)) {
 	$dispOpponent =  $tournamentObj->getPlayerName($matchInfo['team1_id']);
 	$dispMatchReplay = $matchInfo['replayteam1url'];
 	$dispReplayColumn = "replayteam2url";
-}
-else {
+} else {
 	echo "
 	<script type='text/javascript'>
 	window.location = '".$MAIN_ROOT."members/console.php?cID=".$cID."';
@@ -52,8 +50,7 @@ $dispTeam2 = $tournamentObj->getPlayerName($matchInfo['team2_id']);
 
 if ($tournamentInfo['playersperteam'] == 1) {
 	$dispTeamOrPlayer = "Player";
-}
-else {
+} else {
 	$dispTeamOrPlayer = "Team";
 }
 
@@ -61,8 +58,7 @@ else {
 $dispApproved = "";
 if ($checkApprove == 1) {
 	$dispApproved = "<br><br><b><u>NOTE:</u></b> ".$dispOpponent." has already submitted results for this match.  You can approve the submission by clicking the Approve button below or you can enter in different results.";
-}
-elseif ($checkMyApprove == 1) {
+} elseif ($checkMyApprove == 1) {
 	$dispApproved = "<br><br><b><u>NOTE:</u></b> You have already submitted results for this match.  The results will show as pending on the tournament profile page and bracket until ".$dispOpponent." or the tournament manager approves your submission.";
 }
 
@@ -95,12 +91,10 @@ if ($_POST['submit'] && !$_POST['approve']) {
 		if (!$uploadReplayObj->uploadFile()) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload the replay. Please make sure the file extension is .zip and that the file size is not too big.<br>";
-		}
-		else {
+		} else {
 			$matchReplayURL = $MAIN_ROOT."downloads/replays/".$uploadReplayObj->getUploadedFileName();
 		}
-	}
-	else {
+	} else {
 		$matchReplayURL = $_POST['uploadurl'];
 	}
 
@@ -135,14 +129,12 @@ if ($_POST['submit'] && !$_POST['approve']) {
 				$tMemberObj->select($value);
 				$tMemberObj->postNotification($member->getMemberLink()." has updated the match results for <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&mID=".$_GET['mID']."'>".$dispTeam1." vs. ".$dispTeam2."</a>");
 			}
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
 	}
-}
-elseif (!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
+} elseif (!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
 	// Upload Replay
 
 	if ($_FILES['uploadfile']['name'] != "") {
@@ -151,12 +143,10 @@ elseif (!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
 		if (!$uploadReplayObj->uploadFile()) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload the replay. Please make sure the file extension is .zip and that the file size is not too big.<br>";
-		}
-		else {
+		} else {
 			$matchReplayURL = $MAIN_ROOT."downloads/replays/".$uploadReplayObj->getUploadedFileName();
 		}
-	}
-	else {
+	} else {
 		$matchReplayURL = $_POST['uploadurl'];
 	}
 
@@ -189,8 +179,7 @@ elseif (!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
 
 			if ($_POST['matchwinner'] == 1) {
 				$matchWinner = $matchInfo['team1_id'];
-			}
-			else {
+			} else {
 				$matchWinner = $matchInfo['team2_id'];
 			}
 
@@ -200,8 +189,7 @@ elseif (!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
 
 
 			$tournamentObj->objMatch->update(array($nextMatchSpot), array($matchWinner));
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}

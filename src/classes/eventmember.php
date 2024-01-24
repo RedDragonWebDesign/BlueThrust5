@@ -27,8 +27,7 @@ class EventMember extends Basic {
 					// Set Reminder
 
 					$this->setReminder();
-				}
-				elseif ($eventReminderID !== false) {
+				} elseif ($eventReminderID !== false) {
 					$eventReminderTable = $this->MySQL->get_tablePrefix()."event_reminder";
 					$emailQueueTable = $this->MySQL->get_tablePrefix()."emailnotifications_queue";
 					$this->MySQL->query("DELETE FROM ".$emailQueueTable." WHERE emailnotificationsqueue_id = '".$eventReminderID."'");
@@ -94,8 +93,7 @@ class EventMember extends Basic {
 				// A reminder has already been set, need to update the time!
 				// Update reminder
 				$member->setEmailReminder($sendReminder, "Event Starting!", $message, $eventReminderID);
-			}
-			else {
+			} else {
 				// Add new reminder
 				$emailReminderID = $member->setEmailReminder($sendReminder, "Event Starting!", $message);
 				$eventReminder = new Basic($this->MySQL, "event_reminder", "eventreminder_id");

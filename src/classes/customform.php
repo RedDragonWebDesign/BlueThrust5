@@ -91,8 +91,7 @@ class CustomForm extends Basic {
 
 					if (!$this->objComponent->update($arrColumns, $arrValues)) {
 						$countErrors++;
-					}
-					elseif ($value['type'] == "select" || $value['type'] == "multiselect") {
+					} elseif ($value['type'] == "select" || $value['type'] == "multiselect") {
 						$newComponentID = $this->objComponent->get_info("component_id");
 						foreach ($value['cOptions'] as $selectValue) {
 							if (trim($selectValue) != "" && !$this->objSelectValue->addNew(array("component_id", "componentvalue"), array($newComponentID, $selectValue))) {
@@ -102,15 +101,13 @@ class CustomForm extends Basic {
 					}
 
 					$intSortNum++;
-				}
-				elseif (trim($value['name']) != "") {
+				} elseif (trim($value['name']) != "") {
 					$arrColumns = array("customform_id", "name", "componenttype", "required", "tooltip", "sortnum");
 					$arrValues = array($this->intTableKeyValue, $value['name'], $value['type'], $value['required'], $value['tooltip'], $intSortNum);
 
 					if (!$this->objComponent->addNew($arrColumns, $arrValues)) {
 						$countErrors++;
-					}
-					elseif ($value['type'] == "select" || $value['type'] == "multiselect") {
+					} elseif ($value['type'] == "select" || $value['type'] == "multiselect") {
 						$newComponentID = $this->objComponent->get_info("component_id");
 						foreach ($value['cOptions'] as $selectValue) {
 							if (trim($selectValue) != "" && !$this->objSelectValue->addNew(array("component_id", "componentvalue"), array($newComponentID, $selectValue))) {
@@ -139,8 +136,7 @@ class CustomForm extends Basic {
 		if ($this->intTableKeyValue != "") {
 			if ($blnUnseenOnly) {
 				$result = $this->MySQL->query("SELECT submission_id FROM ".$this->MySQL->get_tablePrefix()."customform_submission WHERE seenstatus = '0' AND customform_id = '".$this->intTableKeyValue."'");
-			}
-			else {
+			} else {
 				$result = $this->MySQL->query("SELECT submission_id FROM ".$this->MySQL->get_tablePrefix()."customform_submission WHERE customform_id = '".$this->intTableKeyValue."'");
 			}
 
@@ -186,8 +182,7 @@ class CustomForm extends Basic {
 				if ($componentInfo['componenttype'] != "multiselect") {
 					$row = $result->fetch_assoc();
 					$returnArr['components'][$componentID] = $row['formvalue'];
-				}
-				else {
+				} else {
 					while ($row = $result->fetch_assoc()) {
 						$returnArr['components'][$componentID][] = $row['formvalue'];
 					}

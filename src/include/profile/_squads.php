@@ -17,8 +17,7 @@ foreach ($arrSquads as $squadID) {
 
 	if ($squadInfo['logourl'] != "") {
 		$dispSquads .= "<a href='".$MAIN_ROOT."squads/profile.php?sID=".$squadID."'><img src='".$squadInfo['logourl']."' class='squadLogo'></a><div class='dottedLine' style='width: 90%; margin-top: 20px; margin-bottom: 20px'></div>";
-	}
-	else {
+	} else {
 		$dispSquads .= "<span class='largeFont'><b><a href='".$MAIN_ROOT."squads/profile.php?sID=".$squadID."'>".$squadInfo['name']."</a></b><div class='dottedLine' style='width: 90%; margin-top: 20px; margin-bottom: 20px'></div>";
 	}
 }

@@ -56,8 +56,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 
 			if ($row['team1_id'] != $_POST['teamID']) {
 				$selectedTeam = $row['team1_id'];
-			}
-			elseif ($row['team2_id'] != $_POST['teamID']) {
+			} elseif ($row['team2_id'] != $_POST['teamID']) {
 				$selectedTeam = $row['team2_id'];
 			}
 
@@ -70,19 +69,16 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 
 					if ($row['winner'] == 1) {
 						$dispPlayerOneWinnerSelected = " selected";
-					}
-					elseif ($row['winner'] == 2) {
+					} elseif ($row['winner'] == 2) {
 						$dispPlayerTwoWinnerSelected = " selected";
 					}
-				}
-				elseif ($row['team2_id'] == $_POST['teamID']) {
+				} elseif ($row['team2_id'] == $_POST['teamID']) {
 					$playerOneValue = 2;
 					$playerTwoValue = 1;
 
 					if ($row['winner'] == 1) {
 						$dispPlayerTwoWinnerSelected = " selected";
-					}
-					elseif ($row['winner'] == 2) {
+					} elseif ($row['winner'] == 2) {
 						$dispPlayerOneWinnerSelected = " selected";
 					}
 				}
@@ -94,8 +90,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 				if ($_POST['teamID'] == $row['team1_id']) {
 					$dispTeamScore = $row['team1score'];
 					$dispOpponentScore = $row['team2score'];
-				}
-				elseif ($_POST['teamID'] == $row['team2_id']) {
+				} elseif ($_POST['teamID'] == $row['team2_id']) {
 					$dispTeamScore = $row['team2score'];
 					$dispOpponentScore = $row['team1score'];
 				}

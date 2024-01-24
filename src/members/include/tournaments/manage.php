@@ -15,8 +15,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -72,15 +71,13 @@ if (count($arrTournaments) > 0) {
 
 			if ($tournamentInfo['seedtype'] != 3) {
 				$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=ManageMatches'>Manage Matches</a></li>";
-			}
-			else {
+			} else {
 				$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=ManagePools'>Manage Pools</a></li>";
 			}
 
 			if ($tournamentInfo['playersperteam'] > 1) {
 				$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=ManageTeams'>Manage Teams</a></li>";
-			}
-			else {
+			} else {
 				$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=ManagePlayers'>Manage Players</a></li>";
 			}
 
@@ -163,8 +160,7 @@ if (count($arrTournaments) > 0) {
 			</script>
 		";
 	}
-}
-else {
+} else {
 	$intCreateATournamentCID = $consoleObj->findConsoleIDByName("Create A Tournament");
 	echo "
 	<div class='shadedBox' style='width: 400px; margin-top: 50px; margin-bottom: 50px; margin-left: auto; margin-right: auto;'>

@@ -48,8 +48,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		if ($_POST['cDir'] == "up" and $consoleObj->select($arrAssociates[$moveUp])) {
 			$makeMove = "before";
-		}
-		elseif ($_POST['cDir'] == "down" and $consoleObj->select($arrAssociates[$moveDown])) {
+		} elseif ($_POST['cDir'] == "down" and $consoleObj->select($arrAssociates[$moveDown])) {
 			$makeMove = "after";
 		}
 

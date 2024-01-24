@@ -30,8 +30,7 @@ if (!isset($member)) {
 	// Check Login
 	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
-	}
-	else {
+	} else {
 		exit();
 	}
 
@@ -80,8 +79,7 @@ foreach ($arrDownloadCat as $catID => $catName) {
 			if ($altBGCount == 0) {
 				$addCSS = "";
 				$altBGCount = 1;
-			}
-			else {
+			} else {
 				$addCSS = " alternateBGColor";
 				$altBGCount = 0;
 			}

@@ -24,8 +24,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -54,8 +53,7 @@ if (count($arrPosts) > 0) {
 	}
 
 	$newsObj->displayPageSelector();
-}
-else {
+} else {
 	echo "
 
 	<div class='shadedBox' style='width: 300px; margin-top: 50px; margin-bottom: 25px; margin-left: auto; margin-right: auto'>

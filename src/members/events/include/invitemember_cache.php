@@ -49,8 +49,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESS
 
 					if (!in_array($inviteMemberInfo['member_id'], $arrInviteList)) {
 						$_SESSION['btInviteList'][] = $inviteMemberInfo['member_id'];
-					}
-					else {
+					} else {
 						echo "
 							<div id='dupInviteDiv' style='display: none'>
 								<p class='main' align='center'>

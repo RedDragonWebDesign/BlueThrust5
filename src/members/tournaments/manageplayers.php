@@ -15,8 +15,7 @@
 
 if (!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -102,8 +101,7 @@ if ($tournamentInfo['playersperteam'] == 1) {
 
 			if ($member->select($playerInfo['member_id'])) {
 				$dispPlayer = $member->get_info_filtered("username");
-			}
-			else {
+			} else {
 				$dispPlayer = $playerInfo['displayname'];
 			}
 
@@ -112,8 +110,7 @@ if ($tournamentInfo['playersperteam'] == 1) {
 			$arrDispPlayers[$teamID] = "
 					<a href='javascript:void(0)' onclick=\"setPlayerSeed('".$teamInfo['tournamentteam_id']."')\">".$dispPlayer."</a><div class='mttDeletePlayer'><a href='javascript:void(0)' onclick=\"deletePlayer('".$playerInfo['tournamentplayer_id']."')\">X</a></div>
 				";
-		}
-		else {
+		} else {
 			$arrEmptySpots[$teamID] = "";
 			$arrDispPlayers[$teamID] = "
 					<span style='font-style: italic'>Empty Player Slot</span>
@@ -131,8 +128,7 @@ if ($tournamentInfo['playersperteam'] == 1) {
 		echo "<div class='mttPlayerSlot main'>".$i.". ".$arrDispPlayers[$key]."</div>";
 		$i++;
 	}
-}
-else {
+} else {
 }
 
 

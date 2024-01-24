@@ -37,12 +37,10 @@ if ($menuSQL !== false) {
 			if ($result = $mysqli->store_result()) {
 				$result->free();
 			}
-		}
-		while ($mysqli->next_result());
+		} while ($mysqli->next_result());
 
 		echo "1";
 	}
-}
-else {
+} else {
 	echo "2";
 }

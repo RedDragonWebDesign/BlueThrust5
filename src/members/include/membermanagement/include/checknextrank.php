@@ -29,8 +29,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		if ($_POST['action'] == "promote") {
 			$nextRank = $rankObj->get_info("ordernum")+1;
-		}
-		else {
+		} else {
 			$nextRank = $rankObj->get_info("ordernum")-1;
 		}
 
@@ -44,7 +43,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	if ($blnDispNone) {
 		echo "None";
 	}
-}
-else {
+} else {
 	echo "Error";
 }

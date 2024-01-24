@@ -16,8 +16,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -38,8 +37,7 @@ if ( ! empty($_POST['submit']) ) {
 	if (!$delMemberObj->select($_POST['deletemember']) || !is_numeric($_POST['deletemember'])) {
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member.<br>";
 		$countErrors++;
-	}
-	else {
+	} else {
 		// Check if member is disabled
 		if ($delMemberObj->get_info("disabled") != 1) {
 			$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may only delete members who are currently disabled.<br>";
@@ -69,8 +67,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 			$member->logAction("Deleted ".$delMemberUsername." from the website.");
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to delete member from the database.  Please contact the website administrator.<br>";
 		}

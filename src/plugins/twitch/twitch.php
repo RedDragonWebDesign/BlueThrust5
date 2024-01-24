@@ -55,8 +55,7 @@ class Twitch {
 
 			if (substr($twitchName, 0, strlen("http://twitch.tv/")) == "http://twitch.tv/") {
 				$twitchName = substr($twitchName, strlen("http://twitch.tv/"));
-			}
-			elseif (substr($twitchName, 0, strlen("http://www.twitch.tv/")) == "http://www.twitch.tv/") {
+			} elseif (substr($twitchName, 0, strlen("http://www.twitch.tv/")) == "http://www.twitch.tv/") {
 				$twitchName = substr($twitchName, strlen("http://www.twitch.tv/"));
 			}
 
@@ -171,8 +170,7 @@ class Twitch {
 		if ($method == "POST") {
 			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
-		}
-		elseif ($method == "DELETE") {
+		} elseif ($method == "DELETE") {
 			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);

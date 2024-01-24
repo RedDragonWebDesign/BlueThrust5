@@ -22,8 +22,7 @@ foreach ($arrGames as $gameID) {
 			if ($gameStatObj->get_info_filtered("hidestat") == 0) {
 				if ($gameStatObj->get_info_filtered("stattype") == "calculate") {
 					$dispGameStats .= "<b>".$gameStatObj->get_info_filtered("name").":</b> ".$gameObj->calcStat($gameStatID, $member)."<br>";
-				}
-				else {
+				} else {
 					$dispGameStats .= "<b>".$gameStatObj->get_info_filtered("name").":</b> ".$member->getGameStatValue($gameStatID)."<br>";
 				}
 			}

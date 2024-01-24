@@ -35,8 +35,7 @@ class PluginInstaller {
 
 		if (is_file($strSQL)) {
 			require_once($strSQL);
-		}
-		else {
+		} else {
 			$this->sql = $strSQL;
 		}
 	}
@@ -87,8 +86,7 @@ class PluginInstaller {
 				$newOrderNum = $consoleCatObj->getHighestOrderNum()+1;
 				$consoleCatObj->addNew(array("name", "ordernum"), array($this->pluginConsoleCategory, $newOrderNum));
 				$consoleCatID = $consoleCatObj->get_info("consolecategory_id");
-			}
-			else {
+			} else {
 				$row = $result->fetch_assoc();
 				$consoleCatID = $row['consolecategory_id'];
 			}
@@ -124,10 +122,8 @@ class PluginInstaller {
 					if ($result = $this->MySQL->store_result()) {
 						$result->free();
 					}
-				}
-				while ($this->MySQL->next_result());
-			}
-			else {
+				} while ($this->MySQL->next_result());
+			} else {
 				$returnVal = false;
 			}
 		}
@@ -197,8 +193,7 @@ class PluginInstaller {
 			$this->removeConsoleOptions();
 
 			$returnVal['result'] = "success";
-		}
-		else {
+		} else {
 			$returnVal['result'] = "fail";
 		}
 

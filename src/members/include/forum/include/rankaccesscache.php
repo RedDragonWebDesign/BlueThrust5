@@ -53,8 +53,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 			if (in_array($accessType, $arrAccessOptions) && $rankObj->select($rankID)) {
 				$_SESSION['btRankAccessCache'][$checkBoxName] = $accessType;
-			}
-			elseif ($accessType == 0 && $rankObj->select($rankID)) {
+			} elseif ($accessType == 0 && $rankObj->select($rankID)) {
 				$_SESSION['btRankAccessCache'][$checkBoxName] = 0;
 				unset($_SESSION['btRankAccessCache'][$checkBoxName]);
 			}
@@ -78,8 +77,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 				$dispRankAccess = "";
 				if (($_SESSION['btRankAccessCache']["rankaccess_".$rankID] ?? '') == 1) {
 					$dispRankAccess = " - <span class='allowText' style='font-style: italic'>Read-Only</span>";
-				}
-				elseif (($_SESSION['btRankAccessCache']["rankaccess_".$rankID] ?? '') == 2) {
+				} elseif (($_SESSION['btRankAccessCache']["rankaccess_".$rankID] ?? '') == 2) {
 					$dispRankAccess = " - <span class='pendingFont' style='font-style: italic'>Full Access</span>";
 				}
 

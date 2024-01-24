@@ -38,8 +38,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -95,8 +94,7 @@ if ( ! empty($_POST['submit']) ) {
 				if ($componentInfo['required'] == 1 && $componentInfo['componenttype'] != "multiselect" && trim($_POST[$formComponentName]) == "") {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> ".$componentInfo['name']." may not be blank.<br>";
-				}
-				elseif ($componentInfo['required'] == 1 && $componentInfo['componenttype'] == "multiselect") {
+				} elseif ($componentInfo['required'] == 1 && $componentInfo['componenttype'] == "multiselect") {
 					$countMultiSelect = 0;
 					foreach ($arrSelectValues as $selectValueID) {
 						$multiSelectName = $formComponentName."_".$selectValueID;
@@ -131,29 +129,25 @@ if ( ! empty($_POST['submit']) ) {
 								$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 							}
 						}
-					}
-					elseif ($componentInfo['componenttype'] == "select") {
+					} elseif ($componentInfo['componenttype'] == "select") {
 						$customFormObj->objSelectValue->select($_POST[$formComponentName]);
 						$selectValue = $customFormObj->objSelectValue->get_info_filtered("componentvalue");
 						if (!$customFormObj->objFormValue->addNew($arrColumns, array($submissionInfo['submission_id'], $componentID, $selectValue))) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 						}
-					}
-					elseif (($componentInfo['componenttype'] == "input" || $componentInfo['componenttype'] == "largeinput") && !$customFormObj->objFormValue->addNew($arrColumns, array($submissionInfo['submission_id'], $componentID, $_POST[$formComponentName]))) {
+					} elseif (($componentInfo['componenttype'] == "input" || $componentInfo['componenttype'] == "largeinput") && !$customFormObj->objFormValue->addNew($arrColumns, array($submissionInfo['submission_id'], $componentID, $_POST[$formComponentName]))) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 					}
-				}
-				else {
+				} else {
 					$mysqli->query("DELETE FROM ".$dbprefix."customform_values WHERE submission_id = '".$submissionInfo['submission_id']."'");
 					$customFormObj->objSubmission->delete();
 
 					break;
 				}
 			}
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 		}
@@ -181,8 +175,7 @@ if ( ! empty($_POST['submit']) ) {
 					popupDialog('".$customPageInfo['name']."', '".$customPageInfo['submitlink']."', 'successBox');
 				</script>
 			";
-		}
-		else {
+		} else {
 			echo "
 				<div style='display: none' id='successBox'>
 					".$customPageInfo['submitmessage']."
@@ -319,8 +312,7 @@ if ( empty($_POST['submit']) ) {
 						</tr>
 					
 					";
-		}
-		else {
+		} else {
 			echo "
 						<tr>
 							<td colspan='2' class='main'><br>

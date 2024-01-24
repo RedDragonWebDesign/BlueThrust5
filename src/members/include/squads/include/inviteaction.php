@@ -54,8 +54,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			if (!$squadObj->objSquadRank->select($squadInviteInfo['startingrank_id']) && count($arrRankList) > 1) {
 				$rankKey = count($arrRankList)-1;
 				$squadInviteInfo['startingrank_id'] = $arrRankList[$rankKey];
-			}
-			elseif (!$squadObj->objSquadRank->select($squadInviteInfo['startingrank_id']) && count($arrRankList) <= 1) {
+			} elseif (!$squadObj->objSquadRank->select($squadInviteInfo['startingrank_id']) && count($arrRankList) <= 1) {
 				$member->select($squadInfo['member_id']);
 				$member->postNotification("There are currently members in your squad, <b><a href='".$MAIN_ROOT."squads/profile.php?sID=".$squadInfo['squad_id']."'>".$squadInfo['name']."</a></b> without ranks!");
 				$member->select($memberInfo['member_id']);
@@ -84,8 +83,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					});
 				</script>
 			";
-		}
-		else {
+		} else {
 			$squadInviteObj->update(array("dateaction", "status"), array(time(), "2"));
 
 			$member->select($squadInviteInfo['sender_id']);
@@ -101,8 +99,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			
 			";
 		}
-	}
-	elseif (in_array($memberInfo['member_id'], $squadMemberList)) {
+	} elseif (in_array($memberInfo['member_id'], $squadMemberList)) {
 		$squadInviteObj->delete($_POST['siID']);
 	}
 

@@ -16,8 +16,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -41,11 +40,9 @@ $countErrors = 0;
 
 if (isset($_GET['mID']) && $tournamentObj->objMatch->select($_GET['mID'])) {
 	require_once("include/managematch.php");
-}
-elseif (isset($_GET['pID']) && $tournamentObj->objTournamentPool->objTournamentPoolMatch->select($_GET['pID'])) {
+} elseif (isset($_GET['pID']) && $tournamentObj->objTournamentPool->objTournamentPoolMatch->select($_GET['pID'])) {
 	require_once("include/managepoolmatch.php");
-}
-else {
+} else {
 	echo "
 		<table class='formTable' id='tournamentListTable'>
 			<tr>
@@ -72,8 +69,7 @@ else {
 
 			if ($row['team1_id'] != $teamID) {
 				$dispOpponent = $tournamentObj->getPlayerName($row['team1_id']);
-			}
-			else {
+			} else {
 				$dispOpponent = $tournamentObj->getPlayerName($row['team2_id']);
 			}
 			$tournamentObj->objPlayer->select($playerID);
@@ -102,8 +98,7 @@ else {
 
 			if ($row['team1_id'] != $teamID) {
 				$dispOpponent = $tournamentObj->getPlayerName($row['team1_id']);
-			}
-			else {
+			} else {
 				$dispOpponent = $tournamentObj->getPlayerName($row['team2_id']);
 			}
 			$tournamentObj->objPlayer->select($playerID);
@@ -142,8 +137,7 @@ else {
 				</p>
 			</div>
 		";
-	}
-	else {
+	} else {
 		echo "	
 		
 		<script type='text/javascript'>

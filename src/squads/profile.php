@@ -38,8 +38,7 @@ if (!isset($member)) {
 
 if (!$squadObj->select($_GET['sID'])) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
-}
-else {
+} else {
 	$squadInfo = $squadObj->get_info_filtered();
 }
 
@@ -50,8 +49,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -103,8 +101,7 @@ foreach ($arrAllNews as $newsPostID) {
 
 	if ($newsMemberInfo['avatar'] == "") {
 		$newsMemberInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
-	}
-	else {
+	} else {
 		$newsMemberInfo['avatar'] = $MAIN_ROOT.$newsMemberInfo['avatar'];
 	}
 
@@ -192,8 +189,7 @@ foreach ($arrSquadMembers as $key => $sortnum) {
 
 	if (substr($member->get_info_filtered("profilepic"), 0, 4) == "http") {
 		$squadMemberProfilePic = $member->get_info_filtered("profilepic");
-	}
-	else {
+	} else {
 		$squadMemberProfilePic = $MAIN_ROOT.$member->get_info_filtered("profilepic");
 	}
 
@@ -206,8 +202,7 @@ foreach ($arrSquadMembers as $key => $sortnum) {
 	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
-	}
-	else {
+	} else {
 		$addCSS = "";
 		$counter = 1;
 	}
@@ -315,8 +310,7 @@ if (in_array($memberInfo['member_id'], $squadMemberList)) {
 						<div class='dottedLine' style='margin: 5px 0px'></div>
 						<p align='center' class='largeFont main'><b><a href='".$MAIN_ROOT."members/console.php?cID=".$consoleObj->findConsoleIDByName("View Your Squads")."&select=".$squadInfo['squad_id']."'>Manage Squad</a></b></p>
 					";
-}
-else {
+} else {
 	echo "
 					
 						<div class='dottedLine' style='margin: 5px 0px'></div>
@@ -341,8 +335,7 @@ else {
 
 if ($squadInfo['privateshoutbox'] == 0 && in_array($memberInfo['member_id'], $squadMemberList)) {
 	echo $dispShoutbox;
-}
-elseif ($squadInfo['privateshoutbox'] == 1) {
+} elseif ($squadInfo['privateshoutbox'] == 1) {
 	echo $dispShoutbox;
 }
 

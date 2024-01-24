@@ -74,16 +74,14 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$member->select($pmInfo['receiver_id']);
 			$dispToMember = $member->getMemberLink();
 			$pmObj->update(array("status"), array(1));
-		}
-		elseif ($result->num_rows > 0) {
+		} elseif ($result->num_rows > 0) {
 			$row = $result->fetch_assoc();
 			$pmMemberID = $row['pmmember_id'];
 			$multiMemPMObj->select($pmMemberID);
 			$multiMemPMObj->update(array("seenstatus"), array(1));
 			$blnMultiPM = true;
 			$dispToMember = $pmObj->getRecipients(true);
-		}
-		elseif ($memberInfo['member_id'] == $pmInfo['sender_id'] && $senderResult->num_rows > 0) {
+		} elseif ($memberInfo['member_id'] == $pmInfo['sender_id'] && $senderResult->num_rows > 0) {
 			// Member is the sender
 			$blnMultiPM = true;
 			$dispToMember = $pmObj->getRecipients(true);
@@ -126,8 +124,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				if ($row['receiver_id'] != 0) {
 					$member->select($row['receiver_id']);
 					$dispToPrevMember = $member->getMemberLink();
-				}
-				else {
+				} else {
 					$dispToPrevMember = $oldPMObj->getRecipients(true);
 					$pmObj->select($row['pm_id']);
 					$arrReceivers = $pmObj->getAssociateIDs();
@@ -186,8 +183,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		if ($pmInfo['originalpm_id'] == 0) {
 			$replyID = $pmInfo['pm_id'];
 			$threadID = $pmInfo['pm_id'];
-		}
-		else {
+		} else {
 			$replyID = $pmInfo['pm_id'];
 			$threadID = $pmInfo['originalpm_id'];
 
@@ -317,8 +313,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		if ($totalNewPMs > 0) {
 			$dispPMCount = "PM Inbox <b>(".$totalNewPMs.")</b> <img src='".$MAIN_ROOT."themes/".$THEME."/images/pmalert.gif'>";
 			$intPMCount = $totalNewPMs;
-		}
-		else {
+		} else {
 			$dispPMCount = "PM Inbox (".$totalPMs.")";
 			$intPMCount = $totalPMs;
 		}
@@ -346,12 +341,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			</script>
 			
 		";
-	}
-	else {
+	} else {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");
 	}
-}
-else {
+} else {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
 }
 

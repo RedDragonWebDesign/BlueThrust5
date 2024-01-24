@@ -81,8 +81,7 @@ class Download extends Basic {
 				for ($i=0; $i<2; $i++) {
 					if ($modulus!=0 && $i==1) {
 						$parts[$i] = fread($handle, $parts_size+$modulus);
-					}
-					else {
+					} else {
 						$parts[$i] = fread($handle, $parts_size);
 					}
 
@@ -108,8 +107,7 @@ class Download extends Basic {
 					}
 				}
 			}
-		}
-		else {
+		} else {
 			// Do not split downloads
 			$newName = $this->objUpload->getUploadedFileName().".download";
 			if ($this->renameFile($newName)) {

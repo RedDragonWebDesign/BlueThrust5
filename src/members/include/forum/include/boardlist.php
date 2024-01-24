@@ -75,8 +75,7 @@ if (isset($_POST['bID']) && $boardObj->select($_POST['bID'])) {
 	if ($boardObj->get_info("subforum_id") != 0) {
 		$arrSelectBoard[0] = $boardObj->get_info("subforum_id");
 	}
-}
-else {
+} else {
 	$_POST['bID'] = "";
 }
 

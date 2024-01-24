@@ -17,8 +17,7 @@ if (!defined("MAIN_ROOT")) {
 
 if (is_numeric($_GET['start'])) {
 	$dateObj->setTimestamp($_GET['start']);
-}
-else {
+} else {
 	$startDate = explode("-", $_GET['start']);
 	$dateObj->setDate($startDate[2], $startDate[0], $startDate[1]);
 	$setStartValue = $dateObj->getTimestamp();
@@ -28,8 +27,7 @@ else {
 
 if (is_numeric($_GET['end'])) {
 	$dateObj->setTimestamp($_GET['end']);
-}
-else {
+} else {
 	$endDate = explode("-", $_GET['end']);
 	$dateObj->setDate($endDate[2], $endDate[0], $endDate[1]);
 	$setEndValue = $dateObj->getTimestamp();

@@ -62,16 +62,13 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					});
 				</script>
 			";
-		}
-		elseif ($_POST['confirm'] == "1") {
+		} elseif ($_POST['confirm'] == "1") {
 			$profileCatObj->delete();
 			require_once("main.php");
-		}
-		else {
+		} else {
 			echo "<p align='center'>Are you sure you want to delete the profile category <b>".$profileCatInfo['name']."</b>?";
 		}
-	}
-	elseif (!$profileCatObj->select($_POST['catID'])) {
+	} elseif (!$profileCatObj->select($_POST['catID'])) {
 		echo "<p align='center'>Unable find the selected profile category.  Please try again or contact the website administrator.</p>";
 	}
 }

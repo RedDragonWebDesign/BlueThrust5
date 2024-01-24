@@ -15,8 +15,7 @@
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -57,12 +56,10 @@ if ( ! empty($_POST['submit']) ) {
 		if (!$uploadLogoObj->uploadFile()) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload the squad logo. Please make sure the file extension is either .jpg, .png, .gif or .bmp and that the file size is not too big.<br>";
-		}
-		else {
+		} else {
 			$logoImageURL = $MAIN_ROOT."images/squads/".$uploadLogoObj->getUploadedFileName();
 		}
-	}
-	else {
+	} else {
 		$logoImageURL = $_POST['logourl'];
 	}
 
@@ -96,8 +93,7 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 
 			";
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}

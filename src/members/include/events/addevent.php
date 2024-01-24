@@ -16,8 +16,7 @@ require_once("../classes/event.php");
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -76,8 +75,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	if ($_POST['ampm'] == "pm") {
 		$startHour = $_POST['starthour']+12;
-	}
-	else {
+	} else {
 		$startHour = $_POST['starthour'];
 	}
 	//date_default_timezone_set($tempTimezone);
@@ -96,15 +94,13 @@ if ( ! empty($_POST['submit']) ) {
 
 	if ($_POST['invitetype'] != 1) {
 		$inviteType = 0;
-	}
-	else {
+	} else {
 		$inviteType = 1;
 	}
 
 	if ($_POST['openinvites'] != 0) {
 		$openInvites = 1;
-	}
-	else {
+	} else {
 		$openInvites = 0;
 	}
 
@@ -117,8 +113,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	if ($_POST['allowmessages'] != 0) {
 		$allowMessages = 1;
-	}
-	else {
+	} else {
 		$allowMessages = 0;
 	}
 
@@ -144,8 +139,7 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			
 			";
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
@@ -168,8 +162,7 @@ if ( empty($_POST['submit']) ) {
 	for ($i=0; $i<=59; $i++) {
 		if ($i < 10) {
 			$dispI = "0".$i;
-		}
-		else {
+		} else {
 			$dispI = $i;
 		}
 

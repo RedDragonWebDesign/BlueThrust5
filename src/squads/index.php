@@ -31,8 +31,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -67,8 +66,7 @@ require_once($prevFolder."include/breadcrumb.php");
 	while ($row = $result->fetch_assoc()) {
 		if ($row['recruitingstatus'] == 1) {
 			$dispRecruiting = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/bluedot.png' title='Recruiting Open'>";
-		}
-		else {
+		} else {
 			$dispRecruiting = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/graydot.png' title='Recruiting Closed'>";
 		}
 
@@ -78,8 +76,7 @@ require_once($prevFolder."include/breadcrumb.php");
 		if ($counter == 1) {
 			$addCSS = " alternateBGColor";
 			$counter = 0;
-		}
-		else {
+		} else {
 			$addCSS = "";
 			$counter = 1;
 		}

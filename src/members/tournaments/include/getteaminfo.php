@@ -42,8 +42,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 	if ($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
 		if ($_POST['getWhat'] == "name") {
 			echo $teamInfo['name'];
-		}
-		elseif ($_POST['getWhat'] == "playerlist") {
+		} elseif ($_POST['getWhat'] == "playerlist") {
 			$arrPlayers = $tournamentObj->getTeamPlayers($teamInfo['tournamentteam_id'], true);
 
 			$playerCount = 1;
@@ -53,8 +52,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 
 				if (is_numeric($playerInfo['member_id']) && $member->select($playerInfo['member_id'])) {
 					$dispPlayerName = $member->get_info_filtered("username");
-				}
-				else {
+				} else {
 					$dispPlayerName = $playerInfo['displayname'];
 				}
 

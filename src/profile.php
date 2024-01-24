@@ -25,8 +25,7 @@ if ($member->select($_GET['mID'])) {
 	$member->addProfileView();
 	$member->autoAwardMedals();
 	$member->autoPromote();
-}
-else {
+} else {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 }
 
@@ -55,8 +54,7 @@ $rankInfo = $rankObj->get_info_filtered();
 
 if ($memberInfo['profilepic'] == "") {
 	$dispProfileImage = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
-}
-else {
+} else {
 	$dispProfileImage = $memberInfo['profilepic'];
 }
 
@@ -106,8 +104,7 @@ if ($dispSocialMedia != "") {
 $dispRecruiter = "Unknown";
 if ($member->select($memberInfo['recruiter'])) {
 	$dispRecruiter = $member->getMemberLink();
-}
-elseif ($memberInfo['recruiter'] == 0) {
+} elseif ($memberInfo['recruiter'] == 0) {
 	$dispRecruiter = "Website Admin";
 }
 
@@ -151,8 +148,7 @@ $dispDaysInClan = round((time()-$memberInfo['datejoined'])/86400);
 
 if ((time()-$memberInfo['lastseen']) < 600) {
 	$dispOnlineStatus = "<span style='margin-top: 1px'><img src='".$MAIN_ROOT."themes/".$THEME."/images/onlinedot.png' title='Online!'></span>";
-}
-else {
+} else {
 	$dispOnlineStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/offlinedot.png' title='Offline'>";
 
 	if ($memberInfo['loggedin'] == 1) {
@@ -187,8 +183,7 @@ if ($memberInfo['birthday'] != 0) {
 
 if ($memberInfo['lastseenlink'] == "") {
 	$dispLastSeenLink = "No Where";
-}
-else {
+} else {
 	$member->select($memberInfo['member_id']);
 	$dispLastSeenLink = $member->get_info("lastseenlink");
 }

@@ -34,8 +34,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $diplomacyClanObj->selec
 
 
 		require_once("main_manageclans.php");
-	}
-	else {
+	} else {
 		echo "<p class='main' align='center'>Are you sure you want to delete ".$dClanName." from the diplomacy page?</p>";
 	}
 }

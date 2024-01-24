@@ -32,8 +32,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -84,8 +83,7 @@ while ($row = $result->fetch_assoc()) {
 				<td class='main' align='center' colspan='2'><img src='".$rankCatInfo['imageurl']."' width='".$rankCatInfo['imagewidth']."' height='".$rankCatInfo['imageheight']."' onmouseover=\"showToolTip('<b>".$rankCatInfo['name']."</b><br>".$rankCatInfo['description']."')\" onmouseout='hideToolTip()'></td>
 			</tr>
 		";
-	}
-	else {
+	} else {
 		$dispCatDesc = "";
 		if ($rankCatInfo['description'] != "") {
 			$dispCatDesc = " style='cursor: pointer' onmouseover=\"showToolTip('<b>".$rankCatInfo['name']."</b><br>".$rankCatInfo['description']."')\" onmouseout='hideToolTip()'";

@@ -94,7 +94,6 @@ while ($row = $result->fetch_assoc()) {
 
 if (file_put_contents($websiteInfo['theme']."/savemenu.sql", $saveMenuSQL)) {
 	echo "1";
-}
-else {
+} else {
 	echo "2";
 }

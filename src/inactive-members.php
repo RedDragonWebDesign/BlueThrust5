@@ -32,8 +32,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -103,8 +102,7 @@ if ($result->num_rows > 0) {
 			<b>Total Inactive Members:</b>	<?php echo $result->num_rows; ?>
 		</p>
 	";
-}
-else {
+} else {
 	echo "
 	
 		<div class='shadedBox' style='width: 40%; margin: 20px auto'>

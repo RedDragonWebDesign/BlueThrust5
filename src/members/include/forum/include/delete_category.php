@@ -68,8 +68,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $categoryObj->select($_P
 			</script>
 		
 		";
-	}
-	elseif (count($arrBoards) == 0 && !isset($_POST['confirm'])) {
+	} elseif (count($arrBoards) == 0 && !isset($_POST['confirm'])) {
 		echo "
 		
 			<div id='deleteMessage' style='display: none'>
@@ -121,8 +120,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $categoryObj->select($_P
 		
 		
 		";
-	}
-	elseif (count($arrBoards) == 0 && isset($_POST['confirm'])) {
+	} elseif (count($arrBoards) == 0 && isset($_POST['confirm'])) {
 		$categoryObj->delete();
 		$categoryObj->resortOrder();
 		require_once("main_managecategory.php");

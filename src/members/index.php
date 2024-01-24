@@ -32,8 +32,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -113,15 +112,13 @@ if ($checkMember) {
 							selectCategory('".$counter."');
 						</script>
 					";
-				}
-				elseif (isset($_SESSION['lastConsoleCategory']) && $_SESSION['lastConsoleCategory']['catID'] == $categoryID && $_SESSION['lastConsoleCategory']['exptime'] > time()) {
+				} elseif (isset($_SESSION['lastConsoleCategory']) && $_SESSION['lastConsoleCategory']['catID'] == $categoryID && $_SESSION['lastConsoleCategory']['exptime'] > time()) {
 					$clickCategory = "
 						<script type='text/javascript'>
 							selectCategory('".$counter."');
 						</script>
 					";
-				}
-				elseif ($memberInfo['defaultconsole'] == $categoryID && $clickCategory == "") {
+				} elseif ($memberInfo['defaultconsole'] == $categoryID && $clickCategory == "") {
 					$clickCategory = "
 					<script type='text/javascript'>
 						selectCategory('".$counter."');
@@ -149,8 +146,7 @@ if ($checkMember) {
 					if ($consoleInfo['sep'] == "1") {
 						$dispPageTitle = "<div class='dashedLine' style='width: 80%; margin: 6px 1px; padding: 0px'></div>";
 						$dispConsoleOptions .= $dispPageTitle;
-					}
-					elseif ($consoleInfo['hide'] == 0) {
+					} elseif ($consoleInfo['hide'] == 0) {
 						$memberAppCID = $consoleObj->findConsoleIDByName("View Member Applications");
 						$diplomacyRequestsCID = $consoleObj->findConsoleIDByName("View Diplomacy Requests");
 						$viewEventInvitationsCID = $consoleObj->findConsoleIDByName("View Event Invitations");
@@ -165,8 +161,7 @@ if ($checkMember) {
 
 							if ($unseenApps > 0) {
 								$dispPageTitle .= " <b>(".$unseenApps.")</b>";
-							}
-							else {
+							} else {
 								$dispPageTitle .= " (".$totalApps.")";
 							}
 						}

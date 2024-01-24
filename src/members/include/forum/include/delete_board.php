@@ -38,8 +38,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $boardObj->select($_POST
 		$member->logAction("Deleted Forum Board: ".$boardInfo['name']);
 
 		require_once("main_manageboards.php");
-	}
-	else {
+	} else {
 		$addMessage = "";
 		if (count($boardObj->getSubForums()) > 0) {
 			$addMessage = "<br><br>All sub-forums will be moved to the parent category/sub-forum.";

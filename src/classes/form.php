@@ -288,8 +288,7 @@ class Form {
 
 							$displayForm .= "<input name='".$newComponentName."' type='".$componentInfo['type']."' value='".$optionValue."' ".$dispAttributes." ".$dispSelected."> ".$dispLabel;
 						}
-					}
-					else {
+					} else {
 						$dispChecked = "";
 						if ($componentInfo['checked'] ?? '') {
 							$dispChecked = " checked";
@@ -506,16 +505,14 @@ class Form {
 							if ($countBlanks == count($componentInfo['options'])) {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You must select at least one value for ".$componentInfo['display_name'].".";
 							}
-						}
-						elseif ($componentInfo['type'] != "file" && trim($_POST[$componentName]) == "") {
+						} elseif ($componentInfo['type'] != "file" && trim($_POST[$componentName]) == "") {
 							$this->errors[] = (($arrValidate['customMessage'] ?? '') != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." may not be blank.";
 						}
 						break;
 					case "NUMBER_ONLY":
 						if (!is_numeric($_POST[$componentName]) && $componentInfo['type'] != "datepicker") {
 							$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." may only be a numeric value.";
-						}
-						elseif ($componentInfo['type'] == "datepicker") {
+						} elseif ($componentInfo['type'] == "datepicker") {
 							$checkDate = explode("-", $_POST[$componentName]);
 							if (!is_numeric($checkDate[0]) || !is_numeric($checkDate[1]) || !is_numeric($checkDate[2])) {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." may only be a date value.";
@@ -549,8 +546,7 @@ class Form {
 								if ($countErrors > 0) {
 									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid value for ".$componentInfo['display_name'].".";
 								}
-							}
-							elseif ( isset($_POST[$componentName]) && !in_array($_POST[$componentName], $arrPossibleValues)) {
+							} elseif ( isset($_POST[$componentName]) && !in_array($_POST[$componentName], $arrPossibleValues)) {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid value for ".$componentInfo['display_name'].".";
 							}
 						}
@@ -616,8 +612,7 @@ class Form {
 							$checkOrder = $arrValidate['orderObject']->validateOrder($_POST[$componentName], $_POST[$componentName."_beforeafter"], $arrValidate['edit'] ?? '', $arrValidate['edit_ordernum'] ?? '');
 							if ($checkOrder === false) {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid ".$componentInfo['display_name'].".";
-							}
-							else {
+							} else {
 								$_POST[$componentName] = $checkOrder;
 								$this->components[$componentName]['resortOrderObject'] = $arrValidate['orderObject'];
 							}
@@ -631,8 +626,7 @@ class Form {
 					default:
 						if (!is_array($validateMethod)) {
 							call_user_func($validateMethod);
-						}
-						else {
+						} else {
 							call_user_func_array($validateMethod['function'], $validateMethod['args']);
 						}
 				}
@@ -644,8 +638,7 @@ class Form {
 				$outsideLink = false;
 				if ($_FILES[$componentName."_file"]['name'] != "") {
 					$uploadFile = new BTUpload($_FILES[$componentName."_file"], $componentInfo['options']['file_prefix'], $componentInfo['options']['save_loc'], $componentInfo['options']['file_types']);
-				}
-				elseif ($_POST[$componentName."_url"] != "") {
+				} elseif ($_POST[$componentName."_url"] != "") {
 					$uploadFile = new BTUpload($_POST[$componentName."_url"], $componentInfo['options']['file_prefix'], $componentInfo['options']['save_loc'], $componentInfo['options']['file_types'], $componentInfo['options']['ext_length'], true);
 					$outsideLink = true;
 				}
@@ -657,16 +650,13 @@ class Form {
 
 						if (!$this->attachmentObj->uploadFile()) {
 							$this->errors[] = "Unable to upload ".$componentInfo['display_name'].". Make sure that the file is not too big and correct extension.";
-						}
-						else {
+						} else {
 							$_POST[$componentName] = $componentInfo['options']['append_db_value'].$uploadFile->getUploadedFileName();
 						}
-					}
-					else {
+					} else {
 						if (!$uploadFile->uploadFile()) {
 							$this->errors[] = "Unable to upload ".$componentInfo['display_name'].". Make sure that the file is not too big and correct extension.";
-						}
-						else {
+						} else {
 							$_POST[$componentName] = $componentInfo['options']['append_db_value'].$uploadFile->getUploadedFileName();
 							// Check if updating, and delete old file
 
@@ -675,8 +665,7 @@ class Form {
 							}
 						}
 					}
-				}
-				elseif ($componentInfo['value'] != "") {
+				} elseif ($componentInfo['value'] != "") {
 					$_POST[$componentName] = $componentInfo['value'];
 				}
 
@@ -685,8 +674,7 @@ class Form {
 						$this->errors[] = $componentInfo['display_name']." may not be blank.";
 					}
 				}
-			}
-			elseif ($componentInfo['type'] == "datepicker") {
+			} elseif ($componentInfo['type'] == "datepicker") {
 				$formatDate = explode("-", $_POST[$componentName]);
 				$datePick = new DateTime();
 				$datePick->setTimezone(new DateTimeZone("UTC"));
@@ -759,8 +747,7 @@ class Form {
 
 			if ($this->objSave != "" && $this->saveType == "add") {
 				$this->blnSaveResult = $this->objSave->addNew($arrColumns, $arrValues);
-			}
-			elseif ($this->objSave != "" && $this->saveType == "update") {
+			} elseif ($this->objSave != "" && $this->saveType == "update") {
 				$this->blnSaveResult = $this->objSave->update($arrColumns, $arrValues);
 
 				if (count($this->arrDeleteFiles) > 0) {
@@ -768,25 +755,21 @@ class Form {
 						unlink(BASE_DIRECTORY.$file);
 					}
 				}
-			}
-			elseif ($this->objSave != "" && $this->saveType != "") {
+			} elseif ($this->objSave != "" && $this->saveType != "") {
 				//echo $this->saveType;
 				$this->blnSaveResult = $this->objSave->{$this->saveType}($arrColumns, $arrValues);
-			}
-			else {
+			} else {
 				$this->blnSaveResult = true;
 			}
 
 			if (!$this->blnSaveResult) {
 				$this->errors[] = "Unable to save information to the database.  Please contact the website administrator.";
-			}
-			else {
+			} else {
 				if (is_array($this->afterSave)) {
 					foreach ($this->afterSave as $saveFunction) {
 						if (!is_array($saveFunction)) {
 							call_user_func($saveFunction);
-						}
-						else {
+						} else {
 							call_user_func_array($saveFunction['function'], $saveFunction['args']);
 						}
 					}
@@ -810,8 +793,7 @@ class Form {
 		$returnVal = 1;
 		if ($a['sortorder'] == $b['sortorder']) {
 			$returnVal = 0;
-		}
-		elseif ($a['sortorder'] < $b['sortorder']) {
+		} elseif ($a['sortorder'] < $b['sortorder']) {
 			$returnVal = -1;
 		}
 
@@ -848,8 +830,7 @@ class Form {
 			foreach ($attr as $attrName => $attrValue) {
 				$returnVal .= $attrName."='".$attrValue."' ";
 			}
-		}
-		else {
+		} else {
 			$returnVal = $attr;
 		}
 
@@ -877,8 +858,7 @@ class Form {
 					</script>
 				
 				";
-		}
-		else {
+		} else {
 			echo "
 					<script type='text/javascript'>
 						window.location = '".$popupLink."'

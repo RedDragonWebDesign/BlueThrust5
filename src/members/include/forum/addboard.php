@@ -21,8 +21,7 @@ require_once("../classes/rankcategory.php");
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -85,8 +84,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	if (($_POST['subforum'] ?? '') == 1 && $boardObj->select($_POST['subforumboard'])) {
 		$setSubForum = $_POST['subforumboard'];
-	}
-	else {
+	} else {
 		$setSubForum = 0;
 	}
 
@@ -109,15 +107,13 @@ if ( ! empty($_POST['submit']) ) {
 		$_POST['accesstype'] = 0;
 		$arrRanks = array();
 		$arrMembers = array();
-	}
-	else {
+	} else {
 		$result = $mysqli->query("SELECT rank_id FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 		while ($row = $result->fetch_assoc()) {
 			$checkboxName = "rankaccess_".$row['rank_id'];
 			if (($_SESSION['btRankAccessCache'][$checkboxName] ?? '') == "1") {
 				$arrRanks[$row['rank_id']] = 1;
-			}
-			elseif (($_SESSION['btRankAccessCache'][$checkboxName] ?? '') == "2") {
+			} elseif (($_SESSION['btRankAccessCache'][$checkboxName] ?? '') == "2") {
 				$arrRanks[$row['rank_id']] = 0;
 			}
 		}
@@ -146,8 +142,7 @@ if ( ! empty($_POST['submit']) ) {
 					popupDialog('Add Board', '".$MAIN_ROOT."members', 'successBox');
 				</script>
 			";
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
@@ -169,8 +164,7 @@ if ( empty($_POST['submit']) ) {
 		$dispError
 		</div>
 		";
-	}
-	else {
+	} else {
 		$_SESSION['btMemberAccessCache'] = array();
 		$_SESSION['btRankAccessCache'] = array();
 	}

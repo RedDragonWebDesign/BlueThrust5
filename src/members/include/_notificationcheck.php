@@ -124,8 +124,7 @@ if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 
 
 			$mysqli->query("UPDATE ".$dbprefix."notifications SET status = '1' WHERE member_id = '".$memberInfo['member_id']."' AND status = '0'");
-		}
-		else {
+		} else {
 			echo "SELECT * FROM ".$dbprefix."notifications WHERE member_id = '".$memberInfo['member_id']."' AND status = '0'";
 		}
 	}

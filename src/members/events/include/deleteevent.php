@@ -40,8 +40,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_POST
 	if ($eventInfo['member_id'] == $memberInfo['member_id']) {
 		if ($_POST['confirmDelete'] == 1) {
 			$eventObj->delete();
-		}
-		else {
+		} else {
 			echo "
 			
 				<div id='confirmDeleteMessage' style='display: none'>

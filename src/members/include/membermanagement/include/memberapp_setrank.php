@@ -20,8 +20,7 @@ function memberAppSetRank() {
 		$rankInfo = $memberRank->get_info_filtered();
 		if ($memberInfo['promotepower'] != 0) {
 			$rankInfo['promotepower'] = $memberInfo['promotepower'];
-		}
-		elseif ($memberInfo['promotepower'] == -1) {
+		} elseif ($memberInfo['promotepower'] == -1) {
 			$rankInfo['promotepower'] = 0;
 		}
 

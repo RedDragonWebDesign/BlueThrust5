@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -116,8 +115,7 @@ function saveCustomValues() {
 			$arrColumns = array("value");
 			$arrValues = array($_POST[$postVal]);
 			$member->objSocial->objSocialMember->update($arrColumns, $arrValues);
-		}
-		else {
+		} else {
 			$arrColumns = array("social_id", "member_id", "value");
 			$arrValues = array($socialMediaInfo['social_id'], $memberInfo['member_id'], $_POST[$postVal]);
 			$member->objSocial->objSocialMember->addNew($arrColumns, $arrValues);
@@ -380,8 +378,7 @@ while ($row = $result->fetch_assoc()) {
 		if ($profileOptionObj->isSelectOption()) {
 			$arrSelectOptions = $profileOptionObj->getSelectValues();
 			$inputType = "select";
-		}
-		else {
+		} else {
 			$inputType = "text";
 		}
 

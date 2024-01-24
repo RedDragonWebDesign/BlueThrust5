@@ -34,8 +34,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -140,16 +139,13 @@ if ($tournamentInfo['seedtype'] == 3) {
 							if ($tournamentObj->objPlayer->select($teamPlayers[0])) {
 								if ($member->select($tournamentObj->objPlayer->get_info("member_id"))) {
 									$dispName = $member->getMemberLink();
-								}
-								else {
+								} else {
 									$dispName = $tournamentObj->objPlayer->get_info_filtered("displayname");
 								}
-							}
-							else {
+							} else {
 								$dispName = "Bye";
 							}
-						}
-						else {
+						} else {
 							// Multi-Player Teams
 							$dispPlayerList = "";
 							$arrTeamPlayers = $tournamentObj->getTeamPlayers($teamInfo['tournamentteam_id'], true);
@@ -159,8 +155,7 @@ if ($tournamentInfo['seedtype'] == 3) {
 								$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
 								if (is_numeric($playerInfo['member_id']) && $member->select($playerInfo['member_id'])) {
 									$dispPlayerList .= "<b>&middot;</b> ".$member->getMemberLink()."<br>";
-								}
-								else {
+								} else {
 									$dispPlayerList .= "<b>&middot;</b> ".$playerInfo['displayname']."<br>";
 								}
 							}
@@ -174,8 +169,7 @@ if ($tournamentInfo['seedtype'] == 3) {
 						}
 
 						$dispSeed = "#".$teamInfo['seed'];
-					}
-					else {
+					} else {
 						$dispName = "Empty Spot";
 						$dispSeed = "";
 					}
@@ -286,12 +280,10 @@ if ($tournamentInfo['seedtype'] == 3) {
 
 					if ($member->select($winnerInfo['member_id'])) {
 						$dispWinner = $member->getMemberLink();
-					}
-					else {
+					} else {
 						$dispWinner = $winnerInfo['displayname'];
 					}
-				}
-				else {
+				} else {
 					$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 
 					$dispPlayerList = "";
@@ -302,8 +294,7 @@ if ($tournamentInfo['seedtype'] == 3) {
 						$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
 						if (is_numeric($playerInfo['member_id']) && $member->select($playerInfo['member_id'])) {
 							$dispPlayerList .= "<b>&middot;</b> ".$member->getMemberLink()."<br>";
-						}
-						else {
+						} else {
 							$dispPlayerList .= "<b>&middot;</b> ".$playerInfo['displayname']."<br>";
 						}
 					}

@@ -30,8 +30,7 @@ if (!defined("SHOW_BANLIST")) {
 
 	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info_filtered();
-	}
-	else {
+	} else {
 		exit();
 	}
 }
@@ -47,8 +46,7 @@ while ($row = $result->fetch_assoc()) {
 	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
-	}
-	else {
+	} else {
 		$counter = 1;
 		$addCSS = "";
 	}

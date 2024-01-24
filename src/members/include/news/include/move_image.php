@@ -35,8 +35,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		$_GET['cID'] = $cID;
 		require_once("imagelist.php");
-	}
-	else {
+	} else {
 		echo $_POST['imgID'];
 	}
 }

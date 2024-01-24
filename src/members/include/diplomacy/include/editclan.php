@@ -78,8 +78,7 @@ if ( ! empty($_POST['submit']) ) {
 			";
 
 			$member->logAction("Edited ".$_POST['clanname']." diplomacy page information.  Set status to ".$diplomacyStatusObj->get_info_filtered("name"));
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}

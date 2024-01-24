@@ -36,8 +36,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$imageSliderObj->delete();
 
 			require_once("imagelist.php");
-		}
-		else {
+		} else {
 			echo "
 			
 				<div id='confirmDeleteImage' style='display: none'>

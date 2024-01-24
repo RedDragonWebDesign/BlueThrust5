@@ -14,8 +14,7 @@
 
 if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -91,8 +90,7 @@ $statusSelectBox->setOptions(array("Unconfirmed", "Attended", "Excused Absence",
 		if ($counter == 1) {
 			$addCSS = " alternateBGColor";
 			$counter = 0;
-		}
-		else {
+		} else {
 			$addCSS = "";
 			$counter = 1;
 		}

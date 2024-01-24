@@ -70,8 +70,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		if ($ytConnectCID !== false) {
 			$consoleObj->select($ytConnectCID);
 			$checkDeleteConsole = $consoleObj->delete();
-		}
-		else {
+		} else {
 			$checkDeleteConsole = false;
 		}
 
@@ -84,8 +83,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$countErrors++;
 			$dispError[] = "Unable to delete ".$PLUGIN_NAME." console option.  You will have to manually delete it.";
 		}
-	}
-	else {
+	} else {
 		$countErrors++;
 		$dispError[] = "Unable to delete plugin database table.";
 	}
@@ -95,8 +93,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	if ($countErrors == 0) {
 		$arrReturn['result'] = "success";
 		$member->logAction("Uninstalled ".$PLUGIN_NAME." Plugin.");
-	}
-	else {
+	} else {
 		$arrReturn['result'] = "fail";
 		$arrReturn['errors'] = $dispError;
 	}

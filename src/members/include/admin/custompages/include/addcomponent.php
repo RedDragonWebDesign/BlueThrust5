@@ -143,12 +143,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 			if ($_POST['componentRequired'] == 1) {
 				$checkRequired = " checked";
-			}
-			else {
+			} else {
 				$_POST['componentRequired'] = 0;
 			}
-		}
-		else {
+		} else {
 			$_SESSION['btFormComponent'][$componentIndex]['cOptions'] = array();
 		}
 

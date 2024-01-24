@@ -168,8 +168,7 @@ class ForumBoard extends BasicSort {
 				$arrRankAccess = $this->getRankAccessRules();
 				if ($fullAccessOnly) {
 					$checkAccess = $arrRankAccess[$memberInfo['rank_id']] ?? '' == 0;
-				}
-				else {
+				} else {
 					$checkAccess = (($arrRankAccess[$memberInfo['rank_id'] ?? ''] ?? '') == 0 || ($arrRankAccess[$memberInfo['rank_id'] ?? ''] ?? '') == 1);
 				}
 
@@ -182,19 +181,16 @@ class ForumBoard extends BasicSort {
 
 				if ($memberAccessIsSet && !$fullAccessOnly && $arrMembers[$memberInfo['member_id']] != 0) {
 					$checkCount++;
-				}
-				elseif ($memberAccessIsSet && $fullAccessOnly && $arrMembers[$memberInfo['member_id']] == 1) {
+				} elseif ($memberAccessIsSet && $fullAccessOnly && $arrMembers[$memberInfo['member_id']] == 1) {
 					$checkCount++;
-				}
-				elseif ($memberAccessIsSet && $arrMembers[$memberInfo['member_id']] == 0) {
+				} elseif ($memberAccessIsSet && $arrMembers[$memberInfo['member_id']] == 0) {
 					$checkCount = 0;
 				}
 
 				if ($checkCount > 0) {
 					$returnVal = true;
 				}
-			}
-			else {
+			} else {
 				$returnVal = true;
 			}
 		}
@@ -216,8 +212,7 @@ class ForumBoard extends BasicSort {
 			$result = $this->MySQL->query("SELECT forummoderator_id FROM ".$this->MySQL->get_tablePrefix()."forum_moderator WHERE member_id = '".$memberID."' AND forumboard_id = '".$this->intTableKeyValue."'");
 			if ($result->num_rows > 0 && !$returnForumModeratorID) {
 				$returnVal = true;
-			}
-			elseif ($result->num_rows > 0 && $returnForumModeratorID) {
+			} elseif ($result->num_rows > 0 && $returnForumModeratorID) {
 				$row = $result->fetch_assoc();
 				$returnVal = $row['forummoderator_id'];
 			}
@@ -447,15 +442,13 @@ class ForumBoard extends BasicSort {
 					$arrConsoleOptions[$x][0] = $row[$this->strTableKey];
 					$arrConsoleOptions[$x][1] = $row['sortnum'];
 					$x++;
-				}
-				elseif ($strBeforeAfter == "after" and $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
+				} elseif ($strBeforeAfter == "after" and $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
 					$arrConsoleOptions[$x][0] = $row[$this->strTableKey];
 					$arrConsoleOptions[$x][1] = $row['sortnum'];
 					$x++;
 					$newSortNum = $x;
 					$x++;
-				}
-				else {
+				} else {
 					$arrConsoleOptions[$x][0] = $row[$this->strTableKey];
 					$arrConsoleOptions[$x][1] = $row['sortnum'];
 					$x++;
@@ -537,8 +530,7 @@ class ForumBoard extends BasicSort {
 			if ($num_rows == 0 || ($num_rows == 1 && $blnEdit)) {
 				$returnVal = 1;
 			}
-		}
-		elseif ($this->select($intOrderNumID) && ($strBeforeAfter == "before" || $strBeforeAfter == "after")) {
+		} elseif ($this->select($intOrderNumID) && ($strBeforeAfter == "before" || $strBeforeAfter == "after")) {
 			// Check first to see if we are editing or adding a new rank
 
 			if ($blnEdit) {
@@ -558,12 +550,10 @@ class ForumBoard extends BasicSort {
 				// If checkOrderNum is the same as intEditOrderNum then the order hasn't changed
 				if ($checkOrderNum != $intEditOrderNum) {
 					$returnVal = $this->makeRoom($strBeforeAfter);
-				}
-				else {
+				} else {
 					$returnVal= $intEditOrderNum;
 				}
-			}
-			else {
+			} else {
 				$returnVal = $this->makeRoom($strBeforeAfter);
 			}
 		}
@@ -604,8 +594,7 @@ class ForumBoard extends BasicSort {
 		if ($fullLink) {
 			$linkHTML = "<a href='".$url."'>".$this->get_info_filtered("name")."</a>";
 			return $linkHTML;
-		}
-		else {
+		} else {
 			return $url;
 		}
 	}

@@ -15,8 +15,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -79,8 +78,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	if ($_POST['headertype'] == "customcode") {
 		$headerImageURL = $_POST['headercustomcode'];
-	}
-	elseif ($_POST['headertype'] == "customformat") {
+	} elseif ($_POST['headertype'] == "customformat") {
 		$headerImageURL = $_POST['wysiwygHTML'];
 	}
 
@@ -88,15 +86,13 @@ if ( ! empty($_POST['submit']) ) {
 	if ($countErrors == 0) {
 		if ($_POST['headertype'] == "image" && $_FILES['headerimagefile']['name'] != "") {
 			$btUploadObj = new BTUpload($_FILES['headerimagefile'], "menuheader_", "../images/menu/", array(".jpg", ".png", ".bmp", ".gif"));
-		}
-		elseif ($_POST['headertype'] == "image") {
+		} elseif ($_POST['headertype'] == "image") {
 			$btUploadObj = new BTUpload($_POST['headerimageurl'], "menuheader_", "../images/menu/", array(".jpg", ".png", ".bmp", ".gif"), 4, true);
 		}
 
 		if ($_POST['headertype'] == "image" && $btUploadObj->uploadFile()) {
 			$headerImageURL = "images/menu/".$btUploadObj->getUploadedFileName();
-		}
-		elseif ($_POST['headertype'] == "image") {
+		} elseif ($_POST['headertype'] == "image") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload selected image.  Make sure it's the correct file extension and not too big.<br>";
 		}

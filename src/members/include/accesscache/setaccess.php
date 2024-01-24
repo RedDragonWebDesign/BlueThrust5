@@ -34,8 +34,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && isset($_POST['cacheID'])
 		$objSelector = $rankObj;
 		$sessionPrefix = "rankaccess_";
 		$sessionName = "btAccessCache";
-	}
-	else {
+	} else {
 		$objSelector = $member;
 		$sessionName = "btMemberAccess";
 	}
@@ -48,8 +47,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && isset($_POST['cacheID'])
 		if ($accessTypeValue == 0 && $objSelector->select($selectorID)) {
 			$_SESSION[$sessionName][$_POST['cacheID']][$checkBoxName] = 0;
 			unset($_SESSION[$sessionName][$_POST['cacheID']][$checkBoxName]);
-		}
-		elseif (is_numeric($accessTypeValue) && $objSelector->select($selectorID)) {
+		} elseif (is_numeric($accessTypeValue) && $objSelector->select($selectorID)) {
 			$_SESSION[$sessionName][$_POST['cacheID']][$checkBoxName] = $accessTypeValue;
 		}
 	}

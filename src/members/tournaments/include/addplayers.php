@@ -56,8 +56,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 					if (!in_array($newPlayerID, $arrPlayers)) { // Prevent multiple entries of same person
 						$tournamentObj->objPlayer->addNew(array("member_id", "tournament_id"), array($newPlayerID, $tID));
 					}
-				}
-				elseif ($tournamentInfo['access'] != 1) {
+				} elseif ($tournamentInfo['access'] != 1) {
 					if (!in_array($newPlayer, $arrPlayers)) { // Prevent multiple entries of same person
 						$tournamentObj->objPlayer->addNew(array("displayname", "tournament_id"), array($newPlayer, $tID));
 					}
@@ -81,8 +80,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 					});
 				</script>
 			";
-		}
-		else {
+		} else {
 			$filterPlayers = filterText($_POST['players']);
 			echo "
 			
@@ -128,8 +126,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 
 			if ($member->select($playerID)) {
 				$dispPlayer = $member->get_info_filtered("username");
-			}
-			else {
+			} else {
 				$dispPlayer = $playerID;
 			}
 

@@ -15,8 +15,7 @@
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -57,8 +56,7 @@ if (count($squadRankList) < 2) {
 			popupDialog('Send Squad Invite', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'errorBox');
 		</script>
 	";
-}
-elseif ($squadInfo['recruitingstatus'] == 0) {
+} elseif ($squadInfo['recruitingstatus'] == 0) {
 	echo "
 		<div style='display: none' id='errorBox'>
 			<p align='center'>
@@ -70,8 +68,7 @@ elseif ($squadInfo['recruitingstatus'] == 0) {
 			popupDialog('Send Squad Invite', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'errorBox');
 		</script>
 	";
-}
-else {
+} else {
 	$squadMemberList = $squadObj->getMemberList();
 	$intFounderRankID = $squadObj->getFounderRankID();
 
@@ -83,20 +80,17 @@ else {
 		if ($_POST['newmemberid'] == "" && trim($_POST['newmember']) == "") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a member to invite!";
-		}
-		elseif (($_POST['newmemberid'] != "" && !$member->select($_POST['newmemberid'])) || ($_POST['newmemberid'] == "" && trim($_POST['newmember']) != "" && !$member->select($_POST['newmember']))) {
+		} elseif (($_POST['newmemberid'] != "" && !$member->select($_POST['newmemberid'])) || ($_POST['newmemberid'] == "" && trim($_POST['newmember']) != "" && !$member->select($_POST['newmember']))) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member!";
-		}
-		else {
+		} else {
 			$intNewMemberID = $member->get_info("member_id");
 		}
 
 		if (in_array($intNewMemberID, $squadMemberList)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> This member is already in your squad!";
-		}
-		elseif (in_array($intNewMemberID, $squadInvitesOutstanding)) {
+		} elseif (in_array($intNewMemberID, $squadInvitesOutstanding)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> This member was already sent an invitation!";
 		}
@@ -109,8 +103,7 @@ else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid starting rank!";
 			}
-		}
-		else {
+		} else {
 			$startRankKey = max(array_keys($squadRankList));
 			$_POST['startingrank'] = $squadRankList[$startRankKey];
 		}
@@ -141,8 +134,7 @@ else {
 					</script>
 				
 				";
-			}
-			else {
+			} else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 			}

@@ -62,8 +62,7 @@ $totalPosts = $totalPosts['totalPosts'];
 if (!isset($_GET['pID']) || !is_numeric($_GET['pID'])) {
 	$intOffset = 0;
 	$_GET['pID'] = 1;
-}
-else {
+} else {
 	$intOffset = $NUM_PER_PAGE*($_GET['pID']-1);
 }
 

@@ -126,8 +126,7 @@ class News extends Basic {
 			$dispNewsType = "";
 			if ($postInfo['newstype'] == 1) {
 				$dispNewsType = " - <span class='publicNewsColor' style='font-style: italic'>public</span>";
-			}
-			elseif ($postInfo['newstype'] == 2) {
+			} elseif ($postInfo['newstype'] == 2) {
 				$dispNewsType = " - <span class='privateNewsColor' style='font-style: italic'>private</span>";
 			}
 
@@ -172,8 +171,7 @@ class News extends Basic {
 
 		if ($postType != "") {
 			$newsPostSQL = "newstype = '".$postType."'";
-		}
-		else {
+		} else {
 			$showPrivateSQL = $this->blnViewPrivateNews ? " OR newstype = '2'" : "";
 			$newsPostSQL = "newstype = '1'".$showPrivateSQL;
 		}
@@ -235,8 +233,7 @@ class News extends Basic {
 
 		if ($postType != "") {
 			$newsPostSQL = "newstype = '".$postType."'";
-		}
-		else {
+		} else {
 			$showPrivateSQL = $this->blnViewPrivateNews ? " OR newstype = '2'" : "";
 			$newsPostSQL = "newstype = '1'".$showPrivateSQL;
 		}
@@ -244,8 +241,7 @@ class News extends Basic {
 		if (!isset($_GET['page']) || $_GET['page'] > $totalPages) {
 			$sqlLimit = " LIMIT 0, ".$websiteInfo['news_postsperpage'];
 			$_GET['page'] = 1;
-		}
-		else {
+		} else {
 			$sqlLimit = " LIMIT ".($_GET['page']-1)*$websiteInfo['news_postsperpage'].", ".$websiteInfo['news_postsperpage'];
 		}
 

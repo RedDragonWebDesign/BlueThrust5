@@ -36,8 +36,7 @@ class BreadCrumb {
 		foreach ($this->arrBreadcrumb as $breadcrumbInfo) {
 			if ($breadcrumbInfo['link'] != "") {
 				$breadcrumbs[] = "<a href='".$breadcrumbInfo['link']."'>".$breadcrumbInfo['value']."</a>";
-			}
-			else {
+			} else {
 				$breadcrumbs[] = $breadcrumbInfo['value'];
 			}
 		}

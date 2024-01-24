@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -49,32 +48,26 @@ if ( ! empty($_POST['submit']) ) {
 	if (!$consoleCatObj->select($_POST['consolecat'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid console category.<br>";
-	}
-	else {
+	} else {
 		$arrConsoleIDs = $consoleCatObj->getAssociateIDs();
 
 		if ($_POST['consoleorder'] == "first" && count($arrConsoleIDs) > 0) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
-		}
-		elseif (!in_array($_POST['consoleorder'], $arrConsoleIDs) && $_POST['consoleorder'] != "first") {
+		} elseif (!in_array($_POST['consoleorder'], $arrConsoleIDs) && $_POST['consoleorder'] != "first") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order. (console option/console cat)<br>";
-		}
-		elseif (!$consoleObj->select($_POST['consoleorder']) && $_POST['consoleorder'] != "first") {
+		} elseif (!$consoleObj->select($_POST['consoleorder']) && $_POST['consoleorder'] != "first") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order. (console option)<br>";
-		}
-		elseif ($_POST['consoleorder'] == "first") {
+		} elseif ($_POST['consoleorder'] == "first") {
 			$intNewSortNum = 1;
-		}
-		else {
+		} else {
 			// Check Before/After Then Make Room
 
 			if ($_POST['consolebeforeafter'] == "before" or $_POST['consolebeforeafter'] == "after") {
 				$intNewSortNum = $consoleObj->makeRoom($_POST['consolebeforeafter']);
-			}
-			else {
+			} else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order. (before/after)<br>";
 			}
@@ -142,8 +135,7 @@ if ( ! empty($_POST['submit']) ) {
 
 		if ($btUpload->uploadFile()) {
 			$consoleFileURL = "customconsole/".$btUpload->getUploadedFileName();
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload console option.  Please make sure the filesize is not too big and filetype is php.<br>";
 		}
@@ -183,8 +175,7 @@ if ( ! empty($_POST['submit']) ) {
 			foreach ($_SESSION['btAccessRules'] as $memAccessInfo) {
 				if ($memAccessInfo['accessRule'] == "allow") {
 					$intAllowDeny = 1;
-				}
-				else {
+				} else {
 					$intAllowDeny = 0;
 				}
 
@@ -208,8 +199,7 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 			";
 		}
-	}
-	else {
+	} else {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}

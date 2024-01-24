@@ -52,8 +52,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				if (count($_SESSION['btStatCache']) < 2) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp<b>&middot;</b> You must have at least two input stats before having a calculated stat.<br>";
-				}
-				else {
+				} else {
 					// Check the for two calculated stats and the math operation
 
 
@@ -77,8 +76,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 						$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid second calculation statistic.";
 					}
 				}
-			}
-			elseif ($_POST['statType'] != "inputnum" and $_POST['statType'] != "inputtext") {
+			} elseif ($_POST['statType'] != "inputnum" and $_POST['statType'] != "inputtext") {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid stat type.<br>";
 			}
@@ -113,8 +111,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				if ($_POST['statType'] == "inputtext") {
 					$intInputText = 1;
 					$_POST['statType'] = "input";
-				}
-				elseif ($_POST['statType'] == "inputnum") {
+				} elseif ($_POST['statType'] == "inputnum") {
 					$_POST['statType'] = "input";
 				}
 
@@ -152,8 +149,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 						});
 					</script>
 				";
-			}
-			else {
+			} else {
 				$_POST['submit'] = false;
 			}
 		}
@@ -311,11 +307,9 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				
 			";
 		}
-	}
-	else {
+	} else {
 		header("HTTP/1.0 404 Not Found");
 	}
-}
-else {
+} else {
 	header("HTTP/1.0 404 Not Found");
 }

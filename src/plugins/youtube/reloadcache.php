@@ -27,13 +27,11 @@ if (isset($_POST['yID']) && is_numeric($_POST['yID']) && $ytObj->select($_POST['
 		$arrReturn['result'] = "success";
 		$arrReturn['html'] = $ytObj->dispSubscribeButton();
 		$arrReturn['time'] = getPreciseTime(time());
-	}
-	else {
+	} else {
 		$arrReturn['result'] = "error";
 		$arrReturn['message'] = "Reload Limit Reached";
 	}
-}
-else {
+} else {
 	$arrReturn['result'] = "error";
 	$arrReturn['message'] = "Invalid yID";
 }

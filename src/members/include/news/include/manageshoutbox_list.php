@@ -30,8 +30,7 @@ while ($row = $result->fetch_assoc()) {
 	if ($counter == 0) {
 		$addCSS = "";
 		$counter = 1;
-	}
-	else {
+	} else {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
 	}

@@ -39,8 +39,7 @@ else {
 
 	if ($_GET['appCompID'] == -1) {
 		$appCompInfo['appcomponent_id'] = -1;
-	}
-	else {
+	} else {
 		$appCompInfo = $appComponentObj->get_info_filtered();
 	}
 
@@ -89,8 +88,7 @@ else {
 
 		if (is_numeric($value) && rand(1, 10) > 2) {
 			$char = (rand(1, 10) > 5) ? strtoupper($arrABC[$value]) : $value;
-		}
-		elseif (!is_numeric($value) && rand(1, 10) > 5) {	// randomly uppercase some of the letters
+		} elseif (!is_numeric($value) && rand(1, 10) > 5) {	// randomly uppercase some of the letters
 			$char = strtoupper($value);
 		}
 
@@ -99,15 +97,12 @@ else {
 
 			if ($char == 0) {
 				unset($arrFonts[0]);
-			}
-			elseif ($char == 3) {
+			} elseif ($char == 3) {
 				unset($arrFonts[3]);
-			}
-			elseif ($char == 9) {
+			} elseif ($char == 9) {
 				unset($arrFonts[2]);
 			}
-		}
-		elseif (strtolower($char) == "s") {
+		} elseif (strtolower($char) == "s") {
 			unset($arrFonts[3]);
 		}
 

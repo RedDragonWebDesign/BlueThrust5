@@ -42,14 +42,12 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	$LOGIN_FAIL = true;
 	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$LOGIN_FAIL = false;
-	}
-	else {
+	} else {
 		die($MAIN_ROOT."members");
 	}
 
 	require_once("youtube.php");
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 
@@ -68,8 +66,7 @@ else {
 
 if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
-}
-else {
+} else {
 	$dispHTTP = "https://";
 }
 
@@ -115,8 +112,7 @@ if (!$ytObj->hasYoutube($memberInfo['member_id'])) {
 					</script>
 				";
 			exit();
-		}
-		else {
+		} else {
 			echo "
 				
 					<script type='text/javascript'>
@@ -126,12 +122,10 @@ if (!$ytObj->hasYoutube($memberInfo['member_id'])) {
 				";
 			exit();
 		}
-	}
-	elseif (isset($_GET['error'])) {
+	} elseif (isset($_GET['error'])) {
 		$countErrors++;
 		$dispError = "Unable to connect to Youtube! Please try again.";
-	}
-	elseif (!isset($_GET['error']) && !isset($_GET['code'])) {
+	} elseif (!isset($_GET['error']) && !isset($_GET['code'])) {
 		$loginLink = $ytObj->getConnectLink($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 		$_SESSION['btYoutubeNonce'] = $ytObj->tokenNonce;
 
@@ -163,8 +157,7 @@ if (!$ytObj->hasYoutube($memberInfo['member_id'])) {
 			
 			";
 	}
-}
-else {
+} else {
 	// Has Connected Youtube Account
 
 	$countErrors = 0;
@@ -186,8 +179,7 @@ else {
 
 			if ($ytObj->update(array("allowlogin", "showsubscribe", "showvideos"), array($_POST['allowlogin'], $_POST['showinfocard'], $_POST['showvideos']))) {
 				$dispSuccess = true;
-			}
-			else {
+			} else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 			}
@@ -199,8 +191,7 @@ else {
 	$checkVideos = array();
 	if ($ytInfo['showvideos'] == 0) {
 		$checkVideos[0] = " selected";
-	}
-	elseif ($ytInfo['showvideos'] == 1) {
+	} elseif ($ytInfo['showvideos'] == 1) {
 		$checkVideos[1] = " selected";
 	}
 

@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -43,8 +42,7 @@ if ( ! empty($_POST['submit']) ) {
 	if (!is_numeric($_POST['gameimageheight']) and trim($_POST['gameimageheight']) != "") {
 		$countErrors++;
 		$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a numeric value.<br>";
-	}
-	elseif (is_numeric($_POST['gameimageheight']) and $_POST['gameimageheight'] <= 0) {
+	} elseif (is_numeric($_POST['gameimageheight']) and $_POST['gameimageheight'] <= 0) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a value greater than 0.<br>";
 	}
@@ -59,8 +57,7 @@ if ( ! empty($_POST['submit']) ) {
 	if (!is_numeric($_POST['gameimagewidth']) and trim($_POST['gameimagewidth']) != "") {
 		$countErrors++;
 		$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a numeric value.<br>";
-	}
-	elseif (is_numeric($_POST['gameimagewidth']) and $_POST['gameimagewidth'] <= 0) {
+	} elseif (is_numeric($_POST['gameimagewidth']) and $_POST['gameimagewidth'] <= 0) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a value greater than 0.<br>";
 	}
@@ -79,8 +76,7 @@ if ( ! empty($_POST['submit']) ) {
 	if ($_POST['beforeafter'] != "before" and $_POST['beforeafter'] != "after") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The selected an invalid display order. (before/after)<br>";
-	}
-	elseif ($_POST['gameorder'] == "first") {
+	} elseif ($_POST['gameorder'] == "first") {
 		// Check if this is really the first game being added
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."gamesplayed ORDER BY ordernum DESC");
 		$num_rows = $result->num_rows;
@@ -88,18 +84,15 @@ if ( ! empty($_POST['submit']) ) {
 		if ($num_rows > 0) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The selected an invalid display order.<br>";
-		}
-		else {
+		} else {
 			$intGameOrderNum = 1;
 		}
-	}
-	elseif ($_POST['gameorder'] != "first") {
+	} elseif ($_POST['gameorder'] != "first") {
 		// Check if its a real game selected
 		if (!$gameObj->select($_POST['gameorder'])) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The selected an invalid display order. (game position)<br>";
-		}
-		else {
+		} else {
 			// Game was selected make some room for the new game and get a new ordernum
 			$intGameOrderNum = $gameObj->makeRoom($_POST['beforeafter']);
 
@@ -121,15 +114,12 @@ if ( ! empty($_POST['submit']) ) {
 			if (!$btUploadObj->uploadFile()) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload games image file.  Please make sure the file extension is either .jpg, .png, .gif or .bmp<br>";
-			}
-			else {
+			} else {
 				$gameImageURL = "images/gamesplayed/".$btUploadObj->getUploadedFileName();
 			}
-		}
-		elseif (trim($_POST['gameimageurl']) != "") {
+		} elseif (trim($_POST['gameimageurl']) != "") {
 			$gameImageURL = $_POST['gameimageurl'];
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must include an image for the game.<br>";
 		}
@@ -163,8 +153,7 @@ if ( ! empty($_POST['submit']) ) {
 				if (!$newStat->addNew($arrColumns, $arrValues)) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> ".filterText($statInfo['statName'])."<br>";
-				}
-				else {
+				} else {
 					$arrSavedStats[] = $newStat->get_info_filtered();
 				}
 			}
@@ -194,8 +183,7 @@ if ( ! empty($_POST['submit']) ) {
 						$newStat->update($arrColumns, $arrValues);
 					}
 				}
-			}
-			else {
+			} else {
 				$showErrorMessage = "<br><br>However, the following stats were unable to be saved:<br><br>".$dispError;
 			}
 
@@ -212,13 +200,11 @@ if ( ! empty($_POST['submit']) ) {
 			popupDialog('Add New Game', '".$MAIN_ROOT."members', 'successBox');
 			</script>
 			";
-		}
-		else {
+		} else {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to add new game.  Please try again.<br>";
 			$_POST['submit'] = false;
 		}
-	}
-	else {
+	} else {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}

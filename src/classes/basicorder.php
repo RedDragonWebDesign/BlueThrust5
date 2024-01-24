@@ -98,15 +98,13 @@ class BasicOrder extends Basic {
 						$x++;
 						$arrRanks[$x] = $row[$this->strTableKey];
 						$x++;
-					}
-					elseif ($strBeforeAfter == "before") {
+					} elseif ($strBeforeAfter == "before") {
 						$arrRanks[$x] = $row[$this->strTableKey];
 						$x++;
 						$intNewRankOrderNum = $x;
 						$x++;
 					}
-				}
-				else {
+				} else {
 					$arrRanks[$x] = $row[$this->strTableKey];
 					$x++;
 				}
@@ -161,8 +159,7 @@ class BasicOrder extends Basic {
 			if ($num_rows == 0 || ($num_rows == 1 && $blnEdit)) {
 				$returnVal = 1;
 			}
-		}
-		elseif ($this->select($intOrderNumID) && ($strBeforeAfter == "before" || $strBeforeAfter == "after")) {
+		} elseif ($this->select($intOrderNumID) && ($strBeforeAfter == "before" || $strBeforeAfter == "after")) {
 			// Check first to see if we are editing or adding a new rank
 
 			if ($blnEdit) {
@@ -182,12 +179,10 @@ class BasicOrder extends Basic {
 				// If checkOrderNum is the same as intEditOrderNum then the order hasn't changed
 				if ($checkOrderNum != $intEditOrderNum) {
 					$returnVal = $this->makeRoom($strBeforeAfter);
-				}
-				else {
+				} else {
 					$returnVal= $intEditOrderNum;
 				}
-			}
-			else {
+			} else {
 				$returnVal = $this->makeRoom($strBeforeAfter);
 			}
 		}
@@ -259,8 +254,7 @@ class BasicOrder extends Basic {
 
 			if ($strDir == "up" and $this->selectByOrder($moveUp)) {
 				$makeMove = "before";
-			}
-			elseif ($strDir == "down" and $this->selectByOrder($moveDown)) {
+			} elseif ($strDir == "down" and $this->selectByOrder($moveDown)) {
 				$makeMove = "after";
 			}
 
@@ -304,8 +298,7 @@ class BasicOrder extends Basic {
 			if ($this->arrObjInfo['ordernum'] == 1 && $intHighestOrderNum != 1) {
 				$strBeforeAfter = "after";
 				$addTo = 1;
-			}
-			elseif ($intHighestOrderNum == 1) {
+			} elseif ($intHighestOrderNum == 1) {
 				$strBeforeAfter = "first";
 			}
 
@@ -375,8 +368,7 @@ class BasicOrder extends Basic {
 			if ($this->strAssociateTableName != "") {
 				$blnDelete2 = $this->MySQL->query("DELETE FROM ".$this->strAssociateTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 				$this->MySQL->query("OPTIMIZE TABLE `".$this->strAssociateTableName."`");
-			}
-			else {
+			} else {
 				$blnDelete2 = true;
 			}
 

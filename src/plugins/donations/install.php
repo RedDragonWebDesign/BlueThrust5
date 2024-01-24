@@ -76,8 +76,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				if ($result = $mysqli->store_result()) {
 					$result->free();
 				}
-			}
-			while ($mysqli->next_result());
+			} while ($mysqli->next_result());
 
 			$pluginObj->addNew(array("name", "filepath", "dateinstalled"), array($PLUGIN_NAME, $_POST['pluginDir'], time()));
 
@@ -94,8 +93,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				$newOrderNum = $consoleCatObj->getHighestOrderNum()+1;
 				$consoleCatObj->addNew(array("name", "ordernum"), array("Donations", $newOrderNum));
 				$consoleCatID = $consoleCatObj->get_info("consolecategory_id");
-			}
-			else {
+			} else {
 				$row = $result->fetch_assoc();
 				$consoleCatID = $row['consolecategory_id'];
 			}
@@ -105,8 +103,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 			$consoleObj->addNew(array("consolecategory_id", "pagetitle", "filename", "sortnum"), array($consoleCatID, "Create a Donation Campaign", "../plugins/donations/console/createcampaign.php", $newSortNum++));
 			$consoleObj->addNew(array("consolecategory_id", "pagetitle", "filename", "sortnum"), array($consoleCatID, "Manage Donation Campaigns", "../plugins/donations/console/managecampaign.php", $newSortNum++));
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError[] = "Unable to create plugin database table.";
 		}
@@ -117,8 +114,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	if ($countErrors == 0) {
 		$arrReturn['result'] = "success";
 		$member->logAction("Installed ".$PLUGIN_NAME." Plugin.");
-	}
-	else {
+	} else {
 		$arrReturn['result'] = "fail";
 		$arrReturn['errors'] = $dispError;
 	}

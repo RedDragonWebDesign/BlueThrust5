@@ -14,8 +14,7 @@
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -51,12 +50,10 @@ if ( ! empty($_POST['submit']) ) {
 	if (!$squadObj->objSquadMember->select($_POST['squadmember'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid squad member.<br>";
-	}
-	elseif ($squadObj->objSquadMember->select($_POST['squadmember']) && $squadObj->objSquadMember->get_info("squad_id") != $squadInfo['squad_id']) {
+	} elseif ($squadObj->objSquadMember->select($_POST['squadmember']) && $squadObj->objSquadMember->get_info("squad_id") != $squadInfo['squad_id']) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid squad member.<br>";
-	}
-	elseif ($squadObj->objSquadMember->get_info("member_id") == $squadInfo['member_id']) {
+	} elseif ($squadObj->objSquadMember->get_info("member_id") == $squadInfo['member_id']) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not change the founder's rank.<br>";
 	}
@@ -88,8 +85,7 @@ if ( ! empty($_POST['submit']) ) {
 			$arrColumns[] = "lastpromotion";
 			$arrValues[] = time();
 			$strAction = "promoted";
-		}
-		elseif ($squadMemberRankInfo['sortnum'] < $newRankInfo['sortnum']) {
+		} elseif ($squadMemberRankInfo['sortnum'] < $newRankInfo['sortnum']) {
 			$arrColumns[] = "lastdemotion";
 			$arrValues[] = time();
 			$strAction = "demoted";
@@ -115,8 +111,7 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 			
 			";
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 		}

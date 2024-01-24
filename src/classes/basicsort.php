@@ -60,15 +60,13 @@ class BasicSort extends Basic {
 					$arrConsoleOptions[$x][0] = $row[$this->strTableKey];
 					$arrConsoleOptions[$x][1] = $row['sortnum'];
 					$x++;
-				}
-				elseif ($strBeforeAfter == "after" and $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
+				} elseif ($strBeforeAfter == "after" and $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
 					$arrConsoleOptions[$x][0] = $row[$this->strTableKey];
 					$arrConsoleOptions[$x][1] = $row['sortnum'];
 					$x++;
 					$newSortNum = $x;
 					$x++;
-				}
-				else {
+				} else {
 					$arrConsoleOptions[$x][0] = $row[$this->strTableKey];
 					$arrConsoleOptions[$x][1] = $row['sortnum'];
 					$x++;
@@ -173,8 +171,7 @@ class BasicSort extends Basic {
 			if ($num_rows == 0 || ($num_rows == 1 && $blnEdit)) {
 				$returnVal = 1;
 			}
-		}
-		elseif ($this->select($intOrderNumID) && ($strBeforeAfter == "before" || $strBeforeAfter == "after")) {
+		} elseif ($this->select($intOrderNumID) && ($strBeforeAfter == "before" || $strBeforeAfter == "after")) {
 			// Check first to see if we are editing or adding a new rank
 
 			if ($blnEdit) {
@@ -194,12 +191,10 @@ class BasicSort extends Basic {
 				// If checkOrderNum is the same as intEditOrderNum then the order hasn't changed
 				if ($checkOrderNum != $intEditOrderNum) {
 					$returnVal = $this->makeRoom($strBeforeAfter);
-				}
-				else {
+				} else {
 					$returnVal= $intEditOrderNum;
 				}
-			}
-			else {
+			} else {
 				$returnVal = $this->makeRoom($strBeforeAfter);
 			}
 		}
@@ -234,8 +229,7 @@ class BasicSort extends Basic {
 
 			if ($strDir == "up" and $this->selectByOrder($moveUp)) {
 				$makeMove = "before";
-			}
-			elseif ($strDir == "down" and $this->selectByOrder($moveDown)) {
+			} elseif ($strDir == "down" and $this->selectByOrder($moveDown)) {
 				$makeMove = "after";
 			}
 
@@ -304,8 +298,7 @@ class BasicSort extends Basic {
 			if ($this->arrObjInfo['sortnum'] == $intHighestOrderNum && $intHighestOrderNum != 1) {
 				$strBeforeAfter = "after";
 				$addTo = -1;
-			}
-			elseif ($intHighestOrderNum == 1) {
+			} elseif ($intHighestOrderNum == 1) {
 				$strBeforeAfter = "first";
 			}
 

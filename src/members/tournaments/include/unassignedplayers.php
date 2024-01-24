@@ -54,8 +54,7 @@ if (!defined("SHOW_UNASSIGNEDPLAYERS")) {
 				$tournamentObj->objPlayer->delete();
 			}
 		}
-	}
-	elseif (isset($_POST['action']) && $_POST['action'] == "add" && in_array($_POST['teamID'], $arrTeams)) {
+	} elseif (isset($_POST['action']) && $_POST['action'] == "add" && in_array($_POST['teamID'], $arrTeams)) {
 		$arrUnableToAddPlayer = array();
 		$arrAddPlayers = json_decode($_POST['playerList'], true);
 		foreach ($arrAddPlayers as $playerID) {
@@ -63,8 +62,7 @@ if (!defined("SHOW_UNASSIGNEDPLAYERS")) {
 			$blnBasicChecks = $tournamentObj->objPlayer->select($playerID) && $tournamentObj->objPlayer->get_info("tournament_id") == $_POST['tournamentID'];
 			if ($blnBasicChecks && in_array($_POST['teamID'], $arrUnfilledTeams)) {
 				$tournamentObj->objPlayer->update(array("team_id"), array($_POST['teamID']));
-			}
-			elseif ($blnBasicChecks && !in_array($_POST['teamID'], $arrUnfilledTeams)) {
+			} elseif ($blnBasicChecks && !in_array($_POST['teamID'], $arrUnfilledTeams)) {
 				$arrUnableToAddPlayer[] = $playerID;
 			}
 		}
@@ -84,8 +82,7 @@ while ($row = $result->fetch_assoc()) {
 
 	if ($member->select($playerInfo['member_id']) && $playerInfo['member_id'] != 0) {
 		$arrUnassignedPlayers[$row['tournamentplayer_id']] = $member->getMemberLink();
-	}
-	else {
+	} else {
 		$arrUnassignedPlayers[$row['tournamentplayer_id']] = $playerInfo['displayname'];
 	}
 }
@@ -104,8 +101,7 @@ foreach ($arrUnassignedPlayers as $playerID => $playerName) {
 	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
-	}
-	else {
+	} else {
 		$addCSS = "";
 		$counter = 1;
 	}

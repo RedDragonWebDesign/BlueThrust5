@@ -33,8 +33,7 @@ $eventObj = new Event($mysqli);
 // Check Login
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$memberInfo = $member->get_info();
-}
-else {
+} else {
 	exit();
 }
 

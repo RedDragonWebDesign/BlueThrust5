@@ -67,8 +67,7 @@ class btPlugin extends Basic {
 		$arrReturn = array();
 		if ($return != "") {
 			$return = $this->MySQL->real_escape_string($return);
-		}
-		else {
+		} else {
 			$return = "plugin_id";
 		}
 
@@ -127,8 +126,7 @@ class btPlugin extends Basic {
 
 		if ($this->intTableKeyValue != "" && !isset($this->configInfo[$name])) {
 			$this->objPluginConfig->addNew(array("plugin_id", "name", "value"), array($this->intTableKeyValue, $name, $value));
-		}
-		else {
+		} else {
 			$this->updateConfigValue($name, $value);
 		}
 	}
@@ -158,8 +156,7 @@ class btPlugin extends Basic {
 		if ($this->intTableKeyValue != "") {
 			if ($returnSingleValue != "") {
 				$returnVal = $this->configInfo[$returnSingleValue];
-			}
-			else {
+			} else {
 				$returnVal = $this->configInfo;
 			}
 		}
@@ -173,8 +170,7 @@ class btPlugin extends Basic {
 		if (!$this->selectByName($pluginName)) {
 			echo "<script type='text/javascript'>window.location = '".MAIN_ROOT."';</script>";
 			exit();
-		}
-		elseif ($this->selectByName($pluginName)) {
+		} elseif ($this->selectByName($pluginName)) {
 			$countErrors = 0;
 			foreach ($arrRequiredConfig as $configName) {
 				if ($this->getConfigInfo($configName) == "") {

@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -62,8 +61,7 @@ if ( ! empty($_POST['submit']) ) {
 	if (!is_numeric($_POST['gameimageheight']) and trim($_POST['gameimageheight']) != "") {
 		$countErrors++;
 		$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a numeric value.<br>";
-	}
-	elseif (is_numeric($_POST['gameimageheight']) and $_POST['gameimageheight'] <= 0) {
+	} elseif (is_numeric($_POST['gameimageheight']) and $_POST['gameimageheight'] <= 0) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a value greater than 0.<br>";
 	}
@@ -78,8 +76,7 @@ if ( ! empty($_POST['submit']) ) {
 	if (!is_numeric($_POST['gameimagewidth']) and trim($_POST['gameimagewidth']) != "") {
 		$countErrors++;
 		$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a numeric value.<br>";
-	}
-	elseif (is_numeric($_POST['gameimagewidth']) and $_POST['gameimagewidth'] <= 0) {
+	} elseif (is_numeric($_POST['gameimagewidth']) and $_POST['gameimagewidth'] <= 0) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a value greater than 0.<br>";
 	}
@@ -115,12 +112,10 @@ if ( ! empty($_POST['submit']) ) {
 			if (!$btUploadObj->uploadFile()) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload games image file.  Please make sure the file extension is either .jpg, .png, .gif or .bmp<br>";
-			}
-			else {
+			} else {
 				$gameImageURL = "images/gamesplayed/".$btUploadObj->getUploadedFileName();
 			}
-		}
-		elseif (trim($_POST['gameimageurl']) != "") {
+		} elseif (trim($_POST['gameimageurl']) != "") {
 			$gameImageURL = $_POST['gameimageurl'];
 		}
 	}
@@ -161,8 +156,7 @@ if ( ! empty($_POST['submit']) ) {
 				if ($statInfo['gamestatsID'] != "" and $gameStatsObj->select($statInfo['gamestatsID'])) {
 					// Updating already added stats
 					$checkSave = $gameStatsObj->update($updateGameStatCol, $updateGameStatsVal);
-				}
-				else {
+				} else {
 					// Adding new stats
 					$checkSave = $gameStatsObj->addNew($updateGameStatCol, $updateGameStatsVal);
 				}
@@ -171,8 +165,7 @@ if ( ! empty($_POST['submit']) ) {
 
 				if ($checkSave) {
 					$arrSavedStats[] = $gameStatsObj->get_info_filtered();
-				}
-				else {
+				} else {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> ".filterText($statInfo['statName'])."<br>";
 				}
@@ -204,8 +197,7 @@ if ( ! empty($_POST['submit']) ) {
 						$gameStatsObj->update($updateGameStatCol, $arrValues);
 					}
 				}
-			}
-			else {
+			} else {
 				$showErrorMessage = "<br><br>However, the following stats were unable to be saved:<br><br>".$dispError;
 			}
 
@@ -223,13 +215,11 @@ if ( ! empty($_POST['submit']) ) {
 			popupDialog('Manage Games Played', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'successBox');
 			</script>
 			";
-		}
-		else {
+		} else {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save game information.  Please try again.<br>";
 			$_POST['submit'] = false;
 		}
-	}
-	else {
+	} else {
 		$_POST['submit'] = false;
 	}
 }
@@ -304,8 +294,7 @@ if ( empty($_POST['submit']) ) {
 	if ($result->num_rows == 1) {
 		$beforeGameInfo = $result->fetch_assoc();
 		$intGameBeforeAfter = $beforeGameInfo['gamesplayed_id'];
-	}
-	else {
+	} else {
 		// Editing First Game Need to select "After" option
 		$intGameAfter = $gameInfo['ordernum']+1;
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."gamesplayed WHERE ordernum = '".$intGameAfter."'");
@@ -323,8 +312,7 @@ if ( empty($_POST['submit']) ) {
 		$gameName = filterText($row['name']);
 		if ($row['gamesplayed_id'] == $intGameBeforeAfter) {
 			$gameOrderOptions .= "<option value='".$row['gamesplayed_id']."' selected>".$gameName."</option>";
-		}
-		else {
+		} else {
 			$gameOrderOptions .= "<option value='".$row['gamesplayed_id']."'>".$gameName."</option>";
 		}
 	}

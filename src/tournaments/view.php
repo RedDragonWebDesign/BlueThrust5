@@ -39,8 +39,7 @@ if (!isset($member)) {
 
 if (!$tournamentObj->select($_GET['tID'])) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
-}
-else {
+} else {
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 	$tID = $_GET['tID'];
 }
@@ -52,8 +51,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -115,22 +113,18 @@ $dispStartDate = $dateTimeObj->format("M j, Y g:i A").$dispTimezone;
 
 if ($tournamentInfo['startdate'] < time() && $tournamentObj->getTournamentWinner() == 0) {
 	$dispStatus = "<span class='successFont'>Started</span>";
-}
-elseif ($tournamentInfo['startdate'] > time()) {
+} elseif ($tournamentInfo['startdate'] > time()) {
 	$dispStatus = "<span class='pendingFont'>Forming</span>";
-}
-elseif ($tournamentInfo['startdate'] < time() && $tournamentObj->getTournamentWinner() != 0) {
+} elseif ($tournamentInfo['startdate'] < time() && $tournamentObj->getTournamentWinner() != 0) {
 	$dispStatus = "<span class='failedFont'>Finished</span>";
 }
 
 
 if ($tournamentInfo['access'] == 1) {
 	$dispAccess = "Clan Only";
-}
-elseif ($tournamentInfo['access'] == 2) {
+} elseif ($tournamentInfo['access'] == 2) {
 	$dispAccess = "Multi-Clan";
-}
-else {
+} else {
 	$dispAccess = "Everyone";
 }
 
@@ -140,19 +134,16 @@ if ($tournamentInfo['description'] == "") {
 
 if ($tournamentInfo['seedtype'] == 1 && !$tournamentObj->checkForPools()) {
 	$dispSeedType = "Manual";
-}
-elseif ($tournamentInfo['seedtype'] == 2) {
+} elseif ($tournamentInfo['seedtype'] == 2) {
 	$dispSeedType = "Random";
-}
-else {
+} else {
 	$dispSeedType = "Pools";
 }
 
 
 if ($tournamentInfo['eliminations'] == 1) {
 	$dispEliminations = "Single Elimination";
-}
-else {
+} else {
 	$dispEliminations = "Double Elimination";
 }
 
@@ -217,8 +208,7 @@ echo "
 
 if ($tournamentInfo['playersperteam'] == 1) {
 	$dispPlayerOrTeam = "Player";
-}
-else {
+} else {
 	$dispPlayerOrTeam = "Team";
 }
 

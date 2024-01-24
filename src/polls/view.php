@@ -130,8 +130,7 @@ $dispPollEnd = ($pollInfo['pollend'] == 0) ? "Never" : date("D M j, Y g:i a", $p
 $dispPollAccess = "<span class='publicNewsColor'>Public</span>";
 if ($pollInfo['accesstype'] == "members") {
 	$dispPollAccess = "<span class='pendingFont'>Members Only</span>";
-}
-elseif ($pollInfo['accesstype'] == "memberslimited") {
+} elseif ($pollInfo['accesstype'] == "memberslimited") {
 	$dispPollAccess = "<span class='failedFont'>Limited</span>";
 }
 
@@ -221,8 +220,7 @@ if ($blnShowResults) {
 				if ($counter == 0) {
 					$addCSS = "";
 					$counter = 1;
-				}
-				else {
+				} else {
 					$addCSS = " alternateBGColor";
 					$counter = 0;
 				}
@@ -231,8 +229,7 @@ if ($blnShowResults) {
 
 				if ($pollMemberInfo['profilepic'] == "") {
 					$pollMemberInfo['profilepic'] = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
-				}
-				else {
+				} else {
 					$pollMemberInfo['profilepic'] = $MAIN_ROOT.$pollMemberInfo['profilepic'];
 				}
 
@@ -292,8 +289,7 @@ if ($blnShowResults) {
 
 
 	<?php
-}
-else {
+} else {
 	if ($pollObj->totalVotes() == 0) {
 		$pollInfo['resultvisibility'] = "novotes";
 	}

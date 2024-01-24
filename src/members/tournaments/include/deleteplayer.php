@@ -52,8 +52,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 
 			if ($member->select($playerID)) {
 				$dispPlayer = $member->get_info_filtered("username");
-			}
-			else {
+			} else {
 				$dispPlayer = $playerID;
 			}
 

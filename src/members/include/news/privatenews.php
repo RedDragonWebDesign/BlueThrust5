@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -62,8 +61,7 @@ if (count($arrPosts) > 0) {
 	}
 
 	$newsObj->displayPageSelector(2, MAIN_ROOT."members/console.php?cID=".$cID."&page=");
-}
-else {
+} else {
 	echo "
 		
 			<div class='shadedBox' style='width: 300px; margin-left: auto; margin-right: auto'>

@@ -73,8 +73,7 @@ while ($row = $result->fetch_assoc()) {
 
 	if ($appComponentInfo['componenttype'] == "multiselect") {
 		$appComponentInfo['componenttype'] = "Multi-Select";
-	}
-	elseif ($appComponentInfo['componenttype'] == "largeinput") {
+	} elseif ($appComponentInfo['componenttype'] == "largeinput") {
 		$appComponentInfo['componenttype'] = "Large-Input";
 	}
 

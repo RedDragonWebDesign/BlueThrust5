@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -88,8 +87,7 @@ if (count($arrSquads) > 0) {
 
 					if ($squadInfo['member_id'] == $memberInfo['member_id'] || $squadObj->getManageAllStatus()) {
 						$dispSquadOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$squadInfo['squad_id']."&pID=CloseSquad'>Close Squad</a><br>";
-					}
-					else {
+					} else {
 						$dispSquadOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$squadInfo['squad_id']."&pID=LeaveSquad'>Leave Squad</a><br>";
 					}
 
@@ -120,8 +118,7 @@ if (count($arrSquads) > 0) {
 			</script>
 		";
 	}
-}
-else {
+} else {
 	$intApplyToSquadCID = $consoleObj->findConsoleIDByName("Apply to a Squad");
 	echo "
 	<div class='shadedBox' style='width: 400px; margin-top: 50px; margin-bottom: 50px; margin-left: auto; margin-right: auto;'>

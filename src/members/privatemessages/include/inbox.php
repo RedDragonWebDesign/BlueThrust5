@@ -56,11 +56,9 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	if (!$isFolderSet) {
 		$_POST['folder'] = 0;
 		$pmFolderObj->setFolder($_POST['folder']);
-	}
-	elseif ($isFolderSet && $condition1 && !in_array($_POST['folder'], $arrStandardFolders)) {
+	} elseif ($isFolderSet && $condition1 && !in_array($_POST['folder'], $arrStandardFolders)) {
 		exit();
-	}
-	elseif (in_array($_POST['folder'], $arrStandardFolders)) {
+	} elseif (in_array($_POST['folder'], $arrStandardFolders)) {
 		$pmFolderObj->setFolder($_POST['folder']);
 	}
 
@@ -81,8 +79,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 		if (isset($arrPMMID[$key]) && $multiMemPMObj->select($arrPMMID[$key]) && $multiMemPMObj->get_info("seenstatus") == 1) {
 			$useAltBG = "";
-		}
-		elseif (!isset($arrPMMID[$key]) && $pmInfo['status'] == 1) {
+		} elseif (!isset($arrPMMID[$key]) && $pmInfo['status'] == 1) {
 			$useAltBG = "";
 		}
 
@@ -99,11 +96,9 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$member->select($pmInfo['receiver_id']);
 			$dispSender = $member->getMemberLink();
 			$member->select($memberInfo['member_id']);
-		}
-		elseif ($_POST['folder'] == "-1" && $pmInfo['receiver_id'] == 0) {
+		} elseif ($_POST['folder'] == "-1" && $pmInfo['receiver_id'] == 0) {
 			$dispSender = $pmObj->getRecipients(true);
-		}
-		else {
+		} else {
 			$dispSender = $member->getMemberLink();
 		}
 

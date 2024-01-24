@@ -62,16 +62,13 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					});
 				</script>
 			";
-		}
-		elseif ($_POST['confirm'] == "1") {
+		} elseif ($_POST['confirm'] == "1") {
 			$consoleCatObj->delete();
 			require_once("main.php");
-		}
-		else {
+		} else {
 			echo "<p align='center'>Are you sure you want to delete the console category <b>".$consoleCatInfo['name']."</b>?";
 		}
-	}
-	elseif (!$consoleCatObj->select($_POST['catID'])) {
+	} elseif (!$consoleCatObj->select($_POST['catID'])) {
 		echo "<p align='center'>Unable find the selected console category.  Please try again or contact the website administrator.</p>";
 	}
 }

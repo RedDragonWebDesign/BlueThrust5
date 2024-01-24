@@ -38,8 +38,7 @@ if ($_POST['whichValue'] == "" || !is_numeric($_POST['whichValue'])) {
 	$componentIndex = $_SESSION['btFormComponentCount'];
 	$arrSelectValues = $_SESSION['btFormComponent'][$componentIndex]['cOptions'];
 	$blnAddComponent = true;
-}
-else {
+} else {
 	$componentIndex = $_POST['whichValue'];
 	$arrSelectValues = $_SESSION['btFormComponentTempSelectValues'];
 	$blnAddComponent = false;
@@ -51,8 +50,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 	if ($blnAddComponent) {
 		$_SESSION['btFormComponent'][$componentIndex]['cOptions'] = $arrSelectValues;
-	}
-	else {
+	} else {
 		$_SESSION['btFormComponentTempSelectValues'] = $arrSelectValues;
 	}
 

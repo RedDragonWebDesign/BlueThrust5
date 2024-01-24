@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -79,8 +78,7 @@ $selectShowNewsPosts = "";
 
 if ($websiteInfo['hpnews'] == 0) {
 	$selectShowNewsPosts = " selected";
-}
-else {
+} else {
 	$showCustomAmount = "";
 	switch ($websiteInfo['hpnews']) {
 		case 5:

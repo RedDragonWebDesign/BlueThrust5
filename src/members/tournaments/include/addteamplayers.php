@@ -57,19 +57,16 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 						if ($tournamentObj->objPlayer->addNew(array("tournament_id", "team_id", "member_id"), array($tournamentInfo['tournament_id'], $_POST['teamID'], $checkMemberID))) {
 							$teamPlayerCount++;
 						}
-					}
-					else {
+					} else {
 						$dispErrorMembers .= "<b>&middot;</b> ".$member->getMemberLink()."<br>";
 						$blnErrorDuplicatePlayer = true;
 					}
-				}
-				elseif (!$member->select($newPlayer) && $tournamentInfo['access'] != 1) {
+				} elseif (!$member->select($newPlayer) && $tournamentInfo['access'] != 1) {
 					if ($tournamentObj->objPlayer->addNew(array("tournament_id", "team_id", "displayname"), array($tournamentInfo['tournament_id'], $_POST['teamID'], $newPlayer))) {
 						$teamPlayerCount++;
 					}
 				}
-			}
-			else {
+			} else {
 				$blnErrorFullTeam = true;
 				break;
 			}

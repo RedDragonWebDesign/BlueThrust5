@@ -37,12 +37,10 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !is
 	// Check Login
 	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
-	}
-	else {
+	} else {
 		exit();
 	}
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($consoleObj->findConsoleIDByName("Manage Forum Categories"));
 	if (!$member->hasAccess($consoleObj)) {
@@ -64,8 +62,7 @@ while ($row = $result->fetch_assoc()) {
 	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
-	}
-	else {
+	} else {
 		$counter = 1;
 	}
 

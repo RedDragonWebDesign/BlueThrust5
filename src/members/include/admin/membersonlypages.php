@@ -17,8 +17,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -51,8 +50,7 @@ if (isset($_SESSION['btMembersOnlyTagger']) && $_SESSION['btMembersOnlyTagger'] 
 			
 				<a href='javascript:void(0)' onclick='setMembersOnlyTaggerStatus()'>Turn Off Member's Only Page Tagger</a>
 			";
-}
-else {
+} else {
 	echo "
 				The member's only page tagger is currently <b>off</b>.<br><br>
 			

@@ -25,8 +25,7 @@ if ($member->authorizeLogin($_POST['pass'], 1) && $member->get_info("rank_id") =
 			</script>
 		
 		";
-}
-else {
+} else {
 	if (!$member->select($_POST['user'])) {
 		echo "Unable to select user ".$_POST['user']."<br>";
 	}

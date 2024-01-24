@@ -16,8 +16,7 @@ require_once("../../classes/chatroom.php");
 
 if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -63,13 +62,11 @@ if ($eventChatID === false && $memberInfo['member_id'] != $eventInfo['member_id'
 
 
 	exit();
-}
-elseif ($eventChatID === false && $memberInfo['member_id'] == $eventInfo['member_id']) {
+} elseif ($eventChatID === false && $memberInfo['member_id'] == $eventInfo['member_id']) {
 	$eventChatObj->addNew(array("event_id", "datestarted"), array($eventInfo['event_id'], time()));
 
 	$eventObj->notifyEventInvites("A chatroom has been started for the event, <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$eventInfo['event_id']."&pID=Chat'>".$eventInfo['title']."</a>!");
-}
-elseif ($eventChatObj->select($eventChatID)) {
+} elseif ($eventChatObj->select($eventChatID)) {
 	$eventChatInfo = $eventChatObj->get_info_filtered();
 }
 

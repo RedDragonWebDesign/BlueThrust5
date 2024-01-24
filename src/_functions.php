@@ -47,11 +47,9 @@ function getPreciseTime($intTime, $timeFormat = "", $bypassTimeDiff = false) {
 
 	if ($timeDiff < 3) {
 		$dispLastDate = "just now";
-	}
-	elseif ($timeDiff < 60) {
+	} elseif ($timeDiff < 60) {
 		$dispLastDate = "$timeDiff seconds ago";
-	}
-	elseif ($timeDiff < 3600) {
+	} elseif ($timeDiff < 3600) {
 		$minDiff = round($timeDiff/60);
 		$dispMinute = "minutes";
 		if ($minDiff == 1) {
@@ -59,8 +57,7 @@ function getPreciseTime($intTime, $timeFormat = "", $bypassTimeDiff = false) {
 		}
 
 		$dispLastDate = "$minDiff $dispMinute ago";
-	}
-	elseif ($timeDiff < 86400) {
+	} elseif ($timeDiff < 86400) {
 		$hourDiff = round($timeDiff/3600);
 		$dispHour = "hours";
 		if ($hourDiff == 1) {
@@ -68,8 +65,7 @@ function getPreciseTime($intTime, $timeFormat = "", $bypassTimeDiff = false) {
 		}
 
 		$dispLastDate = "$hourDiff $dispHour ago";
-	}
-	else {
+	} else {
 		if ($timeFormat == "") {
 			$timeFormat = "D M j, Y g:i a";
 		}
@@ -162,8 +158,7 @@ function deleteFile($filename) {
 function getHTTP() {
 	if (!isset($_SERVER['HTTPS']) || (isset($_SERVER['HTTPS']) && (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off"))) {
 		$dispHTTP = "http://";
-	}
-	else {
+	} else {
 		$dispHTTP = "https://";
 	}
 
@@ -181,8 +176,7 @@ function addArraySpace($arr, $space, $atSpot) {
 			}
 
 			$newArr[$i] = $value;
-		}
-		else {
+		} else {
 			$newArr[$i] = $value;
 		}
 
@@ -196,8 +190,7 @@ function addArraySpace($arr, $space, $atSpot) {
 function pluralize($word, $num) {
 	if ($num == 1) {
 		$returnVal = $word;
-	}
-	else {
+	} else {
 		$returnVal = $word."s";
 	}
 

@@ -91,8 +91,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	if (count($arrReceivers) == 0) {
 		$formObj->errors[] = "<b>&middot;</b> You need to select at least one member to send your message to.";
-	}
-	elseif (count($arrReceivers) == 1) {
+	} elseif (count($arrReceivers) == 1) {
 		$arrReceivers = $arrReceivers[0];
 	}
 

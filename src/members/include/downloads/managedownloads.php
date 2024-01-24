@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -35,8 +34,7 @@ if (isset($_GET['dlID']) && $downloadObj->select($_GET['dlID'])) {
 	$downloadCatObj->select($downloadInfo['downloadcategory_id']);
 	$downloadCatInfo = $downloadCatObj->get_info_filtered();
 	require_once("include/edit.php");
-}
-else {
+} else {
 	$addDLCID = $consoleObj->findConsoleIDByName("Add Download");
 
 	echo "

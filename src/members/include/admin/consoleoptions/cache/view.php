@@ -58,8 +58,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 				if ($accessInfo['accessRule'] == "allow") {
 					$dispAccess = "<span class='allowText'>Allow</span>";
-				}
-				else {
+				} else {
 					$dispAccess = "<span class='denyText'>Deny</span>";
 				}
 

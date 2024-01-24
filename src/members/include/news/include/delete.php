@@ -40,8 +40,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	if ($_POST['confirm'] == 1) {
 		$newsObj->delete();
 		require_once("newslist.php");
-	}
-	else {
+	} else {
 		echo "
 		
 			<p align='center'>
@@ -50,7 +49,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			
 		";
 	}
-}
-else {
+} else {
 	echo $_POST['nID'];
 }

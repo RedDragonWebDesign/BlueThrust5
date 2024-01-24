@@ -15,8 +15,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -122,8 +121,7 @@ if ($i == 1) {
 	);
 
 	$additionalNote = "<br><br><b><u>NOTE:</u></b> If you have selected which games you play in your profile, there might not be any stats associated with them.";
-}
-else {
+} else {
 	$arrComponents['submit'] = array(
 		"type" => "submit",
 		"attributes" => array("class" => "submitButton formSubmitButton"),

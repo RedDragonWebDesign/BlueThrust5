@@ -74,13 +74,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The selected match is not in the selected pool.";
 		}
-	}
-	else {
+	} else {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to verify tournament information.";
 	}
-}
-else {
+} else {
 	$countErrors++;
 	$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to verify tournament information.";
 }
@@ -92,8 +90,7 @@ if ($countErrors == 0) {
 
 	if ($poolTeamInfo['team1_id'] == $teamInfo['tournamentteam_id']) {
 		$arrUpdateValues = array($_POST['teamScore'], $_POST['opponentScore'], $_POST['matchWinner']);
-	}
-	else {
+	} else {
 		$arrUpdateValues = array($_POST['opponentScore'], $_POST['teamScore'], $_POST['matchWinner']);
 	}
 
@@ -129,8 +126,7 @@ if ($countErrors == 0) {
 			
 			</script>
 		";
-	}
-	else {
+	} else {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 	}

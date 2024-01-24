@@ -39,12 +39,10 @@ if ($pollObj->select($_POST['pollID'])) {
 	if ($pollInfo['accesstype'] == "members" && $member->authorizeLogin($_SESSION['btPassword'])) {
 		$memberID = $member->get_info("member_id");
 		$blnVote = true;
-	}
-	elseif ($pollInfo['accesstype'] == "memberslimited" && $member->authorizeLogin($_SESSION['btPassword']) && $pollObj->hasAccess($member)) {
+	} elseif ($pollInfo['accesstype'] == "memberslimited" && $member->authorizeLogin($_SESSION['btPassword']) && $pollObj->hasAccess($member)) {
 		$memberID = $member->get_info("member_id");
 		$blnVote = true;
-	}
-	elseif ($pollInfo['accesstype'] == "public") {
+	} elseif ($pollInfo['accesstype'] == "public") {
 		$memberID = ($member->authorizeLogin($_SESSION['btPassword'])) ? $member->get_info("member_id") : "";
 		$blnVote = true;
 	}
@@ -57,8 +55,7 @@ if ($pollObj->select($_POST['pollID'])) {
 			$pollOptionInfo = $pollObj->objPollOption->get_info_filtered();
 			$arrReturn = $pollObj->vote($memberID, $pollOptionInfo);
 		}
-	}
-	else {
+	} else {
 		$arrReturn['errors'] = "You do not have permission to vote on this poll.";
 	}
 }

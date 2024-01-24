@@ -47,8 +47,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	if ($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], $pID)) {
 		if (!$_POST['filterShoutbox']) {
 			$filterNewsType = "(newstype = '1' OR newstype = '2')";
-		}
-		else {
+		} else {
 			$filterNewsType = "newstype = '3'";
 		}
 
@@ -66,11 +65,9 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 			if ($row['newstype'] == 1) {
 				$dispNewsType = " - <span class='publicNewsColor' style='font-style: italic'>public</span>";
-			}
-			elseif ($row['newstype'] == 2) {
+			} elseif ($row['newstype'] == 2) {
 				$dispNewsType = " - <span class='privateNewsColor' style='font-style: italic'>private</span>";
-			}
-			elseif ($row['newstype'] == 3) {
+			} elseif ($row['newstype'] == 3) {
 				$dispNewsType = "";
 			}
 

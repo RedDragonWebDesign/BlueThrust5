@@ -34,8 +34,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -53,18 +52,15 @@ if (LOGGED_IN) {
 if (count($_GET) > 0 && !isset($_GET['stage'])) {
 	$countErrors++;
 	$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Stage data not properly defined.<br>";
-}
-elseif (!isset($_GET['stage'])) {
+} elseif (!isset($_GET['stage'])) {
 	$stage = 'start';
-}
-else {
+} else {
 	$stage = $_GET['stage'];
 }
 
 if ( ! isset($_SERVER['HTTPS']) || trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
-}
-else {
+} else {
 	$dispHTTP = "https://";
 }
 $url=$dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME'];
@@ -100,15 +96,13 @@ if ($stage == "start"  && $countErrors == 0) {
 	</div>
 </form>
 ";
-}
-elseif ($stage == "send"  && $countErrors == 0) {
+} elseif ($stage == "send"  && $countErrors == 0) {
 	if (isset($_POST['validator'])) {
 		if ($_POST['validator'] != '20473833234') {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Validator Entry Not Correct. Most likely due to an invalid form submission.<br>";
 		}
-	}
-	else {
+	} else {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Validator Entry Not Existant. Most likely due to an invalid form submission.<br>";
 	}
@@ -119,13 +113,11 @@ elseif ($stage == "send"  && $countErrors == 0) {
 	if ($memberObj->select($username)) {
 		if ($memberObj->get_info("email") == $email) {
 			$emailvalid = true;
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Email Address Not Valid.<br>";
 		}
-	}
-	else {
+	} else {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Username Not Valid.<br>";
 	}
@@ -160,8 +152,7 @@ Your request has been successfully submitted. Please check your email for the li
 </div>
 ";
 	}
-}
-elseif ($stage == "validate"  && $countErrors == 0) {
+} elseif ($stage == "validate"  && $countErrors == 0) {
 	$changekey = $mysqli->real_escape_string($_GET['changekey']);
 	$forgotPassObj->set_tableKey("changekey");
 	if ($forgotPassObj->select($changekey, false)) {
@@ -227,13 +218,11 @@ Time of Request: $timeofrqcon Server Time<br>
   
   </script>
 ";
-	}
-	else {
+	} else {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Not a Valid Changekey.<br>";
 	}
-}
-elseif ($stage == "set" && isset($_POST['newpass']) && isset($_POST['changekey'])  && $countErrors == 0) {
+} elseif ($stage == "set" && isset($_POST['newpass']) && isset($_POST['changekey'])  && $countErrors == 0) {
 	$newpass = $_POST['newpass'];
 	$newpasscon = $_POST['connewpass'];
 	$changekey = $_POST['changekey'];
@@ -251,18 +240,15 @@ elseif ($stage == "set" && isset($_POST['newpass']) && isset($_POST['changekey']
 			if ($memberObj->select($username)) {
 				if ($memberObj->get_info("email") == $email) {
 					$emailvalid = true;
-				}
-				else {
+				} else {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> POST Validation Failed. Email Validation Error.<br>";
 				}
-			}
-			else {
+			} else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> POST Validation Failed. Username Validation Error.<br>";
 			}
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> POST Validation Failed. Changekey Validation Error.<br>";
 		}
@@ -278,8 +264,7 @@ elseif ($stage == "set" && isset($_POST['newpass']) && isset($_POST['changekey']
 ";
 		}
 	}
-}
-elseif ($countErrors == 0) {
+} elseif ($countErrors == 0) {
 	$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Not a proper setup definition.<br>";
 }
 if ($dispError != "") {

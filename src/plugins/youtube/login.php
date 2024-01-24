@@ -24,8 +24,7 @@ require_once($prevFolder."classes/member.php");
 
 if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
-}
-else {
+} else {
 	$dispHTTP = "https://";
 }
 
@@ -84,19 +83,15 @@ if (isset($_GET['code']) && $_GET['state'] == $_SESSION['btYoutubeNonce'] && !is
 				</script>
 			";
 			exit();
-		}
-		else {
+		} else {
 			$dispError = "There is no user associated with this Youtube account.  You must connect your Youtube account while logged in before using this feature.";
 		}
-	}
-	else {
+	} else {
 		$dispError = "Unable to validate your Youtube account, please log in regularly through the website.";
 	}
-}
-elseif (isset($_GET['error'])) {
+} elseif (isset($_GET['error'])) {
 	$dispError = "Unable to validate your Youtube account, please log in regularly through the website.";
-}
-elseif (!isset($_GET['error']) && !isset($_GET['code'])) {
+} elseif (!isset($_GET['error']) && !isset($_GET['code'])) {
 	$loginLink = $ytObj->getConnectLink($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 	$_SESSION['btYoutubeNonce'] = $ytObj->tokenNonce;
 

@@ -61,12 +61,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				// Sender
 				echo "hi";
 				$pmObj->update(array("senderfolder_id"), array($_POST['newFolder']));
-			}
-			elseif ($tempPMInfo['receiver_id'] == $memberInfo['member_id']) {
+			} elseif ($tempPMInfo['receiver_id'] == $memberInfo['member_id']) {
 				// Receiver
 				$pmObj->update(array("receiverfolder_id"), array($_POST['newFolder']));
-			}
-			elseif (in_array($memberInfo['member_id'], $arrRecipients)) {
+			} elseif (in_array($memberInfo['member_id'], $arrRecipients)) {
 				// Receiver - Multi Member PM
 
 				$tempKey = array_search($memberInfo['member_id'], $arrRecipients);

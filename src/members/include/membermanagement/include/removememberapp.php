@@ -63,8 +63,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			
 			</script>
 		";
-	}
-	else {
+	} else {
 		$member->logAction("Removed the member application for ".$memberAppUser.".");
 	}
 

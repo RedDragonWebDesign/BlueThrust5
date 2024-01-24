@@ -42,8 +42,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					Are you sure you want to delete <b>".$arrCompInfo['name']."</b> from the member application?
 				</p>
 			";
-		}
-		elseif ($_POST['confirmDelete']) {
+		} elseif ($_POST['confirmDelete']) {
 			if ($appComponentObj->delete()) {
 				$appComponentObj->resortOrder();
 				$member->logAction("Deleted a member application component.");
@@ -74,8 +73,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					
 					</script>
 					";
-			}
-			else {
+			} else {
 				echo "
 				
 					<div id='confirmDeleteMessage' style='display: none'>

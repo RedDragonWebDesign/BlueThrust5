@@ -139,8 +139,7 @@ class AppComponent extends BasicOrder {
 
 		if (count($customSelectOptions) > 0) {
 			$arrSelectOptions = $customSelectOptions;
-		}
-		else {
+		} else {
 			$arrSelectOptions = $this->getSelectOptionArray();
 		}
 
@@ -158,8 +157,7 @@ class AppComponent extends BasicOrder {
 	public function getSelectInputCode($customSelectOptions = array()) {
 		if (count($customSelectOptions) > 0) {
 			$arrSelectOptions = $customSelectOptions;
-		}
-		else {
+		} else {
 			$arrSelectOptions = $this->getSelectOptionArray();
 		}
 
@@ -243,8 +241,7 @@ class AppComponent extends BasicOrder {
 					$returnArr = $this->getProfileOptionInputCode();
 					break;
 			}
-		}
-		else {
+		} else {
 			switch ($this->arrObjInfo['componenttype']) {
 				case "multiselect":
 					$returnArr = $this->getMultiSelectInputCode();
@@ -301,12 +298,10 @@ class AppComponent extends BasicOrder {
 
 		if (in_array($this->arrObjInfo['componenttype'], $arrSingleInputs)) {
 			$this->saveSingleValue();
-		}
-		elseif ($this->arrObjInfo['componenttype'] == "multiselect") {
+		} elseif ($this->arrObjInfo['componenttype'] == "multiselect") {
 			// Multi-select values
 			$this->saveMultiValues();
-		}
-		elseif ($this->arrObjInfo['componenttype'] == "profile") {
+		} elseif ($this->arrObjInfo['componenttype'] == "profile") {
 			$this->saveProfileValue();
 		}
 	}
@@ -350,16 +345,14 @@ class AppComponent extends BasicOrder {
 					$this->profileOptionObj->select($profileOptionType);
 					if ($this->profileOptionObj->get_info("optiontype") == "input") {
 						$returnVal = $value;
-					}
-					else {
+					} else {
 						$returnVal = "Unknown Value";
 						if ($this->profileOptionObj->objProfileOptionSelect->select($value)) {
 							$returnVal = $this->profileOptionObj->objProfileOptionSelect->get_info_filtered("selectvalue");
 						}
 					}
 			}
-		}
-		else {
+		} else {
 			$returnVal = $value;
 		}
 
@@ -407,8 +400,7 @@ class AppComponent extends BasicOrder {
 			$arrGameList = $gameObj->getGameList();
 
 			$returnVal = $this->saveMultiValues($arrGameList);
-		}
-		else {
+		} else {
 			$returnVal = $this->saveSingleValue();
 		}
 

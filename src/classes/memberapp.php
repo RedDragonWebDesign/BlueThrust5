@@ -40,8 +40,7 @@ class MemberApp extends Basic {
 				$returnVal = true;
 				$this->notifyManagers();
 			}
-		}
-		else {
+		} else {
 			$_POST = filterArray($_POST);
 			if ($this->objSignUpForm->prefillValues) {
 				$this->objSignUpForm->prefillPostedValues();
@@ -192,8 +191,7 @@ class MemberApp extends Basic {
 		if ($accepted) {
 			$subject = $webInfo['clanname'].": Member Application Accepted";
 			$message = "You have been accepted to become a full member of ".$webInfo['clanname']."!  Go to <a href='".FULL_SITE_URL."'>".FULL_SITE_URL."</a> to log in to your account.";
-		}
-		else {
+		} else {
 			$subject = $webInfo['clanname'].": Member Application Declined";
 			$message = "Your application to become a member of ".$webInfo['clanname']." has been declined.  You may try signing up again by going to <a href='".FULL_SITE_URL."'>".FULL_SITE_URL."</a>.";
 		}

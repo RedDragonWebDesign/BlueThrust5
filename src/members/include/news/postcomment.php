@@ -45,8 +45,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		if ($member->hasAccess($consoleObj)) {
 			$blnPostComment	= true;
 		}
-	}
-	else {
+	} else {
 		$blnPostComment = true;
 	}
 

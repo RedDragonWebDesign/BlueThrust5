@@ -44,8 +44,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				</div>
 			
 			";
-		}
-		else {
+		} else {
 			echo "
 			
 			<div id='resultDeclineMessage' style='display: none'>
@@ -86,8 +85,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				});
 			</script>
 		";
-	}
-	else {
+	} else {
 		echo "
 			<div id='confirmDeclineMessage' style='display: none'>
 				<p class='main' align='center'>

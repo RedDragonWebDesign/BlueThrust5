@@ -35,8 +35,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			asort($tempOptionArr);
 			$_SESSION['btAppComponent']['cOptions'] = $tempOptionArr;
 		}
-	}
-	elseif ($_POST['action'] == "delete") {
+	} elseif ($_POST['action'] == "delete") {
 		if (is_numeric($_POST['deleteOptionKey'])) {
 			$tempOptionArr = $_SESSION['btAppComponent']['cOptions'];
 

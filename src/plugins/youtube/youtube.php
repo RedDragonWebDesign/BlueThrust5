@@ -224,11 +224,9 @@ class Youtube extends Basic {
 
 		if ($this->arrObjInfo['subscribers'] >= 1000 && $this->arrObjInfo['subscribers'] < 1000000) {
 			$dispSubscribers = floor($this->arrObjInfo['subscribers']/1000)."K";
-		}
-		elseif ($this->arrObjInfo['subscribers'] >= 1000000) {
+		} elseif ($this->arrObjInfo['subscribers'] >= 1000000) {
 			$dispSubscribers = floor($this->arrObjInfo['subscribers']/1000000)."M";
-		}
-		else {
+		} else {
 			$dispSubscribers = number_format($this->arrObjInfo['subscribers'], 0);
 		}
 
@@ -277,8 +275,7 @@ class Youtube extends Basic {
 		if ($method == "POST") {
 			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
-		}
-		elseif ($method = "DELETE") {
+		} elseif ($method = "DELETE") {
 			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);

@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -29,8 +28,7 @@ else {
 
 if ($memberInfo['promotepower'] != 0) {
 	$rankInfo['promotepower'] = $memberInfo['promotepower'];
-}
-elseif ($memberInfo['promotepower'] == -1) {
+} elseif ($memberInfo['promotepower'] == -1) {
 	$rankInfo['promotepower'] = 0;
 }
 

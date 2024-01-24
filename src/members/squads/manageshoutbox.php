@@ -14,8 +14,7 @@
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -165,8 +164,7 @@ if ($_GET['nID'] == "") {
 			
 		</script>
 	";
-}
-elseif ($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
+} elseif ($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
 	echo "
 	
 	<script type='text/javascript'>
@@ -205,8 +203,7 @@ elseif ($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
 				</script>
 		
 				";
-			}
-			else {
+			} else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 			}

@@ -10,8 +10,7 @@ if (!defined("MAIN_ROOT")) {
 	$dispName = $donationInfo['name'];
 if ($donationInfo['name'] == "" && $dispMemberName == "") {
 	$dispName = "Anonymous";
-}
-elseif ($donationInfo['name'] != "" && $dispMemberName != "") {
+} elseif ($donationInfo['name'] != "" && $dispMemberName != "") {
 	$dispName = $dispMemberName." <i>(".$donationInfo['name'].")</i>";
 }
 

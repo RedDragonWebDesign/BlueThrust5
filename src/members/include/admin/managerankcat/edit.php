@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -90,8 +89,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 		if (!$rankCatObj->select($_POST['catorder'])) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (category).<br>";
-		}
-		else {
+		} else {
 			$arrBeforeAfter['before'] = 1;
 			$arrBeforeAfter['after'] = -1;
 
@@ -107,19 +105,16 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 				}
 
 				$resetCatOrder = true;
-			}
-			else {
+			} else {
 				$intNewCatOrderNum = $rankCatInfo['ordernum'];
 			}
 		}
-	}
-	else {
+	} else {
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."rankcategory ORDER BY ordernum");
 		if ($result->num_rows > 0) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (category).<br>";
-		}
-		else {
+		} else {
 			$intNewCatOrderNum = 1;
 		}
 	}
@@ -139,15 +134,12 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 				if (!$uploadFile->uploadFile()) {
 					$countErrors++;
 					$dispError .= "<b>&middot;</b> Unable to upload category image file.  Please make sure the file extension is either .jpg, .png, .gif or .bmp<br>";
-				}
-				else {
+				} else {
 					$strCatImageURL = "images/ranks/".$uploadFile->getUploadedFileName();
 				}
-			}
-			elseif ($_POST['catimageurl'] != "") {
+			} elseif ($_POST['catimageurl'] != "") {
 				$strCatImageURL = $_POST['catimageurl'];
-			}
-			else {
+			} else {
 				$strCatImageURL = $rankCatInfo['imageurl'];
 			}
 		}
@@ -183,13 +175,11 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 			popupDialog('Edit Rank Category', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'successBox');
 			</script>
 			";
-		}
-		else {
+		} else {
 			$_POST['submit'] = false;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to edit category.  Please try again.<br>";
 		}
-	}
-	else {
+	} else {
 		$_POST['submit'] = false;
 	}
 }
@@ -204,8 +194,7 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 	if ($result->num_rows == 1) {
 		$beforeCatInfo = $result->fetch_assoc();
 		$intCatBeforeAfter = $beforeCatInfo['rankcategory_id'];
-	}
-	else {
+	} else {
 		// Editing First Category Need to select "After" option
 		$intCatAfter = $rankCatInfo['ordernum']+1;
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."rankcategory WHERE ordernum = '".$intCatAfter."'");
@@ -223,8 +212,7 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 		$catName = filterText($row['name']);
 		if ($row['rankcategory_id'] == $intCatBeforeAfter) {
 			$catOrderOptions .= "<option value='".$row['rankcategory_id']."' selected>".$catName."</option>";
-		}
-		else {
+		} else {
 			$catOrderOptions .= "<option value='".$row['rankcategory_id']."'>".$catName."</option>";
 		}
 	}

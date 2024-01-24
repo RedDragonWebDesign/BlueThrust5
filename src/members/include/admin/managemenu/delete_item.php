@@ -63,8 +63,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 			";
 			*/
-		}
-		else {
+		} else {
 			echo "<div id='confirmDelete'><p align='center'>Are you sure you want to delete the menu item <b>".$menuItemInfo['name']."</b>?</p></div>";
 
 			echo "
@@ -105,8 +104,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			
 			";
 		}
-	}
-	elseif (!$menuCatObj->select($_POST['mcID'])) {
+	} elseif (!$menuCatObj->select($_POST['mcID'])) {
 		echo "<div id='confirmDelete'><p align='center'>Unable find the selected menu category.  Please try again or contact the website administrator.</p></div>";
 
 
@@ -134,11 +132,9 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			</script>
 		
 		";
-	}
-	else {
+	} else {
 		echo "hi2";
 	}
-}
-else {
+} else {
 	echo "hi";
 }

@@ -17,15 +17,13 @@ class DestinyMenu extends btThemeMenu {
 		if ($loc == "top" && $this->intMenuSection != 2) {
 			if ($menuCatInfo['headertype'] == "image") {
 				echo "<img src='".MAIN_ROOT.$menuCatInfo['headercode']."'>";
-			}
-			else {
+			} else {
 				$menuCatInfo['headercode'] = $this->replaceKeywords($menuCatInfo['headercode']);
 				echo "<div class='menuCatTitle'>".$menuCatInfo['headercode']."</div>";
 			}
 
 			echo "<div class='menuItems'>";
-		}
-		elseif ($this->intMenuSection != 2) {
+		} elseif ($this->intMenuSection != 2) {
 			echo "</div>";
 		}
 	}
@@ -42,8 +40,7 @@ class DestinyMenu extends btThemeMenu {
 			}
 
 			echo "<div class='topMenuItem'><a href='".$menuLinkInfo['link']."' target='".$menuLinkInfo['linktarget']."'>".strtoupper($this->menuItemInfo['name'])."</a></div>";
-		}
-		else {
+		} else {
 			parent::displayLink();
 		}
 	}
@@ -73,8 +70,7 @@ class DestinyMenu extends btThemeMenu {
 				echo "
 						<a href='".$menuImageInfo['link']."' target='".$menuImageInfo['linktarget']."'><img src='".$menuImageInfo['imageurl']."' style='".$dispSetWidth.$dispSetHeight."' title='".$menuItemInfo['name']."'></a>
 					";
-			}
-			else {
+			} else {
 				echo "
 						<img src='".$menuImageInfo['imageurl']."' title='".$menuItemInfo['name']."' style='".$dispSetWidth.$dispSetHeight."'>
 					";
@@ -83,8 +79,7 @@ class DestinyMenu extends btThemeMenu {
 			echo "
 					</div>
 				";
-		}
-		else {
+		} else {
 			parent::displayImage();
 		}
 	}

@@ -41,8 +41,7 @@ if ($_POST['whichValue'] == "" || !is_numeric($_POST['whichValue'])) {
 
 	$tempArr = $_SESSION['btFormComponent'][$componentIndex]['cOptions'];
 	asort($tempArr);
-}
-else {
+} else {
 	$componentIndex = $_POST['whichValue'];
 
 	$tempArr = $_SESSION['btFormComponentTempSelectValues'];
@@ -64,23 +63,20 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 			asort($tempArr);
 
 			$_SESSION['btFormComponent'][$componentIndex]['cOptions'] = $tempArr;
-		}
-		elseif ($countErrors == 0 && isset($_POST['whichValue'])) {
+		} elseif ($countErrors == 0 && isset($_POST['whichValue'])) {
 			$_SESSION['btFormComponentTempSelectValues'][] = $_POST['optionValue'];
 
 			$tempArr = $_SESSION['btFormComponentTempSelectValues'];
 			asort($tempArr);
 		}
-	}
-	elseif ($_POST['action'] == "delete" && is_numeric($_POST['deleteKey'])) {
+	} elseif ($_POST['action'] == "delete" && is_numeric($_POST['deleteKey'])) {
 		if ($_POST['whichValue'] == "" || !is_numeric($_POST['whichValue'])) {
 			$componentIndex = $_SESSION['btFormComponentCount'];
 			unset($_SESSION['btFormComponent'][$componentIndex]['cOptions'][$_POST['deleteKey']]);
 
 			$tempArr = $_SESSION['btFormComponent'][$componentIndex]['cOptions'];
 			asort($tempArr);
-		}
-		else {
+		} else {
 			$componentIndex = $_POST['whichValue'];
 			unset($_SESSION['btFormComponentTempSelectValues'][$_POST['deleteKey']]);
 

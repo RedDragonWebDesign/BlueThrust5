@@ -40,8 +40,7 @@ if ($_POST['comment'] == 1) {
 	$eventMessageID = $objMessage->get_info("eventmessage_id");
 	$eventObj->objEventMessage->select($eventMessageID);
 	$eventID = $eventObj->objEventMessage->get_info("event_id");
-}
-else {
+} else {
 	$checkMessage = $eventObj->objEventMessage->select($_POST['messageID']);
 	$objMessage = $eventObj->objEventMessage;
 

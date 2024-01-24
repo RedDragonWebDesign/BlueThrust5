@@ -32,8 +32,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -60,8 +59,7 @@ foreach ($arrDownloads as $dlID) {
 
 	if ($posterInfo['avatar'] == "") {
 		$posterInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
-	}
-	else {
+	} else {
 		$posterInfo['avatar'] = $MAIN_ROOT.$posterInfo['avatar'];
 	}
 
@@ -70,11 +68,9 @@ foreach ($arrDownloads as $dlID) {
 
 	if ($dispFileSize < 1) {
 		$dispFileSize = $downloadInfo['filesize']."B";
-	}
-	elseif (($dispFileSize/1024) < 1) {
+	} elseif (($dispFileSize/1024) < 1) {
 		$dispFileSize = round($dispFileSize, 2)."KB";
-	}
-	else {
+	} else {
 		$dispFileSize = round(($dispFileSize/1024), 2)."MB";
 	}
 

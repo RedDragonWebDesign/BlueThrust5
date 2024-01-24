@@ -35,12 +35,10 @@ if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen
 	// Check Login
 	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $eventObj->select($_GET['eID']) && ($eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions") || $memberInfo['rank_id'] == 1)) {
 		$eventInfo = $eventObj->get_info_filtered();
-	}
-	else {
+	} else {
 		exit();
 	}
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($consoleObj->findConsoleIDByName("Manage My Events"));
 	if (!$member->hasAccess($consoleObj) || !$eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions")) {
@@ -63,24 +61,21 @@ while ($row = $result->fetch_assoc()) {
 	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
-	}
-	else {
+	} else {
 		$addCSS = "";
 		$counter = 1;
 	}
 
 	if ($x == 1) {
 		$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
-	}
-	else {
+	} else {
 		$dispUpArrow = "<a href='javascript:void(0)' onclick=\"movePosition('up', '".$row['position_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 	}
 
 
 	if ($x == $intHighestOrder) {
 		$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
-	}
-	else {
+	} else {
 		$dispDownArrow = "<a href='javascript:void(0)' onclick=\"movePosition('down', '".$row['position_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' width='24' height='24' title='Move Down'></a>";
 	}
 

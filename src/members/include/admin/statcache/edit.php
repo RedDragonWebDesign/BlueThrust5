@@ -54,8 +54,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					if (count($_SESSION['btStatCache']) < 2) {
 						$countErrors++;
 						$dispError .= "&nbsp;&nbsp<b>&middot;</b> You must have at least two input stats before having a calculated stat.<br>";
-					}
-					else {
+					} else {
 						// Check the for two calculated stats and the math operation
 
 
@@ -77,8 +76,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 							$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid second calculation statistic.";
 						}
 					}
-				}
-				elseif ($_POST['statType'] != "inputnum" and $_POST['statType'] != "inputtext") {
+				} elseif ($_POST['statType'] != "inputnum" and $_POST['statType'] != "inputtext") {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid stat type.<br>";
 				}
@@ -88,8 +86,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				if ($_POST['rounding'] != "" and !is_numeric($_POST['rounding'])) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You may only enter a number for rounding.<br>";
-				}
-				elseif ($_POST['rounding'] < 0) {
+				} elseif ($_POST['rounding'] < 0) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You may not enter a negative value for rounding.<br>";
 				}
@@ -113,8 +110,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					if ($_POST['statType'] == "inputtext") {
 						$intInputText = 1;
 						$_POST['statType'] = "input";
-					}
-					elseif ($_POST['statType'] == "inputnum") {
+					} elseif ($_POST['statType'] == "inputnum") {
 						$_POST['statType'] = "input";
 					}
 
@@ -156,8 +152,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 							});
 						</script>
 					";
-				}
-				else {
+				} else {
 					$_POST['submit'] = false;
 				}
 			}
@@ -177,8 +172,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					if (count($_SESSION['btStatCache']) > 1) {
 						if ($statInfo['statType'] == "calculate") {
 							$statOptions .= "<option value='calculate' selected>Auto-Calculate</option>";
-						}
-						else {
+						} else {
 							$statOptions .= "<option value='calculate'>Auto-Calculate</option>";
 						}
 
@@ -189,15 +183,13 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				foreach ($_SESSION['btStatCache'] as $key => $arrStats) {
 					if ($statInfo['firstStat'] == $key and is_numeric($statInfo['firstStat'])) {
 						$firstStatOptions .= "<option value='".$key."' selected>".filterText($arrStats['statName'])."</option>";
-					}
-					elseif ($key != $_POST['sID'] and $arrStats['textInput'] == 0) {
+					} elseif ($key != $_POST['sID'] and $arrStats['textInput'] == 0) {
 						$firstStatOptions .= "<option value='".$key."'>".filterText($arrStats['statName'])."</option>";
 					}
 
 					if ($statInfo['secondStat'] == $key and is_numeric($statInfo['secondStat'])) {
 						$secondStatOptions .= "<option value='".$key."' selected>".filterText($arrStats['statName'])."</option>";
-					}
-					elseif ($key != $_POST['sID'] and $arrStats['textInput'] == 0) {
+					} elseif ($key != $_POST['sID'] and $arrStats['textInput'] == 0) {
 						$secondStatOptions .= "<option value='".$key."'>".filterText($arrStats['statName'])."</option>";
 					}
 				}
@@ -207,8 +199,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				foreach ($calcOps as $key => $value) {
 					if ($statInfo['calcOperation'] == $key) {
 						$calcOpsOptions .= "<option value='".$key."' selected>".$value."</option>";
-					}
-					else {
+					} else {
 						$calcOpsOptions .= "<option value='".$key."'>".$value."</option>";
 					}
 				}

@@ -57,15 +57,13 @@ class PageSelector {
 
 			if ($value < 1 && $maxValue != $this->numOfPages) {
 				$arrReturn[$key] = $maxValue+1;
-			}
-			elseif ($value < 1 && $maxValue == $this->numOfPages) {
+			} elseif ($value < 1 && $maxValue == $this->numOfPages) {
 				unset($arrReturn[$key]);
 			}
 
 			if ($value > $this->numOfPages && $minValue != 1) {
 				$arrReturn[$key] = $minValue-1;
-			}
-			elseif ($value > $this->numOfPages && $minValue == 1) {
+			} elseif ($value > $this->numOfPages && $minValue == 1) {
 				unset($arrReturn[$key]);
 			}
 		}
@@ -93,8 +91,7 @@ class PageSelector {
 			foreach ($arrPages as $pageNum) {
 				if ($pageNum == $this->currentPage) {
 					echo "<div class='pageNum currentPage'>".$pageNum."</div>";
-				}
-				else {
+				} else {
 					echo "<div class='pageNum'><a href='".$this->pageLink.$pageNum."'>".$pageNum."</a></div>";
 				}
 			}

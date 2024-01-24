@@ -15,8 +15,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -92,8 +91,7 @@ if ( ! empty($_POST['submit']) ) {
 			$dispRankName = "Default";
 			if ($_POST['maximumrank'] == -1) {
 				$dispRankName = "(Can't Promote)";
-			}
-			elseif ($_POST['maximumrank'] != 0 && $rankObj->select($_POST['maximumrank'])) {
+			} elseif ($_POST['maximumrank'] != 0 && $rankObj->select($_POST['maximumrank'])) {
 				$dispRankName = $rankObj->get_info_filtered("name");
 			}
 
@@ -114,8 +112,7 @@ if ( ! empty($_POST['submit']) ) {
 
 			$member->select($memberInfo['member_id']);
 			$member->logAction("Set maximum promote power for ".$dispMemberName." to ".$dispRankName);
-		}
-		else {
+		} else {
 		}
 	}
 

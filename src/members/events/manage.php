@@ -26,8 +26,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -99,8 +98,7 @@ if ($blnShowPage) {
 		echo "
 		<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$_GET['eID']."&pID=ManagePositions'>Go Back</a></p>
 		";
-	}
-	else {
+	} else {
 		echo "
 			<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&select=".$eID."'>Go Back</a></p>
 		";
@@ -135,14 +133,12 @@ if ($blnShowPage) {
 		echo "
 			<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$_GET['eID']."&pID=ManagePositions'>Go Back</a></p></div>
 		";
-	}
-	else {
+	} else {
 		echo "
 			<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&select=".$eID."'>Go Back</a></p></div>
 		";
 	}
-}
-else {
+} else {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");
 }
 

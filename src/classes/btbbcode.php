@@ -50,8 +50,7 @@ class btBBCode {
 			if ($bbCodes['type'] == "simple") {
 				$strText = str_replace($bbCodes['bbOpenTag'], $bbCodes['htmlOpenTag'], $strText);
 				$strText = str_replace($bbCodes['bbCloseTag'], $bbCodes['htmlCloseTag'], $strText);
-			}
-			else {
+			} else {
 				$strText = preg_replace(
 			}
 		}

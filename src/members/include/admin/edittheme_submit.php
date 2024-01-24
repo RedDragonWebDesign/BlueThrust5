@@ -98,8 +98,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		if (!is_writable("../../../themes/".$THEME."/_header.php")) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save header information.<br>";
-		}
-		else {
+		} else {
 			$headerCode = $_POST['headerCode'];
 			$headerCode = str_replace("&lt;", "<", $headerCode);
 			$headerCode = str_replace("&gt;", ">", $headerCode);
@@ -118,8 +117,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		if (!is_writable("../../../themes/".$THEME."/_footer.php")) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save footer information.<br>";
-		}
-		else {
+		} else {
 			$footerCode = $_POST['footerCode'];
 			$footerCode = str_replace("&lt;", "<", $footerCode);
 			$footerCode = str_replace("&gt;", ">", $footerCode);
@@ -137,8 +135,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		if (!is_writable("../../../themes/".$THEME."/style.css")) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save theme css information.<br>";
-		}
-		else {
+		} else {
 			$themeFile = fopen("../../../themes/".$THEME."/style.css", "w");
 			if (!fwrite($themeFile, htmlspecialchars_decode($_POST['themeCSSCode']))) {
 				$countErrors++;
@@ -179,8 +176,7 @@ if ($submitSuccess) {
 			$('#errorDiv').hide();
 		</script>
 	";
-}
-else {
+} else {
 	echo "
 		<script type='text/javascript'>
 			$(document).ready(function() {

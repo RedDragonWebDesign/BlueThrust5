@@ -59,8 +59,7 @@ class RankCategory extends Rank {
 			$this->resortOrder();
 			if (!$this->MySQL->error) {
 				$returnVal = true;
-			}
-			else {
+			} else {
 				$this->MySQL->displayError("basic.php");
 			}
 		}

@@ -26,8 +26,7 @@ if (!isset($menuXML)) {
 
 	if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 		$dispHTTP = "http://";
-	}
-	else {
+	} else {
 		$dispHTTP = "https://";
 	}
 
@@ -35,8 +34,7 @@ if (!isset($menuXML)) {
 
 	try {
 		$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", null, true);
-	}
-	catch (Exception $e) {
+	} catch (Exception $e) {
 		$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", null, true);
 	}
 }
@@ -56,8 +54,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 		$selectCatID = "";
 		if (!isset($_POST['mcID'])) {
 			$_POST['mcID'] = "";
-		}
-		else {
+		} else {
 			$menuCatObj->select($_POST['mcID']);
 			$selectCatID = $menuCatObj->findBeforeAfter();
 			$selectCatID = $selectCatID[0];
@@ -83,8 +80,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 		}
 
 		echo $orderoptions;
-	}
-	elseif (isset($_POST['manage'])) {
+	} elseif (isset($_POST['manage'])) {
 		$arrDispSectionNames = array();
 		for ($x=0; $x<$menuXML->info->section->count(); $x++) {
 			$arrDispSectionNames[$x] = $menuXML->info->section[$x];
@@ -120,15 +116,13 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 			if ($counter == 0) {
 				$dispUpArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' class='manageListActionButton'>";
-			}
-			else {
+			} else {
 				$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveCat('up', '".$row['menucategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' class='manageListActionButton' title='Move Up'></a>";
 			}
 
 			if (($counter+1) == $intHighestSortNum) {
 				$dispDownArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' class='manageListActionButton'>";
-			}
-			else {
+			} else {
 				$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveCat('down', '".$row['menucategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' class='manageListActionButton' title='Move Down'></a>";
 			}
 

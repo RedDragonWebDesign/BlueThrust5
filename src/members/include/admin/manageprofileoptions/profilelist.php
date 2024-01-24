@@ -51,8 +51,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					if ($arrFlipped[$_POST['oID']] == $highestIndex) {
 						$temp = $highestIndex-1;
 						$selectedOption = $arrAssociates[$temp];
-					}
-					else {
+					} else {
 						$temp = $arrFlipped[$_POST['oID']]+1;
 						$selectedConsole = $arrAssociates[$temp];
 					}

@@ -15,8 +15,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -37,8 +36,7 @@ if ( ! empty($_POST['submit']) ) {
 	if (!$memberObj->select($_POST['member'])) {
 		$countErrors++;
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member.<br>";
-	}
-	else {
+	} else {
 		$newMemberInfo = $memberObj->get_info_filtered();
 		$memberObj->select($newMemberInfo['recruiter']);
 		$oldRecruiterInfo = $memberObj->get_info_filtered();
@@ -49,8 +47,7 @@ if ( ! empty($_POST['submit']) ) {
 	if (!$memberObj->select($_POST['newrecruiter'])) {
 		$countErrors++;
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid Recruiter.<br>";
-	}
-	else {
+	} else {
 		$newRecruiterInfo = $memberObj->get_info_filtered();
 	}
 
@@ -81,8 +78,7 @@ if ( ! empty($_POST['submit']) ) {
 
 			$member->select($memberInfo['member_id']);
 			$member->logAction($logMessage);
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}

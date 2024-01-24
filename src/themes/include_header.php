@@ -9,8 +9,7 @@ $siteDomain = $_SERVER['SERVER_NAME'];
 
 if ( ! isset($_SERVER['HTTPS']) || trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
-}
-else {
+} else {
 	$dispHTTP = "https://";
 }
 
@@ -87,8 +86,7 @@ if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 				if ($taggerObj->select($pageTaggerURL, false)) {
 					$pageTagStatus = "<span class='pendingFont'>Member's Only</span>";
 					$dispTagOrUntag = "Untag";
-				}
-				else {
+				} else {
 					$pageTagStatus = "<span class='publicNewsColor'>Public</span>";
 					$dispTagOrUntag = "Tag";
 				}
@@ -188,8 +186,7 @@ if ($result->num_rows > 0) {
 	}
 
 	$hitCountObj->update($updateColumns, $updateValues);
-}
-else {
+} else {
 	$hitCountObj->addNew(array("ipaddress", "dateposted", "pagename", "totalhits"), array($IP_ADDRESS, time(), $PAGE_NAME, 1));
 }
 

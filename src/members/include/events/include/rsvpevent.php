@@ -31,8 +31,7 @@ $eventObj = new Event($mysqli);
 // Check Login
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$memberInfo = $member->get_info();
-}
-else {
+} else {
 	exit();
 }
 
@@ -47,8 +46,7 @@ if ($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMemb
 
 	if ($_SESSION['btCountMindChanges'][$_POST['emID']] == "") {
 		$_SESSION['btCountMindChanges'][$_POST['emID']] == 1;
-	}
-	else {
+	} else {
 		$_SESSION['btCountMindChanges'][$_POST['emID']]++;
 	}
 
@@ -57,8 +55,7 @@ if ($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMemb
 		$arrColumns = array("status");
 		$arrValues = array("1");
 		$dispAction = "going";
-	}
-	elseif ($_POST['rsvpNum'] == 2 && time() < $eventInfo['startdate']) {
+	} elseif ($_POST['rsvpNum'] == 2 && time() < $eventInfo['startdate']) {
 		$arrColumns = array("status");
 		$arrValues = array("2");
 		$dispAction = "not going";

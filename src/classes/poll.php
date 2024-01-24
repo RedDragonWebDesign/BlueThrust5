@@ -81,13 +81,11 @@ class Poll extends Basic {
 				$tempArr[$x] = "";
 				$x++;
 				$tempArr[$x] = $_SESSION['btPollOptionCache'][$this->cacheID][$key];
-			}
-			elseif ($strBeforeAfter == "after" && $key == $intSpot) {
+			} elseif ($strBeforeAfter == "after" && $key == $intSpot) {
 				$tempArr[$x] = $_SESSION['btPollOptionCache'][$this->cacheID][$key];
 				$x++;
 				$returnVal = $x;
-			}
-			else {
+			} else {
 				$tempArr[$x] = $_SESSION['btPollOptionCache'][$this->cacheID][$key];
 			}
 
@@ -298,8 +296,7 @@ class Poll extends Basic {
 					</script>
 					
 				";
-		}
-		else {
+		} else {
 			echo "
 					<p class='main' align='center'>
 						You do not have permission to view this poll.<br><br>
@@ -316,19 +313,16 @@ class Poll extends Basic {
 
 			if ($accessInfo['rank'] == 2 || $member->get_info("rank_id") == 1) {
 				$returnVal = true;
-			}
-			elseif ($accessInfo['member'] == 2) {
+			} elseif ($accessInfo['member'] == 2) {
 				$returnVal = true;
 			}
 
 			if ($returnVal && $accessInfo['member'] == 3) {
 				$returnVal = false;
 			}
-		}
-		elseif ($this->arrObjInfo['accesstype'] == "members" && $member->get_info("datejoined") > 0 && $member->get_info("disabled") == 0) {
+		} elseif ($this->arrObjInfo['accesstype'] == "members" && $member->get_info("datejoined") > 0 && $member->get_info("disabled") == 0) {
 			$returnVal = true;
-		}
-		elseif ($this->arrObjInfo['accesstype'] == "public") {
+		} elseif ($this->arrObjInfo['accesstype'] == "public") {
 			$returnVal = true;
 		}
 
@@ -371,21 +365,17 @@ class Poll extends Basic {
 					if ($this->objPollVote->select($selectedPollVote)) {
 						$newVoteCount = $this->objPollVote->get_info("votecount")+1;
 						$this->objPollVote->update(array("datevoted", "votecount", "ipaddress"), array(time(), $newVoteCount, $_SERVER['REMOTE_ADDR']));
-					}
-					else {
+					} else {
 						$this->objPollVote->addNew(array("poll_id", "polloption_id", "member_id", "ipaddress", "datevoted", "votecount"), array($this->intTableKeyValue, $pollOptionInfo['polloption_id'], $memberID, $_SERVER['REMOTE_ADDR'], time(), 1));
 					}
 
 					$returnArr['result'] = "success";
-				}
-				elseif (!$pollEndCheck) {
+				} elseif (!$pollEndCheck) {
 					$pollError = "This poll has ended.";
-				}
-				else {
+				} else {
 					$pollError = "Maximum number of votes allowed.";
 				}
-			}
-			else {
+			} else {
 				$returnArr['result'] = "success";
 				$this->objPollVote->addNew(array("poll_id", "polloption_id", "member_id", "ipaddress", "datevoted", "votecount"), array($this->intTableKeyValue, $pollOptionInfo['polloption_id'], $memberID, $_SERVER['REMOTE_ADDR'], time(), 1));
 			}

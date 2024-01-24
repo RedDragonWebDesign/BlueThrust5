@@ -16,8 +16,7 @@ if (!defined("SHOW_POLLLIST")) {
 	// Check Login
 	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
-	}
-	else {
+	} else {
 		exit();
 	}
 }
@@ -32,8 +31,7 @@ while ($row = $result->fetch_assoc()) {
 	if ($counter == 0) {
 		$addCSS = "";
 		$counter = 1;
-	}
-	else {
+	} else {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
 	}

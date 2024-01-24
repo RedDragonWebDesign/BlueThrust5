@@ -15,8 +15,7 @@ if (isset($_POST['refreshSectionID'])) {
 		$updateTime = $row['updatetime'];
 		$_SESSION[$tableName] = $updateTime;
 	}
-}
-else {
+} else {
 	$updateMenu = 0;
 
 	$result = $mysqli->query("SELECT itemtype FROM ".$dbprefix."menu_item WHERE itemtype = 'forumactivity' OR itemtype = 'newestmembers'");

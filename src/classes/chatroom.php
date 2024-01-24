@@ -81,8 +81,7 @@ class ChatRoom extends Basic {
 
 			if (!in_array($intMemberID, $arrRoomList)) {
 				$returnVal = $this->objChatRoomList->addNew(array("member_id", "eventchat_id"), array($intMemberID, $this->intTableKeyValue));
-			}
-			elseif (in_array($intMemberID, $arrRoomList)) {
+			} elseif (in_array($intMemberID, $arrRoomList)) {
 				$intChatListID = array_search($intMemberID, $arrRoomList);
 				$this->objChatRoomList->select($intChatListID);
 				if ($this->objChatRoomList->get_info("inactive") == 1) {
@@ -104,8 +103,7 @@ class ChatRoom extends Basic {
 				$intChatListID = array_search($intMemberID, $arrRoomList);
 				$this->objChatRoomList->select($intChatListID);
 				$returnVal = $this->objChatRoomList->update(array("inactive"), array(1));
-			}
-			else {
+			} else {
 				$returnVal = true;
 			}
 		}

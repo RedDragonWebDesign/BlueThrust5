@@ -17,8 +17,7 @@ require_once("../classes/customform.php");
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -73,7 +72,6 @@ if (isset($_GET['cfID']) && $customFormPageObj->select($_GET['cfID'])) {
 		</script>
 	
 	";
-}
-else {
+} else {
 	require_once("custompages/main_submissions.php");
 }

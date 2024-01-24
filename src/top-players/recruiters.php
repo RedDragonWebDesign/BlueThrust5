@@ -31,8 +31,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -64,8 +63,7 @@ if ( isset($_GET['sort']) && $_GET['sort'] != "up") {
 	$dispSort = "<a href='".$MAIN_ROOT."top-players/recruiters.php?sort=up'><img src='".$MAIN_ROOT."themes/".$THEME."/images/downarrow.png'></a>";
 	$_GET['sort'] = "down";
 	arsort($arrMembers);
-}
-else {
+} else {
 	$dispSort = "<a href='".$MAIN_ROOT."top-players/recruiters.php?sort=down'><img src='".$MAIN_ROOT."themes/".$THEME."/images/uparrow.png'></a>";
 	$_GET['sort'] = "up";
 	asort($arrMembers);

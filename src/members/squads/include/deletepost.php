@@ -52,8 +52,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$squadNewsObj->delete();
 			$_POST['pID'] = $pID;
 			require_once("newslist.php");
-		}
-		else {
+		} else {
 			echo "
 				<p align='center' class='main'>Are you sure you want to delete the news post?</p>
 			";

@@ -257,8 +257,7 @@ if (!defined("CAMPAIGN_FORM")) {
 			$_POST['recurringunit'] = "";
 			$_POST['recurringamount'] = 0;
 			$_POST['recurring'] = 0;
-		}
-		else {
+		} else {
 			switch ($_POST['recurringunit']) {
 				case "days":
 					$_POST['recurring'] = date($formObj->objSave->DAY);

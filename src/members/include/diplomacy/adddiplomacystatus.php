@@ -15,8 +15,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -55,18 +54,15 @@ if ( ! empty($_POST['submit']) ) {
 			if (!$uploadImg->uploadFile()) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload status image. Please make sure the file size is not too big and it has an acceptable file extension.<br>";
-			}
-			else {
+			} else {
 				$statusImageURL = "images/diplomacy/".$uploadImg->getUploadedFileName();
 			}
-		}
-		else {
+		} else {
 			$uploadImg = new BTUpload($_POST['statusimageurl'], "status_", "../images/diplomacy/", array(".jpg", ".png", ".gif", ".bmp"), 4, true);
 			if (!$uploadImg->uploadFile()) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to download status image from remote url. You may need to first download the image and upload normally.<br>";
-			}
-			else {
+			} else {
 				$statusImageURL = "images/diplomacy/".$uploadImg->getUploadedFileName();
 			}
 
@@ -98,8 +94,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 				$member->logAction("Added the ".$_POST['statusname']." status to the diplomacy page.");
-			}
-			else {
+			} else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 			}

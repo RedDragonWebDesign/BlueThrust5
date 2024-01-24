@@ -79,8 +79,7 @@ class DonationCampaign extends Basic {
 			}
 
 			$returnVal = (!$returnTimestamps) ? array("current" => $currentPeriod, "next" => $nextPeriod) : array("current" => $currentPeriodDate, "next" => $nextPeriodDate);
-		}
-		elseif ($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] == 0) {
+		} elseif ($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] == 0) {
 			// Default Prior 30 days range
 			$x30Days = 60*60*24*30;
 			$returnVal = (!$returnTimestamps) ? array() : array("current" => 0, "next" => time());
@@ -101,8 +100,7 @@ class DonationCampaign extends Basic {
 				$this->arrObjInfo['currentperiod'] = $currentPeriodRange['next'];
 				$this->blnUpdateCurrentPeriod = true;
 				$this->updateCurrentPeriod();
-			}
-			elseif ($this->blnUpdateCurrentPeriod) {
+			} elseif ($this->blnUpdateCurrentPeriod) {
 				$this->update(array("currentperiod"), array($this->arrObjInfo['currentperiod']));
 				$this->blnUpdateCurrentPeriod = false;
 			}
@@ -220,8 +218,7 @@ class DonationCampaign extends Basic {
 				if ($i == 0) {
 					$addCSS = "";
 					$i = 1;
-				}
-				else {
+				} else {
 					$addCSS = " alternateBGColor";
 					$i = 0;
 				}
@@ -250,8 +247,7 @@ class DonationCampaign extends Basic {
 			$dispDonatorInfo['amount'] = $this->arrDonatorList[$selectID]['amount'];
 			$dispDonatorInfo['lastdate'] = getPreciseTime($this->arrDonatorList[$selectID]['lastdate']);
 			$dispDonatorInfo['lastdonation'] = ($this->arrDonatorList[$selectID]['timesdonated'] > 1) ? "Last Donation: <span class='donatorAmount'>".$this->formatAmount($this->arrDonatorList[$selectID]['lastdonation'])."</span><br>" : "";
-		}
-		else {
+		} else {
 			$this->donationObj->select($selectID);
 			$donationInfo = $this->donationObj->get_info_filtered();
 			$dispDonatorInfo['name'] = ($donationInfo['name'] == "") ? "Anonymous" : $donationInfo['name'];
@@ -276,8 +272,7 @@ class DonationCampaign extends Basic {
 					if ($i == 0) {
 						$addCSS = "";
 						$i = 1;
-					}
-					else {
+					} else {
 						$addCSS = " alternateBGColor";
 						$i = 0;
 					}
@@ -306,8 +301,7 @@ class DonationCampaign extends Basic {
 			if ($member->select($donationInfo['member_id'])) {
 				$extraName = $donationInfo['name'] != "" ? " <i>(".$donationInfo['name'].")</i>" : "";
 				$dispDonatorName = $member->getMemberLink().$extraName;
-			}
-			else {
+			} else {
 				$dispDonatorName = ($donationInfo['name'] == "") ? "Anonymous" : $donationInfo['name'];
 			}
 
@@ -344,8 +338,7 @@ class DonationCampaign extends Basic {
 			if ($this->arrObjInfo['dateend'] != 0) {
 				$periodRange = $this->getCurrentPeriodRange(true);
 				$currentEndDate = ($periodRange['next'] > $this->arrObjInfo['dateend']) ? $this->arrObjInfo['dateend'] : $periodRange['next']-(60*60*24);
-			}
-			elseif ($this->arrObjInfo['dateend'] == 0 && $this->arrObjInfo['currentperiod'] != 0) {
+			} elseif ($this->arrObjInfo['dateend'] == 0 && $this->arrObjInfo['currentperiod'] != 0) {
 				$periodRange = $this->getCurrentPeriodRange(true);
 				$currentEndDate = $periodRange['next']-(60*60*24);
 			}
@@ -362,16 +355,13 @@ class DonationCampaign extends Basic {
 			$timeDiff = $currentEndDate-time();
 			if ($timeDiff < 0) {
 				$returnVal = "Campaign Ended";
-			}
-			elseif ($timeDiff < 3600) {
+			} elseif ($timeDiff < 3600) {
 				$timeLeft = round($timeDiff/60);
 				$returnVal = $timeLeft." ".pluralize("minute", $timeLeft);
-			}
-			elseif ($timeDiff < 86400) {
+			} elseif ($timeDiff < 86400) {
 				$timeLeft = round($timeDiff/3600);
 				$returnVal = $timeLeft." ".pluralize("hour", $timeLeft);
-			}
-			else {
+			} else {
 				$timeLeft = round($timeDiff/86400);
 				$returnVal = $timeLeft." ".pluralize("day", $timeLeft);
 			}

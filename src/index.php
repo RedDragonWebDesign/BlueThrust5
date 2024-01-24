@@ -20,8 +20,7 @@ function deleteDir($path) {
 	foreach ($i as $f) {
 		if ($f->isFile()) {
 			unlink($f->getRealPath());
-		}
-		elseif (!$f->isDot() && $f->isDir()) {
+		} elseif (!$f->isDot() && $f->isDir()) {
 			deleteDir($f->getRealPath());
 			rmdir($f->getRealPath());
 		}
@@ -32,8 +31,7 @@ function deleteDir($path) {
 
 if ((!file_exists("_config.php")) && (file_exists("installer/lock.txt"))) {
 	die("Installer Lock File Exists. Please delete if you wish installation to continue.");
-}
-elseif (((!file_exists("_config.php")) && (!file_exists("installer/lock.txt"))) || ((file_exists("installer/_installrunning.txt")) && (file_get_contents("installer/_installrunning.txt") != "done"))) {
+} elseif (((!file_exists("_config.php")) && (!file_exists("installer/lock.txt"))) || ((file_exists("installer/_installrunning.txt")) && (file_get_contents("installer/_installrunning.txt") != "done"))) {
 	file_put_contents("installer/_installrunning.txt", "");
 
 	echo "
@@ -111,8 +109,7 @@ $lastVisitDate = $result->fetch_assoc();
 
 if ($result->num_rows == 1) {
 	$dispLastVisitDate = "Your last visit was ".getPreciseTime($lastVisitDate['dateposted']).".";
-}
-else {
+} else {
 	$dispLastVisitDate = "This is your first visit!";
 }
 
@@ -203,8 +200,7 @@ while ($row = $result->fetch_assoc()) {
 
 		if ($posterInfo['avatar'] == "") {
 			$posterInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
-		}
-		else {
+		} else {
 			$posterInfo['avatar'] = $MAIN_ROOT.$posterInfo['avatar'];
 		}
 

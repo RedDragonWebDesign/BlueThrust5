@@ -29,8 +29,7 @@
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$memberInfo = $member->get_info_filtered();
-}
-else {
+} else {
 	exit();
 }
 
@@ -82,8 +81,7 @@ if ($countErrors == 0) {
 
 	if ($ipbanObj->addNew(array("ipaddress", "exptime", "dateadded"), array($_POST['ipaddress'], $setExpTime, time()))) {
 		$arrReturn = array("result"=>"success", "settime"=>$setExpTime);
-	}
-	else {
+	} else {
 		$countErrors++;
 		$arrErrors[] = "Unable to save information to database! Please contact the website administrator.";
 	}

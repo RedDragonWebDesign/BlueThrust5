@@ -25,12 +25,10 @@ class IPBan extends Basic {
 
 			if (time() < $this->arrObjInfo['exptime'] || $this->arrObjInfo['exptime'] == 0) {
 				$returnVal = true;
-			}
-			else {
+			} else {
 				$this->delete();
 			}
-		}
-		else {
+		} else {
 			$arrCheckIP = explode(".", $ip);
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."ipban WHERE ipaddress LIKE '%*%' AND (exptime > '".time()."' OR exptime = '0')");

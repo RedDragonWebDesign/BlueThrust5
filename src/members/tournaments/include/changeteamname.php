@@ -72,12 +72,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 				</script>
 			
 			";
-		}
-		else {
+		} else {
 			$dispMessage = "<p class='failedFont'><b>Unable to save team name!</b></p>";
 		}
-	}
-	else {
+	} else {
 		$dispMessage = "<p class='failedFont'><b>Unable to save team name.  Make sure your team name is not blank!</b></p>";
 	}
 }

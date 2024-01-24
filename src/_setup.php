@@ -28,8 +28,7 @@ if (isset($_COOKIE['btUsername']) && isset($_COOKIE['btPassword'])) {
 	session_start();
 	$_SESSION['btUsername'] = $_COOKIE['btUsername'];
 	$_SESSION['btPassword'] = $_COOKIE['btPassword'];
-}
-else {
+} else {
 	session_start();
 }
 
@@ -52,8 +51,7 @@ require_once(BASE_DIRECTORY."_functions.php");
 function BTCS4Loader($class_name) {
 	if (file_exists(BASE_DIRECTORY."classes/".strtolower($class_name).".php")) {
 		require_once(BASE_DIRECTORY."classes/".strtolower($class_name).".php");
-	}
-	elseif (file_exists(require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php"))) {
+	} elseif (file_exists(require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php"))) {
 		require_once(BASE_DIRECTORY."classes/formcomponents/".strtolower($class_name).".php");
 	}
 }

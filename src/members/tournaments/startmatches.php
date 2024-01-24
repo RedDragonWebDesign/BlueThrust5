@@ -21,8 +21,7 @@ if (!isset($member) || !isset($tournamentObj) || !$tournamentObj->poolsComplete(
 	";
 
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -52,8 +51,7 @@ $countErrors = 0;
 
 if ($tournamentInfo['playersperteam'] == 1) {
 	$dispTeamOrPlayer = "Player";
-}
-else {
+} else {
 	$dispTeamOrPlayer = "Team";
 }
 
@@ -77,8 +75,7 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 	
 	";
-}
-elseif ( empty($_POST['submit']) ) {
+} elseif ( empty($_POST['submit']) ) {
 	$arrPools = $tournamentObj->getPoolList();
 	$arrPoolTeams = array();
 	$arrTeams = $tournamentObj->getTeams(true);
@@ -92,8 +89,7 @@ elseif ( empty($_POST['submit']) ) {
 		$poolInfo = $tournamentObj->objTournamentPool->get_info();
 		if ($poolInfo['finished'] == 0) {
 			$tournamentObj->objTournamentPool->update(array("finished"), array(1));
-		}
-		else {
+		} else {
 			$totalPoolsFinished++;
 		}
 	}
@@ -108,8 +104,7 @@ elseif ( empty($_POST['submit']) ) {
 		while ($row = $result->fetch_assoc()) {
 			if ($row['winner'] == 1) {
 				$winningTeam = $row['team1_id'];
-			}
-			else {
+			} else {
 				$winningTeam = $row['team2_id'];
 			}
 

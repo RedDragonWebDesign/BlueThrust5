@@ -38,8 +38,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 
 	if ($tournamentInfo['playersperteam'] == 1) {
 		$dispTeamOrPlayer = "Player";
-	}
-	else {
+	} else {
 		$dispTeamOrPlayer = "Team";
 	}
 

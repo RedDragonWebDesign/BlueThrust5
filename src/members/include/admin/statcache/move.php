@@ -46,8 +46,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$newSpot = "none";
 			if ($_POST['statDir'] == "up" and isset($_SESSION['btStatCache'][$moveUp])) {
 				$newSpot = $moveUp;
-			}
-			elseif ($_POST['statDir'] == "down" and isset($_SESSION['btStatCache'][$moveDown])) {
+			} elseif ($_POST['statDir'] == "down" and isset($_SESSION['btStatCache'][$moveDown])) {
 				$newSpot = $moveDown;
 			}
 
@@ -63,15 +62,13 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				foreach ($_SESSION['btStatCache'] as $key => $statInfo) {
 					if ($statInfo['firstStat'] == $newSpot) {
 						$_SESSION['btStatCache'][$key]['firstStat'] = $_POST['sID'];
-					}
-					elseif ($statInfo['firstStat'] == $_POST['sID']) {
+					} elseif ($statInfo['firstStat'] == $_POST['sID']) {
 						$_SESSION['btStatCache'][$key]['firstStat'] = $newSpot;
 					}
 
 					if ($statInfo['secondStat'] == $newSpot) {
 						$_SESSION['btStatCache'][$key]['secondStat'] = $_POST['sID'];
-					}
-					elseif ($statInfo['secondStat'] == $_POST['sID']) {
+					} elseif ($statInfo['secondStat'] == $_POST['sID']) {
 						$_SESSION['btStatCache'][$key]['secondStat'] = $newSpot;
 					}
 				}

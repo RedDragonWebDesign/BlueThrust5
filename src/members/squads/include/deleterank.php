@@ -69,13 +69,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					});
 				</script>
 			";
-		}
-		elseif ($totalMembers == 0 && $_POST['confirm'] == 1) {
+		} elseif ($totalMembers == 0 && $_POST['confirm'] == 1) {
 			$squadObj->objSquadRank->delete();
 
 			require_once("ranklist.php");
-		}
-		else {
+		} else {
 			echo "
 				<p align='center' class='main'>
 					Are you sure you want to delete the rank: <b>".$squadRankInfo['name']."</b>?

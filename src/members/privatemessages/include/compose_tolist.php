@@ -43,8 +43,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					if ($removeKey !== false) {
 						unset($_SESSION['btComposeList'][$pmSessionID][$search][$removeKey]);
 					}
-				}
-				else {
+				} else {
 					$_SESSION['btComposeList'][$pmSessionID][$search][] = $composeID;
 				}
 

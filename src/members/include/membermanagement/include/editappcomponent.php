@@ -65,8 +65,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 						foreach ($_SESSION['btAppComponent']['cOptions'] as $optionValue) {
 							$appComponentSelectOptionObj->addNew(array("appcomponent_id", "componentvalue"), array($appCompInfo['appcomponent_id'], $optionValue));
 						}
-					}
-					elseif ($_POST['saveComponentType'] == "profile") {
+					} elseif ($_POST['saveComponentType'] == "profile") {
 						$appComponentSelectOptionObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
 						$appComponentSelectOptionObj->addNew(array("appcomponent_id", "componentvalue"), array($appCompInfo['appcomponent_id'], $_POST['profileOptionID']));
 					}
@@ -120,8 +119,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					
 					
 					";
-				}
-				else {
+				} else {
 					$addAppForm->errors[] = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.";
 				}
 			}
@@ -149,13 +147,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				asort($tempArr);
 
 				$_SESSION['btAppComponent']['cOptions'] = $tempArr;
-			}
-			elseif ($countErrors == 0) {
+			} elseif ($countErrors == 0) {
 				$_SESSION['btAppComponent']['cOptions'] = array();
 			}
 		}
-	}
-	else {
+	} else {
 		echo "
 			<script type='text/javascript'>
 				$(document).ready(function() {

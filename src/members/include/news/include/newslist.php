@@ -47,18 +47,15 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 			if ($posterInfo['avatar'] == "") {
 				$posterInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
-			}
-			else {
+			} else {
 				$posterInfo['avatar'] = $MAIN_ROOT.$posterInfo['avatar'];
 			}
 
 			if ($row['newstype'] == 1) {
 				$dispNewsType = " - <span class='publicNewsColor' style='font-style: italic'>public</span>";
-			}
-			elseif ($row['newstype'] == 2) {
+			} elseif ($row['newstype'] == 2) {
 				$dispNewsType = " - <span class='privateNewsColor' style='font-style: italic'>private</span>";
-			}
-			elseif ($row['newstype'] == 3) {
+			} elseif ($row['newstype'] == 3) {
 				$dispNewsType = "";
 			}
 
@@ -102,8 +99,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			
 			";
 		}
-	}
-	else {
+	} else {
 		echo "
 			<div class='shadedBox' style='width: 300px; margin-left: auto; margin-right: auto'>
 				<p class='main' align='center'>

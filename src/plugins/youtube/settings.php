@@ -26,8 +26,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -131,8 +130,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				";
 
 				$member->logAction("Changed Youtube Connect Plugin Settings.");
-			}
-			else {
+			} else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 			}
@@ -237,8 +235,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$selectKey = "";
 			if ($pluginPageInfo[0]['sortnum'] == $key) {
 				$selectKey = " selected";
-			}
-			elseif ($key == (count($arrProfileModules)-1) && $selectAfter == " selected") {
+			} elseif ($key == (count($arrProfileModules)-1) && $selectAfter == " selected") {
 				$selectKey = " selected";
 			}
 
@@ -261,8 +258,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	
 		";
 	}
-}
-else {
+} else {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
 }
 

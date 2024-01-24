@@ -78,8 +78,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		if ($counter == 1) {
 			$addCSS = " alternateBGColor";
 			$counter = 0;
-		}
-		else {
+		} else {
 			$addCSS = "";
 			$counter = 1;
 		}
@@ -92,15 +91,13 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 		if ($x == 1 || $x == 2) {
 			$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
-		}
-		else {
+		} else {
 			$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveRank('up', '".$squadInfo['squad_id']."', '".$row['squadrank_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 		}
 
 		if ($x == $intHighestOrder || $x == 1) {
 			$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
-		}
-		elseif ($x != 1) {
+		} elseif ($x != 1) {
 			$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveRank('down', '".$squadInfo['squad_id']."', '".$row['squadrank_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' width='24' height='24' title='Move Down'></a>";
 		}
 

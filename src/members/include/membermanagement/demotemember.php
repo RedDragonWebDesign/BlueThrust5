@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -27,8 +26,7 @@ $rankInfo = $memberRank->get_info_filtered();
 
 if ($memberInfo['promotepower'] != 0) {
 	$rankInfo['promotepower'] = $memberInfo['promotepower'];
-}
-elseif ($memberInfo['promotepower'] == -1) {
+} elseif ($memberInfo['promotepower'] == -1) {
 	$rankInfo['promotepower'] = 0;
 }
 
@@ -70,12 +68,10 @@ if ( ! empty($_POST['submit']) ) {
 	if (!$member->select($_POST['member'])) {
 		$countErrors++;
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member.<br>";
-	}
-	elseif (!in_array($member->get_info("rank_id"), $arrRanks)) {
+	} elseif (!in_array($member->get_info("rank_id"), $arrRanks)) {
 		$countErrors++;
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not change the selected member's rank.<br>";
-	}
-	else {
+	} else {
 		$rankObj->select($member->get_info("rank_id"));
 		$newRankOrder = $rankObj->get_info("ordernum")-1;
 
@@ -136,8 +132,7 @@ if ( ! empty($_POST['submit']) ) {
 
 			$member->select($memberInfo['member_id']);
 			$member->logAction($logMessage);
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
@@ -157,8 +152,7 @@ $maxRankInfo = $rankObj->get_info_filtered();
 
 if ($rankInfo['rank_id'] == 1) {
 	$maxRankInfo['ordernum'] += 1;
-}
-else {
+} else {
 	$maxRankInfo['ordernum'] -= 1;
 }
 

@@ -43,8 +43,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$consoleObj->select($arrAssociates[0]);
 			$intSpot = $consoleObj->makeRoom("before");
 			$resortOrder = true;
-		}
-		else {
+		} else {
 			$intSpot = 1;
 		}
 

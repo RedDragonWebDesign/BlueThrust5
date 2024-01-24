@@ -16,8 +16,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -32,8 +31,7 @@ $imageSliderObj = new ImageSlider($mysqli);
 
 if ($_GET['action'] == "edit" && $imageSliderObj->select($_GET['imgID'])) {
 	require_once("include/news/include/editimage.php");
-}
-else {
+} else {
 	$addImageCID = $consoleObj->findConsoleIDByName("Add Home Page Image");
 	$selectWidthUnit = ($websiteInfo['hpimagewidthunit'] == "px") ? "" : " selected";
 	$selectHeightUnit = ($websiteInfo['hpimageheightunit'] == "px") ? "" : " selected";

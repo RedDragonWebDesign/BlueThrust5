@@ -38,8 +38,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$selectItemID = "";
 		if (!isset($_POST['itemID'])) {
 			$_POST['itemID'] = "";
-		}
-		else {
+		} else {
 			$menuItemObj->select($_POST['itemID']);
 			$selectItemID = $menuItemObj->findBeforeAfter();
 			$selectItemID = $selectItemID[0];
@@ -66,8 +65,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		}
 
 		echo $orderoptions;
-	}
-	elseif (!isset($_POST['menuCatID'])) {
+	} elseif (!isset($_POST['menuCatID'])) {
 		$intManageMenuCatCID = $consoleObj->findConsoleIDByName("Manage Menu Categories");
 		$query = "SELECT ".$dbprefix."menu_item.* FROM ".$dbprefix."menu_item, ".$dbprefix."menu_category WHERE ".$dbprefix."menu_item.menucategory_id = ".$dbprefix."menu_category.menucategory_id ORDER BY ".$dbprefix."menu_category.section, ".$dbprefix."menu_category.sortnum, ".$dbprefix."menu_item.menucategory_id, ".$dbprefix."menu_item.sortnum";
 
@@ -100,15 +98,13 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$intHighestSortNum = $menuItemObj->getHighestSortNum();
 			if (($counter+1) == $intHighestSortNum) {
 				$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' class='manageListActionButton'>";
-			}
-			else {
+			} else {
 				$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveItem('down', '".$row['menuitem_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' class='manageListActionButton' title='Move Down'></a>";
 			}
 
 			if ($counter == 0) {
 				$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' class='manageListActionButton'>";
-			}
-			else {
+			} else {
 				$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveItem('up', '".$row['menuitem_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' class='manageListActionButton' title='Move Up'></a>";
 			}
 

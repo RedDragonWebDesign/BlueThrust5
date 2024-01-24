@@ -39,7 +39,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 
 		echo "deleted";
 	}
-}
-else {
+} else {
 	echo "no";
 }

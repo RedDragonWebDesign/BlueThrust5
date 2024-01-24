@@ -197,8 +197,7 @@ class Facebook extends Basic {
 		if ($method == "POST") {
 			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
-		}
-		elseif ($method = "DELETE") {
+		} elseif ($method = "DELETE") {
 			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);

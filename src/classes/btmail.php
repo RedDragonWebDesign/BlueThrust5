@@ -16,8 +16,7 @@ class btMail {
 		// Check if the from has both email and name
 		if (is_array($from)) {
 			$mail->setFrom($from['email'], $from['name']);
-		}
-		else {
+		} else {
 			$mail->setFrom($from);
 		}
 
@@ -42,8 +41,7 @@ class btMail {
 			}
 
 			$from = "admin@".$siteDomain;
-		}
-		else {
+		} else {
 			$from = $args['from'];
 		}
 
@@ -70,13 +68,11 @@ class btMail {
 			foreach ($args[$type] as $info) {
 				if (is_array($info)) {
 					call_user_func_array(array($mail, $func), array($info['email'], $info['name']));
-				}
-				else {
+				} else {
 					call_user_func_array(array($mail, $func), array($info));
 				}
 			}
-		}
-		elseif (isset($args[$type])) {
+		} elseif (isset($args[$type])) {
 			call_user_func_array(array($mail, $func), array($args[$type]));
 		}
 	}

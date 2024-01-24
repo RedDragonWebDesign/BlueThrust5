@@ -55,8 +55,7 @@ $squadMemberList = $squadObj->getMemberList();
 $blnShowShoutBox = false;
 if (in_array($memberInfo['member_id'], $squadMemberList) && $squadInfo['privateshoutbox'] == 1) {
 	$blnShowShoutBox = true;
-}
-elseif ($squadInfo['privateshoutbox'] == 0) {
+} elseif ($squadInfo['privateshoutbox'] == 0) {
 	$blnShowShoutBox = true;
 }
 
@@ -76,7 +75,6 @@ if ($blnShowShoutBox) {
 
 
 	echo $shoutboxObj->dispShoutbox();
-}
-else {
+} else {
 	echo "no";
 }

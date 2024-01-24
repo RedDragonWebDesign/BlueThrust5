@@ -127,8 +127,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 	if (isset($_GET['threadID']) && is_numeric($_GET['threadID'])) {
 		$replyPMID = $_GET['threadID'];
-	}
-	else {
+	} else {
 		$replyPMID = 0;
 	}
 
@@ -171,8 +170,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 	require_once(BASE_DIRECTORY."members/console.form.php");
-}
-else {
+} else {
 	die("<script type='text/javascript'>window.location = '".MAIN_ROOT."login.php';</script>");
 }
 

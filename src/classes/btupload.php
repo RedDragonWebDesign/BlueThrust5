@@ -34,8 +34,7 @@ class BTUpload {
 
 		if (!$outsideLink) {
 			$this->arrFile = $uploadfile;
-		}
-		else {
+		} else {
 			$this->strOutsideFileURL = $uploadfile;
 		}
 
@@ -68,8 +67,7 @@ class BTUpload {
 
 		if ($this->blnOutsideLink) {
 			$strFileName = $this->strOutsideFileURL;
-		}
-		else {
+		} else {
 			$strFileName = $this->arrFile['name'];
 		}
 
@@ -79,8 +77,7 @@ class BTUpload {
 			if (strtolower(substr($strFileName, (strlen($fileExt))*-1)) == $fileExt) {
 				$checkExt++;
 				$this->strFileExt = $fileExt;
-			}
-			elseif ($fileExt == "") {
+			} elseif ($fileExt == "") {
 				$this->strFileExt = strtolower(substr($strFileName, strpos($strFileName, ".")));
 				$checkExt++;
 			}
@@ -111,8 +108,7 @@ class BTUpload {
 			if (isset($arrHeaders['Content-Length']) && $arrHeaders['Content-Length'] <= (self::ONE_MEGABYTE*$this->intUploadSizeLimit)) {
 				$returnVal = true;
 			}
-		}
-		else {
+		} else {
 			if ($this->arrFile['size'] <= (self::ONE_MEGABYTE*$this->intUploadSizeLimit)) {
 				$returnVal = true;
 			}
@@ -134,8 +130,7 @@ class BTUpload {
 
 			if (!$this->blnOutsideLink) {
 				$blnUploadFile = move_uploaded_file($this->arrFile['tmp_name'], $this->strNewFileLoc.$this->strUploadedFileName);
-			}
-			else {
+			} else {
 				$uploadContents = file_get_contents($this->strOutsideFileURL);
 
 				$createFile = file_put_contents($this->strNewFileLoc.$this->strUploadedFileName, $uploadContents);
@@ -148,8 +143,7 @@ class BTUpload {
 			if (!$blnUploadFile) {
 				$this->arrErrors[] = "Can't Upload";
 			}
-		}
-		else {
+		} else {
 			$this->arrErrors[] = "File Size and Extension";
 		}
 

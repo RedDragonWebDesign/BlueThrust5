@@ -45,8 +45,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		if (count($addAppForm->errors) == 0) {
 			if ($appComponentObj->getHighestOrderNum() == "") {
 				$componentOrderNum = $appComponentObj->validateOrder("first", "before");
-			}
-			else {
+			} else {
 				$appComponentObj->selectByOrder(1);
 				$componentOrderNum = $appComponentObj->makeRoom("after");
 			}
@@ -65,8 +64,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					foreach ($_SESSION['btAppComponent']['cOptions'] as $optionValue) {
 						$appComponentSelectOptionObj->addNew(array("appcomponent_id", "componentvalue"), array($newComponentID, $optionValue));
 					}
-				}
-				elseif ($_POST['newComponentType'] == "profile") {
+				} elseif ($_POST['newComponentType'] == "profile") {
 					$appComponentSelectOptionObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
 					$newComponentID = $appComponentObj->get_info("appcomponent_id");
 					$appComponentSelectOptionObj->addNew(array("appcomponent_id", "componentvalue"), array($newComponentID, $_POST['profileOptionID']));
@@ -117,8 +115,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					</script>
 					
 				";
-			}
-			else {
+			} else {
 				$addAppForm->errors[] = "nable to save information to the database.  Please contact the website administrator.";
 			}
 		}

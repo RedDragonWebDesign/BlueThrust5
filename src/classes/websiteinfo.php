@@ -33,8 +33,7 @@ class WebsiteInfo extends Basic {
 				$this->arrKeys[$row['name']] = $row['websiteinfo_id'];
 			}
 			$this->blnRefreshInfo = false;
-		}
-		else {
+		} else {
 			$this->arrObjInfo = $temp;
 		}
 
@@ -50,8 +49,7 @@ class WebsiteInfo extends Basic {
 				if (!$this->update(array("value"), array($arrValues[$key]))) {
 					$countErrors++;
 				}
-			}
-			else {
+			} else {
 				if (!$this->addNew(array("name", "value"), array($settingName, $arrValues[$key]))) {
 					$countErrors++;
 				}

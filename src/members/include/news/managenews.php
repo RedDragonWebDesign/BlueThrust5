@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -42,8 +41,7 @@ if (isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
 
 		$breadcrumbObj->addCrumb($consoleTitle, $MAIN_ROOT."members/console.php?cID=".$cID);
 		$breadcrumbObj->addCrumb("<b>Edit Post:</b> ".$newsInfo['postsubject']);
-	}
-	else {
+	} else {
 		unset($arrComponents['newstype']);
 		unset($arrComponents['pintohp']);
 		unset($arrComponents['subject']);
@@ -81,8 +79,7 @@ if (isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
 
 
 	$breadcrumbObj->updateBreadcrumb();
-}
-else {
+} else {
 	$postNewsCID = $consoleObj->findConsoleIDByName("Post News");
 
 	echo "

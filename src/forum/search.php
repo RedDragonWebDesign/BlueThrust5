@@ -256,8 +256,7 @@ if (isset($_POST['submit']) && $formObj->validate()) {
 
 	define("SHOW_SEARCHRESULTS", true);
 	require_once("search_results.php");
-}
-else {
+} else {
 	$formObj->show();
 }
 

@@ -28,8 +28,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -111,8 +110,7 @@ while ($row = $result->fetch_assoc()) {
 
 	if ($websiteInfo['maxdsl'] == 0) {
 		$tableCols = 4;
-	}
-	else {
+	} else {
 		$tableCols = 5;
 	}
 
@@ -123,8 +121,7 @@ while ($row = $result->fetch_assoc()) {
 			<td class='main' align='center' colspan='".$tableCols."'><img src='".$rankCatInfo['imageurl']."' width='".$rankCatInfo['imagewidth']."' height='".$rankCatInfo['imageheight']."' onmouseover=\"showToolTip('<b>".$rankCatInfo['name']."</b><br>".$rankCatInfo['description']."')\" onmouseout='hideToolTip()'></td>
 		</tr>
 		";
-	}
-	else {
+	} else {
 		$dispCatDesc = "";
 		if ($rankCatInfo['description'] != "") {
 			$dispCatDesc = " style='cursor: pointer' onmouseover=\"showToolTip('<b>".$rankCatInfo['name']."</b><br>".$rankCatInfo['description']."')\" onmouseout='hideToolTip()'";
@@ -179,8 +176,7 @@ while ($row = $result->fetch_assoc()) {
 			$gameInfo = $gameObj->get_info_filtered();
 			$arrGameCount[] = $gameInfo['gamesplayed_id'];
 			$dispMainGame = "<div class='memberPageImage'><img src='".$gameInfo['imageurl']."' width='".$gameInfo['imagewidth']."' height='".$gameInfo['imageheight']."' onmouseover=\"showToolTip('".$gameInfo['name']."')\" onmouseout='hideToolTip()'></div>";
-		}
-		else {
+		} else {
 			$arrGameCount[] = "NotSet";
 		}
 
@@ -195,11 +191,9 @@ while ($row = $result->fetch_assoc()) {
 
 		if (is_numeric($dispDSL) && $dispDSL >= 0 && $dispDSL <= $maxDSLIntervals) {
 			$arrCountDSL[1]++;
-		}
-		elseif (is_numeric($dispDSL) && $dispDSL > $maxDSLIntervals && $dispDSL <= ($maxDSLIntervals*2)) {
+		} elseif (is_numeric($dispDSL) && $dispDSL > $maxDSLIntervals && $dispDSL <= ($maxDSLIntervals*2)) {
 			$arrCountDSL[2]++;
-		}
-		elseif (is_numeric($dispDSL)) {
+		} elseif (is_numeric($dispDSL)) {
 			$arrCountDSL[3]++;
 		}
 
@@ -208,8 +202,7 @@ while ($row = $result->fetch_assoc()) {
 
 		if ($memberListInfo['loggedin'] == 1 && (time()-$memberListInfo['lastseen']) < 600) {
 			$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/onlinedot.png' onmouseover=\"showToolTip('".$memberListInfo['username']." is Online!')\" onmouseout='hideToolTip()'>";
-		}
-		else {
+		} else {
 			$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/offlinedot.png'>";
 
 			if ($memberListInfo['loggedin'] == 1) {
@@ -323,15 +316,13 @@ if ($websiteInfo['maxdsl'] != 0) {
 			$highEndDSL = $maxDSLIntervals;
 			$lowEndDSL = 0;
 			$extraDSLMessage = "These members are very safe from being disabled due to inactivity.";
-		}
-		elseif ($i == 2) {
+		} elseif ($i == 2) {
 			$dispTitle = "Medium DSL";
 			$dispColor = $websiteInfo['meddsl'];
 			$highEndDSL = $maxDSLIntervals*2;
 			$lowEndDSL =  $maxDSLIntervals+1;
 			$extraDSLMessage = "These members are somewhat safe from being disabled but should log in soon.";
-		}
-		else {
+		} else {
 			$dispTitle = "High DSL";
 			$dispColor = $websiteInfo['highdsl'];
 			$highEndDSL = $websiteInfo['maxdsl']-1;

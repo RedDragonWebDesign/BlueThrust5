@@ -11,8 +11,7 @@ if ($_POST['step2submit']) {
 			&nbsp;&nbsp;<b>MySQL Response:</b> ".$mysqli->connect_error."<br>";
 
 		$countErrors++;
-	}
-	else {
+	} else {
 		if ($_POST['installType'] == 1) {
 			// Fresh Install
 
@@ -34,8 +33,7 @@ if ($_POST['step2submit']) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;<b>&middot;</b> The admin password must be at least 6 characters long.<br>";
 			}
-		}
-		else {
+		} else {
 			// Updating
 
 
@@ -46,8 +44,7 @@ if ($_POST['step2submit']) {
 			if (!$member->authorizeLogin($_POST['adminpassword'], 1)) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;<b>&middot;</b> The admin username/password combination was incorrect.<br>";
-			}
-			elseif ($member->authorizeLogin($_POST['adminpassword'], 1) && $member->get_info("rank_id") != 1) {
+			} elseif ($member->authorizeLogin($_POST['adminpassword'], 1) && $member->get_info("rank_id") != 1) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You entered incorrect admin login information.<br>";
 			}
@@ -87,8 +84,7 @@ if ($_POST['step2submit']) {
 
 			if (file_put_contents("../_config.php", $configInput)) {
 				echo "Config File Created!<br><br>";
-			}
-			else {
+			} else {
 				echo "Unable to populate config file!  You will have to manually create the config file.  Click <a href=''>HERE</a> to view instructions on setting it up.<br><br>";
 			}
 
@@ -138,8 +134,7 @@ if ($_POST['step2submit']) {
 
 			if ($_POST['installType'] == 1) {
 				$fullSQL = file_get_contents("cs4.sql");
-			}
-			else {
+			} else {
 				$fullSQL = file_get_contents("cs4update.sql");
 			}
 
@@ -168,8 +163,7 @@ if ($_POST['step2submit']) {
 					if ($result = $mysqli->store_result()) {
 						$result->free();
 					}
-				}
-				while ($mysqli->next_result());
+				} while ($mysqli->next_result());
 
 
 				echo "Successfully set up database!<br><br>";
@@ -189,8 +183,7 @@ if ($_POST['step2submit']) {
 					$encryptPassword = crypt($_POST['adminpassword'], $strSalt);
 
 					$mysqli->query("INSERT INTO ".$_POST['tableprefix']."members (username, password, password2, rank_id, datejoined, lastlogin) VALUES ('".$_POST['adminusername']."', '".$encryptPassword."', '".$strSalt."', '1', '".time()."', '".time()."')");
-				}
-				else {
+				} else {
 					if ($blnConvertWebsiteInfo) {
 						// Convert websiteinfo table for people updating
 						define("CONVERT_WEBSITEINFO", true);
@@ -260,8 +253,7 @@ if ($_POST['step2submit']) {
 							$consoleOptionObj->addNew($arrColumns, $arrValues);
 
 							$consoleOptionObj->resortOrder();
-						}
-						elseif ($consoleOptionName == "Private Messages" && $checkConsole !== false && $pmCatID != "") {
+						} elseif ($consoleOptionName == "Private Messages" && $checkConsole !== false && $pmCatID != "") {
 							$consoleOptionObj->select($checkConsole);
 							$consoleOptionObj->update(array("consolecategory_id", "sortnum"), array($pmCatID, 0));
 							$consoleOptionObj->resortOrder();
@@ -312,8 +304,7 @@ if ($_POST['step2submit']) {
 								
 								
 								";
-						}
-						else {
+						} else {
 							$themeMessage = "Your previous theme is no longer supported.  Please choose a new theme from the dropdown list below.<br><br><select id='theme' class='textBox'>".$themeOptions."</select>";
 
 							$jqDialogButton = "
@@ -384,8 +375,7 @@ if ($_POST['step2submit']) {
 							<a href='".$setMainRoot."'>View Your Website Now!</a>
 						</p>
 					";
-			}
-			else {
+			} else {
 				echo "Unable to create database!";
 			}
 

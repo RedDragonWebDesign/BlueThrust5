@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -88,7 +87,6 @@ echo "
 
 if (!isset($_GET['rID']) || $_GET['rID'] == "") {
 	require_once("manageranks/main.php");
-}
-elseif ($_GET['rID'] != "" && $_GET['action'] == "edit") {
+} elseif ($_GET['rID'] != "" && $_GET['action'] == "edit") {
 	require_once("manageranks/edit.php");
 }

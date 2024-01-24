@@ -33,8 +33,7 @@ foreach ($arrFolderList as $folderID => $folderName) {
 	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
-	}
-	else {
+	} else {
 		$addCSS = "";
 		$counter = 1;
 	}

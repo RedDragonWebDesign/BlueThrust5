@@ -33,8 +33,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -45,8 +44,7 @@ $gameObj = new Game($mysqli);
 if ($gameObj->select($_GET['gID'])) {
 	$gameObj->refreshImageSize();
 	$gameInfo = $gameObj->get_info_filtered();
-}
-else {
+} else {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 }
 
@@ -71,8 +69,7 @@ $arrGameStats = $gameObj->getAssociateIDs("ORDER BY ordernum");
 if (count($arrGameStats) > 0) {
 	if (isset($_GET['sID']) && in_array($_GET['sID'], $arrGameStats) && $gameStatObj->select($_GET['sID'])) {
 		$gameStatObj->select($_GET['sID']);
-	}
-	else {
+	} else {
 		$gameStatObj->select($arrGameStats[0]);
 		$_GET['sID'] = $arrGameStats[0];
 	}
@@ -87,8 +84,7 @@ if (count($arrGameStats) > 0) {
 
 		if ($gameStatInfo['stattype'] == "calculate") {
 			$arrTopPlayers[$memberID] = $gameObj->calcStat($_GET['sID'], $member);
-		}
-		else {
+		} else {
 			$arrTopPlayers[$memberID] = $member->getGameStatValue($_GET['sID']);
 		}
 	}
@@ -99,8 +95,7 @@ if (count($arrGameStats) > 0) {
 		$dispSort = "<a href='".$MAIN_ROOT."top-players/game.php?gID=".$_GET['gID']."&sID=".$_GET['sID']."&sort=up'><img src='".$MAIN_ROOT."themes/".$THEME."/images/downarrow.png'></a>";
 		$_GET['sort'] = "down";
 		arsort($arrTopPlayers);
-	}
-	else {
+	} else {
 		$dispSort = "<a href='".$MAIN_ROOT."top-players/game.php?gID=".$_GET['gID']."&sID=".$_GET['sID']."&sort=down'><img src='".$MAIN_ROOT."themes/".$THEME."/images/uparrow.png'></a>";
 		$_GET['sort'] = "up";
 		asort($arrTopPlayers);
@@ -193,8 +188,7 @@ if (count($arrGameStats) > 0) {
 				});
 			</script>
 		";
-}
-else {
+} else {
 	echo "
 		
 			<div class='shadedBox' style='width: 300px; margin-top: 50px; margin-left: auto; margin-right: auto'>

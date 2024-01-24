@@ -50,8 +50,7 @@ while ($row = $result->fetch_assoc()) {
 
 	if ($memInfo['profilepic'] == "") {
 		$dispProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
-	}
-	else {
+	} else {
 		$dispProfilePic = $MAIN_ROOT.$memInfo['profilepic'];
 	}
 
@@ -87,8 +86,7 @@ while ($row = $result->fetch_assoc()) {
 
 			if ($memInfo['profilepic'] == "") {
 				$dispProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
-			}
-			else {
+			} else {
 				$dispProfilePic = $MAIN_ROOT.$memInfo['profilepic'];
 			}
 
@@ -139,8 +137,7 @@ while ($row = $result->fetch_assoc()) {
 	
 		</li>
 		";
-	}
-	else {
+	} else {
 		echo "<li class='dashedLine'></li>";
 	}
 }

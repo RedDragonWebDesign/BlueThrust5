@@ -39,8 +39,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				<a href='javascript:void(0)' onclick='setMembersOnlyTaggerStatus()'>Turn On Member's Only Page Tagger</a>
 			
 			";
-		}
-		else {
+		} else {
 			$_SESSION['btMembersOnlyTagger'] = 1;
 
 			echo "
@@ -51,8 +50,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			
 			";
 		}
-	}
-	elseif ($_POST['setPageStatus'] == 1 && !isset($_POST['pageID']) && $_SESSION['btMembersOnlyTagger'] == 1) {
+	} elseif ($_POST['setPageStatus'] == 1 && !isset($_POST['pageID']) && $_SESSION['btMembersOnlyTagger'] == 1) {
 		$taggerObj = new Basic($mysqli, "membersonlypage", "pageurl");
 
 		if (!$taggerObj->select($_POST['tagURL'], false)) {
@@ -70,8 +68,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				
 		
 			";
-		}
-		else {
+		} else {
 			$taggerObj->delete();
 			echo "
 			
@@ -86,23 +83,20 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			
 			";
 		}
-	}
-	elseif ($_POST['setPageStatus'] == 1 && isset($_POST['pageID'])) {
+	} elseif ($_POST['setPageStatus'] == 1 && isset($_POST['pageID'])) {
 		$taggerObj = new Basic($mysqli, "membersonlypage", "page_id");
 		if ($taggerObj->select($_POST['pageID'])) {
 			$taggerObj->delete();
 			require_once("membersonlypageslist.php");
 		}
-	}
-	elseif ($_POST['setSectionStatus'] == 1 && ($_POST['pageID'] == "profile" || $_POST['pageID'] == "forum") && ($_POST['pageStatusValue'] == 1 || $_POST['pageStatusValue'] == 0)) {
+	} elseif ($_POST['setSectionStatus'] == 1 && ($_POST['pageID'] == "profile" || $_POST['pageID'] == "forum") && ($_POST['pageStatusValue'] == 1 || $_POST['pageStatusValue'] == 0)) {
 		$settingName = "private".$_POST['pageID'];
 		$arrColumn = array("value");
 		$arrValue = array($_POST['pageStatusValue']);
 		$webInfoObj->select($webInfoObj->get_key($settingName));
 		if ($webInfoObj->update($arrColumn, $arrValue)) {
 			echo "<span class='successFont'><i>section privacy updated!</i></span>";
-		}
-		else {
+		} else {
 			echo "<span class='failedFont'><i>unable to update privacy settings!</i></span>";
 		}
 	}

@@ -24,8 +24,7 @@ require_once($prevFolder."classes/member.php");
 
 if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
-}
-else {
+} else {
 	$dispHTTP = "https://";
 }
 
@@ -94,16 +93,13 @@ if (isset($_GET['code'])) {
 			";
 
 			exit();
-		}
-		else {
+		} else {
 			$dispError = "There is no user associated with this Facebook account.  You must connect your Facebook account while logged in before using this feature.";
 		}
-	}
-	else {
+	} else {
 		$dispError = "Unable to validate your Facebook account, please log in regularly through the website.";
 	}
-}
-elseif (isset($_GET['error_reason'])) {
+} elseif (isset($_GET['error_reason'])) {
 	$dispError = "There is no user associated with this Facebook account.  You must connect your Facebook account while logged in before using this feature.";
 }
 

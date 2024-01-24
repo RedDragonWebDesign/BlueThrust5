@@ -252,8 +252,7 @@ class Squad extends Basic {
 
 		if ($this->blnManageAllSquads) {
 			$returnVal = true;
-		}
-		elseif ($intSquadMemberID !== false && in_array($privName, $this->arrSquadPrivileges)) {
+		} elseif ($intSquadMemberID !== false && in_array($privName, $this->arrSquadPrivileges)) {
 			$this->objSquadMember->select($intSquadMemberID);
 			$squadMemberRankID = $this->objSquadMember->get_info("squadrank_id");
 
@@ -287,8 +286,7 @@ class Squad extends Basic {
 				if ($info['logourl'] != "" && file_exists(BASE_DIRECTORY.$info['logourl'])) {
 					deleteFile(BASE_DIRECTORY.$info['logourl']);
 				}
-			}
-			else {
+			} else {
 				$this->MySQL->displayError("basic.php");
 			}
 		}

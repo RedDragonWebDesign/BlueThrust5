@@ -82,8 +82,7 @@ if ( ! empty($_POST['submit']) ) {
 if ( empty($_POST['submit']) && ! constant("LOGGED_IN")) {
 	if ( $fail ) {
 		$errorMessage = "You entered an incorrect username/password combination!";
-	}
-	else {
+	} else {
 		$errorMessage = "You must be logged in to view this page!";
 	}
 
@@ -125,8 +124,7 @@ if ( empty($_POST['submit']) && ! constant("LOGGED_IN")) {
 
 
 ";
-}
-elseif (constant("LOGGED_IN")) {
+} elseif (constant("LOGGED_IN")) {
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."members/console.php'

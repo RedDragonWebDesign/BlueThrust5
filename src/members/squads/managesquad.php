@@ -25,8 +25,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -73,11 +72,9 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 	if (($squadObj->select($_GET['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], $pID)) || $blnManageAllSquads) {
 		$blnShowPage = true;
-	}
-	elseif ($squadObj->select($_GET['sID']) && !$squadObj->memberHasAccess($memberInfo['member_id'], $pID)) {
+	} elseif ($squadObj->select($_GET['sID']) && !$squadObj->memberHasAccess($memberInfo['member_id'], $pID)) {
 		$blnShowPage = false;
-	}
-	else {
+	} else {
 		echo "
 			<script type='text/javascript'>
 				window.location = '".$MAIN_ROOT."'
@@ -90,8 +87,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		if ($memberInfo['member_id'] == $squadObj->get_info("member_id") || $blnManageAllSquads) {
 			$blnShowPage = true;
 		}
-	}
-	elseif ($pID == "leavesquad") {
+	} elseif ($pID == "leavesquad") {
 		if ($memberInfo['member_id'] != $squadObj->get_info("member_id")) {
 			$blnShowPage = true;
 		}
@@ -124,13 +120,11 @@ if ($blnShowPage) {
 		echo "
 		<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=ManageNews'>Go Back</a></p>
 		";
-	}
-	elseif ($_GET['rID'] != "") {
+	} elseif ($_GET['rID'] != "") {
 		echo "
 		<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=ManageRanks'>Go Back</a></p>
 		";
-	}
-	else {
+	} else {
 		echo "
 		<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&select=".$sID."'>Go Back</a></p>
 		";
@@ -187,19 +181,16 @@ if ($blnShowPage) {
 		echo "
 		<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=ManageNews'>Go Back</a></p></div>
 		";
-	}
-	elseif ($_GET['rID'] != "") {
+	} elseif ($_GET['rID'] != "") {
 		echo "
 		<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=ManageRanks'>Go Back</a></p></div>
 		";
-	}
-	else {
+	} else {
 		echo "
 		<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&select=".$sID."'>Go Back</a></p></div>
 		";
 	}
-}
-else {
+} else {
 	echo "
 
 	<div class='shadedBox' style='width: 400px; margin-top: 50px; margin-bottom: 50px; margin-left: auto; margin-right: auto;'>

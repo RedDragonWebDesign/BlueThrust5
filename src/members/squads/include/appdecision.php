@@ -72,8 +72,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 						});
 					</script>
 				";
-			}
-			else {
+			} else {
 				$squadAppObj->update(array("dateaction", "status", "squadmember_id"), array(time(), "2", $memberInfo['member_id']));
 
 				$member->select($squadAppInfo['member_id']);
@@ -89,8 +88,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			
 				";
 			}
-		}
-		elseif (count($squadRankList) <= 1 && $_POST['action'] == "accept") {
+		} elseif (count($squadRankList) <= 1 && $_POST['action'] == "accept") {
 			echo "
 				<div style='display: none' id='errorMessage'>
 					<p align='center' class='main'>You must have at least one rank besides the founder's rank to add a new member!</p>
@@ -122,8 +120,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 		require_once("applist.php");
-	}
-	else {
+	} else {
 		echo "
 			<script type='text/javascript'>
 				window.location = '".$MAIN_ROOT."members/console.php?cID=".$cID."'

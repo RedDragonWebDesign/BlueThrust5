@@ -55,8 +55,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 		if ($squadMemberInfo['avatar'] == "") {
 			$squadMemberInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
-		}
-		else {
+		} else {
 			$squadMemberInfo['avatar'] = $MAIN_ROOT.$squadMemberInfo['avatar'];
 		}
 

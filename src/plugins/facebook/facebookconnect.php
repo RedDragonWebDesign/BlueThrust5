@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -26,8 +25,7 @@ else {
 
 if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
-}
-else {
+} else {
 	$dispHTTP = "https://";
 }
 
@@ -158,8 +156,7 @@ if ($blnCheckForFacebook) {
 		</script>
 	
 	";
-}
-elseif (!$blnCheckForFacebook && isset($_GET['code'])) {
+} elseif (!$blnCheckForFacebook && isset($_GET['code'])) {
 	$fbObj->tokenNonce = $_SESSION['btFacebookNonce'];
 
 	$arrURLInfo = parse_url($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
@@ -184,8 +181,7 @@ elseif (!$blnCheckForFacebook && isset($_GET['code'])) {
 			</script>
 		
 		";
-	}
-	else {
+	} else {
 		echo "
 		
 			<div class='shadedBox' style='margin-left: auto; margin-right: auto; width: 50%'>
@@ -197,16 +193,14 @@ elseif (!$blnCheckForFacebook && isset($_GET['code'])) {
 		
 		";
 	}
-}
-elseif (!$blnCheckForFacebook && isset($_GET['error_reason'])) {
+} elseif (!$blnCheckForFacebook && isset($_GET['error_reason'])) {
 	echo "
 	
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."members';
 		</script>
 	";
-}
-elseif (!$blnCheckForFacebook) {
+} elseif (!$blnCheckForFacebook) {
 	$loginURL = $fbObj->getFBConnectLink($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 	$_SESSION['btFacebookNonce'] = $fbObj->tokenNonce;
 

@@ -104,8 +104,7 @@ if ($_POST['step1submit']) {
 				</form>
 			
 			";
-	}
-	else {
+	} else {
 		$_POST['step1submit'] = false;
 	}
 }

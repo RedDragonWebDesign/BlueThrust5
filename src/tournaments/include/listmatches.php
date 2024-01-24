@@ -65,8 +65,7 @@ foreach ($arrMatches as $matchID) {
 	if ($matchInfo['outcome'] == 1) {
 		$addStyle[1] = " class='successFont' style='font-weight: bold'";
 		$addStyle[2] = " class='failedFont'";
-	}
-	elseif ($matchInfo['outcome'] == 2) {
+	} elseif ($matchInfo['outcome'] == 2) {
 		$addStyle[2] = " class='successFont' style='font-weight: bold'";
 		$addStyle[1] = " class='failedFont'";
 	}

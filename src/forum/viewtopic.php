@@ -126,8 +126,7 @@ $totalPosts = $totalPostsSQL->num_rows;
 if (!isset($_GET['pID']) || !is_numeric($_GET['pID'])) {
 	$intOffset = 0;
 	$_GET['pID'] = 1;
-}
-else {
+} else {
 	$intOffset = $NUM_PER_PAGE*($_GET['pID']-1);
 }
 
@@ -177,8 +176,7 @@ $dispManagePosts = "";
 if ($LOGGED_IN) {
 	if ($topicInfo['lockstatus'] == 0) {
 		$dispPostReply = "<b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$topicInfo['forumboard_id']."&tID=".$topicInfo['forumtopic_id']."'>POST REPLY</a> &laquo;</b>";
-	}
-	else {
+	} else {
 		$dispPostReply = "<b>&raquo; LOCKED &laquo;</b>";
 	}
 
@@ -188,16 +186,14 @@ if ($LOGGED_IN) {
 
 		if ($topicInfo['stickystatus'] == 0) {
 			$dispManagePosts .= "<b>&raquo <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&tID=".$topicInfo['forumtopic_id']."&action=sticky'>STICKY TOPIC</a> &laquo;</b>&nbsp;&nbsp;&nbsp;";
-		}
-		else {
+		} else {
 			$dispManagePosts .= "<b>&raquo <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&tID=".$topicInfo['forumtopic_id']."&action=sticky'>UNSTICKY TOPIC</a> &laquo;</b>&nbsp;&nbsp;&nbsp;";
 		}
 
 
 		if ($topicInfo['lockstatus'] == 0) {
 			$dispManagePosts .= "<b>&raquo <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&tID=".$topicInfo['forumtopic_id']."&action=lock'>LOCK TOPIC</a> &laquo;</b>&nbsp;&nbsp;&nbsp;";
-		}
-		else {
+		} else {
 			$dispManagePosts .= "<b>&raquo <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&tID=".$topicInfo['forumtopic_id']."&action=lock'>UNLOCK TOPIC</a> &laquo;</b>&nbsp;&nbsp;&nbsp;";
 		}
 

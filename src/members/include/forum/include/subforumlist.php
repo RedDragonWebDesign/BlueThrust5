@@ -39,8 +39,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		$arrSelectBoard = "";
 		if (isset($_POST['bID']) && $boardObj->select($_POST['bID'])) {
 			$arrSelectBoard = $boardObj->findBeforeAfter();
-		}
-		else {
+		} else {
 			$_POST['bID'] = "";
 		}
 

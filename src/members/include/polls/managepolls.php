@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -34,8 +33,7 @@ if (isset($_GET['pID']) && $pollObj->select($_GET['pID'])) {
 	define("SHOW_EDITPOLL", true);
 	$pollInfo = $pollObj->get_info_filtered();
 	require_once("include/edit.php");
-}
-else {
+} else {
 	$createPollCID = $consoleObj->findConsoleIDByName("Create a Poll");
 	echo "
 		<div class='formDiv' style='border: 0px; text-align: right; background: none'>

@@ -60,8 +60,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				</p>
 			</div>
 		";
-	}
-	else {
+	} else {
 		echo "
 			<div id='memAppMessage'>
 				<p class='main' align='center'>

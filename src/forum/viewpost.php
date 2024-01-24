@@ -37,8 +37,7 @@ if ($boardObj->objPost->select($_GET['post'])) {
 	";
 
 	$boardObj->objPost->show(true);
-}
-else {
+} else {
 	echo "
 		<div class='shadedBox' style='width: 45%; margin-left: auto; margin-right: auto; margin-top: 20px'>
 			<p align='center'>

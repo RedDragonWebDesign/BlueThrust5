@@ -91,8 +91,7 @@ class TournamentPlayer extends Basic {
 				// A reminder has already been set, need to update the time!
 				// Update reminder
 				$member->setEmailReminder($sendReminder, "Tournament Starting!", $message, $tournamentReminderID);
-			}
-			else {
+			} else {
 				// Add new reminder
 				$emailReminderID = $member->setEmailReminder($sendReminder, "Tournament Starting!", $message);
 				$tournamentReminder = new Basic($this->MySQL, "tournament_reminder", "tournamentreminder_id");

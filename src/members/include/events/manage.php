@@ -17,8 +17,7 @@ require_once("../classes/event.php");
 $_SESSION['btEventID'] = "";
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -46,8 +45,7 @@ $sqlEvents = "('".implode("','", $arrEvents)."')";
 
 if ($eventObj->getManageAllStatus()) {
 	$query = "SELECT * FROM ".$dbprefix."events ORDER BY title";
-}
-else {
+} else {
 	$query = "SELECT * FROM ".$dbprefix."events WHERE member_id = '".$memberInfo['member_id']."' OR event_id IN ".$sqlEvents." ORDER BY title";
 }
 
@@ -106,8 +104,7 @@ while ($row = $result->fetch_assoc()) {
 		if ($row['startdate'] < time()) {
 			$dispEventOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=SetAttendance'>Set Attendance</a><br>";
 		}
-	}
-	else {
+	} else {
 		// Invited Member
 
 		$eventObj->select($row['event_id']);
@@ -117,14 +114,12 @@ while ($row = $result->fetch_assoc()) {
 		if ($eventMemberInfo['status'] == 1) {
 			if ($eventMemberInfo['position_id'] == 0 && $row['invitepermission'] == 1) {
 				$dispEventOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=InviteMembers'>Invite Members</a><br>";
-			}
-			elseif ($eventMemberInfo['position_id'] != 0 && $eventObj->objEventPosition->select($eventMemberInfo['position_id']) && $eventObj->objEventPosition->get_info("event_id") == $row['event_id']) {
+			} elseif ($eventMemberInfo['position_id'] != 0 && $eventObj->objEventPosition->select($eventMemberInfo['position_id']) && $eventObj->objEventPosition->get_info("event_id") == $row['event_id']) {
 				$eventPositionInfo = $eventObj->objEventPosition->get_info();
 				foreach ($arrPositionOptions as $key => $value) {
 					if ($eventPositionInfo[$key] == 1 && $key != "attendenceconfirm") {
 						$dispEventOptions .= $value;
-					}
-					elseif ($eventPositionInfo[$key] == 1 && $key == "attendenceconfirm" && $eventPositionInfo['manageinvites'] == 0) {
+					} elseif ($eventPositionInfo[$key] == 1 && $key == "attendenceconfirm" && $eventPositionInfo['manageinvites'] == 0) {
 						$dispEventOptions .= $value;
 					}
 				}

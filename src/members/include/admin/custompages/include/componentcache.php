@@ -66,8 +66,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 		$dispType = ucfirst($value['type']);
 		if ($value['type'] == "multiselect") {
 			$dispType = "Multi-Select";
-		}
-		elseif ($value['type'] == "largeinput") {
+		} elseif ($value['type'] == "largeinput") {
 			$dispType = "Large-Input";
 		}
 

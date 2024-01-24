@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -34,8 +33,7 @@ if ( ! empty($_POST['submit']) ) {
 	if (!$squadObj->select($_POST['squad'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid squad!<br>";
-	}
-	else {
+	} else {
 		$outstandingApps = $squadObj->getOutstandingApplications();
 
 		if (in_array($memberInfo['member_id'], $outstandingApps)) {
@@ -70,8 +68,7 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			
 			";
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}

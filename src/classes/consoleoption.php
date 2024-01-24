@@ -56,8 +56,7 @@ class ConsoleOption extends BasicSort {
 
 			if ($countRows > 0) {
 				$returnVal = true;
-			}
-			elseif ($intRankID == 1) {
+			} elseif ($intRankID == 1) {
 				$returnVal = true;
 			}
 		}
@@ -152,8 +151,7 @@ class ConsoleOption extends BasicSort {
 			while ($row = $result->fetch_assoc()) {
 				if ($row['allowdeny'] == 0) {
 					$addTo += -1;
-				}
-				else {
+				} else {
 					$addTo += 1;
 				}
 			}
@@ -182,8 +180,7 @@ class ConsoleOption extends BasicSort {
 
 			if (!$this->MySQL->error) {
 				$returnVal = true;
-			}
-			else {
+			} else {
 				$this->MySQL->displayError("basic.php");
 			}
 		}

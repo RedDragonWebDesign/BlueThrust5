@@ -15,8 +15,7 @@
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -117,8 +116,7 @@ if ($_GET['rID'] == "") {
 	
 	</script>
 	";
-}
-elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $squadObj->objSquadRank->get_info("squad_id") == $squadInfo['squad_id']) {
+} elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $squadObj->objSquadRank->get_info("squad_id") == $squadInfo['squad_id']) {
 	$dispError = "";
 	$countErrors = 0;
 
@@ -159,11 +157,9 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 			if ($blnCheckOrder1 || $blnCheckOrder2 || $blnCheckOrder3 || $blnCheckOrder4) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid rank order.<br>";
-			}
-			elseif ($_POST['rankorder'] == "first" && count($arrRankList) == 2) {
+			} elseif ($_POST['rankorder'] == "first" && count($arrRankList) == 2) {
 				$intNewOrderNum = 2;
-			}
-			elseif ($_POST['rankorder'] != "first" && $squadObj->objSquadRank->select($_POST['rankorder'])) {
+			} elseif ($_POST['rankorder'] != "first" && $squadObj->objSquadRank->select($_POST['rankorder'])) {
 				$intNewOrderNum = $squadObj->objSquadRank->makeRoom($_POST['beforeafter']);
 
 				if ($intNewOrderNum === false) {
@@ -185,8 +181,7 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 			if ($intFounderRankID == $squadRankInfo['squadrank_id']) {
 				$arrColumns = array("name");
 				$arrValues = array($_POST['rankname']);
-			}
-			else {
+			} else {
 				$arrColumns = array("name", "sortnum", "postnews", "managenews", "postshoutbox", "manageshoutbox", "addrank", "manageranks", "editprofile", "sendinvites", "acceptapps", "setrank", "removemember");
 				$arrValues = array($_POST['rankname'], $intNewOrderNum, $_POST['postnews'], $_POST['managenews'], $_POST['postshoutbox'], $_POST['manageshoutbox'], $_POST['addrank'], $_POST['manageranks'], $_POST['editprofile'], $_POST['sendinvites'], $_POST['acceptapps'], $_POST['setrank'], $_POST['removemember']);
 			}
@@ -205,8 +200,7 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 		
 				";
 				$squadObj->objSquadRank->resortOrder();
-			}
-			else {
+			} else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 			}
@@ -243,8 +237,7 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 			if ($squadObj->objSquadRank->select($arrSquadRanks[$intHighestSortNum-2])) {
 				$selectRank = $arrSquadRanks[$intHighestSortNum-2];
 			}
-		}
-		else {
+		} else {
 			if ($squadObj->objSquadRank->select($arrSquadRanks[$squadRankInfo['sortnum']])) {
 				$selectRank = $arrSquadRanks[$squadRankInfo['sortnum']];
 			}
@@ -279,8 +272,7 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 			$dispChecked = "";
 			if ($squadRankInfo['squadrank_id'] == $intFounderRankID) {
 				$dispChecked = "disabled='disabled' checked";
-			}
-			elseif ($squadRankInfo[$squadOption] == 1) {
+			} elseif ($squadRankInfo[$squadOption] == 1) {
 				$dispChecked = "checked";
 			}
 
@@ -324,8 +316,7 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 							<select name='beforeafter' class='textBox'><option value='before'>Before</option><option value='after' ".$selectAfter.">After</option></select><br>
 							<select name='rankorder' class='textBox'>".$rankoptions."</select>
 							";
-		}
-		else {
+		} else {
 			echo "<span style='font-weight: bold; font-style: italic'>Founder Rank</span>";
 		}
 

@@ -101,11 +101,9 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$numOfNewsPosts = 0;
 		if ($_POST['showHPNews'] == "yes" && $_POST['numOfNewsPosts'] == "custom" && is_numeric($_POST['customNewsAmount']) && $_POST['customNewsAmount'] > 0) {
 			$numOfNewsPosts = $_POST['customNewsAmount'];
-		}
-		elseif ($_POST['showHPNews'] == "yes" && $_POST['numOfNewsPosts'] == "all") {
+		} elseif ($_POST['showHPNews'] == "yes" && $_POST['numOfNewsPosts'] == "all") {
 			$numOfNewsPosts = -1;
-		}
-		elseif ($_POST['showHPNews'] == "yes" &&  is_numeric($_POST['numOfNewsPosts']) && $_POST['numOfNewsPosts'] > 0) {
+		} elseif ($_POST['showHPNews'] == "yes" &&  is_numeric($_POST['numOfNewsPosts']) && $_POST['numOfNewsPosts'] > 0) {
 			$numOfNewsPosts = $_POST['numOfNewsPosts'];
 		}
 
@@ -142,8 +140,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					$('#errorDiv').hide();
 				</script>
 			";
-		}
-		else {
+		} else {
 			echo "
 				<script type='text/javascript'>
 					$(document).ready(function() {

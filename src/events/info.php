@@ -28,8 +28,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -57,8 +56,7 @@ $eventMemberProfilePic = $eventPgMemberObj->get_info_filtered("profilepic");
 
 if ($eventMemberProfilePic == "") {
 	$eventMemberProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
-}
-else {
+} else {
 	$eventMemberProfilePic = $MAIN_ROOT.$eventMemberProfilePic;
 }
 
@@ -83,8 +81,7 @@ if (constant("LOGGED_IN") && $member->select($_SESSION['btUsername'])) {
 		";
 		exit();
 	}
-}
-elseif ($eventInfo['visibility'] != 0) {
+} elseif ($eventInfo['visibility'] != 0) {
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."events';
@@ -125,8 +122,7 @@ foreach ($arrInviteList as $value) {
 
 	if ($eventObj->objEventPosition->select($eventMemInfo['position_id'])) {
 		$arrSortInviteList[] = $value;
-	}
-	else {
+	} else {
 		$arrInviteListNoPosition[] = $value;
 	}
 }
@@ -138,8 +134,7 @@ foreach ($arrInviteList as $value) {
 	$sqlInviteList[1] = "('".implode("','", $arrInviteListNoPosition)."')";
 if ($eventInfo['startdate'] > time()) {
 	$query[1] = "SELECT m.rank_id, r.ordernum, m.member_id FROM ".$dbprefix."members m, ".$dbprefix."events_members em, ".$dbprefix."ranks r WHERE r.rank_id = m.rank_id AND m.member_id = em.member_id AND em.event_id = '".$eventInfo['event_id']."' AND em.member_id IN ".$sqlInviteList[1]." ORDER BY em.status DESC, r.ordernum DESC";
-}
-else {
+} else {
 	$query[1] = "SELECT m.rank_id, r.ordernum, m.member_id FROM ".$dbprefix."members m, ".$dbprefix."events_members em, ".$dbprefix."ranks r WHERE r.rank_id = m.rank_id AND m.member_id = em.member_id AND em.event_id = '".$eventInfo['event_id']."' AND em.member_id IN ".$sqlInviteList[1]." ORDER BY em.attendconfirm_admin, r.ordernum DESC";
 }
 
@@ -155,8 +150,7 @@ for ($x=0; $x<=1; $x++) {
 
 			if ($eventObj->objEventPosition->select($eventMemInfo['position_id'])) {
 				$dispPositionName = $eventObj->objEventPosition->get_info_filtered("name");
-			}
-			else {
+			} else {
 				$dispPositionName = "<i>None</i>";
 			}
 
@@ -165,8 +159,7 @@ for ($x=0; $x<=1; $x++) {
 
 			if ($eventMemberProfilePic == "") {
 				$eventMemberProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
-			}
-			else {
+			} else {
 				$eventMemberProfilePic = $MAIN_ROOT.$eventMemberProfilePic;
 			}
 
@@ -183,8 +176,7 @@ for ($x=0; $x<=1; $x++) {
 					default:
 						$dispAttendStatus = "Invited";
 				}
-			}
-			else {
+			} else {
 				$dispAttendStatus = "";
 				switch ($eventMemInfo['attendconfirm_admin']) {
 					case 1:
@@ -216,8 +208,7 @@ for ($x=0; $x<=1; $x++) {
 			if ($counter == 1) {
 				$addCSS = " alternateBGColor";
 				$counter = 0;
-			}
-			else {
+			} else {
 				$addCSS = "";
 				$counter = 1;
 			}
@@ -438,8 +429,7 @@ while ($row = $result->fetch_assoc()) {
 
 	if ($memInfo['profilepic'] == "") {
 		$dispProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
-	}
-	else {
+	} else {
 		$dispProfilePic = $MAIN_ROOT.$memInfo['profilepic'];
 	}
 
@@ -473,8 +463,7 @@ while ($row = $result->fetch_assoc()) {
 
 			if ($memInfo['profilepic'] == "") {
 						$dispProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
-			}
-			else {
+			} else {
 								$dispProfilePic = $MAIN_ROOT.$memInfo['profilepic'];
 			}
 
@@ -516,8 +505,7 @@ while ($row = $result->fetch_assoc()) {
 							
 							</li>
 						";
-	}
-	else {
+	} else {
 		echo "<li class='dashedLine'></li>";
 	}
 }

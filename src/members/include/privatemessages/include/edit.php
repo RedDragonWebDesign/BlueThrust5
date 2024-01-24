@@ -56,8 +56,7 @@ if ( ! empty($_POST['submit']) ) {
 			";
 
 			$pmFolderObj->resortOrder();
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save folder to the database.  Please contact the website administrator.<br>";
 		}

@@ -14,8 +14,7 @@
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
 	if (!$member->hasAccess($consoleObj)) {
@@ -95,8 +94,7 @@ if ( ! empty($_POST['submit']) ) {
 	if (trim($_FILES['uploadfile']['name']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must select a file to upload.<br>";
-	}
-	elseif ($countErrors == 0 && $downloadObj->uploadFile($_FILES['uploadfile'], $prevFolder."downloads/files/", $_POST['section'])) {
+	} elseif ($countErrors == 0 && $downloadObj->uploadFile($_FILES['uploadfile'], $prevFolder."downloads/files/", $_POST['section'])) {
 		$blnUploaded = true;
 		$arrDLColumns = array("downloadcategory_id", "member_id", "dateuploaded", "filename", "mimetype", "filesize", "splitfile1", "splitfile2", "name", "description");
 		$splitFiles = $downloadObj->getSplitNames();
@@ -119,8 +117,7 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 
 			";
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}

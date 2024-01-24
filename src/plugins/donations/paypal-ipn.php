@@ -35,8 +35,7 @@ if ($donationPlugin->selectByName("Donations")) {
 		$arrValues = array($customVars['campaign_id'], $customVars['member_id'], $customVars['name'], $customVars['message'], time(), $arrData['mc_gross'], $arrData['payer_email'], $arrData['txn_id'], $data);
 
 		$donationObj->addNew($arrColumns, $arrValues);
-	}
-	else {
+	} else {
 		$data = json_encode($p->ipn_data);
 		$data = "ERROR: - ".$p->last_error." - ".$data;
 

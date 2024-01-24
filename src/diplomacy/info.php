@@ -38,8 +38,7 @@ if ($ipbanObj->select($IP_ADDRESS, false)) {
 
 	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
 }
@@ -58,8 +57,7 @@ $statusInfo = $diplomacyStatusObj->get_info_filtered();
 
 if ($statusInfo['imageurl'] == "") {
 	$dispStatus = $statusInfo['name'];
-}
-else {
+} else {
 	if (strpos($statusInfo['imageurl'], "http://") === false) {
 		$statusInfo['imageurl'] = "../".$statusInfo['imageurl'];
 	}

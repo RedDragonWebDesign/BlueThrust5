@@ -63,8 +63,7 @@ class btThemeMenu {
 
 			if (!in_array($forumPostID, $arrReturn) && $boardAccessType == 0) {
 				$arrReturn[] = $forumPostID;
-			}
-			elseif (!in_array($forumPostID, $arrReturn) && $boardAccessType == 1 && $this->blnLoggedIn && $forumObj->memberHasAccess($memberInfo)) {
+			} elseif (!in_array($forumPostID, $arrReturn) && $boardAccessType == 1 && $this->blnLoggedIn && $forumObj->memberHasAccess($memberInfo)) {
 				$arrReturn[] = $forumPostID;
 			}
 		}
@@ -84,8 +83,7 @@ class btThemeMenu {
 				define("FORUMACTIVITY_MENUITEM", true);
 			}
 			require_once(BASE_DIRECTORY."themes/".$this->dir."/menus/forumactivity.php");
-		}
-		else {
+		} else {
 			echo "
 					<div class='menusForumActivityWrapper'>
 				";
@@ -105,8 +103,7 @@ class btThemeMenu {
 				if ($altColorSwitch == 1) {
 					$addCSS = "";
 					$altColorSwitch = 0;
-				}
-				else {
+				} else {
 					$addCSS = " alternateBGColor";
 					$altColorSwitch = 1;
 				}
@@ -150,8 +147,7 @@ class btThemeMenu {
 				define("NEWMEMBERS_MENUITEM", true);
 			}
 			require_once(BASE_DIRECTORY."themes/".$this->dir."/menus/newmembers.php");
-		}
-		else {
+		} else {
 			echo "
 					<div class='menusNewestMembersWrapper'>
 				";
@@ -166,8 +162,7 @@ class btThemeMenu {
 				if ($altColorSwitch == 1) {
 					$addCSS = "";
 					$altColorSwitch = 0;
-				}
-				else {
+				} else {
 					$addCSS = " alternateBGColor";
 					$altColorSwitch = 1;
 				}
@@ -326,8 +321,7 @@ class btThemeMenu {
 			echo "
 					<a href='".$menuImageInfo['link']."' target='".$menuImageInfo['linktarget']."'><img src='".$menuImageInfo['imageurl']."' style='".$dispSetWidth.$dispSetHeight."' title='".$menuItemInfo['name']."'></a>
 				";
-		}
-		else {
+		} else {
 			echo "
 					<img src='".$menuImageInfo['imageurl']."' title='".$menuItemInfo['name']."' style='".$dispSetWidth.$dispSetHeight."'>
 				";
@@ -448,8 +442,7 @@ class btThemeMenu {
 		$menuCatInfo = $this->menuCatObj->get_info();
 		if ($loc == "top") {
 			echo $this->getHeaderCode($menuCatInfo);
-		}
-		else {
+		} else {
 			echo "<br>";
 		}
 	}
@@ -467,8 +460,7 @@ class btThemeMenu {
 
 		if ($info['headertype'] == "image") {
 			$returnVal = "<img src='".MAIN_ROOT.$info['headercode']."' class='menuHeaderImg'>";
-		}
-		else {
+		} else {
 			$info['headercode'] = $this->replaceKeywords($info['headercode']);
 			$returnVal = $info['headercode'];
 		}
@@ -481,8 +473,7 @@ class btThemeMenu {
 
 		if ($this->blnLoggedIn) {
 			$this->displayLoggedIn();
-		}
-		else {
+		} else {
 			$this->displayLoggedOut();
 		}
 	}
@@ -504,8 +495,7 @@ class btThemeMenu {
 				$dispPMCount = "<b>(".$totalNewPMs.")</b> <img src='".MAIN_ROOT."themes/".THEME."/images/pmalert.gif'>";
 				$intPMCount = $totalNewPMs;
 				$alertPM = 1;
-			}
-			else {
+			} else {
 				$dispPMCount = "(".$totalPMs.")";
 				$intPMCount = $totalPMs;
 			}

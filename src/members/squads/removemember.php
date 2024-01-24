@@ -15,8 +15,7 @@
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -59,8 +58,7 @@ if ($_POST['submitted']) {
 	if (!$squadObj->objSquadMember->select($intSquadMemberID)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid squad member2.<br>";
-	}
-	elseif ($squadObj->objSquadMember->get_info("squad_id") != $squadInfo['squad_id']) {
+	} elseif ($squadObj->objSquadMember->get_info("squad_id") != $squadInfo['squad_id']) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid squad member3.<br>";
 	}
@@ -90,8 +88,7 @@ if ($_POST['submitted']) {
 			</script>
 			
 			";
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 		}
