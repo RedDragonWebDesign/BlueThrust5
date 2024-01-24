@@ -50,8 +50,8 @@ $breadcrumbObj->addCrumb("Top Players: Recruiters");
 
 require_once($prevFolder."include/breadcrumb.php");
 
-
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '0' AND rank_id != '1'");
+$arrMembers = [];
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '0' AND rank_id != '1'");
 while ($row = $result->fetch_assoc()) {
 	$member->select($row['member_id']);
 
@@ -70,17 +70,17 @@ if ( isset($_GET['sort']) && $_GET['sort'] != "up") {
 }
 
 
-	echo "
+echo "
 		<table class='formTable' style='margin-top: 50px'>
 			<tr>
 				<td class='formTitle' align='center' style='width: 5%; height: 14px'>#</td>
 				<td class='formTitle' style='width: 60%'>Member</td>
 				<td class='formTitle' align='center' style='width: 35%'>Recruits - ".$dispSort."</td>
 			</tr>
-	";
+";
 
 
-	$counter = 0;
+$counter = 0;
 foreach ($arrMembers as $memberID => $statValue) {
 	$counter++;
 
@@ -97,7 +97,7 @@ foreach ($arrMembers as $memberID => $statValue) {
 			<td class='main".$addCSS."' align='center' style='height: 30px'>".$statValue."</td>
 		</tr>
 	
-		";
+	";
 
 
 	if ($counter >= 10) {
@@ -123,5 +123,5 @@ if ($counter < 10) {
 	}
 }
 
-	echo "</table>";
-	require_once($prevFolder."themes/".$THEME."/_footer.php");
+echo "</table>";
+require_once($prevFolder."themes/".$THEME."/_footer.php");
