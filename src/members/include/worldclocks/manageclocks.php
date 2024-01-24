@@ -31,15 +31,17 @@
 	$objManageList->strMainListLink = BASE_DIRECTORY."members/include/worldclocks/main.php";
 
 	
-	if($_GET['clockID'] != "" && $clockObj->select($_GET['clockID']) && $_GET['action'] == "edit") {
+	$action = $_GET['action'] ?? '';
+	$clockID = $_GET['clockID'] ?? '';
+	$itemID = $_POST['itemID'] ?? '';
+
+	if ($clockID != "" && $clockObj->select($clockID) && $action == "edit") {
 		$clockInfo = $clockObj->get_info_filtered();
-		require_once(BASE_DIRECTORY."members/include/worldclocks/edit.php");
-	}
-	elseif($_GET['action'] == "delete" && $clockObj->select($_POST['itemID'])) {
+		require_once(BASE_DIRECTORY . "members/include/worldclocks/edit.php");
+	} elseif ($action == "delete" && $itemID != "" && $clockObj->select($itemID)) {
 		$info = $clockObj->get_info_filtered();
 		$objManageList->strDeleteName = $info['name'];
-		$objManageList->strDeletePostVarID = "clockID";	
-	}
-	elseif($_GET['action'] != "move") {
-		require_once($objManageList->strMainListLink);	
+		$objManageList->strDeletePostVarID = "clockID";
+	} elseif ($action != "move") {
+		require_once($objManageList->strMainListLink);
 	}
