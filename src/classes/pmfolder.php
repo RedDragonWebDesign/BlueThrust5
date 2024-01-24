@@ -12,7 +12,7 @@
 		public $intMemberID;
 				
 		public function __construct($sqlConnection) {
-
+	
 			$this->MySQL = $sqlConnection;
 			$this->strTableKey = "pmfolder_id";
 			$this->strTableName = $this->MySQL->get_tablePrefix()."privatemessage_folders";
