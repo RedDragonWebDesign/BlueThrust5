@@ -34,7 +34,7 @@
 
 			}
 			else {
-				$returnVal = parent::select($intIDNum, numericIDOnly);	
+				$returnVal = parent::select($intIDNum, $numericIDOnly);	
 			}
 			
 			return $returnVal;
