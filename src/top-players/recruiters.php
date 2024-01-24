@@ -50,7 +50,7 @@ $breadcrumbObj->addCrumb("Top Players: Recruiters");
 
 require_once($prevFolder."include/breadcrumb.php");
 
-
+$arrMembers = [];
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '0' AND rank_id != '1'");
 while ($row = $result->fetch_assoc()) {
 	$member->select($row['member_id']);
