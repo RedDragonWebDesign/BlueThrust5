@@ -20,4 +20,7 @@
             <property name="eolChar" value="\n"/>
         </properties>
     </rule>
+
+    <!-- opening brace location: ) {, not ){, not )\n{ -->
+    <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
 </ruleset>

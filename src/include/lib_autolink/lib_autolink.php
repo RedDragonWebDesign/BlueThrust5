@@ -25,7 +25,7 @@
 
 	####################################################################
 
-	function autolink($text, $limit=30, $tagfill=' target="_blank"', $auto_title = true){
+	function autolink($text, $limit=30, $tagfill=' target="_blank"', $auto_title = true) {
 
 		$text = autolink_do($text, '![a-z][a-z-]+://!i',	$limit, $tagfill, $auto_title);
 		$text = autolink_do($text, '!(mailto|skype):!i',	$limit, $tagfill, $auto_title);
@@ -35,7 +35,7 @@
 
 	####################################################################
 
-	function autolink_do($text, $sub, $limit, $tagfill, $auto_title, $force_prefix=null){
+	function autolink_do($text, $sub, $limit, $tagfill, $auto_title, $force_prefix=null) {
 
 		$text_l = StrToLower($text);
 		$cursor = 0;
@@ -190,7 +190,7 @@
 
 	####################################################################
 
-	function autolink_label($text, $limit){
+	function autolink_label($text, $limit) {
 
 		if (!$limit){ return $text; }
 
@@ -203,7 +203,7 @@
 
 	####################################################################
 
-	function autolink_email($text, $tagfill=''){
+	function autolink_email($text, $tagfill='') {
 
 		$atom = '[^()<>@,;:\\\\".\\[\\]\\x00-\\x20\\x7f]+'; # from RFC822
 
