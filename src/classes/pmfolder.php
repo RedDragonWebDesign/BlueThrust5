@@ -12,20 +12,21 @@
 		public $intMemberID;
 				
 		public function __construct($sqlConnection) {
-	
+
 			$this->MySQL = $sqlConnection;
 			$this->strTableKey = "pmfolder_id";
 			$this->strTableName = $this->MySQL->get_tablePrefix()."privatemessage_folders";
 			$this->intMemberID = 0;
-			
+   
 			//$this->strAssociateKeyName = "pm_id";
 			//$this->strAssociateTableName = $this->MySQL->get_tablePrefix()."privatemessages";
-			
+   
 			$this->strCategoryKey = "member_id";
-			
+   
 		}
 		
 		public function select($intIDNum, $numericIDOnly = true) {
+			$returnVal = false; 
 			$arrSpecialFolders = array("Inbox" => self::INBOX_ID, "Sent Messages" => self::SENTBOX_ID, "Trash" => self::TRASH_ID);
 			if(in_array($intIDNum, $arrSpecialFolders)) {
 				$this->arrObjInfo['name'] = array_search($intIDNum, $arrSpecialFolders);
@@ -38,7 +39,7 @@
 			
 			return $returnVal;
 		}
-	
+ 
 		function isMemberFolder() {
 
 			$returnVal = false;
