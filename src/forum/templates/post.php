@@ -157,6 +157,7 @@ if (count($arrAttachments) > 0 && $blnShowAttachments) {
 					";
 }
 
+
 if ($postMemberInfo['forumsignature'] != "" && $websiteInfo['forum_hidesignatures'] == 0) {
 	echo "
 				<div class='forumSignatureContainer'>".parseBBCode($posterMemberObj->get_info("forumsignature"))."</div>
@@ -177,7 +178,6 @@ if (LOGGED_IN && ($topicInfo['lockstatus'] ?? '') == 0) {
 
 	echo "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$topicInfo['forumboard_id']."&tID=".$topicInfo['forumtopic_id']."&quote=".$postInfo['forumpost_id']."'>QUOTE</a> &laquo;";
 }
-
 
 
 		echo "
