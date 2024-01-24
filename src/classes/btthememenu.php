@@ -529,7 +529,7 @@ class btThemeMenu {
 		);
 
 		foreach ($arrFilter as $find => $replace) {
-			$value = str_replace($find, $replace, $value);
+			$value = str_replace($find, $replace ?? '', $value);
 		}
 
 		return $value;
