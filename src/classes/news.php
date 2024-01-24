@@ -25,7 +25,7 @@ class News extends Basic {
 	private $consoleObj;
 	private $blnViewPrivateNews;
 
-	public function __construct($sqlConnection, $newsTableName="news", $newsTableKey="news_id", $commentTableName="comments", $commentTableKey="comment_id") {
+	public function __construct($sqlConnection, $newsTableName = "news", $newsTableKey = "news_id", $commentTableName = "comments", $commentTableKey = "comment_id") {
 
 		$this->MySQL = $sqlConnection;
 		$this->strTableName = $this->MySQL->get_tablePrefix().$newsTableName;
@@ -46,7 +46,7 @@ class News extends Basic {
 
 
 
-	public function getComments($orderBY="") {
+	public function getComments($orderBY = "") {
 
 		$returnArr = array();
 
@@ -55,16 +55,13 @@ class News extends Basic {
 		}
 
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strCommentTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'".$orderBY);
 			while ($row = $result->fetch_assoc()) {
 				$returnArr[] = $row[$this->strCommentTableKey];
 			}
-
 		}
 
 		return $returnArr;
-
 	}
 
 
@@ -73,15 +70,12 @@ class News extends Basic {
 		$returnVal = 0;
 
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strCommentTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 
 			$returnVal = $result->num_rows;
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -91,15 +85,12 @@ class News extends Basic {
 		$returnVal = false;
 
 		if (is_numeric($intMemberID) && $this->intTableKeyValue != "" && trim($strMessage) != "") {
-
 			if ($this->objComment->addNew(array($this->strTableKey, "member_id", "message", "dateposted"), array($this->intTableKeyValue, $intMemberID, $strMessage, time()))) {
 				$returnVal = true;
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -107,18 +98,15 @@ class News extends Basic {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
-
 			$result1 = $this->MySQL->query("DELETE FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 			$result2 = $this->MySQL->query("DELETE FROM ".$this->strCommentTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 
 			if ($result1 && $result2) {
 				$returnVal = true;
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -175,13 +163,11 @@ class News extends Basic {
 			echo $GLOBALS['news_post']['post'];
 
 			unset($GLOBALS['news_POST']);
-
 		}
-
 	}
 
 
-	public function calcPages($postType="") {
+	public function calcPages($postType = "") {
 		global $websiteInfo;
 
 		if ($postType != "") {
@@ -200,14 +186,14 @@ class News extends Basic {
 		$totalPages = ceil($totalPosts/$websiteInfo['news_postsperpage']);
 
 		return $totalPages;
-
 	}
 
 
-	public function displayPageSelector($postType="", $pageURL="") {
+	public function displayPageSelector($postType = "", $pageURL = "") {
 
 		if (!isset($_GET['page'])) {
-$_GET['page'] = 1; }
+$_GET['page'] = 1;
+        }
 		$totalPages = $this->calcPages($postType);
 
 		$dispLink = ($pageURL == "") ? MAIN_ROOT."news/?page=" : $pageURL;
@@ -240,10 +226,9 @@ $_GET['page'] = 1; }
 				</p>
 			";
 		}*/
-
 	}
 
-	public function getPosts($postType="") {
+	public function getPosts($postType = "") {
 		global $websiteInfo;
 
 		$totalPages = $this->calcPages($postType);
@@ -271,7 +256,6 @@ $_GET['page'] = 1; }
 		}
 
 		return $returnArr;
-
 	}
 
 	private function determinePrivateNewsStatus() {

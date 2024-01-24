@@ -36,7 +36,6 @@ $multiMemPMObj = $pmObj->multiMemPMObj;
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
 $memberInfo = $member->get_info_filtered();
 $arrPM = array();
 $arrPMMID = array();
@@ -75,7 +74,6 @@ $arrPMMID = $arrFolderContents[1];
 
 echo "<table class='formTable' style='border-spacing: 0px; table-layout: fixed'>";
 foreach ($arrPM as $key => $value) {
-
 	$pmObj->select($key);
 	$pmInfo = $pmObj->get_info_filtered();
 
@@ -118,11 +116,9 @@ foreach ($arrPM as $key => $value) {
 		<td class='pmInbox main solidLine".$useAltBG."' width=\"30%\">".getPreciseTime($pmInfo['datesent'])."</td>
 	</tr>
 	";
-
 }
 
 if (count($arrPM) == 0) {
-
 	echo "
 	<tr>
 		<td class='main' colspan='4'>
@@ -133,9 +129,7 @@ if (count($arrPM) == 0) {
 	</tr>
 
 	";
-
 }
 
 echo "</table>";
-
 }

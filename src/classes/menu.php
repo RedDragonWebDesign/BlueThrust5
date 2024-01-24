@@ -9,7 +9,6 @@ class Menu {
 
 		$xml = new XMLReader();
 		$xml->open($themeInfoXML);
-
 	}
 
 }

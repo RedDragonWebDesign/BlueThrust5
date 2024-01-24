@@ -10,7 +10,6 @@
 			$this->MySQL = $sqlConnection;
 			$this->strTableName = $this->MySQL->get_tablePrefix()."clocks";
 			$this->strTableKey = "clock_id";
-
 		}
 
 
@@ -24,7 +23,7 @@
 			return $utcTime;
 		}
 
-		public function getClockInfo($forceOffset=false) {
+		public function getClockInfo($forceOffset = false) {
 
 			$returnVal = false;
 			if ($this->intTableKeyValue != "") {
@@ -44,13 +43,12 @@
 					"hour" => $dateHour,
 					"minutes" => $dateMinutes
 				);
-
 			}
 
 			return $returnVal;
 		}
 
-		public function displayClocks($return=false) {
+		public function displayClocks($return = false) {
 
 			$clockArray = array();
 			$clocksJS = "";
@@ -64,7 +62,6 @@
 
 				$clocksJS .= "displayClock(".$clockInfo['offset'].", ".$clockInfo['hour'].", ".$clockInfo['minutes'].", 'clock_".$row['clock_id']."');
 				";
-
 			}
 
 			if (!$return) {
@@ -78,7 +75,6 @@
 				";
 			}
 			else {
-
 				return implode(" ".$this->clockSeparator." ", $clockArray)."
 				
 					<script type='text/javascript'>
@@ -87,9 +83,7 @@
 					
 					</script>
 				";
-
 			}
-
 		}
 
 		public function getTimezones() {
@@ -97,7 +91,6 @@
 			$arrTimezoneOptions = array();
 			$arrTimezones = DateTimeZone::listIdentifiers();
 			foreach ($arrTimezones as $timeZone) {
-
 				$tz = new DateTimeZone($timeZone);
 				$dispOffset = ((($tz->getOffset(new DateTime("now", $tz)))/60)/60);
 				$dispSign = ($dispOffset < 0) ? "" : "+";
@@ -112,7 +105,7 @@
 		/**
 		 * This class doesn't use associate id's so cancelling out these functions
 		 */
-		public function getAssociateIDs($sqlOrderBY = "", $bypassFilter=false) {
+		public function getAssociateIDs($sqlOrderBY = "", $bypassFilter = false) {
 			return false;
 		}
 

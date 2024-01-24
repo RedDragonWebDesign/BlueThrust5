@@ -28,10 +28,8 @@ $consoleObj->select($diplomacyRequestsCID);
 $diplomacyRequestObj = new Basic($mysqli, "diplomacy_request", "diplomacyrequest_id");
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $diplomacyRequestObj->select($_POST['reqID']) && $member->hasAccess($consoleObj)) {
-
 	$diplomacyRequestInfo = $diplomacyRequestObj->get_info_filtered();
 	if (isset($_POST['confirmDecline'])) {
-
 		// Send E-mail Confirmation
 		$emailTo = $diplomacyRequestInfo['email'];
 		$emailFrom = "confirmemail@bluethrust.com";
@@ -50,10 +48,8 @@ Your diplomacy request has been declined.\n\n
 
 
 		$member->logAction("Declined ".$diplomacyRequestInfo['clanname']."'s diplomacy request.");
-
 	}
 	else {
-
 		echo "
 			<div id='confirmDialogBox' style='display: none'>
 				<p class='main' align='center'>
@@ -98,7 +94,5 @@ Your diplomacy request has been declined.\n\n
 			</script>
 		
 		";
-
 	}
-
 }

@@ -10,9 +10,7 @@
 	$medalObj = new Medal($mysqli);
 
 	if (count($arrMedals) > 0) {
-
 		foreach ($arrMedals as $medalID) {
-
 			$medalObj->select($medalID);
 			$medalInfo = $medalObj->get_info_filtered();
 
@@ -93,5 +91,4 @@
 				
 			</script>
 		";
-
 	}

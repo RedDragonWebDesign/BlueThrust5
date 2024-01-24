@@ -115,7 +115,6 @@ $LOGGED_IN = false;
 if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 	$LOGGED_IN = true;
-
 }
 
 $breadcrumbObj->setTitle("Poll Results");
@@ -272,7 +271,6 @@ elseif ($pollInfo['accesstype'] == "memberslimited") {
 			}
 
 			if ($memberVoters == 0) {
-
 				echo "
 				
 					<p align='center'>
@@ -280,7 +278,6 @@ elseif ($pollInfo['accesstype'] == "memberslimited") {
 					</p>
 				
 				";
-
 			}
 
 
@@ -297,7 +294,6 @@ elseif ($pollInfo['accesstype'] == "memberslimited") {
 <?php
 	}
 	else {
-
 		if ($pollObj->totalVotes() == 0) {
 			$pollInfo['resultvisibility'] = "novotes";
 		}
@@ -328,7 +324,6 @@ elseif ($pollInfo['accesstype'] == "memberslimited") {
 			</div>
 		
 		";
-
 	}
 
 require_once($prevFolder."themes/".$THEME."/_footer.php");

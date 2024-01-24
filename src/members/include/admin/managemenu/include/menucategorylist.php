@@ -51,7 +51,6 @@ $consoleObj->select($intEditMenuCatCID);
 $checkAccess2 = $member->hasAccess($consoleObj);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
-
 	if (isset($_POST['section']) && is_numeric($_POST['section'])) {
 		$orderoptions = "";
 		$selectCatID = "";
@@ -68,7 +67,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_category WHERE section = '".$_POST['section']."' ORDER BY sortnum");
 		while ($row = $result->fetch_assoc()) {
 			if ($_POST['mcID'] != $row['menucategory_id']) {
-
 				$dispSelected = "";
 				if ($selectCatID == $row['menucategory_id']) {
 					$dispSelected = " selected";
@@ -87,12 +85,9 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 		echo $orderoptions;
 	}
 	elseif (isset($_POST['manage'])) {
-
 		$arrDispSectionNames = array();
 		for ($x=0; $x<$menuXML->info->section->count(); $x++) {
-
 			$arrDispSectionNames[$x] = $menuXML->info->section[$x];
-
 		}
 
 		echo "<table class='formTable' style='margin-top: 0px; border-spacing: 0px'><tr><td colspan='5' class='dottedLine'></td></tr>";
@@ -100,7 +95,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 		$intSection = "";
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_category ORDER BY section, sortnum");
 		while ($row = $result->fetch_assoc()) {
-
 			if ($intSection != $row['section']) {
 				$intSection = $row['section'];
 				$counter = 0;
@@ -113,7 +107,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 						<td class='dottedLine main manageList' colspan='4' align='center'><a href='".$MAIN_ROOT."members/console.php?cID=".$intAddMenuCatCID."&sectionID=".$intSection."'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/add.png' class='manageListActionButton' title='Add menu category to ".$arrDispSectionNames[$intSection]."'></a></td>
 					</tr>
 				";
-
 			}
 
 			$addCSS = "";
@@ -167,5 +160,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 		echo "</table>";
 	}
-
 }

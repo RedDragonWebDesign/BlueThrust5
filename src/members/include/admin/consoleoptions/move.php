@@ -29,12 +29,9 @@ $cID = $consoleObj->findConsoleIDByName("Manage Console Options");
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($member->hasAccess($consoleObj) && $consoleObj->select($_POST['cID'])) {
-
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 
 		$consoleInfo = $consoleObj->get_info();
@@ -49,10 +46,10 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$moveDown = $intSortNum+1;
 		$makeMove = "";
 
-		if ($_POST['cDir'] == "up" AND $consoleObj->select($arrAssociates[$moveUp])) {
+		if ($_POST['cDir'] == "up" and $consoleObj->select($arrAssociates[$moveUp])) {
 			$makeMove = "before";
 		}
-		elseif ($_POST['cDir'] == "down" AND $consoleObj->select($arrAssociates[$moveDown])) {
+		elseif ($_POST['cDir'] == "down" and $consoleObj->select($arrAssociates[$moveDown])) {
 			$makeMove = "after";
 		}
 
@@ -71,6 +68,4 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$_GET['cID'] = $cID;
 		require_once("main.php");
 	}
-
-
 }

@@ -37,7 +37,6 @@ if (!isset($member)) {
 
 	$downloadObj = new Download($mysqli);
 	$downloadCatObj = new DownloadCategory($mysqli);
-
 }
 
 
@@ -65,7 +64,6 @@ foreach ($arrDownloadCat as $catID => $catName) {
 	$arrDownloads = $downloadCatObj->getAssociateIDs($dispOrderBY);
 
 	if (count($arrDownloads) > 0) {
-
 		echo "
 			<tr>
 				<td class='main manageList dottedLine' colspan='2' style='width: 76%'><b><u>".$catName."</u></b></td>
@@ -101,17 +99,13 @@ foreach ($arrDownloadCat as $catID => $catName) {
 
 			$totalDownloads++;
 		}
-
-
 	}
-
 }
 
 echo "</table>";
 
 
 if ($totalDownloads == 0) {
-
 	echo "
 	
 		<div class='shadedBox' style='margin: 20px auto; width: 40%'>
@@ -121,5 +115,4 @@ if ($totalDownloads == 0) {
 		</div>
 	
 	";
-
 }

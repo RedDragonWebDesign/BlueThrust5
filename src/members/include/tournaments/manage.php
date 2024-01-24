@@ -42,11 +42,8 @@ echo "
 
 $clickCounter = 0;
 if (count($arrTournaments) > 0) {
-
 	foreach ($arrTournaments as $tournamentID) {
-
 		if ($tournamentObj->select($tournamentID)) {
-
 			$categoryCSS = "consoleCategory_clicked";
 			$hideoptions = "";
 			if ($counter > 0) {
@@ -100,9 +97,7 @@ if (count($arrTournaments) > 0) {
 				$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=StartMatches'>Start Tournament Matches</li>";
 			}
 			$dispTournamentOptions .= "</ul></div></div>";
-
 		}
-
 	}
 
 	echo "
@@ -162,15 +157,12 @@ if (count($arrTournaments) > 0) {
 	";
 
 	if ($clickCounter != 0) {
-
 		echo "
 			<script type='text/javascript'>
 				selectCategory('".$clickCounter."');
 			</script>
 		";
-
 	}
-
 }
 else {
 	$intCreateATournamentCID = $consoleObj->findConsoleIDByName("Create A Tournament");
@@ -181,6 +173,4 @@ else {
 		</p>
 	</div>
 	";
-
-
 }

@@ -14,7 +14,6 @@
 
 
 if (!isset($member) || !isset($tournamentObj) || !$tournamentObj->poolsComplete() || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
-
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."members/console.php?cID=".$cID."';
@@ -33,7 +32,6 @@ else {
 
 
 	if (!$member->hasAccess($consoleObj)) {
-
 		exit();
 	}
 }
@@ -61,7 +59,6 @@ else {
 
 
 if ( ! empty($_POST['submit']) ) {
-
 	$mysqli->query("DELETE FROM ".$dbprefix."tournamentmatches WHERE tournament_id = '".$tournamentInfo['tournament_id']."'");
 	$tournamentObj->update(array("seedtype"), array(1));
 
@@ -80,12 +77,8 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 	
 	";
-
-
-
 }
 elseif ( empty($_POST['submit']) ) {
-
 	$arrPools = $tournamentObj->getPoolList();
 	$arrPoolTeams = array();
 	$arrTeams = $tournamentObj->getTeams(true);
@@ -103,19 +96,16 @@ elseif ( empty($_POST['submit']) ) {
 		else {
 			$totalPoolsFinished++;
 		}
-
 	}
 
 
 	if ($totalPoolCount != $totalPoolsFinished) {
-
 		foreach ($arrTeams as $teamID) {
 			$arrWinCount[$teamID] = 0;
 		}
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentpools_teams WHERE tournament_id = '".$tID."'");
 		while ($row = $result->fetch_assoc()) {
-
 			if ($row['winner'] == 1) {
 				$winningTeam = $row['team1_id'];
 			}
@@ -124,20 +114,17 @@ elseif ( empty($_POST['submit']) ) {
 			}
 
 			$arrWinCount[$winningTeam] += 1;
-
 		}
 
 		arsort($arrWinCount);
 
 		$seedCount = 1;
 		foreach ($arrWinCount as $teamID => $wins) {
-
 			$tournamentObj->objTeam->select($teamID);
 			$tournamentObj->objTeam->update(array("seed"), array($seedCount));
 
 			$seedCount++;
 		}
-
 	}
 
 
@@ -185,7 +172,6 @@ elseif ( empty($_POST['submit']) ) {
 
 
 				$seedCount++;
-
 			}
 
 			echo "
@@ -283,6 +269,4 @@ elseif ( empty($_POST['submit']) ) {
 		</script>
 		
 	";
-
-
 }

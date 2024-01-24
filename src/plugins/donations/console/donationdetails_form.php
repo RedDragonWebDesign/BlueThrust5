@@ -1,7 +1,8 @@
 <?php
 
 	if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+    }
 
 	$donationMember = new Member($mysqli);
 	$dispMemberName = $donationMember->select($donationInfo['member_id']) ? $donationMember->getMemberLink() : "";

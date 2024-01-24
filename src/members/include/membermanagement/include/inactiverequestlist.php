@@ -49,7 +49,6 @@ function dispIAMessages($iaID) {
 
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
-
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 
@@ -62,16 +61,13 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 
 	if (!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
-
 		exit();
-
 	}
 
 	$memberInfo = $member->get_info_filtered();
 	$iaRequestObj = new Basic($mysqli, "iarequest", "iarequest_id");
 	$checkRequestID = $iaRequestObj->select($_POST['iaRequestID']);
 	if ($_POST['action'] == "postmessage" && trim($_POST['message']) != "" && $checkRequestID) {
-
 		$iaRequestMessageObj = new Basic($mysqli, "iarequest_messages", "iamessage_id");
 
 		$arrColumns = array("iarequest_id", "member_id", "messagedate", "message");
@@ -88,7 +84,6 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 		exit();
 	}
 	elseif (($_POST['action'] == "approve" || $_POST['action'] == "deny")  && $checkRequestID) {
-
 		$requestStatus = ($_POST['action'] == "approve") ? 1 : 2;
 
 		$iaRequestObj->update(array("reviewer_id", "reviewdate", "requeststatus"), array($memberInfo['member_id'], time(), $requestStatus));
@@ -107,7 +102,6 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 		$member->select($memberInfo['member_id']);
 	}
 	elseif ($_POST['action'] == "delete" && $checkRequestID) {
-
 		$member->select($iaRequestObj->get_info("member_id"));
 		$dispIAMemberName = $member->getMemberLink();
 		$iaRequestObj->delete();
@@ -116,18 +110,13 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 		$member->select($memberInfo['member_id']);
 
 		$member->logAction("Deleted ".$dispIAMemberName."'s IA Request.");
-
 	}
-
-
 }
 
 $iaMember = new Member($mysqli);
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."iarequest ORDER BY requestdate DESC");
 	while ($row = $result->fetch_assoc()) {
-
-
 		$iaMessages = dispIAMessages($row['iarequest_id']);
 
 		$iaMember->select($row['member_id']);
@@ -202,11 +191,9 @@ $result = $mysqli->query("SELECT * FROM ".$dbprefix."iarequest ORDER BY requestd
 			</div>
 			<br>
 		";
-
 	}
 
 	if ($result->num_rows == 0) {
-
 		echo "
 			<div class='shadedBox' style='width: 50%; margin: 20px auto;'>
 				<p class='main' align='center'>
@@ -216,7 +203,6 @@ $result = $mysqli->query("SELECT * FROM ".$dbprefix."iarequest ORDER BY requestd
 		";
 	}
 	else {
-
 		echo "
 
 			<script type='text/javascript'>
@@ -263,5 +249,4 @@ $result = $mysqli->query("SELECT * FROM ".$dbprefix."iarequest ORDER BY requestd
 			</script>
 		
 		";
-
 	}

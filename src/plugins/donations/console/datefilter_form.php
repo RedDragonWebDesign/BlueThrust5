@@ -1,7 +1,8 @@
 <?php
 
 	if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+    }
 
 	$donationLogForm = new Form();
 
@@ -15,9 +16,7 @@ exit(); }
 	$setEndValue = $_GET['end'];
 
 	if (is_numeric($_GET['start'])) {
-
 		$dateObj->setTimestamp($_GET['start']);
-
 	}
 	else {
 		$startDate = explode("-", $_GET['start']);

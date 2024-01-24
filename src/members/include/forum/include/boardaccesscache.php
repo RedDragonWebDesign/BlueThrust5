@@ -31,7 +31,6 @@ $consoleObj = new ConsoleOption($mysqli);
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
 	/*
 	 * 0 - No Access
 	 * 1 - Full Access
@@ -94,7 +93,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 	if ($countRules == 0) {
-
 		echo "
 			<tr>
 				<td class='main' colspan='3'>
@@ -110,6 +108,4 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	
 	
 	";
-
-
 }

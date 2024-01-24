@@ -26,7 +26,7 @@
 		}
 
 
-		function addCrumb($crumbName, $crumbLink="") {
+		function addCrumb($crumbName, $crumbLink = "") {
 			$this->arrBreadcrumb[] = array("link" => $crumbLink, "value" => $crumbName);
 		}
 
@@ -34,18 +34,15 @@
 
 			$breadcrumbs = array();
 			foreach ($this->arrBreadcrumb as $breadcrumbInfo) {
-
 				if ($breadcrumbInfo['link'] != "") {
 					$breadcrumbs[] = "<a href='".$breadcrumbInfo['link']."'>".$breadcrumbInfo['value']."</a>";
 				}
 				else {
 					$breadcrumbs[] = $breadcrumbInfo['value'];
 				}
-
 			}
 
 			return implode(" ".$this->separator." ", $breadcrumbs);
-
 		}
 
 		function popCrumb() {

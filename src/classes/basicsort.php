@@ -47,37 +47,32 @@ class BasicSort extends Basic {
 
 		$strBeforeAfter = strtolower($strBeforeAfter);
 		$newSortNum = "false";
-		if ($this->intTableKeyValue != "" AND ($strBeforeAfter == "before" OR $strBeforeAfter == "after")) {
+		if ($this->intTableKeyValue != "" and ($strBeforeAfter == "before" or $strBeforeAfter == "after")) {
 			$consoleInfo = $this->arrObjInfo;
 			$startSaving = false;
 			$x = 1;
 			$arrConsoleOptions = array();
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strCategoryKey." = '".$consoleInfo[$this->strCategoryKey]."' ORDER BY sortnum");
 			while ($row = $result->fetch_assoc()) {
-
-				if ($strBeforeAfter == "before" AND $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
+				if ($strBeforeAfter == "before" and $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
 					$newSortNum = $x;
 					$x++;
 					$arrConsoleOptions[$x][0] = $row[$this->strTableKey];
 					$arrConsoleOptions[$x][1] = $row['sortnum'];
 					$x++;
 				}
-				elseif ($strBeforeAfter == "after" AND $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
+				elseif ($strBeforeAfter == "after" and $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
 					$arrConsoleOptions[$x][0] = $row[$this->strTableKey];
 					$arrConsoleOptions[$x][1] = $row['sortnum'];
 					$x++;
 					$newSortNum = $x;
 					$x++;
-
 				}
 				else {
-
 					$arrConsoleOptions[$x][0] = $row[$this->strTableKey];
 					$arrConsoleOptions[$x][1] = $row['sortnum'];
 					$x++;
-
 				}
-
 			}
 
 			$updateArray = array();
@@ -86,20 +81,14 @@ class BasicSort extends Basic {
 			if (is_numeric($newSortNum)) {
 				$intOriginalCID = $this->intTableKeyValue;
 				foreach ($arrConsoleOptions as $key => $value) {
-
 					if ($key != $value[1]) {
-
 						$this->select($value[0]);
 						$this->update(array("sortnum"), array($key));
-
 					}
-
 				}
 
 				$this->select($intOriginalCID);
-
 			}
-
 		}
 
 		return $newSortNum;
@@ -150,11 +139,9 @@ class BasicSort extends Basic {
 			$catKeyValue = $this->arrObjInfo[$this->strCategoryKey];
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strCategoryKey." = '".$catKeyValue."'");
 			$returnVal = $result->num_rows;
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -186,14 +173,11 @@ class BasicSort extends Basic {
 			if ($num_rows == 0 || ($num_rows == 1 && $blnEdit)) {
 				$returnVal = 1;
 			}
-
 		}
 		elseif ($this->select($intOrderNumID) && ($strBeforeAfter == "before" || $strBeforeAfter == "after")) {
-
 			// Check first to see if we are editing or adding a new rank
 
 			if ($blnEdit) {
-
 				// Editing...
 				// Check to see if the rank's order is being changed or if its staying the same
 
@@ -214,14 +198,10 @@ class BasicSort extends Basic {
 				else {
 					$returnVal= $intEditOrderNum;
 				}
-
 			}
 			else {
-
 				$returnVal = $this->makeRoom($strBeforeAfter);
-
 			}
-
 		}
 
 		return $returnVal;
@@ -243,7 +223,7 @@ class BasicSort extends Basic {
 
 		$returnVal = false;
 
-		if ($this->intTableKeyValue != "" AND ($strDir == "up" OR $strDir == "down")) {
+		if ($this->intTableKeyValue != "" and ($strDir == "up" or $strDir == "down")) {
 			$intOriginalRank = $this->intTableKeyValue;
 			$intOrderNum = $this->arrObjInfo['sortnum'];
 
@@ -252,10 +232,10 @@ class BasicSort extends Basic {
 
 			$makeMove = "";
 
-			if ($strDir == "up" AND $this->selectByOrder($moveUp)) {
+			if ($strDir == "up" and $this->selectByOrder($moveUp)) {
 				$makeMove = "before";
 			}
-			elseif ($strDir == "down" AND $this->selectByOrder($moveDown)) {
+			elseif ($strDir == "down" and $this->selectByOrder($moveDown)) {
 				$makeMove = "after";
 			}
 
@@ -273,7 +253,6 @@ class BasicSort extends Basic {
 		}
 
 		return $returnVal;
-
 	}
 
 	/**
@@ -298,11 +277,9 @@ class BasicSort extends Basic {
 				$this->intTableKeyValue = $this->arrObjInfo[$this->strTableKey];
 				$returnVal = true;
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 	/**
@@ -341,7 +318,6 @@ class BasicSort extends Basic {
 			$returnArr = array($intNextOrderID, $strBeforeAfter);
 
 			$this->select($intOriginalRank);
-
 		}
 		return $returnArr;
 	}
@@ -365,7 +341,6 @@ class BasicSort extends Basic {
 			$blnDelete = parent::delete();
 			$this->resortOrder();
 		}
-
 	}
 
 }

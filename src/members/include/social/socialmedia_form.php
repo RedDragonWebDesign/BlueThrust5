@@ -1,7 +1,8 @@
 <?php
 
 	if (!defined("SOCIALMEDIA_FORM")) {
-exit(); }
+exit();
+    }
 
 	$socialOrderObj = new Social($mysqli);
 	$socialOptions = array();

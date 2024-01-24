@@ -44,7 +44,6 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 $countErrors = 0;
 $dispError = "";
 if ($_POST['submit']) {
-
 	// Check News Type
 	//	1 - Public
 	// 	2 - Private
@@ -77,7 +76,6 @@ if ($_POST['submit']) {
 
 		$newsPost = new Basic($mysqli, "squadnews", "squadnews_id");
 		if ($newsPost->addNew($arrColumns, $arrValues)) {
-
 			echo "
 				<div style='display: none' id='successBox'>
 					<p align='center'>
@@ -90,28 +88,21 @@ if ($_POST['submit']) {
 				</script>
 				
 			";
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 		}
-
-
 	}
 
 	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
-
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	echo "
 		<form action='managesquad.php?sID=".$_GET['sID']."&pID=PostNews' method='post'>
 			<div class='formDiv'>
@@ -175,5 +166,4 @@ if ( empty($_POST['submit']) ) {
 			updateTypeDesc();
 		</script>
 	";
-
 }

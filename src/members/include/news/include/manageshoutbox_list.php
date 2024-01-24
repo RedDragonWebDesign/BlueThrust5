@@ -44,7 +44,6 @@ while ($row = $result->fetch_assoc()) {
 			<td class='pmInbox main solidLine".$addCSS."' style='padding-left: 5px' width=\"30%\">".getPreciseTime($row['dateposted'])."</td>
 		</tr>
 	";
-
 }
 
 if ($result->num_rows == 0) {

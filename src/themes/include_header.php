@@ -34,10 +34,8 @@ $menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml"
 
 // Check if user is logged in
 if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
-
 	$memberObj = new Member($mysqli);
 	if ($memberObj->select($_SESSION['btUsername'])) {
-
 		if ($memberObj->authorizeLogin($_SESSION['btPassword'])) {
 			define("LOGGED_IN", true);
 
@@ -50,7 +48,7 @@ if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 			}
 
 
-			$actualPageNameLoc = strrpos($PAGE_NAME," - ");
+			$actualPageNameLoc = strrpos($PAGE_NAME, " - ");
 			$actualPageName = substr($PAGE_NAME, 0, $actualPageNameLoc);
 
 			if ($PAGE_NAME == "") {
@@ -82,7 +80,6 @@ if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 
 			$dispMembersOnlyTagger = "";
 			if (isset($_SESSION['btMembersOnlyTagger']) && $_SESSION['btMembersOnlyTagger'] == 1 && substr($_SERVER['PHP_SELF'], -11) != "console.php") {
-
 				$pageTaggerURL = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 
 				$taggerCID = $consoleOptionObj->findConsoleIDByName("Member's Only Pages");
@@ -150,12 +147,8 @@ if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 				
 				";
 			}
-
 		}
-
 	}
-
-
 }
 
 if (!defined("LOGGED_IN")) {
@@ -164,7 +157,6 @@ if (!defined("LOGGED_IN")) {
 
 
 if ($taggerObj->select($_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'], false) && constant('LOGGED_IN') == false) {
-
 	echo "
 	
 		<script type='text/javascript'>
@@ -176,7 +168,6 @@ if ($taggerObj->select($_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'], false) &
 	";
 
 	exit();
-
 }
 
 
@@ -197,7 +188,6 @@ if ($result->num_rows > 0) {
 	}
 
 	$hitCountObj->update($updateColumns, $updateValues);
-
 }
 else {
 	$hitCountObj->addNew(array("ipaddress", "dateposted", "pagename", "totalhits"), array($IP_ADDRESS, time(), $PAGE_NAME, 1));

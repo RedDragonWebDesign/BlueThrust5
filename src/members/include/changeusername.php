@@ -68,7 +68,6 @@ function validateUsername() {
 	if ($checkMemberObj->select($_POST['newusername'])) {
 		$formObj->errors[] = "There is already a member with that username.";
 	}
-
 }
 
 // After Save Functions

@@ -28,7 +28,6 @@ class ProfileOption extends BasicSort {
 		$this->strCategoryKey = "profilecategory_id";
 		$this->objProfileOptionSelect = new Basic($sqlConnection, "profileoptions_select", "selectopt_id");
 		$this->objProfileOptionValue = new Basic($sqlConnection, "profileoptions_values", "values_id");
-
 	}
 
 
@@ -36,14 +35,11 @@ class ProfileOption extends BasicSort {
 		$returnVal = false;
 
 		if ($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue) && $this->arrObjInfo['optiontype'] == "select") {
-
 			$returnArr = array();
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."profileoptions_select WHERE profileoption_id = '".$this->intTableKeyValue."' ORDER BY sortnum");
 			while ($row = $result->fetch_assoc()) {
-
 				$returnArr[$row['selectopt_id']] = $row['selectvalue'];
-
 			}
 
 			$returnVal = $returnArr;
@@ -64,11 +60,9 @@ class ProfileOption extends BasicSort {
 			if ($this->objProfileOptionSelect->addNew($arrColumns, $arrValues)) {
 				$returnVal = true;
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -83,7 +77,6 @@ class ProfileOption extends BasicSort {
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -114,11 +107,9 @@ class ProfileOption extends BasicSort {
 			if ($countErrors == 0) {
 				$returnVal = true;
 			}
-
-		}
+		    }
 
 		return $returnVal;
-
 	}
 
 

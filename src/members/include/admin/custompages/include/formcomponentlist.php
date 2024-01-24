@@ -15,7 +15,6 @@
 
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
-
 	require_once("../../../../../_setup.php");
 	require_once("../../../../../classes/member.php");
 	require_once("../../../../../classes/basicorder.php");
@@ -31,12 +30,8 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 
 	if (!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
-
 		exit();
-
 	}
-
-
 }
 
 
@@ -63,7 +58,6 @@ echo "
 	$objAppComponent = new BasicOrder($mysqli, "app_components", "appcomponent_id");
 	$result = $mysqli->query("SELECT appcomponent_id FROM ".$dbprefix."app_components ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
-
 		$objAppComponent->select($row['appcomponent_id']);
 		$appComponentInfo = $objAppComponent->get_info_filtered();
 
@@ -96,8 +90,6 @@ echo "
 		
 		
 		";
-
-
 	}
 
 echo "

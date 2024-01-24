@@ -1,7 +1,8 @@
 <?php
 
 	if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+    }
 	global $donationPlugin, $campaignInfo, $campaignObj;
 
 
@@ -11,11 +12,9 @@ exit(); }
 	require_once("include/donate_form.php");
 
 	if ($donationPlugin->getConfigInfo("mode") != "live") {
-
 		echo "
 			<div class='errorDiv'><p><strong>NOTE:</strong> This plugin is currently set to sandbox mode!  In order to properly receive donations it must be set to Live mode.</p></div>
 		";
-
 	}
 
 
@@ -31,17 +30,14 @@ exit(); }
 		// Graph
 		$goalCompletePercent = round(($campaignObj->getTotalDonationAmount()/$campaignInfo['goalamount'])*100);
 		$goalCompletePercent = ($goalCompletePercent > 100) ? "100%" : $goalCompletePercent."%";
-
 	}
 
 	$daysLeft = "";
 	$dispEndDate = "";
 	if (($campaignInfo['dateend'] != 0) || ($campaignInfo['dateend'] == 0 && $campaignInfo['currentperiod'] != 0)) {
-
 		$currentEndDate = $campaignObj->getCurrentEndDate();
 		$daysLeft = $campaignObj->getDaysLeft();
 		$dispEndDate = "<div class='main' style='text-align: center'><br>This campaign will end on ".date("F j, Y", $currentEndDate)."</div>";
-
 	}
 
 
@@ -73,7 +69,6 @@ exit(); }
 	<p class='main'>raised<?php echo $dispGoal; ?></p>
 	<?php
 		if ($dispGoal != "") {
-
 			$dispDaysLeft = ($daysLeft != "") ? "<div class='donationsDaysLeft'>".$campaignObj->getFormattedEndDate()." left</div>" : "";
 
 			$progressBarColor = $donationPlugin->getConfigInfo("goalprogresscolor") == "" ? "black" : $donationPlugin->getConfigInfo("goalprogresscolor");
@@ -86,7 +81,6 @@ exit(); }
 				<div class='main donationGoalText'>".$goalCompletePercent.$dispDaysLeft."</div>
 				".$dispEndDate."
 			";
-
 		}
 		elseif ($daysLeft != "") {
 			echo "

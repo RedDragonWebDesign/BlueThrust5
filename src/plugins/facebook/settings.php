@@ -24,13 +24,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -69,13 +68,10 @@ $dispBreadCrumb
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
-
 	$fbObj = new Facebook($mysqli);
 	$pluginObj->selectByName("Facebook Login");
 
 	if ( ! empty($_POST['submit']) ) {
-
 		$arrAPIKey = array(
 			'appID' => $_POST['appid'],
 			'appSecret' => $_POST['appsecret']
@@ -83,7 +79,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 		$jsonAPIKey = json_encode($arrAPIKey);
 		if ($pluginObj->update(array("apikey"), array($jsonAPIKey))) {
-
 			echo "
 				<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -103,8 +98,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 		}
-
-
 	}
 
 
@@ -114,15 +107,12 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 		$arrFacebookAPIKeys = array("App ID"=>$fbObj->getAppID(), "App Secret"=>$fbObj->getAppSecret());
 
-		foreach ($arrFacebookAPIKeys as $key=>$value) {
-
+		foreach ($arrFacebookAPIKeys as $key => $value) {
 			if ($value == "") {
 				$dispNote .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> ".$key."<br>";
 			}
 
 			$dispFacebookAPIKey[$key] = filterText($value);
-
-
 		}
 
 		echo "
@@ -178,9 +168,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	}
 }
 else {
-
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
-
 }
 
 

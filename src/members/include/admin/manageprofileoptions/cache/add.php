@@ -34,12 +34,9 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 $checkAccess = $checkAccess1 || $checkAccess2;
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($checkAccess) {
-
 		if (trim($_POST['selectValue']) != "") {
 			$_SESSION['btProfileCache'][] = $_POST['selectValue'];
 		}
@@ -47,8 +44,5 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$_SESSION['btProfileCacheRefresh'] = true;
 
 		require_once("view.php");
-
 	}
-
-
 }

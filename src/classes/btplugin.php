@@ -74,27 +74,22 @@
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName);
 			while ($row = $result->fetch_assoc()) {
-
 				$arrReturn[$row['plugin_id']] = $row[$return];
-
 			}
 
 			return $arrReturn;
-
 		}
 
 		public function getAPIKeys() {
 			$returnArr = array();
 			if ($this->intTableKeyValue != "") {
-
 				$returnArr = json_decode($this->arrObjInfo['apikey'], true);
-
 			}
 
 			return $returnArr;
 		}
 
-		public function getPluginPage($page, $limitToPlugin="") {
+		public function getPluginPage($page, $limitToPlugin = "") {
 
 			$sqlFilter = "";
 			if ($limitToPlugin != "" && is_numeric($limitToPlugin)) {
@@ -107,14 +102,11 @@
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."plugin_pages WHERE page = '".$page."'".$sqlFilter." ORDER BY sortnum");
 			while ($row = $result->fetch_assoc()) {
-
 				$this->pluginPage->select($row['pluginpage_id']);
 				$arrReturn[] = $this->pluginPage->get_info();
-
 			}
 
 			return $arrReturn;
-
 		}
 
 
@@ -124,14 +116,10 @@
 			if ($this->intTableKeyValue != "") {
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."plugin_config WHERE plugin_id = '".$this->intTableKeyValue."'");
 				while ($row = $result->fetch_assoc()) {
-
 					$this->configInfo[$row['name']] = $row['value'];
 					$this->configInfoIDs[$row['name']] = $row['pluginconfig_id'];
-
 				}
-
 			}
-
 		}
 
 
@@ -143,7 +131,6 @@
 			else {
 				$this->updateConfigValue($name, $value);
 			}
-
 		}
 
 
@@ -151,9 +138,7 @@
 
 			$returnVal = false;
 			if ($this->intTableKeyValue != "" && $this->objPluginConfig->select($this->configInfoIDs[$name])) {
-
 				$returnVal = $this->objPluginConfig->update(array("value"), array($value));
-
 			}
 
 			return $returnVal;
@@ -162,34 +147,28 @@
 		public function deleteConfigValue($name) {
 
 			if ($this->intTableKeyValue != "" && $this->objPluginConfig->select($this->configInfoIDs[$name])) {
-
 				$this->objPluginConfig->delete();
-
 			}
-
 		}
 
 
-		public function getConfigInfo($returnSingleValue="") {
+		public function getConfigInfo($returnSingleValue = "") {
 
 			$returnVal = "";
 			if ($this->intTableKeyValue != "") {
-
 				if ($returnSingleValue != "") {
 					$returnVal = $this->configInfo[$returnSingleValue];
 				}
 				else {
 					$returnVal = $this->configInfo;
 				}
-
 			}
 
 			return $returnVal;
-
 		}
 
 
-		public function verifyPlugin($pluginName, $arrRequiredConfig=array()) {
+		public function verifyPlugin($pluginName, $arrRequiredConfig = array()) {
 
 			if (!$this->selectByName($pluginName)) {
 				echo "<script type='text/javascript'>window.location = '".MAIN_ROOT."';</script>";
@@ -212,7 +191,6 @@
 					";
 					exit();
 				}
-
 			}
 		}
 
@@ -237,7 +215,6 @@
 				if (count($queries) == $deleteCount && $blnDeletePlugin) {
 					$returnVal = true;
 				}
-
 			}
 
 			return $returnVal;

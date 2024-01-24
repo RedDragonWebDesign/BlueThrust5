@@ -35,15 +35,10 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 $checkAccess = $checkAccess1 || $checkAccess2;
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($checkAccess) {
-
-
 		if ( ! empty($_POST['submit']) ) {
-
 			$countErrors = 0;
 
 			// Check Stat Name
@@ -81,20 +76,16 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 						$countErrors++;
 						$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid second calculation statistic.";
 					}
-
-
-
-
 				}
 			}
-			elseif ($_POST['statType'] != "inputnum" AND $_POST['statType'] != "inputtext") {
+			elseif ($_POST['statType'] != "inputnum" and $_POST['statType'] != "inputtext") {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid stat type.<br>";
 			}
 
 
 			// Check Rounding
-			if ($_POST['rounding'] != "" AND !is_numeric($_POST['rounding'])) {
+			if ($_POST['rounding'] != "" and !is_numeric($_POST['rounding'])) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You may only enter a number for rounding.<br>";
 			}
@@ -110,10 +101,9 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 			if ($countErrors == 0) {
-
 				$_POST = filterArray($_POST);
 
-				if ($_POST['statType'] == "inputnum" OR $_POST['statType'] == "inputtext") {
+				if ($_POST['statType'] == "inputnum" or $_POST['statType'] == "inputtext") {
 					$_POST['firstStat'] = "";
 					$_POST['secondStat'] = "";
 					$_POST['calcOperation'] = "";
@@ -162,24 +152,18 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 						});
 					</script>
 				";
-
-
 			}
 			else {
 				$_POST['submit'] = false;
-
 			}
-
 		}
 
 
 		if ( empty($_POST['submit']) ) {
-
 			$statOptions = "<option value='inputnum'>Input (Number)</option><option value='inputtext'>Input (Text)</option>";
 			$onChange = "";
 			if (is_array($_SESSION['btStatCache'])) {
 				if (count($_SESSION['btStatCache']) > 1) {
-
 					$countStats = 0;
 					foreach ($_SESSION['btStatCache'] as $key => $statInfo) {
 						if ($statInfo['textInput'] == 0) {
@@ -327,16 +311,10 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				
 			";
 		}
-
-
-
 	}
 	else {
 		header("HTTP/1.0 404 Not Found");
 	}
-
-
-
 }
 else {
 	header("HTTP/1.0 404 Not Found");

@@ -87,16 +87,12 @@ while ($row = $result2->fetch_assoc()) {
 while ($row = $result->fetch_assoc()) {
 	$member->select($row['member_id']);
 	$arrMembersOnline[] = $member->getMemberLink();
-if (constant('LOGGED_IN')) {
+	if (constant('LOGGED_IN')) {
+		$rankObj->select($member->get_info("rank_id"));
+		$rankCat = $rankObj->get_info("rankcategory_id");
 
-	$rankObj->select($member->get_info("rank_id"));
-	$rankCat = $rankObj->get_info("rankcategory_id");
-
-	$arrRankCatCount[$rankCat] += 1;
-
+		$arrRankCatCount[$rankCat] += 1;
 	}
-
-
 }
 
 $membersOnlineList = implode(", ", $arrMembersOnline);
@@ -200,7 +196,6 @@ while ($row = $result->fetch_assoc()) {
 	$newsInfo = filterArray($row);
 
 	if ($newsInfo['newstype'] == 1 || ($newsInfo['newstype'] == 2 && constant('LOGGED_IN'))) {
-
 		$newsObj->select($newsInfo['news_id']);
 
 		$member->select($newsInfo['member_id']);
@@ -220,7 +215,6 @@ while ($row = $result->fetch_assoc()) {
 
 		$dispLastEdit = "";
 		if ($member->select($newsInfo['lasteditmember_id'])) {
-
 			$dispLastEditTime = getPreciseTime($newsInfo['lasteditdate']);
 			$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";
 		}
@@ -228,7 +222,8 @@ while ($row = $result->fetch_assoc()) {
 		$member->select($newsInfo['member_id']);
 
 		if (!isset($checkHTMLAccess)) {
-$checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj); }
+			$checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj);
+        }
 
 		$dispNews = ($checkHTMLAccess) ? parseBBCode($newsObj->get_info("newspost")) : nl2br(parseBBCode(filterText($newsInfo['newspost'])));
 
@@ -252,10 +247,7 @@ $checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj); }
 		
 		
 		";
-
-
 	}
-
 }
 
 
@@ -284,7 +276,6 @@ if ($result->num_rows > 0) {
 
 		$dispLastEdit = "";
 		if ($member->select($newsInfo['lasteditmember_id'])) {
-
 			$dispLastEditTime = getPreciseTime($newsInfo['lasteditdate']);
 			$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";
 		}
@@ -292,7 +283,8 @@ if ($result->num_rows > 0) {
 		$member->select($newsInfo['member_id']);
 
 		if (!isset($checkHTMLAccess)) {
-$checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj); }
+			$checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj);
+        }
 
 		$dispNews = ($checkHTMLAccess) ? parseBBCode($newsObj->get_info("newspost")) : nl2br(parseBBCode(filterText($newsInfo['newspost'])));
 
@@ -322,22 +314,18 @@ $checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj); }
 
 
 if ($dispAnnouncements != "") {
-
-echo "<p class='main' style='font-size: 18px; font-weight: bold; padding-left: 15px'>Announcements</p>";
-echo $dispAnnouncements;
+	echo "<p class='main' style='font-size: 18px; font-weight: bold; padding-left: 15px'>Announcements</p>";
+	echo $dispAnnouncements;
 
 	if ($dispHPNews != "") {
 		echo "<br>";
 	}
-
 }
 
 
 if ($dispHPNews != "") {
-
-echo "<p class='main' style='font-size: 18px; font-weight: bold; padding-left: 15px'>Latest News</p>";
-echo $dispHPNews;
-
+	echo "<p class='main' style='font-size: 18px; font-weight: bold; padding-left: 15px'>Latest News</p>";
+	echo $dispHPNews;
 }
 
 echo "
@@ -351,9 +339,15 @@ echo "
 		<td class='main solidBox' style='border-top-width: 0px' align='center'>
 			<b>Members Online:</b> ".$membersOnlineCount."<br>
 			<p>
-				"; if (constant('LOGGED_IN')) {
-echo $membersOnlineList; } else {
-echo "You must be logged in to view members online"; } echo"
+";
+
+if (constant('LOGGED_IN')) {
+	echo $membersOnlineList;
+} else {
+	echo "You must be logged in to view members online";
+}
+
+echo "
 			</p>
 		</td>
 	</tr>
@@ -363,15 +357,12 @@ echo "You must be logged in to view members online"; } echo"
 
 
 
-foreach ($arrRankCatCount as $key=>$value) {
-
+foreach ($arrRankCatCount as $key => $value) {
 	$rankCatObj->select($key);
 	$rankCatColor = $rankCatObj->get_info_filtered("color");
 	$rankCatName = $rankCatObj->get_info_filtered("name");
 
 	$arrDispRankCat[$key] = "<span style='color: ".$rankCatColor."'><b>".$value."</b> ".$rankCatName."</span>";
-
-
 }
 
 $dispRankCatCount = implode(", ", $arrDispRankCat);

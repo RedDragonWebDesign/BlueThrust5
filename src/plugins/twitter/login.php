@@ -33,7 +33,6 @@ $twitterObj = new Twitter($mysqli);
 
 
 if (!isset($_GET['oauth_token']) || !isset($_GET['oauth_verifier']) || $_GET['oauth_token'] != $_SESSION['btOauth_Token']) {
-
 	// CONNECT
 
 	$response = $twitterObj->getRequestToken($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
@@ -47,8 +46,6 @@ if (!isset($_GET['oauth_token']) || !isset($_GET['oauth_verifier']) || $_GET['oa
 		header("Location: ".$twitterObj->authorizeURL."?oauth_token=".$arrOutput['oauth_token']);
 		exit();
 	}
-
-
 }
 elseif (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oauth_token'] == $_SESSION['btOauth_Token']) {
 	// CALLBACK
@@ -95,27 +92,18 @@ elseif (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['
 				";
 
 				exit();
-
-
 			}
 			else {
 				$dispError = "You may not use twitter to log in to this account.  To change this setting, log in to your account regularly and change your Twitter Connect settings.<br><br>";
 			}
 		}
 		else {
-
 			$dispError = "There is no user associated with this Twitter account.  You must connect your Twitter account while logged in before using this feature.";
-
 		}
-
-
 	}
 	else {
-
 		$dispError = "Unable to connect to Twitter!  Please <a href='".$MAIN_ROOT."plugins/twitter/login.php'>Try Again</a>.";
 	}
-
-
 }
 else {
 	$dispError = "You entered an incorrect username/password combination!";
@@ -128,14 +116,12 @@ $dispBreadCrumb = "<a href='".$MAIN_ROOT."'>Home</a> > Log In";
 require_once($prevFolder."themes/".$THEME."/_header.php");
 
 if (constant("LOGGED_IN")) {
-
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."members'
 		</script>
 	";
 	exit();
-
 }
 
 

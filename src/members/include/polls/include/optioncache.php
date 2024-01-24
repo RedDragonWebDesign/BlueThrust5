@@ -37,7 +37,6 @@ $pollObj = new Poll($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
 	$pollObj->cacheID = $_POST['cacheID'];
 
 
@@ -55,7 +54,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	echo "<table class='formTable' style='width: 75%; margin-top: 0px'>";
 
 	foreach ($_SESSION['btPollOptionCache'][$pollObj->cacheID] as $key => $pollOptionInfo) {
-
 		$pollOptionInfo = filterArray($pollOptionInfo);
 
 		$dispDownArrow = "<a href='javascript:void(0)' title='Move Down'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' data-pollcache='".$key."' data-polldirection='down' class='manageListActionButton'></a>";
@@ -80,7 +78,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			</tr>
 		
 		";
-
 	}
 	echo "</table>
 	
@@ -187,7 +184,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	";
 
 	if (count($_SESSION['btPollOptionCache'][$pollObj->cacheID]) == 0) {
-
 		echo "
 			<p class='main' align='center'>
 				<i>No options added yet!</i>

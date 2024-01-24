@@ -15,16 +15,13 @@ foreach ($arrTableNames as $tableName) {
 	if (in_array($tempTableName, $arrTestTables)) {
 		$countTableMatches++;
 	}
-
 }
 
 
 if ($countTableMatches > 0) {
-
 	echo "
 	<div class='noteDiv'>
 	<b>Note:</b> It appears you may have already installed BlueThrust Clan Scripts.  Running this script may overwrite information in your database.
 	</div>
 	";
-
 }

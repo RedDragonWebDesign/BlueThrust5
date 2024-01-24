@@ -1,7 +1,8 @@
 <?php
 
 	if (!defined("MAIN_ROOT")) {
-exit(); }
+		exit();
+    }
 	require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
 
 	$campaignInfo = $campaignObj->get_info_filtered();
@@ -97,7 +98,6 @@ exit(); }
 	echo "</table>";
 
 	if ($totalDonations == 0) {
-
 		echo "
 		
 			<div class='shadedBox' style='margin-left: auto; margin-right: auto; width: 45%; margin-top: 20px'>
@@ -109,7 +109,6 @@ exit(); }
 			</div>
 		
 		";
-
 	}
 
 

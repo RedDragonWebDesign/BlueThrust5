@@ -43,13 +43,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$memberInfo = $member->get_info_filtered();
 
 	if ($squadObj->memberHasAccess($memberInfo['member_id'], "acceptapps")) {
-
 		$squadInfo = $squadObj->get_info_filtered();
 
 		$counter = 0;
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."squadapps WHERE squad_id = '".$squadInfo['squad_id']."' AND status = '0' ORDER BY applydate DESC");
 		while ($row = $result->fetch_assoc()) {
-
 			$member->select($row['member_id']);
 			$newMemberInfo = $member->get_info_filtered();
 
@@ -87,7 +85,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 		if ($counter == 0) {
-
 			echo "
 			<div class='shadedBox' style='width: 300px; margin-top: 50px; margin-left: auto; margin-right: auto; font-style: italic'>
 				<p class='main' align='center'>
@@ -97,9 +94,5 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			<br>
 			";
 		}
-
-
 	}
-
-
 }

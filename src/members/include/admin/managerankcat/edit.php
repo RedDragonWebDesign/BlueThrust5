@@ -25,15 +25,12 @@ else {
 
 
 if (!$rankCatObj->select($_GET['rID'])) {
-
-
 	echo "
 	<script type='text/javascript'>
 		window.location = '".$MAIN_ROOT."members/console.php?cID=".$cID."';
 	</script>
 	";
 	exit();
-
 }
 $rankCatInfo = $rankCatObj->get_info_filtered();
 
@@ -51,7 +48,6 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 
 if (isset($_POST['submit']) && $_POST['submit']) {
-
 	$countErrors = 0;
 	$dispError = "";
 
@@ -65,7 +61,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 
 	// Check Before/After
 
-	if ($_POST['beforeafter'] != "before" AND $_POST['beforeafter'] != "after") {
+	if ($_POST['beforeafter'] != "before" and $_POST['beforeafter'] != "after") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (before/after).<br>";
 	}
@@ -73,7 +69,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 
 	// Check image width
 
-	if ($_FILES['catimagefile']['name'] == "" AND trim($_POST['catimageurl']) != "" AND $_POST['useimage'] == "1" AND (trim($_POST['catimagewidth']) == "" OR $_POST['catimagewidth'] <= 0)) {
+	if ($_FILES['catimagefile']['name'] == "" and trim($_POST['catimageurl']) != "" and $_POST['useimage'] == "1" and (trim($_POST['catimagewidth']) == "" or $_POST['catimagewidth'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a valid image width when using an external image.<br>";
 	}
@@ -81,7 +77,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 
 	// Check image height
 
-	if ($_FILES['catimagefile']['name'] == "" AND trim($_POST['catimageurl']) != "" AND $_POST['useimage'] == "1" AND (trim($_POST['catimageheight']) == "" OR $_POST['catimageheight'] <= 0)) {
+	if ($_FILES['catimagefile']['name'] == "" and trim($_POST['catimageurl']) != "" and $_POST['useimage'] == "1" and (trim($_POST['catimageheight']) == "" or $_POST['catimageheight'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a valid image height when using an external image.<br>";
 	}
@@ -91,15 +87,11 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 
 	$resetCatOrder = false;
 	if ($_POST['catorder'] != "first") {
-
-
 		if (!$rankCatObj->select($_POST['catorder'])) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (category).<br>";
 		}
 		else {
-
-
 			$arrBeforeAfter['before'] = 1;
 			$arrBeforeAfter['after'] = -1;
 
@@ -119,12 +111,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 			else {
 				$intNewCatOrderNum = $rankCatInfo['ordernum'];
 			}
-
-
-
 		}
-
-
 	}
 	else {
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."rankcategory ORDER BY ordernum");
@@ -141,11 +128,9 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 	$strCatImageURL = "";
 	// Check Image
 	if (isset($_POST['useimage']) && $_POST['useimage'] == 1) {
-
 		// Use Image Selected, check for no errors
 
 		if ($countErrors == 0) {
-
 			if ($_FILES['catimagefile']['name'] != "") {
 				// Image File Selected.... Upload it
 
@@ -158,29 +143,22 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 				else {
 					$strCatImageURL = "images/ranks/".$uploadFile->getUploadedFileName();
 				}
-
-
 			}
 			elseif ($_POST['catimageurl'] != "") {
-
 				$strCatImageURL = $_POST['catimageurl'];
-
 			}
 			else {
 				$strCatImageURL = $rankCatInfo['imageurl'];
 			}
-
 		}
 
 		if ($strCatImageURL == "") {
 			$_POST['useimage'] = 0;
 		}
-
 	}
 
 
 	if ($countErrors == 0) {
-
 		// No errors... Add to DB
 
 
@@ -190,7 +168,6 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 		$rankCatObj->select($_GET['rID']);
 
 		if ($rankCatObj->update($arrColumns, $arrValues)) {
-
 			if ($resetCatOrder) {
 				$rankCatObj->resortOrder();
 			}
@@ -206,26 +183,19 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 			popupDialog('Edit Rank Category', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'successBox');
 			</script>
 			";
-
-
 		}
 		else {
 			$_POST['submit'] = false;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to edit category.  Please try again.<br>";
 		}
-
 	}
 	else {
 		$_POST['submit'] = false;
 	}
-
-
-
 }
 
 
 if (!isset($_POST['submit']) || !$_POST['submit']) {
-
 	$afterSelected = "";
 	$intCatBeforeAfter = "";
 
@@ -257,7 +227,6 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 		else {
 			$catOrderOptions .= "<option value='".$row['rankcategory_id']."'>".$catName."</option>";
 		}
-
 	}
 
 	if ($counter == 0) {
@@ -274,17 +243,15 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 	$rankcounter = 1;
 	$manageRanksCID = $consoleObj->findConsoleIDByName("Manage Ranks");
 	while ($row = $result->fetch_assoc()) {
-
-
 		$rankoptions .= $rankcounter.". <a href='console.php?cID=".$manageRanksCID."&rID=".$row['rank_id']."&action=edit'>".$row['name']."</a><br>";
 		$rankcounter++;
-
 	}
 
 	$rankoptionheight = 20*$rankcounter;
 
 	if ($rankoptionheight > 300) {
-$rankoptionheight = 300; }
+$rankoptionheight = 300;
+    }
 
 	if ($rankoptions == "") {
 		$rankoptions = "<i>no ranks in this category!</i>";
@@ -297,7 +264,7 @@ $rankoptionheight = 300; }
 	$dispImagePopup = "";
 	$dispImagePopupLink = "";
 
-	if ($rankCatInfo['useimage'] == 1 AND $rankCatInfo['imageurl'] != "") {
+	if ($rankCatInfo['useimage'] == 1 and $rankCatInfo['imageurl'] != "") {
 		$useImageChecked = "checked";
 
 		$imageURL = $rankCatObj->getLocalImageURL();
@@ -347,7 +314,6 @@ $rankoptionheight = 300; }
 		";
 
 		$dispImagePopupLink = "<i><a href='javascript:void(0)' onclick='showCatImage()'>View Current Image</a></i><br>";
-
 	}
 
 
@@ -490,8 +456,4 @@ $rankoptionheight = 300; }
 	</script>
 	
 	";
-
-
-
-
 }

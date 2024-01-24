@@ -31,7 +31,6 @@ $cID = $_GET['cID'];
 
 
 if ( ! empty($_POST['submit']) ) {
-
 	$countErrors = 0;
 
 	// Check Category Name
@@ -56,7 +55,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		$arrColumns = array("name", "ordernum");
 		$arrValues = array($_POST['catname'], $intNewOrderSpot);
 
@@ -73,33 +71,22 @@ if ( ! empty($_POST['submit']) ) {
 				popupDialog('Add Profile Category', '".$MAIN_ROOT."members', 'successBox');
 			</script>
 			";
-
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save category to the database.  Please contact the website administrator.<br>";
 		}
-
-
 	}
 
 
 
 	if ($countErrors > 0) {
-
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
-
 	}
-
-
 }
 
 if ( empty($_POST['submit']) ) {
-
-
-
 	$countCategories = 0;
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");
@@ -155,5 +142,4 @@ if ( empty($_POST['submit']) ) {
 		</div>
 	</form>
 	";
-
 }

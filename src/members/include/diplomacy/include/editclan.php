@@ -33,7 +33,6 @@ while ($row = $result->fetch_assoc()) {
 
 
 if ( ! empty($_POST['submit']) ) {
-
 	$diplomacyStatusObj = new Basic($mysqli, "diplomacy_status", "diplomacystatus_id");
 	// Check for clan name
 
@@ -60,12 +59,10 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		$arrColumns = array("clanname", "diplomacystatus_id", "website", "clansize", "clantag", "skill", "gamesplayed", "extrainfo", "leaders");
 		$arrValues = array($_POST['clanname'], $_POST['status'], $_POST['website'], $_POST['clansize'], $_POST['tag'], $_POST['skill'], $_POST['gamesplayed'], $_POST['extrainfo'], $_POST['leaders']);
 
 		if ($diplomacyClanObj->update($arrColumns, $arrValues)) {
-
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -81,27 +78,21 @@ if ( ! empty($_POST['submit']) ) {
 			";
 
 			$member->logAction("Edited ".$_POST['clanname']." diplomacy page information.  Set status to ".$diplomacyStatusObj->get_info_filtered("name"));
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-
-
-
 	}
 
 
 	if ($countErrors > 0) {
 		$_POST['submit'] = false;
 	}
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	echo "<div class='formDiv'>";
 
 	if ($dispError != "") {
@@ -129,13 +120,12 @@ if ( empty($_POST['submit']) ) {
 							<select name='status' class='textBox'>
 							";
 
-								foreach ($arrDiplomacyStatus as $key=>$value) {
+								foreach ($arrDiplomacyStatus as $key => $value) {
 									$dispSelected = "";
 									if ($diplomacyClanInfo['diplomacystatus_id'] == $key) {
 										$dispSelected = " selected";
 									}
 									echo "<option value='".$key."'".$dispSelected.">".$value."</option>";
-
 								}
 
 							echo "
@@ -173,7 +163,6 @@ if ( empty($_POST['submit']) ) {
 								}
 
 								echo "<option value='".$clanSizeLC."'".$dispSelected.">".$clanSize."</option>";
-
 							}
 							echo "
 							
@@ -202,6 +191,4 @@ if ( empty($_POST['submit']) ) {
 		</div>	
 	
 	";
-
-
 }

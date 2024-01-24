@@ -21,12 +21,10 @@ require_once($prevFolder."_setup.php");
 $member = new Member($mysqli);
 
 if ($member->select($_GET['mID'])) {
-
 	$memberInfo = $member->get_info_filtered();
 	$member->addProfileView();
 	$member->autoAwardMedals();
 	$member->autoPromote();
-
 }
 else {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
@@ -80,7 +78,6 @@ $dispSocialMedia = "";
 $memberSocialInfo = $member->objSocial->getMemberSocialInfo(true);
 
 foreach ($memberSocialInfo as $socialID => $socialInfo) {
-
 	$dispSocialIconDimensions = "";
 	$member->objSocial->select($socialID);
 	$tempSocialInfo = $member->objSocial->get_info_filtered();
@@ -96,16 +93,13 @@ foreach ($memberSocialInfo as $socialID => $socialInfo) {
 
 
 	$dispSocialMedia .= "<a href='".$socialInfo."' target='_blank'><img class='socialMediaProfileIcons' src='".$MAIN_ROOT.$tempSocialInfo['icon']."' style='margin-right: 5px; ".$dispSocialIconDimensions."'></a>";
-
 }
 
 
 
 if ($dispSocialMedia != "") {
-
 	$addBar = "<div class='dottedLine' style='padding: 3px 0px; margin-bottom: 3px'></div><b>Follow Me:</b><br><p align='center'>";
 	$dispSocialMedia = $addBar.$dispSocialMedia."</p>";
-
 }
 
 
@@ -122,11 +116,8 @@ $arrRecruits = $member->countRecruits(true);
 $totalRecruits = count($arrRecruits);
 
 foreach ($arrRecruits as $recruitID) {
-
 	$member->select($recruitID);
 	$arrDispRecruits[] = $member->getMemberLink();
-
-
 }
 
 $dispRecruits = implode(", ", $arrDispRecruits ?? []);
@@ -168,7 +159,6 @@ else {
 		$member->select($memberInfo['member_id']);
 		$member->update(array("loggedin"), array(0));
 	}
-
 }
 
 $dispRankImg = "";
@@ -183,7 +173,6 @@ if ($rankInfo['imageurl'] != "") {
 
 $dispBirthday = "";
 if ($memberInfo['birthday'] != 0) {
-
 	$bdayDate = new DateTime();
 	$bdayDate->setTimestamp($memberInfo['birthday']);
 	$bdayDate->setTimezone(new DateTimeZone("UTC"));
@@ -194,7 +183,6 @@ if ($memberInfo['birthday'] != 0) {
 	<b>Birthday:</b><br>
 	".$formatBirthday."<br><br>
 	<b>Age:</b> ".$calcAge;
-
 }
 
 if ($memberInfo['lastseenlink'] == "") {
@@ -269,13 +257,10 @@ require_once($prevFolder."include/breadcrumb.php");
 			$x = 0;
 
 			foreach ($arrSections as $section) {
-
 				foreach ($arrPlugins as $pluginInfo) {
-
 					if ($pluginInfo['sortnum'] == $x) {
 						require_once($pluginInfo['pagepath']);
 					}
-
 				}
 
 				if ($section != "") {
@@ -283,7 +268,6 @@ require_once($prevFolder."include/breadcrumb.php");
 				}
 
 				$x++;
-
 			}
 
 

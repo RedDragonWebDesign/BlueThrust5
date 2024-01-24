@@ -37,13 +37,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -109,12 +108,10 @@ if ($NUM_OF_PAGES == 0) {
 }
 
 if ($_GET['pID'] > $NUM_OF_PAGES) {
-
 	echo "
 	<script type='text/javascript'>window.location = 'viewboard.php?bID=".$_GET['bID']."';</script>
 	";
 	exit();
-
 }
 
 // Check for Next button
@@ -161,7 +158,6 @@ $subForumObj = new ForumBoard($mysqli);
 $arrSubForums = $boardObj->getSubForums();
 $dispSubForums = "";
 foreach ($arrSubForums as $boardID) {
-
 	$subForumObj->select($boardID);
 
 	if ($subForumObj->memberHasAccess($memberInfo)) {
@@ -225,9 +221,7 @@ foreach ($arrSubForums as $boardID) {
 			
 			</tr>
 		";
-
 	}
-
 }
 
 $breadcrumbObj->setTitle($boardInfo['name']);
@@ -249,7 +243,6 @@ if ($boardInfo['subforum_id'] != 0) {
 	foreach ($subForumBC as $bcInfo) {
 		$breadcrumbObj->addCrumb($bcInfo['value'], $bcInfo['link']);
 	}
-
 }
 $breadcrumbObj->addCrumb($boardInfo['name']);
 require_once($prevFolder."include/breadcrumb.php");
@@ -260,7 +253,6 @@ echo "
 ";
 
 if ($dispSubForums != "") {
-
 	echo "	
 	
 		<tr>
@@ -315,7 +307,6 @@ echo "
 $arrPageTopics = $boardObj->getForumTopics(" ft.stickystatus DESC, fp.dateposted DESC", " LIMIT ".$intOffset.", ".$NUM_PER_PAGE);
 
 foreach ($arrPageTopics as $postID) {
-
 	$boardObj->objPost->select($postID);
 	$postInfo = $boardObj->objPost->get_info_filtered();
 
@@ -363,7 +354,6 @@ foreach ($arrPageTopics as $postID) {
 			<td class='boardLastPost dottedLine".$newTopicBG."'>by ".$dispLastPoster."<br>".getPreciseTime($lastPostInfo['dateposted'])."</td>
 		</tr>
 	";
-
 }
 
 echo "
@@ -389,7 +379,6 @@ echo "
 ";
 
 if (count($arrTopics) == 0) {
-
 	echo "
 		<div class='shadedBox' style='width: 40%; margin: 20px auto'>
 			<p class='main' align='center'>
@@ -398,7 +387,6 @@ if (count($arrTopics) == 0) {
 			</p>
 		</div>
 	";
-
 }
 
 if ($blnPageSelect) {

@@ -1,7 +1,8 @@
 <?php
 
 	if (!defined("HPIMAGE_FORM")) {
-exit(); }
+exit();
+    }
 
 	$imageOrderObj = new ImageSlider($mysqli);
 	$imageOptions = array();

@@ -14,7 +14,6 @@
 
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
-
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/event.php");
@@ -39,7 +38,6 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !is
 	else {
 		exit();
 	}
-
 }
 else {
 	$memberInfo = $member->get_info();
@@ -54,7 +52,6 @@ $result = $mysqli->query("SELECT em.* FROM ".$dbprefix."events_members em, ".$db
 
 
 if ($result->num_rows > 0) {
-
 	echo "<table class='formTable' style='margin-top: 0px; border-spacing: 0px'>";
 	$counter = 0;
 	while ($row = $result->fetch_assoc()) {

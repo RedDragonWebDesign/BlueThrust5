@@ -49,7 +49,6 @@ if ($numOfPages < $_GET['page']) {
 
 
 for ($i=1; $i<=$numOfPages; $i++) {
-
 	$dispSelected = "";
 	if ($_GET['page'] == $i) {
 		$dispSelected = " selected";
@@ -107,7 +106,6 @@ echo "
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."logs ORDER BY logdate DESC LIMIT ".$startLimit.",".$_GET['show']);
 while ($row = $result->fetch_assoc()) {
-
 	$member->select($row['member_id']);
 	$formatDate = getPreciseTime($row['logdate']);
 
@@ -132,7 +130,6 @@ while ($row = $result->fetch_assoc()) {
 			<td colspan='2' align='center'><br><div class='dottedLine' style='width: 90%'></div><br></td>
 		</tr>
 	";
-
 }
 
 echo "</table>

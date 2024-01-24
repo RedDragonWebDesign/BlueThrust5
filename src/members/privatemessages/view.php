@@ -55,7 +55,6 @@ $multiMemPMObj = $pmObj->multiMemPMObj;
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $pmObj->select($_GET['pmID'])) {
-
 	$memberInfo = $member->get_info_filtered();
 
 	$pmInfo = $pmObj->get_info_filtered();
@@ -77,14 +76,12 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$pmObj->update(array("status"), array(1));
 		}
 		elseif ($result->num_rows > 0) {
-
 			$row = $result->fetch_assoc();
 			$pmMemberID = $row['pmmember_id'];
 			$multiMemPMObj->select($pmMemberID);
 			$multiMemPMObj->update(array("seenstatus"), array(1));
 			$blnMultiPM = true;
 			$dispToMember = $pmObj->getRecipients(true);
-
 		}
 		elseif ($memberInfo['member_id'] == $pmInfo['sender_id'] && $senderResult->num_rows > 0) {
 			// Member is the sender
@@ -127,17 +124,13 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				$oldPMObj->select($row['pm_id']);
 
 				if ($row['receiver_id'] != 0) {
-
 					$member->select($row['receiver_id']);
 					$dispToPrevMember = $member->getMemberLink();
 				}
 				else {
-
 					$dispToPrevMember = $oldPMObj->getRecipients(true);
 					$pmObj->select($row['pm_id']);
 					$arrReceivers = $pmObj->getAssociateIDs();
-
-
 				}
 
 				$member->select($row['sender_id']);
@@ -185,9 +178,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 						</td>
 					</tr>
 				";
-
 			}
-
 		}
 
 
@@ -254,10 +245,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			
 			
 			";
-
-
-
-
 		}
 
 
@@ -309,9 +296,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 							";
 
 						if ($blnMultiPM) {
-
 							echo "<input type='button' id='replyAllButton' class='submitButton' style='margin-left: 20px' value='Reply All'>";
-
 						}
 
 		echo "
@@ -361,19 +346,13 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			</script>
 			
 		";
-
-
-
 	}
 	else {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");
 	}
-
 }
 else {
-
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
-
 }
 
 

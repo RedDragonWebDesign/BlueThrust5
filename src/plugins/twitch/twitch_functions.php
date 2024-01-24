@@ -8,7 +8,6 @@
 		$memberObj = new Member($mysqli);
 		$returnVal = false;
 		if ($memberObj->select($_GET['user'])) {
-
 			$streamTitle = $memberObj->get_info_filtered("username")."'s Stream";
 			$hooksObj->addHook("breadcrumb", "setStreamPageBreadcrumb", array($streamTitle));
 			$returnVal = true;
@@ -26,5 +25,4 @@
 		$breadcrumbObj->popCrumb();
 		$breadcrumbObj->addCrumb("Twitch Streams", MAIN_ROOT."plugins/twitch");
 		$breadcrumbObj->addCrumb($breadcrumbTitle);
-
 	}

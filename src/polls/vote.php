@@ -30,7 +30,6 @@
 	$arrReturn = array("result" => "fail");
 	$pollOptionSelector = "poll_".$_POST['pollID'];
 	if ($pollObj->select($_POST['pollID'])) {
-
 		$pollInfo = $pollObj->get_info_filtered();
 		$pollObj->objAccess->arrAccessFor = array("keyName" => "poll_id", "keyValue" => $pollInfo['poll_id']);
 
@@ -53,7 +52,7 @@
 
 
 		if ($blnVote) {
-			foreach (json_decode($_POST['pollOptionID'],true) as $pollOptionID) {
+			foreach (json_decode($_POST['pollOptionID'], true) as $pollOptionID) {
 				$pollObj->objPollOption->select($pollOptionID);
 				$pollOptionInfo = $pollObj->objPollOption->get_info_filtered();
 				$arrReturn = $pollObj->vote($memberID, $pollOptionInfo);
@@ -62,7 +61,6 @@
 		else {
 			$arrReturn['errors'] = "You do not have permission to vote on this poll.";
 		}
-
 	}
 
 	echo json_encode($arrReturn);

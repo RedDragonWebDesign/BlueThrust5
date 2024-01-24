@@ -14,7 +14,6 @@
 
 
 if (!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
-
 	exit();
 }
 else {
@@ -27,7 +26,6 @@ else {
 
 
 	if (!$member->hasAccess($consoleObj)) {
-
 		exit();
 	}
 }
@@ -108,7 +106,6 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 		if ($member->hasAccess($tournamentConsoleCheck)) {
 			$arrMembers[] = array("id" => $row['member_id'], "value" => filterText($row['username']));
 		}
-
 	}
 	$member->select($memberInfo['member_id']);
 	$arrJSONMembers = json_encode($arrMembers);

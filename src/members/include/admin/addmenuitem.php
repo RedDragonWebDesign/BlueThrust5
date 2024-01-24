@@ -393,9 +393,7 @@ $afterJS = "
 	";
 
 	foreach ($arrAfterJS as $value) {
-
 		$afterJS .= $value."\n";
-
 	}
 
 $afterJS .= "		

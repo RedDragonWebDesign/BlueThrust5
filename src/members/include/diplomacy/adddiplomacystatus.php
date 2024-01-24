@@ -30,7 +30,6 @@ $cID = $_GET['cID'];
 require_once("../classes/btupload.php");
 
 if ( ! empty($_POST['submit']) ) {
-
 	$diplomacyStatusObj = new BasicOrder($mysqli, "diplomacy_status", "diplomacystatus_id");
 
 	// Check Name
@@ -52,7 +51,6 @@ if ( ! empty($_POST['submit']) ) {
 	if ($countErrors == 0) {
 		// If no errors, check for image upload and try to upload the image
 		if ($_FILES['statusimagefile']['name'] != "") {
-
 			$uploadImg = new BTUpload($_FILES['statusimagefile'], "status_", "../images/diplomacy/", array(".jpg", ".png", ".gif", ".bmp"));
 			if (!$uploadImg->uploadFile()) {
 				$countErrors++;
@@ -61,11 +59,8 @@ if ( ! empty($_POST['submit']) ) {
 			else {
 				$statusImageURL = "images/diplomacy/".$uploadImg->getUploadedFileName();
 			}
-
-
 		}
 		else {
-
 			$uploadImg = new BTUpload($_POST['statusimageurl'], "status_", "../images/diplomacy/", array(".jpg", ".png", ".gif", ".bmp"), 4, true);
 			if (!$uploadImg->uploadFile()) {
 				$countErrors++;
@@ -77,17 +72,14 @@ if ( ! empty($_POST['submit']) ) {
 
 
 			//$statusImageURL = $_POST['statusimageurl'];
-
 		}
 
 		// If there are still no errors after uploading the image, add to db
 		if ($countErrors == 0) {
-
 			$arrColumns = array("name", "imageurl", "imagewidth", "imageheight", "ordernum");
 			$arrValues = array($_POST['statusname'], $statusImageURL, $_POST['imagewidth'], $_POST['imageheight'], $intNewOrderNum);
 
 			if ($diplomacyStatusObj->addNew($arrColumns, $arrValues)) {
-
 				echo "
 				
 					<div style='display: none' id='successBox'>
@@ -112,29 +104,20 @@ if ( ! empty($_POST['submit']) ) {
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 			}
 		}
-
 	}
 
 	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
-
-
-
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	$orderoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
-
 		$orderoptions .= "<option value='".$row['diplomacystatus_id']."'>".filterText($row['name'])."</option>";
-
 	}
 
 	if ($orderoptions == "") {
@@ -198,5 +181,4 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		
 	";
-
 }

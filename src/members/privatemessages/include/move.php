@@ -39,13 +39,11 @@ $pmFolderObj->intMemberID = $memberInfo['member_id'];
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && ($checkFolder || $pmFolderObj->isMemberFolder())) {
-
 	$pmObj = new PrivateMessage($mysqli);
 
 	$arrPMIDS = json_decode($_POST['movePMs']);
 
 	foreach ($arrPMIDS as $pmID) {
-
 		$pmMID = "";
 		if (strpos($pmID, "_") !== false) {
 			$tempPMID = substr($pmID, 0, strpos($pmID, "_"));
@@ -77,9 +75,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 				$pmObj->multiMemPMObj->update(array("pmfolder_id"), array($_POST['newFolder']));
 			}
-
 		}
-
 	}
-
 }

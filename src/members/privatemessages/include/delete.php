@@ -32,7 +32,6 @@ $member->select($_SESSION['btUsername']);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
 	$memberInfo = $member->get_info_filtered();
 	$pmObj = new Basic($mysqli, "privatemessages", "pm_id");
 
@@ -40,13 +39,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 	foreach ($arrPMIDS as $pmID) {
-
 		if (!is_numeric($pmID)) {
 			$arrMultiMemPM = explode("_", $pmID);
 
 			$pmID = $arrMultiMemPM[0];
 			$pmMID = $arrMultiMemPM[1];
-
 		}
 
 
@@ -67,8 +64,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			elseif ($multiMemPMInfo['member_id'] == $memberInfo['member_id']) {
 				$multiMemPMObj->update(array("pmfolder_id"), array(-2));
 			}
-
-
 		}
 		elseif ($pmInfo['receiver_id'] == $memberInfo['member_id'] && $pmInfo['receiverfolder_id'] == -2) {
 			$pmObj->update(array("deletereceiver"), array(1));
@@ -82,8 +77,5 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		elseif ($pmInfo['sender_id'] == $memberInfo['member_id']) {
 			$pmObj->update(array("senderfolder_id"), array(-2));
 		}
-
 	}
-
-
 }

@@ -70,7 +70,6 @@ if (isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {
 		exit();
 	}
 	elseif ($topicInfo['lockstatus'] == 1) {
-
 		echo "
 			<div id='lockedMessage' style='display: none'>
 				<p class='main' align='center'>
@@ -102,7 +101,6 @@ if (isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {
 		";
 
 		exit();
-
 	}
 
 
@@ -130,10 +128,8 @@ if (isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {
 	</script>
 	";
 	$postActionWord = "reply";
-
 }
 else {
-
 	echo "
 	<script type='text/javascript'>
 		$(document).ready(function() {
@@ -224,7 +220,6 @@ $arrComponents = array(
 
 
 if ($blnCheckForumAttachments) {
-
 	$arrAttachmentComponents = array(
 		"attachments" => array(
 			"type" => "custom",
@@ -243,7 +238,6 @@ if ($blnCheckForumAttachments) {
 
 
 	$arrComponents = array_merge($arrComponents, $arrAttachmentComponents);
-
 }
 
 
@@ -351,7 +345,6 @@ function saveAdditionalPostData() {
 		$boardObj->objPost->update(array("forumtopic_id"), array($topicInfo['forumtopic_id']));
 		$newReplies = $topicInfo['replies']+1;
 		$boardObj->objTopic->update(array("replies", "lastpost_id"), array($newReplies, $boardObj->objPost->get_info("forumpost_id")));
-
 	}
 
 	$boardObj->objPost->sendNotifications();
@@ -364,9 +357,7 @@ function saveAdditionalPostData() {
 		foreach ($arrDownloadID as $downloadID) {
 			$forumAttachmentObj->addNew(array("download_id", "forumpost_id"), array($downloadID, $boardObj->objPost->get_info("forumpost_id")));
 		}
-
 	}
-
 }
 
 function checkForAttachments() {
@@ -382,11 +373,9 @@ function checkForAttachments() {
 		$arrDownloadID = array();
 		$arrDLColumns = array("downloadcategory_id", "member_id", "dateuploaded", "filename", "mimetype", "filesize", "splitfile1", "splitfile2");
 		for ( $i = 1; $i <= ($_POST['numofattachments'] ?? 0); $i++ ) {
-
 			$tempPostName = "forumattachment_".$i;
 
 			if ($_FILES[$tempPostName]['name'] != "" && $attachmentObj->uploadFile($_FILES[$tempPostName], $prevFolder."downloads/files/forumattachment/", $forumAttachmentCatID)) {
-
 				$splitFiles = $attachmentObj->getSplitNames();
 				$fileSize = $attachmentObj->getFileSize();
 				$mimeType = $attachmentObj->getMIMEType();
@@ -398,16 +387,13 @@ function checkForAttachments() {
 				if ($attachmentObj->addNew($arrDLColumns, $arrDLValues)) {
 					$arrDownloadID[] = $attachmentObj->get_info("download_id");
 				}
-
 			}
 			elseif ($_FILES[$tempPostName]['name'] != "") {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload attachment #".$i.": ".$_FILES[$tempPostName]['name'].".<br>";
 			}
-
 		}
 		$returnVal = $arrDownloadID;
-
 	}
 
 	return $returnVal;

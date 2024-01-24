@@ -14,7 +14,6 @@
 
 
 if (!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
-
 	exit();
 }
 else {
@@ -27,7 +26,6 @@ else {
 
 
 	if (!$member->hasAccess($consoleObj)) {
-
 		exit();
 	}
 }

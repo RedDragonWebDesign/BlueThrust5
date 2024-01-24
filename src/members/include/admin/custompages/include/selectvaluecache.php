@@ -41,23 +41,18 @@ if ($_POST['whichValue'] == "" || !is_numeric($_POST['whichValue'])) {
 
 	$tempArr = $_SESSION['btFormComponent'][$componentIndex]['cOptions'];
 	asort($tempArr);
-
 }
 else {
 	$componentIndex = $_POST['whichValue'];
 
 	$tempArr = $_SESSION['btFormComponentTempSelectValues'];
 	asort($tempArr);
-
 }
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
-
 	$countErrors = 0;
 	if ($_POST['action'] == "add") {
-
 		if (trim($_POST['optionValue']) == "") {
-
 			$countErrors++;
 		}
 
@@ -69,27 +64,21 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 			asort($tempArr);
 
 			$_SESSION['btFormComponent'][$componentIndex]['cOptions'] = $tempArr;
-
 		}
 		elseif ($countErrors == 0 && isset($_POST['whichValue'])) {
 			$_SESSION['btFormComponentTempSelectValues'][] = $_POST['optionValue'];
 
 			$tempArr = $_SESSION['btFormComponentTempSelectValues'];
 			asort($tempArr);
-
 		}
-
-
 	}
 	elseif ($_POST['action'] == "delete" && is_numeric($_POST['deleteKey'])) {
-
 		if ($_POST['whichValue'] == "" || !is_numeric($_POST['whichValue'])) {
 			$componentIndex = $_SESSION['btFormComponentCount'];
 			unset($_SESSION['btFormComponent'][$componentIndex]['cOptions'][$_POST['deleteKey']]);
 
 			$tempArr = $_SESSION['btFormComponent'][$componentIndex]['cOptions'];
 			asort($tempArr);
-
 		}
 		else {
 			$componentIndex = $_POST['whichValue'];
@@ -97,10 +86,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 			$tempArr = $_SESSION['btFormComponentTempSelectValues'];
 			asort($tempArr);
-
 		}
-
-
 	}
 
 
@@ -113,6 +99,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 	if ($counter == 1) {
 		echo "<i>None</i>";
 	}
-
-
 }

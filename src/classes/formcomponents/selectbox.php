@@ -13,7 +13,7 @@
 			$this->nonSelectableItems = $items;
 		}
 
-		public function getHTML($componentName="", $componentValue="", $attributes=array()) {
+		public function getHTML($componentName = "", $componentValue = "", $attributes = array()) {
 			$displayForm = '';
 
 			if ($componentName != "") {

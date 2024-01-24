@@ -66,7 +66,6 @@
 			$this->arrParameters['oauth_consumer_key'] = $this->consumerKey;
 			$this->arrParameters['oauth_signature_method'] = "HMAC-SHA1";
 			$this->arrParameters['oauth_version'] = "1.0";
-
 		}
 
 		// Plugin Functions
@@ -76,23 +75,18 @@
 
 			$returnVal = false;
 			if (is_numeric($memID)) {
-
 				$query = "SELECT twitter_id FROM ".$this->MySQL->get_tablePrefix()."twitter WHERE member_id = '".$memID."'";
 				$result = $this->MySQL->query($query);
 
 				if ($result->num_rows > 0) {
-
 					$row = $result->fetch_assoc();
 					$this->select($row['twitter_id']);
 
 					$returnVal = true;
-
 				}
-
 			}
 
 			return $returnVal;
-
 		}
 
 
@@ -101,19 +95,15 @@
 			$returnVal = false;
 
 			if (isset($oauth_token) && isset($oauth_token_secret)) {
-
 				$loginHash = md5($oauth_token);
 
 				$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE loginhash = '".$loginHash."'");
 				$row = $result->fetch_assoc();
 				if ($result->num_rows > 0 && $row['oauth_tokensecret'] == $oauth_token_secret) {
-
 					$this->select($row['twitter_id']);
 
 					$returnVal = true;
-
 				}
-
 			}
 
 			return $returnVal;
@@ -123,7 +113,6 @@
 		public function reloadCacheInfo() {
 
 			if ($this->intTableKeyValue != "" && isset($this->oauthToken) && isset($this->oauthTokenSecret)) {
-
 				if ((time()-$this->arrObjInfo["lastupdate"]) > 1800) {
 					$twitterInfo = $this->getTwitterInfo();
 
@@ -139,11 +128,8 @@
 						$this->delete();
 						$this->arrObjInfo = array();
 					}
-
 				}
-
 			}
-
 		}
 
 		public function dispCard() {
@@ -162,9 +148,9 @@
 						<p class='main'>".$this->arrObjInfo['description']."</p>
 						
 						<div class='main' style='position: relative; overflow: auto; text-align: left'>
-							<div style='float: left; margin-left: 10px'><a href='http://twitter.com/".$this->arrObjInfo['username']."' target='_blank'><b>".number_format($this->arrObjInfo['tweets'],0)."</b><br>TWEETS</a></div>
-							<div style='float: left; margin-left: 10px'><a href='http://twitter.com/".$this->arrObjInfo['username']."/following' target='_blank'><b>".number_format($this->arrObjInfo['following'],0)."</b><br>FOLLOWING</a></div>
-							<div style='float: left; margin-left: 10px'><a href='http://twitter.com/".$this->arrObjInfo['username']."/followers' target='_blank'><b>".number_format($this->arrObjInfo['followers'],0)."</b><br>FOLLOWERS</a></div>
+							<div style='float: left; margin-left: 10px'><a href='http://twitter.com/".$this->arrObjInfo['username']."' target='_blank'><b>".number_format($this->arrObjInfo['tweets'], 0)."</b><br>TWEETS</a></div>
+							<div style='float: left; margin-left: 10px'><a href='http://twitter.com/".$this->arrObjInfo['username']."/following' target='_blank'><b>".number_format($this->arrObjInfo['following'], 0)."</b><br>FOLLOWING</a></div>
+							<div style='float: left; margin-left: 10px'><a href='http://twitter.com/".$this->arrObjInfo['username']."/followers' target='_blank'><b>".number_format($this->arrObjInfo['followers'], 0)."</b><br>FOLLOWERS</a></div>
 						</div>
 						
 					</div>
@@ -180,7 +166,6 @@
 		public function generateNonce() {
 
 			return md5(uniqid(rand().time(), true));
-
 		}
 
 		public function generateSignature($httpMethod, $reqURL) {
@@ -189,7 +174,6 @@
 			$arrEncodedString = array();
 
 			foreach ($this->arrParameters as $key => $value) {
-
 				$encodedString = "";
 
 				$encodedKey = rawurlencode($key."=");
@@ -212,7 +196,6 @@
 			$returnVal = base64_encode(hash_hmac("sha1", $sigString, $signingKey, true));
 
 			return $returnVal;
-
 		}
 
 		public function prepareAuthHeader() {
@@ -222,16 +205,13 @@
 			// Prepare Authorization Header
 
 			foreach ($this->arrParameters as $key => $value) {
-
 				$arrHeaderParams[] = rawurlencode($key)."=\"".rawurlencode($value)."\"";
-
 			}
 
 			$arrHeader = array();
 			$arrHeader[] = "Authorization: OAuth ".implode(", ", $arrHeaderParams);
 
 			return $arrHeader;
-
 		}
 
 
@@ -253,20 +233,15 @@
 			$response = $this->httpRequest($this->requestTokenURL, "POST", $arrHeader);
 
 			if ($this->httpCode == 200) {
-
 				$returnVal = $response;
-
 			}
 			else {
-
 				$returnVal = false;
-
 			}
 
 			unset($this->arrParameters['oauth_callback']);
 
 			return $returnVal;
-
 		}
 
 		public function getAccessToken($setOauthToken, $oauthVerifier) {
@@ -294,18 +269,13 @@
 			$this->lastResponse = $response;
 
 			if ($this->httpCode == 200) {
-
 				$returnVal = $response;
-
 			}
 			else {
-
 				$returnVal = false;
-
 			}
 
 			return $returnVal;
-
 		}
 
 
@@ -331,7 +301,6 @@
 			}
 
 			return $returnVal;
-
 		}
 
 		public function getTwitterInfo() {
@@ -348,18 +317,13 @@
 			$response = $this->httpRequest($this->twitterInfoURL, "GET", $arrHeader);
 
 			if ($this->httpCode == 200) {
-
 				$returnVal = json_decode($response, true);
-
 			}
 			else {
-
 				$returnVal = false;
-
 			}
 
 			return $returnVal;
-
 		}
 
 
@@ -367,7 +331,6 @@
 
 			$returnArr = array();
 			if (is_numeric($tweetID)) {
-
 				$this->resetParamArray();
 
 				$url = $this->embedTweetURL."?id=".$tweetID."&maxwidth=350&hide_media=1";
@@ -387,18 +350,14 @@
 				$response = $this->httpRequest($url, "GET", $arrHeader);
 
 				if ($this->httpCode == 200) {
-
 					$returnArr = json_decode($response, true);
-
 				}
-
 			}
 
 			return $returnArr;
-
 		}
 
-		public function httpRequest($url, $method, $headers=array(), $postfields=array()) {
+		public function httpRequest($url, $method, $headers = array(), $postfields = array()) {
 
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);
@@ -422,7 +381,6 @@
 			$this->httpCode = $info['http_code'];
 
 			return $result;
-
 		}
 
 		public function resetParamArray() {
@@ -432,7 +390,6 @@
 			$this->arrParameters['oauth_consumer_key'] = $this->consumerKey;
 			$this->arrParameters['oauth_signature_method'] = "HMAC-SHA1";
 			$this->arrParameters['oauth_version'] = "1.0";
-
 		}
 
 		public function getConsumerKey() {

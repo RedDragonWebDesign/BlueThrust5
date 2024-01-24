@@ -13,7 +13,6 @@
  */
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
-
 	exit();
 }
 else {
@@ -25,7 +24,6 @@ else {
 	$squadObj->select($sID);
 
 	if (!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "manageshoutbox")) {
-
 		exit();
 	}
 }
@@ -45,7 +43,6 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 
 if ($_GET['nID'] == "") {
-
 	echo "
 	
 		<div id='loadingSpiral' class='loadingSpiral'>
@@ -168,11 +165,8 @@ if ($_GET['nID'] == "") {
 			
 		</script>
 	";
-
 }
 elseif ($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
-
-
 	echo "
 	
 	<script type='text/javascript'>
@@ -186,8 +180,6 @@ elseif ($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
 
 
 	if ( ! empty($_POST['submit']) ) {
-
-
 		// Check Message
 
 		if (trim($_POST['message']) == "") {
@@ -201,7 +193,6 @@ elseif ($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
 			$arrValues = array($_POST['message'], $memberInfo['member_id'], $time);
 
 			if ($squadNewsObj->update($arrColumns, $arrValues)) {
-
 				echo "
 				<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -214,26 +205,21 @@ elseif ($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
 				</script>
 		
 				";
-
 			}
 			else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 			}
-
-
 		}
 
 		if ($countErrors > 0) {
 			$_POST = filterArray($_POST);
 			$_POST['submit'] = false;
 		}
-
 	}
 
 
 	if ( empty($_POST['submit']) ) {
-
 		$squadNewsInfo = $squadNewsObj->get_info_filtered();
 
 		$privateSelected = "";
@@ -279,8 +265,5 @@ elseif ($_GET['nID'] != "" && $squadNewsObj->select($_GET['nID'])) {
 			</form>
 		
 		";
-
 	}
-
-
 }

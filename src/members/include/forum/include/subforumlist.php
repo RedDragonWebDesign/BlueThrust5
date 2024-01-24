@@ -32,9 +32,6 @@ $member->select($_SESSION['btUsername']);
 $boardObj = new ForumBoard($mysqli);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
-
-
 	if (isset($_POST['subforum']) && $boardObj->select($_POST['subforum'])) {
 		$arrSubForums = $boardObj->getSubForums();
 
@@ -64,8 +61,5 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		if (count($arrSubForums) == 0 || ($_POST['bID'] != "" && count($arrSubForums) == 1)) {
 			echo "<option value='first'>(first board)</option>";
 		}
-
 	}
-
-
 }

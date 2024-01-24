@@ -23,7 +23,6 @@ $checkMember = $member->select($_SESSION['btUsername']);
 $LOGIN_FAIL = true;
 
 if ($checkMember) {
-
 	if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$LOGIN_FAIL = false;
 
@@ -46,19 +45,16 @@ if ($checkMember) {
 		$arrFullySortedConsole = array();
 		$consoleObj = new ConsoleOption($mysqli);
 		foreach ($rankPrivileges as $consoleoption) {
-
 			$consoleObj->select($consoleoption);
 			$consoleInfo = $consoleObj->get_info();
 
 			$sortNum = array_search($consoleInfo['consolecategory_id'], $arrConsoleCats);
 
 			$arrFullySortedConsole[$sortNum][] = $consoleoption;
-
 		}
 		$consoleCatObj = new basic($mysqli, "consolecategory", "consolecategory_id");
 
 		foreach ($arrConsoleCats as $key => $categoryID) {
-
 			$consoleCatObj->select($categoryID);
 			$consoleCatInfo = $consoleCatObj->get_info();
 			echo "<b>".$consoleCatInfo['name']."</b>";
@@ -67,22 +63,13 @@ if ($checkMember) {
 			$arrConsoleOptions = $arrFullySortedConsole[$key];
 
 				foreach ($arrConsoleOptions as $consoleOptionID) {
-
 					$consoleObj->select($consoleOptionID);
 					$consoleInfo = $consoleObj->get_info();
 
 					echo " - ".$consoleInfo['pagetitle']."<br>";
 				}
-
-
 		}
-
-
-
-
-
 	}
-
 }
 
 

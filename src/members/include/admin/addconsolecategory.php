@@ -29,7 +29,6 @@ $cID = $_GET['cID'];
 $consoleCatObj = new ConsoleCategory($mysqli);
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Category Name
 
 	if (trim($_POST['catname']) == "") {
@@ -43,7 +42,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	$intNewOrderSpot = "";
-	if (!$consoleCatObj->select($_POST['catorder']) AND $_POST['catorder'] != "first") {
+	if (!$consoleCatObj->select($_POST['catorder']) and $_POST['catorder'] != "first") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (category)<br>";
 	}
@@ -60,28 +59,21 @@ if ( ! empty($_POST['submit']) ) {
 		else {
 			$intNewOrderSpot = 1;
 		}
-
 	}
 	else {
-
-		if ($_POST['beforeafter'] != "before" AND $_POST['beforeafter'] != "after") {
+		if ($_POST['beforeafter'] != "before" and $_POST['beforeafter'] != "after") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (before/after)<br>";
 		}
 		else {
 			$intNewOrderSpot = $consoleCatObj->makeRoom($_POST['beforeafter']);
 		}
-
-
 	}
 
 
 
 	if ($countErrors == 0) {
-
 		if ($consoleCatObj->addNew(array("name", "ordernum"), array($_POST['catname'], $intNewOrderSpot))) {
-
-
 			echo "
 			<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -93,22 +85,16 @@ if ( ! empty($_POST['submit']) ) {
 				popupDialog('Add New Console Category', '".$MAIN_ROOT."members', 'successBox');
 			</script>
 			";
-
 		}
-
 	}
 	else {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
-
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	$countCategories = 0;
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory WHERE adminoption = '0' ORDER BY ordernum DESC");
@@ -164,5 +150,4 @@ if ( empty($_POST['submit']) ) {
 		</form>
 	
 	";
-
 }

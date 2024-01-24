@@ -41,8 +41,6 @@ $pluginObj = new btPlugin($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
-
 	$countErrors = 0;
 	$dispError = array();
 
@@ -85,7 +83,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$countErrors++;
 			$dispError[] = "Unable to delete ".$PLUGIN_NAME." console option.  You will have to manually delete it.";
 		}
-
 	}
 	else {
 		$countErrors++;
@@ -105,5 +102,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 	echo json_encode($arrReturn);
-
 }

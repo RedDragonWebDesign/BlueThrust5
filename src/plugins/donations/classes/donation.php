@@ -14,14 +14,12 @@
 			$this->strTableKey = "donation_id";
 
 			$this->objError = new Basic($sqlConnection, "donations_errorlog", "donationerror_id");
-
 		}
 
 
 		public function logError($response) {
 
 			$this->objError->addNew(array("datesent", "response"), array(time(), $response));
-
 		}
 
 

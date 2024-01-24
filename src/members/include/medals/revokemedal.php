@@ -38,7 +38,6 @@
 	$dispError = "";
 	$countErrors = 0;
 	if ($memberInfo['rank_id'] == 1) {
-
 		$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 		$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
 
@@ -47,7 +46,6 @@
 			$row = $result->fetch_assoc();
 			$rankInfo['promotepower'] = $row['rank_id'];
 		}
-
 	}
 
 	$rankObj = new Rank($mysqli);
@@ -72,10 +70,8 @@
 	$sqlRanks = "('".implode("','", $arrRanks)."')";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."' ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
 	while ($row = $result->fetch_assoc()) {
-
 		$rankObj->select($row['rank_id']);
 		$memberOptions[$row['member_id']] = $rankObj->get_info_filtered("name")." ".filterText($row['username']);
-
 	}
 
 	if ( ! empty($_POST['submit']) ) {
@@ -83,12 +79,10 @@
 		$arrMedals = $member->getMedalList();
 		$medaloptions = array();
 		foreach ($arrMedals as $medalID) {
-
 			$medalObj->select($medalID);
 			$medalInfo = $medalObj->get_info_filtered();
 
 			$medalOptions[$medalInfo['medal_id']] = $medalInfo['name'];
-
 		}
 
 		$medalObj->select($_POST['medal']);
@@ -237,11 +231,9 @@
 			$arrFrozenMembers = $medalObj->getFrozenMembersList();
 
 			if (in_array($_POST['member'], $arrFrozenMembers)) {
-
 				$frozenMedalID = array_search($_POST['member'], $arrFrozenMembers);
 				$medalObj->objFrozenMedal->select($frozenMedalID);
 				$medalObj->objFrozenMedal->delete();
-
 			}
 
 			$frozenMessage = "";
@@ -259,11 +251,9 @@
 
 			$member->select($memberInfo['member_id']);
 			$member->logAction($logMessage);
-
 		}
 		else {
 			$formObj->blnSaveResult = false;
 			$formObj->errors[] = "Unable to save information to the database.  Please contact the website administrator.";
 		}
-
 	}

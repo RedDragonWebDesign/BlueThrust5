@@ -99,7 +99,6 @@ if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSIO
 	if (!$member->hasSeenTopic($topicInfo['forumtopic_id'])) {
 		$mysqli->query("INSERT INTO ".$dbprefix."forum_topicseen (member_id, forumtopic_id) VALUES ('".$memberInfo['member_id']."', '".$topicInfo['forumtopic_id']."')");
 	}
-
 }
 
 if ($NUM_PER_PAGE == 0) {
@@ -142,12 +141,10 @@ if ($NUM_OF_PAGES == 0) {
 }
 
 if ($_GET['pID'] > $NUM_OF_PAGES) {
-
 	echo "
 	<script type='text/javascript'>window.location = 'viewtopic.php?tID=".$_GET['tID']."';</script>
 	";
 	exit();
-
 }
 
 $breadcrumbObj->setTitle($postInfo['title']);
@@ -169,7 +166,6 @@ if ($boardInfo['subforum_id'] != 0) {
 	foreach ($subForumBC as $bcInfo) {
 		$breadcrumbObj->addCrumb($bcInfo['value'], $bcInfo['link']);
 	}
-
 }
 $breadcrumbObj->addCrumb($boardInfo['name'], $MAIN_ROOT."forum/viewboard.php?bID=".$boardInfo['forumboard_id']);
 $breadcrumbObj->addCrumb($postInfo['title']);
@@ -208,8 +204,6 @@ if ($LOGGED_IN) {
 		$dispManagePosts .= "<b>&raquo <a href='javascript:void(0)' onclick='deleteTopic()'>DELETE TOPIC</a> &laquo;</b>&nbsp;&nbsp;&nbsp;";
 		$dispManagePosts .= "<b>&raquo <a href='".$MAIN_ROOT."members/console.php?cID=".$moveTopicCID."&topicID=".$_GET['tID']."'>MOVE TOPIC</a> &laquo;</b>&nbsp;&nbsp;&nbsp;";
 	}
-
-
 }
 
 
@@ -252,7 +246,6 @@ echo "
 ";
 
 if (LOGGED_IN && $topicInfo['lockstatus'] == 0) {
-
 	$forumConsoleObj = new ConsoleOption($mysqli);
 	$postCID = $forumConsoleObj->findConsoleIDByName("Post Topic");
 	$forumConsoleObj->select($postCID);
@@ -400,7 +393,6 @@ if ($countManagablePosts > 0) {
 			}
 		</script>
 	";
-
 }
 
 require_once($prevFolder."themes/".$THEME."/_footer.php");

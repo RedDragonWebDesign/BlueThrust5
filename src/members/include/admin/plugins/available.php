@@ -13,7 +13,6 @@
  */
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
-
 	$prevFolder = "../../../../";
 	require_once($prevFolder."_setup.php");
 	require_once($prevFolder."classes/member.php");
@@ -43,9 +42,7 @@ echo "
 	$addCSS = "";
 	$x = 0;
 	foreach ($pluginsDir as $dir) {
-
 		if (is_dir($prevFolder."plugins/".$dir) && $dir != "." && $dir != ".." && !in_array($dir, $pluginObj->getPlugins("filepath")) && (file_exists($prevFolder."plugins/".$dir."/install.php") || file_exists($prevFolder."plugins/".$dir."/install_setup.php"))) {
-
 			if ($x == 0) {
 				$x = 1;
 				$addCSS = "";
@@ -72,13 +69,10 @@ echo "
 				</tr>			
 			";
 		}
-
 	}
 
 	if ($dispPlugins != "") {
-
 		echo $dispPlugins;
-
 	}
 	else {
 		echo "
@@ -92,7 +86,6 @@ echo "
 				</td>
 			</tr>
 		";
-
 	}
 
 	echo "</table>

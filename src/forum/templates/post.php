@@ -61,7 +61,6 @@
 	$dispRankIMG = ($websiteInfo['forum_showrank'] == 1 && $posterRankInfo['rank_id'] != 1) ? "<div id='forumShowRank' style='text-align: center'><img src='".$posterRankInfo['imageurl']."'".$dispRankDimensions."></div>" : "";
 	$dispMedals = "";
 	if ($websiteInfo['forum_showmedal'] == 1) {
-
 		$medalObj = new Medal($mysqli);
 		$medalCount = ($websiteInfo['forum_medalcount'] == 0) ? 5 : $websiteInfo['forum_medalcount'];
 
@@ -92,10 +91,9 @@
 
 			$i++;
 			if ($i > $medalCount) {
-break; }
+break;
+            }
 		}
-
-
 	}
 
 	$setAvatarWidth = ($websiteInfo['forum_avatarwidth'] > 0) ? $websiteInfo['forum_avatarwidth'] : "50";
@@ -150,11 +148,10 @@ break; }
 						$dispFileSize = round($dispFileSize, 2)."KB";
 					}
 					else {
-						$dispFileSize = round(($dispFileSize/1024),2)."MB";
+						$dispFileSize = round(($dispFileSize/1024), 2)."MB";
 					}
 
 					echo "<a href='".$MAIN_ROOT."downloads/file.php?dID=".$downloadID."'>".$attachmentInfo['filename']."</a> - downloaded ".$attachmentInfo['downloadcount']." time".$addS." - ".$dispFileSize."<br>";
-
 				}
 
 				echo "
@@ -171,15 +168,12 @@ break; }
 
 		echo "<div class='forumManageLinks'>";
 		if ($this->blnManageable || $postMemberInfo['member_id'] == $memberInfo['member_id']) {
-
 			echo "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&pID=".$postInfo['forumpost_id']."'>EDIT POST</a> &laquo;&nbsp&nbsp;&nbsp;";
 			echo "&raquo; <a href='javascript:void(0)' onclick=\"deletePost('".$postInfo['forumpost_id']."')\">DELETE POST</a> &laquo;&nbsp&nbsp;&nbsp;";
 			$countManagablePosts++;
-
 		}
 
 		if (LOGGED_IN && ($topicInfo['lockstatus'] ?? '') == 0) {
-
 			if ($showReplyLink) {
 				echo "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$topicInfo['forumboard_id']."&tID=".$topicInfo['forumtopic_id']."'>POST REPLY</a> &laquo;&nbsp&nbsp;&nbsp;";
 			}

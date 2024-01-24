@@ -32,18 +32,13 @@ $cID = $consoleObj->findConsoleIDByName("Manage Forum Categories");
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if (($memberInfo['rank_id'] == 1 || $member->hasAccess($consoleObj)) && $categoryObj->select($_POST['catID'])) {
-
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 
 		$categoryObj->move($_POST['cDir']);
 
 		require_once("main_managecategory.php");
-
 	}
-
 }

@@ -6,7 +6,7 @@
 		private $objPHPMailer;
 
 		/** General e-mail function using PHPMailer */
-		public function sendMail($to, $subject="", $message, $additional=array()) {
+		public function sendMail($to, $subject = "", $message, $additional = array()) {
 
 			$mail = new PHPMailer();
 			$this->objPHPMailer = $mail;
@@ -31,14 +31,13 @@
 			$this->addEmail($additional, "cc");
 
 			return $mail->send();
-
 		}
 
 		private function getFrom($args) {
 
 			if (!isset($args['from']) || trim($from) == "") {
 				$siteDomain = $_SERVER['SERVER_NAME'];
-				if (substr($siteDomain,0,strlen("www.")) == "www.") {
+				if (substr($siteDomain, 0, strlen("www.")) == "www.") {
 					$siteDomain = substr($siteDomain, strlen("www."));
 				}
 
@@ -52,7 +51,7 @@
 		}
 
 
-		private function addEmail($args, $type="to") {
+		private function addEmail($args, $type = "to") {
 
 			$mail = $this->objPHPMailer;
 
@@ -68,7 +67,6 @@
 			}
 
 			if (isset($args[$type]) && is_array($args[$type])) {
-
 				foreach ($args[$type] as $info) {
 					if (is_array($info)) {
 						call_user_func_array(array($mail, $func), array($info['email'], $info['name']));
@@ -77,12 +75,10 @@
 						call_user_func_array(array($mail, $func), array($info));
 					}
 				}
-
 			}
 			elseif (isset($args[$type])) {
 				call_user_func_array(array($mail, $func), array($args[$type]));
 			}
-
 		}
 
 	}

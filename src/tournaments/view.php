@@ -32,10 +32,8 @@ $gameObj = new Game($mysqli);
 if (!isset($member)) {
 	$member = new Member($mysqli);
 
-	if (isset($_SESSION['btUsername']) AND isset($_SESSION['btPassword']) && $member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
-
+	if (isset($_SESSION['btUsername']) and isset($_SESSION['btPassword']) && $member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
 		$memberInfo = $member->get_info_filtered();
-
 	}
 }
 
@@ -52,13 +50,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -253,7 +250,6 @@ echo "
 					$dispTeamRecord = $tournamentObj->objTournamentPool->getTeamRecord($teamID);
 
 					$dispPools .= "<tr><td class='tinyFont".$addCSS."' valign='top' style='width: 65%'>".$counter.". ".$dispTeamName."</td><td class='tinyFont".$addCSS."' style='width: 35%' valign='top'>".$dispTeamRecord."</td></tr>";
-
 				}
 
 
@@ -277,10 +273,6 @@ echo "
 				</p>
 				
 			";
-
-
-
-
 		}
 
 
@@ -318,7 +310,6 @@ echo "
 			}
 
 			if ($tournamentObj->memberCanJoin($memberInfo['member_id'])) {
-
 				$tConsoleObj = new ConsoleOption($mysqli);
 				$joinTournamentLink = $tConsoleObj->getConsoleLinkByName("Join a Tournament", false);
 
@@ -328,7 +319,6 @@ echo "
 					</p>
 				";
 			}
-
 		}
 
 		echo "	

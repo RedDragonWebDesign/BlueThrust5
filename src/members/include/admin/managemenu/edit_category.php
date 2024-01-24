@@ -44,7 +44,6 @@ echo "
 
 $arrCheckType = array("image", "customcode", "customformat");
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Name
 	if (trim($_POST['categoryname']) == "") {
 		$countErrors++;
@@ -93,7 +92,6 @@ if ( ! empty($_POST['submit']) ) {
 
 	$newImage = false;
 	if ($countErrors == 0) {
-
 		if ($_POST['headertype'] == "image" && $_FILES['headerimagefile']['name'] != "") {
 			$newImage = true;
 			$btUploadObj = new BTUpload($_FILES['headerimagefile'], "menuheader_", "../images/menu/", array(".jpg", ".png", ".bmp", ".gif"));
@@ -110,12 +108,10 @@ if ( ! empty($_POST['submit']) ) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload selected image.  Make sure it's the correct file extension and not too big.<br>";
 		}
-
 	}
 
 
 	if ($countErrors == 0) {
-
 		if (($newImage || $_POST['headertype'] != "image") && $menuCatInfo['headertype'] == "image") {
 			unlink($prevFolder.$menuCatInfo['headercode']);
 		}
@@ -128,7 +124,6 @@ if ( ! empty($_POST['submit']) ) {
 
 		$menuCatObj->select($menuCatInfo['menucategory_id']);
 		if ($menuCatObj->update($arrColumns, $arrValues)) {
-
 			$menuCatInfo = $menuCatObj->get_info_filtered();
 
 			echo "
@@ -145,19 +140,15 @@ if ( ! empty($_POST['submit']) ) {
 		}
 
 		$menuCatObj->resortOrder();
-
 	}
 
 	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
-
 }
 
 if ( empty($_POST['submit']) ) {
-
 	for ($i=0; $i<$menuXML->info->section->count(); $i++) {
 		$dispSelected = "";
 		if ($menuCatInfo['section'] == $i) {
@@ -291,7 +282,6 @@ if ( empty($_POST['submit']) ) {
 		";
 
 	if ($menuCatInfo['headertype'] == "image") {
-
 		$checkURL = parse_url($menuCatInfo['headercode']);
 		$dispImgWidth = 400;
 		$dispImgHeight = 200;
@@ -397,5 +387,4 @@ if ( empty($_POST['submit']) ) {
 	
 	
 	";
-
 }

@@ -33,20 +33,16 @@
 			);
 
 			$this->objAccess = new Access($sqlConnection, $arrAccessTables, $arrAccessTypes);
-
 		}
 
 		public function savePollOptions() {
 
 			if ($this->intTableKeyValue != "") {
-
 				$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."poll_options WHERE poll_id = '".$this->intTableKeyValue."'");
 				$this->MySQL->query("OPTIMIZE TABLE `".$this->MySQL->get_tablePrefix()."poll_options`");
-
 			}
 
 			foreach ($_SESSION['btPollOptionCache'][$this->cacheID] as $sortNum => $pollOptionInfo) {
-
 				$arrColumns = array("poll_id", "optionvalue", "color", "sortnum");
 				$arrValues = array($this->intTableKeyValue, $pollOptionInfo['value'], $pollOptionInfo['color'], $sortNum);
 
@@ -56,9 +52,7 @@
 				}
 
 				$this->objPollOption->addNew($arrColumns, $arrValues);
-
 			}
-
 		}
 
 
@@ -82,7 +76,6 @@
 			$returnVal = count($_SESSION['btPollOptionCache'][$this->cacheID]);
 
 			foreach ($_SESSION['btPollOptionCache'][$this->cacheID] as $key => $value) {
-
 				if ($strBeforeAfter == "before" && $key == $intSpot) {
 					$returnVal = $x;
 					$tempArr[$x] = "";
@@ -146,7 +139,6 @@
 
 			$_SESSION['btPollOptionCache'][$this->cacheID][$intSpot] = $movingValue;
 			$_SESSION['btPollOptionCache'][$this->cacheID][$movedSpot] = $selectedValue;
-
 		}
 
 		public function getPollOptions() {
@@ -160,7 +152,6 @@
 			}
 
 			return $returnArr;
-
 		}
 
 		public function getPollResults() {
@@ -185,14 +176,10 @@
 
 			$arrReturn = array();
 			if ($this->intTableKeyValue != "") {
-
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."poll_votes WHERE poll_id = '".$this->intTableKeyValue."'");
 				while ($row = $result->fetch_assoc()) {
-
 					$arrReturn[$row['member_id']][$row['polloption_id']] = array("votes" => $row['votecount'], "lastvoted" => $row['datevoted']);
-
 				}
-
 			}
 
 			return $arrReturn;
@@ -201,7 +188,6 @@
 		public function dispPollMenu($memberObj) {
 			global $MAIN_ROOT, $member;
 			if ($this->intTableKeyValue != "" && $this->hasAccess($memberObj)) {
-
 				$pollInfo = $this->get_info_filtered();
 
 				$hideResultLink = ($pollInfo['resultvisibility'] == "votedonly" && !$this->hasVoted($memberObj->get_info("member_id"))) ? " style='display: none'" : "";
@@ -271,12 +257,10 @@
 										";
 
 										if ($pollInfo['resultvisibility'] == "votedonly") {
-
 											echo "
 												dialogHTML += \"<br><br>You may now view the <a href='".$MAIN_ROOT."polls/view.php?pID=".$pollInfo['poll_id']."'><b>poll results</b></a>.\";
 												$('#pollResultsLink_".$pollInfo['poll_id']."').show();
 											";
-
 										}
 				echo "							
 											
@@ -314,7 +298,6 @@
 					</script>
 					
 				";
-
 			}
 			else {
 				echo "
@@ -323,7 +306,6 @@
 					</p>
 				";
 			}
-
 		}
 
 		public function hasAccess($member) {
@@ -356,12 +338,10 @@
 		public function hasVoted($memberID) {
 			$returnVal = false;
 			if ($this->intTableKeyValue != "" && is_numeric($memberID)) {
-
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."poll_votes WHERE poll_id = '".$this->intTableKeyValue."' AND member_id = '".$memberID."'");
 				if ($result->num_rows > 0) {
 					$returnVal = true;
 				}
-
 			}
 
 			return $returnVal;
@@ -372,7 +352,6 @@
 			$pollError = "";
 			$returnArr = array("result"=>"fail");
 			if ($this->intTableKeyValue != "" && $pollOptionInfo['poll_id'] == $this->intTableKeyValue && in_array($pollOptionInfo['polloption_id'], $this->getPollOptions())) {
-
 				$columnName = ($memberID == "") ? "ipaddress" : "member_id";
 				$columnValue = ($memberID == "") ? $this->MySQL->real_escape_string($_SERVER['REMOTE_ADDR']) : $memberID;
 
@@ -389,7 +368,6 @@
 					$pollEndCheck = ($this->arrObjInfo['pollend'] == 0 || $this->arrObjInfo['pollend'] > time());
 					$maxVotesCheck = ($this->arrObjInfo['maxvotes'] == 0 || $this->arrObjInfo['maxvotes'] > $countVotes);
 					if ($maxVotesCheck && $pollEndCheck) {
-
 						if ($this->objPollVote->select($selectedPollVote)) {
 							$newVoteCount = $this->objPollVote->get_info("votecount")+1;
 							$this->objPollVote->update(array("datevoted", "votecount", "ipaddress"), array(time(), $newVoteCount, $_SERVER['REMOTE_ADDR']));
@@ -399,7 +377,6 @@
 						}
 
 						$returnArr['result'] = "success";
-
 					}
 					elseif (!$pollEndCheck) {
 						$pollError = "This poll has ended.";
@@ -407,20 +384,15 @@
 					else {
 						$pollError = "Maximum number of votes allowed.";
 					}
-
 				}
 				else {
-
 					$returnArr['result'] = "success";
 					$this->objPollVote->addNew(array("poll_id", "polloption_id", "member_id", "ipaddress", "datevoted", "votecount"), array($this->intTableKeyValue, $pollOptionInfo['polloption_id'], $memberID, $_SERVER['REMOTE_ADDR'], time(), 1));
-
 				}
-
 			}
 
 			$returnArr['errors'] = $pollError;
 			return $returnArr;
-
 		}
 
 
@@ -442,7 +414,6 @@
 				$this->MySQL->query("OPTIMIZE TABLE `".$dbprefix."poll_votes`");
 
 				parent::delete();
-
 			}
 
 			return true;
@@ -452,14 +423,12 @@
 
 			$returnVal = 0;
 			if ($this->intTableKeyValue != "") {
-
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."poll_votes WHERE poll_id = '".$this->intTableKeyValue."'");
 
 				$returnVal = $result->num_rows;
 			}
 
 			return $returnVal;
-
 		}
 
 	}

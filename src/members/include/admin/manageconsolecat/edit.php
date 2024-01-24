@@ -45,7 +45,6 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 ";
 
 if ( ! empty($_POST['submit']) ) {
-
 	$resortOrder = false;
 	// Check Category Name
 
@@ -60,7 +59,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	$intNewOrderSpot = "";
-	if (!$consoleCatObj->select($_POST['catorder']) AND $_POST['catorder'] != "first") {
+	if (!$consoleCatObj->select($_POST['catorder']) and $_POST['catorder'] != "first") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (category)<br>";
 	}
@@ -77,16 +76,13 @@ if ( ! empty($_POST['submit']) ) {
 		else {
 			$intNewOrderSpot = 1;
 		}
-
 	}
 	else {
-
-		if ($_POST['beforeafter'] != "before" AND $_POST['beforeafter'] != "after") {
+		if ($_POST['beforeafter'] != "before" and $_POST['beforeafter'] != "after") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (before/after)<br>";
 		}
 		else {
-
 			$catOrderOrderNum = $consoleCatObj->get_info("ordernum");
 
 			$addTo = -1;
@@ -98,17 +94,12 @@ if ( ! empty($_POST['submit']) ) {
 			if ($checkOrderNum != $consoleCatInfo['ordernum']) {
 				$intNewOrderSpot = $consoleCatObj->makeRoom($_POST['beforeafter']);
 			}
-
 		}
-
-
 	}
 
 
 
 	if ($countErrors == 0) {
-
-
 		$updateColumns = array("name");
 		$updateValues = array($_POST['catname']);
 
@@ -117,13 +108,10 @@ if ( ! empty($_POST['submit']) ) {
 
 			$updateColumns[] = "ordernum";
 			$updateValues[] = $intNewOrderSpot;
-
 		}
 
 		$consoleCatObj->select($consoleCatInfo['consolecategory_id']);
 		if ($consoleCatObj->update($updateColumns, $updateValues)) {
-
-
 			echo "
 			<div style='display: none' id='successBox'>
 			<p align='center'>
@@ -139,21 +127,17 @@ if ( ! empty($_POST['submit']) ) {
 			if ($resortOrder) {
 				$consoleCatObj->resortOrder();
 			}
-
 		}
-
 	}
 	else {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
 }
 
 
 
 if ( empty($_POST['submit']) ) {
-
 	$countCategories = 0;
 
 
@@ -170,7 +154,6 @@ if ( empty($_POST['submit']) ) {
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory WHERE adminoption = '0' AND consolecategory_id != '".$consoleCatInfo['consolecategory_id']."' ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
-
 		$strSelected = "";
 		if ($selectCat == $row['ordernum']) {
 			$strSelected = "selected";
@@ -227,5 +210,4 @@ if ( empty($_POST['submit']) ) {
 		</form>
 	
 	";
-
 }

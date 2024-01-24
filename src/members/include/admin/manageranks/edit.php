@@ -29,15 +29,10 @@ $member = new Member($mysqli);
 $checkMember = $member->select($_SESSION['btUsername']);
 
 if ($checkMember) {
-
 	if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
 		$memberInfo = $member->get_info();
 
 		if ($member->hasAccess($cOptObj)) {
-
-
-
 			$rank = new Rank($mysqli);
 			if ($rank->select($_GET['rID'])) {
 				$rankInfo = $rank->get_info_filtered();
@@ -52,7 +47,6 @@ if ($checkMember) {
 
 
 				if (isset($_POST['submit']) && $_POST['submit']) {
-
 					$countErrors = 0;
 
 					// Check Rank Name
@@ -71,7 +65,7 @@ if ($checkMember) {
 
 					// Check Image Height
 
-					if (!is_numeric($_POST['rankimageheight']) OR trim($_POST['rankimageheight']) == "") {
+					if (!is_numeric($_POST['rankimageheight']) or trim($_POST['rankimageheight']) == "") {
 						$countErrors++;
 						$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a numeric value.<br>";
 					}
@@ -84,7 +78,7 @@ if ($checkMember) {
 
 					// Check Image Width
 
-					if (!is_numeric($_POST['rankimagewidth']) OR trim($_POST['rankimagewidth']) == "") {
+					if (!is_numeric($_POST['rankimagewidth']) or trim($_POST['rankimagewidth']) == "") {
 						$countErrors++;
 						$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a numeric value.<br>";
 					}
@@ -106,7 +100,7 @@ if ($checkMember) {
 					// Check Auto Days
 
 					if ($_POST['autodays'] != "") {
-						if (!is_numeric($_POST['autodays']) OR (is_numeric($_POST['autodays']) AND $_POST['autodays'] < 0)) {
+						if (!is_numeric($_POST['autodays']) or (is_numeric($_POST['autodays']) and $_POST['autodays'] < 0)) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Auto days must either be blank or a positive numeric value.<br>";
 						}
@@ -114,7 +108,7 @@ if ($checkMember) {
 
 
 					if ($_POST['autodisable'] != "") {
-						if (!is_numeric($_POST['autodisable']) OR (is_numeric($_POST['autodisable']) AND $_POST['autodisable'] < 0)) {
+						if (!is_numeric($_POST['autodisable']) or (is_numeric($_POST['autodisable']) and $_POST['autodisable'] < 0)) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Auto disable must either be blank or a positive numeric value.<br>";
 						}
@@ -169,14 +163,12 @@ if ($checkMember) {
 					// Check rank promote power
 
 					if ($checkRankObj->select($_POST['promoterank'])) {
-
 						$checkRankInfo = $checkRankObj->get_info();
 
 						if ($checkRankInfo['ordernum'] > $intNewRankOrderNum) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You cannot set a rank to promote higher than its rank order.<br>";
 						}
-
 					}
 					elseif ($_POST['promoterank'] == "none") {
 						$_POST['promoterank'] = 0;
@@ -207,9 +199,6 @@ if ($checkMember) {
 								$arrUpdateValues[] = $rankImgURL;
 								$arrUpdateColumns[] = "imageurl";
 							}
-
-
-
 						}
 						elseif ($_POST['rankimageurl'] != "") {
 							$arrUpdateValues[] = $_POST['rankimageurl'];
@@ -241,7 +230,6 @@ if ($checkMember) {
 								$result = $mysqli->query("SELECT * FROM ".$dbprefix."console ORDER BY sortnum");
 								$rankOptions = "";
 								while ($row = $result->fetch_assoc()) {
-
 									$strPostVarName = "consoleid_".$row['console_id'];
 
 									if (isset($_POST[$strPostVarName]) && $_POST[$strPostVarName] == 1) {
@@ -249,7 +237,6 @@ if ($checkMember) {
 										$privObj->addNew($arrColumns, $arrValues);
 									}
 								}
-
 							}
 
 
@@ -266,32 +253,26 @@ if ($checkMember) {
 							popupDialog('Manage Ranks', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'successBox');
 							</script>
 							";
-
 						}
 						else {
 							$_POST['submit'] = false;
 						}
-
 					}
 					else {
 						$_POST['submit'] = false;
 					}
-
 				}
 
 				if (!isset($_POST['submit']) || !$_POST['submit']) {
-
-
-
 					$localImageURL = $rank->getLocalImageURL();
 
-					if ($rankInfo['imagewidth'] == 0 AND $localImageURL !== false) {
+					if ($rankInfo['imagewidth'] == 0 and $localImageURL !== false) {
 						$rankImageSize = getimagesize($prevFolder.$localImageURL);
 
 						$rankInfo['imagewidth'] = $rankImageSize[0];
 					}
 
-					if ($rankInfo['imageheight'] == 0 AND $localImageURL !== false) {
+					if ($rankInfo['imageheight'] == 0 and $localImageURL !== false) {
 						$rankImageSize = getimagesize($prevFolder.$localImageURL);
 
 						$rankInfo['imageheight'] = $rankImageSize[1];
@@ -371,7 +352,6 @@ if ($checkMember) {
 						else {
 							$rankOrderOptions .= "<option value='".$row['rank_id']."'>".$rankName."</option>";
 						}
-
 					}
 
 					if ($counter == 0) {
@@ -553,7 +533,7 @@ if ($checkMember) {
 													$countConsoleCats = 0;
                                                     $consoleJSCode = "";
 													$consoleCatObj = new Basic($mysqli, "consolecategory", "consolecategory_id");
-													foreach ($arrFormatOptions as $key=>$arrOptions) {
+													foreach ($arrFormatOptions as $key => $arrOptions) {
 														$consoleCatObj->select($key);
 														$consoleCatInfo = $consoleCatObj->get_info();
 
@@ -572,7 +552,6 @@ if ($checkMember) {
 									";
 
 																if ($consoleOptionInfo['pagetitle'] != "-separator-") {
-
 																	if ($consoleObj->hasAccess($rankInfo['rank_id'])) {
 																		$dispSelected = " checked";
 																	}
@@ -583,7 +562,6 @@ if ($checkMember) {
 																	echo "&nbsp;&nbsp;<input type='checkbox' name='consoleid_".$consoleOptionInfo['console_id']."' value='1'".$dispSelected."> ".$consoleOptionInfo['pagetitle']."<br>";
 																}
 																elseif ($consoleOptionInfo['pagetitle'] == "-separator-") {
-
 																	if ($consoleObj->hasAccess($rankInfo['rank_id'])) {
 																		$dispSelected = " checked";
 																	}
@@ -595,13 +573,10 @@ if ($checkMember) {
 																	echo "<div style='float: left'>&nbsp;&nbsp;<input type='checkbox' name='consoleid_".$consoleOptionInfo['console_id']."' value='1'".$dispSelected.">&nbsp;</div>".$dispSeparator;
 																	echo "<div style='clear: both'></div>";
 																}
-
 															}
 
 															echo "</div>";
-
 														}
-
 													}
 
 													echo "
@@ -620,17 +595,15 @@ if ($checkMember) {
 						</div>
 					";
 				}
-
-
 			}
-
-
 		}
 		else {
-echo "no"; }
-
+echo "no";
+        }
 	} else {
-echo "no1"; }
+echo "no1";
+    }
 }
 else {
-echo "no2"; }
+echo "no2";
+}

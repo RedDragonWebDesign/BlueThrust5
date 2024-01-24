@@ -12,7 +12,6 @@
 		<?php
 
 			if (constant('LOGGED_IN')) {
-
 				$memberObj = new Member($mysqli);
 				$memberObj->select($_SESSION['btUsername']);
 				$memberInfo = $memberObj->get_info();
@@ -65,7 +64,6 @@
 						checkForNotification();
 					</script>
 				";
-
 				}
 			}
 

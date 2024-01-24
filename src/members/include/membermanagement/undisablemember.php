@@ -37,7 +37,6 @@ $cID = $_GET['cID'];
 $dispError = "";
 $countErrors = 0;
 if ($memberInfo['rank_id'] == 1) {
-
 	$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 	$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
 
@@ -46,7 +45,6 @@ if ($memberInfo['rank_id'] == 1) {
 		$row = $result->fetch_assoc();
 		$rankInfo['promotepower'] = $row['rank_id'];
 	}
-
 }
 
 $rankObj = new Rank($mysqli);
@@ -62,7 +60,6 @@ while ($row = $result->fetch_assoc()) {
 
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Member
 
 	if (!$member->select($_POST['member']) || $_POST['member'] == $memberInfo['member_id']) {
@@ -76,7 +73,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		if ($member->update(array("disabled", "lastlogin"), array(0, time()))) {
 			$logMessage = "Undisabled ".$member->getMemberLink().".";
 			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
@@ -98,37 +94,25 @@ if ( ! empty($_POST['submit']) ) {
 
 			$member->select($memberInfo['member_id']);
 			$member->logAction($logMessage);
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-
-
 	}
 
 
 	if ($countErrors > 0) {
-
-
-
 	}
-
-
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	$sqlRanks = "('".implode("','", $arrRanks)."')";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '1' ORDER BY ".$dbprefix."ranks.ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
-
 		$rankObj->select($row['rank_id']);
 		$memberoptions .= "<option value='".$row['member_id']."'>".$rankObj->get_info_filtered("name")." ".filterText($row['username'])."</option>";
-
 	}
 
 	echo "
@@ -169,7 +153,4 @@ if ( empty($_POST['submit']) ) {
 	
 	
 	";
-
-
-
 }

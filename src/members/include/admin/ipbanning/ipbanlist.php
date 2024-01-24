@@ -14,8 +14,6 @@
 
 
 	if (!defined("SHOW_BANLIST")) {
-
-
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/rank.php");
@@ -36,7 +34,6 @@
 		else {
 			exit();
 		}
-
 	}
 
 ?>
@@ -46,7 +43,6 @@
 	$counter = 0;
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ipban ORDER BY exptime");
 	while ($row = $result->fetch_assoc()) {
-
 		$row = filterArray($row);
 		if ($counter == 1) {
 			$addCSS = " alternateBGColor";
@@ -66,7 +62,6 @@
 				<td class='main manageList".$addCSS."' align='center' style='width: 15%'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' class='manageListActionButton' data-deleteip='".$row['ipaddress']."' style='cursor: pointer'></td>
 			</tr>
 		";
-
 	}
 
 	if ($result->num_rows == 0) {

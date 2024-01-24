@@ -28,13 +28,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 $member = new Member($mysqli);
@@ -42,7 +41,6 @@ $newsObj = new News($mysqli);
 $consoleObj = new ConsoleOption($mysqli);
 
 if (isset($_GET['nID']) && $newsObj->select($_GET['nID'])) {
-
 	$newsInfo = $newsObj->get_info_filtered();
 
 	$member->select($_SESSION['btUsername']);
@@ -52,19 +50,15 @@ if (isset($_GET['nID']) && $newsObj->select($_GET['nID'])) {
 	// Check Login
 	$LOGIN_FAIL = true;
 	if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
 		$LOGIN_FAIL = false;
 		// Check Private News
 		if ($newsInfo['newstype'] == 2 && !$member->hasAccess($consoleObj)) {
 			die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 		}
-
 	}
 	elseif ($newsInfo['newstype'] == 2) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 	}
-
-
 }
 else {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
@@ -99,7 +93,6 @@ $consoleObj->select($postCommentCID);
 
 if ($member->select($memberInfo['member_id'])) {
 	if ($member->hasAccess($consoleObj)) {
-
 		echo "
 	
 		<p class='main' style='font-weight: bold; padding: 0px; margin-bottom: 2px'>Post Comment:</p>
@@ -152,7 +145,6 @@ if ($member->select($memberInfo['member_id'])) {
 		</script>
 		
 		";
-
 	}
 }
 

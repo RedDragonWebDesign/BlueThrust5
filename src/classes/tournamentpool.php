@@ -30,7 +30,6 @@ class TournamentPool extends Basic {
 		$this->strTableKey = "tournamentpool_id";
 
 		$this->objTournamentPoolMatch = new Basic($sqlConnection, "tournamentpools_teams", "poolteam_id");
-
 	}
 
 
@@ -39,10 +38,8 @@ class TournamentPool extends Basic {
 
 		$returnArr = array();
 		if ($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
-
 			$result = $this->MySQL->query("SELECT team1_id,team2_id FROM ".$this->MySQL->get_tablePrefix()."tournamentpools_teams WHERE pool_id = '".$this->intTableKeyValue."'");
 			while ($row = $result->fetch_assoc()) {
-
 				if (!in_array($row['team1_id'], $returnArr)) {
 					$returnArr[] = $row['team1_id'];
 				}
@@ -50,13 +47,10 @@ class TournamentPool extends Basic {
 				if (!in_array($row['team2_id'], $returnArr)) {
 					$returnArr[] = $row['team2_id'];
 				}
-
 			}
-
 		}
 
 		return $returnArr;
-
 	}
 
 
@@ -73,11 +67,9 @@ class TournamentPool extends Basic {
 			$countLosses = $resultLosses->num_rows;
 
 			$returnVal = $countWins." - ".$countLosses;
-
 		}
 
 		return $returnVal;
-
 	}
 
 

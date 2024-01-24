@@ -38,7 +38,6 @@ $cID = $_GET['cID'];
 $dispError = "";
 $countErrors = 0;
 if ($memberInfo['rank_id'] == 1) {
-
 	$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 	$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
 
@@ -47,13 +46,11 @@ if ($memberInfo['rank_id'] == 1) {
 		$row = $result->fetch_assoc();
 		$rankInfo['promotepower'] = $row['rank_id'];
 	}
-
 }
 
 $rankObj = new Rank($mysqli);
 
 if ( ! empty($_POST['submit']) ) {
-
 	$rankObj->select($rankInfo['promotepower']);
 	$maxRankInfo = $rankObj->get_info_filtered();
 
@@ -118,7 +115,6 @@ if ( ! empty($_POST['submit']) ) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-
 	}
 
 
@@ -126,12 +122,9 @@ if ( ! empty($_POST['submit']) ) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
-
 }
 
 if ( empty($_POST['submit']) ) {
-
 	$rankObj->select($rankInfo['promotepower']);
 	$maxRankInfo = $rankObj->get_info_filtered();
 
@@ -149,10 +142,8 @@ if ( empty($_POST['submit']) ) {
 	$memberoptions = "<option value=''>Select</option>";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."'  ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
 	while ($row = $result->fetch_assoc()) {
-
 		$rankObj->select($row['rank_id']);
 		$memberoptions .= "<option value='".$row['member_id']."'>".$rankObj->get_info_filtered("name")." ".filterText($row['username'])."</option>";
-
 	}
 
 
@@ -190,5 +181,4 @@ if ( empty($_POST['submit']) ) {
 			</form><br>
 		</div>
 	";
-
 }

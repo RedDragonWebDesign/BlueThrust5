@@ -14,7 +14,6 @@
 
 	$accessedByConsole = false;
 	if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
-
 		$prevFolder = "../../";
 		require_once("../../_setup.php");
 		require_once("../../classes/member.php");
@@ -49,7 +48,6 @@
 		}
 
 		require_once("youtube.php");
-
 	}
 	else {
 		$memberInfo = $member->get_info_filtered();
@@ -83,7 +81,6 @@
 		$dispError = "";
 
 		if ($accessedByConsole && !isset($_GET['error'])) {
-
 			echo "
 				<script type='text/javascript'>
 					window.location = '".$MAIN_ROOT."plugins/youtube/youtubeconnect.php';
@@ -99,7 +96,6 @@
 			$response = $ytObj->getAccessToken($_GET['code'], $arrURLInfo['scheme']."://".$arrURLInfo['host'].$arrURLInfo['path']);
 
 			if (isset($response['access_token'])) {
-
 				$ytObj->accessToken = $response['access_token'];
 				$ytObj->refreshToken = $response['refresh_token'];
 				$channelInfo = $ytObj->getChannelInfo();
@@ -119,10 +115,8 @@
 					</script>
 				";
 				exit();
-
 			}
 			else {
-
 				echo "
 				
 					<script type='text/javascript'>
@@ -132,17 +126,12 @@
 				";
 				exit();
 			}
-
-
 		}
 		elseif (isset($_GET['error'])) {
-
 			$countErrors++;
 			$dispError = "Unable to connect to Youtube! Please try again.";
-
 		}
 		elseif (!isset($_GET['error']) && !isset($_GET['code'])) {
-
 			$loginLink = $ytObj->getConnectLink($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 			$_SESSION['btYoutubeNonce'] = $ytObj->tokenNonce;
 
@@ -161,7 +150,6 @@
 
 
 		if ($dispError != "") {
-
 			echo "	
 			
 				<div class='shadedBox' style='margin-left: auto; margin-right: auto; width: 50%'>
@@ -174,10 +162,7 @@
 				</div>
 			
 			";
-
 		}
-
-
 	}
 	else {
 		// Has Connected Youtube Account
@@ -187,7 +172,6 @@
 		$dispSuccess = false;
 
 		if ( ! empty($_POST['submit']) ) {
-
 			// Check Video Display
 			$arrVideoDisplayCheck = array(0,1,2,3,4,5);
 			if (!in_array($_POST['showvideos'], $arrVideoDisplayCheck) || !is_numeric($_POST['showvideos'])) {
@@ -207,10 +191,7 @@
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 				}
-
 			}
-
-
 		}
 
 		$ytInfo = $ytObj->get_info_filtered();
@@ -381,7 +362,6 @@
 
 
 		if ((time()-$ytInfo['lastupdate']) > 1800) {
-
 			echo "
 				
 				<script type='text/javascript'>
@@ -418,7 +398,6 @@
 
 
 		if ($dispSuccess) {
-
 			echo "
 				<div id='successDiv' style='display: none'>
 					<p align='center' class='main'>
@@ -449,7 +428,5 @@
 				
 				</script>
 			";
-
 		}
-
 	}

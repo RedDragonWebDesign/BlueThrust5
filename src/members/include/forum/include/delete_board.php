@@ -34,12 +34,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $boardObj->select($_POST
 	$boardInfo = $boardObj->get_info_filtered();
 
 	if (isset($_POST['confirm'])) {
-
 		$boardObj->delete();
 		$member->logAction("Deleted Forum Board: ".$boardInfo['name']);
 
 		require_once("main_manageboards.php");
-
 	}
 	else {
 		$addMessage = "";
@@ -54,9 +52,5 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $boardObj->select($_POST
 			</p>
 		
 		";
-
-
 	}
-
-
 }

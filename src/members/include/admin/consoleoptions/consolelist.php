@@ -30,12 +30,9 @@ $consoleObj->select($cID);
 
 $counter = 0;
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($member->hasAccess($consoleObj) && $consoleCatObj->select($_POST['catID'])) {
-
 		$addSQL = "";
 		$selectedConsole = "";
 		if ($_POST['cnID'] != "" && $consoleObj->SELECT($_POST['cnID'])) {
@@ -44,11 +41,9 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$consoleInfo = $consoleObj->get_info_filtered();
 
 			if ($consoleInfo['consolecategory_id'] == $_POST['catID']) {
-
 				$arrBeforeAfter = $consoleObj->findBeforeAfter();
 				$selectedConsole = $arrBeforeAfter[0];
 			}
-
 		}
 
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
@@ -68,11 +63,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			echo "<option value='".$row['console_id']."' ".$strSelect.">".filterText($row['pagetitle'])."</option>";
 			$counter++;
 		}
-
-
 	}
-
-
 }
 
 if ($counter == 0) {

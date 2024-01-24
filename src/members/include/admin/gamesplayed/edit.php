@@ -49,7 +49,6 @@ echo "
 
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Game Name
 	$checkGameName = trim($_POST['gamename']);
 	if ($checkGameName == "") {
@@ -60,33 +59,33 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check Image Height
 
-	if (!is_numeric($_POST['gameimageheight']) AND trim($_POST['gameimageheight']) != "") {
+	if (!is_numeric($_POST['gameimageheight']) and trim($_POST['gameimageheight']) != "") {
 		$countErrors++;
 		$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a numeric value.<br>";
 	}
-	elseif (is_numeric($_POST['gameimageheight']) AND $_POST['gameimageheight'] <= 0) {
+	elseif (is_numeric($_POST['gameimageheight']) and $_POST['gameimageheight'] <= 0) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a value greater than 0.<br>";
 	}
 
-	if ($_FILES['gameimagefile']['name'] == "" AND trim($_POST['gameimageurl']) == "" AND $gameObj->getLocalImageURL() === false AND (trim($_POST['gameimageheight']) == "" OR $_POST['gameimageheight'] <= 0)) {
+	if ($_FILES['gameimagefile']['name'] == "" and trim($_POST['gameimageurl']) == "" and $gameObj->getLocalImageURL() === false and (trim($_POST['gameimageheight']) == "" or $_POST['gameimageheight'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must supply an image height for images that aren't uploaded.<br>";
 	}
 
 	// Check Image Width
 
-	if (!is_numeric($_POST['gameimagewidth']) AND trim($_POST['gameimagewidth']) != "") {
+	if (!is_numeric($_POST['gameimagewidth']) and trim($_POST['gameimagewidth']) != "") {
 		$countErrors++;
 		$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a numeric value.<br>";
 	}
-	elseif (is_numeric($_POST['gameimagewidth']) AND $_POST['gameimagewidth'] <= 0) {
+	elseif (is_numeric($_POST['gameimagewidth']) and $_POST['gameimagewidth'] <= 0) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a value greater than 0.<br>";
 	}
 
 
-	if ($_FILES['gameimagefile']['name'] == "" AND trim($_POST['gameimageurl']) == "" AND $gameObj->getLocalImageURL() === false AND (trim($_POST['gameimagewidth']) == "" OR $_POST['gameimagewidth'] <= 0)) {
+	if ($_FILES['gameimagefile']['name'] == "" and trim($_POST['gameimageurl']) == "" and $gameObj->getLocalImageURL() === false and (trim($_POST['gameimagewidth']) == "" or $_POST['gameimagewidth'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must supply an image width for images that aren't uploaded.<br>";
 	}
@@ -111,7 +110,6 @@ if ( ! empty($_POST['submit']) ) {
 
 		$gameImageURL = "";
 		if ($_FILES['gameimagefile']['name'] != "") {
-
 			$btUploadObj = new BTUpload($_FILES['gameimagefile'], "game_", "../images/gamesplayed/", array(".jpg", ".png", ".bmp", ".gif"));
 
 			if (!$btUploadObj->uploadFile()) {
@@ -121,12 +119,10 @@ if ( ! empty($_POST['submit']) ) {
 			else {
 				$gameImageURL = "images/gamesplayed/".$btUploadObj->getUploadedFileName();
 			}
-
 		}
 		elseif (trim($_POST['gameimageurl']) != "") {
 			$gameImageURL = $_POST['gameimageurl'];
 		}
-
 	}
 
 	// Check if there are still no errors after uploading image
@@ -147,7 +143,6 @@ if ( ! empty($_POST['submit']) ) {
 		}
 
 		if ($gameObj->update($updateColumns, $updateValues)) {
-
 			// Resort order if needed
 			if ($resortOrder) {
 				$gameObj->resortOrder();
@@ -160,12 +155,10 @@ if ( ! empty($_POST['submit']) ) {
 
 			// First update/add name and stat type
 			foreach ($_SESSION['btStatCache'] as $key => $statInfo) {
-
-
 				$updateGameStatsVal = array($statInfo['statName'], $statInfo['statType'], $statInfo['calcOperation'], $statInfo['rounding'], $key, $statInfo['hideStat'], $gameInfo['gamesplayed_id'], $statInfo['textInput']);
 
 
-				if ($statInfo['gamestatsID'] != "" AND $gameStatsObj->select($statInfo['gamestatsID'])) {
+				if ($statInfo['gamestatsID'] != "" and $gameStatsObj->select($statInfo['gamestatsID'])) {
 				// Updating already added stats
 					$checkSave = $gameStatsObj->update($updateGameStatCol, $updateGameStatsVal);
 				}
@@ -183,7 +176,6 @@ if ( ! empty($_POST['submit']) ) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> ".filterText($statInfo['statName'])."<br>";
 				}
-
 			}
 
 			// Now update other stat information
@@ -200,7 +192,6 @@ if ( ! empty($_POST['submit']) ) {
 			if ($countErrors == 0) {
 				foreach ($arrSavedStats as $key => $statInfo) {
 					if ($statInfo['stattype'] == "calculate") {
-
 						$intFirstStatOrder = $_SESSION['btStatCache'][$key]['firstStat'];
 						$intFirstStatID = $arrSavedStats[$intFirstStatOrder]['gamestats_id'];
 
@@ -232,35 +223,28 @@ if ( ! empty($_POST['submit']) ) {
 			popupDialog('Manage Games Played', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'successBox');
 			</script>
 			";
-
-
-
 		}
 		else {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save game information.  Please try again.<br>";
 			$_POST['submit'] = false;
 		}
-
 	}
 	else {
 		$_POST['submit'] = false;
 	}
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
-
 	$localImageURL = $gameObj->getLocalImageURL();
 
-	if ($gameInfo['imagewidth'] == 0 AND $localImageURL !== false) {
+	if ($gameInfo['imagewidth'] == 0 and $localImageURL !== false) {
 		$gameImageSize = getimagesize($prevFolder.$localImageURL);
 
 		$gameInfo['imagewidth'] = $gameImageSize[0];
 	}
 
-	if ($gameInfo['imageheight'] == 0 AND $localImageURL !== false) {
+	if ($gameInfo['imageheight'] == 0 and $localImageURL !== false) {
 		$gameImageSize = getimagesize($prevFolder.$localImageURL);
 
 		$gameInfo['imageheight'] = $gameImageSize[1];
@@ -343,7 +327,6 @@ if ( empty($_POST['submit']) ) {
 		else {
 			$gameOrderOptions .= "<option value='".$row['gamesplayed_id']."'>".$gameName."</option>";
 		}
-
 	}
 
 	if ($counter == 0) {
@@ -380,7 +363,6 @@ if ( empty($_POST['submit']) ) {
 					'gamestatsID' => $row['gamestats_id']
 
 				);
-
 	}
 
 
@@ -630,6 +612,4 @@ if ( empty($_POST['submit']) ) {
 		
 	</script>
 	";
-
-
 }

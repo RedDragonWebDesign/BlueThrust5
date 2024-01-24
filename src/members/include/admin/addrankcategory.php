@@ -29,7 +29,6 @@ $cID = $_GET['cID'];
 
 
 if (isset($_POST['submit']) && $_POST['submit']) {
-
 	$countErrors = 0;
 	$dispError = "";
 
@@ -43,7 +42,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 
 	// Check Before/After
 
-	if ($_POST['beforeafter'] != "before" AND $_POST['beforeafter'] != "after") {
+	if ($_POST['beforeafter'] != "before" and $_POST['beforeafter'] != "after") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (before/after).<br>";
 	}
@@ -51,7 +50,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 
 	// Check image width
 
-	if ($_FILES['catimagefile']['name'] == "" AND trim($_POST['catimageurl']) != "" AND $_POST['useimage'] == "1" AND (trim($_POST['catimagewidth']) == "" OR $_POST['catimagewidth'] <= 0)) {
+	if ($_FILES['catimagefile']['name'] == "" and trim($_POST['catimageurl']) != "" and $_POST['useimage'] == "1" and (trim($_POST['catimagewidth']) == "" or $_POST['catimagewidth'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a valid image width when using an external image.<br>";
 	}
@@ -59,7 +58,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 
 	// Check image height
 
-	if ($_FILES['catimagefile']['name'] == "" AND trim($_POST['catimageurl']) != "" AND $_POST['useimage'] == "1" AND (trim($_POST['catimageheight']) == "" OR $_POST['catimageheight'] <= 0)) {
+	if ($_FILES['catimagefile']['name'] == "" and trim($_POST['catimageurl']) != "" and $_POST['useimage'] == "1" and (trim($_POST['catimageheight']) == "" or $_POST['catimageheight'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a valid image height when using an external image.<br>";
 	}
@@ -75,13 +74,11 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (category).<br>";
 		}
 		else {
-
 			$intNewCatOrderNum = $rankCatObj->makeRoom($_POST['beforeafter']);
 			if ($intNewCatOrderNum == "false") {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (category).<br>";
 			}
-
 		}
 	}
 	else {
@@ -99,11 +96,9 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 	$strCatImageURL = "";
 	// Check Image
 	if (isset($_POST['useimage']) && $_POST['useimage'] == 1) {
-
 		// Use Image Selected, check for no errors
 
 		if ($countErrors == 0) {
-
 			if ($_FILES['catimagefile']['name'] != "") {
 				// Image File Selected.... Upload it
 
@@ -116,21 +111,15 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 				else {
 					$strCatImageURL = "images/ranks/".$uploadFile->getUploadedFileName();
 				}
-
-
 			}
 			else {
-
 				$strCatImageURL = $_POST['catimageurl'];
-
 			}
-
 		}
 
 		if ($strCatImageURL == "") {
 			$_POST['useimage'] = 0;
 		}
-
 	}
 
 	if ($countErrors == 0) {
@@ -142,8 +131,6 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 
 		$newCat = new RankCategory($mysqli);
 		if ($newCat->addNew($arrColumns, $arrValues)) {
-
-
 			// Added New Category... Now set the ranks in this category
 
 			$newCatInfo = $newCat->get_info();
@@ -159,7 +146,6 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 						$rankObj->update($arrColumn, $arrValue);
 					}
 				}
-
 			}
 
 			echo "
@@ -178,20 +164,15 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 			$_POST['submit'] = false;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to add category.  Please try again.<br>";
 		}
-
 	}
 	else {
 		$_POST['submit'] = false;
 	}
-
-
 }
 
 
 
 if (!isset($_POST['submit']) || !$_POST['submit']) {
-
-
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."rankcategory ORDER BY ordernum DESC");
 	$orderoptions = "";
 	while ($row = $result->fetch_assoc()) {
@@ -216,7 +197,8 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 	$rankoptionheight = 20*$rankcounter;
 
 	if ($rankoptionheight > 300) {
-$rankoptionheight = 300; }
+$rankoptionheight = 300;
+    }
 
 	if ($rankoptions == "") {
 		$rankoptions = "(no ranks added yet)";
@@ -353,8 +335,4 @@ $rankoptionheight = 300; }
 	</script>
 	
 	";
-
-
-
-
 }

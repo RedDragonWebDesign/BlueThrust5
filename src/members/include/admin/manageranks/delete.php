@@ -29,17 +29,12 @@ $member = new Member($mysqli);
 $checkMember = $member->select($_SESSION['btUsername']);
 
 if ($checkMember) {
-
 	if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
 		//$cID = $cOptObj->findConsoleIDByName("Add New Rank");
 
 		$memberInfo = $member->get_info();
 
 		if ($member->hasAccess($cOptObj)) {
-
-
-
 			$rank = new Rank($mysqli);
 			if ($rank->select($_POST['rID'])) {
 				$rankInfo = $rank->get_info_filtered();
@@ -50,10 +45,7 @@ if ($checkMember) {
 					";
 				}
 				else {
-
-
 					if ($rank->countMembers() > 0) {
-
 						echo "
 						<script type='text/javascript'>
 							
@@ -76,10 +68,8 @@ if ($checkMember) {
 								
 						</script>
 						";
-
 					}
 					else {
-
 						if ($rank->delete()) {
 							echo "";
 
@@ -122,7 +112,6 @@ if ($checkMember) {
 							
 							</script>
 							";
-
 						}
 						else {
 							echo "";
@@ -149,14 +138,10 @@ if ($checkMember) {
 								
 							</script>
 							";
-
 						}
-
 					}
 				}
-
 			}
-
 		}
 	}
 }

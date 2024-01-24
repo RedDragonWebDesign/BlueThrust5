@@ -33,7 +33,6 @@ $pollObj = new Poll($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $pollObj->select($_POST['pollID']) && $member->hasAccess($consoleObj)) {
-
 	$pollInfo = $pollObj->get_info_filtered();
 
 	$pollObj->delete();

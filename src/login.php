@@ -43,7 +43,6 @@ if ( ! empty($_POST['submit']) ) {
 	$usernameExists = ($memberInfo['username'] ?? '') != "";
 
 	if ( $usernameExists ) {
-
 		$passwordMatches = $checkMember->authorizeLogin($login_password, 1);
 
 		if ( $passwordMatches ) {
@@ -72,7 +71,6 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			";
 		}
-
 	}
 
 	if ( $fail ) {
@@ -82,7 +80,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 if ( empty($_POST['submit']) && ! constant("LOGGED_IN")) {
-
 	if ( $fail ) {
 		$errorMessage = "You entered an incorrect username/password combination!";
 	}
@@ -128,7 +125,6 @@ echo "
 
 
 ";
-
 }
 elseif (constant("LOGGED_IN")) {
 	echo "

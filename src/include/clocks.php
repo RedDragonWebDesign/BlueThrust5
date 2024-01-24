@@ -1,7 +1,8 @@
 <?php
 
 	if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+    }
 
 	$websiteInfo['date_format'] = (!isset($websiteInfo['date_format']) || $websiteInfo['date_format'] == "") ? "l, F j, Y" : $websiteInfo['date_format'];
 

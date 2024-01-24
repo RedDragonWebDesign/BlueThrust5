@@ -1,7 +1,8 @@
 <?php
 
 if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+}
 
 function memberAppSetRank() {
 	global $mysqli, $member, $memberInfo, $dbprefix, $i, $memberAppInfo;
@@ -16,7 +17,6 @@ function memberAppSetRank() {
 	$setRankConsole->select($setRankCID);
 
 	if ($memberAppInfo['memberadded'] == 0 && $member->hasAccess($setRankConsole)) {
-
 		$rankInfo = $memberRank->get_info_filtered();
 		if ($memberInfo['promotepower'] != 0) {
 			$rankInfo['promotepower'] = $memberInfo['promotepower'];
@@ -26,7 +26,6 @@ function memberAppSetRank() {
 		}
 
 		if ($memberInfo['rank_id'] == 1) {
-
 			$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 			$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
 
@@ -35,7 +34,6 @@ function memberAppSetRank() {
 				$row = $result->fetch_assoc();
 				$rankInfo['promotepower'] = $row['rank_id'];
 			}
-
 		}
 
 		$rankObj = new Rank($mysqli);
@@ -62,7 +60,6 @@ function memberAppSetRank() {
 				"sortorder" => $i++
 			)
 		);
-
 	}
 
 	return $setRankOptions;

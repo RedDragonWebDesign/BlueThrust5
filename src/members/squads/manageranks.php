@@ -14,7 +14,6 @@
 
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
-
 	exit();
 }
 else {
@@ -27,7 +26,6 @@ else {
 
 
 	if (!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "addrank")) {
-
 		exit();
 	}
 }
@@ -119,7 +117,6 @@ if ($_GET['rID'] == "") {
 	
 	</script>
 	";
-
 }
 elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $squadObj->objSquadRank->get_info("squad_id") == $squadInfo['squad_id']) {
 	$dispError = "";
@@ -140,7 +137,6 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 
 
 	if ( ! empty($_POST['submit']) ) {
-
 		// Check Rank Name
 
 		if (trim($_POST['rankname'] == "")) {
@@ -168,14 +164,12 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 				$intNewOrderNum = 2;
 			}
 			elseif ($_POST['rankorder'] != "first" && $squadObj->objSquadRank->select($_POST['rankorder'])) {
-
 				$intNewOrderNum = $squadObj->objSquadRank->makeRoom($_POST['beforeafter']);
 
 				if ($intNewOrderNum === false) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid rank order.<br>";
 				}
-
 			}
 		}
 		// Filter Rank Privileges
@@ -188,7 +182,6 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 
 
 		if ($countErrors == 0) {
-
 			if ($intFounderRankID == $squadRankInfo['squadrank_id']) {
 				$arrColumns = array("name");
 				$arrValues = array($_POST['rankname']);
@@ -199,7 +192,6 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 			}
 			$squadObj->objSquadRank->select($squadRankInfo['squadrank_id']);
 			if ($squadObj->objSquadRank->update($arrColumns, $arrValues)) {
-
 				echo "
 				<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -218,8 +210,6 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 			}
-
-
 		}
 
 
@@ -227,13 +217,10 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 			$_POST = filterArray($_POST);
 			$_POST['submit'] = false;
 		}
-
-
 	}
 
 
 	if ( empty($_POST['submit']) ) {
-
 		$countRanks = 0;
 		$rankoptions = "";
 		$arrSquadRanks = $squadObj->getRankList();
@@ -256,18 +243,14 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 			if ($squadObj->objSquadRank->select($arrSquadRanks[$intHighestSortNum-2])) {
 				$selectRank = $arrSquadRanks[$intHighestSortNum-2];
 			}
-
 		}
 		else {
-
 			if ($squadObj->objSquadRank->select($arrSquadRanks[$squadRankInfo['sortnum']])) {
 				$selectRank = $arrSquadRanks[$squadRankInfo['sortnum']];
 			}
-
 		}
 
 		foreach ($arrSquadRanks as $squadRankID) {
-
 			if ($squadRankID != $intFounderRankID && $squadRankID != $squadRankInfo['squadrank_id']) {
 				$dispSelected = "";
 				if ($selectRank == $squadRankID) {
@@ -278,9 +261,7 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 				$squadObj->objSquadRank->select($squadRankID);
 				$dispRankName = $squadObj->objSquadRank->get_info_filtered("name");
 				$rankoptions .= "<option value='".$squadRankID."' ".$dispSelected.">".$dispRankName."</option>";
-
 			}
-
 		}
 
 
@@ -292,8 +273,7 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 		$arrSquadOptionsDispName = array("Post News", "Manage News", "Post in Shoutbox", "Manage Shoutbox Posts", "Add Rank", "Manage Ranks", "Set Member Rank", "Edit Squad Profile", "Send Squad Invites", "View Applications", "Remove Member");
 		$arrSquadOptionDescriptions = array("", "", "", "", "", "", "", "Edit Squad Information, squad name, recruiting status, etc.", "Send invitations for new members to join.", "Review and Accept/Decline new member applications.", "");
 
-		foreach ($arrSquadOptions as $key=>$squadOption) {
-
+		foreach ($arrSquadOptions as $key => $squadOption) {
 			$showTip = "";
 
 			$dispChecked = "";
@@ -309,9 +289,6 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 			}
 
 			$dispRankPrivileges .= "<li><input type='checkbox' class='textBox' value='1' name='".$squadOption."' id='".$squadOption."' ".$dispChecked."> <label for='".$squadOption."' style='cursor: pointer'>".$arrSquadOptionsDispName[$key]." ".$showTip."</label></li>";
-
-
-
 		}
 
 		echo "
@@ -379,18 +356,5 @@ elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $
 		
 		
 		";
-
-
-
-
-
-
 	}
-
-
-
-
-
-
-
 }

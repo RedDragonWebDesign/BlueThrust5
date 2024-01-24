@@ -6,7 +6,6 @@ $oldInsertSQL = "";
 $alterSQL = "";
 
 	foreach ($arrTableMatches as $tableName) {
-
 		//if($tableName != $_POST['tableprefix']."console" && $tableName != $_POST['tableprefix']."consolecategory") {
 
 			// Create Insert Statements
@@ -18,7 +17,6 @@ $alterSQL = "";
 			$arrColumnNames = array();
 			$result = $mysqli->query("DESCRIBE ".$tableName);
 			while ($row = $result->fetch_assoc()) {
-
 				if ($row['Field'] != "privilege_id") {
 					$arrColumnNames[] = $row['Field'];
 
@@ -31,9 +29,7 @@ $alterSQL = "";
 						$dispDefault = (trim($row['Default']) != "") ? " DEFAULT '".$row['default']."' " : "";
 						$alterSQL .= "ALTER TABLE `".$tableName."` ADD `".$row['Field']."` ".$row['Type'].$dispNotNull.$dispAutoIncrement.$dispDefault.$dispPrimaryKey.";";
 					}
-
 				}
-
 			}
 
 
@@ -48,13 +44,11 @@ $alterSQL = "";
 				$arrColumnValues = array();
 				$blnDoNotAdd = false;
 				foreach ($arrColumnNames as $columnName) {
-
 					$arrColumnValues[] = $mysqli->real_escape_string($row[$columnName]);
 
 					if ($tableName == $_POST['tableprefix']."rank_privileges" && $columnName == "rank_id" && $row[$columnName] == 1) {
 						$blnDoNotAdd = true;
 					}
-
 				}
 
 				$sqlInsertColumnValues = implode("','", $arrColumnValues);
@@ -62,7 +56,6 @@ $alterSQL = "";
 				if (!$blnDoNotAdd) {
 					$arrInsertStmts[] = $insertStmt.$sqlInsertColumnValues."');";
 				}
-
 			}
 
 

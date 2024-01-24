@@ -30,7 +30,6 @@ $member = new Member($mysqli);
 $checkMember = $member->select($_SESSION['btUsername']);
 
 if ($checkMember) {
-
 	if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$cOptObj = new ConsoleOption($mysqli);
 		if (!isset($_GET['cID'])) {
@@ -44,7 +43,6 @@ if ($checkMember) {
 		$memberInfo = $member->get_info();
 
 		if ($member->hasAccess($cOptObj)) {
-
 			echo "
 			<script type='text/javascript'>
 			
@@ -110,7 +108,6 @@ if ($checkMember) {
 			
 			</div><br><br><br>
 			";
-
 		}
 	}
 }

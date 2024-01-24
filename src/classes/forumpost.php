@@ -31,7 +31,6 @@ class ForumPost extends Basic {
 
 		$this->objTopic->set_assocTableName("forum_post");
 		$this->objTopic->set_assocTableKey("forumpost_id");
-
 	}
 
 
@@ -47,7 +46,6 @@ class ForumPost extends Basic {
 		}
 
 		return $returnVal;
-
 	}
 
 	public function select($intIDNum, $numericIDOnly = true) {
@@ -62,36 +60,29 @@ class ForumPost extends Basic {
 		$returnArr = array();
 
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT download_id FROM ".$this->MySQL->get_tablePrefix()."forum_attachments WHERE forumpost_id = '".$this->intTableKeyValue."'");
 			while ($row = $result->fetch_assoc()) {
 				$returnArr[] = $row['download_id'];
 			}
-
 		}
 
 		return $returnArr;
-
 	}
 
-	public function show($showReplyLink=false, $template="") {
+	public function show($showReplyLink = false, $template = "") {
 		global $websiteInfo, $MAIN_ROOT, $dbprefix, $mysqli, $member;
 
 		if ($template == "") {
-
 			require(BASE_DIRECTORY."forum/templates/post.php");
-
 		}
 		else {
 			require(BASE_DIRECTORY."forum/templates/".$template);
 		}
-
 	}
 
-	public function getTopicInfo($filtered=false) {
+	public function getTopicInfo($filtered = false) {
 		$returnArr = array();
 		if ($this->intTableKeyValue != "") {
-
 			$temp = $this->intTableKeyValue;
 			$tempManage = $this->blnManageable;
 			$this->objTopic->select($this->arrObjInfo['forumtopic_id']);
@@ -103,19 +94,17 @@ class ForumPost extends Basic {
 
 			$this->select($temp);
 			$this->blnManageable = $tempManage;
-
 		}
 
 		return $returnArr;
 	}
 
 
-	public function getLink($fullLink=false, $individualPost=false) {
+	public function getLink($fullLink = false, $individualPost = false) {
 		global $websiteInfo, $memberInfo, $setPostsPerPage;
 
 		$returnVal = "";
 		if ($this->intTableKeyValue != "" && !$individualPost) {
-
 			// Figure out num of posts
 			$query = "SELECT * FROM ".$this->strTableName." WHERE forumtopic_id = '".$this->arrObjInfo['forumtopic_id']."' ORDER BY dateposted";
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE forumtopic_id = '".$this->arrObjInfo['forumtopic_id']."' ORDER BY dateposted");
@@ -152,10 +141,8 @@ class ForumPost extends Basic {
 				$topicInfo = $this->getTopicInfo(true);
 				$returnVal = "<a href='".$returnVal."'>".$topicInfo['title']."</a>";
 			}
-
 		}
 		elseif ($this->intTableKeyValue != "" && $individualPost) {
-
 			$returnVal = FULL_SITE_URL."forum/viewpost.php?post=".$this->intTableKeyValue;
 
 			if ($fullLink) {
@@ -179,7 +166,6 @@ class ForumPost extends Basic {
 				$downloadObj->select($attachment);
 				$downloadObj->delete();
 			}
-
 		}
 	}
 
@@ -194,13 +180,11 @@ class ForumPost extends Basic {
 		while ($row = $result->fetch_assoc()) {
 			$arrReturn[] = $row['member_id'];
 		}
-
 	}
 
 	public function sendNotifications() {
 
 		if ($this->intTableKeyValue != "") {
-
 			$mailObj = new btMail();
 			$member = new Member($this->MySQL);
 			$arrBCC = array();
@@ -218,23 +202,17 @@ class ForumPost extends Basic {
 			}
 
 			foreach ($this->getTopicPosters() ?? [] as $memberID) {
-
 				if ($member->select($memberID) && $member->getEmailNotificationSetting("forum_post") == 1 && $member->get_info("email") != "") {
-
 					if (($topicInfo['member_id'] == $memberID && !$sentTopicMember) || $topicInfo['member_id'] != $memberID) {
 						$arrBCC[] = $member->get_info("email");
 					}
-
 				}
-
 			}
 
 			if (count($arrBCC) > 0) {
 				$mailObj->sendMail("", $subject, $message, array("bcc" => $arrBCC));
 			}
-
 		}
-
 	}
 
 

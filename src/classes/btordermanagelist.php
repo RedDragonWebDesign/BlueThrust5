@@ -26,7 +26,6 @@
 			$this->objManage = $obj;
 
 			$this->objConsole = new ConsoleOption($obj->get_MySQL());
-
 		}
 
 		public function select($id) {
@@ -48,13 +47,12 @@
 		}
 
 
-		public function getListArray($customInfo="") {
+		public function getListArray($customInfo = "") {
 
 			$arrItems = array();
 			$arrInfo = ($customInfo == "") ? $this->objManage->get_entries(array(), $this->orderBy) : $customInfo;
 			$x = 0;
 			foreach ($arrInfo as $info) {
-
 				$actionsInfo = array();
 				if ($x != 0) {
 					$actionsInfo[] = "moveup";
@@ -76,7 +74,6 @@
 					"edit_link" => $this->strEditItemLink.$info[$this->objManage->get_tableKey()]."&action=edit",
 					"actions" => $actionsInfo
 				);
-
 			}
 
 			$arrAddNewLink = array();

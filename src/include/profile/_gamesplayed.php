@@ -20,15 +20,12 @@
 					foreach ($arrGameStats as $gameStatID) {
 						$gameStatObj->select($gameStatID);
 						if ($gameStatObj->get_info_filtered("hidestat") == 0) {
-
-
 							if ($gameStatObj->get_info_filtered("stattype") == "calculate") {
 								$dispGameStats .= "<b>".$gameStatObj->get_info_filtered("name").":</b> ".$gameObj->calcStat($gameStatID, $member)."<br>";
 							}
 							else {
 								$dispGameStats .= "<b>".$gameStatObj->get_info_filtered("name").":</b> ".$member->getGameStatValue($gameStatID)."<br>";
 							}
-
 						}
 					}
 
@@ -42,17 +39,14 @@
 							</td>
 						</tr>
 					";
-
 				}
 			}
 
 
 			if ($dispGamesPlayed != "") {
-
 				echo "
 
 					<div class='formTitle' style='text-align: center; margin-top: 20px'>Game Statistics</div>
 					<table class='profileTable' style='border-top-width: 0px'>
 					".$dispGamesPlayed."</table>";
-
 			}

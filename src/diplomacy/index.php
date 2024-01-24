@@ -28,13 +28,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -77,7 +76,6 @@ $breadcrumbObj->addCrumb("Diplomacy");
 				$dispStatus = $statusInfo['name'];
 			}
 			else {
-
 				if (strpos($statusInfo['imageurl'], "http://") === false) {
 					$statusInfo['imageurl'] = "../".$statusInfo['imageurl'];
 				}
@@ -94,7 +92,6 @@ $breadcrumbObj->addCrumb("Diplomacy");
 				}
 
 				$dispStatus = "<img src='".$statusInfo['imageurl']."'".$dispImgWidth.$dispImgHeight." title='".$statusInfo['name']."'>";
-
 			}
 
 			$addCSS = "";
@@ -111,7 +108,6 @@ $breadcrumbObj->addCrumb("Diplomacy");
 				</tr>
 			
 			";
-
 		}
 
 	?>
@@ -122,7 +118,6 @@ $breadcrumbObj->addCrumb("Diplomacy");
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status WHERE imageurl != '' ORDER BY ordernum DESC");
 	$counter = 0;
 	if ($result->num_rows > 0) {
-
 		echo "
 		
 			<div style='margin-top: 50px; margin-left: auto; margin-right: auto'>
@@ -134,8 +129,6 @@ $breadcrumbObj->addCrumb("Diplomacy");
 			";
 
 		while ($row = $result->fetch_assoc()) {
-
-
 			if (strpos($row['imageurl'], "http://") === false) {
 				$row['imageurl'] = "../".$row['imageurl'];
 			}

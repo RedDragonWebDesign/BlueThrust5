@@ -16,7 +16,8 @@ require_once("../_setup.php");
 $pluginObj = new btPlugin($mysqli);
 
 if (!isset($_GET['plugin']) || !$pluginObj->selectByName($_GET['plugin'])) {
-echo "<script type='text/javascript'>window.location = '".$MAIN_ROOT."';"; exit(); }
+echo "<script type='text/javascript'>window.location = '".$MAIN_ROOT."';"; exit();
+}
 
 $pluginInfo = $pluginObj->get_info_filtered();
 
@@ -59,7 +60,6 @@ require_once(BASE_DIRECTORY."include/breadcrumb.php");
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
 	$formObj->buildForm($setupFormArgs);
 
 	if ($_POST['submit'] && $formObj->save()) {
@@ -70,12 +70,9 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 	$formObj->show();
-
 }
 else {
-
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
-
 }
 
 

@@ -14,8 +14,6 @@
 
 
 if (!defined("SHOW_UNASSIGNEDPLAYERS")) {
-
-
 	require_once("../../../_setup.php");
 	require_once("../../../classes/member.php");
 	require_once("../../../classes/rank.php");
@@ -34,7 +32,6 @@ if (!defined("SHOW_UNASSIGNEDPLAYERS")) {
 	$tournamentObj = new Tournament($mysqli);
 
 	if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($_POST['tournamentID']) && $member->hasAccess($consoleObj)) {
-
 		$memberInfo = $member->get_info();
 
 		$tournamentInfo = $tournamentObj->get_info_filtered();
@@ -44,29 +41,24 @@ if (!defined("SHOW_UNASSIGNEDPLAYERS")) {
 		if ($memberInfo['member_id'] != $tmemberID && $memberInfo['rank_id'] != "1" && !$tournamentObj->isManager($memberInfo['member_id'])) {
 			exit();
 		}
-
 	}
 
 
 	$arrTeams = $tournamentObj->getTeams();
 
 	if (isset($_POST['action']) && $_POST['action'] == "remove") {
-
 		$arrRemovePlayers = json_decode($_POST['playerList'], true);
 
 		foreach ($arrRemovePlayers as $playerID) {
-
 			if ($tournamentObj->objPlayer->select($playerID)) {
 				$tournamentObj->objPlayer->delete();
 			}
 		}
-
 	}
 	elseif (isset($_POST['action']) && $_POST['action'] == "add" && in_array($_POST['teamID'], $arrTeams)) {
 		$arrUnableToAddPlayer = array();
 		$arrAddPlayers = json_decode($_POST['playerList'], true);
 		foreach ($arrAddPlayers as $playerID) {
-
 			$arrUnfilledTeams = $tournamentObj->getUnfilledTeams();
 			$blnBasicChecks = $tournamentObj->objPlayer->select($playerID) && $tournamentObj->objPlayer->get_info("tournament_id") == $_POST['tournamentID'];
 			if ($blnBasicChecks && in_array($_POST['teamID'], $arrUnfilledTeams)) {
@@ -76,10 +68,7 @@ if (!defined("SHOW_UNASSIGNEDPLAYERS")) {
 				$arrUnableToAddPlayer[] = $playerID;
 			}
 		}
-
 	}
-
-
 }
 
 
@@ -99,8 +88,6 @@ echo "
 		else {
 			$arrUnassignedPlayers[$row['tournamentplayer_id']] = $playerInfo['displayname'];
 		}
-
-
 	}
 
 
@@ -108,7 +95,6 @@ echo "
 
 	$counter = 0;
 	foreach ($arrUnassignedPlayers as $playerID => $playerName) {
-
 		$tournamentObj->objPlayer->select($playerID);
 		$plainTextUsername = "";
 		if ($member->select($tournamentObj->objPlayer->get_info("member_id"))) {
@@ -130,7 +116,6 @@ echo "
 					<td class='main manageList".$addCSS."' style='padding-left: 10px'>".$playerName."</td>
 				</tr>			
 			";
-
 	}
 
 	echo "
@@ -139,7 +124,6 @@ echo "
 
 
 	if ($result->num_rows == 0) {
-
 		echo "
 		
 			<div class='shadedBox main' style='width: 45%; margin-left: auto; margin-right: auto'>
@@ -147,7 +131,6 @@ echo "
 			</div>
 		
 		";
-
 	}
 
 	$member->select($memberInfo['member_id']);

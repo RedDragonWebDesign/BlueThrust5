@@ -32,30 +32,22 @@ $_GET['cID'] = $cID;
 
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 	$selectedOption = "";
 	$addSQL = "";
 
 
 	if ($member->hasAccess($consoleObj) && $profileCatObj->select($_POST['catID'])) {
-
-
-
-		if ($_POST['oID'] != "" AND $profileObj->SELECT($_POST['oID'])) {
+		if ($_POST['oID'] != "" and $profileObj->SELECT($_POST['oID'])) {
 			$addSQL = " AND profileoption_id != '".$_POST['oID']."'";
 
 			$profileOptionInfo = $profileObj->get_info_filtered();
 
 			if ($profileOptionInfo['profilecategory_id'] == $_POST['catID']) {
-
 				$arrAssociates = $profileCatObj->getAssociateIDs("ORDER BY sortnum");
 				$highestIndex = count($arrAssociates) - 1;
 				$arrFlipped = array_flip($arrAssociates);
 				if ($highestIndex > 0) {
-
-
 					if ($arrFlipped[$_POST['oID']] == $highestIndex) {
 						$temp = $highestIndex-1;
 						$selectedOption = $arrAssociates[$temp];
@@ -64,12 +56,8 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 						$temp = $arrFlipped[$_POST['oID']]+1;
 						$selectedConsole = $arrAssociates[$temp];
 					}
-
 				}
-
-
 			}
-
 		}
 
 
@@ -85,7 +73,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			}
 
 			$dispOptions .= "<option value='".$row['profileoption_id']."' ".$strSelect.">".filterText($row['name'])."</option>";
-
 		}
 
 
@@ -95,7 +82,4 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		echo $dispOptions;
 	}
-
-
-
 }

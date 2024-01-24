@@ -53,13 +53,11 @@ echo "
 			";
 		}
 		else {
-
 			echo "
 				The member's only page tagger is currently <b>off</b>.<br><br>
 			
 				<a href='javascript:void(0)' onclick='setMembersOnlyTaggerStatus()'>Turn On Member's Only Page Tagger</a>
 			";
-
 		}
 
 		$selectPrivateForum = "";

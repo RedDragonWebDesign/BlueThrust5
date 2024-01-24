@@ -45,14 +45,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$memberInfo = $member->get_info_filtered();
 	$squadNewsObj = new Basic($mysqli, "squadnews", "squadnews_id");
 	if ($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], "managenews") && $squadNewsObj->select($_POST['nID'])) {
-
-
-
-
-
 		if ( ! empty($_POST['submit']) ) {
-
-
 			// Check News Type
 			//	1 - Public
 			// 	2 - Private
@@ -84,26 +77,18 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 				if ($squadNewsObj->update($arrColumns, $arrValues)) {
-
 					$_POST['cancel'] = true;
-
 				}
 				else {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 				}
-
-
 			}
 
 			if ($countErrors > 0) {
 				$_POST = filterArray($_POST);
 				$_POST['submit'] = false;
 			}
-
-
-
-
 		}
 
 
@@ -217,17 +202,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			<div class='main' style='margin-top: 0px; margin-bottom: 10px; padding-left: 5px'>".$dispLastEdit."</div>
 			<p style='padding: 0px; margin: 0px' align='right'><b><a href='javascript:void(0)' onclick=\"editNews('".$squadNewsInfo['squad_id']."', '".$squadNewsInfo['squadnews_id']."')\">EDIT</a> | <a href='javascript:void(0)' onclick=\"deleteNews('".$squadNewsInfo['squad_id']."', '".$squadNewsInfo['squadnews_id']."')\">DELETE</a></b></p>
 			";
-
-
 		}
-
-
-
-
-
-
-
 	}
-
-
 }

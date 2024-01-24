@@ -13,7 +13,6 @@
  */
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
-
 	exit();
 }
 else {
@@ -26,7 +25,6 @@ else {
 
 
 	if (!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "setrank")) {
-
 		exit();
 	}
 }
@@ -48,7 +46,6 @@ $countErrors = 0;
 $arrSquadRanks = $squadObj->getRankList();
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Squad Member
 
 	if (!$squadObj->objSquadMember->select($_POST['squadmember'])) {
@@ -72,7 +69,6 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	if ($countErrors == 0) {
-
 		$arrColumns = array("squadrank_id");
 		$arrValues = array($_POST['squadrank']);
 
@@ -119,28 +115,22 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 			
 			";
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 		}
-
-
 	}
 
 
 	if ($countErrors > 0) {
 		$_POST['submit'] = false;
 	}
-
-
 }
 
 
 
 if ( empty($_POST['submit']) ) {
-
 	$arrSquadMembers = $squadObj->getMemberListSorted();
 	$squadmemberoptions = "";
 	foreach ($arrSquadMembers as $memberID) {
@@ -194,5 +184,4 @@ if ( empty($_POST['submit']) ) {
 			</div>
 		</form>
 	";
-
 }

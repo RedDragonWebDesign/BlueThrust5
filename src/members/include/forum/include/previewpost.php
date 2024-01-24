@@ -80,6 +80,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			</tr>
 		</table>
 	";
-
-
 }

@@ -30,8 +30,6 @@ $cID = $_GET['cID'];
 $dispError = "";
 $countErrors = 0;
 if ( ! empty($_POST['submit']) ) {
-
-
 	// Check Squad Name
 	if (trim($_POST['squadname']) == "") {
 		$countErrors++;
@@ -40,7 +38,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($_FILES['uploadlogo']['name'] != "") {
-
 		$uploadLogoObj = new BTUpload($_FILES['uploadlogo'], "squad_", "../images/squads/", array(".png", ".jpg", ".gif", ".bmp"));
 
 		if (!$uploadLogoObj->uploadFile()) {
@@ -50,7 +47,6 @@ if ( ! empty($_POST['submit']) ) {
 		else {
 			$logoImageURL = $MAIN_ROOT."images/squads/".$uploadLogoObj->getUploadedFileName();
 		}
-
 	}
 	else {
 		$logoImageURL = $_POST['logourl'];
@@ -73,7 +69,6 @@ if ( ! empty($_POST['submit']) ) {
 		$arrValues = array($memberInfo['member_id'], $_POST['squadname'], $_POST['squaddesc'], $logoImageURL, $_POST['recruiting'], $time, $_POST['shoutbox'], $_POST['squadsite']);
 
 		if ($newSquadObj->addNew($arrColumns, $arrValues)) {
-
 			$newSquadInfo = $newSquadObj->get_info_filtered();
 
 			$arrColumns = array("squad_id", "name", "sortnum", "postnews", "managenews", "postshoutbox", "manageshoutbox", "addrank", "manageranks", "editprofile", "sendinvites", "acceptapps", "setrank", "removemember");
@@ -85,7 +80,6 @@ if ( ! empty($_POST['submit']) ) {
 			$checkAddMember = $newSquadObj->objSquadMember->addNew(array("squad_id", "member_id", "squadrank_id", "datejoined"), array($newSquadInfo['squad_id'], $memberInfo['member_id'], $squadRankInfo['squadrank_id'], $time));
 
 			if ($checkAddRank && $checkAddMember) {
-
 				echo "
 				
 				<div style='display: none' id='successBox'>
@@ -99,34 +93,26 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 				
 				";
-
-
-
 			}
 			else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 			}
-
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-
 	}
 
 	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	echo "
 		<form action='console.php?cID=".$cID."' method='post' enctype='multipart/form-data'>
 			<div class='formDiv'>
@@ -196,5 +182,4 @@ if ( empty($_POST['submit']) ) {
 			</div>
 		</form>
 	";
-
 }

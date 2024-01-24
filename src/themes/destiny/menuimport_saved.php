@@ -18,7 +18,6 @@ if (!isset($_SESSION['btUsername']) || !isset($_SESSION['btPassword']) || !$memb
 $menuSQL = file_get_contents("savemenu.sql");
 
 if ($menuSQL !== false) {
-
 	//$menuSQL = str_replace("INSERT INTO `", "INSERT INTO `".$dbprefix, $menuSQL);
 
 
@@ -34,8 +33,6 @@ if ($menuSQL !== false) {
 	$fullSQL = $emptyMenusSQL.$menuSQL;
 
 	if ($mysqli->multi_query($fullSQL)) {
-
-
 		do {
 			if ($result = $mysqli->store_result()) {
 				$result->free();
@@ -44,10 +41,7 @@ if ($menuSQL !== false) {
 		while ($mysqli->next_result());
 
 		echo "1";
-
-
 	}
-
 }
 else {
 	echo "2";

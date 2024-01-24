@@ -14,7 +14,6 @@
 
 
 if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
-
 	require_once("../../../_setup.php");
 	require_once("../../../classes/member.php");
 	require_once("../../../classes/event.php");
@@ -35,13 +34,11 @@ if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen
 	$memberInfo = $member->get_info();
 	// Check Login
 	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $eventObj->select($_GET['eID']) && ($eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions") || $memberInfo['rank_id'] == 1)) {
-
 		$eventInfo = $eventObj->get_info_filtered();
 	}
 	else {
 		exit();
 	}
-
 }
 else {
 	$memberInfo = $member->get_info();
@@ -63,8 +60,6 @@ $eventObj->objEventPosition->setCategoryKeyValue($eventInfo['event_id']);
 $intHighestOrder = $eventObj->objEventPosition->getHighestSortNum();
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."eventpositions WHERE event_id = '".$eventInfo['event_id']."' ORDER BY sortnum");
 while ($row = $result->fetch_assoc()) {
-
-
 	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
@@ -102,15 +97,12 @@ while ($row = $result->fetch_assoc()) {
 	";
 
 	$x++;
-
-
 }
 
 echo "</table>";
 
 
 if ($result->num_rows == 0) {
-
 	echo "
 	
 		<div class='shadedBox' style='width: 40%; margin: 20px auto'>
@@ -120,5 +112,4 @@ if ($result->num_rows == 0) {
 		</div>
 	
 	";
-
 }

@@ -48,7 +48,6 @@ if (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oaut
 
 
 		if (!$twitterObj->authorizeLogin($oauthArray['oauth_token'], $oauthArray['oauth_token_secret'])) {
-
 			$twitterObj->addNew($arrColumns, $arrValues);
 
 			echo "
@@ -56,10 +55,8 @@ if (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oaut
 					window.location = '".$MAIN_ROOT."members/console.php?cID=".$_GET['cID']."';
 				</script>
 			";
-
 		}
 		else {
-
 			echo "
 			
 				<div class='shadedBox' style='margin-left: auto; margin-right: auto; width: 50%'>
@@ -70,12 +67,9 @@ if (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oaut
 				</div>
 			
 			";
-
 		}
-
 	}
 	else {
-
 		echo "
 		
 			<div class='shadedBox' style='margin-left: auto; margin-right: auto; width: 50%'>
@@ -87,8 +81,6 @@ if (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oaut
 		
 		";
 	}
-
-
 }
 elseif (isset($_GET['denied'])) {
 	echo "
@@ -119,10 +111,8 @@ elseif (!$twitterObj->hasTwitter($memberInfo['member_id'])) {
 			</script>
 
 		";
-
 	}
 	else {
-
 		echo "
 			
 			<div class='shadedBox' style='margin-left: auto; margin-right: auto; width: 50%'>
@@ -133,16 +123,11 @@ elseif (!$twitterObj->hasTwitter($memberInfo['member_id'])) {
 			</div>
 		
 		";
-
 	}
-
 }
 elseif ($twitterObj->hasTwitter($memberInfo['member_id'])) {
-
-
 	$dispSuccess = false;
 	if ( ! empty($_POST['submit']) ) {
-
 		$setShowFeed = ($_POST['showfeed'] == 1) ? 1 : 0;
 		$setEmbedTweet = ($_POST['embedlasttweet'] == 1) ? 1 : 0;
 		$setInfoCard = ($_POST['showinfo'] == 1) ? 1 : 0;
@@ -154,7 +139,6 @@ elseif ($twitterObj->hasTwitter($memberInfo['member_id'])) {
 		$twitterObj->update($arrColumns, $arrValues);
 
 		$dispSuccess = true;
-
 	}
 
 
@@ -298,7 +282,6 @@ elseif ($twitterObj->hasTwitter($memberInfo['member_id'])) {
 
 
 	if ($dispSuccess) {
-
 		echo "
 			<div id='successDiv' style='display: none'>
 				<p align='center' class='main'>
@@ -331,9 +314,7 @@ elseif ($twitterObj->hasTwitter($memberInfo['member_id'])) {
 		
 		
 		";
-
 	}
-
 }
 else {
 	echo "

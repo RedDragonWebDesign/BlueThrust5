@@ -27,12 +27,9 @@ $cID = $consoleObj->findConsoleIDByName("Manage Console Options");
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($member->hasAccess($consoleObj) && $consoleObj->select($_POST['cID'])) {
-
 		define("MEMBERRANK_ID", $memberInfo['rank_id']);
 
 		$consoleInfo = $consoleObj->get_info();
@@ -43,19 +40,13 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$consoleObj->resortOrder();
 			$_GET['cID'] = $cID;
 			require_once("main.php");
-
-
 		}
 		else {
 			$consoleName = $consoleObj->get_info_filtered("pagetitle");
 			echo "<p align='center'>Are you sure you want to delete the console option <b>".$consoleName."</b>?</p>";
 		}
-
 	}
 	elseif (!$consoleObj->select($_POST['cID'])) {
-
 		echo "<p align='center'>Unable find the selected console option.  Please try again or contact the website administrator.</p>";
-
 	}
-
 }

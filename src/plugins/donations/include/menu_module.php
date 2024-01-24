@@ -5,7 +5,6 @@
 		$menuItemObj = $formObj->objSave;
 
 		if (isset($_GET['action']) && $_GET['action'] == "edit" && $menuItemObj->get_info("itemtype") == "donation") {
-
 			$_POST['itemtype'] = "donation";
 			$arrComponents = $formObj->components;
 
@@ -48,9 +47,7 @@
 
 			$formObj->components = $arrComponents;
 			$formObj->afterSave[] = "saveDonationMenuItem";
-
 		}
-
 	}
 
 	function donationAddMenuItem() {
@@ -120,25 +117,25 @@
 		$formObj->components = $arrComponents;
 		$formObj->embedJS = $afterJS;
 		$formObj->afterSave[] = "saveDonationMenuItem";
-
 	}
 
 
 	function saveDonationMenuItem() {
 
 		if ($_POST['itemtype'] != "donation") {
-return false; }
+return false;
+        }
 
 		global $menuItemObj;
 
 		$menuItemObj->update(array("itemtype_id"), array($_POST['donation_campaign']));
-
 	}
 
 	function displayDonationMenuModule() {
 		$menuItemInfo = $GLOBALS['menu_item_info'];
 		if ($menuItemInfo['itemtype'] != "donation") {
-return false; }
+return false;
+        }
 
 		global $mysqli;
 		if (!class_exists("DonationCampaign")) {
@@ -165,7 +162,6 @@ return false; }
 
 			$dispGoal = "";
 			if ($campaignInfo['goalamount'] > 0) {
-
 				// Graph
 				$goalCompletePercent = round(($campaignObj->getTotalDonationAmount()/$campaignInfo['goalamount'])*100);
 				$goalCompletePercent = ($goalCompletePercent > 100) ? "100%" : $goalCompletePercent."%";
@@ -176,7 +172,6 @@ return false; }
 						<div style='width: ".$goalCompletePercent."; background-color: ".$progressBarColor."'></div>
 					</div>
 				";
-
 			}
 
 			$donationsInfo = $campaignObj->getDonationInfo();
@@ -209,19 +204,15 @@ return false; }
 			";
 
 				if (count($donationsInfo) > 0) {
-
 					echo "<p class='donateMenuItemTitle'><b>Latest Donators:</b></p>";
 					$campaignObj->showDonatorList(false, 2);
-
 				}
 
 			echo "
 				</div>
 			
 			";
-
 		}
-
 	}
 
 

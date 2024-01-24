@@ -35,7 +35,6 @@ $failbanObj = new Basic($mysqli, "failban", "failban_id");
 $intMaxAttempts = 3;
 
 if ( ! empty($_POST['submit']) ) {
-
 	$countErrors = 0;
 
 	// Check Page Title
@@ -52,7 +51,6 @@ if ( ! empty($_POST['submit']) ) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid console category.<br>";
 	}
 	else {
-
 		$arrConsoleIDs = $consoleCatObj->getAssociateIDs();
 
 		if ($_POST['consoleorder'] == "first" && count($arrConsoleIDs) > 0) {
@@ -73,7 +71,7 @@ if ( ! empty($_POST['submit']) ) {
 		else {
 			// Check Before/After Then Make Room
 
-			if ($_POST['consolebeforeafter'] == "before" OR $_POST['consolebeforeafter'] == "after") {
+			if ($_POST['consolebeforeafter'] == "before" or $_POST['consolebeforeafter'] == "after") {
 				$intNewSortNum = $consoleObj->makeRoom($_POST['consolebeforeafter']);
 			}
 			else {
@@ -81,14 +79,11 @@ if ( ! empty($_POST['submit']) ) {
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order. (before/after)<br>";
 			}
 		}
-
-
 	}
 
 	// Check Security Code
 
 	if (constant('ADMIN_KEY') != $_POST['checkadmin']) {
-
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."failban WHERE ipaddress = '".$IP_ADDRESS."' AND pagename = 'addconsoleoption'");
 		$countFails = $result->num_rows;
 		$adminKeyFails = $intMaxAttempts-$countFails;
@@ -127,15 +122,10 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 			
 			";
-
-
 		}
 
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You entered an invalid admin key.  Please check the config file for the correct admin key.  You have ".$adminKeyFails." more trys before being IP Banned. ".$IP_ADDRESS."<br>";
-
-
-
 	}
 
 	if ($_FILES['consolefile'] == "") {
@@ -146,21 +136,17 @@ if ( ! empty($_POST['submit']) ) {
 	if ($countErrors == 0) {
 		// No Errors Try uploading Console File
 
-		$newFileName = strtolower(str_replace(" ","",$_POST['pagetitle']))."_";
+		$newFileName = strtolower(str_replace(" ", "", $_POST['pagetitle']))."_";
 
 		$btUpload = new BTUpload($_FILES['consolefile'], $newFileName, "include/customconsole/", array(".php"));
 
 		if ($btUpload->uploadFile()) {
-
 			$consoleFileURL = "customconsole/".$btUpload->getUploadedFileName();
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload console option.  Please make sure the filesize is not too big and filetype is php.<br>";
 		}
-
-
 	}
 
 	if ($_POST['hideoption'] != 1) {
@@ -176,7 +162,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 		if ($consoleObj->addNew($arrColumns, $arrValues)) {
-
 			// Added new Console Option, now add permissions
 			$consolePrivObj = new Basic($mysqli, "rank_privileges", "privilege_id");
 
@@ -206,7 +191,6 @@ if ( ! empty($_POST['submit']) ) {
 				if ($member->select($memAccessInfo['mID'])) {
 					$memberConsoleObj->addNew($arrColumns, array($memAccessInfo['mID'], $newConsoleInfo['console_id'], $intAllowDeny));
 				}
-
 			}
 
 
@@ -223,16 +207,12 @@ if ( ! empty($_POST['submit']) ) {
 			popupDialog('Add New Console Option', '".$MAIN_ROOT."members/console.php', 'successBox');
 			</script>
 			";
-
 		}
-
-
 	}
 	else {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
 }
 
 if ( empty($_POST['submit']) ) {
@@ -262,7 +242,6 @@ if ( empty($_POST['submit']) ) {
 			}
 			$rankOptions .= "</div><br>";
 		}
-
 	}
 
 
@@ -270,17 +249,16 @@ if ( empty($_POST['submit']) ) {
 	$rankOptionsHeight = $counter*20;
 
 	if ($rankOptionsHeight > 300) {
-$rankOptionsHeight = 300; }
+$rankOptionsHeight = 300;
+    }
 
 
 	$memberOptions = "<option value='select'>[SELECT]</option>";
 	$result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.ordernum FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id != '1' AND ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id AND ".$dbprefix."members.disabled = '0' ORDER BY ".$dbprefix."ranks.ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
-
 		$memberRank->select($row['rank_id']);
 		$dispRankName = $memberRank->get_info_filtered("name");
 		$memberOptions .= "<option value='".$row['member_id']."'>".$dispRankName." ".filterText($row['username'])."</option>";
-
 	}
 
 	$manageRanksCID = $consoleObj->findConsoleIDByName("Manage Ranks");

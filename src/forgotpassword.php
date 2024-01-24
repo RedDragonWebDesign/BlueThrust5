@@ -32,13 +32,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 // Start Page
@@ -64,7 +63,7 @@ $stage = $_GET['stage'];
 
 if ( ! isset($_SERVER['HTTPS']) || trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
     $dispHTTP = "http://";
-   }
+}
    else {
     $dispHTTP = "https://";
    }
@@ -291,7 +290,7 @@ if ($dispError != "") {
 		<br>
 		</div>
 		";
-	}
+}
 ?>
 
 <?php require_once($prevFolder."themes/".$THEME."/_footer.php");

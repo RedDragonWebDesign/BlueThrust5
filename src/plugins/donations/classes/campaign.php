@@ -27,11 +27,10 @@
 
 			$this->donationObj = new Donation($sqlConnection);
 			$this->arrPeriodDateCodes = array("days" => self::DAY, "weeks" => self::WEEK, "months" => self::MONTH, "years" => self::YEAR);
-
 		}
 
 
-		public function select($intIDNum, $numericIDOnly=true) {
+		public function select($intIDNum, $numericIDOnly = true) {
 
 			$returnVal = parent::select($intIDNum, $numericIDOnly);
 
@@ -43,14 +42,12 @@
 		public function getLink() {
 
 			return MAIN_ROOT."plugins/donations/?campaign_id=".$this->intTableKeyValue;
-
 		}
 
-		public function getCurrentPeriodRange($returnTimestamps=false) {
+		public function getCurrentPeriodRange($returnTimestamps = false) {
 
 			$returnVal = array();
 			if ($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] != 0) {
-
 				$recurAmount = $this->arrObjInfo['recurringamount'];
 				$currentPeriod = $this->arrObjInfo['currentperiod'];
 
@@ -60,8 +57,8 @@
 
 				switch ($this->arrObjInfo['recurringunit']) {
 					case "days":
-						$currentPeriodDate = mktime(0,0,0,$month,$day,$year);
-						$nextPeriodDate = mktime(0,0,0,$month,$day+$recurAmount,$year);
+						$currentPeriodDate = mktime(0, 0, 0, $month, $day, $year);
+						$nextPeriodDate = mktime(0, 0, 0, $month, $day+$recurAmount, $year);
 						$nextPeriod = date(self::DAY, $nextPeriodDate);
 						break;
 					case "weeks":
@@ -70,25 +67,23 @@
 						$nextPeriod = date(self::WEEK, $nextPeriodDate);
 						break;
 					case "months":
-						$currentPeriodDate = mktime(0,0,0,$month,01,$year);
-						$nextPeriodDate = mktime(0,0,0,$month+$recurAmount,01,$year);
+						$currentPeriodDate = mktime(0, 0, 0, $month, 01, $year);
+						$nextPeriodDate = mktime(0, 0, 0, $month+$recurAmount, 01, $year);
 						$nextPeriod = date(self::MONTH, $nextPeriodDate);
 						break;
 					case "years":
-						$currentPeriodDate = mktime(0,0,0,01,$day,$year);
-						$nextPeriodDate = mktime(0,0,0,01,01,$year+$recurAmount);
+						$currentPeriodDate = mktime(0, 0, 0, 01, $day, $year);
+						$nextPeriodDate = mktime(0, 0, 0, 01, 01, $year+$recurAmount);
 						$nextPeriod = date(self::YEAR, $nextPeriodDate);
 						break;
 				}
 
 				$returnVal = (!$returnTimestamps) ? array("current" => $currentPeriod, "next" => $nextPeriod) : array("current" => $currentPeriodDate, "next" => $nextPeriodDate);
-
 			}
 			elseif ($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] == 0) {
 				// Default Prior 30 days range
 				$x30Days = 60*60*24*30;
 				$returnVal = (!$returnTimestamps) ? array() : array("current" => 0, "next" => time());
-
 			}
 
 			return $returnVal;
@@ -98,7 +93,6 @@
 		public function updateCurrentPeriod() {
 
 			if ($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] != 0) {
-
 				$recurUnit = $this->arrObjInfo['recurringunit'];
 				$todayPeriod = date($this->arrPeriodDateCodes[$recurUnit]);
 
@@ -112,9 +106,7 @@
 					$this->update(array("currentperiod"), array($this->arrObjInfo['currentperiod']));
 					$this->blnUpdateCurrentPeriod = false;
 				}
-
 			}
-
 		}
 
 
@@ -122,7 +114,6 @@
 
 			$returnVal = 0;
 			if ($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] != 0) {
-
 				$startDate = $this->arrObjInfo['datestarted'];
 				$recurAmount = $this->arrObjInfo['recurringamount'];
 				$recurUnit = $this->arrObjInfo['recurringunit'];
@@ -132,18 +123,16 @@
 				$todayPeriod = date($this->arrPeriodDateCodes[$recurUnit]);
 
 				$returnVal = floor(($todayPeriod-$startPeriod)/$recurAmount);
-
 			}
 
 			return $returnVal;
 		}
 
 
-		public function populateDonationInfo($total=false, $currentPeriod=0, $nextPeriod=0) {
+		public function populateDonationInfo($total = false, $currentPeriod = 0, $nextPeriod = 0) {
 
 			$donationInfo = array();
 			if ($this->intTableKeyValue != "") {
-
 				$arrPeriod = $this->getCurrentPeriodRange(true);
 				$sqlCurrentPeriod = ($currentPeriod == 0) ? $arrPeriod['current'] : $currentPeriod;
 				$sqlNextPeriod = ($nextPeriod == 0) ? $arrPeriod['next'] : $nextPeriod;
@@ -173,25 +162,21 @@
 
 
 
-		public function getDonators($allTime=false) {
+		public function getDonators($allTime = false) {
 
 			$returnVal = array();
 			if ($this->intTableKeyValue != "") {
-
 				$addSQL = "";
 				if (!$allTime) {
-
 					$period = $this->getCurrentPeriodRange(true);
 
 					$addSQL = " AND (datesent >= '".$period['current']."' AND datesent < '".$period['next']."')";
-
 				}
 
 				$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."donations WHERE donationcampaign_id = '".$this->intTableKeyValue."'".$addSQL." GROUP BY transaction_id ORDER BY datesent DESC");
 				while ($row = $result->fetch_assoc()) {
 					$returnVal[] = $row;
 				}
-
 			}
 
 			return $returnVal;
@@ -219,7 +204,7 @@
 		}
 
 
-		public function showDonatorList($allTime=false, $limit=0) {
+		public function showDonatorList($allTime = false, $limit = 0) {
 
 			$counter = 0;
 
@@ -228,9 +213,7 @@
 			$arrList = array();
 			$i = 0;
 			foreach ($arrDonators as $arr) {
-
 				if (!in_array($arr['member_id'], $arrList)) {
-
 					$isMember = $arr['member_id'] != 0;
 					$selectID = $isMember ? $arr['member_id'] : $arr['donation_id'];
 
@@ -255,12 +238,10 @@
 				if ($limit != 0 && $counter == $limit) {
 					break;
 				}
-
 			}
-
 		}
 
-		public function displayDonator($selectID, $isMember=true, $css="") {
+		public function displayDonator($selectID, $isMember = true, $css = "") {
 			$member = new Member($this->MySQL);
 
 			$arrSymbols = $this->getCurrencySymbol();
@@ -271,7 +252,6 @@
 				$dispDonatorInfo['lastdonation'] = ($this->arrDonatorList[$selectID]['timesdonated'] > 1) ? "Last Donation: <span class='donatorAmount'>".$this->formatAmount($this->arrDonatorList[$selectID]['lastdonation'])."</span><br>" : "";
 			}
 			else {
-
 				$this->donationObj->select($selectID);
 				$donationInfo = $this->donationObj->get_info_filtered();
 				$dispDonatorInfo['name'] = ($donationInfo['name'] == "") ? "Anonymous" : $donationInfo['name'];
@@ -281,12 +261,11 @@
 			}
 
 			require_once(BASE_DIRECTORY."plugins/donations/include/donator_template.php");
-
 		}
 
 
 
-		public function showMessagesList($allTime=false) {
+		public function showMessagesList($allTime = false) {
 
 			if ($this->intTableKeyValue != "") {
 				$i = 0;
@@ -309,21 +288,17 @@
 				}
 
 				if ($count == 0) {
-
 					echo "	
 						<p align='center' class='main'>
 							<i>No Messages!</i>
 						</p>
 					";
-
 				}
-
 			}
-
 		}
 
 
-		public function displayMessage($donationID, $css="") {
+		public function displayMessage($donationID, $css = "") {
 			if ($this->donationObj->select($donationID)) {
 				$member = new Member($this->MySQL);
 				$donationInfo = $this->donationObj->get_info_filtered();
@@ -337,7 +312,6 @@
 				}
 
 				require_once(BASE_DIRECTORY."plugins/donations/include/messages_template.php");
-
 			}
 		}
 
@@ -367,7 +341,6 @@
 
 			$currentEndDate = 0;
 			if ($this->intTableKeyValue != "") {
-
 				if ($this->arrObjInfo['dateend'] != 0) {
 					$periodRange = $this->getCurrentPeriodRange(true);
 					$currentEndDate = ($periodRange['next'] > $this->arrObjInfo['dateend']) ? $this->arrObjInfo['dateend'] : $periodRange['next']-(60*60*24);
@@ -376,7 +349,6 @@
 					$periodRange = $this->getCurrentPeriodRange(true);
 					$currentEndDate = $periodRange['next']-(60*60*24);
 				}
-
 			}
 
 			return $currentEndDate;
@@ -387,7 +359,6 @@
 			$currentEndDate = $this->getCurrentEndDate();
 			$returnVal = "";
 			if ($currentEndDate != 0) {
-
 				$timeDiff = $currentEndDate-time();
 				if ($timeDiff < 0) {
 					$returnVal = "Campaign Ended";
@@ -404,7 +375,6 @@
 					$timeLeft = round($timeDiff/86400);
 					$returnVal = $timeLeft." ".pluralize("day", $timeLeft);
 				}
-
 			}
 
 			return $returnVal;
@@ -428,7 +398,6 @@
 			if (in_array($name, $arrConstants)) {
 				return constant("self::$name");
 			}
-
 		}
 
 		public function getCurrencyCodes() {

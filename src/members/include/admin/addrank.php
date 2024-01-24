@@ -48,32 +48,32 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 
 	// Check Image Height
 
-	if (!is_numeric($_POST['rankimageheight']) AND trim($_POST['rankimageheight']) != "") {
+	if (!is_numeric($_POST['rankimageheight']) and trim($_POST['rankimageheight']) != "") {
 		$countErrors++;
 		$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a numeric value.<br>";
 	}
-	elseif ($_POST['rankimageheight'] <= 0 AND is_numeric($_POST['rankimageheight'])) {
+	elseif ($_POST['rankimageheight'] <= 0 and is_numeric($_POST['rankimageheight'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a value greater than 0.<br>";
 	}
 
-	if ($_FILES['rankimagefile']['name'] == "" AND (trim($_POST['rankimageheight']) == "" OR $_POST['rankimageheight'] <= 0)) {
+	if ($_FILES['rankimagefile']['name'] == "" and (trim($_POST['rankimageheight']) == "" or $_POST['rankimageheight'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must supply an image height for images that aren't uploaded.<br>";
 	}
 
 	// Check Image Width
 
-	if (!is_numeric($_POST['rankimagewidth']) AND trim($_POST['rankimagewidth']) != "") {
+	if (!is_numeric($_POST['rankimagewidth']) and trim($_POST['rankimagewidth']) != "") {
 		$countErrors++;
 		$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a numeric value.<br>";
 	}
-	elseif ($_POST['rankimagewidth'] <= 0 AND is_numeric($_POST['rankimagewidth'])) {
+	elseif ($_POST['rankimagewidth'] <= 0 and is_numeric($_POST['rankimagewidth'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a value greater than 0.<br>";
 	}
 
-	if ($_FILES['rankimagefile']['name'] == "" AND (trim($_POST['rankimagewidth']) == "" OR $_POST['rankimagewidth'] <= 0)) {
+	if ($_FILES['rankimagefile']['name'] == "" and (trim($_POST['rankimagewidth']) == "" or $_POST['rankimagewidth'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must supply an image width for images that aren't uploaded.<br>";
 	}
@@ -100,12 +100,9 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid rank order. (rank)<br>";
 			}
-
 		}
-
 	}
 	else {
-
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 		$num_rows = $result->num_rows;
 
@@ -116,11 +113,9 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 		else {
 			$intNewRankOrderNum = 1;
 		}
-
-
 	}
 
-	if ($_POST['beforeafter'] != "after" AND $_POST['beforeafter'] != "before") {
+	if ($_POST['beforeafter'] != "after" and $_POST['beforeafter'] != "before") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid rank order. (before/after)<br>";
 	}
@@ -132,7 +127,6 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 	// Check Max Rank to Promote
 
 	if ($_POST['promoterank'] != "0") {
-
 		if ($_POST['promoterank'] != "-1") {
 			if (!$rankObj->select($_POST['promoterank'])) {
 				$countErrors++;
@@ -146,13 +140,12 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 				}
 			}
 		}
-
 	}
 
 	// Check Auto Days
 
 	if ($_POST['autodays'] != "") {
-		if (!is_numeric($_POST['autodays']) OR (is_numeric($_POST['autodays']) AND $_POST['autodays'] < 0)) {
+		if (!is_numeric($_POST['autodays']) or (is_numeric($_POST['autodays']) and $_POST['autodays'] < 0)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Auto days must either be blank or a positive numeric value.<br>";
 		}
@@ -160,7 +153,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 
 
 	if ($_POST['autodisable'] != "") {
-		if (!is_numeric($_POST['autodisable']) OR (is_numeric($_POST['autodisable']) AND $_POST['autodisable'] < 0)) {
+		if (!is_numeric($_POST['autodisable']) or (is_numeric($_POST['autodisable']) and $_POST['autodisable'] < 0)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Auto disable must either be blank or a positive numeric value.<br>";
 		}
@@ -180,10 +173,8 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 			else {
 				$rankImgURL = "images/ranks/".$uploadFile->getUploadedFileName();
 			}
-
 		}
 		else {
-
 			if (trim($_POST['rankimageurl']) == "") {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must include a rank image.<br>";
@@ -195,7 +186,6 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 	}
 
 	if ($countErrors > 0) {
-
 		$_POST = filterArray($_POST);
 
 		$_POST['submit'] = false;
@@ -223,7 +213,6 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 			$result = $mysqli->query("SELECT * FROM ".$dbprefix."console ORDER BY sortnum");
 			$rankOptions = "";
 			while ($row = $result->fetch_assoc()) {
-
 				$strPostVarName = "consoleid_".$row['console_id'];
 
 				if (isset($_POST[$strPostVarName]) && $_POST[$strPostVarName] == 1) {
@@ -244,13 +233,11 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 				popupDialog('Add New Rank', '".$MAIN_ROOT."members/console.php?cID=".$manageRanksCID."', 'successBox');
 			</script>
 		";
-
 		}
 		else {
 			$_POST['submit'] = false;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to add new rank.  Please try again.<br>";
 		}
-
 	}
 }
 
@@ -263,7 +250,6 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 	while ($arrRankCat = $rankCategories->fetch_assoc()) {
 		$rankCatName = filterText($arrRankCat['name']);
 		$rankCatOptions .= "<option value='".$arrRankCat['rankcategory_id']."'>".$arrRankCat['name']."</option>";
-
 	}
 
 	$getRanks = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1' ORDER BY ordernum");
@@ -271,7 +257,6 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 	while ($arrRanks = $getRanks->fetch_assoc()) {
 		$rankName = filterText($arrRanks['name']);
 		$rankOptions .= "<option value='".$arrRanks['rank_id']."'>".$rankName."</option>";
-
 	}
 
 	$firstRankOption = "";
@@ -414,7 +399,7 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 							$countConsoleCats = 0;
 							$consoleCatObj = new Basic($mysqli, "consolecategory", "consolecategory_id");
                             $consoleJSCode = "";
-							foreach ($arrFormatOptions as $key=>$arrOptions) {
+							foreach ($arrFormatOptions as $key => $arrOptions) {
 								$consoleCatObj->select($key);
 								$consoleCatInfo = $consoleCatObj->get_info();
 
@@ -433,22 +418,17 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 			";
 
 										if ($consoleOptionInfo['pagetitle'] != "-separator-") {
-
 											echo "&nbsp;&nbsp;<input type='checkbox' name='consoleid_".$consoleOptionInfo['console_id']."' value='1'> ".$consoleOptionInfo['pagetitle']."<br>";
-
 										}
 										elseif ($consoleOptionInfo['pagetitle'] == "-separator-") {
 											$dispSeparator = "<div class='dashedLine' style='width: 250px; margin: 6px 1px; padding: 0px; float: left'></div>";
 											echo "<div style='float: left'>&nbsp;&nbsp;<input type='checkbox' name='consoleid_".$consoleOptionInfo['console_id']."' value='1'>&nbsp;</div>".$dispSeparator;
 											echo "<div style='clear: both'></div>";
 										}
-
 									}
 
 									echo "</div>";
-
 								}
-
 							}
 
 							echo "
@@ -470,5 +450,4 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 	
 	
 	";
-
 }

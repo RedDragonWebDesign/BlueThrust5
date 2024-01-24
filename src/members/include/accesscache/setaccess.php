@@ -26,7 +26,6 @@
 	$accessObj = new Access($mysqli);
 
 	if ($member->authorizeLogin($_SESSION['btPassword']) && isset($_POST['cacheID']) && isset($_POST['accessType']) && isset($_POST['accessInfo'])) {
-
 		$accessObj->cacheID = $_POST['cacheID'];
 		$accessInfo = json_decode($_POST['accessInfo'], true);
 
@@ -44,7 +43,6 @@
 
 
 		foreach ($accessInfo as $checkBoxName => $accessTypeValue) {
-
 			$selectorID = ($_POST['accessType'] == "rank") ? str_replace($sessionPrefix, "", $checkBoxName) : $checkBoxName;
 
 			if ($accessTypeValue == 0 && $objSelector->select($selectorID)) {
@@ -54,7 +52,6 @@
 			elseif (is_numeric($accessTypeValue) && $objSelector->select($selectorID)) {
 				$_SESSION[$sessionName][$_POST['cacheID']][$checkBoxName] = $accessTypeValue;
 			}
-
 		}
 
 

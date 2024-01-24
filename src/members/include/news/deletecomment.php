@@ -33,7 +33,6 @@ $commentObj = new Basic($mysqli, "comments", "comment_id");
 $newsObj = new News($mysqli);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $commentObj->select($_POST['commentID'])) {
-
 	$commentInfo = $commentObj->get_info_filtered();
 
 	$newsObj->select($commentInfo['news_id']);
@@ -51,7 +50,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 	$arrComments = $newsObj->getComments();
 	$commentCount = $newsObj->countComments();
-
 }
 
 

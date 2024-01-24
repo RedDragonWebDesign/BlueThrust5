@@ -33,7 +33,6 @@ $tID = $_POST['tID'];
 $arrMembers = array();
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID) && $member->hasAccess($consoleObj)) {
-
 	$memberInfo = $member->get_info();
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 
@@ -45,7 +44,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 	}
 
 	if (($memberInfo['member_id'] == $tournamentInfo['member_id'] || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) && $tournamentInfo['seedtype'] == 3) {
-
 		echo "
 		
 				<table class='formTable' align='center' style='margin-left: auto; margin-right: auto; width: 250px'>
@@ -75,7 +73,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 
 
 					$seedCount++;
-
 				}
 
 				echo "
@@ -85,7 +82,5 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 		
 		
 		";
-
 	}
-
 }

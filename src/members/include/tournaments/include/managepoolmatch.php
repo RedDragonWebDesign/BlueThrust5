@@ -90,7 +90,6 @@ if ($_POST['submit'] && !$_POST['approve']) {
 	// Upload Replay
 
 	if ($_FILES['uploadfile']['name'] != "") {
-
 		$uploadReplayObj = new BTUpload($_FILES['uploadfile'], "replay_", "../../downloads/replays/", array(".zip"));
 
 		if (!$uploadReplayObj->uploadFile()) {
@@ -100,7 +99,6 @@ if ($_POST['submit'] && !$_POST['approve']) {
 		else {
 			$matchReplayURL = $MAIN_ROOT."downloads/replays/".$uploadReplayObj->getUploadedFileName();
 		}
-
 	}
 	else {
 		$matchReplayURL = $_POST['uploadurl'];
@@ -113,7 +111,6 @@ if ($_POST['submit'] && !$_POST['approve']) {
 		$arrValues[] = $matchReplayURL;
 
 		if ($tournamentObj->objTournamentPool->objTournamentPoolMatch->update($arrColumns, $arrValues)) {
-
 			echo "
 			
 			<div style='display: none' id='successBox'>
@@ -132,23 +129,17 @@ if ($_POST['submit'] && !$_POST['approve']) {
 				$tMemberObj->select($value);
 				$tMemberObj->postNotification($member->getMemberLink()." has updated the match results for <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&pID=".$_GET['pID']."'>".$dispTeam1." vs. ".$dispTeam2."</a>");
 			}
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-
 	}
-
-
 }
 elseif (!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
-
 	// Upload Replay
 
 	if ($_FILES['uploadfile']['name'] != "") {
-
 		$uploadReplayObj = new BTUpload($_FILES['uploadfile'], "replay_", "../downloads/replays/", array(".zip"));
 
 		if (!$uploadReplayObj->uploadFile()) {
@@ -158,7 +149,6 @@ elseif (!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
 		else {
 			$matchReplayURL = $MAIN_ROOT."downloads/replays/".$uploadReplayObj->getUploadedFileName();
 		}
-
 	}
 	else {
 		$matchReplayURL = $_POST['uploadurl'];
@@ -166,7 +156,6 @@ elseif (!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
 
 
 	if ($countErrors == 0) {
-
 		$arrColumns[] = $dispReplayColumn;
 		$arrValues[] = $matchReplayURL;
 		$arrColumns[] = $dispMyTeamApprove;
@@ -178,7 +167,6 @@ elseif (!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
 
 
 		if ($tournamentObj->objTournamentPool->objTournamentPoolMatch->update($arrColumns, $arrValues)) {
-
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -198,16 +186,12 @@ elseif (!$_POST['submit'] && $_POST['approve'] && $checkApprove == 1) {
 				$tMemberObj->select($value);
 				$tMemberObj->postNotification($member->getMemberLink()." has approved the match results for <a href='".$MAIN_ROOT."tournaments/view.php?tID=".$matchInfo['tournament_id']."'>".$dispTeam1." vs. ".$dispTeam2."</a>");
 			}
-
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-
 	}
-
 }
 
 
@@ -299,9 +283,7 @@ if ($dispError != "") {
 						";
 
 					if ($checkApprove == 1) {
-
 						echo "<input type='submit' name='approve' value='Approve Results' class='submitButton' style='width: 125px'><br><br>";
-
 					}
 
 				echo "

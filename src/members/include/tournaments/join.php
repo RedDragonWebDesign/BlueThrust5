@@ -15,7 +15,6 @@
 
 
 	if (!isset($member)|| substr($_SERVER['PHP_SELF'], -strlen("console.php")) != "console.php") {
-
 		exit();
 	}
 	else {
@@ -25,7 +24,6 @@
 		$consoleObj->select($cID);
 
 		if (!$member->hasAccess($consoleObj)) {
-
 			exit();
 		}
 	}
@@ -50,8 +48,6 @@
 	}
 
 	if ($result->num_rows > 0) {
-
-
 		$arrComponents = array(
 			"tournament" => array(
 				"display_name" => "Tournament",
@@ -132,11 +128,8 @@
 			</script>
 		
 		";
-
-
 	}
 	else {
-
 		echo "
 			<div class='shadedBox' style='width: 40%; margin: 25px auto'>
 				<p class='main' align='center'>

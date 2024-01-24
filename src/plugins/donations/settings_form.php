@@ -14,7 +14,8 @@
 
 
 if (!isset($pluginObj)) {
-exit(); }
+exit();
+}
 require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
 
 
@@ -109,7 +110,6 @@ function saveDonationSettings() {
 	$pluginObj->addConfigValue("thankyou", $_POST['thankyou']);
 	$pluginObj->addConfigValue("goalprogresscolor", $_POST['goalprogresscolor']);
 	$pluginObj->addConfigValue("goalprogressbackcolor", $_POST['goalprogressbackcolor']);
-
 }
 
 $EXTERNAL_JAVASCRIPT .= $formObj->getRichtextboxJSFile();

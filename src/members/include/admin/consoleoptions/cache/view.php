@@ -35,13 +35,9 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 
 $rank = new Rank($mysqli);
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($checkAccess1 || $checkAccess2) {
-
-
 		echo "
 		
 			<table align='left' border='0' cellspacing='2' cellpadding='2' width=\"90%\">
@@ -55,8 +51,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		$counter=0;
 		foreach ($_SESSION['btAccessRules'] as $key => $accessInfo) {
-			if ($member->select($accessInfo['mID']) AND ($accessInfo['accessRule'] == "allow" OR $accessInfo['accessRule'] == "deny")) {
-
+			if ($member->select($accessInfo['mID']) and ($accessInfo['accessRule'] == "allow" or $accessInfo['accessRule'] == "deny")) {
 				$tempMemInfo = $member->get_info_filtered();
 				$rank->select($tempMemInfo['rank_id']);
 				$dispRankName = $rank->get_info_filtered("name");
@@ -87,15 +82,11 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					</td>
 				</tr>
 			";
-
 		}
 		echo "
 				
 			</table>
 		
 		";
-
 	}
-
-
 }

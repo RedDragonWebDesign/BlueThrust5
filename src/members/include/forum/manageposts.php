@@ -21,7 +21,6 @@ $boardObj = new ForumBoard($mysqli);
 if (isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {
 	$boardID = $boardObj->objTopic->get_info("forumboard_id");
 	$boardObj->select($boardID);
-
 }
 elseif (isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID'])) {
 	$topicID = $boardObj->objPost->get_info("forumtopic_id");
@@ -64,7 +63,6 @@ if (
 		$member->hasAccess($consoleObj)
 	)
 ) {
-
 	$topicInfo = $boardObj->objTopic->get_info();
 	$boardObj->objPost->select($topicInfo['forumpost_id']);
 	$topicName = $boardObj->objPost->get_info_filtered("title");
@@ -91,8 +89,6 @@ if (
 			$member->logAction("Locked forum topic: <a href='".$MAIN_ROOT."forum/viewtopic.php?tID=".$topicInfo['forumtopic_id']."'>".$topicName."</a>");
 			break;
 		case "delete":
-
-
 			$mysqli->query("DELETE FROM ".$dbprefix."forum_topicseen WHERE forumtopic_id = '".$topicInfo['forumtopic_id']."'");
 			$mysqli->query("DELETE FROM ".$dbprefix."forum_post WHERE forumtopic_id = '".$topicInfo['forumtopic_id']."'");
 
@@ -138,15 +134,12 @@ elseif (isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GE
 		// Topics First Post
 		$arrPosts = $boardObj->objTopic->getAssociateIDs();
 		if (count($arrPosts) > 1) {
-
 			$dialogMessage = "You cannot delete this post with out deleting the entire topic!<br><br>Ask a mod to delete the topic.";
-
 		}
 		else {
 			$boardObj->objTopic->delete();
 			$dialogMessage = "Successfully deleted forum post!";
 		}
-
 	}
 
 	echo "
@@ -166,7 +159,6 @@ elseif (isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GE
 	$boardObj->objPost->select($topicInfo['forumpost_id']);
 
 	$member->logAction("Deleted post in topic: <a href='".$MAIN_ROOT."forum/viewtopic.php?tID=".$topicInfo['forumtopic_id']."'>".$boardObj->objPost->get_info_filtered("title")."</a>");
-
 }
 elseif (isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GET['action'] ?? '') != "delete") {
 // EDIT POST
@@ -184,7 +176,6 @@ elseif (isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GE
 
 
 	if ( ! empty($_POST['submit']) ) {
-
 		$_POST['wysiwygHTML'] = str_replace("<?", "&lt;?", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("?>", "?&gt;", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("<script", "&lt;script", $_POST['wysiwygHTML']);
@@ -207,7 +198,6 @@ elseif (isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GE
 		}
 
 		if ($countErrors == 0) {
-
 			$arrValues = array($_POST['wysiwygHTML'], time(), $memberInfo['member_id']);
 
 			if ($topicPostInfo['forumpost_id'] == $postInfo['forumpost_id']) {
@@ -229,22 +219,16 @@ elseif (isset($_GET['pID']) && $boardObj->objPost->select($_GET['pID']) && ($_GE
 					</script>
 				
 				";
-
 			}
-
-
 		}
 
 		if ($countErrors > 0) {
 			$_POST = filterArray($_POST);
 			$_POST['submit'] = false;
 		}
-
-
 	}
 
 	if ( empty($_POST['submit']) ) {
-
 		if ($topicPostInfo['forumpost_id'] == $postInfo['forumpost_id']) {
 			$dispEditTitle = "<input type='text' id='postSubject' name='topicname' value='".$topicPostInfo['title']."' class='textBox' style='width: 250px'>";
 		}

@@ -39,21 +39,18 @@ $dispBreadCrumb = "<a href='".$MAIN_ROOT."'>Home</a> > Log In";
 require_once($prevFolder."themes/".$THEME."/_header.php");
 
 if (constant("LOGGED_IN")) {
-
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."members'
 		</script>
 	";
 	exit();
-
 }
 
 
 
 
 if (isset($_GET['code'])) {
-
 	// Check if a member is connected
 
 	$fbObj->tokenNonce = $_SESSION['btFacebookNonce'];
@@ -97,22 +94,14 @@ if (isset($_GET['code'])) {
 			";
 
 			exit();
-
-
-
 		}
 		else {
 			$dispError = "There is no user associated with this Facebook account.  You must connect your Facebook account while logged in before using this feature.";
 		}
-
 	}
 	else {
-
 		$dispError = "Unable to validate your Facebook account, please log in regularly through the website.";
-
 	}
-
-
 }
 elseif (isset($_GET['error_reason'])) {
 	$dispError = "There is no user associated with this Facebook account.  You must connect your Facebook account while logged in before using this feature.";

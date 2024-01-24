@@ -31,7 +31,6 @@ $member->select($_SESSION['btUsername']);
 $tournamentObj = new Tournament($mysqli);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($_POST['tournamentID']) && $member->hasAccess($consoleObj)) {
-
 	$memberInfo = $member->get_info();
 
 	$tournamentInfo = $tournamentObj->get_info_filtered();
@@ -39,14 +38,9 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 
 
 	if ($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1") {
-
 		$tournamentObj->deleteManager($_POST['managerID']);
 
 		define("SHOW_MANAGERLIST", true);
 		require_once("managerlist.php");
-
-
 	}
-
-
 }

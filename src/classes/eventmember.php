@@ -12,7 +12,6 @@
 			$this->strTableKey = "eventmember_id";
 
 			$this->eventObj = $eObj;
-
 		}
 
 		public function update($arrTableColumns, $arrTableValues) {
@@ -20,9 +19,7 @@
 			$result = parent::update($arrTableColumns, $arrTableValues);
 
 			if ($result) {
-
 				if (in_array("status", $arrTableColumns)) {
-
 					$eventReminderID = $this->getEventReminderID();
 					$statusKey = array_search("status", $arrTableColumns);
 
@@ -30,18 +27,14 @@
 						// Set Reminder
 
 						$this->setReminder();
-
 					}
 					elseif ($eventReminderID !== false) {
-
 						$eventReminderTable = $this->MySQL->get_tablePrefix()."event_reminder";
 						$emailQueueTable = $this->MySQL->get_tablePrefix()."emailnotifications_queue";
 						$this->MySQL->query("DELETE FROM ".$emailQueueTable." WHERE emailnotificationsqueue_id = '".$eventReminderID."'");
 						$this->MySQL->query("DELETE FROM ".$eventReminderTable." WHERE emailnotificationsqueue_id = '".$eventReminderID."'");
 					}
-
 				}
-
 			}
 
 			return $result;
@@ -75,7 +68,6 @@
 			$member = new Member($this->MySQL);
 
 			if ($this->arrObjInfo['status'] == 1 && $member->select($this->arrObjInfo['member_id']) && $member->getEmailNotificationSetting("event_time") != 0) {
-
 				$timeBefore = $member->getEmailNotificationSetting("event_time");
 				$unitBefore = $member->getEmailNotificationSetting("event_unit");
 
@@ -108,11 +100,8 @@
 					$emailReminderID = $member->setEmailReminder($sendReminder, "Event Starting!", $message);
 					$eventReminder = new Basic($this->MySQL, "event_reminder", "eventreminder_id");
 					$eventReminder->addNew(array("emailnotificationsqueue_id", "event_id"), array($emailReminderID, $this->arrObjInfo['event_id']));
-
 				}
-
 			}
-
 		}
 
 
@@ -121,15 +110,12 @@
 			$eventReminderID = $this->getEventReminderID();
 
 			if ($eventReminderID !== false) {
-
 				$eventReminderTable = $this->MySQL->get_tablePrefix()."event_reminder";
 				$emailQueueTable = $this->MySQL->get_tablePrefix()."emailnotifications_queue";
 
 				$this->MySQL->query("DELETE FROM ".$emailQueueTable." WHERE emailnotificationsqueue_id = '".$eventReminderID."'");
 				$this->MySQL->query("DELETE FROM ".$eventReminderTable." WHERE emailnotificationsqueue_id = '".$eventReminderID."'");
-
 			}
-
 		}
 
 		public function delete() {
@@ -137,7 +123,6 @@
 			$this->deleteReminder();
 
 			return parent::delete();
-
 		}
 
 	}

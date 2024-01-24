@@ -42,11 +42,9 @@ $pollObj = new Poll($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
-
 	$pollObj->cacheID = $_POST['cacheID'];
 
 	if ( ! empty($_POST['submit']) ) {
-
 		$arrOptionInfo = array();
 		$arrErrors = array();
 		$arrReturn = array();
@@ -70,7 +68,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 		}
 
 		if (count($arrErrors) == 0) {
-
 			$arrOptionInfo = $_SESSION['btPollOptionCache'][$pollObj->cacheID][$_POST['pollOption']];
 
 			unset($_SESSION['btPollOptionCache'][$pollObj->cacheID][$_POST['pollOption']]);
@@ -86,14 +83,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 			$_SESSION['btPollOptionCache'][$pollObj->cacheID][$newSortNum] = $arrOptionInfo;
 
 			$pollObj->resortCacheOrder();
-
 		}
 
 		if (count($arrErrors) > 0) {
-
 			$arrReturn['result'] = "fail";
 			$arrReturn['errors'] = $arrErrors;
-
 		}
 
 
@@ -127,8 +121,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 			";
 
 		if (count($_SESSION['btPollOptionCache'][$pollObj->cacheID]) > 1) {
-
-
 			// Find Before After
 
 			$selectKey = $_POST['pollOption']+1;
@@ -138,8 +130,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 				$afterSelected = " selected";
 			}
 
-			foreach ($_SESSION['btPollOptionCache'][$pollObj->cacheID] as $key=>$optionInfo) {
-
+			foreach ($_SESSION['btPollOptionCache'][$pollObj->cacheID] as $key => $optionInfo) {
 				$selectOption = ($key == $selectKey) ? " selected" : "";
 
 				if ($key != $_POST['pollOption']) {
@@ -165,6 +156,5 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 		echo "
 			</table>
 		";
-
 	}
 }

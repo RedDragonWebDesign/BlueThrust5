@@ -22,7 +22,6 @@ require_once("breadcrumb_functions.php");
 
 switch ($_GET['p']) {
 	case "history":
-
 		break;
 	case "thankyou":
 		$webInfoObj->setPage("plugins/donations/include/thankyou.php");

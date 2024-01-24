@@ -34,21 +34,18 @@ if (!$member->hasAccess($consoleObj)) {
 	exit();
 }
 
-foreach ($_POST as $key=>$value) {
+foreach ($_POST as $key => $value) {
 	$_POST[$key] = utf8_decode($_POST[$key]);
 }
 
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info();
 
 
 	// Check Security Code
 
 	if ($_POST['checkadmin'] != constant('ADMIN_KEY')) {
-
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."failban WHERE ipaddress = '".$IP_ADDRESS."' AND pagename = 'edittheme'");
 		$countFails = $result->num_rows;
 		$adminKeyFails = $intMaxAttempts-$countFails;
@@ -93,9 +90,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You entered an invalid admin key.  Please check the config file for the correct admin key.  You have ".$adminKeyFails." more trys before being IP Banned. ".$IP_ADDRESS."<br>";
-
-
-
 	}
 
 	if ($countErrors == 0) {
@@ -106,7 +100,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save header information.<br>";
 		}
 		else {
-
 			$headerCode = $_POST['headerCode'];
 			$headerCode = str_replace("&lt;", "<", $headerCode);
 			$headerCode = str_replace("&gt;", ">", $headerCode);
@@ -118,7 +111,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save header information.<br>";
 			}
-
 		}
 
 		// Update Footer
@@ -128,7 +120,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save footer information.<br>";
 		}
 		else {
-
 			$footerCode = $_POST['footerCode'];
 			$footerCode = str_replace("&lt;", "<", $footerCode);
 			$footerCode = str_replace("&gt;", ">", $footerCode);
@@ -139,7 +130,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save footer information.<br>";
 			}
-
 		}
 
 		// Update Theme CSS
@@ -154,7 +144,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save theme css information.<br>";
 			}
-
 		}
 	}
 	/*
@@ -178,8 +167,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	if ($countErrors == 0) {
 		$submitSuccess = true;
 	}
-
-
 }
 
 
@@ -192,10 +179,8 @@ if ($submitSuccess) {
 			$('#errorDiv').hide();
 		</script>
 	";
-
 }
 else {
-
 	echo "
 		<script type='text/javascript'>
 			$(document).ready(function() {
@@ -214,5 +199,4 @@ else {
 			});
 		</script>
 	";
-
 }

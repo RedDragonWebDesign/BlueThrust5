@@ -43,18 +43,14 @@ function saveGameStats() {
 	global $mysqli, $dbprefix, $memberInfo, $member, $arrGames, $gameObj, $memberGameStatObj, $gameStatsObj;
 	$mysqli->query("DELETE FROM ".$dbprefix."gamestats_members WHERE member_id = '".$memberInfo['member_id']."'");
 	foreach ($arrGames as $gameID) {
-
 		if ($member->playsGame($gameID)) {
-
 			$gameObj->select($gameID);
 
 			$arrGameStats = $gameObj->getAssociateIDs("ORDER BY ordernum");
 			foreach ($arrGameStats as $gameStatsID) {
-
 				$gameStatsObj->select($gameStatsID);
 
 				if ($gameStatsObj->get_info("stattype") == "input") {
-
 					$statType = "statvalue";
 					if ($gameStatsObj->get_info("textinput") == 1) {
 						$statType = "stattext";
@@ -63,15 +59,10 @@ function saveGameStats() {
 					$postVal = "stat_".$gameStatsID;
 
 					$memberGameStatObj->addNew(array("gamestats_id", "member_id", $statType, "dateupdated"), array($gameStatsID, $memberInfo['member_id'], $_POST[$postVal], time()));
-
 				}
-
 			}
-
 		}
-
 	}
-
 }
 
 
@@ -110,9 +101,7 @@ foreach ($arrGames as $gameID) {
 				);
 			}
 		}
-
 	}
-
 }
 
 
@@ -135,14 +124,12 @@ if ($i == 1) {
 	$additionalNote = "<br><br><b><u>NOTE:</u></b> If you have selected which games you play in your profile, there might not be any stats associated with them.";
 }
 else {
-
 	$arrComponents['submit'] = array(
 		"type" => "submit",
 		"attributes" => array("class" => "submitButton formSubmitButton"),
 		"value" => "Save Stats",
 		"sortorder" => $i++
 	);
-
 }
 
 $setupFormArgs = array(

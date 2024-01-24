@@ -14,7 +14,6 @@
 
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
-
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/basicorder.php");
@@ -30,11 +29,8 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 
 	if (!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
-
 		exit();
-
 	}
-
 }
 
 $memberAppObj = new MemberApp($mysqli);
@@ -51,7 +47,6 @@ $setupMemberAppForm = array(
 
 $result = $mysqli->query("SELECT memberapp_id FROM ".$dbprefix."memberapps ORDER BY applydate DESC");
 while ($row = $result->fetch_assoc()) {
-
 	$memberAppObj->select($row['memberapp_id']);
 	$memberAppInfo = $memberAppObj->get_info_filtered();
 
@@ -118,13 +113,11 @@ while ($row = $result->fetch_assoc()) {
 			"html" => "<div class='main formInput'>".$dispCompValue."</div>"
 
 		);
-
 	}
 
 	$setRankOptions = memberAppSetRank();
 
 	if ($memberAppInfo['memberadded'] == 0) {
-
 		$addJS = "";
 		if (count($setRankOptions) > 0) {
 			$addJS = ", $('#newRankID_".$memberAppInfo['memberapp_id']."').val()";
@@ -157,7 +150,6 @@ while ($row = $result->fetch_assoc()) {
 
 
 if ($result->num_rows == 0) {
-
 	echo "
 		<div class='shadedBox' style='width: 400px; margin-top: 50px; margin-left: auto; margin-right: auto'>
 			<p class='main' align='center'>
@@ -165,7 +157,6 @@ if ($result->num_rows == 0) {
 			</p>
 		</div>
 	";
-
 }
 else {
 	$mysqli->query("UPDATE ".$dbprefix."memberapps SET seenstatus = '1' WHERE seenstatus = '0'");

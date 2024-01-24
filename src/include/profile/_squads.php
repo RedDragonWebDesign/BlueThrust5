@@ -12,7 +12,6 @@
 	$dispSquads = "";
 
 	foreach ($arrSquads as $squadID) {
-
 		$squadObj->select($squadID);
 		$squadInfo = $squadObj->get_info_filtered();
 
@@ -25,7 +24,6 @@
 	}
 
 	if ($dispSquads != "") {
-
 		echo "
 			<div class='formTitle' style='text-align: center; margin-top: 20px'>Squads</div>
 			<table class='profileTable' style='border-top-width: 0px'>
@@ -38,6 +36,4 @@
 				</tr>
 			</table>
 		";
-
-
 	}

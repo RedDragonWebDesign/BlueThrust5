@@ -21,7 +21,7 @@ require_once("../../../../classes/forumboard.php");
 // List all subforums function
 
 
-function listSubForums($forumID, $filterOut, $indent=1) {
+function listSubForums($forumID, $filterOut, $indent = 1) {
 	global $mysqli;
 
 	$boardObj = new ForumBoard($mysqli);
@@ -30,7 +30,6 @@ function listSubForums($forumID, $filterOut, $indent=1) {
 	$arrSubForums = $boardObj->getSubForums();
 
 	foreach ($arrSubForums as $value) {
-
 		if ($filterOut != $value) {
 			$boardObj->select($value);
 			$boardInfo = $boardObj->get_info_filtered();
@@ -41,9 +40,7 @@ function listSubForums($forumID, $filterOut, $indent=1) {
 				listSubForums($value, $filterOut, ($indent+1));
 			}
 		}
-
 	}
-
 }
 
 
@@ -78,7 +75,6 @@ if (isset($_POST['bID']) && $boardObj->select($_POST['bID'])) {
 	if ($boardObj->get_info("subforum_id") != 0) {
 		$arrSelectBoard[0] = $boardObj->get_info("subforum_id");
 	}
-
 }
 else {
 	$_POST['bID'] = "";
@@ -87,16 +83,11 @@ else {
 
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
-
 	if ($categoryObj->select($_POST['catID'])) {
-
 		$arrBoards = $categoryObj->getAssociateIDs("AND subforum_id = '0' ORDER BY sortnum", true);
 
 		foreach ($arrBoards as $value) {
-
 			if ($_POST['bID'] != $value) {
-
 				$boardObj->select($value);
 				$boardInfo = $boardObj->get_info_filtered();
 
@@ -109,14 +100,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 				listSubForums($boardInfo['forumboard_id'], $_POST['bID']);
 			}
-
 		}
 
 		if (count($arrBoards) == 0 || ($_POST['bID'] != "" && count($arrBoards) == 1)) {
 			echo "<option value='first'>(first board)</option>";
 		}
-
 	}
-
-
 }

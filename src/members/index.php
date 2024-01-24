@@ -30,13 +30,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 // Start Page
@@ -53,7 +52,6 @@ $LOGIN_FAIL = true;
 $blnShowCategoryList = true;
 
 if ($checkMember) {
-
 	if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$LOGIN_FAIL = false;
 
@@ -79,8 +77,6 @@ if ($checkMember) {
 		$arrFullySortedConsole = array();
 		$consoleObj = new ConsoleOption($mysqli);
 		foreach ($rankPrivileges as $consoleoption) {
-
-
 			$consoleObj->select($consoleoption);
 			$consoleInfo = $consoleObj->get_info();
 			if ($member->hasAccess($consoleObj) && $consoleInfo['hide'] == 0) {
@@ -88,7 +84,6 @@ if ($checkMember) {
 
 				$arrFullySortedConsole[$sortNum][] = $consoleoption;
 			}
-
 		}
 		$consoleCatObj = new ConsoleCategory($mysqli);
 
@@ -98,15 +93,12 @@ if ($checkMember) {
 		$totalConsoleCats = count($arrConsoleCats);
 
 		foreach ($arrConsoleCats as $key => $categoryID) {
-
 			$consoleCatObj->select($categoryID);
 			$consoleCatInfo = $consoleCatObj->get_info_filtered();
 
 			$arrConsoleOptions = $arrFullySortedConsole[$key] ?? [];
 			$categoryCSS = "consoleCategory_clicked";
 			if (count($arrConsoleOptions)) {
-
-
 				$blnShowCategoryList = false;
 				$hideoptions = "";
 				if ($counter > 0) {
@@ -121,7 +113,6 @@ if ($checkMember) {
 							selectCategory('".$counter."');
 						</script>
 					";
-
 				}
 				elseif (isset($_SESSION['lastConsoleCategory']) && $_SESSION['lastConsoleCategory']['catID'] == $categoryID && $_SESSION['lastConsoleCategory']['exptime'] > time()) {
 					$clickCategory = "
@@ -152,7 +143,6 @@ if ($checkMember) {
 				<ul style='padding: 0px; padding-left: 15px'>
 				";
 				foreach ($arrConsoleOptions as $consoleOptionID) {
-
 					$consoleObj->select($consoleOptionID);
 					$consoleInfo = $consoleObj->get_info_filtered();
 					$dispPageTitle = $consoleInfo['pagetitle'];
@@ -161,7 +151,6 @@ if ($checkMember) {
 						$dispConsoleOptions .= $dispPageTitle;
 					}
 					elseif ($consoleInfo['hide'] == 0) {
-
 						$memberAppCID = $consoleObj->findConsoleIDByName("View Member Applications");
 						$diplomacyRequestsCID = $consoleObj->findConsoleIDByName("View Diplomacy Requests");
 						$viewEventInvitationsCID = $consoleObj->findConsoleIDByName("View Event Invitations");
@@ -180,8 +169,6 @@ if ($checkMember) {
 							else {
 								$dispPageTitle .= " (".$totalApps.")";
 							}
-
-
 						}
 
 
@@ -212,10 +199,7 @@ if ($checkMember) {
 					}
 				}
 				$dispConsoleOptions .= "</ul></div></div>";
-
 			}
-
-
 		}
 
 
@@ -244,7 +228,6 @@ if ($checkMember) {
 
 		echo $clickCategory;
 	}
-
 }
 
 
@@ -254,7 +237,6 @@ die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';
 }
 
 if ($blnShowCategoryList) {
-
 	echo "
 		<script type='text/javascript'>
 			$(document).ready(function() {
@@ -263,7 +245,6 @@ if ($blnShowCategoryList) {
 			});
 		</script>
 	";
-
 }
 
 require_once("../themes/".$THEME."/_footer.php");

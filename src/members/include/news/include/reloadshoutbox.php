@@ -45,7 +45,6 @@ $shoutboxObj->intDispHeight = 300;
 $shoutboxObj->blnUpdateShoutbox = true;
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
 	$manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
 
 	$consoleObj->select($manageNewsCID);
@@ -53,11 +52,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	if ($member->hasAccess($consoleObj)) {
 		$shoutboxObj->strEditLink = $MAIN_ROOT."members/console.php?cID=".$manageNewsCID."&newsID=";
 		$shoutboxObj->strDeleteLink = $MAIN_ROOT."members/include/news/include/deleteshoutpost.php";
-
 	}
-
-
-
 }
 
 echo $shoutboxObj->dispShoutbox();

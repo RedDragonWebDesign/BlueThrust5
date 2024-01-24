@@ -35,17 +35,15 @@
 				"medium" => array("width" => "320", "height" => "200"),
 				"large" => array("width" => "640", "height" => "400")
 			);
-
 		}
 
-		public function getGameImageURL($game, $size="small") {
+		public function getGameImageURL($game, $size = "small") {
 			$arrSizes = array_keys($this->arrGameImageSizes);
 			if (!in_array($size, $arrSizes)) {
 				$size = "small";
 			}
 
 			return "http://static-cdn.jtvnw.net/ttv-boxart/".urlencode($game)."-".$this->arrGameImageSizes[$size]['width']."x".$this->arrGameImageSizes[$size]['height'].".jpg";
-
 		}
 
 		public function getStreamInfo($memberID) {
@@ -53,13 +51,12 @@
 			$returnVal = array();
 			$arrMembers = $this->getMembers();
 			if (in_array($memberID, $arrMembers)) {
-
 				$twitchName = $this->getTwitchName($memberID);
 
-				if (substr($twitchName,0,strlen("http://twitch.tv/")) == "http://twitch.tv/") {
+				if (substr($twitchName, 0, strlen("http://twitch.tv/")) == "http://twitch.tv/") {
 					$twitchName = substr($twitchName, strlen("http://twitch.tv/"));
 				}
-				elseif (substr($twitchName,0,strlen("http://www.twitch.tv/")) == "http://www.twitch.tv/") {
+				elseif (substr($twitchName, 0, strlen("http://www.twitch.tv/")) == "http://www.twitch.tv/") {
 					$twitchName = substr($twitchName, strlen("http://www.twitch.tv/"));
 				}
 
@@ -89,10 +86,11 @@
 		}
 
 
-		public function isOnline($memberID, $resetStreamInfo=true) {
+		public function isOnline($memberID, $resetStreamInfo = true) {
 
 			if ($resetStreamInfo) {
-$this->getStreamInfo($memberID); }
+$this->getStreamInfo($memberID);
+            }
 
 			$returnVal = false;
 			if ($this->data['streamInfo']['stream'] != null) {
@@ -126,14 +124,12 @@ $this->getStreamInfo($memberID); }
 			$hooksObj->run("twitch-plugin-display-card");
 
 			$webInfoObj->displayPage();
-
 		}
 
 		public function displayAllMemberCards() {
 
 			$counter = 0;
 			foreach ($this->getMembers() as $memberID) {
-
 				$this->displayMemberCard($memberID);
 				$counter++;
 			}
@@ -147,9 +143,7 @@ $this->getStreamInfo($memberID); }
 			$socialMemberID = array_search($memberID, $this->getMembers());
 
 			if ($this->socialObj->objSocialMember->select($socialMemberID)) {
-
 				$returnVal = $this->socialObj->objSocialMember->get_info_filtered("value");
-
 			}
 
 			return $returnVal;
@@ -162,14 +156,13 @@ $this->getStreamInfo($memberID); }
 				$memberInfo = $this->memberObj->get_info_filtered();
 				$returnVal = in_array($this->memberObj->get_info("member_id"), $this->getMembers());
 				$this->data['memberID'] = $memberInfo['member_id'];
-
 			}
 
 			return $returnVal;
 		}
 
 
-		public function httpRequest($url, $method="GET", $headers=array(), $postfields=array()) {
+		public function httpRequest($url, $method = "GET", $headers = array(), $postfields = array()) {
 
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);
@@ -193,7 +186,6 @@ $this->getStreamInfo($memberID); }
 			$result = curl_exec($ch);
 
 			return $result;
-
 		}
 
 

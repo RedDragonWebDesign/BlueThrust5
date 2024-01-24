@@ -36,7 +36,6 @@ class Squad extends Basic {
 		$this->arrSquadPrivileges = array("postnews", "managenews", "postshoutbox", "manageshoutbox", "addrank", "manageranks", "setrank", "editprofile", "sendinvites", "acceptapps", "removemember");
 
 		$this->checkManageAllSquads();
-
 	}
 
 
@@ -61,14 +60,11 @@ class Squad extends Basic {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squads_members WHERE squad_id = '".$this->intTableKeyValue."'");
 			$returnVal = $result->num_rows;
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -77,18 +73,13 @@ class Squad extends Basic {
 		$returnVal = array();
 
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squads_members WHERE squad_id = '".$this->intTableKeyValue."'");
 			while ($row = $result->fetch_assoc()) {
-
 				$returnVal[] = $row['member_id'];
-
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -99,14 +90,11 @@ class Squad extends Basic {
 		$returnVal = array();
 
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squads_members WHERE squad_id = '".$this->intTableKeyValue."'");
 			while ($row = $result->fetch_assoc()) {
-
 				$this->objSquadRank->select($row['squadrank_id']);
 
 				$returnVal[$row['member_id']] = $this->objSquadRank->get_info("sortnum");
-
 			}
 
 			asort($returnVal);
@@ -114,7 +102,6 @@ class Squad extends Basic {
 		}
 
 		return $returnArr;
-
 	}
 
 
@@ -124,18 +111,13 @@ class Squad extends Basic {
 		$returnVal = array();
 
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squadinvites WHERE squad_id = '".$this->intTableKeyValue."' AND status = '0'");
 			while ($row = $result->fetch_assoc()) {
-
 				$returnVal[] = $row['receiver_id'];
-
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -144,18 +126,13 @@ class Squad extends Basic {
 		$returnVal = array();
 
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squadapps WHERE squad_id = '".$this->intTableKeyValue."' AND status = '0'");
 			while ($row = $result->fetch_assoc()) {
-
 				$returnVal[] = $row['member_id'];
-
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 	/**
@@ -189,14 +166,11 @@ class Squad extends Basic {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squadranks WHERE squad_id = '".$this->intTableKeyValue."'");
 			$returnVal = $result->num_rows;
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -206,18 +180,13 @@ class Squad extends Basic {
 		$returnVal = array();
 
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squadranks WHERE squad_id = '".$this->intTableKeyValue."' ORDER BY sortnum");
 			while ($row = $result->fetch_assoc()) {
-
 				$returnVal[] = $row['squadrank_id'];
-
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 	public function getFounderRankID() {
@@ -225,17 +194,14 @@ class Squad extends Basic {
 		$returnVal = false;
 
 		if ($this->intTableKeyValue != "") {
-
 			$founderID = $this->get_info("member_id");
 			$founderSquadMemberID = $this->getSquadMemberID($founderID);
 
 			$this->objSquadMember->select($founderSquadMemberID);
 			$returnVal = $this->objSquadMember->get_info("squadrank_id");
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -250,14 +216,12 @@ class Squad extends Basic {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue && is_numeric($memberID)) {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squads_members WHERE squad_id = '".$this->intTableKeyValue."' AND member_id = '".$memberID."'");
 
 			if ($result->num_rows == 1) {
 				$row = $result->fetch_array();
 				$returnVal = $row['squadmember_id'];
 			}
-
 		}
 
 		return $returnVal;
@@ -271,16 +235,13 @@ class Squad extends Basic {
 	public function getNewsPostList($newsType) {
 		$returnArr = array();
 		if ($this->intTableKeyValue != "" && is_numeric($newsType) && ($newsType >= 1 && $newsType <= 3)) {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squadnews WHERE squad_id = '".$this->intTableKeyValue."' AND newstype = '".$newsType."'");
 			while ($row = $result->fetch_assoc()) {
 				$returnArr[] = $row['squadnews_id'];
 			}
-
 		}
 
 		return $returnArr;
-
 	}
 
 
@@ -290,12 +251,9 @@ class Squad extends Basic {
 		$intSquadMemberID = $this->getSquadMemberID($memberID);
 
 		if ($this->blnManageAllSquads) {
-
 			$returnVal = true;
-
 		}
 		elseif ($intSquadMemberID !== false && in_array($privName, $this->arrSquadPrivileges)) {
-
 			$this->objSquadMember->select($intSquadMemberID);
 			$squadMemberRankID = $this->objSquadMember->get_info("squadrank_id");
 
@@ -303,14 +261,11 @@ class Squad extends Basic {
 			$squadRankInfo = $this->objSquadRank->get_info();
 
 			if ($squadRankInfo[$privName] == 1) {
-
 				$returnVal = true;
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -332,12 +287,10 @@ class Squad extends Basic {
 				if ($info['logourl'] != "" && file_exists(BASE_DIRECTORY.$info['logourl'])) {
 					deleteFile(BASE_DIRECTORY.$info['logourl']);
 				}
-
 			}
 			else {
 				$this->MySQL->displayError("basic.php");
 			}
-
 		}
 
 		return $returnVal;

@@ -32,7 +32,6 @@ $dispError = "";
 $countErrors = 0;
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Folder Name
 	if (trim($_POST['foldername']) == "") {
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Your folder name may not be blank.";
@@ -53,7 +52,6 @@ if ( ! empty($_POST['submit']) ) {
 		$arrValues = array($memberInfo['member_id'], $_POST['foldername'], $intNewOrderSpot);
 
 		if ($pmFolderObj->addNew($arrColumns, $arrValues)) {
-
 			$folderInfo = $pmFolderObj->get_info_filtered();
 
 			echo "
@@ -74,7 +72,6 @@ if ( ! empty($_POST['submit']) ) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save folder to the database.  Please contact the website administrator.<br>";
 		}
-
 	}
 
 
@@ -83,12 +80,9 @@ if ( ! empty($_POST['submit']) ) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
-
 }
 
 if ( empty($_POST['submit']) ) {
-
 	$arrFolders = $pmFolderObj->listFolders($memberInfo['member_id']);
 	$folderOptions = "";
 	foreach ($arrFolders as $folderID => $folderName) {

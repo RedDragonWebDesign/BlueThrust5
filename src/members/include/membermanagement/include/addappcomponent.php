@@ -27,12 +27,9 @@ $appComponentObj = new BasicOrder($mysqli, "app_components", "appcomponent_id");
 
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
 	require_once(BASE_DIRECTORY."members/include/membermanagement/include/appcomponent_form.php");
 
 	if ($_POST['saveComponent']) {
-
-
 		// Check Component Name
 
 		if (trim($_POST['newComponentName']) == "") {
@@ -46,8 +43,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 	if (count($addAppForm->errors) == 0) {
-
-
 			if ($appComponentObj->getHighestOrderNum() == "") {
 				$componentOrderNum = $appComponentObj->validateOrder("first", "before");
 			}
@@ -64,14 +59,12 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$arrValues = array($_POST['newComponentName'], $_POST['newComponentType'], $componentOrderNum, $_POST['newComponentRequired'], $_POST['newComponentTooltip']);
 
 			if ($appComponentObj->addNew($arrColumns, $arrValues)) {
-
 				if ($_POST['newComponentType'] == "select" || $_POST['newComponentType'] == "multiselect") {
 					$appComponentSelectOptionObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
 					$newComponentID = $appComponentObj->get_info("appcomponent_id");
 					foreach ($_SESSION['btAppComponent']['cOptions'] as $optionValue) {
 						$appComponentSelectOptionObj->addNew(array("appcomponent_id", "componentvalue"), array($newComponentID, $optionValue));
 					}
-
 				}
 				elseif ($_POST['newComponentType'] == "profile") {
 					$appComponentSelectOptionObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
@@ -124,14 +117,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					</script>
 					
 				";
-
-
 			}
 			else {
 				$addAppForm->errors[] = "nable to save information to the database.  Please contact the website administrator.";
 			}
-
-		}
+    }
 
 
 		if (count($addAppForm->errors) == 0) {
@@ -145,9 +135,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				</script>
 			";
 		}
-
-
-
 	}
 
 	if (!$_POST['saveComponent']) {
@@ -161,6 +148,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$addAppForm->show();
 
 	echo "</div>";
-
-
 }

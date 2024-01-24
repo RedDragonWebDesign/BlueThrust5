@@ -26,14 +26,12 @@ $pID = "manageranks";
 $squadObj = new Squad($mysqli);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($member->get_info("member_id"), $pID)) {
-
 	$squadInfo = $squadObj->get_info_filtered();
 	$memberInfo = $member->get_info_filtered();
 	$intFounderRankID = $squadObj->getFounderRankID();
 
 
 	if ($squadObj->objSquadRank->select($_POST['rID']) && $_POST['rID'] != $intFounderRankID) {
-
 		$squadRankInfo = $squadObj->objSquadRank->get_info_filtered();
 
 
@@ -73,24 +71,16 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			";
 		}
 		elseif ($totalMembers == 0 && $_POST['confirm'] == 1) {
-
 			$squadObj->objSquadRank->delete();
 
 			require_once("ranklist.php");
-
 		}
 		else {
-
 			echo "
 				<p align='center' class='main'>
 					Are you sure you want to delete the rank: <b>".$squadRankInfo['name']."</b>?
 				</p>
 			";
-
 		}
-
 	}
-
-
-
 }

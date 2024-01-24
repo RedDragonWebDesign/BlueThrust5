@@ -41,7 +41,6 @@ if ($blnCheckForFacebook) {
 	$fbInfo = $fbObj->get_info_filtered();
 	$fbID = $fbInfo['fbconnect_id'];
 	if ((time()-$fbInfo['lastupdate']) > 1800) {
-
 		$fbObj->accessToken = $fbInfo['access_token'];
 		$fbInfo = $fbObj->getFBInfo();
 
@@ -69,7 +68,6 @@ if ($blnCheckForFacebook) {
 		$fbObj->select($fbID);
 		$fbObj->update($arrColumns, $arrValues);
 		$fbInfo = $fbObj->get_info_filtered();
-
 	}
 
 	echo "
@@ -160,10 +158,8 @@ if ($blnCheckForFacebook) {
 		</script>
 	
 	";
-
 }
 elseif (!$blnCheckForFacebook && isset($_GET['code'])) {
-
 	$fbObj->tokenNonce = $_SESSION['btFacebookNonce'];
 
 	$arrURLInfo = parse_url($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
@@ -190,7 +186,6 @@ elseif (!$blnCheckForFacebook && isset($_GET['code'])) {
 		";
 	}
 	else {
-
 		echo "
 		
 			<div class='shadedBox' style='margin-left: auto; margin-right: auto; width: 50%'>
@@ -201,9 +196,7 @@ elseif (!$blnCheckForFacebook && isset($_GET['code'])) {
 			</div>
 		
 		";
-
 	}
-
 }
 elseif (!$blnCheckForFacebook && isset($_GET['error_reason'])) {
 	echo "
@@ -214,7 +207,6 @@ elseif (!$blnCheckForFacebook && isset($_GET['error_reason'])) {
 	";
 }
 elseif (!$blnCheckForFacebook) {
-
 	$loginURL = $fbObj->getFBConnectLink($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 	$_SESSION['btFacebookNonce'] = $fbObj->tokenNonce;
 
@@ -225,5 +217,4 @@ elseif (!$blnCheckForFacebook) {
 			window.location = '".$loginURL."';
 		</script>
 	";
-
 }

@@ -30,13 +30,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 $downloadCatInfo = $downloadCatObj->get_info_filtered();
@@ -76,7 +75,7 @@ foreach ($arrDownloads as $dlID) {
 		$dispFileSize = round($dispFileSize, 2)."KB";
 	}
 	else {
-		$dispFileSize = round(($dispFileSize/1024),2)."MB";
+		$dispFileSize = round(($dispFileSize/1024), 2)."MB";
 	}
 
 	$addS = ($downloadInfo['downloadcount'] == 1) ? "" : "s";
@@ -103,9 +102,7 @@ foreach ($arrDownloads as $dlID) {
 }
 
 if (count($arrDownloads) == 0) {
-
 	echo "<div class='shadedBox' style='width: 50%; margin: 20px auto'><p align='center' class='main'><i>No downloads added to ".$downloadCatInfo['name']." yet!</i></p></div>";
-
 }
 
 require_once($prevFolder."themes/".$THEME."/_footer.php");

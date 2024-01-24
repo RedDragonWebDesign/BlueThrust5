@@ -17,22 +17,18 @@
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_category ORDER BY section, sortnum");
 	while ($catInfo = $result->fetch_assoc()) {
-
-
-		foreach ($catInfo as $key=>$value) {
+		foreach ($catInfo as $key => $value) {
 			$catInfo[$key] = $mysqli->real_escape_string($value);
 		}
 
 		$saveMenuSQL .= "INSERT INTO `".$dbprefix."menu_category` (`menucategory_id`, `section`, `name`, `sortnum`, `headertype`, `headercode`, `accesstype`, `hide`) VALUES ('".$catInfo['menucategory_id']."', '".$catInfo['section']."', '".$catInfo['name']."', '".$catInfo['sortnum']."', '".$catInfo['headertype']."', '".$catInfo['headercode']."', '".$catInfo['accesstype']."', '".$catInfo['hide']."');";
 		$saveMenuSQL .= "\n";
-
 	}
 
 	$saveMenuSQL .= "\n";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_item ORDER BY menucategory_id, sortnum");
 	while ($row = $result->fetch_assoc()) {
-
-		foreach ($row as $key=>$value) {
+		foreach ($row as $key => $value) {
 			$row[$key] = $mysqli->real_escape_string($value);
 		}
 
@@ -43,8 +39,7 @@
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_customblock");
 	while ($row = $result->fetch_assoc()) {
-
-		foreach ($row as $key=>$value) {
+		foreach ($row as $key => $value) {
 			$row[$key] = $mysqli->real_escape_string($value);
 		}
 
@@ -55,8 +50,7 @@
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_custompage");
 	while ($row = $result->fetch_assoc()) {
-
-		foreach ($row as $key=>$value) {
+		foreach ($row as $key => $value) {
 			$row[$key] = $mysqli->real_escape_string($value);
 		}
 
@@ -67,8 +61,7 @@
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_image");
 	while ($row = $result->fetch_assoc()) {
-
-		foreach ($row as $key=>$value) {
+		foreach ($row as $key => $value) {
 			$row[$key] = $mysqli->real_escape_string($value);
 		}
 
@@ -79,8 +72,7 @@
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_link");
 	while ($row = $result->fetch_assoc()) {
-
-		foreach ($row as $key=>$value) {
+		foreach ($row as $key => $value) {
 			$row[$key] = $mysqli->real_escape_string($value);
 		}
 
@@ -91,8 +83,7 @@
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_shoutbox");
 	while ($row = $result->fetch_assoc()) {
-
-		foreach ($row as $key=>$value) {
+		foreach ($row as $key => $value) {
 			$row[$key] = $mysqli->real_escape_string($value);
 		}
 

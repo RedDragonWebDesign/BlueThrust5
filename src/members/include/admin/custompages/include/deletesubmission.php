@@ -30,12 +30,10 @@ $customFormPageObj = new CustomForm($mysqli);
 
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $customFormPageObj->objSubmission->select($_POST['subID'])) {
-
 	$submissionID = $customFormPageObj->objSubmission->get_info("submission_id");
 	$mysqli->query("DELETE FROM ".$dbprefix."customform_values WHERE submission_id = '".$submissionID."'");
 
 	$customFormPageObj->objSubmission->delete();
-
 }
 
 

@@ -28,21 +28,15 @@ $cID = $consoleObj->findConsoleIDByName("Member Application");
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
 	if ($_POST['action'] == "add") {
-
 		if (trim($_POST['newOptionValue']) != "") {
-
 			$tempOptionArr = $_SESSION['btAppComponent']['cOptions'];
 			$tempOptionArr[] = $_POST['newOptionValue'];
 			asort($tempOptionArr);
 			$_SESSION['btAppComponent']['cOptions'] = $tempOptionArr;
-
 		}
-
 	}
 	elseif ($_POST['action'] == "delete") {
-
 		if (is_numeric($_POST['deleteOptionKey'])) {
 			$tempOptionArr = $_SESSION['btAppComponent']['cOptions'];
 
@@ -51,14 +45,12 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			asort($tempOptionArr);
 
 			$_SESSION['btAppComponent']['cOptions'] = $tempOptionArr;
-
 		}
 	}
 
 
 	$counter = 1;
 	foreach ($_SESSION['btAppComponent']['cOptions'] as $key => $optionValue) {
-
 		echo "<div style='float: left'>".$counter.". ".filterText($optionValue)."</div><div style='float: right; padding-right: 30px'>- <a href='javascript:void(0)' onclick=\"deleteOptionValue('".$key."')\">Delete</a></div><div style='clear: both'></div>";
 
 		$counter++;
@@ -67,6 +59,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	if ($counter == 1) {
 		echo "<i>None</i>";
 	}
-
-
 }

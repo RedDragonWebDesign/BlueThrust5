@@ -39,7 +39,6 @@ if (isset($_GET['menuID']) && $menuItemObj->select($_GET['menuID']) && $_GET['ac
 	require_once("include/admin/managemenu/edit_item.php");
 }
 else {
-
 	echo "
 		<table class='formTable'>
 			<tr>
@@ -97,7 +96,4 @@ else {
 		</script>
 		
 	";
-
-
-
 }

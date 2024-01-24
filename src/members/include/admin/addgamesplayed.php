@@ -30,7 +30,6 @@ $cID = $_GET['cID'];
 $gameObj = new Game($mysqli);
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Game Name
 	$checkGameName = trim($_POST['gamename']);
 	if ($checkGameName == "") {
@@ -41,33 +40,33 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check Image Height
 
-	if (!is_numeric($_POST['gameimageheight']) AND trim($_POST['gameimageheight']) != "") {
+	if (!is_numeric($_POST['gameimageheight']) and trim($_POST['gameimageheight']) != "") {
 		$countErrors++;
 		$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a numeric value.<br>";
 	}
-	elseif (is_numeric($_POST['gameimageheight']) AND $_POST['gameimageheight'] <= 0) {
+	elseif (is_numeric($_POST['gameimageheight']) and $_POST['gameimageheight'] <= 0) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a value greater than 0.<br>";
 	}
 
-	if ($_FILES['gameimagefile']['name'] == "" AND (trim($_POST['gameimageheight']) == "" OR $_POST['gameimageheight'] <= 0)) {
+	if ($_FILES['gameimagefile']['name'] == "" and (trim($_POST['gameimageheight']) == "" or $_POST['gameimageheight'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must supply an image height for images that aren't uploaded.<br>";
 	}
 
 	// Check Image Width
 
-	if (!is_numeric($_POST['gameimagewidth']) AND trim($_POST['gameimagewidth']) != "") {
+	if (!is_numeric($_POST['gameimagewidth']) and trim($_POST['gameimagewidth']) != "") {
 		$countErrors++;
 		$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a numeric value.<br>";
 	}
-	elseif (is_numeric($_POST['gameimagewidth']) AND $_POST['gameimagewidth'] <= 0) {
+	elseif (is_numeric($_POST['gameimagewidth']) and $_POST['gameimagewidth'] <= 0) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a value greater than 0.<br>";
 	}
 
 
-	if ($_FILES['gameimagefile']['name'] == "" AND (trim($_POST['gameimagewidth']) == "" OR $_POST['gameimagewidth'] <= 0)) {
+	if ($_FILES['gameimagefile']['name'] == "" and (trim($_POST['gameimagewidth']) == "" or $_POST['gameimagewidth'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must supply an image width for images that aren't uploaded.<br>";
 	}
@@ -77,12 +76,11 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check Display Order
 
-	if ($_POST['beforeafter'] != "before" AND $_POST['beforeafter'] != "after") {
+	if ($_POST['beforeafter'] != "before" and $_POST['beforeafter'] != "after") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The selected an invalid display order. (before/after)<br>";
 	}
 	elseif ($_POST['gameorder'] == "first") {
-
 		// Check if this is really the first game being added
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."gamesplayed ORDER BY ordernum DESC");
 		$num_rows = $result->num_rows;
@@ -94,10 +92,8 @@ if ( ! empty($_POST['submit']) ) {
 		else {
 			$intGameOrderNum = 1;
 		}
-
 	}
 	elseif ($_POST['gameorder'] != "first") {
-
 		// Check if its a real game selected
 		if (!$gameObj->select($_POST['gameorder'])) {
 			$countErrors++;
@@ -111,9 +107,7 @@ if ( ! empty($_POST['submit']) ) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The selected an invalid display order. (game position)<br>";
 			}
-
 		}
-
 	}
 
 
@@ -122,7 +116,6 @@ if ( ! empty($_POST['submit']) ) {
 	// No Errors! Check game image, if it needs to be uploaded, try uploading.
 
 		if ($_FILES['gameimagefile']['name'] != "") {
-
 			$btUploadObj = new BTUpload($_FILES['gameimagefile'], "game_", "../images/gamesplayed/", array(".jpg", ".png", ".bmp", ".gif"));
 
 			if (!$btUploadObj->uploadFile()) {
@@ -132,7 +125,6 @@ if ( ! empty($_POST['submit']) ) {
 			else {
 				$gameImageURL = "images/gamesplayed/".$btUploadObj->getUploadedFileName();
 			}
-
 		}
 		elseif (trim($_POST['gameimageurl']) != "") {
 			$gameImageURL = $_POST['gameimageurl'];
@@ -141,7 +133,6 @@ if ( ! empty($_POST['submit']) ) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must include an image for the game.<br>";
 		}
-
 	}
 
 
@@ -167,7 +158,6 @@ if ( ! empty($_POST['submit']) ) {
 			// First insert all stats so we can get their actual database ids
 			// After we add them, save the info array to a separate array
 			foreach ($_SESSION['btStatCache'] as $key => $statInfo) {
-
 				$arrValues = array($statInfo['statName'], $statInfo['statType'], $key, $statInfo['rounding'], $newGameInfo['gamesplayed_id'], $statInfo['hideStat'], $statInfo['textInput']);
 
 				if (!$newStat->addNew($arrColumns, $arrValues)) {
@@ -190,7 +180,6 @@ if ( ! empty($_POST['submit']) ) {
 				$arrColumns = array("firststat_id", "secondstat_id", "calcop");
 				foreach ($arrSavedStats as $key => $statInfo) {
 					if ($statInfo['stattype'] == "calculate") {
-
 						$intFirstStatOrder = $_SESSION['btStatCache'][$key]['firstStat'];
 						$intFirstStatID = $arrSavedStats[$intFirstStatOrder]['gamestats_id'];
 
@@ -205,8 +194,6 @@ if ( ! empty($_POST['submit']) ) {
 						$newStat->update($arrColumns, $arrValues);
 					}
 				}
-
-
 			}
 			else {
 				$showErrorMessage = "<br><br>However, the following stats were unable to be saved:<br><br>".$dispError;
@@ -225,23 +212,16 @@ if ( ! empty($_POST['submit']) ) {
 			popupDialog('Add New Game', '".$MAIN_ROOT."members', 'successBox');
 			</script>
 			";
-
-
 		}
 		else {
-
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to add new game.  Please try again.<br>";
 			$_POST['submit'] = false;
-
 		}
-
 	}
 	else {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
-
 }
 
 
@@ -271,7 +251,6 @@ if ( empty($_POST['submit']) ) {
 		$counter++;
 		$dispName = filterText($row['name']);
 		$gameOrderOptions .= "<option value='".$row['gamesplayed_id']."'>".$dispName."</option>";
-
 	}
 
 	if ($counter == 0) {
@@ -485,6 +464,4 @@ if ( empty($_POST['submit']) ) {
 		
 	</script>
 	";
-
-
 }

@@ -24,13 +24,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -69,7 +68,6 @@ $dispBreadCrumb
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
 	$twitterObj = new Twitter($mysqli);
 	$memberInfo = $member->get_info_filtered();
 
@@ -87,8 +85,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$dispError = "";
 
 	if ( ! empty($_POST['submit']) ) {
-
-
 		// Check Display Order (before/after)
 		if ($_POST['beforeafter'] != "before" && $_POST['beforeafter'] != "after") {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order (before/after).<br>";
@@ -103,7 +99,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		}
 
 		if ($countErrors == 0) {
-
 			$arrAPIKey = array(
 				'consumerKey' => $_POST['consumerkey'],
 				'consumerSecret' => $_POST['consumersecret'],
@@ -123,7 +118,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			}
 
 			if ($pluginObj->update(array("apikey"), array($jsonAPIKey)) && $pluginObj->pluginPage->update(array("sortnum"), array($setSortNum))) {
-
 				echo "
 				<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -143,20 +137,14 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 			}
-
-
-
 		}
 
 		if ($countErrors > 0) {
 			$_POST['submit'] = false;
 		}
-
-
 	}
 
 	if ( empty($_POST['submit']) ) {
-
 		$selectAfter = "";
 		if (count($arrProfileModules) == $pluginPageInfo[0]['sortnum']) {
 			$selectAfter = " selected";
@@ -171,7 +159,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 		$arrTwitterAPIKeys = array("Consumer Key"=>$twitterObj->getConsumerKey(), "Consumer Secret"=>$twitterObj->getConsumerSecret(), "Widget ID"=>$twitterObj->widgetID);
 
-		foreach ($arrTwitterAPIKeys as $key=>$value) {
+		foreach ($arrTwitterAPIKeys as $key => $value) {
 			if ($value == "") {
 				$dispNote .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> ".$key."<br>";
 			}
@@ -249,8 +237,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 								<select name='displayorder' class='textBox'>
 								";
 
-		foreach ($arrProfileModules as $key=>$module) {
-
+		foreach ($arrProfileModules as $key => $module) {
 			$selectKey = "";
 			if ($pluginPageInfo[0]['sortnum'] == $key) {
 				$selectKey = " selected";
@@ -277,15 +264,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."'>Return to Plugin Manager</a></p>
 	
 		";
-
 	}
-
-
 }
 else {
-
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
-
 }
 
 

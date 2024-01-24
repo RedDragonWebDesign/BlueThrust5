@@ -26,14 +26,9 @@ $cID = $consoleObj->findConsoleIDByName("Manage Menu Categories");
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($member->hasAccess($consoleObj) && $menuCatObj->select($_POST['mcID'])) {
-
-
-
 		$menuCatObj->move($_POST['cDir']);
 
 		require_once("include/menucategorylist.php");
@@ -56,6 +51,4 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		";
 		*/
 	}
-
-
 }

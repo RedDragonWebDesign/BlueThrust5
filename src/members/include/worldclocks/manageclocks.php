@@ -23,7 +23,6 @@
 		if (!$member->hasAccess($consoleObj)) {
 			exit();
 		}
-
 	}
 
 

@@ -53,8 +53,6 @@ else {
 
 $result = $mysqli->query($query);
 while ($row = $result->fetch_assoc()) {
-
-
 	$row = filterArray($row);
 
 	$arrPositionOptions['invitemembers'] = "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=InviteMembers'>Invite Members</a><br>";
@@ -106,11 +104,8 @@ while ($row = $result->fetch_assoc()) {
 		";
 
 		if ($row['startdate'] < time()) {
-
 			$dispEventOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=SetAttendance'>Set Attendance</a><br>";
-
 		}
-
 	}
 	else {
 		// Invited Member
@@ -120,29 +115,24 @@ while ($row = $result->fetch_assoc()) {
 		$eventMemberInfo = $eventObj->objEventMember->get_info_filtered();
 
 		if ($eventMemberInfo['status'] == 1) {
-
 			if ($eventMemberInfo['position_id'] == 0 && $row['invitepermission'] == 1) {
 				$dispEventOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=InviteMembers'>Invite Members</a><br>";
 			}
 			elseif ($eventMemberInfo['position_id'] != 0 && $eventObj->objEventPosition->select($eventMemberInfo['position_id']) && $eventObj->objEventPosition->get_info("event_id") == $row['event_id']) {
 				$eventPositionInfo = $eventObj->objEventPosition->get_info();
 				foreach ($arrPositionOptions as $key => $value) {
-
 					if ($eventPositionInfo[$key] == 1 && $key != "attendenceconfirm") {
 						$dispEventOptions .= $value;
 					}
 					elseif ($eventPositionInfo[$key] == 1 && $key == "attendenceconfirm" && $eventPositionInfo['manageinvites'] == 0) {
 						$dispEventOptions .= $value;
 					}
-
-
 				}
 
 				// Member has access to the attendenceconfirm privilege
 				if ($row['startdate'] < time() && $eventPositionInfo['attendenceconfirm'] == 1) {
 					$dispEventOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$row['event_id']."&pID=SetAttendance'>Set Attendance</a><br>";
 				}
-
 			}
 		}
 
@@ -153,8 +143,6 @@ while ($row = $result->fetch_assoc()) {
 	$dispEventOptions .= "
 	<b>&middot;</b> <a href='".$MAIN_ROOT."events/info.php?eID=".$row['event_id']."'>View Event Page</a>
 	</div></div>";
-
-
 }
 
 if ($result->num_rows > 0) {
@@ -168,22 +156,18 @@ if ($result->num_rows > 0) {
 	
 		<div style='clear:both; height: 30px; margin-top: 20px'></div>
 	";
-
 }
 
 if ($clickCounter != 0) {
-
 	echo "
 	<script type='text/javascript'>
 	selectCategory('".$clickCounter."');
 	</script>
 	";
-
 }
 
 
 if ($result->num_rows == 0) {
-
 	echo "
 		<div class='shadedBox' style='width: 400px; margin-bottom: 50px; margin-left: auto; margin-right: auto;'>
 			<p align='center' class='main'>
@@ -191,8 +175,6 @@ if ($result->num_rows == 0) {
 			</p>
 		</div>
 	";
-
-
 }
 
 ?>

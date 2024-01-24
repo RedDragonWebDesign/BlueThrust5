@@ -26,13 +26,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 if (!$eventObj->select($_GET['eID'])) {
@@ -84,17 +83,14 @@ if (constant("LOGGED_IN") && $member->select($_SESSION['btUsername'])) {
 		";
 		exit();
 	}
-
 }
 elseif ($eventInfo['visibility'] != 0) {
-
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."events';
 		</script>
 	";
 	exit();
-
 }
 
 $breadcrumbObj->setTitle($eventInfo['title']);
@@ -150,8 +146,7 @@ echo "
 
 	$counter = 1;
 	$currentAttendStatus = "";
-	for ($x=0;$x<=1;$x++) {
-
+	for ($x=0; $x<=1; $x++) {
 		$result = $mysqli->query($query[$x]);
 		while ($row = $result->fetch_assoc()) {
 			if ($eventPgMemberObj->select($row['member_id'])) {
@@ -190,7 +185,6 @@ echo "
 					}
 				}
 				else {
-
 					$dispAttendStatus = "";
 					switch ($eventMemInfo['attendconfirm_admin']) {
 						case 1:
@@ -205,7 +199,6 @@ echo "
 						default:
 							$dispAttendStatus = "Pending Confirmation";
 					}
-
 				}
 
 				if ($x == 1 && $currentAttendStatus != $dispAttendStatus) {
@@ -241,13 +234,13 @@ echo "
 							";
 
 				if ($x == 0) {
-echo "<b>Position:</b> ".$dispPositionName."<br><i>".$dispAttendStatus."</i>"; }
+echo "<b>Position:</b> ".$dispPositionName."<br><i>".$dispAttendStatus."</i>";
+                }
 
 				echo "
 					</td>
 					</tr>
 				";
-
 			}
 		}
 	}
@@ -257,7 +250,6 @@ echo "<b>Position:</b> ".$dispPositionName."<br><i>".$dispAttendStatus."</i>"; }
 	$arrEventPositions = $eventObj->getPositions();
 	$x = 1;
 	foreach ($arrEventPositions as $value) {
-
 		$eventObj->objEventPosition->select($value);
 
 
@@ -391,13 +383,11 @@ echo "
 						}
 				
 				";
-
 			}
 
 
 			$dispManageMessagesJS = "";
 			if ($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) {
-
 				$dispManageMessagesJS = "
 				
 					function deleteMessage(intMessageID, strMessageType) {
@@ -425,7 +415,6 @@ echo "
 					}
 				
 				";
-
 			}
 
 
@@ -444,7 +433,6 @@ echo "
 
 				$result = $mysqli->query("SELECT * FROM ".$dbprefix."eventmessages WHERE event_id = '".$eventInfo['event_id']."' ORDER BY dateposted DESC");
 				while ($row = $result->fetch_assoc()) {
-
 					$eventPgMemberObj->select($row['member_id']);
 					$memInfo = $eventPgMemberObj->get_info_filtered();
 
@@ -507,7 +495,6 @@ echo "
 									</li>
 									
 									";
-
 								}
 							}
 
@@ -533,7 +520,6 @@ echo "
 					else {
 						echo "<li class='dashedLine'></li>";
 					}
-
 				}
 
 

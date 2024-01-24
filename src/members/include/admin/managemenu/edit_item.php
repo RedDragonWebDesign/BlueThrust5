@@ -185,7 +185,6 @@ foreach ($itemTypeInclude as $key => $itemTypeInfo) {
 
 
 		$arrExtraComponents = ${$itemTypeInfo['array']};
-
 	}
 }
 
@@ -483,9 +482,7 @@ $afterJS = "
 	";
 
 	if ($menuItemInfo['itemtype'] == "customcode") {
-
 		$afterJS .= "$('#menuCodeEditor_code').val(menuCodeEditor.getValue());";
-
 	}
 
 
@@ -495,7 +492,6 @@ $afterJS .= "
 });";
 
 if ($menuItemInfo['itemtype'] == "shoutbox") {
-
 	$afterJS .= "
 	
 		$('#shoutBoxWidthPercent').change(function() {
@@ -511,7 +507,6 @@ if ($menuItemInfo['itemtype'] == "shoutbox") {
 		
 		$('#shoutBoxWidthPercent').change();
 	";
-
 }
 
 

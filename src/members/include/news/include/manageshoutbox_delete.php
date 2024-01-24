@@ -36,7 +36,6 @@ $newsObj = new News($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
 	$memberInfo = $member->get_info_filtered();
 
 	$arrPostIDs = json_decode($_POST['deletePosts'], true);
@@ -54,5 +53,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 	define("SHOW_SHOUTBOXLIST", true);
 	require_once("manageshoutbox_list.php");
-
 }

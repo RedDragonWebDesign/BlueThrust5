@@ -16,15 +16,13 @@
 		protected $data = array();
 
 
-		function addHook($hookName, $function, $args="") {
+		function addHook($hookName, $function, $args = "") {
 
 			$this->data[$hookName][] = array("function" => $function, "args" => $args);
-
 		}
 
 		function removeHook($hookName, $function) {
 			foreach ($this->data[$hookName] as $key => $hookInfo) {
-
 				if ($hookInfo['function'] == $function) {
 					unset($this->data[$hookName][$key]);
 				}
@@ -45,9 +43,7 @@
 						call_user_func_array($hookInfo['function'], $hookInfo['args']);
 					}
 				}
-
 			}
-
 		}
 
 

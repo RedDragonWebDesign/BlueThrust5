@@ -6,17 +6,15 @@
 		public function __construct($sqlConnection) {
 
 			parent::__construct("bluegrid", $sqlConnection);
-
 		}
 
 
-		public function displayMenuCategory($loc="top") {
+		public function displayMenuCategory($loc = "top") {
 			// Placeholder function
 
 			$menuCatInfo = $this->menuCatObj->get_info();
 
 			if ($loc == "top" && $this->intMenuSection != 2) {
-
 				if ($menuCatInfo['headertype'] == "image") {
 					echo "<img src='".MAIN_ROOT.$menuCatInfo['headercode']."'>";
 				}
@@ -26,21 +24,16 @@
 				}
 
 				echo "<div class='menuItems'>";
-
 			}
 			elseif ($this->intMenuSection != 2) {
-
 				echo "</div>";
-
 			}
-
 		}
 
 
 		public function displayLink() {
 
 			if ($this->intMenuSection == 2) {
-
 				$menuLinkInfo = $this->menuItemObj->objLink->get_info();
 				$checkURL = parse_url($menuLinkInfo['link']);
 
@@ -49,20 +42,15 @@
 				}
 
 				echo "<div class='topMenuItem'><a href='".$menuLinkInfo['link']."' target='".$menuLinkInfo['linktarget']."'>".strtoupper($this->menuItemInfo['name'])."</a></div>";
-
 			}
 			else {
-
 				parent::displayLink();
-
 			}
-
 		}
 
 		public function displayImage() {
 
 			if ($this->intMenuSection == 2) {
-
 				$menuImageInfo = $this->menuItemObj->objImage->get_info();
 				$checkURL = parse_url($menuItemInfo['imageurl']);
 				if (!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
@@ -77,7 +65,6 @@
 				";
 
 				if ($menuImageInfo['link'] != "") {
-
 					$checkURL = parse_url($menuImageInfo['link']);
 					if (!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
 						$menuImageInfo['link'] = MAIN_ROOT.$menuImageInfo['link'];
@@ -96,12 +83,10 @@
 				echo "
 					</div>
 				";
-
 			}
 			else {
 				parent::displayImage();
 			}
-
 		}
 
 
@@ -131,7 +116,6 @@
 					</div>
 				</form>
 			";
-
 		}
 
 		public function displayLoggedIn() {

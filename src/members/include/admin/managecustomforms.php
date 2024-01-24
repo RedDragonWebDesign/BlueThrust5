@@ -26,8 +26,6 @@ else {
 $cID = $_GET['cID'];
 $intAddCustomPageID = $consoleObj->findConsoleIDByName("Add Custom Form Page");
 if ($_GET['cfID'] == "") {
-
-
 	echo "
 	
 		<table class='formTable' style='border-spacing: 1px; margin-left: auto; margin-right: auto'>
@@ -102,12 +100,7 @@ if ($_GET['cfID'] == "") {
 	}
 	</script>
 	";
-
-
-
-
 }
 elseif ($_GET['cfID'] != "" && $_GET['action'] == "edit") {
-
 	require_once("custompages/edit_customforms.php");
 }

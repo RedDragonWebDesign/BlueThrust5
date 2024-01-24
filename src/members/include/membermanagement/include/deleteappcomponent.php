@@ -32,27 +32,19 @@ $appComponentObj->set_assocTableName("app_selectvalues");
 $appComponentObj->set_assocTableKey("appselectvalue_id");
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
-
 	if ($appComponentObj->select($_POST['acID'])) {
-
 		$arrCompInfo = $appComponentObj->get_info_filtered();
 
 
 		if (!$_POST['confirmDelete']) {
-
 			echo "
 				<p align='center' class='main'>
 					Are you sure you want to delete <b>".$arrCompInfo['name']."</b> from the member application?
 				</p>
 			";
-
 		}
 		elseif ($_POST['confirmDelete']) {
-
-
 			if ($appComponentObj->delete()) {
-
 				$appComponentObj->resortOrder();
 				$member->logAction("Deleted a member application component.");
 				echo "
@@ -84,7 +76,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					";
 			}
 			else {
-
 				echo "
 				
 					<div id='confirmDeleteMessage' style='display: none'>
@@ -100,7 +91,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					</script>
 					
 				";
-
 			}
 
 			echo "
@@ -131,9 +121,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				
 				</script>
 				";
-
 		}
-
 	}
-
 }

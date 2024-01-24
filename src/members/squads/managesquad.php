@@ -23,13 +23,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -58,7 +57,8 @@ $arrSquadPrivileges = $squadObj->arrSquadPrivileges;
 $pID = strtolower($_GET['pID']);
 
 if ($pID == "viewapps") {
-$pID = "acceptapps"; }
+$pID = "acceptapps";
+}
 
 $sID = $_GET['sID'];
 
@@ -96,7 +96,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$blnShowPage = true;
 		}
 	}
-
 }
 
 
@@ -121,7 +120,6 @@ $dispBreadCrumb
 </div>
 ";
 if ($blnShowPage) {
-
 	if ($_GET['nID'] != "") {
 		echo "
 		<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=ManageNews'>Go Back</a></p>
@@ -200,10 +198,8 @@ if ($blnShowPage) {
 		<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&select=".$sID."'>Go Back</a></p></div>
 		";
 	}
-
 }
 else {
-
 	echo "
 
 	<div class='shadedBox' style='width: 400px; margin-top: 50px; margin-bottom: 50px; margin-left: auto; margin-right: auto;'>
@@ -214,7 +210,6 @@ else {
 
 	
 	";
-
 }
 
 require_once("../../themes/".$THEME."/_footer.php");

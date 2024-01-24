@@ -13,7 +13,8 @@
 
 
 if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+}
 
 $consoleObj = new ConsoleOption($mysqli);
 $boardObj = new ForumBoard($mysqli);

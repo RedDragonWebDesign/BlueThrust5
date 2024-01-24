@@ -49,7 +49,6 @@ $sqlCID = "('".implode("','", $arrCIDs)."')";
 $memberoptions = "";
 $result = $mysqli->query("SELECT ".$dbprefix."members.member_id, ".$dbprefix."members.username, ".$dbprefix."ranks.name FROM ".$dbprefix."console_members, ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."console_members.member_id = ".$dbprefix."members.member_id AND ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id AND ".$dbprefix."console_members.console_id IN ".$sqlCID." AND ".$dbprefix."console_members.allowdeny = '1' AND ".$dbprefix."members.disabled = '0' ORDER BY ".$dbprefix."ranks.ordernum DESC");
 while ($row = $result->fetch_assoc()) {
-
 	$member->select($row['member_id']);
 	$rankObj->select($row['rank_id']);
 	$rankObj->select($member->get_info("rank_id"));
@@ -62,8 +61,6 @@ while ($row = $result->fetch_assoc()) {
 
 
 	$memberoptions .= "<option value='".$row['member_id']."' data-maxrank='".$member->get_info("promotepower")."' data-defaultpower=\"".$dispDefaultPower."\">".$row['name']." ".$row['username']."</option>";
-
-
 }
 
 if ($memberoptions == "") {
@@ -74,7 +71,6 @@ if ($memberoptions == "") {
 
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Member
 	if (!$member->select($_POST['member'])) {
 		$countErrors++;
@@ -91,7 +87,6 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	if ($countErrors == 0) {
-
 		if ($member->update(array("promotepower"), array($_POST['maximumrank']))) {
 			$dispMemberName = $member->getMemberLink();
 			$dispRankName = "Default";
@@ -119,12 +114,9 @@ if ( ! empty($_POST['submit']) ) {
 
 			$member->select($memberInfo['member_id']);
 			$member->logAction("Set maximum promote power for ".$dispMemberName." to ".$dispRankName);
-
 		}
 		else {
-
 		}
-
 	}
 
 
@@ -132,14 +124,11 @@ if ( ! empty($_POST['submit']) ) {
 		$member->select($memberInfo['member_id']);
 		$_POST['submit'] = false;
 	}
-
-
 }
 
 
 
 if ( empty($_POST['submit']) ) {
-
 	$rankoptions = "<option value='0' id='defaultPower'>Default</option><option value='-1'>(Can't Promote)</option>";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1' ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
@@ -200,5 +189,4 @@ if ( empty($_POST['submit']) ) {
 		</script>
 		
 	";
-
 }

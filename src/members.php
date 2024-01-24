@@ -26,13 +26,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -104,7 +103,6 @@ $arrGameCount = array();
 $arrGamesPlayed = array();
 $result = $mysqli->query("SELECT rankcategory_id FROM ".$dbprefix."rankcategory WHERE hidecat = '0' ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
-
 	$rankCatObj->select($row['rankcategory_id']);
 	$rankCatObj->refreshImageSize();
 	$rankCatInfo = $rankCatObj->get_info_filtered();
@@ -127,7 +125,6 @@ while ($row = $result->fetch_assoc()) {
 		";
 	}
 	else {
-
 		$dispCatDesc = "";
 		if ($rankCatInfo['description'] != "") {
 			$dispCatDesc = " style='cursor: pointer' onmouseover=\"showToolTip('<b>".$rankCatInfo['name']."</b><br>".$rankCatInfo['description']."')\" onmouseout='hideToolTip()'";
@@ -146,12 +143,13 @@ while ($row = $result->fetch_assoc()) {
 			<td class='formTitle'>Rank:</td>
 			<td class='formTitle'>Username:</td>
 			<td class='formTitle'>Main Game:</td>
-			";
+	";
 
-			if ($tableCols == 5) {
-echo "<td class='formTitle'><span onmouseover=\"showToolTip('Days Since Last Login')\" onmouseout='hideToolTip()' style='cursor: help'>DSL:</span></td>"; }
+	if ($tableCols == 5) {
+		echo "<td class='formTitle'><span onmouseover=\"showToolTip('Days Since Last Login')\" onmouseout='hideToolTip()' style='cursor: help'>DSL:</span></td>";
+	}
 
-			echo "
+	echo "
 			<td class='formTitle'>Status:</td>
 		</tr>
 	";
@@ -217,7 +215,6 @@ echo "<td class='formTitle'><span onmouseover=\"showToolTip('Days Since Last Log
 			if ($memberListInfo['loggedin'] == 1) {
 				$member->update(array("loggedin"), array(0));
 			}
-
 		}
 
 		echo "
@@ -225,18 +222,19 @@ echo "<td class='formTitle'><span onmouseover=\"showToolTip('Days Since Last Log
 				<td class='main' align='center'><div class='memberPageImage'><img src='".$rankListInfo['imageurl']."' width='".$rankListInfo['imagewidth']."' height='".$rankListInfo['imageheight']."'></div></td>
 				<td class='main'>".$member->getMemberLink()."</td>
 				<td class='main' align='center'>".$dispMainGame."</td>
-				";
-				if ($tableCols == 5) {
-echo "<td class='main' align='center'>".$dispDSL."</td>"; }
-				echo "
+		";
+
+		if ($tableCols == 5) {
+			echo "<td class='main' align='center'>".$dispDSL."</td>";
+		}
+
+		echo "
 				<td class='main' align='center'><div class='memberPageImage'>".$dispStatus."</div></td>
 			</tr>
 		";
-
 	}
 
 	echo "<tr><td colspan='5'><br></td></tr>";
-
 }
 
 $totalMembers = array_sum($arrMemberCountCat);
@@ -251,7 +249,7 @@ $totalMembers = array_sum($arrMemberCountCat);
 			<td colspan='3' class='main dottedLine' align='center'><b>Total Members:</b> <?php echo $totalMembers; ?></td>
 		</tr>
 		<?php
-			foreach ($arrMemberCountCat as $key=>$value) {
+			foreach ($arrMemberCountCat as $key => $value) {
 				$rankCatObj->select($key);
 				$rankCatInfo = $rankCatObj->get_info_filtered();
 
@@ -262,12 +260,11 @@ $totalMembers = array_sum($arrMemberCountCat);
 				echo "
 					<tr>
 						<td class='main' style='font-weight: bold; width: 40%'>Total ".$rankCatInfo['name'].":</td>
-						<td class='main' style='font-weight: bold; width: 20%'>".$value." - ".($totalMembers ? (round($value/$totalMembers,2)*100) : 0)."%</td>
+						<td class='main' style='font-weight: bold; width: 20%'>".$value." - ".($totalMembers ? (round($value/$totalMembers, 2)*100) : 0)."%</td>
 						<td class='main' style='width: 40%'>".$dispBars."</td>
 					</tr>
 				
 				";
-
 			}
 		?>
 	</table>
@@ -298,12 +295,11 @@ $totalMembers = array_sum($arrMemberCountCat);
 				echo "
 					<tr>
 						<td class='main' style='font-weight: bold; width: 40%'>Total ".$gameInfo['name']." Players:</td>
-						<td class='main' style='font-weight: bold; width: 20%'>".$arrTotalGamesPlayed[$value]." - ".($arrTotalGamesPlayed[$value] ? round($arrTotalGamesPlayed[$value]/$totalMembers,2)*100 : 0)."%</td>
+						<td class='main' style='font-weight: bold; width: 20%'>".$arrTotalGamesPlayed[$value]." - ".($arrTotalGamesPlayed[$value] ? round($arrTotalGamesPlayed[$value]/$totalMembers, 2)*100 : 0)."%</td>
 						<td class='main' style='letter-spacing: -4px; width: 40%'>".$dispBars."</td>
 					</tr>
 				
 				";
-
 			}
 		?>
 	</table>
@@ -314,16 +310,13 @@ $totalMembers = array_sum($arrMemberCountCat);
 
 <?php
 if ($websiteInfo['maxdsl'] != 0) {
-
 	echo "
 	<table class='formTable' id='membersPageTable' style='width: 85%; margin-left: auto; margin-right: auto'>
 		<tr>
 			<td colspan='3' class='main dottedLine' align='center'><b>- Activity Statistics -</b></td>
 		</tr>
 		";
-			for ($i=1;$i<=3;$i++) {
-
-
+			for ($i=1; $i<=3; $i++) {
 				if ($i == 1) {
 					$dispTitle = "Low DSL";
 					$dispColor = $websiteInfo['lowdsl'];
@@ -353,7 +346,7 @@ if ($websiteInfo['maxdsl'] != 0) {
 				echo "
 					<tr>
 						<td class='main' style='font-weight: bold; width: 40%'>".$dispTitle." <span onmouseover=\"showToolTip('Members who logged in within the last ".$lowEndDSL." to ".$highEndDSL." days. ".$extraDSLMessage."')\" onmouseout='hideToolTip()' style='cursor: help'>(?)</span>:</td>
-						<td class='main' style='font-weight: bold; width: 20%'>".$arrCountDSL[$i]." - ".(round($arrCountDSL[$i]/$totalMembers,2)*100)."%</td>
+						<td class='main' style='font-weight: bold; width: 20%'>".$arrCountDSL[$i]." - ".(round($arrCountDSL[$i]/$totalMembers, 2)*100)."%</td>
 						<td class='main' style='letter-spacing: -4px; width: 40%'>".$dispBars."</td>
 					</tr>
 				

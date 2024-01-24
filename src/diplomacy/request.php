@@ -24,13 +24,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 // Start Page
@@ -43,8 +42,6 @@ $breadcrumbObj->addCrumb("Diplomacy Request");
 
 $result = $mysqli->query("SELECT ipaddress FROM ".$dbprefix."diplomacy_request WHERE ipaddress = '".$IP_ADDRESS."'");
 if ($result->num_rows >= $websiteInfo['maxdiplomacy']) {
-
-
 	echo "
 		<div id='maxRequestDialog' style='display: none'>
 			<p class='main' align='center'>
@@ -63,7 +60,6 @@ if ($result->num_rows >= $websiteInfo['maxdiplomacy']) {
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
-
 	$statusoptions .= "<option value='".$row['diplomacystatus_id']."'>".filterText($row['name'])."</option>";
 	$arrStatuses[] = $row['diplomacystatus_id'];
 }
@@ -79,7 +75,6 @@ require_once($prevFolder."include/breadcrumb.php");
 	$countErrors = 0;
 	$dispError = "";
 	if ( isset($_POST['submit']) && $_POST['submit'] && $_POST['submit'] != "block") {
-
 		// Check Required Fields not Blank
 
 		$arrRequiredFields = array("Your Name"=>"requestername", "Your E-mail"=>"requesteremail", "Clan Name"=>"clanname", "Diplomacy Status"=>"diplomacystatus", "Games Played"=>"gamesplayed", "Clan Leaders"=>"clanleaders");
@@ -90,7 +85,6 @@ require_once($prevFolder."include/breadcrumb.php");
 
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> ".$fieldTitle." may not be blank!<br>";
 				$countErrors++;
-
 			}
 		}
 
@@ -136,7 +130,6 @@ require_once($prevFolder."include/breadcrumb.php");
 
 
 		if ($countErrors == 0) {
-
 			$emailCode = md5(time().uniqid());
 
 
@@ -161,7 +154,6 @@ Thanks,\n
 			}
 
 			if ($sendMail) {
-
 				$diplomacyRequestObj = new Basic($mysqli, "diplomacy_request", "diplomacyrequest_id");
 
 				$arrColumns = array("ipaddress", "dateadded", "diplomacystatus_id", "email", "name", "clanname", "clantag", "clansize", "gamesplayed", "website", "leaders", "message", "confirmemail");
@@ -193,15 +185,11 @@ Thanks,\n
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 				}
-
-
 			}
 			else {
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to send confirmation e-mail.<br>";
 				$countErrors++;
 			}
-
-
 		}
 
 
@@ -210,8 +198,6 @@ Thanks,\n
 			$_POST = filterArray($_POST);
 			$_POST['submit'] = false;
 		}
-
-
 	}
 
 

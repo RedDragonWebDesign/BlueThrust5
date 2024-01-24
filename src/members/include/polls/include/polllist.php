@@ -1,7 +1,6 @@
 <?php
 
 if (!defined("SHOW_POLLLIST")) {
-
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/poll.php");
@@ -21,7 +20,6 @@ if (!defined("SHOW_POLLLIST")) {
 	else {
 		exit();
 	}
-
 }
 
 echo "
@@ -31,7 +29,6 @@ echo "
 $counter = 0;
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."polls ORDER BY dateposted DESC");
 while ($row = $result->fetch_assoc()) {
-
 	if ($counter == 0) {
 		$addCSS = "";
 		$counter = 1;
@@ -51,13 +48,11 @@ while ($row = $result->fetch_assoc()) {
 			<td class='main manageList".$addCSS."' style='width: 12%' align='center'><a href='javascript:void(0)'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' class='manageListActionButton' data-deletePoll='".$row['poll_id']."'></a></td>
 		</tr>
 	";
-
 }
 
 echo "</table>";
 
 if ($result->num_rows == 0) {
-
 	echo "
 		<div class='shadedBox' style='margin: 20px auto; width: 40%'>
 			<p class='main' align='center'>

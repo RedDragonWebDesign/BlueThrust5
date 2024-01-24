@@ -1,7 +1,8 @@
 <?php
 
 	if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+    }
 
 ?>
 
@@ -17,7 +18,7 @@ exit(); }
 	
 		<?php echo $dispDonatorInfo['name']; ?>
 		<br>
-		<span class='donatorAmount'><?php echo $arrSymbols['left'].number_format($dispDonatorInfo['amount'],2).$arrSymbols['right']; ?></span>
+		<span class='donatorAmount'><?php echo $arrSymbols['left'].number_format($dispDonatorInfo['amount'], 2).$arrSymbols['right']; ?></span>
 		<br>
 		<span class='main'><br><?php echo $dispDonatorInfo['lastdonation']."<span class='donateDate'>".$dispDonatorInfo['lastdate']; ?></span></span>
 	</div>

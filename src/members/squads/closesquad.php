@@ -13,7 +13,6 @@
  */
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
-
 	exit();
 }
 else {
@@ -29,7 +28,6 @@ else {
 	$consoleAllSquads->select($manageAllSquadsCID);
 
 	if (!$member->hasAccess($consoleObj) || ($squadInfo['member_id'] != $memberInfo['member_id'] && !$member->hasAccess($consoleAllSquads))) {
-
 		exit();
 	}
 }
@@ -53,20 +51,16 @@ $squadMemberList = $squadObj->getMemberListSorted();
 
 
 if ($_POST['submitted']) {
-
 	if ($squadObj->delete()) {
 		$dispMessage = "Successfully closed squad: <b>".$squadInfo['name']."</b>";
 		$dispFounderName = $member->getMemberLink();
 
 		foreach ($squadMemberList as $memberID) {
-
 			if ($memberID != $squadInfo['member_id']) {
 				$member->select($memberID);
 				$member->postNotification($dispFounderName." has closed the squad: <b>".$squadInfo['name']."</b>!");
 			}
 		}
-
-
 	}
 	else {
 		$dispMessage = "Unabled to close squad!";
@@ -85,12 +79,10 @@ if ($_POST['submitted']) {
 	</script>
 	
 	";
-
 }
 
 
 if (!$_POST['submitted']) {
-
 	echo "
 	
 		<form action='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=CloseSquad' method='post' id='closeSquadForm'>

@@ -31,15 +31,10 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 $checkAccess = $checkAccess1 || $checkAccess2;
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($checkAccess) {
-
-
 		if (is_array($_SESSION['btProfileCache']) && count($_SESSION['btProfileCache']) > 0) {
-
 			if ($_SESSION['btProfileCacheRefresh']) {
 				echo "
 					<p class='failedFont' align='center'><b>Select Values Modified!  Your member's currently saved information will be reset.</b></p>
@@ -58,7 +53,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$counter = 0;
 			$totalOptions = count($_SESSION['btProfileCache']);
 			foreach ($_SESSION['btProfileCache'] as $key => $selectValue) {
-
 				$counter++;
 
 
@@ -83,13 +77,11 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 						</td>
 					</tr>
 				";
-
 			}
 
 			echo "</table>";
 
 			if ($counter == 0) {
-
 				echo "
 					<script type='text/javascript'>
 						$(document).ready(function() {
@@ -97,7 +89,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 						});
 					</script>
 				";
-
 			}
 
 
@@ -192,10 +183,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					
 				</script>
 			";
-
 		}
-
 	}
-
-
 }

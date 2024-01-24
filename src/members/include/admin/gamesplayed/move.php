@@ -28,12 +28,9 @@ $cID = $consoleObj->findConsoleIDByName("Manage Games Played");
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($member->hasAccess($consoleObj) && $gameObj->select($_POST['gID'])) {
-
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 
 		$gameObj->move($_POST['gDir']);
@@ -41,6 +38,4 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$_GET['cID'] = $cID;
 		require_once("main.php");
 	}
-
-
 }

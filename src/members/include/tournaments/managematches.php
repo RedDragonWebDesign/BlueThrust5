@@ -40,18 +40,12 @@ $countErrors = 0;
 
 
 if (isset($_GET['mID']) && $tournamentObj->objMatch->select($_GET['mID'])) {
-
 	require_once("include/managematch.php");
-
-
 }
 elseif (isset($_GET['pID']) && $tournamentObj->objTournamentPool->objTournamentPoolMatch->select($_GET['pID'])) {
-
 	require_once("include/managepoolmatch.php");
-
 }
 else {
-
 	echo "
 		<table class='formTable' id='tournamentListTable'>
 			<tr>
@@ -62,7 +56,6 @@ else {
 	";
 	$counter = 0;
 	foreach ($arrTournaments as $tournamentID) {
-
 		$tournamentObj->select($tournamentID);
 		$tournamentName = $tournamentObj->get_info_filtered("name");
 		$playerID = $tournamentObj->getTournamentPlayerID($memberInfo['member_id']);
@@ -128,9 +121,6 @@ else {
 				</tr>
 				";
 		}
-
-
-
 	}
 
 	echo $dispPools;
@@ -145,7 +135,6 @@ else {
 
 
 	if ($counter == 0) {
-
 		echo "
 			<div class='shadedBox' style='width: 40%; margin: 25px auto'>
 				<p class='main' align='center'>
@@ -153,10 +142,8 @@ else {
 				</p>
 			</div>
 		";
-
 	}
 	else {
-
 	echo "	
 		
 		<script type='text/javascript'>
@@ -171,8 +158,5 @@ else {
 		</script>
 		
 	";
-
 	}
-
-
 }

@@ -31,11 +31,9 @@ $customPageObj = new Basic($mysqli, "custompages", "custompage_id");
 
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($member->hasAccess($consoleObj) && $customPageObj->select($_POST['cpID'])) {
-
 		$countErrors = 0;
 		// Check Page Name
 
@@ -47,15 +45,12 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 		if ($countErrors == 0) {
-
 			$_POST['wysiwygHTML'] = str_replace("<?", "", $_POST['wysiwygHTML']);
 			$_POST['wysiwygHTML'] = str_replace("?>", "", $_POST['wysiwygHTML']);
 			$_POST['wysiwygHTML'] = str_replace("&lt;?", "", $_POST['wysiwygHTML']);
 			$_POST['wysiwygHTML'] = str_replace("?&gt;", "", $_POST['wysiwygHTML']);
 
 			if ($customPageObj->update(array("pagename", "pageinfo"), array($_POST['pagename'], $_POST['wysiwygHTML']))) {
-
-
 				$dispTime = date("l F j, Y g:i:s A");
 
 				$customPageInfo = $customPageObj->get_info();
@@ -67,24 +62,17 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					
 				</script>
 				";
-
-
-
 			}
 			else {
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to edit custom page.  Please try again!<br>";
 				$countErrors++;
 			}
-
 		}
-
-
 	}
 	else {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to edit custom page.  Invalid Custom Page ID!<br>";
 		$countErrors++;
 	}
-
 }
 else {
 	$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to edit custom page.  You are not authorized to edit custom pages!<br>";

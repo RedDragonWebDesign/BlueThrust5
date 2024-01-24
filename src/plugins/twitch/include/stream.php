@@ -1,7 +1,8 @@
 <?php
 
 	if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+    }
 
 	$member = new Member($mysqli);
 	$twitchObj = new Twitch($mysqli);

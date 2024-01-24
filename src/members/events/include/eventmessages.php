@@ -22,7 +22,6 @@ require_once("../../../classes/consoleoption.php");
 require_once("../../../classes/event.php");
 
 if (!isset($eventObj)) {
-
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);
 	$memberInfo = $member->get_info_filtered();
@@ -35,11 +34,9 @@ if (!isset($eventObj)) {
 
 
 	$eventID = $_POST['eID'];
-
 }
 
 if (!$eventObj->select($eventID)) {
-
 	exit();
 }
 
@@ -48,7 +45,6 @@ echo "<ul>";
 $focusID = "";
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."eventmessages WHERE event_id = '".$eventID."' ORDER BY dateposted DESC");
 while ($row = $result->fetch_assoc()) {
-
 	$objMember->select($row['member_id']);
 	$memInfo = $objMember->get_info_filtered();
 
@@ -113,7 +109,6 @@ while ($row = $result->fetch_assoc()) {
 			</li>
 
 			";
-
 		}
 	}
 
@@ -126,7 +121,6 @@ while ($row = $result->fetch_assoc()) {
 	";
 
 	if ($eventObj->memberHasAccess($memberInfo['member_id'], "postmessages")) {
-
 		$tempTextAreaID = "txtComment_".$row['eventmessage_id'];
 
 		$dispComment = "";
@@ -134,7 +128,6 @@ while ($row = $result->fetch_assoc()) {
 			$dispComment = filterText($_POST['commentBox'][$tempTextAreaID]);
 
 			$focusID = "#".$tempTextAreaID;
-
 		}
 
 		echo "
@@ -150,13 +143,11 @@ while ($row = $result->fetch_assoc()) {
 	else {
 		echo "<li class='dashedLine'></li>";
 	}
-
 }
 
 echo "</ul>";
 
 if ($focusID != "") {
-
 	echo "
 		<script type='text/javascript'>
 		

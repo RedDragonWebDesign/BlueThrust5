@@ -36,16 +36,10 @@ $checkAccess = $checkAccess1 || $checkAccess2;
 
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($checkAccess) {
-
-
-
-		if (is_array($_SESSION['btStatCache']) AND count($_SESSION['btStatCache']) > 0) {
-
+		if (is_array($_SESSION['btStatCache']) and count($_SESSION['btStatCache']) > 0) {
 			echo "
 			
 				<table align='left' border='0' cellspacing='2' cellpadding='2' width=\"90%\">
@@ -88,7 +82,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 						}
 
 						$dispFormula = $dispFirstStat.$dispOp.$dispSecondStat;
-
 				}
 
 				$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveStat('up', '".$key."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' title='Move Up' width='24' height='24'></a>";
@@ -113,20 +106,14 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 						</td>
 					</tr>
 				";
-
-
 			}
 
 			echo "
 				</table>
 			";
-
 		}
 		else {
 			echo "<i>No Stats Added Yet!</i>";
 		}
-
-
 	}
-
 }

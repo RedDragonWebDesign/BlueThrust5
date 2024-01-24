@@ -31,40 +31,30 @@ $tID = $_POST['tID'];
 $arrMembers = array();
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID) && $member->hasAccess($consoleObj)) {
-
 	$memberInfo = $member->get_info();
 	$tmemberID = $tournamentObj->get_info("member_id");
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 	$maxPlayers = $tournamentInfo['playersperteam']*$tournamentInfo['maxteams'];
 
 	if ($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
-
 		if ($tournamentObj->objPlayer->select($_POST['playerID']) && $tournamentObj->objPlayer->get_info("tournament_id") == $tID) {
-
 			$tournamentObj->objPlayer->delete();
-
 		}
 
 
 		$arrPlayers = $tournamentObj->getPlayers();
 		$counter = 1;
 		foreach ($arrPlayers as $playerID) {
-
 			$tPlayerID = $tournamentObj->getTournamentPlayerID($playerID);
 
 			$tournamentObj->objPlayer->select($tPlayerID);
 			$playerInfo = $tournamentObj->objPlayer->get_info();
 
 			if ($member->select($playerID)) {
-
 				$dispPlayer = $member->get_info_filtered("username");
-
-
 			}
 			else {
-
 				$dispPlayer = $playerID;
-
 			}
 
 			$teamID = $playerInfo['team_id'];
@@ -80,23 +70,17 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 		}
 
 		asort($arrSortPlayers);
-		foreach ($arrSortPlayers as $key=>$value) {
+		foreach ($arrSortPlayers as $key => $value) {
 			echo "<div class='mttPlayerSlot main'>".$counter.". ".$arrDispPlayer[$key]."</div>";
 			$counter++;
 		}
 
 		if (count($arrPlayers) < $maxPlayers) {
-
 			for ($i=$counter; $i<=$maxPlayers; $i++) {
 				echo "
 					<div class='mttPlayerSlot main'>".$i.". <span style='font-style: italic'>Empty Player Slot</span></div>
 				";
 			}
-
 		}
-
-
 	}
-
-
 }

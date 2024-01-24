@@ -1,7 +1,8 @@
 <?php
 
 if (!defined("POSTNEWS_FORM")) {
-exit(); }
+exit();
+}
 
 $newsTextbox = $member->hasAccess($newsObj->getHTMLNewsConsole()) ? "richtextbox" : "textarea";
 
@@ -97,5 +98,4 @@ function formFilterNewsPost() {
 		$_POST['newspost'] = str_replace("<script", "", $_POST['newspost']);
 		$_POST['newspost'] = str_replace("</script>", "", $_POST['newspost']);
 	}
-
 }

@@ -35,7 +35,6 @@ $countErrors = 0;
 
 
 if ( ! empty($_POST['submit']) ) {
-
 	$checkArr = array(1,2,3,4,5,6);
 
 	if (!in_array($_POST['clearlogs'], $checkArr)) {
@@ -44,7 +43,6 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	if ($countErrors == 0) {
-
 		switch ($_POST['clearlogs']) {
 			case 1:
 				$deleteDate = time()-(60*60*24*15);
@@ -78,7 +76,6 @@ if ( ! empty($_POST['submit']) ) {
 		}
 
 		if ($mysqli->query($query)) {
-
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -96,25 +93,19 @@ if ( ! empty($_POST['submit']) ) {
 			$mysqli->query("OPTIMIZE TABLE `".$dbprefix."logs`");
 			$logMessage = ucfirst($successMessage).".";
 			$member->logAction($logMessage);
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-
-
-
 	}
 
 	if ($countErrors > 0) {
 		$_POST['submit'] = false;
 	}
-
 }
 
 if ( empty($_POST['submit']) ) {
-
 	echo "
 		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
 			<div class='formDiv'>

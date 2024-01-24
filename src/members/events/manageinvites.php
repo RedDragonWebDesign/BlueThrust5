@@ -15,7 +15,6 @@
 
 
 if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
-
 	exit();
 }
 else {
@@ -53,9 +52,7 @@ while ($row = $result->fetch_assoc()) {
 	$row = filterArray($row);
 	$eventMemberID = $eventObj->getEventMemberID($row['member_id']);
 	if ($eventMemberID !== false) {
-
 		$memberoptions .= "<option value='".$eventMemberID."'>".$row['name']." ".$row['username']."</option>";
-
 	}
 }
 

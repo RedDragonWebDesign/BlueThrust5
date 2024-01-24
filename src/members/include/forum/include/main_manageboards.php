@@ -13,7 +13,6 @@
  */
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
-
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/forumboard.php");
@@ -45,7 +44,6 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !is
 	else {
 		exit();
 	}
-
 }
 else {
 	$memberInfo = $member->get_info();
@@ -56,7 +54,7 @@ else {
 }
 
 
-function dispManageTable($arrBoards, $indent=0) {
+function dispManageTable($arrBoards, $indent = 0) {
 	global $mysqli, $MAIN_ROOT, $THEME, $cID;
 
 	$boardObj = new ForumBoard($mysqli);
@@ -102,9 +100,7 @@ function dispManageTable($arrBoards, $indent=0) {
 		if (count($arrSubForums) > 0) {
 			dispManageTable($arrSubForums, ($indent+1));
 		}
-
 	}
-
 }
 
 
@@ -121,7 +117,6 @@ $totalBoards = $result->num_rows;
 if ($totalBoards > 0) {
 	$result = $mysqli->query("SELECT forumcategory_id FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
-
 		$categoryObj->select($row['forumcategory_id']);
 		$arrBoards = $categoryObj->getAssociateIDs("AND subforum_id = '0' ORDER BY sortnum", true);
 
@@ -139,12 +134,10 @@ if ($totalBoards > 0) {
 
 		dispManageTable($arrBoards);
 	}
-
 }
 echo "</table>";
 
 if ($totalBoards == 0) {
-
 	echo "
 	
 		<div class='shadedBox' style='width: 40%; margin: 20px auto'>
@@ -156,5 +149,4 @@ if ($totalBoards == 0) {
 		</div>
 	
 	";
-
 }

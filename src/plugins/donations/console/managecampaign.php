@@ -22,7 +22,6 @@ else {
 	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
-
 }
 
 $cID = $_GET['cID'];

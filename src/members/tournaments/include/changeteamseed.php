@@ -31,26 +31,20 @@ $tID = $_POST['tID'];
 $arrMembers = array();
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID) && $member->hasAccess($consoleObj)) {
-
 	$memberInfo = $member->get_info();
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 
 	if (($memberInfo['member_id'] == $tournamentInfo['member_id'] || $memberInfo['rank_id'] == "1")  || $tournamentObj->isManager($memberInfo['member_id']) && $tournamentObj->objTeam->select($_POST['teamID']) && $tournamentObj->objTeam->get_info("tournament_id") == $tID) {
-
 		$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 
 		if (!isset($_POST['newSeed'])) {
-
 			for ($i=1; $i<=$tournamentInfo['maxteams']; $i++) {
-
 				$dispSelected = "";
 				if ($teamInfo['seed'] == $i) {
 					$dispSelected = "selected";
 				}
 
 				$seedOptions .= "<option value='".$i."' ".$dispSelected.">".$i."</option>";
-
-
 			}
 
 
@@ -68,7 +62,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 				}
 
 				$dispTeamOrPlayer = "Player";
-
 			}
 			else {
 				$dispName = $tournamentObj->objTeam->get_info_filtered("name");
@@ -88,11 +81,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 					</tr>
 				</table>
 			";
-
-
 		}
 		elseif (isset($_POST['newSeed']) && $_POST['newSeed'] > 0 && $_POST['newSeed'] <= $tournamentInfo['maxteams'] && $tournamentObj->getTeamIDBySeed($_POST['newSeed']) !== false) {
-
 			if ($tournamentInfo['playersperteam'] == 1) {
 				$strPlayerTeam = "Player";
 			}
@@ -134,29 +124,19 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 
 
 			if ($blnCheck1 && $blnCheck2 && $blnCheck3 & $blnCheck4) {
-
 				echo "
 					<p class='main' align='center'>
 						".$strPlayerTeam." Seed Changed Successfully!
 					</p>
 				";
-
 			}
 			else {
-
 				echo "
 				<p class='main' align='center'>
 					Unable to change ".$strPlayerTeam." Seed!
 				</p>
 				";
-
 			}
-
-
 		}
-
-
 	}
-
-
 }

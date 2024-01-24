@@ -64,7 +64,6 @@ if ( ! empty($_POST['submit']) ) {
 }
 
 if ( empty($_POST['submit']) ) {
-
 	$signUpForm->show();
 
 
@@ -92,7 +91,6 @@ if ( empty($_POST['submit']) ) {
 	</script>
 	
 	";
-
 } ?>
 
 <?php require_once($prevFolder."themes/".$THEME."/_footer.php");

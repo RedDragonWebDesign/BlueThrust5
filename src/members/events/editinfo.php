@@ -15,7 +15,6 @@
 
 
 if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
-
 	exit();
 }
 else {
@@ -27,7 +26,6 @@ else {
 	$eventObj->select($eID);
 
 	if (!$member->hasAccess($consoleObj) || (!$eventObj->memberHasAccess($memberInfo['member_id'], "editinfo") && $memberInfo['rank_id'] != 1)) {
-
 		exit();
 	}
 }
@@ -60,7 +58,7 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	$arrMinutes = array();
-	for ($i=0;$i<=59;$i++) {
+	for ($i=0; $i<=59; $i++) {
 		$arrMinutes[] = $i;
 	}
 
@@ -120,12 +118,10 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		$arrColumns = array("title", "description", "location", "startdate", "publicprivate", "visibility", "messages", "invitepermission", "timezone");
 		$arrValues = array($_POST['eventtitle'], $_POST['eventdetails'], $_POST['eventlocation'], $setStartTime, $inviteType, $_POST['visibility'], $allowMessages, $openInvites, $_POST['timezone']);
 
 		if ($eventObj->update($arrColumns, $arrValues)) {
-
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -139,13 +135,11 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			
 			";
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-
 	}
 
 
@@ -153,15 +147,11 @@ if ( ! empty($_POST['submit']) ) {
 	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
-
 	}
-
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	$tempTimezone = date_default_timezone_get();
 	date_default_timezone_set("UTC");
 	$startHour = date("G", $eventInfo['startdate']);
@@ -173,7 +163,7 @@ if ( empty($_POST['submit']) ) {
 
 	$houroptions = "<option value='0'>12</option>";
 	$dispSelected = "";
-	for ($i=1;$i<=11;$i++) {
+	for ($i=1; $i<=11; $i++) {
 		if ($startHour == $i) {
 			$dispSelected = " selected";
 		}
@@ -181,8 +171,7 @@ if ( empty($_POST['submit']) ) {
 		$dispSelected = "";
 	}
 
-	for ($i=0;$i<=59;$i++) {
-
+	for ($i=0; $i<=59; $i++) {
 		if ($startMinute == $i) {
 			$dispSelected = " selected";
 		}
@@ -237,7 +226,6 @@ if ( empty($_POST['submit']) ) {
 
 	$timezoneoptions = "<option value=''>[Use Default]</option>";
 	foreach ($arrTimezones as $timeZone) {
-
 		$tz = new DateTimeZone($timeZone);
 		$dispOffset = ((($tz->getOffset(new DateTime("now", $tz)))/60)/60);
 		$dispSign = ($dispOffset < 0) ? "" : "+";
@@ -355,5 +343,4 @@ if ( empty($_POST['submit']) ) {
 		
 		</script>
 	";
-
 }

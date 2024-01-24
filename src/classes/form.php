@@ -59,7 +59,7 @@
 		 * $components = $arr;
 		 *
 		 */
-		public function __construct($args=array()) {
+		public function __construct($args = array()) {
 
 			$this->buildForm($args);
 			$this->richtextboxJSFile = "<script type='text/javascript' src='".MAIN_ROOT."js/tiny_mce/jquery.tinymce.js'></script>";
@@ -100,7 +100,6 @@
 				$this->arrSkipPrefill = $args['skipPrefill'];
 				$this->prefillDBValues();
 			}
-
 		}
 
 		/**
@@ -126,7 +125,6 @@
 			$afterJS = $this->embedJS;
 
 			foreach ($this->components as $componentName => $componentInfo) {
-
 				$dispAttributes = $this->convertAttributes($componentInfo['attributes'] ?? '');
 
 				$displayForm .= $componentInfo['before_html'] ?? '';
@@ -169,7 +167,6 @@
 						";
 						break;
 					case "datepicker":
-
 						$datePick = new DateTime();
 						$datePick->setTimestamp($componentInfo['value']/1000);
 						$datePick->setTimezone(new DateTimeZone("UTC"));
@@ -180,7 +177,6 @@
 						$displayForm .= "<input type='text' value='".$componentInfo['options']['defaultDate']."' ".$dispAttributes." readonly='readonly'><input type='hidden' id='".$componentInfo['options']['altField']."' name='".$componentName."' value='".$formatDatePick."'>";
 						break;
 					case "timepicker":
-
 						$arrTimezones = DateTimeZone::listIdentifiers();
 
 						$datePick = new DateTime();
@@ -257,7 +253,6 @@
 
 						break;
 					case "select":
-
 						$selectBoxObj = new SelectBox();
 						$selectBoxObj->setComponentName($componentName);
 						$selectBoxObj->setAttributes($componentInfo['attributes']);
@@ -295,7 +290,6 @@
 							}
 						}
 						else {
-
 							$dispChecked = "";
 							if ($componentInfo['checked'] ?? '') {
 								$dispChecked = " checked";
@@ -327,15 +321,12 @@
 						$displayForm .= "URL:<br><input type='text' name='".$componentName."_url' ".$dispAttributes.">";
 
 						if (($componentInfo['value'] ?? '') != "") {
-
 							$displayForm .= "<br><a href='".$MAIN_ROOT.$componentInfo['value']."' target='_blank'>View Saved File</a>";
-
 						}
 
 						$displayForm .= "</div>";
 						break;
 					case "section":
-
 						$displayForm .= "<div ".$dispAttributes.">";
 						if ($componentInfo['options']['section_title'] != "") {
 							$displayForm .= "<p class='dottedLine' style='margin: 0px; margin-top: 25px; padding-bottom: 2px'><b>".$componentInfo['options']['section_title']."</b></p>";
@@ -346,12 +337,10 @@
 						}
 
 						if (isset($componentInfo['components']) && $componentInfo['components'] != "" && is_array($componentInfo['components'])) {
-
 							$sectionFormObj = new Form();
 							$sectionFormObj->isContainer = true;
 							$sectionFormObj->components = $componentInfo['components'];
 							$displayForm .= $sectionFormObj->show();
-
 						}
 						$displayForm .= "</div>";
 
@@ -367,7 +356,6 @@
 							if ($optionValue != ($componentInfo['value'] ?? '')) {
 								$displayOptions .= "<option value='".$optionValue."'".$dispSelected.">".$displayValue."</option>";
 							}
-
 						}
 
 						$afterSelected = (($componentInfo['after_selected'] ?? '') == "after") ? " selected" : "";
@@ -388,7 +376,6 @@
 					case "custom":
 						break;
 					case "colorpick":
-
 						$afterJS .= $this->colorpickerJS($componentInfo['attributes']['id'], $componentInfo['allowHTML'] ?? '');
 						$displayForm .= "<input type='text' name='".$componentName."' value='".($componentInfo['value'] ?? '')."' ".$dispAttributes.">";
 
@@ -402,12 +389,12 @@
 				if ($componentInfo['type'] != "section" && !isset($componentInfo['hidden'])) {
 					$displayForm .= "<br>";
 				}
-
 			}
 
 			$dispFormAttributes = $this->convertAttributes($this->attributes);
 			if ($blnFileUploadForm) {
-$dispFormAttributes .= "  enctype='multipart/form-data'"; }
+$dispFormAttributes .= "  enctype='multipart/form-data'";
+            }
 
 			$dispErrors = "";
 			if (count($this->errors) > 0) {
@@ -440,7 +427,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 
 				return $displayForm.$js;
 			}
-
 		}
 
 		public function prefillPostedValues() {
@@ -452,7 +438,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 					$this->components[$componentName]['value'] = $_POST[$componentName];
 				}
 			}
-
 		}
 
 		public function prefillDBValues() {
@@ -464,9 +449,7 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 						$this->components[$key]['value'] = $info[$this->components[$key]['db_name']];
 					}
 				}
-
 			}
-
 		}
 
 
@@ -484,7 +467,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 		public function validate() {
 			$returnVal = false;
 			foreach ($this->components as $componentName => $componentInfo) {
-
 				// Turn on RESTRICT_TO_OPTIONS by default for select, check boxes, radio buttons
 				if (
 					$componentInfo['type'] == "checkbox" ||
@@ -501,7 +483,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 				}
 
 				foreach (($componentInfo['validate'] ?? []) as $validateMethod) {
-
 					$arrValidate = array();
 					if (is_array($validateMethod)) {
 						$arrValidate = $validateMethod;
@@ -514,7 +495,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 								$componentCounter = 1;
 								$countBlanks = 0;
 								foreach ($componentInfo['options'] as $optionName => $optionValue) {
-
 									$fullComponentName = $componentName."_".$componentCounter;
 									if (trim($_POST[$fullComponentName]) == "") {
 										$countBlanks++;
@@ -526,7 +506,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 								if ($countBlanks == count($componentInfo['options'])) {
 									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You must select at least one value for ".$componentInfo['display_name'].".";
 								}
-
 							}
 							elseif ($componentInfo['type'] != "file" && trim($_POST[$componentName]) == "") {
 								$this->errors[] = (($arrValidate['customMessage'] ?? '') != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." may not be blank.";
@@ -541,7 +520,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 								if (!is_numeric($checkDate[0]) || !is_numeric($checkDate[1]) || !is_numeric($checkDate[2])) {
 									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : $componentInfo['display_name']." may only be a date value.";
 								}
-
 							}
 							break;
 						case "POSITIVE_NUMBER":
@@ -550,7 +528,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 							}
 							break;
 						case "RESTRICT_TO_OPTIONS":
-
 							if ( isset($componentInfo['options']) && is_array($componentInfo['options'])) {
 								$arrPostNames = array();
 								$arrPossibleValues = array();
@@ -564,27 +541,22 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 								if (($componentInfo['type'] == "checkbox" || $componentInfo['type'] == "radio") && count($componentInfo['options']) > 1) {
 									$countErrors = 0;
 									foreach ($arrPostNames as $postName) {
-
 										if (isset($_POST[$postName]) && !in_array($_POST[$postName], $arrPossibleValues)) {
 											$countErrors++;
 										}
-
 									}
 
 									if ($countErrors > 0) {
 										$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid value for ".$componentInfo['display_name'].".";
 									}
-
 								}
 								elseif ( isset($_POST[$componentName]) && !in_array($_POST[$componentName], $arrPossibleValues)) {
 									$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You selected an invalid value for ".$componentInfo['display_name'].".";
 								}
-
 							}
 
 							break;
 						case "IS_SELECTABLE":
-
 							$selectBackID = isset($arrValidate['select_back']) ? $arrValidate['selectObj']->get_info($arrValidate['select_back']) : "";
 
 							if (!$arrValidate['selectObj']->select($_POST[$componentName])) {
@@ -605,7 +577,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 
 							break;
 						case "CHECK_LENGTH":
-
 							if ($arrValidate['min_length'] != "" && strlen(trim($_POST[$componentName])) < $arrValidate['min_length']) {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "The value for ".$componentInfo['display_name']." must be at least ".$arrValidate['min_length']." characters long.";
 							}
@@ -616,7 +587,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 
 							break;
 						case "EQUALS_VALUE":
-
 							if ($arrValidate['value'] != $_POST[$componentName]) {
 								$this->errors[] = ($arrValidate['customMessage'] != "") ? $arrValidate['customMessage'] : "You entered an incorrect value for ".$componentInfo['display_name'].".";
 							}
@@ -638,9 +608,7 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 							}
 							break;
 						case "VALIDATE_ORDER":
-
 							if ($arrValidate['orderObject'] != "") {
-
 								if (($arrValidate['set_category'] ?? '') != "") {
 									$arrValidate['orderObject']->setCategoryKeyValue($arrValidate['set_category']);
 								}
@@ -652,13 +620,11 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 								else {
 									$_POST[$componentName] = $checkOrder;
 									$this->components[$componentName]['resortOrderObject'] = $arrValidate['orderObject'];
-
 								}
 
 								if (isset($arrValidate['select_back'])) {
 									$arrValidate['orderObject']->select($arrValidate['select_back']);
 								}
-
 							}
 
 							break;
@@ -670,7 +636,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 								call_user_func_array($validateMethod['function'], $validateMethod['args']);
 							}
 					}
-
 				}
 
 				if ($componentInfo['type'] == "file" && $_POST[$componentName] == "") {
@@ -686,7 +651,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 					}
 
 					if ($uploadFile != "noupload") {
-
 						if ($this->attachmentForm) {
 							$this->attachmentObj->setUploadObj($uploadFile);
 							$this->attachmentObj->setCategory($componentInfo['options']['download_category']);
@@ -697,7 +661,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 							else {
 								$_POST[$componentName] = $componentInfo['options']['append_db_value'].$uploadFile->getUploadedFileName();
 							}
-
 						}
 						else {
 							if (!$uploadFile->uploadFile()) {
@@ -710,10 +673,8 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 								if ($this->saveType != "add" && $componentInfo['db_name'] != "" && $this->objSave->get_info($componentInfo['db_name']) != "") {
 									$this->arrDeleteFiles[] = $this->objSave->get_info($componentInfo['db_name']);
 								}
-
 							}
 						}
-
 					}
 					elseif ($componentInfo['value'] != "") {
 						$_POST[$componentName] = $componentInfo['value'];
@@ -724,10 +685,8 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 							$this->errors[] = $componentInfo['display_name']." may not be blank.";
 						}
 					}
-
 				}
 				elseif ($componentInfo['type'] == "datepicker") {
-
 					$formatDate = explode("-", $_POST[$componentName]);
 					$datePick = new DateTime();
 					$datePick->setTimezone(new DateTimeZone("UTC"));
@@ -749,7 +708,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 
 					$_POST[$componentName] = $dateTimestamp;
 				}
-
 			}
 
 			if ($_POST['checkCSRF'] != $_SESSION['csrfKey']) {
@@ -779,11 +737,9 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 
 			$arrResortOrder = array();
 			if ($this->validate()) {
-
 				$arrColumns = array();
 				$arrValues = array();
 				foreach ($this->components as $componentName => $componentInfo) {
-
 					if (isset($componentInfo['db_name']) && $componentInfo['db_name'] != "") {
 						$arrColumns[] = $componentInfo['db_name'];
 						$arrValues[] = $_POST[$componentName];
@@ -792,7 +748,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 					if ($componentInfo['type'] == "beforeafter") {
 						$this->beforeAfter = true;
 					}
-
 				}
 
 				if ( is_array($this->saveAdditional) ) {
@@ -813,12 +768,10 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 							unlink(BASE_DIRECTORY.$file);
 						}
 					}
-
 				}
 				elseif ($this->objSave != "" && $this->saveType != "") {
 					//echo $this->saveType;
 					$this->blnSaveResult = $this->objSave->{$this->saveType}($arrColumns, $arrValues);
-
 				}
 				else {
 					$this->blnSaveResult = true;
@@ -828,7 +781,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 					$this->errors[] = "Unable to save information to the database.  Please contact the website administrator.";
 				}
 				else {
-
 					if (is_array($this->afterSave)) {
 						foreach ($this->afterSave as $saveFunction) {
 							if (!is_array($saveFunction)) {
@@ -837,27 +789,21 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 							else {
 								call_user_func_array($saveFunction['function'], $saveFunction['args']);
 							}
-
 						}
 					}
 
 					if ($this->beforeAfter) {
 						foreach ($this->components as $componentName => $componentInfo) {
-
 							// Check for Display Order input types, need to resort order
 							if ($componentInfo['type'] == "beforeafter" && $componentInfo['resortOrderObject'] != "") {
 								$componentInfo['resortOrderObject']->resortOrder();
 							}
-
 						}
 					}
-
 				}
-
 			}
 
 			return $this->blnSaveResult;
-
 		}
 
 		static function sortForm($a, $b) {
@@ -872,7 +818,7 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 			return $returnVal;
 		}
 
-		public function addComponentSortSpace($spaceAmount=2, $components = array()) {
+		public function addComponentSortSpace($spaceAmount = 2, $components = array()) {
 
 			if (count($components) > 0) {
 				$this->components = $components;
@@ -886,7 +832,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 				$this->components[$componentName]['sortorder'] = $nextSpot;
 				$nextSpot += $nextSpot+$spaceAmount;
 			}
-
 		}
 
 		/**
@@ -903,7 +848,6 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 				foreach ($attr as $attrName => $attrValue) {
 					$returnVal .= $attrName."='".$attrValue."' ";
 				}
-
 			}
 			else {
 				$returnVal = $attr;
@@ -935,15 +879,12 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 				";
 			}
 			else {
-
 				echo "
 					<script type='text/javascript'>
 						window.location = '".$popupLink."'
 					</script>
 				";
-
 			}
-
 		}
 
 
@@ -991,7 +932,7 @@ $dispFormAttributes .= "  enctype='multipart/form-data'"; }
 			return $returnVal;
 		}
 
-		private function richTextboxJS($componentID, $allowHTML=false) {
+		private function richTextboxJS($componentID, $allowHTML = false) {
 			global $MAIN_ROOT, $THEME, $hooksObj;
 
 			$addHTML = ($allowHTML) ? ",code" : "";

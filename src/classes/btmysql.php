@@ -36,7 +36,7 @@ class btMySQL extends MySQLi {
 		return $result;
 	}
 
-	public function __construct($host, $username, $passwd, $dbname = "", $port=null, $socket=null) {
+	public function __construct($host, $username, $passwd, $dbname = "", $port = null, $socket = null) {
 
 		$host = !isset($host) ? ini_get("mysqli.default_host") : $host;
 		$username = !isset($username) ? ini_get("mysqli.default_user") : $username;
@@ -47,7 +47,6 @@ class btMySQL extends MySQLi {
 		parent::__construct($host, $username, $passwd, $dbname, $port, $socket);
 
 		$this->query("SET SESSION sql_mode = ''");
-
 	}
 
 
@@ -63,7 +62,7 @@ class btMySQL extends MySQLi {
 		$this->bt_TestingMode = $testModeValue;
 	}
 
-	public function displayError($pageName="") {
+	public function displayError($pageName = "") {
 		if ($this->bt_TestingMode) {
 			die($pageName." - ".$this->error);
 		}
@@ -84,7 +83,6 @@ class btMySQL extends MySQLi {
 					default:
 						$strParamTypes .= "s";
 				}
-
 			}
 		}
 		return $strParamTypes;
@@ -96,7 +94,7 @@ class btMySQL extends MySQLi {
 
 		$tmpParams = array_merge(array($strParamTypes), $arrValues);
 		$arrParams = array();
-		foreach ($tmpParams as $key=>$value) {
+		foreach ($tmpParams as $key => $value) {
 			$arrParams[$key] = &$tmpParams[$key];
 		}
 
@@ -111,7 +109,6 @@ class btMySQL extends MySQLi {
 		}
 
 		return $returnVal;
-
 	}
 
 	public function optimizeTables() {
@@ -126,7 +123,6 @@ class btMySQL extends MySQLi {
 		if (count($tables) > 0) {
 			$this->query("OPTIMIZE TABLE ".$optimizeTables);
 		}
-
 	}
 
 }

@@ -32,7 +32,6 @@ $cID = $_GET['cID'];
 
 
 if ( ! empty($_POST['submit']) ) {
-
 	$setRegistration = 1;
 	$setMemberApproval = 0;
 	if ($_POST['registrationstatus'] != 1) {
@@ -48,7 +47,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($webInfoObj->multiUpdate($updateColumns, $updateValues)) {
-
 		$member->logAction("Modified website registration options.");
 
 		echo "
@@ -63,21 +61,15 @@ if ( ! empty($_POST['submit']) ) {
 		</script>
 		
 		";
-
-
 	}
 	else {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		$_POST['submit'] = false;
 	}
-
-
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	$selectOpen = "";
 	$checkApproval = "";
 	if ($websiteInfo['memberregistration'] != 1) {
@@ -153,7 +145,4 @@ if ( empty($_POST['submit']) ) {
 		</script>
 		
 	";
-
 }
-
-

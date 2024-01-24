@@ -77,7 +77,6 @@ foreach ($arrMatches as $matchID) {
 
 
 		for ($i=1; $i<=2; $i++) {
-
 			$teamColumn = "team".$i."_id";
 			$dispName = "Empty Spot";
 			$dispSeed = "";
@@ -90,7 +89,6 @@ foreach ($arrMatches as $matchID) {
 				if ($dispName == "") {
 					$dispName = "Bye";
 				}
-
 			}
 
 
@@ -102,7 +100,6 @@ foreach ($arrMatches as $matchID) {
 				<div style='position: absolute; width: 25px; right: 3px; top: 5px; z-index: 9999'><a href='javascript:void(0)' onmouseover=\"showToolTip('Seed')\" onmouseout='hideToolTip()'>".$dispSeed."</a></div>
 			</div>					
 			";
-
 		}
 
 
@@ -113,5 +110,4 @@ foreach ($arrMatches as $matchID) {
 
 
 	echo "</div><div style='clear:both'></div>";
-
 }

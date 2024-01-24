@@ -29,12 +29,9 @@ $consoleObj->select($cID);
 $_GET['cID'] = $cID;
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($member->hasAccess($consoleObj) && $gameObj->select($_POST['gID'])) {
-
 		define("MEMBERRANK_ID", $memberInfo['rank_id']);
 
 
@@ -49,12 +46,8 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$gameName = $gameObj->get_info_filtered("name");
 			echo "<p align='center'>Are you sure you want to delete the game <b>".$gameName."</b>?</p>";
 		}
-
 	}
 	elseif (!$gameObj->select($_POST['gID'])) {
-
 		echo "<p align='center'>Unable find the selected game.  Please try again or contact the website administrator.</p>";
-
 	}
-
 }

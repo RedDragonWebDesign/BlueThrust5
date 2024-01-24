@@ -40,7 +40,6 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Name
 	if (trim($_POST['catname']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Category name may not be blank.<br>";
@@ -59,12 +58,10 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		$arrColumns = array("name", "ordernum");
 		$arrValues = array($_POST['catname'], $intNewOrderSpot);
 		$categoryObj->select($categoryInfo['forumcategory_id']);
 		if ($categoryObj->update($arrColumns, $arrValues)) {
-
 			$forumCatInfo = $categoryObj->get_info_filtered();
 			echo "
 				<div style='display: none' id='successBox'>
@@ -91,14 +88,11 @@ if ( ! empty($_POST['submit']) ) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
-
 }
 
 
 
 if ( empty($_POST['submit']) ) {
-
 	$arrDisplayOrder = $categoryObj->findBeforeAfter();
 	$dispSelected = "";
 	if ($arrDisplayOrder[1] == "after") {
@@ -159,5 +153,4 @@ if ( empty($_POST['submit']) ) {
 		</form>
 	
 	";
-
 }

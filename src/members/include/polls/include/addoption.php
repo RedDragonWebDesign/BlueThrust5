@@ -42,11 +42,9 @@ $pollObj = new Poll($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
-
 	$pollObj->cacheID = $_POST['cacheID'];
 
 	if ( ! empty($_POST['submit']) ) {
-
 		$arrNewOption = array();
 		$arrErrors = array();
 		$arrReturn = array();
@@ -70,7 +68,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 		}
 
 		if (count($arrErrors) == 0) {
-
 			$newSortNum = $pollObj->makeCacheRoom($_POST['optionOrderBeforeAfter'], $_POST['optionOrder']);
 
 			$arrReturn['result'] = "success";
@@ -83,14 +80,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 			$_SESSION['btPollOptionCache'][$pollObj->cacheID][$newSortNum] = $arrNewOption;
 
 			$pollObj->resortCacheOrder();
-
 		}
 
 		if (count($arrErrors) > 0) {
-
 			$arrReturn['result'] = "fail";
 			$arrReturn['errors'] = $arrErrors;
-
 		}
 
 
@@ -124,11 +118,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 			";
 
 		if (count($_SESSION['btPollOptionCache'][$pollObj->cacheID]) > 0) {
-
-			foreach ($_SESSION['btPollOptionCache'][$pollObj->cacheID] as $key=>$optionInfo) {
-
+			foreach ($_SESSION['btPollOptionCache'][$pollObj->cacheID] as $key => $optionInfo) {
 				$displayOrder .= "<option value='".$key."'>".$optionInfo['value']."</option>";
-
 			}
 
 			echo "
@@ -148,6 +139,5 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 		echo "
 			</table>
 		";
-
 	}
 }

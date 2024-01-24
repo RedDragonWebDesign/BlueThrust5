@@ -54,7 +54,7 @@ else {
 
 	// Colors
 	$black = imagecolorallocate($im, 9, 9, 9);
-	$blackAlpha = imagecolorallocatealpha($im, 9, 9, 9,25);
+	$blackAlpha = imagecolorallocatealpha($im, 9, 9, 9, 25);
 	$redAlpha = imagecolorallocatealpha($im, 255, 0, 0, 15);
 	$white = imagecolorallocate($im, 255, 255, 255);
 
@@ -63,7 +63,7 @@ else {
 
 	// Generate Captcha Text (all lowercase, not final version)
 	$randString = md5(uniqid("", true));
-	$randNum = rand(0,22);
+	$randNum = rand(0, 22);
 	$captcha = substr($randString.$randString, $randNum, 8);
 
 	$arrABC = range("a", "z");
@@ -88,7 +88,7 @@ else {
 		$char = $value;
 
 		if (is_numeric($value) && rand(1, 10) > 2) {
-			$char = (rand(1,10) > 5) ? strtoupper($arrABC[$value]) : $value;
+			$char = (rand(1, 10) > 5) ? strtoupper($arrABC[$value]) : $value;
 		}
 		elseif (!is_numeric($value) && rand(1, 10) > 5) {	// randomly uppercase some of the letters
 			$char = strtoupper($value);
@@ -106,7 +106,6 @@ else {
 			elseif ($char == 9) {
 				unset($arrFonts[2]);
 			}
-
 		}
 		elseif (strtolower($char) == "s") {
 			unset($arrFonts[3]);
@@ -114,20 +113,20 @@ else {
 
 		// pick a random font
 		shuffle($arrFonts);
-		$randFontNum = rand(0,(count($arrFonts)-1));
+		$randFontNum = rand(0, (count($arrFonts)-1));
 		$randFont = $arrFonts[$randFontNum];
-		$randNum2 = rand(0,8);
+		$randNum2 = rand(0, 8);
 
 		// if component type is "captchaextra", add lots of splats and noise using the special font RFX Splatz
 		if ($appComponentObj->get_info("componenttype") == "captchaextra") {
 			$xCoord = ($counter == 0) ? 10 : (55*$counter);
-			imagettftext($im, 70, rand(0,20), $xCoord, 80, $blackAlpha, $distortFont, $arrDistort[$randNum2]);
+			imagettftext($im, 70, rand(0, 20), $xCoord, 80, $blackAlpha, $distortFont, $arrDistort[$randNum2]);
 		}
 
 		$xCoord = ($counter == 0) ? 10 : (55*$counter);
 
 		// place this character in the image
-		imagettftext($im, 50, rand(-5,5), $xCoord, 70, $black, $randFont, $char);
+		imagettftext($im, 50, rand(-5, 5), $xCoord, 70, $black, $randFont, $char);
 		$counter++;
 
 		// note the final captcha (different than original, some letters randomly capitalized)

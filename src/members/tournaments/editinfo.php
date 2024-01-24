@@ -14,7 +14,6 @@
 
 
 if (!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
-
 	exit();
 }
 else {
@@ -27,7 +26,6 @@ else {
 
 
 	if (!$member->hasAccess($consoleObj)) {
-
 		exit();
 	}
 }
@@ -63,7 +61,6 @@ $arrComponents['tournamentpw']['validate'][] = "resetTournamentPassword";
 $arrComponents['tournamentpw']['tooltip'] = "If you don't want to change the current password, leave both password inputs blank.";
 
 if ($tournamentInfo['password'] != "") {
-
 	$lastComponentOrder = $arrComponents['submit']['sortorder'];
 	$arrComponents['removepw'] = array(
 		"type" => "checkbox",
@@ -101,7 +98,6 @@ function removeTournamentPassword() {
 	if ($_POST['removepw'] == 1) {
 		$formObj->saveAdditional['password'] = "";
 	}
-
 }
 
 

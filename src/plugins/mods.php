@@ -17,7 +17,6 @@
 			CKEDITOR.replace('".$GLOBALS['rtCompID']."');
 		
 		";
-
 	}
 
 

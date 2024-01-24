@@ -40,8 +40,6 @@ $componentIndex = $_POST['whichComponent'];
 
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2) && is_numeric($componentIndex)) {
-
-
 	if ($_POST['moveDir'] == "up") {
 		$addTo = -1;
 	}
@@ -60,6 +58,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 
 	require_once("componentcache.php");
-
-
 }

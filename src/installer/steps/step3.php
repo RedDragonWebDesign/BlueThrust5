@@ -1,7 +1,6 @@
 <?php
 
 	if ($_POST['step2submit']) {
-
 		// Check Connection Again
 		$mysqli = new btmysql($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass'], $_POST['dbname']);
 		$mysqli->set_tablePrefix($_POST['tableprefix']);
@@ -14,8 +13,6 @@
 			$countErrors++;
 		}
 		else {
-
-
 			if ($_POST['installType'] == 1) {
 				// Fresh Install
 
@@ -37,7 +34,6 @@
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> The admin password must be at least 6 characters long.<br>";
 				}
-
 			}
 			else {
 				// Updating
@@ -55,8 +51,6 @@
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You entered incorrect admin login information.<br>";
 				}
-
-
 			}
 
 			// Check Admin Key
@@ -73,7 +67,6 @@
 
 
 			if ($countErrors == 0) {
-
 				echo "
 					<table class='mainTable'>
 						<tr>
@@ -123,7 +116,6 @@
 						$countTableMatches++;
 						$arrTableMatches[] = $tempTableName;
 					}
-
 				}
 
 
@@ -133,7 +125,6 @@
 
 				$blnConvertWebsiteInfo = false;
 				if ($countTableMatches > 0) {
-
 					// Check if using the old websiteinfo table
 					$result = $mysqli->query("SELECT websiteinfo_id FROM ".$_POST['tableprefix']."websiteinfo");
 					if ($result->num_rows < 60) {
@@ -141,7 +132,6 @@
 					}
 
 					require_once("steps/backupdb.php");
-
 				}
 
 				// Install New SQL
@@ -161,7 +151,6 @@
 					$fullSQL = str_replace("[SWAPINSERTWITHTABLEPREFIX]", "INSERT INTO `".$_POST['tableprefix'], $fullSQL);
 
 					$fullSQL = str_replace("ALTER TABLE `ipban`", "ALTER TABLE `".$_POST['tableprefix']."ipban`", $fullSQL);
-
 				}
 
 
@@ -175,8 +164,6 @@
 
 
 				if ($mysqli->multi_query($fullSQL)) {
-
-
 					do {
 						if ($result = $mysqli->store_result()) {
 							$result->free();
@@ -190,8 +177,8 @@
 
 					if ($_POST['installType'] == 1) {
 						// Generate New Salt
-						$randomString = substr(md5(uniqid("", true)),0,22);
-						$randomNum = rand(4,10);
+						$randomString = substr(md5(uniqid("", true)), 0, 22);
+						$randomNum = rand(4, 10);
 						if ($randomNum < 10) {
 							$randomNum = "0".$randomNum;
 						}
@@ -204,7 +191,6 @@
 						$mysqli->query("INSERT INTO ".$_POST['tableprefix']."members (username, password, password2, rank_id, datejoined, lastlogin) VALUES ('".$_POST['adminusername']."', '".$encryptPassword."', '".$strSalt."', '1', '".time()."', '".time()."')");
 					}
 					else {
-
 						if ($blnConvertWebsiteInfo) {
 							// Convert websiteinfo table for people updating
 							define("CONVERT_WEBSITEINFO", true);
@@ -227,7 +213,6 @@
 								$tempCatID = array_search($row['name'], $arrConsoleCategories);
 								$arrConsoleCategoryIDs[$tempCatID] = $row['consolecategory_id'];
 							}
-
 						}
 
 						$pmCatID = "";
@@ -245,9 +230,7 @@
 								if ($consoleCategory == "Private Messages") {
 									$pmCatID = $arrConsoleCategoryIDs[$tempCatID];
 								}
-
 							}
-
 						}
 
 
@@ -279,13 +262,10 @@
 								$consoleOptionObj->resortOrder();
 							}
 							elseif ($consoleOptionName == "Private Messages" && $checkConsole !== false && $pmCatID != "") {
-
 								$consoleOptionObj->select($checkConsole);
 								$consoleOptionObj->update(array("consolecategory_id", "sortnum"), array($pmCatID, 0));
 								$consoleOptionObj->resortOrder();
-
 							}
-
 						}
 
 
@@ -307,13 +287,11 @@
 
 
 						if (!$verifyTheme) {
-
 							$arrThemes = scandir("../themes");
 							$themeOptions = "";
 
 
 							foreach ($arrThemes as $themeName) {
-
 								$themeURL = "../themes/".$themeName;
 
 								if (is_dir($themeURL) && $themeName != "." && $themeName != ".." && is_readable($themeURL."/THEMENAME.txt") && file_exists("../themes/".$themeName."/themeinfo.xml")) {
@@ -334,7 +312,6 @@
 								
 								
 								";
-
 							}
 							else {
 								$themeMessage = "Your previous theme is no longer supported.  Please choose a new theme from the dropdown list below.<br><br><select id='theme' class='textBox'>".$themeOptions."</select>";
@@ -350,7 +327,6 @@
 									}
 								
 								";
-
 							}
 
 							echo "
@@ -390,9 +366,7 @@
 								</script>
 							
 							";
-
 						}
-
 					}
 
 					file_put_contents("_installrunning.txt", "done");
@@ -410,8 +384,6 @@
 							<a href='".$setMainRoot."'>View Your Website Now!</a>
 						</p>
 					";
-
-
 				}
 				else {
 					echo "Unable to create database!";
@@ -422,23 +394,14 @@
 
 
 			if ($countErrors > 0) {
-
 				$_POST['step2submit'] = false;
-
 			}
-
-
-
 		}
-
-
 	}
 
 
 	if (!$_POST['step2submit']) {
-
 		$_POST['step1submit'] = true;
 
 		require_once("step2.php");
-
 	}

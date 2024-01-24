@@ -34,19 +34,14 @@ $consoleObj->select($cID);
 
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_POST['eID'])) {
-
 	$memberInfo = $member->get_info();
 	$eventInfo = $eventObj->get_info_filtered();
 
 	if ($eventInfo['member_id'] == $memberInfo['member_id']) {
-
 		if ($_POST['confirmDelete'] == 1) {
-
 			$eventObj->delete();
-
 		}
 		else {
-
 			echo "
 			
 				<div id='confirmDeleteMessage' style='display: none'>
@@ -95,11 +90,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_POST
 				
 				
 			";
-
-
 		}
-
-
 	}
-
 }

@@ -36,15 +36,12 @@ $member->select($_SESSION['btUsername']);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
-
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."news WHERE newstype != '3' ORDER BY dateposted DESC");
 	$checkHTMLConsoleObj = new ConsoleOption($mysqli);
 	$htmlNewsCID = $checkHTMLConsoleObj->findConsoleIDByName("HTML in News Posts");
 	$checkHTMLConsoleObj->select($htmlNewsCID);
 	if ($result->num_rows > 0) {
 		while ($row = $result->fetch_assoc()) {
-
 			$member->select($row['member_id']);
 			$posterInfo = $member->get_info_filtered();
 
@@ -77,7 +74,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$member->select($row['member_id']);
 
 			if (!isset($checkHTMLAccess)) {
-$checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj); }
+$checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj);
+            }
 
 
 			$dispNews = ($checkHTMLAccess) ? parseBBCode($row['newspost']) : nl2br(parseBBCode(filterText($row['newspost'])));
@@ -103,12 +101,9 @@ $checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj); }
 			
 			
 			";
-
 		}
 	}
 	else {
-
-
 		echo "
 			<div class='shadedBox' style='width: 300px; margin-left: auto; margin-right: auto'>
 				<p class='main' align='center'>
@@ -116,11 +111,5 @@ $checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj); }
 				</p>
 			</div>
 		";
-
-
 	}
-
-
-
-
 }

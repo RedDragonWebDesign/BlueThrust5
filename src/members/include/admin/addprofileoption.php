@@ -33,7 +33,6 @@ $profileCatObj = new ProfileCategory($mysqli);
 $profileOptionObj = new ProfileOption($mysqli);
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Option Name
 
 	if (trim($_POST['optionname']) == "") {
@@ -49,7 +48,6 @@ if ( ! empty($_POST['submit']) ) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile category.<br>";
 	}
 	else {
-
 		// Check Order
 		$arrProfileOptionIDs = $profileCatObj->getAssociateIDs();
 
@@ -66,26 +64,18 @@ if ( ! empty($_POST['submit']) ) {
 			$intNewSortNum = 1;
 		}
 		else {
-
 			if ($_POST['beforeafter'] == "before" || $_POST['beforeafter'] == "after") {
-
 				$intNewSortNum = $profileOptionObj->makeRoom($_POST['beforeafter']);
-
 			}
 			else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile option order.<br>";
 			}
-
-
 		}
-
-
 	}
 
 
 	if ($countErrors == 0) {
-
 		if ($_POST['optiontype'] != "select") {
 			$_POST['optiontype'] = "input";
 		}
@@ -97,17 +87,12 @@ if ( ! empty($_POST['submit']) ) {
 
 
 		if ($profileOptionObj->addNew($arrColumnNames, $arrColumnValues)) {
-
 			if ($_POST['optiontype'] == "select") {
-
 				$counter = 1;
 				foreach ($_SESSION['btProfileCache'] as $selectValue) {
-
 					$profileOptionObj->addNewSelectValue($selectValue, $counter);
 					$counter++;
-
 				}
-
 			}
 			$newProfileInfo = $profileOptionObj->get_info_filtered();
 
@@ -122,19 +107,11 @@ if ( ! empty($_POST['submit']) ) {
 			popupDialog('Add New Profile Option', '".$MAIN_ROOT."members/console.php', 'successBox');
 			</script>
 			";
-
-
-
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database!  Please contact the website administrator.<br>";
 		}
-
-
-
-
 	}
 
 
@@ -142,7 +119,6 @@ if ( ! empty($_POST['submit']) ) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
 }
 
 if ( empty($_POST['submit']) ) {
@@ -296,5 +272,4 @@ if ( empty($_POST['submit']) ) {
 		
 	</script>
 	";
-
 }

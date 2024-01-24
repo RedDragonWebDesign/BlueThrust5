@@ -53,8 +53,6 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 $countErrors = 0;
 $dispError = "";
 if ( ! empty($_POST['submit']) ) {
-
-
 	if (trim($_POST['pagename']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a page name for your custom page.<br>";
@@ -62,7 +60,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		$_POST['wysiwygHTML'] = str_replace("<?", "", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("?>", "", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("&lt;?", "", $_POST['wysiwygHTML']);
@@ -76,7 +73,6 @@ if ( ! empty($_POST['submit']) ) {
 		$postResults = ($_POST['postresults'] == "yes") ? "yes" : "";
 
 		if ($customFormPageObj->update(array("name", "pageinfo", "submitmessage", "submitlink", "specialform"), array($_POST['pagename'], $_POST['wysiwygHTML'], $_POST['submitMessageHTML'], $_POST['submitlink'], $postResults)) && $customFormPageObj->addComponents($_SESSION['btFormComponent'])) {
-
 			foreach ($_SESSION['btDeleteFormComponent'] as $deleteKey) {
 				if ($customFormPageObj->objComponent->select($deleteKey)) {
 					$checkFormID = $customFormPageObj->get_info("customform_id");
@@ -102,9 +98,6 @@ if ( ! empty($_POST['submit']) ) {
 					popupDialog('Edit Custom Form Page', '".$MAIN_ROOT."members/console.php?cID=".$intManageCustomPagesID."&cfID=".$customPageInfo['customform_id']."&action=edit', 'successBox');
 				</script>
 			";
-
-
-
 		}
 		else {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to add custom page.  Please try again!<br>";
@@ -112,20 +105,16 @@ if ( ! empty($_POST['submit']) ) {
 			$_POST['wysiwygHTML'] = addslashes($_POST['wysiwygHTML']);
 			$_POST['submitMessageHTML'] = addslashes($_POST['submitMessageHTML']);
 		}
-
 	}
 	else {
 		$_POST['submit'] = false;
 		$_POST['wysiwygHTML'] = addslashes($_POST['wysiwygHTML']);
 		$_POST['submitMessageHTML'] = addslashes($_POST['submitMessageHTML']);
 	}
-
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	echo "
 	<form action='console.php?cID=".$cID."&cfID=".$customFormInfo['customform_id']."&action=edit' method='post'>
 	<div class='formDiv'>
@@ -141,12 +130,10 @@ if ( empty($_POST['submit']) ) {
 		";
 	}
 	else {
-
 		$_SESSION['btFormComponent'] = array();
 		$x = 0; // Form Component Counter
 		$arrFormComponents = $customFormPageObj->getComponents();
 		foreach ($arrFormComponents as $formComponentID) {
-
 			$customFormPageObj->objComponent->select($formComponentID);
 
 			$tempComponentInfo = $customFormPageObj->objComponent->get_info_filtered();
@@ -161,11 +148,9 @@ if ( empty($_POST['submit']) ) {
 			if ($tempComponentInfo['componenttype'] == "select" || $tempComponentInfo['componenttype'] == "multiselect") {
 				$arrSelectValues = $customFormPageObj->getSelectValues($formComponentID);
 				foreach ($arrSelectValues as $selectValueID) {
-
 					$customFormPageObj->objSelectValue->select($selectValueID);
 					$selectValue = $customFormPageObj->objSelectValue->get_info_filtered("componentvalue");
 					$_SESSION['btFormComponent'][$x]['cOptions'][] = $selectValue;
-
 				}
 			}
 
@@ -490,8 +475,4 @@ if ( empty($_POST['submit']) ) {
 	
 		</script>
 	";
-
-
-
-
 }

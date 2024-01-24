@@ -31,11 +31,9 @@ $themeOptions = "";
 
 
 foreach ($arrThemes as $themeName) {
-
 	$themeURL = "../themes/".$themeName;
 
 	if (is_dir($themeURL) && $themeName != "." && $themeName != "..") {
-
 		$dispThemeName = "";
 		if (is_readable($themeURL."/THEMENAME.txt")) {
 			$dispThemeName = file_get_contents($themeURL."/THEMENAME.txt");
@@ -85,7 +83,6 @@ if ($websiteInfo['hpnews'] == 0) {
 else {
 	$showCustomAmount = "";
 	switch ($websiteInfo['hpnews']) {
-
 		case 5:
 			$selectNumOfNewsPosts[5] = " selected";
 			break;
@@ -108,7 +105,6 @@ else {
 			$selectNumOfNewsPosts[6] = " selected";
 			$showCustomAmount = $websiteInfo['hpnews'];
 	}
-
 }
 
 $websiteLogoInfo = $webInfoObj->get_info_filtered("logourl");

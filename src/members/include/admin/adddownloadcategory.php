@@ -30,7 +30,6 @@ $downloadCatObj = new DownloadCategory($mysqli);
 $downloadExtObj = new Basic($mysqli, "download_extensions", "extension_id");
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Category Name
 
 	if (trim($_POST['catname']) == "") {
@@ -52,7 +51,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	$intNewOrderSpot = "";
-	if (!$downloadCatObj->select($_POST['catorder']) AND $_POST['catorder'] != "first") {
+	if (!$downloadCatObj->select($_POST['catorder']) and $_POST['catorder'] != "first") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (category)<br>";
 	}
@@ -69,29 +68,23 @@ if ( ! empty($_POST['submit']) ) {
 		else {
 			$intNewOrderSpot = 1;
 		}
-
 	}
 	else {
-
-		if ($_POST['beforeafter'] != "before" AND $_POST['beforeafter'] != "after") {
+		if ($_POST['beforeafter'] != "before" and $_POST['beforeafter'] != "after") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (before/after)<br>";
 		}
 		else {
 			$intNewOrderSpot = $downloadCatObj->makeRoom($_POST['beforeafter']);
 		}
-
-
 	}
 
 
 
 	if ($countErrors == 0) {
-
 		$accessKey = ($_POST['accesskey'] != 1) ? 0 : 1;
 
 		if ($downloadCatObj->addNew(array("name", "ordernum", "accesstype"), array($_POST['catname'], $intNewOrderSpot, $accessKey))) {
-
 			$downloadCatInfo = $downloadCatObj->get_info_filtered();
 
 			foreach ($arrExtensions as $strExtension) {
@@ -110,22 +103,16 @@ if ( ! empty($_POST['submit']) ) {
 				popupDialog('Add New Download Category', '".$MAIN_ROOT."members', 'successBox');
 			</script>
 			";
-
 		}
-
 	}
 	else {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
-
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	$countCategories = 0;
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."downloadcategory ORDER BY ordernum DESC");
@@ -189,5 +176,4 @@ if ( empty($_POST['submit']) ) {
 		</form>
 	
 	";
-
 }

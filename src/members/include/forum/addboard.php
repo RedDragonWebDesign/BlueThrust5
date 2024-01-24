@@ -41,7 +41,6 @@ $countErrors = 0;
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
 if ($result->num_rows == 0) {
-
 	echo "
 	
 		<div style='display: none' id='successBox'>
@@ -68,7 +67,6 @@ $rankObj = new Rank($mysqli);
 $tempMemObj = new Member($mysqli);
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Board Name
 
 	if (trim($_POST['boardname']) == "") {
@@ -113,10 +111,8 @@ if ( ! empty($_POST['submit']) ) {
 		$arrMembers = array();
 	}
 	else {
-
 		$result = $mysqli->query("SELECT rank_id FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 		while ($row = $result->fetch_assoc()) {
-
 			$checkboxName = "rankaccess_".$row['rank_id'];
 			if (($_SESSION['btRankAccessCache'][$checkboxName] ?? '') == "1") {
 				$arrRanks[$row['rank_id']] = 1;
@@ -124,22 +120,16 @@ if ( ! empty($_POST['submit']) ) {
 			elseif (($_SESSION['btRankAccessCache'][$checkboxName] ?? '') == "2") {
 				$arrRanks[$row['rank_id']] = 0;
 			}
-
 		}
 
 		foreach ($_SESSION['btMemberAccessCache'] as $memID => $accessRule) {
-
 			if ($accessRule != "" && $tempMemObj->select($memID)) {
 				$arrMembers[$memID] = $accessRule;
 			}
-
 		}
-
-
 	}
 
 	if ($countErrors == 0) {
-
 		$arrColumns = array("forumcategory_id", "name", "description", "sortnum", "accesstype", "subforum_id");
 		$arrValues = array($_POST['forumcat'], $_POST['boardname'], $_POST['boarddesc'], $intNewOrderSpot, $_POST['accesstype'], $setSubForum);
 
@@ -156,29 +146,22 @@ if ( ! empty($_POST['submit']) ) {
 					popupDialog('Add Board', '".$MAIN_ROOT."members', 'successBox');
 				</script>
 			";
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-
-
 	}
 
 
 	if ($countErrors > 0) {
-
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
-
 	}
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	if ($dispError != "") {
 		$dispError = "
 		<div class='errorDiv'>
@@ -199,7 +182,6 @@ if ( empty($_POST['submit']) ) {
 	$rankCounter = $result1->num_rows;
 
 	while ($row = $result->fetch_assoc()) {
-
 		$selectCat = "";
 		if (isset($_GET['catID']) && $_GET['catID'] == $row['forumcategory_id']) {
 			$selectCat = " selected";
@@ -275,11 +257,9 @@ if ( empty($_POST['submit']) ) {
 	$memberOptions = "<option value='select'>[SELECT]</option>";
 	$result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.ordernum FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id != '1' AND ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id ORDER BY ".$dbprefix."ranks.ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
-
 		$memberRank->select($row['rank_id']);
 		$dispRankName = $memberRank->get_info_filtered("name");
 		$memberOptions .= "<option value='".$row['member_id']."'>".$dispRankName." ".filterText($row['username'])."</option>";
-
 	}
 
 		echo "
@@ -523,6 +503,4 @@ if ( empty($_POST['submit']) ) {
 		</script>
 		
 	";
-
 }
-

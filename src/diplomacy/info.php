@@ -27,7 +27,6 @@ if (!$diplomacyObj->select($_GET['dID'])) {
 		</script>
 	";
 	exit();
-
 }
 
 
@@ -37,13 +36,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -62,7 +60,6 @@ if ($statusInfo['imageurl'] == "") {
 	$dispStatus = $statusInfo['name'];
 }
 else {
-
 	if (strpos($statusInfo['imageurl'], "http://") === false) {
 		$statusInfo['imageurl'] = "../".$statusInfo['imageurl'];
 	}
@@ -79,7 +76,6 @@ else {
 	}
 
 	$dispStatus = "<img src='".$statusInfo['imageurl']."'".$dispImgWidth.$dispImgHeight." title='".$statusInfo['name']."'>";
-
 }
 
 

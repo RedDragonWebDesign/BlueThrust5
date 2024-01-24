@@ -42,7 +42,7 @@ function filterText($strText) {
 	return $temp;
 }
 
-function getPreciseTime($intTime, $timeFormat="", $bypassTimeDiff=false) {
+function getPreciseTime($intTime, $timeFormat = "", $bypassTimeDiff = false) {
 	$timeDiff = (!$bypassTimeDiff) ? time() - $intTime : 99999;
 
 	if ($timeDiff < 3) {
@@ -70,13 +70,11 @@ function getPreciseTime($intTime, $timeFormat="", $bypassTimeDiff=false) {
 		$dispLastDate = "$hourDiff $dispHour ago";
 	}
 	else {
-
 		if ($timeFormat == "") {
 			$timeFormat = "D M j, Y g:i a";
 		}
 
 		$dispLastDate = date($timeFormat, $intTime);
-
 	}
 
 	return $dispLastDate;
@@ -111,10 +109,8 @@ function parseBBCode($strText) {
 	$arrBBCodes['Poll'] = array("bbOpenTag" => "[poll]", "bbCloseTag" => "[/poll]", "htmlOpenTag" => "<div id='".$randPollDiv."'></div><script type='text/javascript'>embedPoll('".$MAIN_ROOT."', '".$randPollDiv."', '", "htmlCloseTag" => "');</script>");
 
 	foreach ($arrBBCodes as $bbCode) {
-
-		$strText = str_ireplace($bbCode['bbOpenTag'],$bbCode['htmlOpenTag'],$strText);
-		$strText = str_ireplace($bbCode['bbCloseTag'],$bbCode['htmlCloseTag'],$strText);
-
+		$strText = str_ireplace($bbCode['bbOpenTag'], $bbCode['htmlOpenTag'], $strText);
+		$strText = str_ireplace($bbCode['bbCloseTag'], $bbCode['htmlCloseTag'], $strText);
 	}
 
 	// Emoticons
@@ -123,10 +119,8 @@ function parseBBCode($strText) {
 	$arrEmoticonImg = array("smile.png", "sad.png", "grin.png", "wink.png", "cheeky.png");
 
 	foreach ($arrEmoticonCodes as $key => $value) {
-
 		$imgURL = "<img src='".$MAIN_ROOT."images/emoticons/".$arrEmoticonImg[$key]."' width='15' height='15'>";
 		$strText = str_ireplace($value, $imgURL, $strText);
-
 	}
 
 	// Complex Codes, ex. Links, colors...
@@ -180,9 +174,7 @@ function addArraySpace($arr, $space, $atSpot) {
 	$newArr = array();
 	$i=0;
 	foreach ($arr as $key => $value) {
-
 		if ($atSpot == $key) {
-
 			for ($x=0; $x<$space; $x++) {
 				$newArr[$i] = "";
 				$i++;
@@ -213,8 +205,8 @@ function pluralize($word, $num) {
 }
 
 function encryptPassword($password) {
-	$randomString = substr(md5(uniqid("", true)),0,22);
-	$randomNum = rand(4,10);
+	$randomString = substr(md5(uniqid("", true)), 0, 22);
+	$randomNum = rand(4, 10);
 	if ($randomNum < 10) {
 		$randomNum = "0".$randomNum;
 	}
@@ -243,7 +235,7 @@ function debug_string_backtrace() {
 
 	// Remove first item from backtrace as it's this function which
 	// is redundant.
-	$trace = preg_replace ('/^#0\s+' . __FUNCTION__ . "[^\n]*\n/", '', $trace, 1);
+	$trace = preg_replace('/^#0\s+' . __FUNCTION__ . "[^\n]*\n/", '', $trace, 1);
 
 	// sanitize HTML
 	$trace = htmlspecialchars($trace);

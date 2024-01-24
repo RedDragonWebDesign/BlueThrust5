@@ -30,7 +30,6 @@ $squadObj = new Squad($mysqli);
 $dispError = "";
 $countErrors = 0;
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Squad
 	if (!$squadObj->select($_POST['squad'])) {
 		$countErrors++;
@@ -43,7 +42,6 @@ if ( ! empty($_POST['submit']) ) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have already applied to this squad!  Please wait for a decision to be made before re-applying.<br>";
 		}
-
 	}
 
 	if ($countErrors == 0) {
@@ -53,13 +51,10 @@ if ( ! empty($_POST['submit']) ) {
 		$arrValues = array($memberInfo['member_id'], $_POST['squad'], $_POST['message'], time(), 0);
 
 		if ($squadAppObj->addNew($arrColumns, $arrValues)) {
-
 			$arrRecruiterMembers = $squadObj->getRecruiterMembers();
 			foreach ($arrRecruiterMembers as $recruiterID) {
-
 				$member->select($recruiterID);
 				$member->postNotification("A new member has applied to join the squad <b><a href='".$MAIN_ROOT."squads/profile.php?sID=".$squadInfo['squad_id']."'>".$squadInfo['name']."</a></b>.  <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$squadInfo['squad_id']."&pID=AcceptApps'>Click Here</a> to review squad applications.");
-
 			}
 
 			echo "
@@ -75,14 +70,11 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			
 			";
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-
-
 	}
 
 
@@ -90,20 +82,16 @@ if ( ! empty($_POST['submit']) ) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	$arrMemberSquads= $member->getSquadList();
 	$sqlSquadList = "('".implode("','", $arrMemberSquads)."')";
 
 	$counter = 0;
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."squads WHERE squad_id NOT IN ".$sqlSquadList." ORDER BY name");
 	while ($row = $result->fetch_assoc()) {
-
 		$dispSelected = "";
 		if ($_GET['select'] == $row['squad_id']) {
 			$dispSelected = "selected";
@@ -155,5 +143,4 @@ if ( empty($_POST['submit']) ) {
 			</form>
 		</div>
 	";
-
 }

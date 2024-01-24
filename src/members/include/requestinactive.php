@@ -13,7 +13,6 @@
  */
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
-
 	// Posted Message?
 
 	require_once("../../_setup.php");
@@ -46,7 +45,6 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 		$arrValues = array($requestInfo['iarequest_id'], $memberInfo['member_id'], time(), $_POST['message']);
 
 		$iaRequestMessageObj->addNew($arrColumns, $arrValues);
-
 	}
 
 
@@ -55,7 +53,6 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	$counter = 1;
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."iarequest_messages WHERE iarequest_id = '".$requestInfo['iarequest_id']."' ORDER BY messagedate DESC");
 	while ($row = $result->fetch_assoc()) {
-
 		if ($counter == 0) {
 			$addCSS = "";
 			$counter = 1;
@@ -72,18 +69,15 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 				<div style='padding-left: 5px'>".nl2br(filterText($row['message']))."</div>
 			</div>
 		";
-
 	}
 
 
 	if ($result->num_rows == 0) {
-
 		echo "
 			<div class='shadedBox' style='margin: 20px auto; width: 50%'>
 				<p align='center'><i>No Messages</i></p>					
 			</div>
 		";
-
 	}
 	else {
 		echo "<br><br>";
@@ -102,7 +96,6 @@ else {
 
 
 if (!$member->requestedIA()) {
-
 	$i = 1;
 	$arrComponents = array(
 		"reason" => array(
@@ -130,7 +123,6 @@ if (!$member->requestedIA()) {
 		"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
 		"description" => "Use the form below to request to be inactive.  When inactive, you will be able to log in, however you will not have access to any console options.  A higher ranking member will have to approve your request before your status is set to inactive."
 	);
-
 }
 else {
 	// Already requested to be inactive
@@ -250,5 +242,4 @@ else {
 		</script>
 		
 	";
-
 }

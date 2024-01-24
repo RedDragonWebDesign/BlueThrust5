@@ -35,7 +35,6 @@ class CustomForm extends Basic {
 		$this->objSelectValue = new Basic($sqlConnection, "customform_selectvalues", "selectvalue_id");
 		$this->objFormValue = new Basic($sqlConnection, "customform_values", "value_id");
 		$this->objSubmission = new Basic($sqlConnection, "customform_submission", "submission_id");
-
 	}
 
 
@@ -43,16 +42,13 @@ class CustomForm extends Basic {
 
 		$returnArr = array();
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT component_id FROM ".$this->MySQL->get_tablePrefix()."customform_components WHERE customform_id = '".$this->intTableKeyValue."' ORDER BY sortnum");
 			while ($row = $result->fetch_assoc()) {
 				$returnArr[] = $row['component_id'];
 			}
-
 		}
 
 		return $returnArr;
-
 	}
 
 
@@ -61,16 +57,13 @@ class CustomForm extends Basic {
 
 		$returnArr = array();
 		if ($this->intTableKeyValue != "" && is_numeric($intComponentID)) {
-
 			$result = $this->MySQL->query("SELECT selectvalue_id FROM ".$this->MySQL->get_tablePrefix()."customform_selectvalues WHERE component_id = '".$intComponentID."' ORDER BY componentvalue");
 			while ($row = $result->fetch_assoc()) {
 				$returnArr[] = $row['selectvalue_id'];
 			}
-
 		}
 
 		return $returnArr;
-
 	}
 
 
@@ -87,11 +80,9 @@ class CustomForm extends Basic {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
-
 			$countErrors = 0;
 			$intSortNum = 1;
 			foreach ($arrComponents as $value) {
-
 				if (trim($value['name']) != "" && (isset($value['component_id']) && $this->objComponent->select($value['component_id']))) {
 					$arrColumns = array("name", "componenttype", "required", "tooltip", "sortnum");
 					$arrValues = array($value['name'], $value['type'], $value['required'], $value['tooltip'], $intSortNum);
@@ -102,22 +93,17 @@ class CustomForm extends Basic {
 						$countErrors++;
 					}
 					elseif ($value['type'] == "select" || $value['type'] == "multiselect") {
-
 						$newComponentID = $this->objComponent->get_info("component_id");
 						foreach ($value['cOptions'] as $selectValue) {
-
 							if (trim($selectValue) != "" && !$this->objSelectValue->addNew(array("component_id", "componentvalue"), array($newComponentID, $selectValue))) {
 								$countErrors++;
 							}
-
 						}
-
 					}
 
 					$intSortNum++;
 				}
 				elseif (trim($value['name']) != "") {
-
 					$arrColumns = array("customform_id", "name", "componenttype", "required", "tooltip", "sortnum");
 					$arrValues = array($this->intTableKeyValue, $value['name'], $value['type'], $value['required'], $value['tooltip'], $intSortNum);
 
@@ -125,21 +111,16 @@ class CustomForm extends Basic {
 						$countErrors++;
 					}
 					elseif ($value['type'] == "select" || $value['type'] == "multiselect") {
-
 						$newComponentID = $this->objComponent->get_info("component_id");
 						foreach ($value['cOptions'] as $selectValue) {
-
 							if (trim($selectValue) != "" && !$this->objSelectValue->addNew(array("component_id", "componentvalue"), array($newComponentID, $selectValue))) {
 								$countErrors++;
 							}
-
 						}
-
 					}
 
 					$intSortNum++;
 				}
-
 			}
 
 			if ($countErrors == 0) {
@@ -151,12 +132,11 @@ class CustomForm extends Basic {
 	}
 
 
-	function countSubmissions($blnUnseenOnly=false) {
+	function countSubmissions($blnUnseenOnly = false) {
 
 		$returnVal = false;
 
 		if ($this->intTableKeyValue != "") {
-
 			if ($blnUnseenOnly) {
 				$result = $this->MySQL->query("SELECT submission_id FROM ".$this->MySQL->get_tablePrefix()."customform_submission WHERE seenstatus = '0' AND customform_id = '".$this->intTableKeyValue."'");
 			}
@@ -165,11 +145,9 @@ class CustomForm extends Basic {
 			}
 
 			$returnVal = $result->num_rows;
-
 		}
 
 		return $returnVal;
-
 	}
 
 	function getSubmissions() {
@@ -177,7 +155,6 @@ class CustomForm extends Basic {
 		$returnArr = array();
 
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT submission_id FROM ".$this->MySQL->get_tablePrefix()."customform_submission WHERE customform_id = '".$this->intTableKeyValue."' ORDER BY submitdate DESC");
 			while ($row = $result->fetch_assoc()) {
 				$returnArr[] = $row['submission_id'];
@@ -201,32 +178,24 @@ class CustomForm extends Basic {
 			$arrComponents = $this->getComponents();
 
 			foreach ($arrComponents as $componentID) {
-
 				$this->objComponent->select($componentID);
 				$componentInfo = $this->objComponent->get_info_filtered();
 
 				$result = $this->MySQL->query("SELECT formvalue FROM ".$this->MySQL->get_tablePrefix()."customform_values WHERE submission_id = '".$intSubmissionID."' AND component_id = '".$componentID."'");
 
 				if ($componentInfo['componenttype'] != "multiselect") {
-
 					$row = $result->fetch_assoc();
 					$returnArr['components'][$componentID] = $row['formvalue'];
-
 				}
 				else {
-
 					while ($row = $result->fetch_assoc()) {
 						$returnArr['components'][$componentID][] = $row['formvalue'];
 					}
-
 				}
-
 			}
-
 		}
 
 		return $returnArr;
-
 	}
 
 
@@ -250,7 +219,6 @@ class CustomForm extends Basic {
 		}
 
 		return $returnVal;
-
 	}
 
 

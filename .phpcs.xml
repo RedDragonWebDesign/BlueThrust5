@@ -36,4 +36,84 @@
 
     <!-- true/false/null not TRUE/FALSE/NULL -->
     <rule ref="Generic.PHP.LowerCaseConstant"/>
+
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen"/>
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose"/>
+
+    <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+    <rule ref="Generic.Formatting.SpaceAfterCast"/>
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
+    <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+    <rule ref="Generic.PHP.LowerCaseConstant"/>
+    <rule ref="Squiz.Classes.LowercaseClassKeywords"/>
+    <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
+    <rule ref="Squiz.ControlStructures.ForLoopDeclaration"/>
+    <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
+    <rule ref="Squiz.Scope.MemberVarScope"/>
+    <rule ref="Squiz.Scope.MethodScope"/>
+    <rule ref="PSR2.Files.EndFileNewline"/>
+    <rule ref="PSR2.Files.ClosingTag"/>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EndFile">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Generic.PHP.LowerCaseKeyword"/>
+    <rule ref="Generic.PHP.LowerCaseType"/>
+    <rule ref="PSR2.Classes.PropertyDeclaration"/>
+    <rule ref="Squiz.Scope.MethodScope"/>
+    <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
+    <rule ref="PSR2.Methods.FunctionClosingBrace"/>
+    <rule ref="Squiz.Functions.FunctionDeclaration"/>
+    <rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
+    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+        <properties>
+            <property name="equalsSpacing" value="1"/>
+        </properties>
+    </rule>
+    <rule ref="PEAR.Functions.ValidDefaultValue"/>
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
+    <rule ref="PSR2.Methods.FunctionCallSignature"/>
+    <rule ref="PSR2.Methods.FunctionCallSignature.SpaceAfterCloseBracket">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PSR2.Methods.FunctionCallSignature.OpeningIndent">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.ControlStructures.ControlSignature"/>
+    <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
+    <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
+    <rule ref="Squiz.ControlStructures.ForLoopDeclaration">
+        <properties>
+            <property name="ignoreNewlines" value="true"/>
+        </properties>
+    </rule>
+    <rule ref="Squiz.ControlStructures.ForLoopDeclaration.SpacingAfterOpen">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.ControlStructures.ForLoopDeclaration.SpacingBeforeClose">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
+    <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+    <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.AsNotLower">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
+    <rule ref="PSR2.ControlStructures.SwitchDeclaration"/>
+    <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.SpaceAfterOpen">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.SpaceBeforeClose">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
+    <rule ref="Squiz.WhiteSpace.CastSpacing"/>
+    <rule ref="Squiz.Scope.MethodScope.Missing">
+        <severity>0</severity>
+    </rule>
 </ruleset>

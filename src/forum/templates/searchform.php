@@ -18,7 +18,8 @@
 
 	$addToURL = addslashes(implode("&", $arrSearchFilterURL));
 	if ($addToURL != "") {
-$addToURL = "&".$addToURL; }
+$addToURL = "&".$addToURL;
+    }
 
 	echo "
 	

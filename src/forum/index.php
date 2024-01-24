@@ -70,7 +70,6 @@ while ($row = $result->fetch_assoc()) {
 	$arrBoards = $categoryObj->getAssociateIDs("AND subforum_id = '0' ORDER BY sortnum", true);
 	$dispBoards = "";
 	foreach ($arrBoards as $boardID) {
-
 		$boardObj->select($boardID);
 
 		if ($boardObj->memberHasAccess($memberInfo)) {
@@ -139,14 +138,11 @@ while ($row = $result->fetch_assoc()) {
 				
 				</tr>
 			";
-
 		}
-
 	}
 
 
 	if ($dispBoards != "") {
-
 		echo "
 			<tr>
 				<td colspan='4' class='boardCategory'>
@@ -163,10 +159,7 @@ while ($row = $result->fetch_assoc()) {
 		echo $dispBoards;
 
 		echo "<tr><td colspan='4'><br></td></tr>";
-
 	}
-
-
 }
 
 if ($result->num_rows == 0) {

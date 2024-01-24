@@ -1,14 +1,16 @@
 <?php
 
 if (!defined("MANAGEMENU_FUNCTIONS")) {
-exit(); }
+exit();
+}
 
 // Validate Functions
 
 function validateMenuItem_Links() {
 
 	if ($_POST['itemtype'] != "link") {
-return false; }
+return false;
+    }
 
 	global $linkOptionComponents, $formObj, $cID;
 
@@ -24,17 +26,15 @@ return false; }
 	$localFormObj = new Form($setupFormArgs);
 
 	if (!$localFormObj->validate()) {
-
 		$formObj->errors = array_merge($formObj->errors, $localFormObj->errors);
-
 	}
-
 }
 
 function validateMenuItem_Images() {
 
 	if ($_POST['itemtype'] != "image") {
-return false; }
+return false;
+    }
 
 	global $imageOptionComponents, $formObj, $cID;
 
@@ -52,17 +52,15 @@ return false; }
 	$localFormObj = new Form($setupFormArgs);
 
 	if (!$localFormObj->validate()) {
-
 		$formObj->errors = array_merge($formObj->errors, $localFormObj->errors);
-
 	}
-
 }
 
 function validateMenuItem_CustomPageTypes($pageName, &$formComponents) {
 
 	if ($_POST['itemtype'] != $pageName) {
-return false; }
+return false;
+    }
 
 	global $formObj, $cID;
 
@@ -81,17 +79,15 @@ return false; }
 	$localFormObj = new Form($setupFormArgs);
 
 	if (!$localFormObj->validate()) {
-
 		$formObj->errors = array_merge($formObj->errors, $localFormObj->errors);
-
 	}
-
 }
 
 function validateMenuItem_Poll() {
 
 	if ($_POST['itemtype'] != "poll") {
-return false; }
+return false;
+    }
 
 	global $pollOptionComponents, $formObj, $cID;
 
@@ -105,9 +101,7 @@ return false; }
 	$localFormObj = new Form($setupFormArgs);
 
 	if (!$localFormObj->validate()) {
-
 		$formObj->errors = array_merge($formObj->errors, $localFormObj->errors);
-
 	}
 }
 
@@ -125,10 +119,11 @@ return false; }
  */
 
 
-function saveMenuItem(&$menuComponents, &$saveObj, $arrDBNames, $dbID, $itemType, $saveAdditionalArgs=array(), $saveType="add") {
+function saveMenuItem(&$menuComponents, &$saveObj, $arrDBNames, $dbID, $itemType, $saveAdditionalArgs = array(), $saveType = "add") {
 
 	if ($_POST['itemtype'] != $itemType) {
-return false; }
+return false;
+    }
 
 	global $menuItemObj, $cID;
 
@@ -148,19 +143,18 @@ return false; }
 	$localFormObj = new Form($setupFormArgs);
 	$localFormObj->save();
 	$menuItemObj->update(array("itemtype_id"), array($saveObj->get_info($dbID)));
-
 }
 
 
 function savePoll() {
 
 	if ($_POST['itemtype'] != "poll") {
-return false; }
+return false;
+    }
 
 	global $menuItemObj;
 
 	$menuItemObj->update(array("itemtype_id"), array($_POST['poll']));
-
 }
 
 
@@ -170,9 +164,7 @@ function prepareItemTypeChangeJS($arr) {
 
 	$innerJS = "";
 	foreach ($arr as $ID => $value) {
-
 		$innerJS .= "\$('#".$ID."').hide();\n";
-
 	}
 
 	$innerJS .= "
@@ -180,13 +172,11 @@ function prepareItemTypeChangeJS($arr) {
 		";
 
 	foreach ($arr as $ID => $value) {
-
 		$innerJS .= "
 		case '".$value."':
 			\$('#".$ID."').show();
 			break;
 		";
-
 	}
 
 	$innerJS .= "

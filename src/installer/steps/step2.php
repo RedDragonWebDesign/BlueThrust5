@@ -2,7 +2,6 @@
 
 	$countErrors = 0;
 	if ($_POST['step1submit']) {
-
 		$mysqli = new btmysql($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass'], $_POST['dbname']);
 
 		if ($mysqli->connect_errno !== 0) {
@@ -14,7 +13,6 @@
 		}
 
 		if ($countErrors == 0) {
-
 			echo "
 				<div class='pageTitle'>Step 2</div>
 				";
@@ -106,18 +104,12 @@
 				</form>
 			
 			";
-
-
 		}
 		else {
 			$_POST['step1submit'] = false;
 		}
-
-
-
 	}
 
 	if (!$_POST['step1submit']) {
-
 		require_once("step1.php");
 	}

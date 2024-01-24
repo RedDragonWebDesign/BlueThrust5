@@ -14,7 +14,6 @@
 
 
 if (!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
-
 	exit();
 }
 else {
@@ -27,7 +26,6 @@ else {
 
 
 	if (!$member->hasAccess($consoleObj)) {
-
 		exit();
 	}
 }
@@ -93,20 +91,17 @@ echo "
 		$arrDispPlayers = array();
 		$arrEmptySpots = array();
 		foreach ($arrTeams as $teamID) {
-
 			$teamPlayer = $tournamentObj->getTeamPlayers($teamID, true);
 			$tournamentObj->objTeam->select($teamID);
 			$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 
 
 			if (count($teamPlayer) > 0) {
-
 				$tournamentObj->objPlayer->select($teamPlayer[0]);
 				$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
 
 				if ($member->select($playerInfo['member_id'])) {
 					$dispPlayer = $member->get_info_filtered("username");
-
 				}
 				else {
 					$dispPlayer = $playerInfo['displayname'];
@@ -117,11 +112,8 @@ echo "
 				$arrDispPlayers[$teamID] = "
 					<a href='javascript:void(0)' onclick=\"setPlayerSeed('".$teamInfo['tournamentteam_id']."')\">".$dispPlayer."</a><div class='mttDeletePlayer'><a href='javascript:void(0)' onclick=\"deletePlayer('".$playerInfo['tournamentplayer_id']."')\">X</a></div>
 				";
-
-
 			}
 			else {
-
 				$arrEmptySpots[$teamID] = "";
 				$arrDispPlayers[$teamID] = "
 					<span style='font-style: italic'>Empty Player Slot</span>
@@ -135,18 +127,12 @@ echo "
 		asort($arrSortPlayers);
 		$arrCombinedPlayersAndEmpty = $arrSortPlayers+$arrEmptySpots;
 		$i=1;
-		foreach ($arrCombinedPlayersAndEmpty as $key=>$value) {
-
+		foreach ($arrCombinedPlayersAndEmpty as $key => $value) {
 			echo "<div class='mttPlayerSlot main'>".$i.". ".$arrDispPlayers[$key]."</div>";
 			$i++;
-
 		}
-
-
 	}
 	else {
-
-
 	}
 
 
@@ -215,7 +201,6 @@ echo "
 	
 	";
 	if ($tournamentInfo['playersperteam'] == 1) {
-
 		echo "
 			function setPlayerSeed(intTeamID) {
 				
@@ -280,7 +265,6 @@ echo "
 			
 			}
 		";
-
 	}
 
 echo "

@@ -33,7 +33,6 @@ $cID = $consoleObj->findConsoleIDByName("Manage My Events");
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMessage->select($_POST['messageID'])) {
-
 	$eventID = $eventObj->objEventMessage->get_info("event_id");
 	$eventObj->select($eventID);
 
@@ -42,18 +41,13 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMessa
 	$memberInfo = $member->get_info_filtered();
 
 	if (trim($_POST['commentMessage']) != "" && $member->hasAccess($consoleObj) && ($eventObj->memberHasAccess($memberInfo['member_id'], "postmessages") || $memberInfo['rank_id'] == 1)) {
-
 		$eventObj->objEventMessageComment->addNew(array("eventmessage_id", "member_id", "dateposted", "comment"), array($_POST['messageID'], $memberInfo['member_id'], time(), $_POST['commentMessage']));
-
 	}
 
 
 	if (in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true)) || $memberInfo['member_id'] == $eventInfo['member_id'] || $memberInfo['rank_id'] == 1) {
-
-
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."eventmessage_comment WHERE eventmessage_id = '".$_POST['messageID']."' ORDER BY dateposted ASC");
 		while ($row = $result->fetch_assoc()) {
-
 			if ($objMember->select($row['member_id'])) {
 				$memInfo = $objMember->get_info_filtered();
 
@@ -80,10 +74,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMessa
 						<div style='clear: both'></div>
 					</li>
 				";
-
 			}
 		}
-
-
 	}
 }

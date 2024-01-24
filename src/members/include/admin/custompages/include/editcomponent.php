@@ -45,8 +45,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 
 	if ($_POST['editComponent']) {
-
-
 		$arrTypes = array("input", "largeinput", "select", "multiselect", "separator");
 
 		// Check Name
@@ -70,7 +68,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 		}
 
 		if ($countErrors == 0) {
-
 			$_SESSION['btFormComponent'][$componentIndex]['name'] = $_POST['componentName'];
 			$_SESSION['btFormComponent'][$componentIndex]['type'] = $_POST['componentType'];
 			$_SESSION['btFormComponent'][$componentIndex]['required'] = $_POST['componentRequired'];
@@ -101,7 +98,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 		
 				</script>
 			";
-
 		}
 
 		if ($countErrors > 0) {
@@ -123,24 +119,14 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 			$arrComponentInfo['name'] = $_POST['componentName'];
 			$arrComponentInfo['required'] = $_POST['componentRequired'];
 			$arrComponentInfo['tooltip'] = $_POST['componentToolTip'];
-
-
 		}
-
-
 	}
 
 
 	if (!$_POST['editComponent']) {
-
-
 		if ($dispError != "") {
-
-
-
 		}
 		else {
-
 			$_SESSION['btFormComponentTempSelectValues'] = $_SESSION['btFormComponent'][$componentIndex]['cOptions'];
 			$arrComponentInfo = filterArray($_SESSION['btFormComponent'][$componentIndex]);
 		}
@@ -160,7 +146,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 			case "separator":
 				$arrSelectedType['separator'] = " selected";
 				break;
-
 		}
 
 		if ($arrComponentInfo['required'] == 1) {
@@ -303,9 +288,5 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 				</script>
 		
 		";
-
-
-
 	}
-
 }

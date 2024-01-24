@@ -29,7 +29,6 @@
 	";
 
 	if ( ! empty($_POST['submit']) ) {
-
 		// Check Question
 		if (trim($_POST['pollquestion']) == "") {
 			$countErrors++;
@@ -70,7 +69,6 @@
 		}
 
 		if ($countErrors == 0) {
-
 			$setEndDate = 0;
 			if ($_POST['enddate'] == "choose") {
 				$setEndDate = $_POST['realenddate']/1000;
@@ -113,7 +111,6 @@
 						popupDialog('Manage Polls', '".$MAIN_ROOT."members', 'successBox');
 					</script>			
 				";
-
 			}
 			else {
 				$countErrors++;
@@ -126,14 +123,11 @@
 			$_POST = filterArray($_POST);
 			$_POST['submit'] = false;
 		}
-
-
 	}
 
 
 
 	if ( empty($_POST['submit']) ) {
-
 		$arrPostSelected['accesstype']['limited'] = ($pollInfo['accesstype'] == "memberslimited") ? " selected" : "";
 		$arrPostSelected['accesstype']['public'] = ($pollInfo['accesstype'] == "public") ? " selected" : "";
 
@@ -467,6 +461,4 @@
 			
 		</script>		
 	";
-
-
 	}

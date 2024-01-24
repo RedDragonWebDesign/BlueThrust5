@@ -23,7 +23,6 @@ class Forum extends Basic {
 
 
 	public function __construct($sqlConnection) {
-
 	}
 
 

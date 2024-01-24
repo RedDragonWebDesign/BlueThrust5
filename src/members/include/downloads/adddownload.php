@@ -55,7 +55,6 @@ while ($row = $result->fetch_assoc()) {
 }
 
 if (count($arrDownloadCat) == 0) {
-
 	echo "
 		<div style='display: none' id='errorBox'>
 			<p align='center'>
@@ -75,7 +74,6 @@ if (count($arrDownloadCat) == 0) {
 
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Name
 	if (trim($_POST['title']) == "") {
 		$countErrors++;
@@ -99,7 +97,6 @@ if ( ! empty($_POST['submit']) ) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must select a file to upload.<br>";
 	}
 	elseif ($countErrors == 0 && $downloadObj->uploadFile($_FILES['uploadfile'], $prevFolder."downloads/files/", $_POST['section'])) {
-
 		$blnUploaded = true;
 		$arrDLColumns = array("downloadcategory_id", "member_id", "dateuploaded", "filename", "mimetype", "filesize", "splitfile1", "splitfile2", "name", "description");
 		$splitFiles = $downloadObj->getSplitNames();
@@ -109,7 +106,6 @@ if ( ! empty($_POST['submit']) ) {
 		$arrDLValues = array($_POST['section'], $memberInfo['member_id'], time(), $_FILES['uploadfile']['name'], $mimeType, $fileSize, "downloads/files/".$splitFiles[0], "downloads/files/".$splitFiles[1], $_POST['title'], $_POST['description']);
 
 		if ($downloadObj->addNew($arrDLColumns, $arrDLValues)) {
-
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -123,16 +119,11 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 
 			";
-
 		}
 		else {
-
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
-
-
 		}
-
 	}
 
 
@@ -143,19 +134,14 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors > 0) {
-
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
-
 	}
-
-
 }
 
 
 
 if ( empty($_POST['submit']) ) {
-
 	echo "
 		<form action='console.php?cID=".$cID."' method='post' enctype='multipart/form-data'>
 			<div class='formDiv'>
@@ -225,5 +211,4 @@ if ( empty($_POST['submit']) ) {
 		</script>
 		
 	";
-
 }

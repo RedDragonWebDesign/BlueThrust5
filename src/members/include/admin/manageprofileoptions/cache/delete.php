@@ -33,12 +33,9 @@ $checkAccess = $checkAccess1 || $checkAccess2;
 
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($checkAccess) {
-
 		$deleteKey = $_POST['deleteKey'];
 		if (isset($_SESSION['btProfileCache'][$deleteKey])) {
 			$_SESSION['btProfileCache'][$deleteKey] = "";
@@ -46,24 +43,15 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$x = 0;
 			$newProfileArr = array();
 			foreach ($_SESSION['btProfileCache'] as $profileOption) {
-
 				if ($profileOption != "") {
-
 					$newProfileArr[] = $profileOption;
-
 				}
-
 			}
 
 			$_SESSION['btProfileCache'] = $newProfileArr;
-
 		}
 		$_SESSION['btProfileCacheRefresh'] = true;
 
 		require_once("view.php");
-
 	}
-
-
-
 }

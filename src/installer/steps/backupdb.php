@@ -10,7 +10,6 @@ $backupFileName = "dbbackup_".time().".txt";
 
 
 if (file_put_contents($backupFileName, "") === false && !isset($_POST['checkBackup'])) {
-
 	echo "
 
 	<div id='showConfirm' style='display: none'>
@@ -72,9 +71,7 @@ else {
 
 
 if ($_POST['checkBackup']) {
-
 	foreach ($arrTableMatches as $tableName) {
-
 		// Get table structure
 		$result = $mysqli->query("SHOW CREATE TABLE ".$tableName);
 		$row = $result->fetch_array();
@@ -88,10 +85,7 @@ if ($_POST['checkBackup']) {
 		$arrColumnNames = array();
 		$result = $mysqli->query("DESCRIBE ".$tableName);
 		while ($row = $result->fetch_assoc()) {
-
 			$arrColumnNames[] = $row['Field'];
-
-
 		}
 
 
@@ -111,8 +105,6 @@ if ($_POST['checkBackup']) {
 			$sqlInsertColumnValues = implode("','", $arrColumnValues);
 
 			$arrInsertStmts[] = $insertStmt.$sqlInsertColumnValues."');";
-
-
 		}
 
 		$createTableSQL .= ";\n\n";
@@ -125,7 +117,6 @@ if ($_POST['checkBackup']) {
 
 
 		$mysqli->query("DROP TABLE ".$tableName);
-
 	}
 
 	//print_r($arrOldInsertStmts);
@@ -133,5 +124,4 @@ if ($_POST['checkBackup']) {
 	echo "
 	Backup created successfully.  <a href='".$backupFileName."' target='_blank'>Click Here</a> to view.<br><br>
 	";
-
 }

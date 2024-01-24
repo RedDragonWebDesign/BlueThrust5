@@ -28,8 +28,6 @@ $cID = $consoleObj->findConsoleIDByName("Website Settings");
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info();
 
 	if ($member->hasAccess($consoleObj)) {
@@ -49,7 +47,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$arrThemes = scandir("../../../themes");
 		$arrCheckTheme = array();
 		foreach ($arrThemes as $strTheme) {
-
 			$themeURL = "../../../themes/".$strTheme;
 
 			if (is_dir($themeURL) && $strTheme != "." && $strTheme != "..") {
@@ -124,7 +121,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 		if ($countErrors == 0) {
-
 			$updateSettings = array("clanname", "clantag", "logourl", "theme", "maxdiplomacy", "failedlogins", "maxdsl", "lowdsl", "meddsl", "highdsl", "medalorder", "debugmode", "hideinactive", "hpnews", "news_postsperpage", "emailqueue_delay");
 			$updateSettingVals = array($_POST['clanName'], $_POST['clanTag'], $_POST['logoURL'], $_POST['themeName'], $_POST['maxDiplomacy'], $_POST['failedLogins'], $_POST['maxDSL'], $_POST['lowDSL'], $_POST['medDSL'], $_POST['highDSL'], $_POST['medalOrder'], $_POST['debugMode'], $_POST['hideInactive'], $numOfNewsPosts, $_POST['newsPostsPerPage'], $_POST['emailqueue_delay']);
 
@@ -133,7 +129,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save the information to the database.<br>";
 			}
-
 		}
 
 
@@ -147,7 +142,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					$('#errorDiv').hide();
 				</script>
 			";
-
 		}
 		else {
 			echo "
@@ -164,6 +158,5 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				</script>
 			";
 		}
-
 	}
 }

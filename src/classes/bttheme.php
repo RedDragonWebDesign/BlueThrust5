@@ -39,15 +39,12 @@
 			$hooksObj->run("head");
 
 			foreach ($this->arrHeadOrder as $value) {
-
 				echo $this->arrHead[$value]."\n";
-
 			}
 
 			if (isset($EXTERNAL_JAVASCRIPT) && $EXTERNAL_JAVASCRIPT != "") {
 				echo $EXTERNAL_JAVASCRIPT;
 			}
-
 		}
 
 		public function displayCopyright() {
@@ -66,17 +63,13 @@
 			$this->arrHead[$itemName] = $itemValue;
 
 			$this->arrHeadOrder[] = $itemName;
-
 		}
 
 		public function updateHeadItem($itemName, $itemValue) {
 
 			if (isset($this->arrHead[$itemName])) {
-
 				$this->arrHead[$itemName] = $itemValue;
-
 			}
-
 		}
 
 		public function removeHeadItem($itemName) {
@@ -91,7 +84,6 @@
 		public function moveHeadItem($itemName, $newPosition) {
 
 			if (isset($this->arrHead[$itemName])) {
-
 				if (isset($this->arrHeadOrder[$newPosition])) {
 					$newOrderArray = array();
 					foreach ($this->arrHeadOrder as $key => $value) {
@@ -109,9 +101,7 @@
 				else {
 					$this->arrHeadOrder[$newPosition] = $itemName;
 				}
-
 			}
-
 		}
 
 		public function requiredFooterFile() {
@@ -126,7 +116,6 @@
 			else {
 				$this->arrHead['title'] = "<title>".$title."</title>";
 			}
-
 		}
 
 		public function setThemeName($name) {

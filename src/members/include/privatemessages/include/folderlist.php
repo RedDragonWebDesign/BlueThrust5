@@ -71,7 +71,6 @@ echo "
 
 
 if ($x == 0) {
-
 	echo "
 		<div class='shadedBox' style='margin-top: 20px; width: 45%; margin-left: auto; margin-right: auto'>
 			<p class='main' align='center'>
@@ -80,5 +79,4 @@ if ($x == 0) {
 		</div>
 	
 	";
-
 }

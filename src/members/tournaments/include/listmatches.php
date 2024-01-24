@@ -37,15 +37,12 @@ if (!isset($tID)) {
 
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID) && $member->hasAccess($consoleObj)) {
-
 	$memberInfo = $member->get_info();
 	$tmemberID = $tournamentObj->get_info("member_id");
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 
 
 	if ($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
-
-
 		if (!isset($_POST['roundSelected']) || !is_numeric($_POST['roundSelected'])) {
 			$_POST['roundSelected'] = 1;
 		}
@@ -77,10 +74,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 
 
 			if ($tournamentInfo['playersperteam'] == 1) {
-
-
 				for ($i=1; $i<=2; $i++) {
-
 					$teamColumn = "team".$i."_id";
 					$dispName = "Empty Spot";
 					$dispSeed = "";
@@ -90,29 +84,22 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 						$arrPlayers = $tournamentObj->getTeamPlayers($matchInfo[$teamColumn], true);
 
 						if ($tournamentObj->objPlayer->select($arrPlayers[0])) {
-
 							$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
 
 							$dispName = "<a href='javascript:void(0)' onclick='setPlayerSeed(".$teamInfo['tournamentteam_id'].")'>";
 
 							if ($member->select($playerInfo['member_id'])) {
-
 								$dispName .= $member->get_info_filtered("username");
-
 							}
 							else {
-
 								$dispName .= $playerInfo['displayname'];
-
 							}
 
 							$dispName .= "</a>";
-
 						}
 						else {
 							$dispName = "Bye";
 						}
-
 					}
 
 
@@ -124,22 +111,17 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 						<div style='position: absolute; width: 25px; right: 3px; top: 5px; z-index: 9999'><a href='javascript:void(0)' onmouseover=\"showToolTip('Seed')\" onmouseout='hideToolTip()'>".$dispSeed."</a></div>
 					</div>					
 					";
-
 				}
 				echo "
 					<div class='main' style='position: relative; margin-top:5px; padding: 3px; text-align: right'>
 						<a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManageMatches&match=".$matchID."'>Manage Match</a>
 					</div>
 				";
-
-
-
 			}
 			else {
 				// Multi-player Team Tournament
 
 				for ($i=1; $i<=2; $i++) {
-
 					$teamColumn = "team".$i."_id";
 					$dispName = "Empty Spot";
 					$dispSeed = "";
@@ -154,17 +136,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 
 							$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
 							if (is_numeric($playerInfo['member_id']) && $member->select($playerInfo['member_id'])) {
-
 								$dispPlayerList .= "<b>&middot;</b> ".$member->getMemberLink()."<br>";
-
 							}
 							else {
-
 								$dispPlayerList .= "<b>&middot;</b> ".$playerInfo['displayname']."<br>";
-
 							}
-
-
 						}
 
 						if ($dispPlayerList == "") {
@@ -173,8 +149,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 
 
 						$dispName = "<a href='javascript:void(0)' onmouseover=\"showToolTip('".addslashes($dispPlayerList)."')\" onmouseout='hideToolTip()' onclick='setPlayerSeed(".$teamInfo['tournamentteam_id'].")'>".$teamInfo['name']."</a>";
-
-
 					}
 
 
@@ -186,18 +160,12 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 					<div style='position: absolute; width: 25px; right: 3px; top: 5px; z-index: 9999'><a href='javascript:void(0)' onmouseover=\"showToolTip('Seed')\" onmouseout='hideToolTip()'>".$dispSeed."</a></div>
 					</div>
 					";
-
 				}
 				echo "
 				<div class='main' style='position: relative; margin-top:5px; padding: 3px; text-align: right'>
 				<a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tID."&pID=ManageMatches&match=".$matchID."'>Manage Match</a>
 				</div>
 				";
-
-
-
-
-
 			}
 
 
@@ -210,12 +178,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 					<div style='clear:both'></div>
 				";
 			}
-
-
 		}
-
 	}
-
-
-
 }

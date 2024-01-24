@@ -29,7 +29,6 @@
 		echo "SELECT * FROM ".$dbprefix."tableupdates WHERE tablename LIKE '".$dbprefix."menu%'".$addSQL."<br><br>";
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."tableupdates WHERE tablename LIKE '".$dbprefix."menu%'".$addSQL);
 		while ($row = $result->fetch_assoc()) {
-
 			$tableName = $row['tablename']."_update";
 			$updateTime = $row['updatetime'];
 
@@ -37,9 +36,7 @@
 				$updateMenu++;
 
 				$_SESSION[$tableName] = $updateTime;
-
 			}
-
 		}
 
 
@@ -53,7 +50,6 @@
 						";
 
 					for ($i=0; $i<=$menuXML->info->section->count(); $i++) {
-
 						echo "
 						
 							$.post('".$MAIN_ROOT."themes/_refreshmenus.php', { refreshSectionID: ".$i." }, function(data) {
@@ -61,7 +57,6 @@
 							});
 	
 						";
-
 					}
 
 
@@ -73,7 +68,5 @@
 				</script>
 				
 			";
-
 		}
-
 	}

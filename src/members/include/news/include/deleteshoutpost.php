@@ -37,7 +37,6 @@ $newsObj = new News($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $newsObj->select($_POST['postID'])) {
-
 	$newsObj->delete();
 
 	$shoutboxObj = new Shoutbox($mysqli, "news", "news_id");
@@ -54,5 +53,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 	echo $shoutboxObj->dispShoutbox();
-
 }

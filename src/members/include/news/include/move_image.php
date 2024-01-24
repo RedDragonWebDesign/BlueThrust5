@@ -26,12 +26,9 @@ $cID = $consoleObj->findConsoleIDByName("Manage Home Page Images");
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($member->hasAccess($consoleObj) && $imageSliderObj->select($_POST['imgID'])) {
-
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 
 		$imageSliderObj->move($_POST['iDir']);
@@ -42,6 +39,4 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	else {
 		echo $_POST['imgID'];
 	}
-
-
 }

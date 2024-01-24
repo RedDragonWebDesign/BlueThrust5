@@ -31,7 +31,6 @@ $member->select($_SESSION['btUsername']);
 $tournamentObj = new Tournament($mysqli);
 $dispMessage = "";
 if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->select($_POST['teamID']) && $member->hasAccess($consoleObj)) {
-
 	$memberInfo = $member->get_info();
 
 	$teamInfo = $tournamentObj->objTeam->get_info_filtered();
@@ -41,14 +40,12 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 
 
 	if (($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1")  || $tournamentObj->isManager($memberInfo['member_id']) && trim($_POST['newName']) != "") {
-
 		if ($tournamentObj->objTeam->update(array("name"), array($_POST['newName']))) {
 			$dispMessage = "<p class='successFont'><b>Team Name Saved!</b></p>";
 
 			$teamCounter = 1;
 			$arrTeams = $tournamentObj->getTeams(true);
 			foreach ($arrTeams as $teamID) {
-
 				$tournamentObj->objTeam->select($teamID);
 				$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 
@@ -75,22 +72,14 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 				</script>
 			
 			";
-
-
-
-
 		}
 		else {
 			$dispMessage = "<p class='failedFont'><b>Unable to save team name!</b></p>";
 		}
-
-
 	}
 	else {
 		$dispMessage = "<p class='failedFont'><b>Unable to save team name.  Make sure your team name is not blank!</b></p>";
 	}
-
-
 }
 
 echo $dispMessage;

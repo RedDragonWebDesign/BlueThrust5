@@ -1,7 +1,8 @@
 <?php
 
 	if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+    }
 
 	if (!isset($tournamentObj)) {
 		$tournamentObj = new Tournament($mysqli);

@@ -28,13 +28,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -68,8 +67,6 @@ require_once($prevFolder."include/breadcrumb.php");
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournaments ORDER BY startdate DESC");
 
 		while ($row = $result->fetch_assoc()) {
-
-
 			$tournamentObj->select($row['tournament_id']);
 			$memberObj->select($row['member_id']);
 			$dispManager = $memberObj->getMemberLink();
@@ -115,12 +112,9 @@ require_once($prevFolder."include/breadcrumb.php");
 				</tr>
 			
 			";
-
 		}
 
 		if ($result->num_rows == 0) {
-
-
 			echo "
 				<tr>
 					<td class='main' colspan='4'>
@@ -130,7 +124,6 @@ require_once($prevFolder."include/breadcrumb.php");
 					</td>
 				</tr>
 			";
-
 		}
 		?>
 		

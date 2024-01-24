@@ -14,7 +14,6 @@
 
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
-
 	exit();
 }
 else {
@@ -27,7 +26,6 @@ else {
 
 
 	if (!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "addrank")) {
-
 		exit();
 	}
 }
@@ -48,7 +46,6 @@ $countErrors = 0;
 $squadRankList = $squadObj->getRankList();
 
 if (count($squadRankList) < 2) {
-
 	echo "
 		<div style='display: none' id='errorBox'>
 			<p align='center'>
@@ -60,12 +57,8 @@ if (count($squadRankList) < 2) {
 			popupDialog('Send Squad Invite', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'errorBox');
 		</script>
 	";
-
-
-
 }
 elseif ($squadInfo['recruitingstatus'] == 0) {
-
 	echo "
 		<div style='display: none' id='errorBox'>
 			<p align='center'>
@@ -77,16 +70,12 @@ elseif ($squadInfo['recruitingstatus'] == 0) {
 			popupDialog('Send Squad Invite', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'errorBox');
 		</script>
 	";
-
-
 }
 else {
-
 	$squadMemberList = $squadObj->getMemberList();
 	$intFounderRankID = $squadObj->getFounderRankID();
 
 	if ( ! empty($_POST['submit']) ) {
-
 		$squadInvitesOutstanding = $squadObj->getOutstandingInvites();
 
 		// Check Member
@@ -116,12 +105,10 @@ else {
 		// Check Starting Rank
 
 		if ($squadObj->memberHasAccess($memberInfo['member_id'], "setrank")) {
-
 			if (!$squadObj->objSquadRank->select($_POST['startingrank']) || $_POST['startingrank'] == $intFounderRankID) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid starting rank!";
 			}
-
 		}
 		else {
 			$startRankKey = max(array_keys($squadRankList));
@@ -131,15 +118,12 @@ else {
 
 
 		if ($countErrors == 0) {
-
-
 			$arrColumns = array("squad_id", "sender_id", "receiver_id", "datesent", "message", "startingrank_id");
 			$arrValues = array($squadInfo['squad_id'], $memberInfo['member_id'], $intNewMemberID, time(), $_POST['message'], $_POST['startingrank']);
 
 			$squadInviteObj = new Basic($mysqli, "squadinvites", "squadinvite_id");
 
 			if ($squadInviteObj->addNew($arrColumns, $arrValues)) {
-
 				$intViewSquadInvitesCID = $consoleObj->findConsoleIDByName("View Squad Invitations");
 
 				$member->postNotification("You have received a squad invitation from <b><a href='".$MAIN_ROOT."squads/profile.php?sID=".$squadInfo['squad_id']."'>".$squadInfo['name']."</a></b>!<br><br><a href='".$MAIN_ROOT."members/console.php?cID=".$intViewSquadInvitesCID."'>Click Here</a> to view your Squad Invitations.");
@@ -157,14 +141,11 @@ else {
 					</script>
 				
 				";
-
 			}
 			else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 			}
-
-
 		}
 
 
@@ -172,23 +153,17 @@ else {
 			$_POST = filterArray($_POST);
 			$_POST['submit'] = false;
 		}
-
-
-
 	}
 
 
 	if ( empty($_POST['submit']) ) {
-
 		$sqlMemberList = "('".implode("','", $squadMemberList)."')";
 
 		$arrMembers = array();
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE member_id NOT IN ".$sqlMemberList." AND disabled = '0' ORDER BY username");
 		while ($row = $result->fetch_assoc()) {
-
 			$arrMembers[] = array("id" => $row['member_id'], "value" => filterText($row['username']));
-
 		}
 
 
@@ -199,13 +174,11 @@ else {
 			$intFounderRankID = $squadObj->getFounderRankID();
 
 			foreach ($squadRankList as $squadRank) {
-
 				if ($squadRank != $intFounderRankID) {
 					$squadObj->objSquadRank->select($squadRank);
 					$squadRankInfo = $squadObj->objSquadRank->get_info_filtered();
 					$setrankoptions .= "<option value='".$squadRankInfo['squadrank_id']."'>".$squadRankInfo['name']."</option>";
 				}
-
 			}
 
 			$dispSetRank = "
@@ -216,7 +189,6 @@ else {
 			</tr>
 			
 			";
-
 		}
 
 
@@ -288,8 +260,5 @@ else {
 			</script>
 			
 		";
-
-
 	}
-
 }

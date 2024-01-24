@@ -13,7 +13,6 @@
  */
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
-
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/basicorder.php");
@@ -29,11 +28,8 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 
 	if (!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
-
 		exit();
-
 	}
-
 }
 
 $diplomacyStatusObj = new Basic($mysqli, "diplomacy_status", "diplomacystatus_id");
@@ -43,7 +39,7 @@ $result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_request WHERE con
 while ($row = $result->fetch_assoc()) {
 	$row = filterArray($row);
 
-	foreach ($row as $key=>$value) {
+	foreach ($row as $key => $value) {
 		if ($value == "") {
 			$row[$key] = "Not Set";
 		}
@@ -103,7 +99,6 @@ while ($row = $result->fetch_assoc()) {
 			</table>
 		</div>
 	";
-
 }
 
 

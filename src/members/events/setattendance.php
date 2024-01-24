@@ -13,7 +13,6 @@
  */
 
 if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
-
 	exit();
 }
 else {
@@ -68,18 +67,15 @@ $statusSelectBox->setOptions(array("Unconfirmed", "Attended", "Excused Absence",
 	<?php
 
 		if ( ! empty($_POST['submit']) ) {
-
 			$arrColumns = array("attendconfirm_admin");
 			$arrValues = array($_POST['status']);
 			foreach ($_POST as $value) {
-
 				if (is_numeric($value) && $eventObj->objEventMember->select($value)) {
 					$checkEventID = $eventObj->objEventMember->get_info("event_id");
 					if ($checkEventID == $eventInfo['event_id']) {
 						$eventObj->objEventMember->update($arrColumns, $arrValues);
 					}
 				}
-
 			}
 
 			$formObj = new Form();
@@ -92,7 +88,6 @@ $statusSelectBox->setOptions(array("Unconfirmed", "Attended", "Excused Absence",
 		$counter = 0;
 		$eventMemberObj = new Member($mysqli);
 		while ($row = $result->fetch_assoc()) {
-
 			if ($counter == 1) {
 				$addCSS = " alternateBGColor";
 				$counter = 0;

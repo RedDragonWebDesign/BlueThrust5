@@ -29,12 +29,10 @@ $cID = $consoleObj->findConsoleIDByName("Manage My Events");
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember->select($_POST['eMemID'])) {
-
 	$eventID = $eventObj->objEventMember->get_info("event_id");
 	$memberInfo = $member->get_info_filtered();
 
 	if ($eventObj->select($eventID) && $member->hasAccess($consoleObj) && ($eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites") || $memberInfo['rank_id'] == 1)) {
-
 		$eventInfo = $eventObj->get_info_filtered();
 		$eventMemberInfo = $eventObj->objEventMember->get_info_filtered();
 		$objInviteMember = new Member($mysqli);
@@ -56,15 +54,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMembe
 			$row = filterArray($row);
 			$eventMemberID = $eventObj->getEventMemberID($row['member_id']);
 			if ($eventMemberID !== false) {
-
 				$memberoptions .= "<option value='".$eventMemberID."'>".$row['name']." ".$row['username']."</option>";
-
 			}
 		}
 
 		echo $memberoptions;
-
 	}
-
-
 }

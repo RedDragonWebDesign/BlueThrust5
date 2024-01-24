@@ -14,7 +14,6 @@
 
 
 if (!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
-
 	exit();
 }
 else {
@@ -27,7 +26,6 @@ else {
 
 
 	if (!$member->hasAccess($consoleObj)) {
-
 		exit();
 	}
 }
@@ -53,7 +51,6 @@ $countErrors = 0;
 $blnShowPoolList = true;
 
 if (isset($_GET['poolID']) && isset($_GET['teamID']) && $tournamentObj->objTournamentPool->select($_GET['poolID']) && $tournamentObj->objTeam->select($_GET['teamID'])) {
-
 	$poolInfo = $tournamentObj->objTournamentPool->get_info();
 	$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 
@@ -98,20 +95,15 @@ if (isset($_GET['poolID']) && isset($_GET['teamID']) && $tournamentObj->objTourn
 				
 				
 		";
-
-
 	}
 
 	echo "
 			</div>
 	";
-
-
 }
 
 
 if ($blnShowPoolList) {
-
 	if ($tournamentInfo['playersperteam'] == 1) {
 		$dispTeamOrPlayer = "Player";
 	}
@@ -168,7 +160,6 @@ if ($blnShowPoolList) {
 					$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 
 					if ($tournamentInfo['playersperteam'] == 1) {
-
 						$dispTeamName = $tournamentObj->getPlayerName($teamID);
 
 						if ($dispTeamName == "") {
@@ -177,8 +168,6 @@ if ($blnShowPoolList) {
 						else {
 							$dispTeamName = "<b><a href='managetournament.php?tID=".$tID."&pID=ManagePools&poolID=".$poolID."&teamID=".$teamID."'>".$dispTeamName."</a></b>";
 						}
-
-
 					}
 					else {
 						$dispTeamName = "<b><a href='managetournament.php?tID=".$tID."&pID=ManagePools&poolID=".$poolID."&teamID=".$teamID."'>".$teamInfo['name']."</a></b>";
@@ -209,6 +198,4 @@ if ($blnShowPoolList) {
 	echo "
 	</div>
 	";
-
-
 }

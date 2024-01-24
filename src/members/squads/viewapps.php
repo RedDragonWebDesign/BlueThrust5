@@ -13,7 +13,6 @@
  */
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
-
 	exit();
 }
 else {
@@ -26,7 +25,6 @@ else {
 
 
 	if (!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "acceptapps")) {
-
 		exit();
 	}
 }

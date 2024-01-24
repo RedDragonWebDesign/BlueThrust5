@@ -74,7 +74,6 @@ $pmObj->set_assocTableKey("member_id");
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
 	$memberInfo = $member->get_info_filtered();
 	$formObj = new Form();
 
@@ -146,7 +145,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$emailPMCID = $consoleObj->findConsoleIDByName("Email Private Messages");
 	$consoleObj->select($emailPMCID);
 	if ($member->hasAccess($consoleObj)) {
-
 		$formObj->addComponentSortSpace(2, $arrComponents);
 		$arrComponents = $formObj->components;
 
@@ -158,7 +156,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			"tooltip" => "Checking this box will force an e-mail to be sent to the member(s) as well.",
 			"attributes" => array("class" => "formInput")
 		);
-
 	}
 	$consoleObj->select($cID);
 
@@ -174,13 +171,9 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 	require_once(BASE_DIRECTORY."members/console.form.php");
-
-
 }
 else {
-
 	die("<script type='text/javascript'>window.location = '".MAIN_ROOT."login.php';</script>");
-
 }
 
 

@@ -30,13 +30,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -69,7 +68,6 @@ while ($row = $result->fetch_assoc()) {
 
 			$imageSize = getimagesize($imageURL);
 			$rankCatInfo['imagewidth'] = $imageSize[0];
-
 		}
 
 		if ($rankCatInfo['imageheight'] == 0) {
@@ -88,7 +86,6 @@ while ($row = $result->fetch_assoc()) {
 		";
 	}
 	else {
-
 		$dispCatDesc = "";
 		if ($rankCatInfo['description'] != "") {
 			$dispCatDesc = " style='cursor: pointer' onmouseover=\"showToolTip('<b>".$rankCatInfo['name']."</b><br>".$rankCatInfo['description']."')\" onmouseout='hideToolTip()'";
@@ -112,7 +109,6 @@ while ($row = $result->fetch_assoc()) {
 
 				$imageSize = getimagesize($imageURL);
 				$rankInfo['imagewidth'] = $imageSize[0];
-
 			}
 
 			if ($rankInfo['imageheight'] == 0) {
@@ -136,10 +132,8 @@ while ($row = $result->fetch_assoc()) {
 				<tr><td colspan='2'><br></td></tr>
 			";
 		}
-
 	}
 	echo "<tr><td colspan='2'><br></td></tr>";
-
 }
 echo "</table>";
 

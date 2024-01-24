@@ -36,7 +36,6 @@ if (isset($_GET['action']) && $_GET['action'] == "edit" && $menuCatObj->select($
 	require_once("managemenu/edit_category.php");
 }
 elseif (!isset($_GET['action']) || (isset($_GET['action']) && !$menuCatObj->select($_GET['mcID']))) {
-
 	echo "
 		<table class='formTable'>
 			<tr>
@@ -119,6 +118,4 @@ elseif (!isset($_GET['action']) || (isset($_GET['action']) && !$menuCatObj->sele
 			
 		</script>
 	";
-
-
 }

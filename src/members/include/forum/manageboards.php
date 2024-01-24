@@ -39,12 +39,9 @@ $categoryObj->set_assocTableKey("forumboard_id");
 
 
 if ($boardObj->select($_GET['bID']) && $_GET['action'] == "edit") {
-
 	require_once("include/edit_board.php");
-
 }
 else {
-
 	echo "
 	
 		<table class='formTable'>

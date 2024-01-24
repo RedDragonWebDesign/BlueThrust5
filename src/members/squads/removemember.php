@@ -14,7 +14,6 @@
 
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
-
 	exit();
 }
 else {
@@ -27,7 +26,6 @@ else {
 
 
 	if (!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "removemember")) {
-
 		exit();
 	}
 }
@@ -49,7 +47,6 @@ $countErrors = 0;
 $squadMemberList = $squadObj->getMemberListSorted();
 
 if ($_POST['submitted']) {
-
 	// Check the Member
 
 	if (!in_array($_POST['squadmember'], $squadMemberList)) {
@@ -76,9 +73,7 @@ if ($_POST['submitted']) {
 
 
 	if ($countErrors == 0) {
-
 		if ($squadObj->objSquadMember->delete()) {
-
 			$member->select($_POST['squadmember']);
 			$member->postNotification("You were removed from the squad squad: <b><a href='".$MAIN_ROOT."squads/profile.php?sID=".$squadInfo['squad_id']."'>".$squadInfo['name']."</a></b>.");
 
@@ -95,30 +90,21 @@ if ($_POST['submitted']) {
 			</script>
 			
 			";
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 		}
-
-
 	}
 
 
 	if ($countErrors > 0) {
 		$_POST['submitted'] = false;
 	}
-
-
-
 }
 
 if (!$_POST['submitted']) {
-
-
 	foreach ($squadMemberList as $memberID) {
-
 		$member->select($memberID);
 		if ($squadInfo['member_id'] != $memberID) {
 			$squadmemberoptions .= "<option value='".$memberID."'>".$member->get_info_filtered("username")."</option>";
@@ -205,6 +191,4 @@ if (!$_POST['submitted']) {
 		
 		</script>
 	";
-
-
 }

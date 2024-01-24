@@ -26,8 +26,6 @@ $consoleObj->select($manageClanCID);
 $diplomacyClanObj = new Basic($mysqli, "diplomacy", "diplomacy_id");
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $diplomacyClanObj->select($_POST['dClanID']) && $member->hasAccess($consoleObj)) {
-
-
 	$dClanName = $diplomacyClanObj->get_info_filtered("clanname");
 
 	if (isset($_POST['confirmDelete'])) {
@@ -38,9 +36,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $diplomacyClanObj->selec
 		require_once("main_manageclans.php");
 	}
 	else {
-
 		echo "<p class='main' align='center'>Are you sure you want to delete ".$dClanName." from the diplomacy page?</p>";
-
 	}
-
 }

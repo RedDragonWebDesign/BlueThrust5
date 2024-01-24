@@ -28,7 +28,6 @@ $memberAppObj = new MemberApp($mysqli);
 
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $memberAppObj->select($_POST['mAppID'])) {
-
 	$arrMemAppInfo = $memberAppObj->get_info_filtered();
 
 
@@ -44,7 +43,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	}
 
 	if ($memberAppObj->addMember($newRankID)) {
-
 		$newMemberInfo = $memberAppObj->getNewMemberInfo();
 		$dispNewMember = $newMemberInfo['username'];
 
@@ -62,7 +60,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				</p>
 			</div>
 		";
-
 	}
 	else {
 		echo "
@@ -100,8 +97,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			});		
 		</script>
 	";
-
-
 }
 
 require_once("memberapplist.php");

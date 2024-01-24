@@ -57,7 +57,6 @@
 
 				if ($value < 1 && $maxValue != $this->numOfPages) {
 					$arrReturn[$key] = $maxValue+1;
-
 				}
 				elseif ($value < 1 && $maxValue == $this->numOfPages) {
 					unset($arrReturn[$key]);
@@ -73,14 +72,12 @@
 			sort($arrReturn);
 
 			return $arrReturn;
-
 		}
 
 
 		public function show() {
 
 			if ($this->numOfPages > 1) {
-
 				$arrPages = $this->getPageNumbersShown();
 
 				$dispFirstDots = ($arrPages[0] == 2) ? "" : " ... ";
@@ -94,19 +91,16 @@
 				echo "<div class='pageSelectorDiv'>";
 				echo $dispPrevButton.$dispFirstPageButton;
 				foreach ($arrPages as $pageNum) {
-
 					if ($pageNum == $this->currentPage) {
 						echo "<div class='pageNum currentPage'>".$pageNum."</div>";
 					}
 					else {
 						echo "<div class='pageNum'><a href='".$this->pageLink.$pageNum."'>".$pageNum."</a></div>";
 					}
-
 				}
 				echo $dispLastPageButton.$dispNextButton;
 				echo "</div>";
 			}
-
 		}
 
 

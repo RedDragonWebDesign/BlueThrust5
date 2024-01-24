@@ -52,8 +52,6 @@ echo "
 
 
 if ( ! empty($_POST['submit']) ) {
-
-
 	$countErrors = 0;
 
 	// Check Page Title
@@ -76,7 +74,6 @@ if ( ! empty($_POST['submit']) ) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid console category.<br>";
 	}
 	else {
-
 		$arrConsoleIDs = $consoleCatObj->getAssociateIDs();
 
 		$blnOrderCheck1 = $_POST['consoleorder'] == "first" && count($arrConsoleIDs) > 1 && $consoleInfo['consolecategory_id'] == $_POST['consolecat'];
@@ -94,30 +91,22 @@ if ( ! empty($_POST['submit']) ) {
 		else {
 			// Check Before/After Then Make Room
 
-			if ($_POST['consolebeforeafter'] == "before" OR $_POST['consolebeforeafter'] == "after") {
-
-
+			if ($_POST['consolebeforeafter'] == "before" or $_POST['consolebeforeafter'] == "after") {
 				$consoleOrderInfo = $consoleObj->get_info();
 
 
 				$intNewSortNum = $consoleObj->makeRoom($_POST['consolebeforeafter']);
-
-
-
 			}
 			else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order. (before/after)<br>";
 			}
 		}
-
-
 	}
 
 	// Check Security Code
 
 	if ($ADMIN_KEY != $_POST['checkadmin']) {
-
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."failban WHERE ipaddress = '".$IP_ADDRESS."' AND pagename = 'editconsoleoption'");
 		$countFails = $result->num_rows;
 		$adminKeyFails = $intMaxAttempts-$countFails;
@@ -156,36 +145,27 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 			
 			";
-
-
 		}
 
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You entered an invalid admin key.  Please check the config file for the correct admin key.  You have ".$adminKeyFails." more trys before being IP Banned. ".$IP_ADDRESS."<br>";
-
-
-
 	}
 
 	$consoleFileURL = "";
 	if ($countErrors == 0 && $_FILES['consolefile']['name'] != "") {
 		// No Errors Try uploading Console File
 
-		$newFileName = strtolower(str_replace(" ","",$_POST['pagetitle']))."_";
+		$newFileName = strtolower(str_replace(" ", "", $_POST['pagetitle']))."_";
 
 		$btUpload = new BTUpload($_FILES['consolefile'], $newFileName, "include/customconsole/", array(".php"));
 
 		if ($btUpload->uploadFile()) {
-
 			$consoleFileURL = "customconsole/".$btUpload->getUploadedFileName();
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload console option.  Please make sure the filesize is not too big and filetype is php.<br>";
 		}
-
-
 	}
 
 	if ($_POST['hideoption'] != 1) {
@@ -241,7 +221,6 @@ if ( ! empty($_POST['submit']) ) {
 				if ($member->select($memAccessInfo['mID'])) {
 					$memberConsoleObj->addNew($arrColumns, array($memAccessInfo['mID'], $newConsoleInfo['console_id'], $intAllowDeny));
 				}
-
 			}
 
 
@@ -258,18 +237,12 @@ if ( ! empty($_POST['submit']) ) {
 			popupDialog('Edit Console Option', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'successBox');
 			</script>
 			";
-
 		}
-
-
 	}
 	else {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
-
-
 }
 
 
@@ -278,7 +251,6 @@ if ( empty($_POST['submit']) ) {
 	$_SESSION['btAccessRules'] = array();
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."console_members WHERE console_id = '".$consoleInfo['console_id']."'");
 	while ($row = $result->fetch_assoc()) {
-
 		if ($row['allowdeny'] == 0) {
 			$strAllowDeny = "deny";
 		}
@@ -305,7 +277,6 @@ if ( empty($_POST['submit']) ) {
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
-
 		$dispSelected = "";
 		if ($consoleInfo['consolecategory_id'] == $row['consolecategory_id']) {
 			$dispSelected = "selected";
@@ -329,7 +300,6 @@ if ( empty($_POST['submit']) ) {
 			$rankOptions .= "<div id='ranksection_".$rankCat."'>";
 			$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1' AND rank_id IN ".$sqlRanks." ORDER BY ordernum DESC");
 			while ($row = $result->fetch_assoc()) {
-
 				$dispChecked = "";
 				if ($consoleObj->hasAccess($row['rank_id'])) {
 					$dispChecked = "checked";
@@ -340,7 +310,6 @@ if ( empty($_POST['submit']) ) {
 			}
 			$rankOptions .= "</div><br>";
 		}
-
 	}
 
 
@@ -348,17 +317,16 @@ if ( empty($_POST['submit']) ) {
 	$rankOptionsHeight = $counter*20;
 
 	if ($rankOptionsHeight > 300) {
-$rankOptionsHeight = 300; }
+$rankOptionsHeight = 300;
+    }
 
 
 	$memberOptions = "<option value='select'>[SELECT]</option>";
 	$result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.ordernum FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id != '1' AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
 	while ($row = $result->fetch_assoc()) {
-
 		$memberRank->select($row['rank_id']);
 		$dispRankName = $memberRank->get_info_filtered("name");
 		$memberOptions .= "<option value='".$row['member_id']."'>".$dispRankName." ".filterText($row['username'])."</option>";
-
 	}
 
 	$manageRanksCID = $consoleObj->findConsoleIDByName("Manage Ranks");
@@ -378,13 +346,12 @@ $rankOptionsHeight = 300; }
 		";
 	}
 
-	if ($consoleInfo['defaultconsole'] == 0 AND $consoleInfo['sep'] == 0) {
+	if ($consoleInfo['defaultconsole'] == 0 and $consoleInfo['sep'] == 0) {
 		$dispPageTitle = "<input type='text' name='pagetitle' class='textBox' value='".$consoleInfo['pagetitle']."' style='width: 250px'>";
 		$dispPageTitleHelp = "";
 		$dispFileHelp = "";
 		$dispFileOpen = "<input type='file' name='consolefile' class='textBox' style='width: 250px; border: 0px'><br>
 							<span style='font-size: 10px'>File Type: .php | <a href='javascript:void(0)' onmouseover=\"showToolTip('The file size upload limit is controlled by your PHP settings in the php.ini file.')\" onmouseout='hideToolTip()'>File Size: ".ini_get("upload_max_filesize")."B or less</a></span>";
-
 	}
 	elseif ($consoleInfo['sep'] == 1) {
 		$dispPageTitle = "<b>".$consoleInfo['pagetitle']."</b>";
@@ -392,7 +359,6 @@ $rankOptionsHeight = 300; }
 
 		$dispFileOpen = "<span style='font-style: italic; font-weight: bold'>N/A</span>";
 		$dispFileHelp = "";
-
 	}
 	else {
 		$dispPageTitle = "<b>".$consoleInfo['pagetitle']."</b>";
@@ -594,7 +560,4 @@ $rankOptionsHeight = 300; }
 			refreshConsoleOptions();
 		</script>
 	";
-
-
-
 }

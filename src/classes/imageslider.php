@@ -35,7 +35,6 @@ class ImageSlider extends BasicOrder {
 		$this->MySQL = $sqlConnection;
 		$this->strTableName = $this->MySQL->get_tablePrefix()."imageslider";
 		$this->strTableKey = "imageslider_id";
-
 	}
 
 
@@ -52,13 +51,9 @@ class ImageSlider extends BasicOrder {
 		global $MAIN_ROOT;
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
-
 			if (strpos($this->arrObjInfo['imageurl'], "http://") === false) {
-
 				$returnVal = $this->arrObjInfo['imageurl'];
-
 			}
-
 		}
 
 		return $returnVal;
@@ -76,7 +71,6 @@ class ImageSlider extends BasicOrder {
 		}
 
 		return $this->arrImageIDs;
-
 	}
 
 
@@ -86,7 +80,6 @@ class ImageSlider extends BasicOrder {
 		$intRandomKey = array_rand($this->arrImageIDs);
 
 		$this->select($this->arrImageIDs[$intRandomKey]);
-
 	}
 
 
@@ -98,7 +91,6 @@ class ImageSlider extends BasicOrder {
 			echo "";
 		}
 		elseif (count($this->arrImageIDs) == 1 && $this->select($this->arrImageIDs[0]) && $this->arrObjInfo['fillstretch'] == "stretch") {
-
 			$addOverlay = "";
 			if ($this->arrObjInfo['message'] != "" || $this->arrObjInfo['messagetitle'] != "") {
 				$addOverlay = "
@@ -123,10 +115,8 @@ class ImageSlider extends BasicOrder {
 				</div>
 			
 			";
-
 		}
 		elseif (count($this->arrImageIDs) == 1 && $this->select($this->arrImageIDs[0]) && $this->arrObjInfo['fillstretch'] == "fill") {
-
 			$this->select($this->arrImageIDs[0]);
 
 			$addOverlay = "";
@@ -151,10 +141,8 @@ class ImageSlider extends BasicOrder {
 				".$addLink."<div class='hp_imgScrollContainer' style=\"background: url('".$this->arrObjInfo['imageurl']."'); width: ".$this->intDisplayWidth.$this->strDisplayWidthUnit."; height: ".$this->intDisplayHeight.$this->strDisplayHeightUnit."\">".$addOverlay."</div>".$closeLinkTag."
 			
 			";
-
 		}
 		elseif ($this->strDisplayStyle == "random" && count($this->arrImageIDs) > 1) {
-
 			$this->selectRandomImage();
 
 			$addOverlay = "";
@@ -182,17 +170,13 @@ class ImageSlider extends BasicOrder {
 			";
 			}
 			else {
-
 				echo "
 					".$addLink."<div class='hp_imgScrollContainer' style=\"background: url('".$this->arrObjInfo['imageurl']."'); width: ".$this->intDisplayWidth.$this->strDisplayWidthUnit."; height: ".$this->intDisplayHeight.$this->strDisplayHeightUnit."\">".$addOverlay."</div>".$closeLinkTag."
 				";
 			}
-
 		}
 		elseif ($this->strDisplayStyle == "slider" && count($this->arrImageIDs) > 1) {
-
 			foreach ($this->arrImageIDs as $imgID) {
-
 				$this->select($imgID);
 				$arrImages[] = $this->arrObjInfo['imageurl'];
 				$arrImageLinks[] = $this->arrObjInfo['link'];
@@ -246,22 +230,18 @@ class ImageSlider extends BasicOrder {
 				</script>
 				
 			";
-
 		}
-
 	}
 
 	public function delete() {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
-
 			$info = $this->arrObjInfo;
 			$returnVal = parent::delete();
 
 			deleteFile(BASE_DIRECTORY.$info['imageurl']);
 		}
-
 	}
 
 

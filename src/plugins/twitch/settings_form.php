@@ -14,7 +14,8 @@
 
 
 if (!isset($pluginObj)) {
-exit(); }
+exit();
+}
 
 $configInfo = $pluginObj->getConfigInfo();
 
@@ -145,7 +146,6 @@ if ($addTwitchInfo != "") {
 		});
 	
 	";
-
 }
 
 

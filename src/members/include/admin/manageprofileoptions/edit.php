@@ -52,7 +52,6 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 $dispError = "";
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Option Name
 
 	if (trim($_POST['optionname']) == "") {
@@ -68,7 +67,6 @@ if ( ! empty($_POST['submit']) ) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile category.<br>";
 	}
 	else {
-
 		// Check Order
 		$arrProfileOptionIDs = $profileCatObj->getAssociateIDs();
 
@@ -86,26 +84,18 @@ if ( ! empty($_POST['submit']) ) {
 			$intNewSortNum = 1;
 		}
 		else {
-
 			if ($_POST['beforeafter'] == "before" || $_POST['beforeafter'] == "after") {
-
 				$intNewSortNum = $profileOptionObj->makeRoom($_POST['beforeafter']);
-
 			}
 			else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile option order.<br>";
 			}
-
-
 		}
-
-
 	}
 
 
 	if ($countErrors == 0) {
-
 		if ($_POST['optiontype'] != "select") {
 			$_POST['optiontype'] = "input";
 		}
@@ -117,20 +107,15 @@ if ( ! empty($_POST['submit']) ) {
 
 		$profileOptionObj->select($profileOptionInfo['profileoption_id']);
 		if ($profileOptionObj->update($arrColumnNames, $arrColumnValues)) {
-
 			if ($_POST['optiontype'] == "select" && $_SESSION['btProfileCacheRefresh']) {
-
 				$counter = 1;
 
 				$result = $mysqli->query("DELETE FROM ".$dbprefix."profileoptions_select WHERE profileoption_id = '".$profileOptionInfo['profileoption_id']."'");
 
 				foreach ($_SESSION['btProfileCache'] as $selectValue) {
-
 					$profileOptionObj->addNewSelectValue($selectValue, $counter);
 					$counter++;
-
 				}
-
 			}
 			$profileOptionObj->resortOrder();
 
@@ -147,19 +132,11 @@ if ( ! empty($_POST['submit']) ) {
 				popupDialog('Edit Profile Option', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'successBox');
 			</script>
 			";
-
-
-
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database!  Please contact the website administrator.<br>";
 		}
-
-
-
-
 	}
 
 
@@ -167,7 +144,6 @@ if ( ! empty($_POST['submit']) ) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
 }
 
 if ( empty($_POST['submit']) ) {
@@ -177,7 +153,6 @@ if ( empty($_POST['submit']) ) {
 	$catoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
-
 		$selectCat = "";
 		if ($profileOptionInfo['profilecategory_id'] == $row['profilecategory_id']) {
 			$selectCat = "selected";
@@ -210,7 +185,6 @@ if ( empty($_POST['submit']) ) {
 
 
 		$_SESSION['btProfileCache'] = $tempArr;
-
 	}
 
 

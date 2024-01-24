@@ -11,7 +11,6 @@ $member->select($memberInfo['member_id']);
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
-
 	$profileCatObj->select($row['profilecategory_id']);
 
 	$arrProfileOptions = $profileCatObj->getAssociateIDs("ORDER BY sortnum");
@@ -23,7 +22,6 @@ while ($row = $result->fetch_assoc()) {
 	";
 
 	foreach ($arrProfileOptions as $profileOptionID) {
-
 		$profileOptionObj->select($profileOptionID);
 
 
@@ -35,7 +33,6 @@ while ($row = $result->fetch_assoc()) {
 		</tr>
 		
 		";
-
 	}
 
 	echo "</table>";

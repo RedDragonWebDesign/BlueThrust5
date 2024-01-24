@@ -22,10 +22,7 @@ require_once("../../classes/member.php");
 $memberObj = new Member($mysqli);
 
 if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
-
-
 	if ($memberObj->select($_SESSION['btUsername']) && $memberObj->authorizeLogin($_SESSION['btPassword'])) {
-
 		$memberInfo = $memberObj->get_info_filtered();
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."notifications WHERE member_id = '".$memberInfo['member_id']."' AND status = '0'");
@@ -33,8 +30,6 @@ if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 		$counter = 0;
 		if ($result->num_rows > 0) {
 			while ($row = $result->fetch_assoc()) {
-
-
 				switch ($row['icontype']) {
 					case "promotion":
 						$imgName = "promotionnotification.png";
@@ -63,8 +58,7 @@ if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 
 			$counter--;
 
-			foreach ($arrDispNotifications as $key=>$value) {
-
+			foreach ($arrDispNotifications as $key => $value) {
 				$addNext = "";
 				$addPrev = "";
 				if ($key < $counter) {
@@ -91,7 +85,6 @@ if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 
 
 				echo $arrDispNotifications[$key];
-
 			}
 
 
@@ -131,13 +124,9 @@ if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 
 
 			$mysqli->query("UPDATE ".$dbprefix."notifications SET status = '1' WHERE member_id = '".$memberInfo['member_id']."' AND status = '0'");
-
-
 		}
 		else {
 			echo "SELECT * FROM ".$dbprefix."notifications WHERE member_id = '".$memberInfo['member_id']."' AND status = '0'";
 		}
 	}
-
-
 }

@@ -24,42 +24,36 @@
 			global $IP_ADDRESS;
 			$returnVal = false;
 			if ($this->objSignUpForm->validate()) {
-
 				$newPassword = encryptPassword($_POST['password']);
 
 				$arrColumns = array("username", "password", "password2", "email", "applydate", "ipaddress");
 				$arrValues = array($_POST['username'], $newPassword['password'], $newPassword['salt'], $_POST['email'], time(), $IP_ADDRESS);
 
 				if ($this->addNew($arrColumns, $arrValues)) {
-
 					$result = $this->MySQL->query("SELECT appcomponent_id FROM ".$this->MySQL->get_tablePrefix()."app_components ORDER BY ordernum DESC");
 					while ($row = $result->fetch_assoc()) {
 						$this->objAppComponent->select($row['appcomponent_id']);
 
 						$this->objAppComponent->saveAppValue($this->intTableKeyValue);
-
 					}
 
 					$returnVal = true;
 					$this->notifyManagers();
 				}
-
 			}
 			else {
-
 				$_POST = filterArray($_POST);
 				if ($this->objSignUpForm->prefillValues) {
 					$this->objSignUpForm->prefillPostedValues();
 				}
 
 				$_POST['submit'] = false;
-
 			}
 
 			return $returnVal;
 		}
 
-		public function getAppValues($profileOnly=false) {
+		public function getAppValues($profileOnly = false) {
 
 			$addSQL = "componenttype != 'captcha' AND componenttype != 'captchaextra'";
 			if ($profileOnly) {
@@ -69,7 +63,6 @@
 			$returnArr = array();
 			$componentIDs = $this->MySQL->query("SELECT appcomponent_id,componenttype FROM ".$this->MySQL->get_tablePrefix()."app_components WHERE ".$addSQL." ORDER BY ordernum DESC");
 			while ($row = $componentIDs->fetch_assoc()) {
-
 				$appValues = $this->MySQL->query("SELECT appvalue FROM ".$this->MySQL->get_tablePrefix()."app_values WHERE appcomponent_id = '".$row['appcomponent_id']."' AND memberapp_id = '".$this->intTableKeyValue."'");
 
 				$this->objAppComponent->select($row['appcomponent_id']);
@@ -77,10 +70,8 @@
 				$arrAppValues = array();
 				$arrAppDisplayValues = array();
 				while ($row2 = $appValues->fetch_assoc()) {
-
 					$arrAppValues[] = $row2['appvalue'];
 					$arrAppDisplayValues[] = $this->objAppComponent->getDisplayValue($row2['appvalue']);
-
 				}
 
 				$returnArr[$row['appcomponent_id']] = array(
@@ -88,16 +79,14 @@
 					"values" => $arrAppValues,
 					"display_values" => $arrAppDisplayValues
 				);
-
 			}
 
 			return $returnArr;
-
 		}
 
 
 
-		public function addMember($rankID=2) {
+		public function addMember($rankID = 2) {
 
 			if (!is_numeric($rankID) || $rankID < 2 || $rankID == "") {
 				$rankID = 2;
@@ -119,7 +108,6 @@
 				$returnVal = $this->update(array("memberadded"), array(1));
 
 				$this->notifyNewMember();
-
 			}
 
 			return $returnVal;
@@ -130,7 +118,6 @@
 
 			$arrProfileValues = $this->getAppValues(true);
 			if (count($arrProfileValues) > 0) {
-
 				foreach ($arrProfileValues as $componentID => $profileItem) {
 					$this->objAppComponent->select($componentID);
 					$arrSelectValueID = $this->objAppComponent->getAssociateIDs("ORDER BY componentvalue");
@@ -154,11 +141,8 @@
 							$this->objMember->setProfileValue($componentValue, $profileItem['values'][0]);
 							break;
 					}
-
 				}
-
 			}
-
 		}
 
 
@@ -181,7 +165,6 @@
 			while ($row = $result->fetch_assoc()) {
 				$memberObj->select($row['member_id']);
 				if ($memberObj->hasAccess($consoleObj)) {
-
 					if ($memberObj->get_info("email") != "") {
 						$arrBCC[] = array(
 							"email" => $memberObj->get_info("email"),
@@ -190,19 +173,16 @@
 					}
 
 					$memberObj->postNotification("A new member has signed up!  Go to the <a href='".MAIN_ROOT."members/console.php?cID=".$viewMemberAppCID."'>View Member Applications</a> page to review the application.");
-
 				}
-
 			}
 
 			$subject = $webInfo['clanname'].": New Member Application";
 			$message = "A new member, ".$this->arrObjInfo['username'].", has signed up at your website: <a href='".FULL_SITE_URL."'>".$webInfo['clanname']."</a>!";
 
 			$webInfoObj->objBTMail->sendMail("", $subject, $message, array("bcc" => $arrBCC));
-
 		}
 
-		public function notifyNewMember($accepted=true) {
+		public function notifyNewMember($accepted = true) {
 			$webInfoObj = new WebsiteInfo($this->MySQL);
 			$webInfoObj->select(1);
 			$webInfo = $webInfoObj->get_info_filtered();
@@ -224,7 +204,6 @@
 		public function getNewMemberInfo() {
 
 			return $this->objMember->get_info_filtered();
-
 		}
 
 		public function setRecruiter($memberID) {
@@ -240,10 +219,8 @@
 		public function delete() {
 			$returnVal = false;
 			if ($this->intTableKeyValue != "") {
-
 				$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."app_values WHERE memberapp_id = '".$this->intTableKeyValue."'");
 				$returnVal = parent::delete();
-
 			}
 
 			return $returnVal;

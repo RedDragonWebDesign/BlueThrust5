@@ -48,7 +48,6 @@ $pluginObj = new btPlugin($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
 	$countErrors = 0;
 	$dispError = array();
 
@@ -102,7 +101,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 		if ($mysqli->query($sql)) {
-
 			$jsonAPIKey = json_encode($arrAPIKeys);
 			$pluginObj->addNew(array("name", "filepath", "dateinstalled", "apikey"), array($PLUGIN_NAME, $_POST['pluginDir'], time(), $jsonAPIKey));
 
@@ -129,7 +127,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$consoleObj->setCategoryKeyValue($consoleCatID);
 			$newSortNum = $consoleObj->getHighestSortNum()+1;
 			$consoleObj->addNew(array("consolecategory_id", "pagetitle", "filename", "sortnum"), array($consoleCatID, $PLUGIN_NAME, "../plugins/twitter/twitterconnect.php", $newSortNum));
-
 		}
 		else {
 			$countErrors++;
@@ -150,5 +147,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 	echo json_encode($arrReturn);
-
 }

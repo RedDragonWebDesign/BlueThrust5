@@ -37,7 +37,6 @@ $imageSliderObj = new ImageSlider($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
 	$countErrors = 0;
 	$dispErrors = "";
 	$widthUnit = ($_POST['containerWidthUnit'] == 1) ? "px" : "%";
@@ -74,7 +73,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	}
 
 	if ($countErrors > 0) {
-
 		echo "
 			
 			<span id='errorMessages'>
@@ -96,5 +94,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		
 		";
 	}
-
 }

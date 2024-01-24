@@ -39,7 +39,6 @@ $intManageCustomFormID = $consoleObj->findConsoleIDByName("Manage Custom Form Pa
 $counter = 0;
 $result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."customform ORDER BY name");
 while ($row = $result->fetch_assoc()) {
-
 	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
@@ -66,7 +65,6 @@ while ($row = $result->fetch_assoc()) {
 }
 
 if ($result->num_rows == 0) {
-
 	$dispPages = "<tr><td colspan='3'><br><p align='center' class='main'><i>No custom form pages added yet!</i></p></td></tr>";
 }
 

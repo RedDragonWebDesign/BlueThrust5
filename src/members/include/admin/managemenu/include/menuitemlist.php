@@ -24,14 +24,13 @@ if (!isset($member)) {
 
 	$menuCatObj = new MenuCategory($mysqli);
 	$menuItemObj = new MenuItem($mysqli);
-
 }
 
 if (!isset($intAddNewMenuItemID)) {
-$intAddNewMenuItemID = $consoleObj->findConsoleIDByName("Add Menu Item"); }
+$intAddNewMenuItemID = $consoleObj->findConsoleIDByName("Add Menu Item");
+}
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
 	if (isset($_POST['menuCatID']) && $menuCatObj->select($_POST['menuCatID'])) {
 		$orderoptions = "";
 		$menuCatInfo = $menuCatObj->get_info_filtered();
@@ -41,7 +40,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$_POST['itemID'] = "";
 		}
 		else {
-
 			$menuItemObj->select($_POST['itemID']);
 			$selectItemID = $menuItemObj->findBeforeAfter();
 			$selectItemID = $selectItemID[0];
@@ -70,7 +68,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		echo $orderoptions;
 	}
 	elseif (!isset($_POST['menuCatID'])) {
-
 		$intManageMenuCatCID = $consoleObj->findConsoleIDByName("Manage Menu Categories");
 		$query = "SELECT ".$dbprefix."menu_item.* FROM ".$dbprefix."menu_item, ".$dbprefix."menu_category WHERE ".$dbprefix."menu_item.menucategory_id = ".$dbprefix."menu_category.menucategory_id ORDER BY ".$dbprefix."menu_category.section, ".$dbprefix."menu_category.sortnum, ".$dbprefix."menu_item.menucategory_id, ".$dbprefix."menu_item.sortnum";
 
@@ -79,7 +76,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		$intMenuCatID = "";
 		while ($row = $result->fetch_assoc()) {
-
 			if ($intMenuCatID != $row['menucategory_id']) {
 				$counter = 0;
 				$intMenuCatID = $row['menucategory_id'];
@@ -93,8 +89,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					</tr>
 				
 				";
-
-
 			}
 
 			$addCSS = "";
@@ -131,8 +125,5 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$counter++;
 		}
 		echo "</table>";
-
-
 	}
-
 }

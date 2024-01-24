@@ -50,14 +50,11 @@ else {
 }
 
 if ( ! empty($_POST['submit']) ) {
-
-
 	if (!$memberObj->select($_POST['member'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member.<br>";
 	}
 	elseif ($memberObj->select($_POST['member'])) {
-
 		$tempMemInfo = $memberObj->get_info();
 		$rankObj->select($tempMemInfo['rank_id']);
 		$tempRankInfo = $rankObj->get_info();
@@ -66,7 +63,6 @@ if ( ! empty($_POST['submit']) ) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not change the selected member's recruit date.<br>";
 		}
-
 	}
 
 
@@ -78,12 +74,10 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	if ($countErrors == 0) {
-
 		$arrColumn = array("datejoined");
 		$arrValue = array($recruitDate);
 
 		if ($memberObj->update($arrColumn, $arrValue)) {
-
 			echo "
 				<div style='display: none' id='successBox'>
 					<p align='center'>
@@ -99,8 +93,6 @@ if ( ! empty($_POST['submit']) ) {
 
 			$logMessage = "Changed ".$tempMemInfo['username']."'s recruit date to ".date("D M j, Y g:i a", $recruitDate).".";
 			$member->logAction($logMessage);
-
-
 		}
 		else {
 			$countErrors++;
@@ -112,12 +104,9 @@ if ( ! empty($_POST['submit']) ) {
 	if ($countErrors > 0) {
 		$_POST['submit'] = false;
 	}
-
-
 }
 
 if ( empty($_POST['submit']) ) {
-
 	$result = $mysqli->query("SELECT ".$dbprefix."members.member_id FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."ranks.rank_id = ".$dbprefix."members.rank_id AND ".$dbprefix."ranks.ordernum <= '".$powerRankInfo['ordernum']."' AND ".$dbprefix."members.rank_id != '1' AND ".$dbprefix."members.disabled = '0' ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
 	while ($row = $result->fetch_assoc()) {
 		$memberObj->select($row['member_id']);
@@ -125,7 +114,6 @@ if ( empty($_POST['submit']) ) {
 		$rankObj->select($tempMemInfo['rank_id']);
 		$tempRankInfo = $rankObj->get_info_filtered();
 		$memberoptions .= "<option value='".$row['member_id']."'>".$tempRankInfo['name']." ".$tempMemInfo['username']."</option>";
-
 	}
 
 
@@ -184,6 +172,4 @@ if ( empty($_POST['submit']) ) {
 			});
 		</script>
 	";
-
 }
-

@@ -1,7 +1,8 @@
 <?php
 
 	if (!isset($pluginInstaller)) {
-exit(); }
+exit();
+    }
 
 	$pluginInstaller->setPluginDirectory("twitch");
 

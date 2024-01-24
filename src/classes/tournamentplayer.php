@@ -11,7 +11,6 @@ class TournamentPlayer extends Basic {
 		$this->strTableKey = "tournamentplayer_id";
 
 		$this->tournamentObj = $tObj;
-
 	}
 
 
@@ -26,20 +25,17 @@ class TournamentPlayer extends Basic {
 		$this->tournamentObj->select($this->get_info("tournament_id"));
 
 		if ($returnVal && $this->tournamentObj->get_info("playersperteam") == 1) {
-
 			$arrUnfilledTeams = $this->tournamentObj->getUnfilledTeams();
 			if (count($arrUnfilledTeams) > 0) {
 				$newTeam = $arrUnfilledTeams[0];
 				$this->update(array("team_id"), array($newTeam));
 			}
-
 		}
 
 		// Check for email notification
 		$this->setReminder();
 
 		return $returnVal;
-
 	}
 
 
@@ -48,7 +44,6 @@ class TournamentPlayer extends Basic {
 		$returnVal = false;
 
 		if ($this->intTableKeyValue != "") {
-
 			$tournamentReminderTable = $this->MySQL->get_tablePrefix()."tournament_reminder";
 			$emailQueueTable = $this->MySQL->get_tablePrefix()."emailnotifications_queue";
 
@@ -71,7 +66,6 @@ class TournamentPlayer extends Basic {
 		$member = new Member($this->MySQL);
 
 		if ($member->select($this->arrObjInfo['member_id']) && $member->getEmailNotificationSetting("tournament_time") != 0) {
-
 			$timeBefore = $member->getEmailNotificationSetting("tournament_time");
 			$unitBefore = $member->getEmailNotificationSetting("tournament_unit");
 
@@ -103,11 +97,8 @@ class TournamentPlayer extends Basic {
 				$emailReminderID = $member->setEmailReminder($sendReminder, "Tournament Starting!", $message);
 				$tournamentReminder = new Basic($this->MySQL, "tournament_reminder", "tournamentreminder_id");
 				$tournamentReminder->addNew(array("emailnotificationsqueue_id", "tournament_id"), array($emailReminderID, $this->arrObjInfo['tournament_id']));
-
 			}
-
 		}
-
 	}
 
 	public function deleteReminder() {
@@ -115,15 +106,12 @@ class TournamentPlayer extends Basic {
 		$tournamentReminderID = $this->getTournamentReminderID();
 
 		if ($tournamentReminderID !== false) {
-
 			$tournamentReminderTable = $this->MySQL->get_tablePrefix()."tournament_reminder";
 			$emailQueueTable = $this->MySQL->get_tablePrefix()."emailnotifications_queue";
 
 			$this->MySQL->query("DELETE FROM ".$emailQueueTable." WHERE emailnotificationsqueue_id = '".$tournamentReminderID."'");
 			$this->MySQL->query("DELETE FROM ".$tournamentReminderTable." WHERE emailnotificationsqueue_id = '".$tournamentReminderID."'");
-
 		}
-
 	}
 
 
@@ -132,7 +120,6 @@ class TournamentPlayer extends Basic {
 		$this->deleteReminder();
 
 		return parent::delete();
-
 	}
 
 }

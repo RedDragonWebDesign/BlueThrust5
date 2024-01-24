@@ -1,7 +1,8 @@
 <?php
 
 	if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+    }
 
 	$usernameMessage = "Not Logged In! - <a href='".MAIN_ROOT."login.php'>Log In</a> to have your account connected to this donation!";
 	$extraNameTooltip = "If left blank, the donation will be from Anonymous.";
@@ -27,7 +28,6 @@ exit(); }
 
 
 	if ($campaignInfo['allowname'] == 1) {
-
 		$arrComponents['name'] = array(
 			"type" => "text",
 			"sortorder" => $i++,
@@ -35,15 +35,11 @@ exit(); }
 			"display_name" => "Your Name",
 			"tooltip" => "This field is optional.".$extraNameTooltip
 		);
-
-
-
 	}
 
 
 
 	if ($campaignInfo['allowmessage'] == 1) {
-
 		$arrComponents['message'] = array(
 			"type" => "textarea",
 			"sortorder" => $i++,
@@ -51,7 +47,6 @@ exit(); }
 			"display_name" => "Message",
 			"tooltip" => "Max 140 characters."
 		);
-
 	}
 
 
@@ -66,7 +61,6 @@ exit(); }
 
 
 	if ($campaignInfo['allowhiddenamount'] == 1) {
-
 		$arrComponents['hideamount'] = array(
 			"type" => "checkbox",
 			"sortorder" => $i++,
@@ -75,7 +69,6 @@ exit(); }
 			"tooltip" => "If you check this box, your donation amount will be hidden on the donation profile page.",
 			"value" => 1
 		);
-
 	}
 
 	$arrComponents['submit'] = array(
@@ -87,14 +80,12 @@ exit(); }
 
 
 	if (isset($_GET['fail']) && $_GET['fail'] == "amount") {
-
 		$arrComponents['show_fail'] = array(
 
 			"type" => "custom",
 			"sortorder" => $i++,
 			"html" => "<p align='center' class='main failedFont'><b>The minimum donation amount is ".$campaignObj->formatAmount($campaignInfo['minimumamount'])."</b></p>"
 		);
-
 	}
 
 

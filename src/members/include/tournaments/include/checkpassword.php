@@ -33,12 +33,9 @@ $tournamentObj = new Tournament($mysqli);
 // Check Login
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $tournamentObj->select($_POST['tID'])) {
-
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 
 	if ($tournamentInfo['password'] != "") {
-
-
 		echo "
 			<div id='passwordCheckDialog' style='display: none'>
 				<p class='main' align='center'>
@@ -90,12 +87,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			</script>
 			
 		";
-
-
-
 	}
 	else {
-
 		echo "
 		
 			<script type='text/javascript'>
@@ -109,8 +102,5 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			</script>
 		
 		";
-
 	}
-
-
 }

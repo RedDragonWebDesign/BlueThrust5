@@ -80,13 +80,10 @@
 			$filterKeyword = array("message" => $_POST['keyword'], "title" => $_POST['keyword']);
 
 			$filterResults[] = " (".$postTable.".message LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%' OR ".$postTable.".title LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%') ";
-
 		}
 		else {
 			$filterResults[] = " ".$postTable.".title LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%' ";
-
 		}
-
 	}
 
 	// Filter By Username
@@ -115,7 +112,6 @@
  			$topicListSQL = "('".implode("','", $topicList)."')";
  			$filterResults[] = " ".$postTable.".forumpost_id IN ".$topicListSQL;
  		}
-
 	}
 
 	// Filter By Reply Count
@@ -141,20 +137,17 @@
 
 
 	if ($arrFilterDates[$_POST['filterposts']] != "" || $arrFilterDates[$_POST['filterposts']] != 0) {
-
 		$filterByDateGTLT = "<=";
 		if ($_POST['filterposts_newold'] == 0) {
 			$filterByDateGTLT = ">=";
 		}
 
 		$filterResults[] = " ".$postTable.".dateposted ".$filterByDateGTLT." '".$arrFilterDates[$_POST['filterposts']]."' ";
-
 	}
 
 	// Filter Board
 	$arrFilterBoards = array();
 	if (!in_array(0, $_POST['filterboards'])) {
-
 		$arrFilterBoards = $_POST['filterboards'];
 
 		if ($_POST['include_subforums'] == 1) {
@@ -218,7 +211,6 @@
 	if (!isset($_GET['page']) || !is_numeric($_GET['page']) || $totalPages < $_GET['page'] || $_GET['page'] < 1) {
 		$sqlLimit = " LIMIT 0, ".$numPerPage;
 		$_POST['page'] = 1;
-
 	}
 	else {
 		$sqlLimit = " LIMIT ".($numPerPage*($_GET['page']-1)).", ".$numPerPage;
@@ -229,7 +221,6 @@
 	$result = $mysqli->query($query);
 
 	while ($row = $result->fetch_assoc()) {
-
 		if (in_array($_POST['sortresults'], $arrCustomSort)) {
 			// Requires additional sorting
 			$blnResort = true;
@@ -250,16 +241,13 @@
 					$arrSearchResults[$row['forumpost_id']] = strtolower($boardObj->get_info("name"));
 					break;
 			}
-
 		}
 		else {
 			$arrSearchResults[] = $row['forumpost_id'];
 		}
-
 	}
 
 	if ($blnResort) {
-
 		if ($_POST['sortresults_ascdesc'] == 0) {
 			arsort($arrSearchResults);
 		}
@@ -279,7 +267,6 @@
 			if (!in_array($tempTopicInfo['forumboard_id'], $arrFilterBoards)) {
 				unset($arrSearchResults[$key]);
 			}
-
 		}
 
 		$totalResults = count($arrSearchResults);
@@ -312,7 +299,6 @@
 	unset($postVars['fakesearchuser']);
 
 	for ($i = 1; $i<=$totalPages; $i++) {
-
 		$dispSelected = ($i == ($_GET['page'] ?? '')) ? " selected" : "";
 
 		$pageOptions .= "<option value='".$i."'".$dispSelected.">".$i."</option>";
@@ -337,7 +323,7 @@
 
 	echo "
 		<p align='right'>
-			Total Results: ".number_format($totalResults,0)."
+			Total Results: ".number_format($totalResults, 0)."
 		</p>
 	";
 
@@ -346,7 +332,6 @@
 	}
 
 	foreach ($arrSearchResults as $postID) {
-
 		$boardObj->objPost->select($postID);
 		$topicInfo = $boardObj->objPost->getTopicInfo(true);
 		$boardObj->select($topicInfo['forumboard_id']);
@@ -368,7 +353,6 @@
 
 
 	if ($totalResults == 0) {
-
 		echo "
 		
 			<div class='shadedBox' style='width: 50%; margin-left: auto; margin-right: auto'>
@@ -381,7 +365,6 @@
 			</div>
 		
 		";
-
 	}
 
 

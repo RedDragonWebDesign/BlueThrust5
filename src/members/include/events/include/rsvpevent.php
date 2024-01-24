@@ -38,7 +38,6 @@ else {
 
 
 if ($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMember->get_info("member_id") == $memberInfo['member_id']) {
-
 	$eventMemberInfo = $eventObj->objEventMember->get_info_filtered();
 	$eventObj->select($eventMemberInfo['event_id']);
 	$eventInfo = $eventObj->get_info_filtered();
@@ -85,5 +84,4 @@ if ($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMemb
 	}
 
 	require_once("invitelist.php");
-
 }

@@ -37,7 +37,6 @@ $countErrors = 0;
 
 $arrTimezones = DateTimeZone::listIdentifiers();
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Title
 	if (trim($_POST['eventtitle']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Event title may not be blank.<br>";
@@ -52,8 +51,9 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	$arrMinutes = array();
-	for ($i=0;$i<=59;$i++) {
-$arrMinutes[] = $i; }
+	for ($i=0; $i<=59; $i++) {
+$arrMinutes[] = $i;
+    }
 
 	if (!in_array($_POST['startminute'], $arrMinutes)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid start minute.<br>";
@@ -125,7 +125,6 @@ $arrMinutes[] = $i; }
 
 
 	if ($countErrors == 0) {
-
 		$eventObj = new Event($mysqli);
 
 		$arrColumns = array("member_id", "title", "description", "location", "startdate", "publicprivate", "visibility", "messages", "invitepermission", "timezone");
@@ -145,14 +144,11 @@ $arrMinutes[] = $i; }
 				</script>
 			
 			";
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-
-
 	}
 
 
@@ -160,18 +156,16 @@ $arrMinutes[] = $i; }
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	$houroptions = "<option value='0'>12</option>";
-	for ($i=1;$i<=11;$i++) {
+	for ($i=1; $i<=11; $i++) {
 		$houroptions .= "<option value='".$i."'>".$i."</option>";
 	}
 
-	for ($i=0;$i<=59;$i++) {
+	for ($i=0; $i<=59; $i++) {
 		if ($i < 10) {
 			$dispI = "0".$i;
 		}
@@ -180,7 +174,6 @@ if ( empty($_POST['submit']) ) {
 		}
 
 		$minuteoptions .= "<option value='".$dispI."'>".$dispI."</option>";
-
 	}
 
 
@@ -204,7 +197,6 @@ if ( empty($_POST['submit']) ) {
 
 	$timezoneoptions = "<option value=''>[Use Default]</option>";
 	foreach ($arrTimezones as $timeZone) {
-
 		$tz = new DateTimeZone($timeZone);
 		$dispOffset = ((($tz->getOffset(new DateTime("now", $tz)))/60)/60);
 		$dispSign = ($dispOffset < 0) ? "" : "+";
@@ -309,8 +301,4 @@ if ( empty($_POST['submit']) ) {
 		</script>
 		
 	";
-
-
-
-
 }

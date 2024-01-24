@@ -23,7 +23,6 @@ class Game extends Rank {
 		$this->strTableKey = "gamesplayed_id";
 		$this->strAssociateTableName = $this->MySQL->get_tablePrefix()."gamestats";
 		$this->strAssociateKeyName = "gamestats_id";
-
 	}
 
 
@@ -33,7 +32,6 @@ class Game extends Rank {
 		if (isset($this->intTableKeyValue)) {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."gamesplayed_members WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 			$returnVal = $result->num_rows;
-
 		}
 
 		return $returnVal;
@@ -49,15 +47,11 @@ class Game extends Rank {
 			$query = "SELECT ".$membersGamesTable.".member_id FROM ".$membersGamesTable.", ".$membersTable." WHERE ".$membersGamesTable.".member_id = ".$membersTable.".member_id AND ".$membersGamesTable.".".$this->strTableKey." = '".$this->intTableKeyValue."' AND ".$membersTable.".disabled = '0'";
 			$result = $this->MySQL->query($query);
 			while ($row = $result->fetch_assoc()) {
-
 				$returnArr[] = $row['member_id'];
-
 			}
-
 		}
 
 		return $returnArr;
-
 	}
 
 
@@ -77,7 +71,6 @@ class Game extends Rank {
 		}
 
 		return $returnArr;
-
 	}
 
 
@@ -89,14 +82,12 @@ class Game extends Rank {
 		$gameStatObj = new Basic($this->MySQL, "gamestats", "gamestats_id");
 
 		if ($gameStatObj->select($gameStatID) && isset($memberObj)) {
-
 			$gameStatInfo = $gameStatObj->get_info_filtered();
 
 			$gameStat1Obj = new Basic($this->MySQL, "gamestats", "gamestats_id");
 			$gameStat2Obj = new Basic($this->MySQL, "gamestats", "gamestats_id");
 
 			if ($gameStatInfo['stattype'] == "calculate" && $gameStat1Obj->select($gameStatInfo['firststat_id']) && $gameStat2Obj->select($gameStatInfo['secondstat_id'])) {
-
 				$gameStats1Info = $gameStat1Obj->get_info_filtered();
 				$gameStats2Info = $gameStat2Obj->get_info_filtered();
 
@@ -133,15 +124,11 @@ class Game extends Rank {
 						break;
 					default:
 						$calculatedValue = round($gameStat1Value+$gameStat2Value, $gameStatInfo['decimalspots']);
-
 				}
-
 			}
-
 		}
 
 		return $calculatedValue;
-
 	}
 
 
@@ -173,12 +160,10 @@ class Game extends Rank {
 			$gameStats = $this->getAssociateIDs();
 
 			foreach ($gameStats as $gameStatID) {
-
 				$result = $this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."gamestats_members WHERE gamestats_id = '".$gameStatID."'");
 				if ($this->MySQL->error) {
 					$countErrors++;
 				}
-
 			}
 
 			$result = $this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."gamestats WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
@@ -191,13 +176,10 @@ class Game extends Rank {
 				$returnVal = true;
 
 				deleteFile(BASE_DIRECTORY.$info['imageurl']);
-
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 	public function get_privileges() {

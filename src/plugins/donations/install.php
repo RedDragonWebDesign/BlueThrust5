@@ -44,7 +44,6 @@ $pluginObj = new btPlugin($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
 	$countErrors = 0;
 	$dispError = array();
 
@@ -73,7 +72,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		require_once(BASE_DIRECTORY."plugins/donations/sql.php");
 
 		if ($mysqli->multi_query($sql)) {
-
 			do {
 				if ($result = $mysqli->store_result()) {
 					$result->free();
@@ -107,8 +105,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 			$consoleObj->addNew(array("consolecategory_id", "pagetitle", "filename", "sortnum"), array($consoleCatID, "Create a Donation Campaign", "../plugins/donations/console/createcampaign.php", $newSortNum++));
 			$consoleObj->addNew(array("consolecategory_id", "pagetitle", "filename", "sortnum"), array($consoleCatID, "Manage Donation Campaigns", "../plugins/donations/console/managecampaign.php", $newSortNum++));
-
-
 		}
 		else {
 			$countErrors++;
@@ -129,5 +125,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 	echo json_encode($arrReturn);
-
 }

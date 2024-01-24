@@ -33,8 +33,6 @@ $customFormPageObj = new CustomForm($mysqli, "custompages", "custompage_id");
 
 
 if (isset($_GET['cfID']) && $customFormPageObj->select($_GET['cfID'])) {
-
-
 	echo "
 	
 		<div id='loadingSpiral' style='display: none'>
@@ -75,13 +73,7 @@ if (isset($_GET['cfID']) && $customFormPageObj->select($_GET['cfID'])) {
 		</script>
 	
 	";
-
-
 }
 else {
-
-
 	require_once("custompages/main_submissions.php");
-
-
 }

@@ -62,7 +62,6 @@ $arrAceEditorPages = array("Modify Current Theme", "Add Menu Category", "Add Men
 if (in_array($consoleInfo['pagetitle'], $arrTinyMCEPages)) {
 	$btThemeObj->addHeadItem("richtexteditor", "<script type='text/javascript' src='".$MAIN_ROOT."js/tiny_mce/jquery.tinymce.js'></script>");
 	$btThemeObj->addHeadItem("richtexteditor1", "<script type='text/javascript' src='".$MAIN_ROOT."js/ckeditor/ckeditor.js'></script>");
-
 }
 
 if (in_array($consoleInfo['pagetitle'], $arrAceEditorPages)) {
@@ -86,7 +85,6 @@ $checkMember = $member->select($_SESSION['btUsername']);
 $LOGIN_FAIL = true;
 
 if ($checkMember) {
-
 	if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$LOGIN_FAIL = false;
 
@@ -170,14 +168,11 @@ if ($checkMember) {
 					<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/index.php?select=".$consoleInfo['consolecategory_id']."' id='consoleBottomBackButton'>Go Back</a></p></div>
 				";
 			}
-
 		}
 		else {
 			echo "<div class='formDiv' style='width: 300px; padding: 5px; margin-top: 50px; margin-left: auto; margin-right: auto'><p align='center'><i>You don't have access to this console option!</i><br><br><a href='console.php'>Return to My Account</a></p></div>";
 		}
-
 	}
-
 }
 
 

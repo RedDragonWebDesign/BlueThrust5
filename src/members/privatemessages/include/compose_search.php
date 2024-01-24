@@ -26,7 +26,6 @@ $cID = $consoleObj->findConsoleIDByName("Private Messages");
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
 	$memberInfo = $member->get_info_filtered();
 	$searchTerm = $mysqli->real_escape_string($_GET['term']);
 	$pmSessionID = $_GET['pmsessionid'];
@@ -40,11 +39,9 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$rankObj = new Rank($mysqli);
 	$result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.name FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id AND ".$dbprefix."members.username LIKE '".$searchTerm."%' AND ".$dbprefix."members.member_id NOT IN ".$filterMembers." ORDER BY ".$dbprefix."members.username");
 	while ($row = $result->fetch_assoc()) {
-
 		$rankObj->select($row['rank_id']);
 		$displayName = $rankObj->get_info_filtered("name")." ".filterText($row['username']);
 		$arrComposeList[] = array("id" => "member_".$row['member_id'], "value" => $displayName);
-
 	}
 
 	$arrQuery['rankcategory']['query'] = "SELECT * FROM ".$dbprefix."rankcategory WHERE name LIKE '".$searchTerm."%' AND rankcategory_id NOT IN ";
@@ -69,7 +66,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 	foreach ($arrQuery as $key => $arr) {
-
 		$filterList = "('')";
 		$checkFilterList = implode("", $_SESSION['btComposeList'][$pmSessionID][$key]);
 		if (is_numeric($checkFilterList)) {
@@ -84,14 +80,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		//echo $arr['query'].$arr['orderby'];
 		$result = $mysqli->query($arr['query'].$arr['orderby']);
 		while ($row = $result->fetch_assoc()) {
-
 			$arrComposeList[] = array("id" => $sessionPrefix.$row[$arr['id']], "value" => filterText($row['name']).$arr['append']);
-
 		}
-
 	}
 
 
 	echo json_encode($arrComposeList);
-
 }

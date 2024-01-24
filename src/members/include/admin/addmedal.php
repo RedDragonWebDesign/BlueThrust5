@@ -35,7 +35,6 @@ $medalObj = new Medal($mysqli);
 	while ($arrMedals = $getMedals->fetch_assoc()) {
 		$medalName = filterText($arrMedals['name']);
 		$medalOptions[$arrMedals['medal_id']] = $medalName;
-
 	}
 
 

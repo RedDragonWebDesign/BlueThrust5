@@ -14,7 +14,6 @@
 
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
-
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 
@@ -36,7 +35,6 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !is
 	else {
 		exit();
 	}
-
 }
 else {
 	$memberInfo = $member->get_info();
@@ -63,7 +61,6 @@ if ($result->num_rows > 0) {
 
 		$counter = 0;
 		while ($row = $result->fetch_assoc()) {
-
 			if ($counter == 0) {
 				$addCSS = "";
 				$counter = 1;
@@ -81,14 +78,12 @@ if ($result->num_rows > 0) {
 					<td class='main dottedLine".$addCSS."' style='width: 20%' align='center'><a href='javascript:void(0)' onclick=\"untagPage('".$row['page_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' title='Untag Page' width='24' height='24'></a></td>
 				</tr>
 			";
-
 		}
 
 	echo "
 		</table>
 	
 	";
-
 }
 else {
 	echo "

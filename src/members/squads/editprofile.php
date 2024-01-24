@@ -14,7 +14,6 @@
 
 
 if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
-
 	exit();
 }
 else {
@@ -27,7 +26,6 @@ else {
 
 
 	if (!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "editprofile")) {
-
 		exit();
 	}
 }
@@ -46,7 +44,6 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Squad Name
 	if (trim($_POST['squadname']) == "") {
 		$countErrors++;
@@ -55,7 +52,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($_FILES['uploadlogo']['name'] != "") {
-
 		$uploadLogoObj = new BTUpload($_FILES['uploadlogo'], "squad_", "../../images/squads/", array(".png", ".jpg", ".gif", ".bmp"));
 
 		if (!$uploadLogoObj->uploadFile()) {
@@ -65,7 +61,6 @@ if ( ! empty($_POST['submit']) ) {
 		else {
 			$logoImageURL = $MAIN_ROOT."images/squads/".$uploadLogoObj->getUploadedFileName();
 		}
-
 	}
 	else {
 		$logoImageURL = $_POST['logourl'];
@@ -73,7 +68,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		if ($_POST['recruiting'] != 0) {
 			$_POST['recruiting'] = 1;
 		}
@@ -87,7 +81,6 @@ if ( ! empty($_POST['submit']) ) {
 		$arrValues = array($_POST['squadname'], $_POST['squaddesc'], $logoImageURL, $_POST['recruiting'], $_POST['shoutbox'], $_POST['squadsite']);
 
 		if ($squadObj->update($arrColumns, $arrValues)) {
-
 			$squadInfo = $squadObj->get_info_filtered();
 
 			echo "
@@ -103,15 +96,12 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 
 			";
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-
 	}
-
 }
 
 $privateSelected = "";

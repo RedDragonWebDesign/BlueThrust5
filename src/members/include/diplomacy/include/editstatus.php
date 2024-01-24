@@ -24,7 +24,6 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !$d
 $diplomacyStatusInfo = $diplomacyStatusObj->get_info_filtered();
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Name
 
 	if (trim($_POST['statusname']) == "") {
@@ -44,7 +43,6 @@ if ( ! empty($_POST['submit']) ) {
 	if ($countErrors == 0) {
 		// If no errors, check for image upload and try to upload the image
 		if ($_FILES['statusimagefile']['name'] != "") {
-
 			$uploadImg = new BTUpload($_FILES['statusimagefile'], "status_", "../images/diplomacy/", array(".jpg", ".png", ".gif", ".bmp"));
 			if (!$uploadImg->uploadFile()) {
 				$countErrors++;
@@ -53,11 +51,8 @@ if ( ! empty($_POST['submit']) ) {
 			else {
 				$statusImageURL = "images/diplomacy/".$uploadImg->getUploadedFileName();
 			}
-
-
 		}
 		elseif ($_POST['statusimageurl'] != "" && $_POST['statusimageurl'] != $diplomacyStatusInfo['imageurl']) {
-
 			$uploadImg = new BTUpload($_POST['statusimageurl'], "status_", "../images/diplomacy/", array(".jpg", ".png", ".gif", ".bmp"), 4, true);
 			if (!$uploadImg->uploadFile()) {
 				$countErrors++;
@@ -66,7 +61,6 @@ if ( ! empty($_POST['submit']) ) {
 			else {
 				$statusImageURL = "images/diplomacy/".$uploadImg->getUploadedFileName();
 			}
-
 		}
 		else {
 			$statusImageURL = $diplomacyStatusInfo['imageurl'];
@@ -75,14 +69,12 @@ if ( ! empty($_POST['submit']) ) {
 
 		// If there are still no errors after uploading the image, add to db
 		if ($countErrors == 0) {
-
 			$arrColumns = array("name", "imageurl", "imagewidth", "imageheight", "ordernum");
 			$arrValues = array($_POST['statusname'], $statusImageURL, $_POST['imagewidth'], $_POST['imageheight'], $intNewOrderNum);
 
 			$diplomacyStatusObj->select($diplomacyStatusInfo['diplomacystatus_id']);
 
 			if ($diplomacyStatusObj->update($arrColumns, $arrValues)) {
-
 				echo "
 				
 					<div style='display: none' id='successBox'>
@@ -100,32 +92,21 @@ if ( ! empty($_POST['submit']) ) {
 				$diplomacyStatusObj->resortOrder();
 
 				$member->logAction("Edited the ".$_POST['statusname']." diplomacy status.");
-
-
 			}
 			else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 			}
-
 		}
-
-
-
-
 	}
 
 	if ($countErrors > 0) {
 		$_POST['submit'] = false;
 	}
-
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
-
 	$arrBeforeAfter = $diplomacyStatusObj->findBeforeAfter();
 
 	$afterSelected = "";
@@ -136,15 +117,12 @@ if ( empty($_POST['submit']) ) {
 	$orderoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status WHERE diplomacystatus_id != '".$diplomacyStatusInfo['diplomacystatus_id']."' ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
-
 		$dispSelected = "";
 		if ($arrBeforeAfter[0] == $row['diplomacystatus_id']) {
 			$dispSelected = " selected";
 		}
 
 		$orderoptions .= "<option value='".$row['diplomacystatus_id']."'".$dispSelected.">".filterText($row['name'])."</option>";
-
-
 	}
 
 	if ($orderoptions == "") {
@@ -153,7 +131,6 @@ if ( empty($_POST['submit']) ) {
 
 
 	if (strpos($diplomacyStatusInfo['imageurl'], "http://") === false) {
-
 		$arrImageInfo = getimagesize("../".$diplomacyStatusInfo['imageurl']);
 
 		if ($diplomacyStatusInfo['imagewidth'] == 0) {
@@ -163,9 +140,6 @@ if ( empty($_POST['submit']) ) {
 		if ($diplomacyStatusInfo['imageheight'] == 0) {
 			$diplomacyStatusInfo['imageheight'] = $arrImageInfo[1];
 		}
-
-
-
 	}
 	elseif ($diplomacyStatusInfo['imagewidth'] == 0) {
 		$popupWidth = 400;
@@ -265,6 +239,4 @@ if ( empty($_POST['submit']) ) {
 	
 	
 	";
-
-
 }

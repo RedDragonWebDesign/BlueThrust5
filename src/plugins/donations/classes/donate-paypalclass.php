@@ -102,9 +102,8 @@ class paypal_class {
       // documentation for a list of fields and their data types. These defaul
       // values can be overwritten by the calling script.
 
-      $this->add_field('rm','2');           // Return method = POST
-      $this->add_field('cmd','_xclick');
-
+      $this->add_field('rm', '2');           // Return method = POST
+      $this->add_field('cmd', '_xclick');
    }
 
    function add_field($field, $value) {
@@ -142,7 +141,6 @@ class paypal_class {
 
       echo "</form>\n";
       echo "</body></html>\n";
-
    }
 
    function validate_ipn() {
@@ -155,24 +153,21 @@ class paypal_class {
       // _POST vars into an arry so we can play with them from the calling
       // script.
       $post_string = '';
-      foreach ($_POST as $field=>$value) {
+      foreach ($_POST as $field => $value) {
          $this->ipn_data[$field] = $value;
          $post_string .= $field.'='.urlencode($value).'&';
       }
       $post_string.="cmd=_notify-validate"; // append ipn command
 
       // open the connection to paypal
-      $fp = fsockopen("ssl://".$url_parsed[host],"443",$err_num,$err_str,30);
+      $fp = fsockopen("ssl://".$url_parsed[host], "443", $err_num, $err_str, 30);
       if (!$fp) {
-
          // could not open the connection.  If loggin is on, the error message
          // will be in the log.
          $this->last_error = "fsockopen error no. $errnum: $errstr";
          $this->log_ipn_results(false);
          return false;
-
       } else {
-
          // Post the data back to paypal
          fputs($fp, "POST $url_parsed[path] HTTP/1.1\r\n");
          fputs($fp, "Host: $url_parsed[host]\r\n");
@@ -194,7 +189,6 @@ class paypal_class {
          }
 
          fclose($fp); // close connection
-
       }
 
       if ($returnVal) {
@@ -202,30 +196,32 @@ class paypal_class {
          $this->log_ipn_results(true);
          return true;
       } else {
-
          // Invalid IPN transaction.  Check the log for details.
          $this->last_error = 'IPN Validation Failed. - '.$this->ipn_response." - ".json_encode($_POST);
          $this->log_ipn_results(false);
          return false;
-
       }
-
    }
 
    function log_ipn_results($success) {
 
-      if (!$this->ipn_log) return;  // is logging turned off?
+      if (!$this->ipn_log) {
+return;  // is logging turned off?
+      }
 
       // Timestamp
       $text = '['.date('m/d/Y g:i A').'] - ';
 
       // Success or failure being logged?
-      if ($success) $text .= "SUCCESS!\n";
-      else $text .= 'FAIL: '.$this->last_error."\n";
+      if ($success) {
+$text .= "SUCCESS!\n";
+      } else {
+$text .= 'FAIL: '.$this->last_error."\n";
+      }
 
       // Log the POST variables
       $text .= "IPN POST Vars from Paypal:\n";
-      foreach ($this->ipn_data as $key=>$value) {
+      foreach ($this->ipn_data as $key => $value) {
          $text .= "$key=$value, ";
       }
 
@@ -233,7 +229,7 @@ class paypal_class {
       $text .= "\nIPN Response from Paypal Server:\n ".$this->ipn_response;
 
       // Write to log
-      $fp=fopen($this->ipn_log_file,'a');
+      $fp=fopen($this->ipn_log_file, 'a');
       fwrite($fp, $text . "\n\n");
 
       fclose($fp);  // close file
@@ -272,6 +268,3 @@ class paypal_class {
 
 
 }
-
-
-

@@ -49,11 +49,9 @@ class BasicOrder extends Basic {
 				$this->intTableKeyValue = $this->arrObjInfo[$this->strTableKey];
 				$returnVal = true;
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -89,15 +87,12 @@ class BasicOrder extends Basic {
 
 		$intRankID = $this->intTableKeyValue;
 		if ($intRankID != null) {
-
 			$intNewRankOrderNum = 0;
 			$arrRanks = array();
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." ORDER BY ordernum");
 			$x = 1;
 			while ($row = $result->fetch_assoc()) {
-
 				if ($row[$this->strTableKey] == $intRankID) {
-
 					if ($strBeforeAfter == "after") {
 						$intNewRankOrderNum = $x;
 						$x++;
@@ -110,7 +105,6 @@ class BasicOrder extends Basic {
 						$intNewRankOrderNum = $x;
 						$x++;
 					}
-
 				}
 				else {
 					$arrRanks[$x] = $row[$this->strTableKey];
@@ -125,26 +119,21 @@ class BasicOrder extends Basic {
 			}
 
 			if (is_numeric($intNewRankOrderNum)) {
-
 				$intOriginalRank = $this->intTableKeyValue;
 
 				foreach ($arrRanks as $key => $value) {
-
 					$arrColumns[0] = "ordernum";
 					$arrValues[0] = $key;
 
 					$this->select($value);
 					$this->update($arrColumns, $arrValues);
-
 				}
 
 				$this->select($intOriginalRank);
-
 			}
 
 			return $intNewRankOrderNum;
 		}
-
 	}
 
 	/**
@@ -170,17 +159,13 @@ class BasicOrder extends Basic {
 			$num_rows = $result->num_rows;
 
 			if ($num_rows == 0 || ($num_rows == 1 && $blnEdit)) {
-
 				$returnVal = 1;
 			}
-
 		}
 		elseif ($this->select($intOrderNumID) && ($strBeforeAfter == "before" || $strBeforeAfter == "after")) {
-
 			// Check first to see if we are editing or adding a new rank
 
 			if ($blnEdit) {
-
 				// Editing...
 				// Check to see if the rank's order is being changed or if its staying the same
 
@@ -201,14 +186,10 @@ class BasicOrder extends Basic {
 				else {
 					$returnVal= $intEditOrderNum;
 				}
-
 			}
 			else {
-
 				$returnVal = $this->makeRoom($strBeforeAfter);
-
 			}
-
 		}
 
 		return $returnVal;
@@ -267,7 +248,7 @@ class BasicOrder extends Basic {
 
 		$returnVal = false;
 
-		if ($this->intTableKeyValue != "" AND ($strDir == "up" OR $strDir == "down")) {
+		if ($this->intTableKeyValue != "" and ($strDir == "up" or $strDir == "down")) {
 			$intOriginalRank = $this->intTableKeyValue;
 			$intOrderNum = $this->arrObjInfo['ordernum'];
 
@@ -276,10 +257,10 @@ class BasicOrder extends Basic {
 
 			$makeMove = "";
 
-			if ($strDir == "up" AND $this->selectByOrder($moveUp)) {
+			if ($strDir == "up" and $this->selectByOrder($moveUp)) {
 				$makeMove = "before";
 			}
-			elseif ($strDir == "down" AND $this->selectByOrder($moveDown)) {
+			elseif ($strDir == "down" and $this->selectByOrder($moveDown)) {
 				$makeMove = "after";
 			}
 
@@ -297,7 +278,6 @@ class BasicOrder extends Basic {
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -336,7 +316,6 @@ class BasicOrder extends Basic {
 			}
 
 			$returnArr = array($intNextOrderID, $strBeforeAfter);
-
 		}
 		return $returnArr;
 	}
@@ -359,7 +338,7 @@ class BasicOrder extends Basic {
  	 *  Returns an array of IDs for the associated table
 	 *
 	 */
-	function getAssociateIDs($sqlOrderBY = "", $bypassFilter=false) {
+	function getAssociateIDs($sqlOrderBY = "", $bypassFilter = false) {
 
 		$arrReturn = array();
 		if (!$bypassFilter) {
@@ -374,7 +353,6 @@ class BasicOrder extends Basic {
 		}
 
 		return $arrReturn;
-
 	}
 
 
@@ -392,7 +370,6 @@ class BasicOrder extends Basic {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
-
 			$blnDelete1 = $this->MySQL->query("DELETE FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 
 			if ($this->strAssociateTableName != "") {
@@ -410,7 +387,6 @@ class BasicOrder extends Basic {
 			$this->resortOrder();
 
 			$this->MySQL->query("OPTIMIZE TABLE `".$this->strTableName."`");
-
 		}
 
 		return $returnVal;

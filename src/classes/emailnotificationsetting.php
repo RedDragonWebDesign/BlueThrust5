@@ -12,7 +12,6 @@
 			$this->strTableName = $this->MySQL->get_tablePrefix()."emailnotifications_settings";
 			$this->strTableKey = "emailnotificationsetting_id";
 			$this->memberID = 0;
-
 		}
 
 
@@ -23,7 +22,6 @@
 			}
 
 			return parent::update($arrTableColumns, $arrColumnValues);
-
 		}
 
 
@@ -34,7 +32,6 @@
 			if (!$this->selectByMulti(array("member_id" => $member_id))) {
 				$this->addNew(array("member_id"), array($this->memberID));
 			}
-
 		}
 
 

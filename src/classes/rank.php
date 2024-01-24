@@ -73,13 +73,9 @@ class Rank extends BasicOrder {
 		global $MAIN_ROOT;
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
-
 			if (strpos($this->arrObjInfo['imageurl'], "http://") === false) {
-
 				$returnVal = $this->arrObjInfo['imageurl'];
-
 			}
-
 		}
 
 		return $returnVal;
@@ -121,12 +117,9 @@ class Rank extends BasicOrder {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
-
 			$imageURL = $this->getLocalImageURL();
 			if ($imageURL !== false) {
-
 				deleteFile(BASE_DIRECTORY.$imageURL);
-
 			}
 
 			$result = $this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."rank_privileges WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
@@ -139,11 +132,9 @@ class Rank extends BasicOrder {
 			else {
 				$this->MySQL->displayError("basic.php");
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -151,9 +142,8 @@ class Rank extends BasicOrder {
 		global $MAIN_ROOT;
 		$result = parent::get_info($returnSingleValue);
 
-		if ( isset($result['imageurl']) && substr($result['imageurl'],0,4) != "http") {
+		if ( isset($result['imageurl']) && substr($result['imageurl'], 0, 4) != "http") {
 			if ($returnSingleValue == "") {
-
 				$fullImageURL = $MAIN_ROOT.$result['imageurl'];
 				$result['imageurl'] = $fullImageURL;
 			}
@@ -163,7 +153,6 @@ class Rank extends BasicOrder {
 			}
 		}
 		return $result;
-
 	}
 
 
@@ -171,9 +160,8 @@ class Rank extends BasicOrder {
 		global $MAIN_ROOT;
 		$result = parent::get_info_filtered($returnSingleValue);
 
-		if ( isset($result['imageurl']) && substr($result['imageurl'],0,4) != "http") {
+		if ( isset($result['imageurl']) && substr($result['imageurl'], 0, 4) != "http") {
 			if ($returnSingleValue == "") {
-
 				$fullImageURL = $MAIN_ROOT.$result['imageurl'];
 				$result['imageurl'] = $fullImageURL;
 			}
@@ -184,7 +172,6 @@ class Rank extends BasicOrder {
 		}
 
 		return $result;
-
 	}
 
 

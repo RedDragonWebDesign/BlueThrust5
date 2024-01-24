@@ -30,7 +30,7 @@ class BTUpload {
 
 	const ONE_MEGABYTE = 1048576;
 
-	function __construct($uploadfile, $prefix, $fileloc = "", $allowableExt=array(), $extlength = 4, $outsideLink = false) {
+	function __construct($uploadfile, $prefix, $fileloc = "", $allowableExt = array(), $extlength = 4, $outsideLink = false) {
 
 		if (!$outsideLink) {
 			$this->arrFile = $uploadfile;
@@ -52,7 +52,6 @@ class BTUpload {
 		$defaultUploadSize = str_replace("K", "", $defaultUploadSize);
 
 		$this->intUploadSizeLimit = $defaultUploadSize;
-
 	}
 
 
@@ -77,16 +76,14 @@ class BTUpload {
 		$checkExt = 0;
 
 		foreach ($this->arrFileExtensions as $fileExt) {
-
-			if (strtolower(substr($strFileName,(strlen($fileExt))*-1)) == $fileExt) {
+			if (strtolower(substr($strFileName, (strlen($fileExt))*-1)) == $fileExt) {
 				$checkExt++;
 				$this->strFileExt = $fileExt;
 			}
 			elseif ($fileExt == "") {
-				$this->strFileExt = strtolower(substr($strFileName,strpos($strFileName, ".")));
+				$this->strFileExt = strtolower(substr($strFileName, strpos($strFileName, ".")));
 				$checkExt++;
 			}
-
 		}
 
 		if ($checkExt > 0 || count($this->arrFileExtensions) == 0) {
@@ -94,7 +91,6 @@ class BTUpload {
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -111,19 +107,15 @@ class BTUpload {
 		$returnVal = false;
 
 		if ($this->blnOutsideLink) {
-
 			$arrHeaders = get_headers($this->strOutsideFileURL, 1);
 			if (isset($arrHeaders['Content-Length']) && $arrHeaders['Content-Length'] <= (self::ONE_MEGABYTE*$this->intUploadSizeLimit)) {
 				$returnVal = true;
 			}
-
 		}
 		else {
-
 			if ($this->arrFile['size'] <= (self::ONE_MEGABYTE*$this->intUploadSizeLimit)) {
 				$returnVal = true;
 			}
-
 		}
 
 		return $returnVal;
@@ -138,29 +130,24 @@ class BTUpload {
 		}
 
 		if ($this->checkExtensions() && $this->checkFileSize()) {
-
 			$this->strUploadedFileName = uniqid($this->strFilePrefix).$this->strFileExt;
 
 			if (!$this->blnOutsideLink) {
 				$blnUploadFile = move_uploaded_file($this->arrFile['tmp_name'], $this->strNewFileLoc.$this->strUploadedFileName);
 			}
 			else {
-
 				$uploadContents = file_get_contents($this->strOutsideFileURL);
 
 				$createFile = file_put_contents($this->strNewFileLoc.$this->strUploadedFileName, $uploadContents);
 
 				if ($createFile !== false) {
 					$blnUploadFile = true;
-
 				}
-
 			}
 
 			if (!$blnUploadFile) {
 				$this->arrErrors[] = "Can't Upload";
 			}
-
 		}
 		else {
 			$this->arrErrors[] = "File Size and Extension";

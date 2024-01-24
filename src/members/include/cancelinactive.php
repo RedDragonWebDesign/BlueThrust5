@@ -29,7 +29,6 @@ $cID = $_GET['cID'];
 
 
 if ($member->update(array("onia"), array(0))) {
-
 	echo "
 		<div style='display: none' id='successBox'>
 			<p align='center'>
@@ -41,5 +40,4 @@ if ($member->update(array("onia"), array(0))) {
 			popupDialog('End Inactive Period', '".$MAIN_ROOT."members', 'successBox');
 		</script>
 	";
-
 }

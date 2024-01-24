@@ -28,7 +28,6 @@ if (isset($memberInfo['member_id']) && $member->hasAccess($consoleObj)) {
 
 
 foreach ($arrComments as $commentID) {
-
 	$newsObj->objComment->select($commentID);
 	$commentInfo = $newsObj->objComment->get_info_filtered();
 
@@ -49,7 +48,6 @@ foreach ($arrComments as $commentID) {
 		
 	
 	";
-
 }
 
 if (count($arrComments) == 0) {

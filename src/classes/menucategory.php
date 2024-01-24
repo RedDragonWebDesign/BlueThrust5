@@ -26,11 +26,10 @@ class MenuCategory extends BasicSort {
 		$this->strTableName = $this->MySQL->get_tablePrefix()."menu_category";
 		$this->strTableKey = "menucategory_id";
 		$this->strCategoryKey = "section";
-
 	}
 
 
-	public function getCategories($intSection, $intAccessType=1, $intHide=0) {
+	public function getCategories($intSection, $intAccessType = 1, $intHide = 0) {
 		$returnArr = array();
 
 		$accessTypeSQL = " OR accesstype = '".$intAccessType."'";

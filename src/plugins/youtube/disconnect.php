@@ -24,7 +24,6 @@ $member->select($_SESSION['btUsername']);
 $ytObj = new Youtube($mysqli);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $ytObj->hasYoutube($member->get_info("member_id"))) {
-
 	$ytObj->delete();
 
 	echo "
@@ -39,5 +38,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $ytObj->hasYoutube($memb
 		</div>
 	
 	";
-
 }

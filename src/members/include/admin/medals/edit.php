@@ -57,7 +57,6 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 	foreach ($arrMedals as $eachMedalInfo) {
 		$medalName = filterText($eachMedalInfo['name']);
 		$medalOptions[$eachMedalInfo['medal_id']] = $medalName;
-
 	}
 
 

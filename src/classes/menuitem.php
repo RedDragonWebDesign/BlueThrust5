@@ -36,10 +36,9 @@ class MenuItem extends BasicSort {
 		$this->objShoutbox = new Basic($this->MySQL, "menuitem_shoutbox", "menushoutbox_id");
 		$this->objCustomPage = new Basic($this->MySQL, "menuitem_custompage", "menucustompage_id");
 		$this->objCustomBlock = new Basic($this->MySQL, "menuitem_customblock", "menucustomblock_id");
-
 	}
 
-	public function getItems($intCategory, $intAccessType=1, $intHide=0) {
+	public function getItems($intCategory, $intAccessType = 1, $intHide = 0) {
 		$returnArr = array();
 
 		$accessTypeSQL = " OR accesstype = '".$intAccessType."'";
@@ -92,12 +91,10 @@ class MenuItem extends BasicSort {
 					$this->objCustomBlock->select($this->arrObjInfo['itemtype_id']);
 					$this->objCustomBlock->delete();
 					break;
-
 			}
 
 			return parent::delete();
 		}
-
 	}
 
 }

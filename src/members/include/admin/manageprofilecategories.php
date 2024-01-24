@@ -29,7 +29,6 @@ $profileCatObj = new ProfileCategory($mysqli);
 
 
 if ($_GET['action'] == "") {
-
 	echo "
 	
 		<div id='loadingSpiral' class='loadingSpiral'>
@@ -112,10 +111,6 @@ if ($_GET['action'] == "") {
 	
 	
 	";
-
-
-
-
 }
 elseif ($_GET['catID'] != "" && $_GET['action'] == "edit") {
 	require_once("manageprofilecat/edit.php");

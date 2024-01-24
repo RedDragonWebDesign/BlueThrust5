@@ -15,7 +15,6 @@
 
 
 if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
-
 	exit();
 }
 else {
@@ -27,7 +26,6 @@ else {
 	$eventObj->select($eID);
 
 	if (!$member->hasAccess($consoleObj) || (!$eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions") && $memberInfo['rank_id'] != 1)) {
-
 		exit();
 	}
 }
@@ -47,7 +45,6 @@ $dispError = "";
 $countErrors = 0;
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check position name
 	if (trim($_POST['positionname']) == "") {
 		$countErrors++;
@@ -71,7 +68,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		$arrColumns = array("event_id", "name", "sortnum", "modchat", "invitemembers", "manageinvites", "postmessages", "managemessages", "attendenceconfirm", "editinfo", "eventpositions", "description");
 		$arrValues = array($eventInfo['event_id'], $_POST['positionname'], $intNewOrderNum, $_POST['modchat'], $_POST['invitemembers'], $_POST['manageinvites'], $_POST['postmessages'], $_POST['managemessages'], $_POST['attendenceconfirm'], $_POST['editinfo'], $_POST['eventpositions'], $_POST['description']);
 		if ($eventObj->objEventPosition->addNew($arrColumns, $arrValues)) {
@@ -93,7 +89,6 @@ if ( ! empty($_POST['submit']) ) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-
 	}
 
 
@@ -101,12 +96,10 @@ if ( ! empty($_POST['submit']) ) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	$arrPositions = $eventObj->getPositions(" ORDER BY sortnum");
 
 	foreach ($arrPositions as $positionID) {

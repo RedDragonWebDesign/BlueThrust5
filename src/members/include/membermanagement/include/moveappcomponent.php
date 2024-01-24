@@ -29,20 +29,13 @@ $appComponentObj = new BasicOrder($mysqli, "app_components", "appcomponent_id");
 
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($appComponentObj->select($_POST['acID'])) {
-
 		$member->logAction("Modified the member application component order.");
 
 		$appComponentObj->move($_POST['acDir']);
 
 		require_once("appcomponentlist.php");
-
-
-
 	}
-
-
 }

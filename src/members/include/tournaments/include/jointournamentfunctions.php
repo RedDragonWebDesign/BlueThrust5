@@ -9,7 +9,6 @@
 			$formObj->errors[] = "You selected an invalid tournament.";
 		}
 		else {
-
 			$tournamentInfo = $tournamentObj->get_info_filtered();
 
 			// Check Password
@@ -31,9 +30,7 @@
 			if (in_array($memberInfo['member_id'], $arrTournaments)) {
 				$formObj->errors[] = "You are already in this tournament.";
 			}
-
 		}
-
 	}
 
 
@@ -43,14 +40,11 @@
 		$tournamentInfo = $tournamentObj->get_info();
 
 		if ($tournamentInfo['playersperteam'] == 1) {
-
 			$arrUnfilledTeams = $tournamentObj->getUnfilledTeams();
 			if (count($arrUnfilledTeams) > 0) {
-
 				$newTeam = $arrUnfilledTeams[0];
 
 				$tournamentObj->objPlayer->update(array("team_id"), array($newTeam));
 			}
 		}
-
 	}

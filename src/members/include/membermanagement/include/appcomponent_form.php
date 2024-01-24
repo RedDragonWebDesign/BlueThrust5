@@ -1,7 +1,8 @@
 <?php
 
 	if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+    }
 
 
 	// Types of application components
@@ -55,10 +56,8 @@ exit(); }
 	while ($row = $result->fetch_assoc()) {
 		$checkCat = "profilecat_".$row['profilecategory_id'];
 		if ($currentCat != $checkCat) {
-
 			$profileSelectOptions[$checkCat] = filterText($row['catName']);
 			$profileCatOptions[] = $checkCat;
-
 		}
 
 

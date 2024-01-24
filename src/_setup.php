@@ -91,7 +91,7 @@ require_once(BASE_DIRECTORY."include/websiteinfo_defaults.php");
 
 
 if (!isset($_SESSION['appendIP'])) {
-	$_SESSION['appendIP'] = substr(md5(uniqid().time()),0,10);
+	$_SESSION['appendIP'] = substr(md5(uniqid().time()), 0, 10);
 }
 
 $IP_ADDRESS = $_SERVER['REMOTE_ADDR'];

@@ -24,7 +24,6 @@ class ProfileCategory extends BasicOrder {
 		$this->strTableKey = "profilecategory_id";
 		$this->strAssociateTableName = $this->MySQL->get_tablePrefix()."profileoptions";
 		$this->strAssociateKeyName = "profileoption_id";
-
 	}
 
 
@@ -40,11 +39,9 @@ class ProfileCategory extends BasicOrder {
 			else {
 				$this->MySQL->displayError("basic.php");
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 }

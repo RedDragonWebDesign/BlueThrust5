@@ -40,7 +40,6 @@ class ConsoleOption extends BasicSort {
 
 		$returnVal = false;
 		if (is_numeric($intRankID) && is_numeric($this->intTableKeyValue)) {
-
 			if ( isset($sqlCache['rank_privileges']) ) {
 				$result = sql_array_select_where(
 					$sqlCache['rank_privileges'],
@@ -61,7 +60,6 @@ class ConsoleOption extends BasicSort {
 			elseif ($intRankID == 1) {
 				$returnVal = true;
 			}
-
 		}
 
 		return $returnVal;
@@ -95,7 +93,7 @@ class ConsoleOption extends BasicSort {
 		return $returnVal;
 	}
 
-	function getConsoleLinkByName($strConsolePageTitle, $htmlLink=true) {
+	function getConsoleLinkByName($strConsolePageTitle, $htmlLink = true) {
 
 		$temp = 0;
 		if ($this->intTableKeyValue != "") {
@@ -105,7 +103,6 @@ class ConsoleOption extends BasicSort {
 		$cID = $this->findConsoleIDByName($strConsolePageTitle);
 		$returnVal = MAIN_ROOT."members/console.php?cID=".$cID;
 		if ($htmlLink) {
-
 			$this->select($cID);
 			$pageTitle = $this->get_info_filtered("pagetitle");
 
@@ -114,7 +111,6 @@ class ConsoleOption extends BasicSort {
 			if ($temp != 0) {
 				$this->select($temp);
 			}
-
 		}
 
 		return $returnVal;
@@ -123,7 +119,6 @@ class ConsoleOption extends BasicSort {
 	function getLink() {
 
 		return MAIN_ROOT."members/console.php?cID=".$this->intTableKeyValue;
-
 	}
 
 	/**
@@ -138,12 +133,9 @@ class ConsoleOption extends BasicSort {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT rank_id FROM ".$this->MySQL->get_tablePrefix()."rank_privileges WHERE console_id = '".$this->intTableKeyValue."'");
 			while ($row = $result->fetch_assoc()) {
-
 				$arrRanks[] = $row['rank_id'];
-
 			}
 
 			$sqlRanks = "('".implode("','", $arrRanks)."')";
@@ -167,11 +159,9 @@ class ConsoleOption extends BasicSort {
 			}
 
 			$returnVal = $countMembers+$addTo;
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -196,11 +186,9 @@ class ConsoleOption extends BasicSort {
 			else {
 				$this->MySQL->displayError("basic.php");
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 

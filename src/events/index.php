@@ -37,7 +37,6 @@ $LOGGED_IN = false;
 if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 	$LOGGED_IN = true;
-
 }
 
 $breadcrumbObj->setTitle("Events");
@@ -64,7 +63,6 @@ require_once($prevFolder."include/breadcrumb.php");
 			$countEvents = 0;
 			$result = $mysqli->query("SELECT event_id FROM ".$dbprefix."events ORDER BY startdate");
 			while ($row = $result->fetch_assoc()) {
-
 				$eventObj->select($row['event_id']);
 				$eventInfo = $eventObj->get_info_filtered();
 
@@ -73,7 +71,6 @@ require_once($prevFolder."include/breadcrumb.php");
 					$showEvent == true;
 				}
 				elseif ($eventInfo['visibility'] == 1 && $LOGGED_IN) {
-
 					$showEvent = true;
 				}
 				elseif ($eventInfo['visibility'] == 0) {
@@ -83,7 +80,6 @@ require_once($prevFolder."include/breadcrumb.php");
 
 
 				if ($showEvent) {
-
 					$countEvents++;
 					$addCSS = "";
 					if ($counter%2 == 0) {
@@ -114,10 +110,7 @@ require_once($prevFolder."include/breadcrumb.php");
 					</tr>
 					
 					";
-
-
 				}
-
 			}
 
 		?>
@@ -127,8 +120,6 @@ require_once($prevFolder."include/breadcrumb.php");
 	<?php
 
 		if ($countEvents == 0) {
-
-
 			echo "
 			
 				<div class='shadedBox' style='width: 30%; margin-top: 20px; margin-left: auto; margin-right: auto'>
@@ -138,7 +129,6 @@ require_once($prevFolder."include/breadcrumb.php");
 				</div>
 			
 			";
-
 		}
 
 	?>

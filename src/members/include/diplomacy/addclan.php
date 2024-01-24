@@ -64,7 +64,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		$diplomacyObj = new Basic($mysqli, "diplomacy", "diplomacy_id");
 
 
@@ -72,7 +71,6 @@ if ( ! empty($_POST['submit']) ) {
 		$arrValues = array($memberInfo['member_id'], time(), $_POST['clanname'], $_POST['status'], $_POST['website'], $_POST['clansize'], $_POST['tag'], $_POST['skill'], $_POST['gamesplayed'], $_POST['extrainfo'], $_POST['leaders']);
 
 		if ($diplomacyObj->addNew($arrColumns, $arrValues)) {
-
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -92,7 +90,6 @@ if ( ! empty($_POST['submit']) ) {
 			$member->logAction("Added ".$_POST['clanname']." to the diplomacy page with ".$diplomacyStatusObj->get_info_filtered("name")." status.");
 
 			if (isset($_POST['reqID']) && $diplomacyRequestObj->select($_POST['reqID'])) {
-
 				$diplomacyRequestInfo = $diplomacyRequestObj->get_info_filtered();
 				$dispStatus = $arrDiplomacyStatus[$_POST['status']];
 				// Send E-mail Confirmation
@@ -115,29 +112,17 @@ Thanks,\n
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-
-
 	}
 
 
 	if ($countErrors > 0) {
-
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
-
 	}
-
-
-
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
-
-
-
 	$arrSelectSize['large'] = "";
 	$arrSelectSize['medium'] = "";
 	$arrSelectSize['small'] = "";
@@ -187,8 +172,7 @@ if ( empty($_POST['submit']) ) {
 							<select name='status' class='textBox'>
 							";
 
-								foreach ($arrDiplomacyStatus as $key=>$value) {
-
+								foreach ($arrDiplomacyStatus as $key => $value) {
 									$dispSelected = "";
 									if ($_POST['status'] == $key) {
 										$dispSelected = " selected";
@@ -249,6 +233,4 @@ if ( empty($_POST['submit']) ) {
 			</form>
 		</div>	
 	";
-
-
 }

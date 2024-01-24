@@ -70,7 +70,6 @@ if (count($_GET) > 0) {
 	foreach ($_GET as $key => $value) {
 		$_POST[$key] = $_GET[$key];
 	}
-
 }
 
 if (count($_POST) > 0) {
@@ -96,13 +95,10 @@ $result = $mysqli->query("SELECT ".$dbprefix."forum_board.forumboard_id FROM ".$
 while ($row = $result->fetch_assoc()) {
 	$boardObj->select($row['forumboard_id']);
 	if ($boardObj->memberHasAccess($memberInfo)) {
-
 		$filterBoardOptions[$row['forumboard_id']] = $boardObj->get_info_filtered("name");
 
 		if (count($boardObj->getSubForums()) > 0) {
-
 			recurseSubForums("&nbsp;&nbsp;&nbsp;&nbsp;");
-
 		}
 	}
 }
@@ -120,7 +116,6 @@ function recurseSubForums($spacing) {
 			}
 		}
 	}
-
 }
 
 function check_filter_boards() {
@@ -261,13 +256,9 @@ if (isset($_POST['submit']) && $formObj->validate()) {
 
 	define("SHOW_SEARCHRESULTS", true);
 	require_once("search_results.php");
-
-
 }
 else {
-
 	$formObj->show();
-
 }
 
 
@@ -286,7 +277,6 @@ function search_checks() {
 	if (!is_numeric($_POST['filtertopics_replies'])) {
 		$formObj->errors[] = "The number of topic replies must be a positive numeric value.";
 	}
-
 }
 
 

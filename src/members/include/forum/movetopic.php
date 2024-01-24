@@ -26,7 +26,6 @@ else {
 $boardObj = new ForumBoard($mysqli);
 
 if (!$boardObj->objTopic->select($_GET['topicID'])) {
-
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."members'
@@ -153,7 +152,6 @@ function post_topic_redirect() {
 	}
 
 	$member->logAction("Moved forum topic, <a href='".$MAIN_ROOT."forum/viewtopic.php?tID=".$topicInfo['forumtopic_id']."'>".$postInfo['title']."</a>, to <a href='".$MAIN_ROOT."forum/viewboard.php?bID=".$_POST['moveto']."'>".$boardObj->get_info_filtered("name")."</a>");
-
 }
 
 $breadcrumbObj->clearBreadcrumb();

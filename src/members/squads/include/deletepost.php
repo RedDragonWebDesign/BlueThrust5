@@ -48,24 +48,15 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 	if ($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], $pID) && $squadNewsObj->select($_POST['nID'])) {
-
 		if ($_POST['confirm'] == 1) {
-
 			$squadNewsObj->delete();
 			$_POST['pID'] = $pID;
 			require_once("newslist.php");
-
 		}
 		else {
 			echo "
 				<p align='center' class='main'>Are you sure you want to delete the news post?</p>
 			";
-
 		}
-
-
 	}
-
-
-
 }

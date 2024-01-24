@@ -32,12 +32,9 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 $checkAccess = $checkAccess1 || $checkAccess2;
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($checkAccess) {
-
 		if ($_POST['moveDir'] == "up") {
 			$addTo = -1;
 		}
@@ -49,7 +46,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$moveKey = $_POST['moveKey'];
 
 		if (isset($_SESSION['btProfileCache'][$checkKey]) && isset($_SESSION['btProfileCache'][$moveKey])) {
-
 			$temp1 = $_SESSION['btProfileCache'][$moveKey];
 			$temp2 = $_SESSION['btProfileCache'][$checkKey];
 
@@ -57,15 +53,9 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$_SESSION['btProfileCache'][$checkKey] = $temp1;
 
 			$_SESSION['btProfileCacheRefresh'] = true;
-
 		}
 
 
 		require_once("view.php");
-
-
 	}
-
-
-
 }

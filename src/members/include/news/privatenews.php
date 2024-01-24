@@ -36,7 +36,6 @@ $cID = $_GET['cID'];
 
 
 	if ($consoleObj->select($postNewsCID) && $member->hasAccess($consoleObj)) {
-
 		$dispPostNews = "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$postNewsCID."'>Post News</a> &laquo; &nbsp; ";
 	}
 
@@ -58,17 +57,13 @@ $cID = $_GET['cID'];
 
 	if (count($arrPosts) > 0) {
 		foreach ($arrPosts as $post) {
-
 			$newsObj->select($post['news_id']);
 			$newsObj->show();
-
 		}
 
 		$newsObj->displayPageSelector(2, MAIN_ROOT."members/console.php?cID=".$cID."&page=");
-
 	}
 	else {
-
 		echo "
 		
 			<div class='shadedBox' style='width: 300px; margin-left: auto; margin-right: auto'>
@@ -78,5 +73,4 @@ $cID = $_GET['cID'];
 			</div>
 		
 		";
-
 	}

@@ -39,24 +39,20 @@ $dispBreadCrumb = "<a href='".$MAIN_ROOT."'>Home</a> > Log In";
 require_once($prevFolder."themes/".$THEME."/_header.php");
 
 if (constant("LOGGED_IN")) {
-
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."members'
 		</script>
 	";
 	exit();
-
 }
 
 if (isset($_GET['code']) && $_GET['state'] == $_SESSION['btYoutubeNonce'] && !isset($_GET['error'])) {
-
 	$arrURLInfo = parse_url($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 
 	$response = $ytObj->getAccessToken($_GET['code'], $arrURLInfo['scheme']."://".$arrURLInfo['host'].$arrURLInfo['path']);
 
 	if (isset($response['access_token'])) {
-
 		$ytObj->accessToken = $response['access_token'];
 		$ytObj->refreshToken = ($response['refresh_token'] != "") ? $response['refresh_token'] : 1;
 		$channelInfo = $ytObj->getChannelInfo();
@@ -92,19 +88,15 @@ if (isset($_GET['code']) && $_GET['state'] == $_SESSION['btYoutubeNonce'] && !is
 		else {
 			$dispError = "There is no user associated with this Youtube account.  You must connect your Youtube account while logged in before using this feature.";
 		}
-
 	}
 	else {
 		$dispError = "Unable to validate your Youtube account, please log in regularly through the website.";
 	}
-
-
 }
 elseif (isset($_GET['error'])) {
 	$dispError = "Unable to validate your Youtube account, please log in regularly through the website.";
 }
 elseif (!isset($_GET['error']) && !isset($_GET['code'])) {
-
 	$loginLink = $ytObj->getConnectLink($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 	$_SESSION['btYoutubeNonce'] = $ytObj->tokenNonce;
 

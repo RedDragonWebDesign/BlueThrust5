@@ -28,7 +28,6 @@ $cID = $_GET['cID'];
 $newsObj = new News($mysqli);
 
 if (isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
-
 	$newsInfo = $newsObj->get_info_filtered();
 
 	define("POSTNEWS_FORM", true);
@@ -43,7 +42,6 @@ if (isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
 
 		$breadcrumbObj->addCrumb($consoleTitle, $MAIN_ROOT."members/console.php?cID=".$cID);
 		$breadcrumbObj->addCrumb("<b>Edit Post:</b> ".$newsInfo['postsubject']);
-
 	}
 	else {
 		unset($arrComponents['newstype']);
@@ -68,7 +66,6 @@ if (isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
 				});
 			</script>
 		";
-
 	}
 
 	$arrComponents['newspost']['value'] = $newsInfo['newspost'];
@@ -84,12 +81,8 @@ if (isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
 
 
 	$breadcrumbObj->updateBreadcrumb();
-
-
 }
 else {
-
-
 	$postNewsCID = $consoleObj->findConsoleIDByName("Post News");
 
 	echo "
@@ -188,7 +181,4 @@ else {
 		</script>
 		
 	";
-
-
-
 }

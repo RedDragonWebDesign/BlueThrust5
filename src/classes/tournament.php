@@ -64,7 +64,6 @@ class Tournament extends Basic {
 				64 => 8,
 				128 => 16,
 				256 => 16);
-
 	}
 
 
@@ -89,7 +88,6 @@ class Tournament extends Basic {
 			}
 
 			for ($i=0; $i<$this->arrObjInfo['maxteams']; $i++) {
-
 				$teamNumber = $i+1;
 				$teamName = "Team ".$teamNumber;
 				if (!$this->objTeam->addNew(array("tournament_id", "seed", "name"), array($this->arrObjInfo['tournament_id'], $arrSeeds[$i], $teamName))) {
@@ -97,7 +95,6 @@ class Tournament extends Basic {
 				}
 
 				$this->arrTeamIDs[] = $this->objTeam->get_info("tournamentteam_id");
-
 			}
 
 			if ($this->arrObjInfo['seedtype'] == 3) {
@@ -122,38 +119,28 @@ class Tournament extends Basic {
 					$poolOffset = 0;
 					shuffle($arrTeams);
 					foreach ($arrPools as $poolID) {
-
 						$arrPoolTeams[$poolID] = array_slice($arrTeams, $poolOffset, $teamsPerPool);
 						$poolOffset += $teamsPerPool;
-
 					}
 
 					$arrNewPoolColumns = array("tournament_id", "pool_id", "team1_id", "team2_id");
 					foreach ($arrPoolTeams as $poolID => $tempTeamArr) {
-
 						$teamStart = 1;
 						foreach ($tempTeamArr as $teamID) {
-
 							$team1Index = $teamStart-1;
 							for ($i=$teamStart; $i<$teamsPerPool; $i++) {
-
 								$arrNewPoolValues = array($this->intTableKeyValue, $poolID, $tempTeamArr[$team1Index], $tempTeamArr[$i]);
 								$this->objPoolMatch->addNew($arrNewPoolColumns, $arrNewPoolValues);
-
 							}
 							$teamStart++;
 						}
-
 					}
-
 				}
-
 			}
 			else {
 				// Non-Pools
 
 				$this->resetMatches();
-
 			}
 
 			/*
@@ -164,7 +151,6 @@ class Tournament extends Basic {
 				$returnVal = true;
 			}
 			else {
-
 				// Unable to add complete tournament - Delete everything with the tournament's ID
 
 				$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."tournamentpools_teams WHERE tournament_id = '".$this->arrObjInfo['tournament_id']."'");
@@ -174,11 +160,9 @@ class Tournament extends Basic {
 				$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."tournamentteams WHERE tournament_id = '".$this->arrObjInfo['tournament_id']."'");
 				$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."tournaments WHERE tournament_id = '".$this->arrObjInfo['tournament_id']."'");
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 	public function select($intIDNum, $numericIDOnly = true) {
@@ -188,7 +172,6 @@ class Tournament extends Basic {
 		$this->objTournamentPool->objTournament = $this;
 
 		return $returnVal;
-
 	}
 
 
@@ -216,13 +199,11 @@ class Tournament extends Basic {
 					$this->objTeam->delete();
 
 					$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."tournamentplayers WHERE team_id = '".$arrCurrentTeams[$i]."'");
-
 				}
 
 				$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."tournamentmatch WHERE tournament_id = '".$this->intTableKeyValue."'");
 
 				$this->resetMatches();
-
 			}
 			elseif ($arrOriginalInfo['maxteams'] < $arrNewInfo['maxteams']) {
 				// More teams than originally
@@ -232,7 +213,6 @@ class Tournament extends Basic {
 				$nextSeed = $arrOriginalInfo['maxteams']+1;
 
 				for ($i=0; $i<$numToAdd; $i++) {
-
 					$this->objTeam->addNew(array("tournament_id", "seed"), array($this->intTableKeyValue, $nextSeed));
 
 					$nextSeed++;
@@ -241,23 +221,18 @@ class Tournament extends Basic {
 				$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."tournamentmatch WHERE tournament_id = '".$this->intTableKeyValue."'");
 
 				$this->resetMatches();
-
 			}
 
 			// Check for time change
 			if ($arrOriginalInfo['startdate'] != $arrNewInfo['startdate']) {
-
 				//Update reminders
 				foreach ($this->getPlayers(true) as $playerID) {
 					$this->objPlayer->select($playerID);
 					$this->objPlayer->setReminder();
 				}
-
 			}
-
 		}
 		return $returnVal;
-
 	}
 
 
@@ -266,14 +241,12 @@ class Tournament extends Basic {
 		$returnVal = false;
 
 		if ($this->intTableKeyValue != "") {
-
 			// Create Match Slots For Entire Tournament
 
 			$totalRounds = $this->getTotalRounds();
 			$intRoundNum = $totalRounds;
 
 			for ($i=1; $i<=$totalRounds; $i++) {
-
 				if ($i == 1) {
 					// Last Round only 1 match
 					$totalMatches = 1;
@@ -284,7 +257,6 @@ class Tournament extends Basic {
 				$nextMatchIndex = 1;
 				$totalMatchesAdded = 0;
 				for ($x=1; $x<=$totalMatches; $x++) {
-
 					$arrColumns = array("round", "tournament_id");
 					$arrValues = array($intRoundNum, $this->arrObjInfo['tournament_id']);
 
@@ -293,10 +265,8 @@ class Tournament extends Basic {
 						$arrValues[] = $nextMatchID[$i-1][1];
 					}
 					elseif ($i != 1) {
-
 						$arrColumns[] = "nextmatch_id";
 						$arrValues[] = $nextMatchID[$i-1][$nextMatchIndex];
-
 					}
 
 					$this->objMatch->addNew($arrColumns, $arrValues);
@@ -309,7 +279,6 @@ class Tournament extends Basic {
 						$nextMatchIndex++;
 						$totalMatchesAdded = 0;
 					}
-
 				}
 
 				$intRoundNum--;
@@ -323,7 +292,6 @@ class Tournament extends Basic {
 			$arrMatches = $this->getMatches(1);
 			$counter = 0;
 			foreach ($arrMatches as $matchID) {
-
 				$team1ID = $arrTeams[$counter];
 				$team2Index = $maxArrTeamsIndex-$counter;
 				$team2ID = $arrTeams[$team2Index];
@@ -343,19 +311,17 @@ class Tournament extends Basic {
 		}
 
 		return $returnVal;
-
 	}
 
 
 
-	public function getTeams($blnRefresh=false, $strOrderBy= "") {
+	public function getTeams($blnRefresh = false, $strOrderBy = "") {
 
 		if ($blnRefresh) {
 			$this->arrTeamIDs = array();
 		}
 
 		if (count($this->arrTeamIDs) == 0) {
-
 			$teamArr = array();
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentteams WHERE tournament_id = '".$this->intTableKeyValue."' ".$strOrderBy);
@@ -367,50 +333,40 @@ class Tournament extends Basic {
 		}
 
 		return $this->arrTeamIDs;
-
 	}
 
 
 
-	public function getPlayers($getPlayerIDs=false) {
+	public function getPlayers($getPlayerIDs = false) {
 
 		$returnArr = array();
 
 		if ($this->intTableKeyValue != "") {
-
 			$query = "SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentplayers WHERE tournament_id = '".$this->intTableKeyValue."'";
 			$result = $this->MySQL->query($query);
 
 			while ($row = $result->fetch_array()) {
-
 				if ($getPlayerIDs) {
 					$returnArr[] = $row['tournamentplayer_id'];
 				}
 				else {
-
 					if ($row['member_id'] != 0) {
 						$returnArr[] = $row['member_id'];
 					}
 					else {
 						$returnArr[] = $row['displayname'];
 					}
-
 				}
-
 			}
-
 		}
 
 		return $returnArr;
-
 	}
 
 	public function getTournamentPlayerID($memberID) {
 
 		if ($this->intTableKeyValue != "") {
-
 			if (is_numeric($memberID)) {
-
 				$query = "SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentplayers WHERE tournament_id = '".$this->intTableKeyValue."' AND member_id = '".$memberID."'";
 				$result = $this->MySQL->query($query);
 			}
@@ -423,114 +379,91 @@ class Tournament extends Basic {
 			$row = $result->fetch_assoc();
 
 			return $row['tournamentplayer_id'];
-
 		}
-
 	}
 
 	/**
 	 * Returns an array memberIDs of players on the $teamID team
 	 */
-	public function getTeamPlayers($teamID, $returnPlayerID=false) {
+	public function getTeamPlayers($teamID, $returnPlayerID = false) {
 
 		$returnArr = array();
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentplayers WHERE team_id = '".$teamID."'");
 			while ($row = $result->fetch_assoc()) {
-
 				if ($returnPlayerID) {
 					$returnArr[] = $row['tournamentplayer_id'];
 				}
 				else {
 					$returnArr[] = $row['member_id'];
 				}
-
 			}
-
 		}
 
 		return $returnArr;
-
 	}
 
 	public function getUnfilledTeams() {
 
 		$returnArr = array();
 		if ($this->intTableKeyValue != "") {
-
 			$this->getTeams(true);
 
 			foreach ($this->arrTeamIDs as $teamID) {
-
 				if (count($this->getTeamPlayers($teamID)) < $this->arrObjInfo['playersperteam']) {
-
 					$returnArr[] = $teamID;
-
 				}
-
 			}
-
 		}
 
 		return $returnArr;
-
 	}
 
-	public function getTotalRounds($intMaxTeams="") {
+	public function getTotalRounds($intMaxTeams = "") {
 
 		if ($intMaxTeams == "") {
 			$intMaxTeams = $this->arrObjInfo['maxteams'];
 		}
 
 		return array_search($intMaxTeams, $this->arrRoundsPerTeams);
-
 	}
 
 
-	public function getMatches($intRoundNumber, $intTeamID=0) {
+	public function getMatches($intRoundNumber, $intTeamID = 0) {
 
 		$returnArr = array();
 
 		if ($this->intTableKeyValue != "") {
-
 			$filterByTeam;
 			if ($intTeamID != 0 && is_numeric($intTeamID)) {
-
 				$filterByTeam = " AND (team1_id = '".$intTeamID."' OR team2_id = '".$intTeamID."') ";
-
 			}
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentmatch WHERE round = '".$intRoundNumber."' AND tournament_id = '".$this->intTableKeyValue."'".$filterByTeam." ORDER BY tournamentmatch_id");
 			while ($row = $result->fetch_assoc()) {
 				$returnArr[] = $row['tournamentmatch_id'];
 			}
-
 		}
 
 		return $returnArr;
-
 	}
 
 
-	public function getTeamIDBySeed($intSeed, $blnSelectTeam=true) {
+	public function getTeamIDBySeed($intSeed, $blnSelectTeam = true) {
 
 		$returnVal = false;
 
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentteams WHERE tournament_id = '".$this->intTableKeyValue."' AND seed = '".$intSeed."'");
 			if ($result->num_rows > 0) {
 				$row = $result->fetch_assoc();
 
 				$returnVal = $row['tournamentteam_id'];
-
 			}
 
 			if ($blnSelectTeam) {
 				$this->objTeam->select($returnVal);
 			}
-
 		}
 
 		return $returnVal;
@@ -541,13 +474,11 @@ class Tournament extends Basic {
 	/**
 	 * Returns either "team1_id" or "team2_id".  Used to figure out which spot to display the winning team in the next match
 	 */
-	public function getNextMatchTeamSpot($intTeamID, $intMatchID=0) {
+	public function getNextMatchTeamSpot($intTeamID, $intMatchID = 0) {
 
 		$returnVal = false;
 		if ($intMatchID != 0 && is_numeric($intMatchID)) {
-
 			$this->objMatch->select($intMatchID);
-
 		}
 
 		if ($this->intTableKeyValue != "" && $this->objMatch->get_info("tournamentmatch_id") != "") {
@@ -563,11 +494,9 @@ class Tournament extends Basic {
 			else {
 				$returnVal = "team2_id";
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -576,7 +505,6 @@ class Tournament extends Basic {
 		$returnVal = false;
 
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentmatch WHERE nextmatch_id = '0' AND tournament_id = '".$this->intTableKeyValue."'");
 			$row = $result->fetch_assoc();
 
@@ -586,11 +514,9 @@ class Tournament extends Basic {
 			elseif ($row['outcome'] == 2) {
 				$returnVal = $row['team2_id'];
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -599,17 +525,14 @@ class Tournament extends Basic {
 		$returnArr = array();
 
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM  ".$this->MySQL->get_tablePrefix()."tournamentpools WHERE tournament_id = '".$this->intTableKeyValue."' ORDER BY tournamentpool_id");
 
 			while ($row = $result->fetch_assoc()) {
 				$returnArr[] = $row['tournamentpool_id'];
 			}
-
 		}
 
 		return $returnArr;
-
 	}
 
 
@@ -618,7 +541,7 @@ class Tournament extends Basic {
 	 * this will just return the actual team name.  It returns blank if there is no player for the selected tead and there is only
 	 * 1 player per team.
 	 */
-	public function getPlayerName($teamID="") {
+	public function getPlayerName($teamID = "") {
 		$returnVal = "";
 
 		if ($teamID != "" && is_numeric($teamID)) {
@@ -626,11 +549,9 @@ class Tournament extends Basic {
 		}
 
 		if ($this->intTableKeyValue != "" && $this->objTeam->get_info("tournament_id") == $this->intTableKeyValue) {
-
 			$teamID = $this->objTeam->get_info("tournamentteam_id");
 
 			if ($this->arrObjInfo['playersperteam'] == 1) {
-
 				$playerID = $this->getTeamPlayers($teamID, true);
 
 				if ($this->objPlayer->select($playerID[0])) {
@@ -642,18 +563,14 @@ class Tournament extends Basic {
 					else {
 						$returnVal = $playerInfo['displayname'];
 					}
-
 				}
-
 			}
 			else {
 				$returnVal = $this->objTeam->get_info_filtered("name");
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -664,7 +581,6 @@ class Tournament extends Basic {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "" && $this->arrObjInfo['seedtype'] == 3) {
-
 			$result = $this->MySQL->query("SELECT winner FROM ".$this->MySQL->get_tablePrefix()."tournamentpools_teams WHERE tournament_id = '".$this->intTableKeyValue."'");
 			$totalPoolMatches = $result->num_rows;
 
@@ -674,11 +590,9 @@ class Tournament extends Basic {
 			if ($totalPoolMatches == $totalPoolMatchesComplete) {
 				$returnVal = true;
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -689,12 +603,10 @@ class Tournament extends Basic {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT pool_id FROM ".$this->MySQL->get_tablePrefix()."tournamentpools_teams WHERE (team1_id = '".$teamID."' OR team2_id = '".$teamID."') AND tournament_id = '".$this->intTableKeyValue."' LIMIT 1");
 			$row = $result->fetch_assoc();
 
 			$returnVal = $row['pool_id'];
-
 		}
 
 		return $returnVal;
@@ -714,33 +626,25 @@ class Tournament extends Basic {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT tournamentpool_id FROM tournamentpools WHERE tournament_id = '".$this->intTableKeyValue."'");
 			if ($result->num_rows > 0) {
 				$returnVal = true;
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 	public function delete() {
 
 		if ($this->intTableKeyValue != "") {
-
 			// Array of Tournament Tables
 			$arrTables = array("tournamentmatch", "tournamentplayers", "tournamentpools", "tournamentpools_teams", "tournaments", "tournamentteams");
 
 			foreach ($arrTables as $tableName) {
-
 				$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix().$tableName." WHERE tournament_id = '".$this->intTableKeyValue."'");
-
 			}
-
 		}
-
 	}
 
 
@@ -763,7 +667,6 @@ class Tournament extends Basic {
 		echo $info['http_code']."<br><br>";
 
 		return $result;
-
 	}
 
 
@@ -771,7 +674,6 @@ class Tournament extends Basic {
 
 		$arrReturn = array();
 		if ($this->intTableKeyValue != "") {
-
 			$query = "SELECT ".$this->MySQL->get_tablePrefix()."tournament_managers.tournamentmanager_id, ".$this->MySQL->get_tablePrefix()."tournament_managers.member_id ".
 						"FROM ".$this->MySQL->get_tablePrefix()."tournament_managers, ".
 						$this->MySQL->get_tablePrefix()."members, ".$this->MySQL->get_tablePrefix()."ranks ".
@@ -785,7 +687,6 @@ class Tournament extends Basic {
 			while ($row = $result->fetch_assoc()) {
 				$arrReturn[$row['tournamentmanager_id']] = $row['member_id'];
 			}
-
 		}
 
 		return $arrReturn;
@@ -795,10 +696,8 @@ class Tournament extends Basic {
 		global $MAIN_ROOT;
 		$returnVal = false;
 		if ($this->intTableKeyValue != "" && $this->objMember->select($mID) && $this->objManager->addNew(array("member_id", "tournament_id"), array($mID, $this->intTableKeyValue))) {
-
 			$returnVal = true;
 			$this->objMember->postNotification("You have been added as a manager on the tournament: <a href='".$MAIN_ROOT."tournaments/view.php?tID=".$this->intTableKeyValue."'>".filterText($this->arrObjInfo['name'])."</a>.");
-
 		}
 
 		return $returnVal;
@@ -813,7 +712,6 @@ class Tournament extends Basic {
 			if ($this->objMember->select($this->objManager->get_info("member_id"))) {
 				$this->objMember->postNotification("You have been removed as a manager on the tournament: <a href='".$MAIN_ROOT."tournaments/view.php?tID=".$this->intTableKeyValue."'>".filterText($this->arrObjInfo['name'])."</a>.");
 			}
-
 		}
 
 		return $returnVal;
@@ -823,7 +721,6 @@ class Tournament extends Basic {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "" && is_numeric($mID)) {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournament_managers WHERE tournament_id = '".$this->intTableKeyValue."' AND member_id = '".$mID."'");
 			if ($result->num_rows > 0) {
 				$returnVal = true;
@@ -843,7 +740,6 @@ class Tournament extends Basic {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "" && $member->select($memberID) && $member->hasAccess($consoleObj)) {
-
 			$arrTournaments = $member->getTournamentList();
 
 			$checkCount = 0;
@@ -863,11 +759,9 @@ class Tournament extends Basic {
 			}
 
 			$returnVal = $checkCount == 0;
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -876,30 +770,24 @@ class Tournament extends Basic {
 		$member = new Member($this->MySQL);
 
 		if ($this->intTableKeyValue != "" && is_numeric($memberID) && $member->select($memberID)) {
-
 			$arrColumns = array("member_id", "tournament_id");
 			$arrValues = array($memberID, $this->intTableKeyValue);
 
 			$this->objPlayer->addNew($arrColumns, $arrValues);
 
 			if ($this->arrObjInfo['playersperteam'] == 1) {
-
 				$arrUnfilledTeams = $this->getUnfilledTeams();
 				if (count($arrUnfilledTeams) > 0) {
 					$newTeam = $arrUnfilledTeams[0];
 					$this->objPlayer->update(array("team_id"), array($newTeam));
 				}
-
 			}
-
 		}
-
 	}
 
 	public function getLink() {
 
 		return FULL_SITE_URL."tournaments/view.php?tID=".$this->intTableKeyValue;
-
 	}
 
 }

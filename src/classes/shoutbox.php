@@ -44,10 +44,9 @@ class ShoutBox {
 		$this->intDispHeight = 350;
 		$this->blnUpdateShoutbox = false;
 		$this->blnMainShoutbox = false;
-
 	}
 
-	public function dispShoutbox($setWidth=0, $setHeight=0, $blnPercentWidth=false, $txtBoxWidth=0, $blnPercentHeight=false) {
+	public function dispShoutbox($setWidth = 0, $setHeight = 0, $blnPercentWidth = false, $txtBoxWidth = 0, $blnPercentHeight = false) {
 		global $MAIN_ROOT, $THEME;
 		if ($setWidth > 0) {
 			$this->intDispWidth = $setWidth;
@@ -70,7 +69,6 @@ class ShoutBox {
 		$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE newstype = '3'".$this->strSQLSort." ORDER BY dateposted");
 		$shoutBoxInfo = '';
 		while ($row = $result->fetch_assoc()) {
-
 			if ($this->memberObj->select($row['member_id'])) {
 				$memberLink = $this->memberObj->getMemberLink();
 				$dispPost = nl2br(parseBBCode(wordwrap(filterText($row['newspost']), $this->intWordWrap)));
@@ -88,9 +86,7 @@ class ShoutBox {
 					".$dispManagePost."
 					<div class='dottedLine' style='margin: 5px 0px'></div>
 				";
-
 			}
-
 		}
 
 		$addToReturn = "";
@@ -109,7 +105,6 @@ class ShoutBox {
 		$returnVal = $addToReturn.$shoutBoxInfo.$addToReturn2;
 
 		if ($this->strPostLink != "") {
-
 			$setTxtBoxWidth = $this->intDispWidth-10;
 			if ($txtBoxWidth > 0) {
 				$setTxtBoxWidth = $txtBoxWidth;
@@ -125,7 +120,6 @@ class ShoutBox {
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -147,7 +141,6 @@ class ShoutBox {
 		if (LOGGED_IN && $this->memberObj->hasAccess($consoleObj)) {
 			$this->strPostLink = MAIN_ROOT."members/include/news/include/postshoutbox.php";
 		}
-
 	}
 
 	public function getShoutboxJS() {

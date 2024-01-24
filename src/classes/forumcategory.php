@@ -15,7 +15,6 @@
 			$this->strAssociateKeyName = "forumboard_id";
 
 			$this->forumBoardObj = new ForumBoard($sqlConnection);
-
 		}
 
 

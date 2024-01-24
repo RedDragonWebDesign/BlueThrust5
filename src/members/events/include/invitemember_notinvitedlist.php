@@ -30,14 +30,12 @@ $cID = $consoleObj->findConsoleIDByName("Manage My Events");
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESSION['btEventID'])) {
-
 	$eventID = $eventObj->get_info("event_id");
 	$eventMID = $eventObj->get_info("member_id");
 
 	$memberInfo = $member->get_info_filtered();
 
 	if ($member->hasAccess($consoleObj) && ($eventObj->memberHasAccess($memberInfo['member_id'], "invitemembers") || $memberInfo['rank_id'] == 1)) {
-
 		$arrInvitedMembers = $eventObj->getInvitedMembers(true);
 		$arrInvitedMembers = array_merge($arrInvitedMembers, $_SESSION['btInviteList']);
 
@@ -51,8 +49,5 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESS
 		}
 
 		echo json_encode($arrACMemberList);
-
 	}
-
-
 }

@@ -32,13 +32,12 @@ $member = new Member($mysqli);
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 if (!is_numeric($_GET['tID']) || !$tournamentObj->select($_GET['tID'])) {
@@ -93,10 +92,7 @@ if ($tournamentInfo['seedtype'] == 3) {
 
 				$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentmatch WHERE tournament_id = '".$tournamentInfo['tournament_id']."' ORDER BY round");
 				while ($row = $result->fetch_assoc()) {
-
-
 					if ($roundNum != $row['round']) {
-
 						if ($roundNum == 1) {
 							echo "
 								<div style='position: absolute; top: ".($intTop-$intMatchDistance)."px; width: 3px; height: ".$intSlotHeight."px'></div>
@@ -124,17 +120,13 @@ if ($tournamentInfo['seedtype'] == 3) {
 							case 6:
 								$intTop += ($intMatchDistance*30);
 								break;
-
 						}
-
-
 					}
 
 					$intMatchCount++;
 
 
 					for ($i=1; $i<=2; $i++) {
-
 						$teamIDColumn = "team".$i."_id";
 						$teamID = $row[$teamIDColumn];
 
@@ -143,24 +135,19 @@ if ($tournamentInfo['seedtype'] == 3) {
 							$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 
 							if ($tournamentInfo['playersperteam'] == 1) {
-
 								$teamPlayers = $tournamentObj->getTeamPlayers($teamID, true);
 
 								if ($tournamentObj->objPlayer->select($teamPlayers[0])) {
-
 									if ($member->select($tournamentObj->objPlayer->get_info("member_id"))) {
 										$dispName = $member->getMemberLink();
 									}
 									else {
 										$dispName = $tournamentObj->objPlayer->get_info_filtered("displayname");
 									}
-
-
 								}
 								else {
 									$dispName = "Bye";
 								}
-
 							}
 							else {
 								// Multi-Player Teams
@@ -171,17 +158,11 @@ if ($tournamentInfo['seedtype'] == 3) {
 
 									$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
 									if (is_numeric($playerInfo['member_id']) && $member->select($playerInfo['member_id'])) {
-
 										$dispPlayerList .= "<b>&middot;</b> ".$member->getMemberLink()."<br>";
-
 									}
 									else {
-
 										$dispPlayerList .= "<b>&middot;</b> ".$playerInfo['displayname']."<br>";
-
 									}
-
-
 								}
 
 								if ($dispPlayerList == "") {
@@ -190,14 +171,9 @@ if ($tournamentInfo['seedtype'] == 3) {
 
 
 								$dispName = "<span style='cursor: pointer' onmouseover=\"showToolTip('".addslashes($dispPlayerList)."')\" onmouseout='hideToolTip()'>".$teamInfo['name']."</span>";
-
-
-
-
 							}
 
 							$dispSeed = "#".$teamInfo['seed'];
-
 						}
 						else {
 							$dispName = "Empty Spot";
@@ -211,22 +187,18 @@ if ($tournamentInfo['seedtype'] == 3) {
 						";
 
 						if ($i == 1) {
-
 							if ($intMatchCount % 2 != 0) {
 								$intBracketConnectorTop = $intTop+$intSlotHeight+($intTeamSeparation/2);
 							}
 
 								$intTop += $intTeamSeparation+$intSlotHeight;
-
 						}
-
 					}
 
 
 					$intBracketConnectorLeft = $intLeft+$intSlotWidth+$intWidthMakeUp+50;
 
 					switch ($roundNum) {
-
 						case 1:
 							$intTop += $intSlotHeight+$intMatchDistance;
 							$intBracketConnectorHeight = ($intSlotHeight*2)+$intMatchDistance+$intTeamSeparation;
@@ -254,7 +226,6 @@ if ($tournamentInfo['seedtype'] == 3) {
 
 
 					if (($intMatchCount%2) == 0) {
-
 						echo "
 							<div class='bracketConnector' style='left: ".$intBracketConnectorLeft."px; top: ".$intBracketConnectorTop."px; width: 30px; height: ".$intBracketConnectorHeight."px'></div>
 							<div class='bracketConnectorDash' style='left: ".($intBracketConnectorLeft+30)."px; top: ".($intBracketConnectorTop+($intBracketConnectorHeight/2))."px'></div>
@@ -276,7 +247,6 @@ if ($tournamentInfo['seedtype'] == 3) {
 						$intTop += $intSlotHeight+$intMatchDistance;
 					}
 					*/
-
 				}
 
 
@@ -297,21 +267,18 @@ if ($tournamentInfo['seedtype'] == 3) {
 					case 6:
 						$intTop += ($intMatchDistance*30);
 						break;
-
 				}
 
 				$tournamentWinner = $tournamentObj->getTournamentWinner();
 				$dispWinner = "Empty Spot";
 				$dispSeed = "";
 				if ($tournamentWinner !== false) {
-
 					$tournamentObj->objTeam->select($tournamentWinner);
 
 
 					$dispSeed = "#".$tournamentObj->objTeam->get_info("seed");
 
 					if ($tournamentInfo['playersperteam'] == 1) {
-
 						$arrWinner = $tournamentObj->getTeamPlayers($tournamentWinner, true);
 
 						$tournamentObj->objPlayer->select($arrWinner[0]);
@@ -323,11 +290,8 @@ if ($tournamentInfo['seedtype'] == 3) {
 						else {
 							$dispWinner = $winnerInfo['displayname'];
 						}
-
-
 					}
 					else {
-
 						$teamInfo = $tournamentObj->objTeam->get_info_filtered();
 
 						$dispPlayerList = "";
@@ -337,17 +301,11 @@ if ($tournamentInfo['seedtype'] == 3) {
 
 							$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
 							if (is_numeric($playerInfo['member_id']) && $member->select($playerInfo['member_id'])) {
-
 								$dispPlayerList .= "<b>&middot;</b> ".$member->getMemberLink()."<br>";
-
 							}
 							else {
-
 								$dispPlayerList .= "<b>&middot;</b> ".$playerInfo['displayname']."<br>";
-
 							}
-
-
 						}
 
 						if ($dispPlayerList == "") {
@@ -361,10 +319,7 @@ if ($tournamentInfo['seedtype'] == 3) {
 
 
 						//$dispWinner = $tournamentObj->objTeam->get_info_filtered("name");
-
 					}
-
-
 				}
 
 				echo "

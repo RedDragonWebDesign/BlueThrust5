@@ -39,11 +39,10 @@
 			$this->menuItemObj = new MenuItem($this->MySQL);
 
 			$this->prepareAdditionalMemberInfo();
-
 		}
 
 
-		public function getForumActivity($amountToShow=5) {
+		public function getForumActivity($amountToShow = 5) {
 
 			$forumObj = new ForumBoard($this->MySQL);
 			$arrReturn = array();
@@ -68,14 +67,12 @@
 				elseif (!in_array($forumPostID, $arrReturn) && $boardAccessType == 1 && $this->blnLoggedIn && $forumObj->memberHasAccess($memberInfo)) {
 					$arrReturn[] = $forumPostID;
 				}
-
 			}
 
 			return $arrReturn;
-
 		}
 
-		public function displayForumActivity($amountToShow=5) {
+		public function displayForumActivity($amountToShow = 5) {
 
 			$forumObj = new ForumBoard($this->MySQL);
 			$arrForumActivity = $this->getForumActivity($amountToShow);
@@ -84,18 +81,17 @@
 
 			if (file_exists(BASE_DIRECTORY."themes/".$this->dir."/menus/forumactivity.php")) {
 				if (!defined("FORUMACTIVITY_MENUITEM")) {
-define("FORUMACTIVITY_MENUITEM", true); }
+define("FORUMACTIVITY_MENUITEM", true);
+                }
 				require_once(BASE_DIRECTORY."themes/".$this->dir."/menus/forumactivity.php");
 			}
 			else {
-
 				echo "
 					<div class='menusForumActivityWrapper'>
 				";
 
 				$altColorSwitch = 0;
 				foreach ($arrForumActivity as $forumPostID) {
-
 					$forumObj->objPost->select($forumPostID);
 					$postInfo = $forumObj->objPost->get_info_filtered();
 
@@ -131,30 +127,28 @@ define("FORUMACTIVITY_MENUITEM", true); }
 							<div style='clear: both'></div>
 						</div>
 					";
-
 				}
 
 				echo "
 					</div>
 				";
-
 			}
-
 		}
 
-		public function getNewMembers($amountToShow=5) {
+		public function getNewMembers($amountToShow = 5) {
 			$result = $this->MySQL->query("SELECT member_id FROM ".$this->MySQL->get_tablePrefix()."members WHERE rank_id != '1' ORDER BY datejoined DESC LIMIT 5");
 			return $result->fetch_all(MYSQLI_ASSOC);
 		}
 
-		public function displayNewMembers($amountToShow=5) {
+		public function displayNewMembers($amountToShow = 5) {
 
 			$member = new Member($this->MySQL);
 			$rank = new Rank($this->MySQL);
 
 			if (file_exists(BASE_DIRECTORY."themes/".$this->dir."/menus/newmembers.php")) {
 				if (!defined("NEWMEMBERS_MENUITEM")) {
-define("NEWMEMBERS_MENUITEM", true); }
+define("NEWMEMBERS_MENUITEM", true);
+                }
 				require_once(BASE_DIRECTORY."themes/".$this->dir."/menus/newmembers.php");
 			}
 			else {
@@ -200,7 +194,6 @@ define("NEWMEMBERS_MENUITEM", true); }
 					</div>
 				";
 			}
-
 		}
 
 
@@ -221,7 +214,6 @@ define("NEWMEMBERS_MENUITEM", true); }
 					</span><br>
 				";
 			}
-
 		}
 
 		public function displayLink() {
@@ -261,7 +253,6 @@ define("NEWMEMBERS_MENUITEM", true); }
 			$shoutboxObj->prepareLinks($this->memberObj);
 			echo $shoutboxObj->dispShoutbox($shoutboxInfo['width'], $shoutboxInfo['height'], $blnShoutboxWidthPercent, $shoutboxInfo['textboxwidth'], $blnShoutboxHeightPercent);
 			echo $shoutboxObj->getShoutboxJS();
-
 		}
 
 		public function displayCustomFormLink() {
@@ -273,7 +264,6 @@ define("NEWMEMBERS_MENUITEM", true); }
 					".$menuCustomFormInfo['prefix']."<a href='".MAIN_ROOT."customform.php?pID=".$menuCustomFormInfo['custompage_id']."' target='".$menuCustomFormInfo['linktarget']."'>".$customFormObj->get_info_filtered("name")."</a>
 				</div>
 			";
-
 		}
 
 
@@ -286,7 +276,6 @@ define("NEWMEMBERS_MENUITEM", true); }
 					".$menuCustomPageInfo['prefix']."<a href='".MAIN_ROOT."custompage.php?pID=".$menuCustomPageInfo['custompage_id']."' target='".$menuCustomPageInfo['linktarget']."'>".$customPageObj->get_info_filtered("pagename")."</a>
 				</div>
 			";
-
 		}
 
 
@@ -300,7 +289,6 @@ define("NEWMEMBERS_MENUITEM", true); }
 					".$menuDownloadLinkInfo['prefix']."<a href='".MAIN_ROOT."downloads/index.php?catID=".$menuDownloadLinkInfo['custompage_id']."' target='".$menuDownloadLinkInfo['linktarget']."'>".$downloadCatObj->get_info_filtered("name")."</a>
 				</div>
 			";
-
 		}
 
 
@@ -311,7 +299,6 @@ define("NEWMEMBERS_MENUITEM", true); }
 			$menuCustomBlockInfo['code'] = $this->replaceKeywords($menuCustomBlockInfo['code']);
 
 			echo $menuCustomBlockInfo['code'];
-
 		}
 
 
@@ -331,7 +318,6 @@ define("NEWMEMBERS_MENUITEM", true); }
 			";
 
 			if ($menuImageInfo['link'] != "") {
-
 				$checkURL = parse_url($menuImageInfo['link']);
 				if (!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
 					$menuImageInfo['link'] = MAIN_ROOT.$menuImageInfo['link'];
@@ -350,7 +336,6 @@ define("NEWMEMBERS_MENUITEM", true); }
 			echo "
 				</div>
 			";
-
 		}
 
 
@@ -420,7 +405,6 @@ define("NEWMEMBERS_MENUITEM", true); }
 					unset($GLOBALS['menu_item_info']);
 					break;
 			}
-
 		}
 
 
@@ -447,7 +431,6 @@ define("NEWMEMBERS_MENUITEM", true); }
 				}
 
 				$this->displayMenuCategory("bottom");
-
 			}
 
 			echo "
@@ -456,7 +439,7 @@ define("NEWMEMBERS_MENUITEM", true); }
 		}
 
 
-		public function displayMenuCategory($loc="top") {
+		public function displayMenuCategory($loc = "top") {
 			// Placeholder function - This likely needs to be overwritten
 
 			// top = top portion of menu
@@ -469,18 +452,15 @@ define("NEWMEMBERS_MENUITEM", true); }
 			else {
 				echo "<br>";
 			}
-
 		}
 
 
 		public function displayLoggedOut() {
 			// Placeholder function
-
 		}
 
 		public function displayLoggedIn() {
 			// Placeholder function
-
 		}
 
 		public function getHeaderCode($info) {
@@ -505,14 +485,12 @@ define("NEWMEMBERS_MENUITEM", true); }
 			else {
 				$this->displayLoggedOut();
 			}
-
 		}
 
 
 		public function prepareAdditionalMemberInfo() {
 
 			if ($this->blnLoggedIn) {
-
 				// Private Message Info
 				$consoleOptionObj = new ConsoleOption($this->MySQL);
 				$pmCID = $consoleOptionObj->findConsoleIDByName("Private Messages");
@@ -544,9 +522,7 @@ define("NEWMEMBERS_MENUITEM", true); }
 				$rank->select($this->memberObj->get_info("rank_id"));
 				$this->data['memberRank'] = $rank->get_info_filtered("name");
 				$this->data['memberInfo'] = $this->memberObj->get_info_filtered();
-
 			}
-
 		}
 
 
@@ -574,14 +550,12 @@ define("NEWMEMBERS_MENUITEM", true); }
 
 			$this->intAccessType = ($this->blnLoggedIn) ? 1 : 2;
 			return $this->intAccessType;
-
 		}
 
 
 		public function getPMInboxLink() {
 
 			return $this->data['pmLink'];
-
 		}
 
 

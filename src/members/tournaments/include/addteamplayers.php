@@ -31,7 +31,6 @@ $member->select($_SESSION['btUsername']);
 $tournamentObj = new Tournament($mysqli);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->select($_POST['teamID']) && $member->hasAccess($consoleObj)) {
-
 	$memberInfo = $member->get_info();
 
 	$teamInfo = $tournamentObj->objTeam->get_info_filtered();
@@ -41,8 +40,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 
 
 	if ($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
-
-
 		$arrAllPlayers = $tournamentObj->getPlayers();
 		$playerList = urlencode($_POST['players']);
 		$arrNewPlayers = explode("%0A", $playerList);
@@ -51,53 +48,33 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 		$blnErrorDuplicatePlayer = false;
 		$blnErrorFullTeam = false;
 		foreach ($arrNewPlayers as $newPlayer) {
-
 			$newPlayer = urldecode($newPlayer);
 			if ($teamPlayerCount < $tournamentInfo['playersperteam']) {
 				if ($member->select($newPlayer)) {
 					$checkMemberID = $member->get_info("member_id");
 
 					if (!in_array($checkMemberID, $arrAllPlayers)) {
-
 						if ($tournamentObj->objPlayer->addNew(array("tournament_id", "team_id", "member_id"), array($tournamentInfo['tournament_id'], $_POST['teamID'], $checkMemberID))) {
-
 							$teamPlayerCount++;
-
 						}
-
-
 					}
 					else {
-
 						$dispErrorMembers .= "<b>&middot;</b> ".$member->getMemberLink()."<br>";
 						$blnErrorDuplicatePlayer = true;
-
 					}
-
-
 				}
 				elseif (!$member->select($newPlayer) && $tournamentInfo['access'] != 1) {
-
 					if ($tournamentObj->objPlayer->addNew(array("tournament_id", "team_id", "displayname"), array($tournamentInfo['tournament_id'], $_POST['teamID'], $newPlayer))) {
-
 						$teamPlayerCount++;
-
 					}
-
 				}
-
 			}
 			else {
 				$blnErrorFullTeam = true;
 				break;
 			}
-
 		}
-
-
 	}
-
-
 }
 
 $_POST['getWhat'] = "playerlist";
@@ -112,7 +89,6 @@ echo "
 ";
 
 if ($blnErrorDuplicatePlayer) {
-
 	echo "
 	
 	<div id='errorMessage1' class='main' style='display: none'>
@@ -150,11 +126,9 @@ if ($blnErrorDuplicatePlayer) {
 	
 	
 	";
-
 }
 
 if ($blnErrorFullTeam) {
-
 	echo "
 
 	<div id='errorMessage2' class='main' style='display: none'>
@@ -188,5 +162,4 @@ if ($blnErrorFullTeam) {
 
 
 ";
-
 }

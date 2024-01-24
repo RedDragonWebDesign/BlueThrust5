@@ -85,8 +85,6 @@ $emptyMenusSQL .= "TRUNCATE `".$dbprefix."menu_item`;";
 $fullSQL = $emptyMenusSQL.$menuSQL;
 
 if ($mysqli->multi_query($fullSQL)) {
-
-
 	do {
 		if ($result = $mysqli->store_result()) {
 			$result->free();
@@ -95,6 +93,4 @@ if ($mysqli->multi_query($fullSQL)) {
 	while ($mysqli->next_result());
 
 	echo "Menus restored to default!";
-
-
 }

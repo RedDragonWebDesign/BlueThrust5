@@ -23,13 +23,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -91,12 +90,10 @@ else {
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID)) {
-
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 	$memberInfo = $member->get_info_filtered();
 
 	if ($memberInfo['member_id'] == $tournamentInfo['member_id'] || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
-
 		$formObj = new Form();
 		switch ($pID) {
 			case "manageplayers":
@@ -123,8 +120,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 				require_once("startmatches.php");
 				break;
 			case "managematches":
-
-
 				if (!isset($_GET['match'])) {
 					require_once("managematches.php");
 				}
@@ -174,8 +169,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 			<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'><br><br>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&select=".$tID."'>Go Back</a></p></div>
 			";
 		}
-
-
 	}
 	else {
 		echo "
@@ -187,12 +180,9 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 			</div>
 		";
 	}
-
 }
 else {
-
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
-
 }
 
 

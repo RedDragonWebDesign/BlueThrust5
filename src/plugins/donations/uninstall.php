@@ -44,8 +44,6 @@ $pluginObj = new btPlugin($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
-
 	$countErrors = 0;
 	$dispError = array();
 
@@ -62,12 +60,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 	$countDrops = 0;
 	foreach ($arrPluginTables as $tableName) {
-
 		$dropSQL = "DROP TABLE `".$tableName."`";
 		if ($mysqli->query($dropSQL)) {
 			$countDrops++;
 		}
-
 	}
 
 	if ($countDrops == count($arrPluginTables)) {
@@ -106,7 +102,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$countErrors++;
 			$dispError[] = "Unable to delete ".$PLUGIN_NAME." console options.  You will have to manually delete them.";
 		}
-
 	}
 	else {
 		$countErrors++;
@@ -127,5 +122,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$mysqli->optimizeTables();
 
 	echo json_encode($arrReturn);
-
 }

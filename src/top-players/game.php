@@ -31,13 +31,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -70,8 +69,6 @@ require_once($prevFolder."include/breadcrumb.php");
 
 
 	if (count($arrGameStats) > 0) {
-
-
 		if (isset($_GET['sID']) && in_array($_GET['sID'], $arrGameStats) && $gameStatObj->select($_GET['sID'])) {
 			$gameStatObj->select($_GET['sID']);
 		}
@@ -90,13 +87,10 @@ require_once($prevFolder."include/breadcrumb.php");
 
 			if ($gameStatInfo['stattype'] == "calculate") {
 				$arrTopPlayers[$memberID] = $gameObj->calcStat($_GET['sID'], $member);
-
 			}
 			else {
 				$arrTopPlayers[$memberID] = $member->getGameStatValue($_GET['sID']);
 			}
-
-
 		}
 
 
@@ -199,10 +193,8 @@ require_once($prevFolder."include/breadcrumb.php");
 				});
 			</script>
 		";
-
 	}
 	else {
-
 		echo "
 		
 			<div class='shadedBox' style='width: 300px; margin-top: 50px; margin-left: auto; margin-right: auto'>
@@ -212,7 +204,6 @@ require_once($prevFolder."include/breadcrumb.php");
 			</div>
 		
 		";
-
 	}
 
 

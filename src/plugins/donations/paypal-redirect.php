@@ -9,8 +9,6 @@
 	$customVars = array();
 
 	if ($donationPlugin->selectByName("Donations") && $donationPlugin->getConfigInfo("email") != "" && $campaignObj->select($_GET['campaign_id'])) {
-
-
 		$notifyURL = FULL_SITE_URL."plugins/donations/paypal-ipn.php";
 
 		$p = new paypal_class();
@@ -31,9 +29,7 @@
 
 		// Check For Custom Variables
 		if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword']) && $member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
-
 			$customVars['member_id'] = $member->get_info("member_id");
-
 		}
 
 		$customVars['campaign_id'] = $_GET['campaign_id'];
@@ -42,8 +38,6 @@
 		$filterFormInputs = array("submit", "checkCSRF");
 		if (($campaignInfo['minimumamount'] > 0 && $_POST['amount'] >= $campaignInfo['minimumamount']) || $campaignInfo['minimumamount'] <= 0) {
 			foreach ($_POST as $key => $value) {
-
-
 				if (in_array($key, $customVals)) {
 					$customVars[$key] = $value;
 				}
@@ -61,10 +55,8 @@
 		else {
 			header("Location: ".$MAIN_ROOT."plugins/donations/?campaign_id=".$campaignInfo['donationcampaign_id']."&fail=amount");
 		}
-
 	}
 	else {
-
 		echo "
 		
 			<script type='text/javascript'>
@@ -72,5 +64,4 @@
 			</script>
 		
 		";
-
 	}

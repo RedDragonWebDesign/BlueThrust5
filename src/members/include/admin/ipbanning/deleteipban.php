@@ -36,10 +36,8 @@
 
 
 	if ($ipbanObj->select($_POST['ipaddress'])) {
-
 		$ipbanObj->delete();
 		$arrReturn = array("result" => "success");
-
 	}
 	else {
 		$arrReturn = array("result" => "fail");

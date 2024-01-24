@@ -1,7 +1,8 @@
 <?php
 
 	if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+    }
 
 
 	$arrTimezoneOptions = $clockObj->getTimezones();
@@ -59,5 +60,4 @@ exit(); }
 		$arrSettings = array("default_timezone", "date_format", "display_date");
 		$arrValues = array($_POST['default_timezone'], $_POST['date_format'], $_POST['display_date']);
 		$webInfoObj->multiUpdate($arrSettings, $arrValues);
-
 	}

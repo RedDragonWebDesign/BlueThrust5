@@ -32,12 +32,9 @@ $_GET['cID'] = $cID;
 
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($member->hasAccess($consoleObj) && $profileOptionObj->select($_POST['oID'])) {
-
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 
 		$profileOptionInfo = $profileOptionObj->get_info();
@@ -52,10 +49,10 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$moveDown = $intSortNum+1;
 		$makeMove = "";
 
-		if ($_POST['oDir'] == "up" AND $profileOptionObj->select($arrAssociates[$moveUp])) {
+		if ($_POST['oDir'] == "up" and $profileOptionObj->select($arrAssociates[$moveUp])) {
 			$makeMove = "before";
 		}
-		elseif ($_POST['oDir'] == "down" AND $profileOptionObj->select($arrAssociates[$moveDown])) {
+		elseif ($_POST['oDir'] == "down" and $profileOptionObj->select($arrAssociates[$moveDown])) {
 			$makeMove = "after";
 		}
 
@@ -73,6 +70,4 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		require_once("main.php");
 	}
-
-
 }

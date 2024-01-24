@@ -26,12 +26,10 @@ $pID = "manageranks";
 $squadObj = new Squad($mysqli);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($member->get_info("member_id"), $pID)) {
-
 	$squadInfo = $squadObj->get_info_filtered();
 	$memberInfo = $member->get_info_filtered();
 
 	if ($squadObj->objSquadRank->select($_POST['rID'])) {
-
 		$squadRankInfo = $squadObj->objSquadRank->get_info();
 
 		$addTo = 1;
@@ -40,8 +38,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		}
 
 		if ($squadRankInfo['sortnum'] != 1 && ($squadRankInfo['sortnum']+$addTo) != 1) {
-
-
 			$newSortNum = $squadRankInfo['sortnum']+$addTo;
 
 			$result = $mysqli->query("SELECT * FROM ".$dbprefix."squadranks WHERE squad_id = '".$squadRankInfo['squad_id']."' AND sortnum = '".$newSortNum."'");
@@ -61,12 +57,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				$squadObj->objSquadRank->select($squadRankInfo['squadrank_id']);
 				$squadObj->objSquadRank->update($arrColumns, array($squadRankInfo['sortnum']));
 			}
-
-
 		}
 
 		require_once("ranklist.php");
-
 	}
-
 }

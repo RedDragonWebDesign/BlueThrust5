@@ -42,7 +42,6 @@ $arrManagers = $tournamentObj->getManagers();
 foreach ($arrManagers as $tManagerID => $tMemberID) {
 	$member->select($tMemberID);
 	echo "<div class='mttPlayerSlot main'>".$member->getMemberLink()."<div class='mttDeletePlayer'><a href='javascript:void(0)' onclick=\"deleteManager('".$tManagerID."')\">X</a></div></div>";
-
 }
 
 if (count($arrManagers) == 0) {

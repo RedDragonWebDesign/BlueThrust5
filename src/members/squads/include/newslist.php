@@ -45,7 +45,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$memberInfo = $member->get_info_filtered();
 
 	if ($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], $pID)) {
-
 		if (!$_POST['filterShoutbox']) {
 			$filterNewsType = "(newstype = '1' OR newstype = '2')";
 		}
@@ -77,7 +76,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 			$dispLastEdit = "";
 			if ($member->select($row['lasteditmember_id'])) {
-
 				$dispLastEditTime = getPreciseTime($row['lasteditdate']);
 				$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";
 			}
@@ -103,7 +101,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 			$counter++;
-
 		}
 
 		if ($counter == 0) {
@@ -115,11 +112,5 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				</div>
 			";
 		}
-
-
-
 	}
-
-
-
 }

@@ -33,7 +33,6 @@ $dispError = "";
 $tournamentObj = new Tournament($mysqli);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->select($_POST['teamID']) && $tournamentObj->objTournamentPool->select($_POST['poolID']) && $tournamentObj->objTournamentPool->objTournamentPoolMatch->select($_POST['poolTeamID']) && $member->hasAccess($consoleObj)) {
-
 	$memberInfo = $member->get_info();
 
 	$teamInfo = $tournamentObj->objTeam->get_info_filtered();
@@ -48,8 +47,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 
 
 	if (($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) && $poolInfo['tournament_id'] == $teamInfo['tournament_id'] && $poolTeamInfo['tournament_id'] == $teamInfo['tournament_id']) {
-
-
 		// Check Match Score
 		if (!is_numeric($_POST['teamScore']) || !is_numeric($_POST['opponentScore'])) {
 			$countErrors++;
@@ -77,17 +74,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The selected match is not in the selected pool.";
 		}
-
-
-
 	}
 	else {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to verify tournament information.";
 	}
-
-
-
 }
 else {
 	$countErrors++;
@@ -97,7 +88,6 @@ else {
 
 
 if ($countErrors == 0) {
-
 	$arrUpdateColumns = array("team1score", "team2score", "winner");
 
 	if ($poolTeamInfo['team1_id'] == $teamInfo['tournamentteam_id']) {
@@ -144,7 +134,6 @@ if ($countErrors == 0) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 	}
-
 }
 
 

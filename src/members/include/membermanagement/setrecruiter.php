@@ -33,8 +33,6 @@ $countErrors = 0;
 $rankObj = new Rank($mysqli);
 $memberObj = new Member($mysqli);
 if ( ! empty($_POST['submit']) ) {
-
-
 	// Check Member
 	if (!$memberObj->select($_POST['member'])) {
 		$countErrors++;
@@ -58,13 +56,11 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		$arrColumns = array("recruiter");
 		$arrValues = array($_POST['newrecruiter']);
 
 		$memberObj->select($_POST['member']);
 		if ($memberObj->update($arrColumns, $arrValues)) {
-
 			$logMessage = $member->getMemberLink()." changed ".$newMemberInfo['username']."'s recruiter from ".$oldRecruiterInfo['username']." to ".$newRecruiterInfo['username'].".";
 			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
 
@@ -85,14 +81,11 @@ if ( ! empty($_POST['submit']) ) {
 
 			$member->select($memberInfo['member_id']);
 			$member->logAction($logMessage);
-
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-
 	}
 
 
@@ -100,16 +93,13 @@ if ( ! empty($_POST['submit']) ) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
 }
 
 
 $result = $mysqli->query("SELECT ".$dbprefix."members.* FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."ranks.rank_id = ".$dbprefix."members.rank_id AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id != '1' ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
 while ($row = $result->fetch_assoc()) {
-
 	$rankObj->select($row['rank_id']);
 	$memberoptions .= "<option value='".$row['member_id']."'>".$rankObj->get_info_filtered("name")." ".filterText($row['username'])."</option>";
-
 }
 
 

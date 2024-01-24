@@ -30,12 +30,9 @@ $consoleObj->select($cID);
 $_GET['cID'] = $cID;
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($member->hasAccess($consoleObj) && $consoleCatObj->select($_POST['cID'])) {
-
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 		$consoleCatInfo = $consoleCatObj->get_info();
 
@@ -59,7 +56,5 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 		require_once("main.php");
-
 	}
-
 }

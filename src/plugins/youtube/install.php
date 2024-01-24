@@ -110,7 +110,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 		if ($mysqli->multi_query($sql)) {
-
 			do {
 				if ($result = $mysqli->store_result()) {
 					$result->free();
@@ -144,7 +143,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$consoleObj->setCategoryKeyValue($consoleCatID);
 			$newSortNum = $consoleObj->getHighestSortNum()+1;
 			$consoleObj->addNew(array("consolecategory_id", "pagetitle", "filename", "sortnum"), array($consoleCatID, $PLUGIN_NAME, "../plugins/youtube/youtubeconnect.php", $newSortNum));
-
 		}
 		else {
 			$countErrors++;
@@ -165,5 +163,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 	echo json_encode($arrReturn);
-
 }

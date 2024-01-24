@@ -26,26 +26,20 @@
 
 
 		if (!file_exists("_config.php")) {
-
 			if (file_put_contents("_config.php", "") === false) {
-
 				echo "
 					<div class='noteDiv'>
 						<b>Note:</b> Unable to write to config file.  You can fix this by setting the file permissions on the _config.php file to 755.  Otherwise, you will need to manually create and fill out the _config.php file.  Go <a href='configinstructions.php'>HERE</a> to view instructions on how to fill out the config file.
 					</div>
 				";
-
 			}
-
 		}
 		elseif (file_exists("_config.php") && !is_writable("_config.php")) {
-
 			echo "
 				<div class='noteDiv'>
 					<b>Note:</b> Unable to write to config file.  You can fix this by setting the file permissions on the _config.php file to 755.  Otherwise, you will need to manually create and fill out the _config.php file.  Go <a href='configinstructions.php'>HERE</a> to view instructions on how to fill out the config file.
 				</div>
 			";
-
 		}
 
 

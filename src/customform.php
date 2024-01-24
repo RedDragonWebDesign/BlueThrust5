@@ -36,13 +36,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -62,7 +61,6 @@ $dispError = "";
 $countErrors = 0;
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check for multi submissions
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."customform_submission WHERE ipaddress = '".$IP_ADDRESS."' ORDER BY submitdate DESC LIMIT 1");
@@ -75,7 +73,6 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	if ($countErrors == 0) {
-
 		$arrColumns = array("submitdate", "ipaddress", "customform_id");
 		$arrValues = array(time(), $IP_ADDRESS, $customPageInfo['customform_id']);
 
@@ -133,7 +130,6 @@ if ( ! empty($_POST['submit']) ) {
 								$countErrors++;
 								$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 							}
-
 						}
 					}
 					elseif ($componentInfo['componenttype'] == "select") {
@@ -143,39 +139,29 @@ if ( ! empty($_POST['submit']) ) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 						}
-
 					}
 					elseif (($componentInfo['componenttype'] == "input" || $componentInfo['componenttype'] == "largeinput") && !$customFormObj->objFormValue->addNew($arrColumns, array($submissionInfo['submission_id'], $componentID, $_POST[$formComponentName]))) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 					}
-
 				}
 				else {
-
 					$mysqli->query("DELETE FROM ".$dbprefix."customform_values WHERE submission_id = '".$submissionInfo['submission_id']."'");
 					$customFormObj->objSubmission->delete();
 
 					break;
 				}
-
-
 			}
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 		}
-
-
-
 	}
 
 
 
 	if ($countErrors == 0) {
-
 		if ($customPageInfo['submitmessage'] == "") {
 			$customPageInfo['submitmessage'] = "<p align='center'>Success!</p>";
 		}
@@ -197,7 +183,6 @@ if ( ! empty($_POST['submit']) ) {
 			";
 		}
 		else {
-
 			echo "
 				<div style='display: none' id='successBox'>
 					".$customPageInfo['submitmessage']."
@@ -206,12 +191,10 @@ if ( ! empty($_POST['submit']) ) {
 						";
 
 					foreach ($arrComponents as $value) {
-
 						$tempName = "customform_".$value;
 						echo "	
 							<input type='hidden' name='".$tempName."' value='".$_POST[$tempName]."'>
 						";
-
 					}
 
 					echo "
@@ -246,7 +229,6 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			
 			";
-
 		}
 
 		$member = new Member($mysqli);
@@ -256,16 +238,12 @@ if ( ! empty($_POST['submit']) ) {
 		$consoleObj = new ConsoleOption($mysqli);
 		$viewSubmissionsCID = $consoleObj->findConsoleIDByName("View Custom Form Submissions");
 		$member->postNotification("There is a new submission for custom form: <b>".$customPageInfo['name']."</b><br><a href='".$MAIN_ROOT."members/console.php?cID=".$viewSubmissionsCID."'>View Form Submissions</a>");
-
-
 	}
 
 	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
-
 	}
-
 }
 
 if ( empty($_POST['submit']) ) {
@@ -290,7 +268,6 @@ if ( empty($_POST['submit']) ) {
 			";
 
 			foreach ($arrComponents as $componentID) {
-
 				$customFormObj->objComponent->select($componentID);
 				$componentInfo = $customFormObj->objComponent->get_info_filtered();
 				$dispInput = "";
@@ -320,7 +297,6 @@ if ( empty($_POST['submit']) ) {
 						}
 						break;
 					case "input":
-
 						$dispInput = "<input type='text' value='".$_POST[$componentFormName]."' name='".$componentFormName."' class='textBox' style='width: 150px'>";
 				}
 
@@ -357,8 +333,6 @@ if ( empty($_POST['submit']) ) {
 						</tr>
 					";
 				}
-
-
 			}
 
 			echo "
@@ -375,6 +349,5 @@ if ( empty($_POST['submit']) ) {
 
 
 	echo "</div>";
-
 }
 require_once($prevFolder."themes/".$THEME."/_footer.php");

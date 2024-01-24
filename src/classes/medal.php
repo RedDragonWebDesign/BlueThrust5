@@ -27,7 +27,6 @@ class Medal extends Rank {
 		$this->strAssociateKeyName = "member_id";
 
 		$this->objFrozenMedal = new Basic($sqlConnection, "freezemedals_members", "freezemedal_id");
-
 	}
 
 
@@ -45,7 +44,6 @@ class Medal extends Rank {
 		}
 
 		return $num_rows;
-
 	}
 
 
@@ -77,29 +75,22 @@ class Medal extends Rank {
 				$returnVal = true;
 				deleteFile(BASE_DIRECTORY.$info['imageurl']);
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 	public function getFrozenMembersList() {
 
 		$returnArr = array();
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."freezemedals_members WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 			while ($row = $result->fetch_assoc()) {
-
 				$returnArr[$row['freezemedal_id']] = $row['member_id'];
-
 			}
-
 		}
 
 		return $returnArr;
-
 	}
 
 }

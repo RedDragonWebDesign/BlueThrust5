@@ -41,8 +41,6 @@ $appComponentObj = $customFormObj->objComponent;
 $_SESSION['btFormComponent'] = array_values($_SESSION['btFormComponent']);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
-
-
 	echo "
 	
 		<table class='formTable' style='width: 90%; margin-top: 3px'>
@@ -53,7 +51,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 	$totalComponents = count($_SESSION['btFormComponent'])-1;
 	$counter = 0;
 	foreach ($_SESSION['btFormComponent'] as $key => $value) {
-
 		$dispUpArrow = "";
 		if ($counter != 0) {
 			$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveComponent('".$key."', 'up')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' style='width: 24px; height: 24px; border: 0px'></a>";
@@ -85,7 +82,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 				<td class='main' style='width: 6%' align='center'><a href='javascript:void(0)' onclick=\"deleteComponent('".$key."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' style='width: 24px; height: 24px; border: 0px'></a></td>
 			</tr>
 		";
-
 	}
 
 
@@ -100,5 +96,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 			</p>
 		";
 	}
-
 }

@@ -88,7 +88,6 @@ class Basic {
 
 		$returnVal = false;
 		if (is_array($arrWhats)) {
-
 			$arrSQL = array();
 			foreach ($arrWhats as $columnName => $value) {
 				$arrSQL[] = $columnName." = ?";
@@ -102,18 +101,15 @@ class Basic {
 			$returnID = "";
 
 			if ($stmt) {
-
 				$this->MySQL->bindParams($stmt, $arrWhats);
 				$stmt->execute();
 				$stmt->bind_result($result);
 				$stmt->fetch();
 				$returnID = $result;
 				$stmt->close();
-
 			}
 
 			$returnVal = $this->select($returnID);
-
 		}
 
 		return $returnVal;
@@ -127,7 +123,7 @@ class Basic {
 	 *
 	 */
 
-	public function get_entries($filterArgs=array(), $orderBy="", $blnNotFiltered=true, $filterComparators=array()) {
+	public function get_entries($filterArgs = array(), $orderBy = "", $blnNotFiltered = true, $filterComparators = array()) {
 
 		$returnVal = false;
 		$returnArr = array();
@@ -140,14 +136,11 @@ class Basic {
 
 		$setSQL = "";
 		if (count($filterArgs) > 0) {
-
 			$arrSQL = array();
 			foreach ($filterArgs as $columnName => $value) {
-
 			$setComparator = isset($filterComparators[$columnName]) ? $filterComparators[$columnName] : "=";
 
 				$arrSQL[] = $columnName." ".$setComparator." ?";
-
 			}
 
 			$setSQL = implode(" AND ", $arrSQL);
@@ -166,7 +159,6 @@ class Basic {
 		$returnID = "";
 
 		if ($stmt) {
-
 			if (count($filterArgs) > 0) {
 				$this->MySQL->bindParams($stmt, $filterArgs);
 			}
@@ -175,13 +167,10 @@ class Basic {
 			$stmt->bind_result($result);
 
 			while ($stmt->fetch()) {
-
 				$arrSelect[] = $result;
-
 			}
 
 			$stmt->close();
-
 		}
 
 		foreach ($arrSelect as $selectKey) {
@@ -194,7 +183,6 @@ class Basic {
 		}
 
 		return $returnArr;
-
 	}
 
 
@@ -218,14 +206,13 @@ class Basic {
 
 		if (is_array($arrColumns)) {
 			$sqlColumns = implode(",", $arrColumns);
-			$sqlValues = rtrim(str_repeat("?, ", count($arrColumns)),", ");
-
+			$sqlValues = rtrim(str_repeat("?, ", count($arrColumns)), ", ");
 		}
 
 		$stmt = $this->MySQL->prepare("INSERT INTO ".$this->strTableName." (".$sqlColumns.") VALUES (".$sqlValues.")");
 
 		if (is_array($arrValues)) {
-			foreach ($arrValues as $key=>$value) {
+			foreach ($arrValues as $key => $value) {
 				$temp = str_replace("&gt;", ">", $value);
 				$value = str_replace("&lt;", "<", $temp);
 				$temp = str_replace('&quot;', '"', $value);
@@ -238,7 +225,6 @@ class Basic {
 			}
 
 			$stmt = $this->MySQL->bindParams($stmt, $arrValues);
-
 		}
 
 		if ($stmt->execute()) {
@@ -251,7 +237,6 @@ class Basic {
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -272,13 +257,11 @@ class Basic {
 	public function update($arrTableColumns, $arrColumnValues) {
 
 		$returnVal = false;
-		if (is_array($arrTableColumns) AND is_array($arrColumnValues) AND $this->intTableKeyValue != null) {
-
+		if (is_array($arrTableColumns) and is_array($arrColumnValues) and $this->intTableKeyValue != null) {
 			if (count($arrTableColumns) == count($arrColumnValues)) {
-
 				$combinedArray = array_combine($arrTableColumns, $arrColumnValues);
 
-				foreach ($combinedArray as $key=>$value) {
+				foreach ($combinedArray as $key => $value) {
 					$temp = str_replace("&gt;", ">", $value);
 					$value = str_replace("&lt;", "<", $temp);
 					$temp = str_replace('&quot;', '"', $value);
@@ -302,14 +285,11 @@ class Basic {
 					$returnVal = true;
 
 					$this->updateTableTime();
-
 				}
 				else {
 					$this->MySQL->displayError("basic.php - update");
 				}
-
 			}
-
 		}
 
 		return $returnVal;
@@ -339,7 +319,6 @@ class Basic {
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -352,7 +331,6 @@ class Basic {
 			$returnVal = $this->arrObjInfo;
 		}
 		else {
-
 			$returnVal = $this->arrObjInfo[$returnSingleValue] ?? '';
 		}
 
@@ -426,7 +404,6 @@ class Basic {
 		else {
 			$this->MySQL->query("INSERT INTO ".$this->MySQL->get_tablePrefix()."tableupdates (tablename, updatetime) VALUES ('".$this->strTableName."', '".time()."')");
 		}
-
 	}
 
 }

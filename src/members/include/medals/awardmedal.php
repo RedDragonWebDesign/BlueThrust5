@@ -37,7 +37,6 @@
 	$cID = $_GET['cID'];
 
 	if ($memberInfo['rank_id'] == 1) {
-
 		$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 		$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
 
@@ -46,7 +45,6 @@
 			$row = $result->fetch_assoc();
 			$rankInfo['promotepower'] = $row['rank_id'];
 		}
-
 	}
 
 	$rankObj = new Rank($mysqli);
@@ -70,10 +68,8 @@
 	$sqlRanks = "('".implode("','", $arrRanks)."')";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."' ORDER BY ".$dbprefix."ranks.ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
-
 		$rankObj->select($row['rank_id']);
 		$memberOptions[$row['member_id']] = $rankObj->get_info_filtered("name")." ".filterText($row['username']);
-
 	}
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."medals ORDER BY ordernum DESC");

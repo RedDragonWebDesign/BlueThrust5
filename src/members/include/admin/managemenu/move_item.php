@@ -31,14 +31,9 @@ $cID = $consoleObj->findConsoleIDByName("Manage Menu Items");
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($member->hasAccess($consoleObj) && $menuItemObj->select($_POST['itemID'])) {
-
-
-
 		$menuItemObj->move($_POST['iDir']);
 
 		require_once("include/menuitemlist.php");
@@ -62,8 +57,5 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		";
 		*/
-
 	}
-
-
 }

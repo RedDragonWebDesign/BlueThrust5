@@ -26,19 +26,13 @@ $appComponentObj = new BasicOrder($mysqli, "app_components", "appcomponent_id");
 
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
-
-
 	if ($appComponentObj->select($_POST['appCompID'])) {
-
 		$appCompInfo = $appComponentObj->get_info_filtered();
 		$appComponentObj->set_assocTableName("app_selectvalues");
 		$appComponentObj->set_assocTableKey("appselectvalue_id");
 
 		require_once(BASE_DIRECTORY."members/include/membermanagement/include/appcomponent_form.php");
 		if ($_POST['saveComponent']) {
-
-
 			// Check Component Name
 
 			if (trim($_POST['saveComponentName']) == "") {
@@ -52,7 +46,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 
 			if (count($addAppForm->errors) == 0) {
-
 				if ($_POST['saveComponentRequired'] != 0) {
 					$_POST['saveComponentRequired'] = 1;
 				}
@@ -127,36 +120,26 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					
 					
 					";
-
 				}
 				else {
 					$addAppForm->errors[] = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.";
 				}
-
-
 			}
 
 
 			if (count($addAppForm->errors) > 0) {
 				$_POST['saveComponent'] = false;
 			}
-
-
-
 		}
 
 
 		if (!$_POST['saveComponent']) {
-
-
-
 			if (($appCompInfo['componenttype'] == "select" || $appCompInfo['componenttype'] == "multiselect") && $countErrors == 0) {
 				$appSelectOptionObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
 				$arrSelectValues = $appComponentObj->getAssociateIDs();
 
 				$tempArr = array();
 				foreach ($arrSelectValues as $selectValueID) {
-
 					$appSelectOptionObj->select($selectValueID);
 					$appSelectValue = $appSelectOptionObj->get_info_filtered("componentvalue");
 
@@ -166,18 +149,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				asort($tempArr);
 
 				$_SESSION['btAppComponent']['cOptions'] = $tempArr;
-
 			}
 			elseif ($countErrors == 0) {
 				$_SESSION['btAppComponent']['cOptions'] = array();
 			}
-
-
-
-
 		}
-
-
 	}
 	else {
 		echo "
@@ -196,7 +172,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$addAppForm->components['tooltip']['value'] = $appCompInfo['tooltip'];
 
 	if ($appCompInfo['componenttype'] == "profile") {
-
 		$appSelectValueID = $appComponentObj->getAssociateIDs();
 		$appSelectValueObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
 		$appSelectValueObj->select($appSelectValueID[0]);

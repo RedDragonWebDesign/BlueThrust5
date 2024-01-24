@@ -49,7 +49,6 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 $dispError = "";
 if ( ! empty($_POST['submit']) ) {
-
 	$countErrors = 0;
 
 
@@ -73,7 +72,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		$arrUpdateColumn = array("name");
 		$arrUpdateValues = array($_POST['catname']);
 
@@ -87,7 +85,6 @@ if ( ! empty($_POST['submit']) ) {
 
 		$profileCatObj->select($profileCatInfo['profilecategory_id']);
 		if ($profileCatObj->update($arrUpdateColumn, $arrUpdateValues)) {
-
 			echo "
 			<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -103,33 +100,22 @@ if ( ! empty($_POST['submit']) ) {
 
 
 			$profileCatObj->resortOrder();
-
-
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database! Please contact the website administrator.<br>";
 		}
-
-
-
 	}
 
 
 	if ($countErrors == 1) {
-
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
-
 	}
-
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	$countCategories = 0;
 
 	$afterSelected = "";
@@ -143,7 +129,6 @@ if ( empty($_POST['submit']) ) {
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory WHERE profilecategory_id != '".$profileCatInfo['profilecategory_id']."' ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
-
 		$strSelected = "";
 		if ($selectCat == $row['ordernum']) {
 			$strSelected = "selected";
@@ -201,6 +186,4 @@ if ( empty($_POST['submit']) ) {
 	</form>
 
 	";
-
-
 }

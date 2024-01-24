@@ -33,7 +33,6 @@ $profileCatObj = new ProfileCategory($mysqli);
 $profileOptionObj = new ProfileOption($mysqli);
 
 if ($_GET['oID'] == "") {
-
 	echo "
 	<div id='loadingSpiral' class='loadingSpiral'>
 		<p align='center'>
@@ -113,8 +112,6 @@ if ($_GET['oID'] == "") {
 	
 	
 	";
-
-
 }
 elseif ($_GET['oID'] != "" && $_GET['action'] == "edit") {
 	require_once("manageprofileoptions/edit.php");

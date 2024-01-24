@@ -38,7 +38,6 @@ $countErrors = 0;
 
 $arrCheckType = array("image", "customcode", "customformat");
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Name
 	if (trim($_POST['categoryname']) == "") {
 		$countErrors++;
@@ -87,7 +86,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		if ($_POST['headertype'] == "image" && $_FILES['headerimagefile']['name'] != "") {
 			$btUploadObj = new BTUpload($_FILES['headerimagefile'], "menuheader_", "../images/menu/", array(".jpg", ".png", ".bmp", ".gif"));
 		}
@@ -102,16 +100,13 @@ if ( ! empty($_POST['submit']) ) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload selected image.  Make sure it's the correct file extension and not too big.<br>";
 		}
-
 	}
 
 	if ($countErrors == 0) {
-
 		$arrColumns = array("section", "name", "sortnum", "headertype", "headercode", "accesstype", "hide");
 		$arrValues = array($_POST['section'], $_POST['categoryname'], $intNewOrderNum, $_POST['headertype'], $headerImageURL, $_POST['accesstype'], $_POST['hidecategory']);
 
 		if ($menuCatObj->addNew($arrColumns, $arrValues)) {
-
 			$menuCatInfo = $menuCatObj->get_info_filtered();
 
 			echo "
@@ -125,22 +120,17 @@ if ( ! empty($_POST['submit']) ) {
 				popupDialog('Add New Menu Category', '".$MAIN_ROOT."members', 'successBox');
 			</script>
 			";
-
 		}
-
-
 	}
 
 	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
 	$selectSection = array();
 	if (isset($_GET['sectionID'])) {
 		$selectSection[$_GET['sectionID']] = " selected";
@@ -292,5 +282,4 @@ if ( empty($_POST['submit']) ) {
 			
 		</script>
 	";
-
 }

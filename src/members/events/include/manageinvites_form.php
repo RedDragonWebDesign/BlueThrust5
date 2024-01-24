@@ -27,13 +27,11 @@ $cID = $consoleObj->findConsoleIDByName("Manage My Events");
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember->select($_POST['eMemID'])) {
-
 	$eventID = $eventObj->objEventMember->get_info("event_id");
 
 	$memberInfo = $member->get_info_filtered();
 
 	if ($eventObj->select($eventID) && $member->hasAccess($consoleObj) && (($eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites") || $eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm")) || $memberInfo['rank_id'] == 1)) {
-
 		$formObj = new Form();
 		$eventInfo = $eventObj->get_info_filtered();
 		$eventMemberInfo = $eventObj->objEventMember->get_info_filtered();
@@ -44,12 +42,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMembe
 		$dispAttendenceStatus = $eventObj->arrInviteStatus[$eventMemberInfo['status']];
 		$positionOptions = array("None");
 		foreach ($eventObj->getPositions() as $value) {
-
 			$eventObj->objEventPosition->select($value);
 			$dispPositionName = $eventObj->objEventPosition->get_info_filtered("name");
 
 			$positionOptions[$value] = $dispPositionName;
-
 		}
 
 		$dispConfirmAttendence = array(
@@ -61,7 +57,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMembe
 
 
 		if ($eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm")) {
-
 			$dispSelected = "";
 			if ($eventMemberInfo['attendconfirm_admin'] == 1) {
 				$dispSelected = " selected";
@@ -83,8 +78,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMembe
 				"options" => array("Not Confirmed", "Confirmed", "Excused", "Unexcused"),
 				"value" => $eventMemberInfo['attendconfirm_admin']
 			);
-
-
 		}
 
 		$i = 1;
@@ -98,7 +91,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMembe
 		);
 
 		if ($eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites")) {
-
 			$arrComponents['selectposition'] = array(
 				"display_name" => "Set Position",
 				"type" => "select",
@@ -107,7 +99,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMembe
 				"attributes" => array("class" => "formInput textBox", "id" => "selectPositionID"),
 				"value" => $eventMemberInfo['position_id']
 			);
-
 		}
 
 
@@ -141,13 +132,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMembe
 		$formObj->show();
 
 		if (isset($_POST['submit']) && $countErrors == 0) {
-
 			echo "
 				<p class='successFont' align='center'>
 					<b>Save Successfull!</b>
 				</p>
 			";
-
 		}
 
 		echo "
@@ -183,7 +172,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMembe
 
 
 		if (isset($_POST['submit']) && $countErrors > 0) {
-
 			echo "
 				
 				$('#dispErrorSpan').html($('#dispErrorDiv').html());
@@ -191,7 +179,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMembe
 				$('#errorDiv').fadeIn(250);
 				
 			";
-
 		}
 
 
@@ -240,8 +227,5 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMembe
 				
 			</script>
 		";
-
-
 	}
-
 }

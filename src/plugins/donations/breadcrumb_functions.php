@@ -1,7 +1,8 @@
 <?php
 
 if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+}
 
 function setThankYouPageBreadcrumb() {
 	global $breadcrumbObj, $campaignInfo;

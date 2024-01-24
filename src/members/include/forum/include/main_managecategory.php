@@ -14,7 +14,6 @@
 
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
-
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 
@@ -42,7 +41,6 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !is
 	else {
 		exit();
 	}
-
 }
 else {
 	$memberInfo = $member->get_info();
@@ -61,7 +59,6 @@ echo "
 $counter = 0;
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
-
 	$categoryObj->select($row['forumcategory_id']);
 	$addCSS = "";
 	if ($counter == 1) {
@@ -102,7 +99,6 @@ while ($row = $result->fetch_assoc()) {
 echo "</table>";
 
 if ($result->num_rows == 0) {
-
 	echo "
 	
 		<div class='shadedBox' style='width: 40%; margin: 20px auto'>
@@ -112,5 +108,4 @@ if ($result->num_rows == 0) {
 		</div>
 	
 	";
-
 }

@@ -7,7 +7,6 @@
 
 	$donationPlugin = new btPlugin($mysqli);
 	if ($donationPlugin->selectByName("Donations")) {
-
 		$donationObj = new Donation($mysqli);
 
 		$p = new paypal_class();
@@ -17,7 +16,6 @@
 
 		$p->setMode($donationPlugin->getConfigInfo("mode"));
 		if ($p->validate_ipn() && $p->ipn_data['payment_status'] != "Failed" && $p->ipn_data['payment_status'] != "Denied") {
-
 			$member = new Member($mysqli);
 			$campaignObj = new DonationCampaign($mysqli);
 
@@ -28,7 +26,6 @@
 
 
 			if ($campaignObj->select($customVars['campaign_id']) && $member->select($customVars['member_id'])) {
-
 				$campaignName = $campaignObj->get_info_filtered("title");
 				$medalID = $campaignObj->get_info("awardmedal");
 
@@ -38,8 +35,6 @@
 			$arrValues = array($customVars['campaign_id'], $customVars['member_id'], $customVars['name'], $customVars['message'], time(), $arrData['mc_gross'], $arrData['payer_email'], $arrData['txn_id'], $data);
 
 			$donationObj->addNew($arrColumns, $arrValues);
-
-
 		}
 		else {
 			$data = json_encode($p->ipn_data);
@@ -47,5 +42,4 @@
 
 			$donationObj->logError($data);
 		}
-
 	}

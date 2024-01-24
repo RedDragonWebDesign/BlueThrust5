@@ -44,7 +44,6 @@
 	}
 
 	if (isset($_POST['customExp'])) {
-
 		switch ($_POST['banLengthUnit']) {
 			case "minute":
 				$_POST['expTime'] = $_POST['banLength'];
@@ -79,7 +78,6 @@
 
 
 	if ($countErrors == 0) {
-
 		$setExpTime = ($_POST['expTime'] == 0) ? $setExpTime = 0 : ($_POST['expTime']*60)+time();
 
 		if ($ipbanObj->addNew(array("ipaddress", "exptime", "dateadded"), array($_POST['ipaddress'], $setExpTime, time()))) {
@@ -89,7 +87,6 @@
 			$countErrors++;
 			$arrErrors[] = "Unable to save information to database! Please contact the website administrator.";
 		}
-
 	}
 
 

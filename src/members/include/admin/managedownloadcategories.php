@@ -112,11 +112,7 @@ if ($_GET['catID'] == "") {
 			
 	</script>
 	";
-
-
 }
-elseif ($_GET['catID'] != "" AND $_GET['action'] == "edit") {
-
+elseif ($_GET['catID'] != "" and $_GET['action'] == "edit") {
 	require_once("managedownloadcat/edit.php");
-
 }

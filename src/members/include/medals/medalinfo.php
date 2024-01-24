@@ -23,8 +23,6 @@ $member->select($_SESSION['btUsername']);
 $medalObj = new Medal($mysqli);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $medalObj->select($_POST['medalID'])) {
-
-
 	$medalObj->refreshImageSize();
 	$medalInfo = $medalObj->get_info_filtered();
 
@@ -39,7 +37,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $medalObj->select($_POST
 		</p>
 	
 	";
-
-
-
 }

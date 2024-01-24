@@ -30,13 +30,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -91,7 +90,6 @@ $gameObj = new Game($mysqli);
 			</tr>
 		
 		";
-
 	}
 
 ?>
@@ -107,7 +105,6 @@ if ($result->num_rows > 0) {
 	";
 }
 else {
-
 	echo "
 	
 		<div class='shadedBox' style='width: 40%; margin: 20px auto'>
@@ -117,7 +114,6 @@ else {
 		</div>
 		
 	";
-
 }
 
 require_once($prevFolder."themes/".$THEME."/_footer.php");

@@ -28,7 +28,6 @@ $rankInfo = $memberRank->get_info_filtered();
 $cID = $_GET['cID'];
 
 if ($memberInfo['rank_id'] == 1) {
-
 	$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 	$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
 
@@ -37,7 +36,6 @@ if ($memberInfo['rank_id'] == 1) {
 		$row = $result->fetch_assoc();
 		$rankInfo['promotepower'] = $row['rank_id'];
 	}
-
 }
 
 $rankObj = new Rank($mysqli);
@@ -54,7 +52,6 @@ $setRankCID = $consoleObj->findConsoleIDByName("Set Member's Rank");
 $consoleObj->select($setRankCID);
 $dispSetRank = false;
 if ($member->hasAccess($consoleObj)) {
-
 	// Get Ranks
 	$sqlRanks = "('".implode("','", $arrRanks)."')";
 
@@ -65,7 +62,6 @@ if ($member->hasAccess($consoleObj)) {
 	}
 
 	$dispSetRank = true;
-
 }
 $consoleObj->select($cID);
 

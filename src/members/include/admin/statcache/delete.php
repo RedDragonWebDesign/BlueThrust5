@@ -37,30 +37,21 @@ $checkAccess = $checkAccess1 || $checkAccess2;
 
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($checkAccess) {
-
-
 		if (isset($_SESSION['btStatCache'][$_POST['sID']])) {
-
-
 			$countErrors = 0;
 			if ($_SESSION['btStatCache'][$_POST['sID']]['statType'] == "input") {
-
 				foreach ($_SESSION['btStatCache'] as $statInfo) {
-					if ($statInfo['statType'] == "calculate" AND ($statInfo['firstStat'] == $_POST['sID'] OR $statInfo['secondStat'] == $_POST['sID'])) {
+					if ($statInfo['statType'] == "calculate" and ($statInfo['firstStat'] == $_POST['sID'] or $statInfo['secondStat'] == $_POST['sID'])) {
 						$countErrors++;
 					}
 				}
-
 			}
 
 
 			if ($countErrors == 0) {
-
 				if ($gameStatsObj->select($_SESSION['btStatCache'][$_POST['sID']]['gamestatsID'])) {
 					$gameStatsObj->delete();
 				}
@@ -76,7 +67,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				}
 
 				$_SESSION['btStatCache'] = $tempArray;
-
 			}
 			else {
 				echo "
@@ -108,7 +98,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					</script>
 				
 				";
-
 			}
 
 			echo "
@@ -128,9 +117,6 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				});
 			</script>
 			";
-
-
 		}
 	}
-
 }

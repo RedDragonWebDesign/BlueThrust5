@@ -32,7 +32,7 @@ class PrivateMessage extends BasicOrder {
 	}
 
 
-	public function getRecipients($blnNameOnly=false) {
+	public function getRecipients($blnNameOnly = false) {
 		global $MAIN_ROOT;
 		$arrGroups = array();
 
@@ -70,7 +70,6 @@ class PrivateMessage extends BasicOrder {
 					elseif ($dispName != "") {
 						$arrGroups['list'][] = $dispName;
 					}
-
 				}
 				elseif ($row['grouptype'] == "") {
 					$this->memberObj->select($row['member_id']);
@@ -86,20 +85,17 @@ class PrivateMessage extends BasicOrder {
 			if ($blnNameOnly) {
 				$arrGroups['list'] = implode(", ", $arrGroups['list']);
 			}
-
 		}
 
 		return $arrGroups['list'];
-
 	}
 
 	/** Gets folder based on Member ID */
-	function getFolder($memberID, $multiPM=false) {
+	function getFolder($memberID, $multiPM = false) {
 
 		$returnVal = "";
 
 		if ($this->intTableKeyValue != "") {
-
 			$arrRecipients = $this->getRecipients();
 
 			if ($this->arrObjInfo['sender_id'] == $memberID && !$multiPM) {
@@ -114,7 +110,6 @@ class PrivateMessage extends BasicOrder {
 
 				$returnVal = $this->multiMemPMObj->get_info("pmfolder_id");
 			}
-
 		}
 
 		return $returnVal;

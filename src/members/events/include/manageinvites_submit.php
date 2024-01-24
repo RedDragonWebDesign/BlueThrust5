@@ -1,7 +1,8 @@
 <?php
 
 	if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+    }
 
 
 	$arrColumns = array();
@@ -16,7 +17,6 @@ exit(); }
 		if ($_POST['updatePositionID'] != 0 && (!$checkSelectPosition || ($checkSelectPosition && $eventObj->objEventPosition->get_info("event_id") != $eventID))) {
 			$formObj->errors[] = "You selected an invalid position.";
 		}
-
 	}
 
 
@@ -26,7 +26,6 @@ exit(); }
 			$arrColumns[] = "attendconfirm_admin";
 			$arrValues[] = $_POST['updateConfirm'];
 		}
-
 	}
 
 

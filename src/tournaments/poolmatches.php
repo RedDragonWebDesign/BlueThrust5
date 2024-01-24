@@ -31,13 +31,12 @@ $member = new Member($mysqli);
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 if (!is_numeric($_GET['tID']) || !$tournamentObj->select($_GET['tID'])) {
@@ -83,7 +82,6 @@ if ($tournamentInfo['seedtype'] != 3 && !$tournamentObj->checkForPools()) {
 			$arrPools = $tournamentObj->getPoolList();
 			$dispPoolLetter = "A";
 			foreach ($arrPools as $poolID) {
-
 				$tournamentObj->objTournamentPool->select($poolID);
 				$arrTeamsInPool = $tournamentObj->objTournamentPool->getTeamsInPool();
 
@@ -92,7 +90,6 @@ if ($tournamentInfo['seedtype'] != 3 && !$tournamentObj->checkForPools()) {
 
 				$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentpools_teams WHERE pool_id = '".$poolID."'");
 				while ($row = $result->fetch_assoc()) {
-
 					$dispTeamOne = $tournamentObj->getPlayerName($row['team1_id']);
 					$dispTeamTwo = $tournamentObj->getPlayerName($row['team2_id']);
 

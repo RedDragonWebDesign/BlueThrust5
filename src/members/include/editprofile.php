@@ -70,7 +70,7 @@ $forumPostsPerPage = array(10=>10, 25=>25, 50=>50, 75=>75, 100=>100);
 
 // Setup Birthday
 $maxBirthdayYear = date("Y")-8;
-$maxDate = mktime(0,0,0,12,31,$maxBirthdayYear);
+$maxDate = mktime(0, 0, 0, 12, 31, $maxBirthdayYear);
 $maxBirthdayDate = "new Date(".date("Y", $maxDate).",12,31)";
 $defaultBirthdayDate = "";
 
@@ -93,7 +93,6 @@ function filterSignature() {
 	$_POST['wysiwygHTML'] = str_replace("?>", "?&gt;", $_POST['wysiwygHTML']);
 	$_POST['wysiwygHTML'] = str_replace("<script", "&lt;script", $_POST['wysiwygHTML']);
 	$_POST['wysiwygHTML'] = str_replace("</script>", "&lt;/script&gt;", $_POST['wysiwygHTML']);
-
 }
 
 
@@ -105,10 +104,8 @@ function saveCustomValues() {
 	// Save Custom Profile Options
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."profileoptions ORDER BY sortnum");
 	while ($row = $result->fetch_assoc()) {
-
 		$postVal = "custom_".$row['profileoption_id'];
 		$member->setProfileValue($row['profileoption_id'], $_POST[$postVal]);
-
 	}
 
 	// Save Social Media Info
@@ -125,7 +122,6 @@ function saveCustomValues() {
 			$arrValues = array($socialMediaInfo['social_id'], $memberInfo['member_id'], $_POST[$postVal]);
 			$member->objSocial->objSocialMember->addNew($arrColumns, $arrValues);
 		}
-
 	}
 
 	// Save Games Played
@@ -133,12 +129,10 @@ function saveCustomValues() {
 	$mysqli->query("DELETE FROM ".$dbprefix."gamesplayed_members WHERE member_id = '".$memberInfo['member_id']."'");
 	$gameMemberObj = new Basic($mysqli, "gamesplayed_members", "gamemember_id");
 	foreach ($arrGames as $gameID) {
-
 		$postVal = "game_".$gameID;
 		if ($_POST[$postVal] == 1) {
 			$gameMemberObj->addNew(array("member_id", "gamesplayed_id"), array($memberInfo['member_id'], $gameID));
 		}
-
 	}
 
 	if (!$member->playsGame($_POST['maingame'])) {
@@ -270,7 +264,6 @@ $arrComponents = array(
 $arrSocialMediaComponents = array();
 $memberSocialInfo = $member->objSocial->getMemberSocialInfo();
 foreach ($arrSocialMediaInfo as $socialMediaInfo) {
-
 	$dispSocialMediaValue = (isset($memberSocialInfo[$socialMediaInfo['social_id']])) ? $memberSocialInfo[$socialMediaInfo['social_id']] : "";
 
 	$tempComponentName = "socialmedia_".$socialMediaInfo['social_id'];
@@ -283,7 +276,6 @@ foreach ($arrSocialMediaInfo as $socialMediaInfo) {
 		"sortorder" => $i++,
 		"value" => $dispSocialMediaValue
 	);
-
 }
 
 $arrBirthdayComponents = array(
@@ -314,8 +306,6 @@ $arrBirthdayComponents = array(
 
 
 if (count($arrGames) > 0) {
-
-
 	// Setup Games Played Section
 
 	$gamesPlayedOptions = array();
@@ -342,7 +332,6 @@ if (count($arrGames) > 0) {
 
 
 	foreach ($arrGames as $gameID) {
-
 		$gameObj->select($gameID);
 
 		$mainGameOptions[$gameID] = $gameObj->get_info_filtered("name");
@@ -371,7 +360,6 @@ $customCount = 1;
 $arrCustomOptions = array();
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
-
 	$profileCategoryObj->select($row['profilecategory_id']);
 	$arrProfileOptions = $profileCategoryObj->getAssociateIDs("ORDER BY sortnum");
 
@@ -384,7 +372,6 @@ while ($row = $result->fetch_assoc()) {
 
 	$customCount++;
 	foreach ($arrProfileOptions as $profileOptionID) {
-
 		$profileOptionObj->select($profileOptionID);
 
 		$profileOptionValue = $member->getProfileValue($profileOptionID, true);
@@ -407,10 +394,7 @@ while ($row = $result->fetch_assoc()) {
 				"options" => $arrSelectOptions,
 				"value" => $profileOptionValue,
 			);
-
 	}
-
-
 }
 
 

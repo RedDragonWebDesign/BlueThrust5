@@ -43,7 +43,6 @@ class ForumBoard extends BasicSort {
 		$this->objRankAccess = new Basic($sqlConnection, "forum_rankaccess", "forumrankaccess_id");
 
 		$this->objMod = new Basic($sqlConnection, "forum_moderator", "forummoderator_id");
-
 	}
 
 
@@ -73,21 +72,17 @@ class ForumBoard extends BasicSort {
 					$arrValues = array($newSortNum, $this->arrObjInfo['subforum_id']);
 
 					$subForumObj->update($arrColumns, $arrValues);
-
 				}
 
 				$subForumObj->resortOrder();
-
 			}
 
 			if (!in_array(false, $result)) {
 				$returnVal = true;
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 	/**
@@ -102,7 +97,6 @@ class ForumBoard extends BasicSort {
 		$returnVal = false;
 		$countErrors = 0;
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."forum_rankaccess WHERE board_id = '".$this->intTableKeyValue."'");
 			$arrColumns = array("rank_id", "board_id", "accesstype");
 			foreach ($arrRanks as $rankID => $accessValue) {
@@ -114,7 +108,6 @@ class ForumBoard extends BasicSort {
 			}
 
 			if ($countErrors == 0) {
-
 				$result = $this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."forum_memberaccess WHERE board_id = '".$this->intTableKeyValue."'");
 
 				$arrColumns = array("member_id", "board_id", "accessrule");
@@ -133,7 +126,6 @@ class ForumBoard extends BasicSort {
 			if ($countErrors == 0) {
 				$returnVal = true;
 			}
-
 		}
 
 		return $returnVal;
@@ -143,14 +135,10 @@ class ForumBoard extends BasicSort {
 
 		$returnArr = array();
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."forum_memberaccess WHERE board_id = '".$this->intTableKeyValue."'");
 			while ($row = $result->fetch_assoc()) {
-
 				$returnArr[$row['member_id']] = $row['accessrule'];
-
 			}
-
 		}
 
 		return $returnArr;
@@ -161,24 +149,19 @@ class ForumBoard extends BasicSort {
 
 		$returnArr = array();
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."forum_rankaccess WHERE board_id = '".$this->intTableKeyValue."'");
 			while ($row = $result->fetch_assoc()) {
-
 				$returnArr[$row['rank_id']] = $row['accesstype'];
-
 			}
-
 		}
 
 		return $returnArr;
 	}
 
-	public function memberHasAccess($memberInfo, $fullAccessOnly=false) {
+	public function memberHasAccess($memberInfo, $fullAccessOnly = false) {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
-
 			if ($this->arrObjInfo['accesstype'] == 1) {
 				$checkCount = 0;
 
@@ -210,16 +193,13 @@ class ForumBoard extends BasicSort {
 				if ($checkCount > 0) {
 					$returnVal = true;
 				}
-
 			}
 			else {
 				$returnVal = true;
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -229,11 +209,10 @@ class ForumBoard extends BasicSort {
 	 * Checks if a member is a mod of the selected board.
 	 * Returns true if yes, false if no
 	 */
-	public function memberIsMod($memberID, $returnForumModeratorID=false) {
+	public function memberIsMod($memberID, $returnForumModeratorID = false) {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "" && is_numeric($memberID)) {
-
 			$result = $this->MySQL->query("SELECT forummoderator_id FROM ".$this->MySQL->get_tablePrefix()."forum_moderator WHERE member_id = '".$memberID."' AND forumboard_id = '".$this->intTableKeyValue."'");
 			if ($result->num_rows > 0 && !$returnForumModeratorID) {
 				$returnVal = true;
@@ -242,11 +221,9 @@ class ForumBoard extends BasicSort {
 				$row = $result->fetch_assoc();
 				$returnVal = $row['forummoderator_id'];
 			}
-
 		}
 		$this->memberID = $memberID;
 		return $returnVal;
-
 	}
 
 	/**
@@ -263,19 +240,15 @@ class ForumBoard extends BasicSort {
 		}
 
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT ft.forumpost_id, ft.lastpost_id, fp.dateposted FROM ".$this->MySQL->get_tablePrefix()."forum_topic ft,  ".$this->MySQL->get_tablePrefix()."forum_post fp WHERE ft.forumboard_id = '".$this->intTableKeyValue."' AND fp.forumpost_id = ft.lastpost_id ORDER BY ".$sqlORDERBY.$sqlLIMIT);
 			while ($row = $result->fetch_assoc()) {
-
 				//$this->objPost->select($row['lastpost_id']);
 				//$datePosted = $this->objPost->get_info("dateposted");
 
 				$returnArr[] = $row['forumpost_id'];
-
 			}
 
 			//arsort($returnArr);
-
 		}
 
 		return $returnArr;
@@ -286,7 +259,6 @@ class ForumBoard extends BasicSort {
 		global $websiteInfo;
 		$returnVal = false;
 		if ($this->intTableKeyValue != "" && is_numeric($memberID)) {
-
 			$checkTime = 0;
 			if ($websiteInfo['forum_newindicator'] != 0) {
 				$checkTime = time()-(60*60*24*$websiteInfo['forum_newindicator']);
@@ -306,7 +278,6 @@ class ForumBoard extends BasicSort {
 					$returnVal = true;
 				}
 			}
-
 		}
 
 		return $returnVal;
@@ -316,7 +287,6 @@ class ForumBoard extends BasicSort {
 
 		$returnVal = 0;
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT forumtopic_id FROM ".$this->MySQL->get_tablePrefix()."forum_topic WHERE forumboard_id = '".$this->intTableKeyValue."'");
 
 			$returnVal = $result->num_rows;
@@ -329,14 +299,12 @@ class ForumBoard extends BasicSort {
 
 		$returnVal = 0;
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT fp.forumpost_id FROM ".$this->MySQL->get_tablePrefix()."forum_post fp, ".$this->MySQL->get_tablePrefix()."forum_topic ft WHERE forumboard_id = '".$this->intTableKeyValue."' AND fp.forumtopic_id = ft.forumtopic_id");
 
 			$returnVal = $result->num_rows;
 		}
 
 		return $returnVal;
-
 	}
 
 	public function addMod($memberID) {
@@ -347,7 +315,6 @@ class ForumBoard extends BasicSort {
 		}
 
 		return $returnVal;
-
 	}
 
 	public function removeMod($memberID) {
@@ -356,14 +323,11 @@ class ForumBoard extends BasicSort {
 		$checkMod = $this->memberIsMod($memberID, true);
 
 		if ($this->intTableKeyValue != "" && $checkMod !== false) {
-
 			$this->objMod->select($checkMod);
 			$returnVal = $this->objMod->delete();
-
 		}
 
 		return $returnVal;
-
 	}
 
 	public function getAllBoards() {
@@ -392,7 +356,6 @@ class ForumBoard extends BasicSort {
 			while ($row = $result->fetch_assoc()) {
 				$arrReturn[] = $row['forumboard_id'];
 			}
-
 		}
 		return $arrReturn;
 	}
@@ -406,10 +369,9 @@ class ForumBoard extends BasicSort {
 		}
 
 		return $returnVal;
-
 	}
 
-	function calcBoardDepth($boardDepth=0) {
+	function calcBoardDepth($boardDepth = 0) {
 
 		if ($this->isSubforum()) {
 			$temp = $this->intTableKeyValue;
@@ -428,7 +390,7 @@ class ForumBoard extends BasicSort {
 	/**
 	 * Returns all sub-forum IDs not just ones directly under the selected forum
 	 */
-	public function getAllSubForums($arrIDs=array()) {
+	public function getAllSubForums($arrIDs = array()) {
 
 		$arrReturn = array();
 		if ($this->intTableKeyValue != "") {
@@ -462,11 +424,9 @@ class ForumBoard extends BasicSort {
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strCategoryKey." = '".$catKeyValue."' AND subforum_id = '".$this->arrObjInfo['subforum_id']."'");
 			$returnVal = $result->num_rows;
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -474,37 +434,32 @@ class ForumBoard extends BasicSort {
 
 		$strBeforeAfter = strtolower($strBeforeAfter);
 		$newSortNum = "false";
-		if ($this->intTableKeyValue != "" && ($strBeforeAfter == "before" OR $strBeforeAfter == "after")) {
+		if ($this->intTableKeyValue != "" && ($strBeforeAfter == "before" or $strBeforeAfter == "after")) {
 			$consoleInfo = $this->arrObjInfo;
 			$startSaving = false;
 			$x = 1;
 			$arrConsoleOptions = array();
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strCategoryKey." = '".$consoleInfo[$this->strCategoryKey]."' AND subforum_id = '".$this->arrObjInfo['subforum_id']."' ORDER BY sortnum");
 			while ($row = $result->fetch_assoc()) {
-
-				if ($strBeforeAfter == "before" AND $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
+				if ($strBeforeAfter == "before" and $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
 					$newSortNum = $x;
 					$x++;
 					$arrConsoleOptions[$x][0] = $row[$this->strTableKey];
 					$arrConsoleOptions[$x][1] = $row['sortnum'];
 					$x++;
 				}
-				elseif ($strBeforeAfter == "after" AND $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
+				elseif ($strBeforeAfter == "after" and $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
 					$arrConsoleOptions[$x][0] = $row[$this->strTableKey];
 					$arrConsoleOptions[$x][1] = $row['sortnum'];
 					$x++;
 					$newSortNum = $x;
 					$x++;
-
 				}
 				else {
-
 					$arrConsoleOptions[$x][0] = $row[$this->strTableKey];
 					$arrConsoleOptions[$x][1] = $row['sortnum'];
 					$x++;
-
 				}
-
 			}
 
 			$updateArray = array();
@@ -513,20 +468,14 @@ class ForumBoard extends BasicSort {
 			if (is_numeric($newSortNum)) {
 				$intOriginalCID = $this->intTableKeyValue;
 				foreach ($arrConsoleOptions as $key => $value) {
-
 					if ($key != $value[1]) {
-
 						$this->select($value[0]);
 						$this->update(array("sortnum"), array($key));
-
 					}
-
 				}
 
 				$this->select($intOriginalCID);
-
 			}
-
 		}
 
 		return $newSortNum;
@@ -569,11 +518,9 @@ class ForumBoard extends BasicSort {
 				$this->intTableKeyValue = $this->arrObjInfo[$this->strTableKey];
 				$returnVal = true;
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 	function validateOrder($intOrderNumID, $strBeforeAfter, $blnEdit = false, $intEditOrderNum = "") {
@@ -590,14 +537,11 @@ class ForumBoard extends BasicSort {
 			if ($num_rows == 0 || ($num_rows == 1 && $blnEdit)) {
 				$returnVal = 1;
 			}
-
 		}
 		elseif ($this->select($intOrderNumID) && ($strBeforeAfter == "before" || $strBeforeAfter == "after")) {
-
 			// Check first to see if we are editing or adding a new rank
 
 			if ($blnEdit) {
-
 				// Editing...
 				// Check to see if the rank's order is being changed or if its staying the same
 
@@ -618,14 +562,10 @@ class ForumBoard extends BasicSort {
 				else {
 					$returnVal= $intEditOrderNum;
 				}
-
 			}
 			else {
-
 				$returnVal = $this->makeRoom($strBeforeAfter);
-
 			}
-
 		}
 
 		return $returnVal;
@@ -634,11 +574,8 @@ class ForumBoard extends BasicSort {
 	public function setSubForumID($subforumID) {
 
 		if (is_numeric($subforumID)) {
-
 			$this->arrObjInfo['subforum_id'] = $subforumID;
-
 		}
-
 	}
 
 
@@ -658,18 +595,15 @@ class ForumBoard extends BasicSort {
 
 		define("SHOW_FORUMSEARCH", true);
 		require_once("templates/searchform.php");
-
 	}
 
-	public function getLink($fullLink=false) {
+	public function getLink($fullLink = false) {
 
 		$url = MAIN_ROOT."forum/viewboard.php?bID=".$this->intTableKeyValue;
 
 		if ($fullLink) {
-
 			$linkHTML = "<a href='".$url."'>".$this->get_info_filtered("name")."</a>";
 			return $linkHTML;
-
 		}
 		else {
 			return $url;

@@ -1,10 +1,10 @@
 <?php
 
 	if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+    }
 
 	if ( ! empty($_POST['submit']) ) {
-
 		$pmSessionID = $_POST['pmsessionid'];
 
 		// Check To
@@ -16,11 +16,8 @@ exit(); }
 		if (count($_SESSION['btComposeList'][$pmSessionID]['member']) > 0) {
 			foreach ($_SESSION['btComposeList'][$pmSessionID]['member'] as $memberID) {
 				if ($memberID != "" && $member->select($memberID)) {
-
 					$arrReceivers[] = $memberID;
-
 				}
-
 			}
 		}
 
@@ -29,22 +26,16 @@ exit(); }
 
 		if (count($_SESSION['btComposeList'][$pmSessionID]['rankcategory']) > 0) {
 			foreach ($_SESSION['btComposeList'][$pmSessionID]['rankcategory'] as $rankCatID) {
-
 				if ($rankCatID != "" && $rankCatObj->select($rankCatID)) {
-
 					$arrRanks = $rankCatObj->getRanks();
 					$rankSQL = "('".implode("','", $arrRanks)."')";
 					$filterMembers = "('".implode("','", $arrReceivers)."')";
 					$result = $mysqli->query("SELECT member_id FROM ".$dbprefix."members WHERE rank_id IN ".$rankSQL." AND member_id NOT IN ".$filterMembers." AND disabled = '0'");
 					while ($row = $result->fetch_assoc()) {
-
 						$arrReceivers[] = $row['member_id'];
 						$arrGroup[$row['member_id']] = array("rankcategory", $rankCatID);
-
 					}
-
 				}
-
 			}
 		}
 
@@ -53,23 +44,15 @@ exit(); }
 		$member->select($memberInfo['member_id']);
 		if (count($_SESSION['btComposeList'][$pmSessionID]['rank']) > 0) {
 			foreach ($_SESSION['btComposeList'][$pmSessionID]['rank'] as $rankID) {
-
 				if ($rankID != "" && $member->objRank->select($rankID)) {
-
 					$filterMembers = "('".implode("','", $arrReceivers)."')";
 					$result = $mysqli->query("SELECT member_id FROM ".$dbprefix."members WHERE rank_id = '".$rankID."' AND member_id NOT IN ".$filterMembers);
 					while ($row = $result->fetch_assoc()) {
-
 						$arrReceivers[] = $row['member_id'];
 						$arrGroup[$row['member_id']] = array("rank", $rankID);
-
 					}
-
 				}
-
-
 			}
-
 		}
 
 
@@ -78,43 +61,29 @@ exit(); }
 		$arrSquads = $member->getSquadList();
 		if (count($_SESSION['btComposeList'][$pmSessionID]['squad']) > 0) {
 			foreach ($_SESSION['btComposeList'][$pmSessionID]['squad'] as $squadID) {
-
 				if ($squadID != "" && in_array($squadID, $arrSquads) && $squadObj->select($squadID)) {
-
 					$filterMembers = "('".implode("','", $arrReceivers)."')";
 					$result = $mysqli->query("SELECT member_id FROM ".$dbprefix."squads_members WHERE squad_id = '".$squadID."' AND member_id NOT IN ".$filterMembers);
 					while ($row = $result->fetch_assoc()) {
-
 						$arrReceivers[] = $row['member_id'];
 						$arrGroup[$row['member_id']] = array("squad", $squadID);
-
 					}
-
 				}
-
-
 			}
-
 		}
 
 		// Check Tournaments
 		$arrTournaments = $member->getTournamentList(true);
 		if (count($_SESSION['btComposeList'][$pmSessionID]['tournament']) > 0) {
 			foreach ($_SESSION['btComposeList'][$pmSessionID]['tournament'] as $tournamentID) {
-
 				if ($tournamentID != "" && in_array($tournamentID, $arrTournaments) && $tournamentObj->select($tournamentID)) {
-
 					$filterMembers = "('".implode("','", $arrReceivers)."')";
 					$result = $mysqli->query("SELECT member_id FROM ".$dbprefix."tournamentplayers WHERE tournament_id = '".$tournamentID."' AND member_id != '' AND member_id NOT IN ".$filterMembers);
 					while ($row = $result->fetch_assoc()) {
-
 						$arrReceivers[] = $row['member_id'];
 						$arrGroup[$row['member_id']] = array("tournament", $tournamentID);
-
 					}
-
 				}
-
 			}
 		}
 
@@ -136,7 +105,6 @@ exit(); }
 
 
 		if ($countErrors == 0) {
-
 			$member->select($memberInfo['member_id']);
 			$sendAsEmail = 0;
 			$emailPMCID = $consoleObj->findConsoleIDByName("Email Private Messages");
@@ -149,7 +117,6 @@ exit(); }
 			if (!$member->sendPM($arrReceivers, $_POST['subject'], $_POST['message'], $_POST['replypmid'], $arrGroup, $sendAsEmail)) {
 				$formObj->errors[] = "Unable to save information to database! Please contact the website administrator.";
 			}
-
 		}
 
 		if ($countErrors > 0) {
@@ -159,5 +126,4 @@ exit(); }
 
 
 		unset($_SESSION['btComposeList'][$pmSessionID]);
-
 	}

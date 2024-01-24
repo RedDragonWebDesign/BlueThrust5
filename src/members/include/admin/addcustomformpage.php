@@ -33,8 +33,6 @@ $customFormPageObj = new CustomForm($mysqli, "custompages", "custompage_id");
 $countErrors = 0;
 $dispError = "";
 if ( ! empty($_POST['submit']) ) {
-
-
 	if (trim($_POST['pagename']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a page name for your custom page.<br>";
@@ -43,7 +41,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		$_POST['wysiwygHTML'] = str_replace("<?", "", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("?>", "", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("&lt;?", "", $_POST['wysiwygHTML']);
@@ -57,7 +54,6 @@ if ( ! empty($_POST['submit']) ) {
 		$postResults = ($_POST['postresults'] == "yes") ? "yes" : "";
 
 		if ($customFormPageObj->addNew(array("name", "pageinfo", "submitmessage", "submitlink", "specialform"), array($_POST['pagename'], $_POST['wysiwygHTML'], $_POST['submitMessageHTML'], $_POST['submitlink'], $postResults)) && $customFormPageObj->addComponents($_SESSION['btFormComponent'])) {
-
 			$intManageCustomPagesID = $consoleObj->findConsoleIDByName("Manage Custom Form Pages");
 			$customPageInfo = $customFormPageObj->get_info_filtered();
 			echo "
@@ -71,9 +67,6 @@ if ( ! empty($_POST['submit']) ) {
 					popupDialog('Add Custom Form Pages', '".$MAIN_ROOT."members/console.php?cID=".$intManageCustomPagesID."&cpID=".$customPageInfo['customform_id']."&action=edit', 'successBox');
 				</script>
 			";
-
-
-
 		}
 		else {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to add custom page.  Please try again!<br>";
@@ -81,15 +74,12 @@ if ( ! empty($_POST['submit']) ) {
 			$_POST['wysiwygHTML'] = addslashes($_POST['wysiwygHTML']);
 			$_POST['submitMessageHTML'] = addslashes($_POST['submitMessageHTML']);
 		}
-
 	}
 	else {
 		$_POST['submit'] = false;
 		$_POST['wysiwygHTML'] = addslashes($_POST['wysiwygHTML']);
 		$_POST['submitMessageHTML'] = addslashes($_POST['submitMessageHTML']);
 	}
-
-
 }
 
 
@@ -406,8 +396,4 @@ if ( empty($_POST['submit']) ) {
 	
 		</script>
 	";
-
-
-
-
 }

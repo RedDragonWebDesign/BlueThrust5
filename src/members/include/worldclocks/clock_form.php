@@ -13,7 +13,8 @@
 	 */
 
 	if (!defined("MAIN_ROOT")) {
-exit(); }
+exit();
+    }
 
 	$arrTimezoneOptions = $clockObj->getTimezones();
 

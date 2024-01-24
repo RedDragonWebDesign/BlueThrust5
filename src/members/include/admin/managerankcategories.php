@@ -31,7 +31,6 @@ $rankCatObj = new RankCategory($mysqli);
 
 
 if (!isset($_GET['rID']) || $_GET['rID'] == "") {
-
 	echo "
 		<div id='loadingSpiral' class='loadingSpiral'>
 			<p align='center'>
@@ -113,11 +112,7 @@ if (!isset($_GET['rID']) || $_GET['rID'] == "") {
 			
 		</script>
 	";
-
-
-
-
 }
-elseif ($_GET['rID'] != "" AND $_GET['action'] == "edit") {
+elseif ($_GET['rID'] != "" and $_GET['action'] == "edit") {
 	require_once("managerankcat/edit.php");
 }

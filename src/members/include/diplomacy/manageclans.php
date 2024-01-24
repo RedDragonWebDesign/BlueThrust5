@@ -29,7 +29,6 @@ $cID = $_GET['cID'];
 $intAddClanCID = $consoleObj->findConsoleIDByName("Diplomacy: Add a Clan");
 
 if (!isset($_GET['dID'])) {
-
 	echo "
 		
 		<table class='formTable' style='border-spacing: 1px'>
@@ -102,10 +101,7 @@ if (!isset($_GET['dID'])) {
 		</script>
 	
 	";
-
 }
 elseif (isset($_GET['dID']) && $_GET['action'] == "edit") {
-
 	require_once("include/editclan.php");
-
 }

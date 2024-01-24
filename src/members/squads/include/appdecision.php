@@ -44,18 +44,13 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$memberInfo = $member->get_info_filtered();
 
 	if ($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], "acceptapps") && $squadAppObj->select($_POST['saID'])) {
-
 		$squadInfo = $squadObj->get_info_filtered();
 		$squadAppInfo = $squadAppObj->get_info();
 		$squadRankList = $squadObj->getRankList();
 
 
 		if ($squadAppInfo['squad_id'] == $_POST['sID'] && $squadAppInfo['status'] == 0 && count($squadRankList) > 1) {
-
-
-
 			if ($_POST['action'] == "accept") {
-
 				$squadRankKey = count($squadRankList)-1;
 				$newMemberSquadRank = $squadRankList[$squadRankKey];
 				$squadAppObj->update(array("dateaction", "status", "squadmember_id"), array(time(), "1", $memberInfo['member_id']));
@@ -77,11 +72,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 						});
 					</script>
 				";
-
-
 			}
 			else {
-
 				$squadAppObj->update(array("dateaction", "status", "squadmember_id"), array(time(), "2", $memberInfo['member_id']));
 
 				$member->select($squadAppInfo['member_id']);
@@ -96,11 +88,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					</script>
 			
 				";
-
 			}
-
-
-
 		}
 		elseif (count($squadRankList) <= 1 && $_POST['action'] == "accept") {
 			echo "
@@ -142,7 +130,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			</script>
 		";
 	}
-
-
-
 }

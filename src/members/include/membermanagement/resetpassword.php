@@ -38,7 +38,6 @@ $cID = $_GET['cID'];
 $dispError = "";
 $countErrors = 0;
 if ($memberInfo['rank_id'] == 1) {
-
 	$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 	$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
 
@@ -47,7 +46,6 @@ if ($memberInfo['rank_id'] == 1) {
 		$row = $result->fetch_assoc();
 		$rankInfo['promotepower'] = $row['rank_id'];
 	}
-
 }
 
 $rankObj = new Rank($mysqli);
@@ -62,7 +60,6 @@ while ($row = $result->fetch_assoc()) {
 
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Member
 
 	if (!$member->select($_POST['member'])) {
@@ -91,11 +88,9 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		$logMessage = "Changed ".$member->getMemberLink()."'s password.";
 
 		if ($member->set_password($_POST['newpassword'])) {
-
 			echo "
 				<div style='display: none' id='successBox'>
 					<p align='center' class='main'>
@@ -107,7 +102,6 @@ if ( ! empty($_POST['submit']) ) {
 					popupDialog('Reset Password', '".$MAIN_ROOT."members', 'successBox');
 				</script>
 			";
-
 		}
 		else {
 			$countErrors++;
@@ -116,22 +110,18 @@ if ( ! empty($_POST['submit']) ) {
 
 		$member->select($memberInfo['member_id']);
 		$member->logAction($logMessage);
-
 	}
 
 
 	if ($countErrors > 0) {
 		$_POST['submit'] = false;
 	}
-
-
 }
 
 
 
 
 if ( empty($_POST['submit']) ) {
-
 	$rankObj->select($rankInfo['promotepower']);
 	$maxRankInfo = $rankObj->get_info_filtered();
 
@@ -139,10 +129,7 @@ if ( empty($_POST['submit']) ) {
 	$memberoptions = "<option value=''>Select</option>";
 	$result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.* FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id IN ".$sqlRanks." ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
 	while ($row = $result->fetch_assoc()) {
-
-
 		$memberoptions .= "<option value='".$row['member_id']."'>".filterText($row['name'])." ".filterText($row['username'])."</option>";
-
 	}
 
 
@@ -219,5 +206,4 @@ if ( empty($_POST['submit']) ) {
 		</script>
 		
 	";
-
 }

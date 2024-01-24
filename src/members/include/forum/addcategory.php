@@ -41,7 +41,6 @@ $categoryObj->set_assocTableKey("forumboard_id");
 
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Name
 	if (trim($_POST['catname']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Category name may not be blank.<br>";
@@ -60,11 +59,9 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		$arrColumns = array("name", "ordernum");
 		$arrValues = array($_POST['catname'], $intNewOrderSpot);
 		if ($categoryObj->addNew($arrColumns, $arrValues)) {
-
 			$forumCatInfo = $categoryObj->get_info_filtered();
 			echo "
 			<div style='display: none' id='successBox'>
@@ -77,13 +74,11 @@ if ( ! empty($_POST['submit']) ) {
 				popupDialog('Add Forum Category', '".$MAIN_ROOT."members', 'successBox');
 			</script>
 			";
-
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save category to the database.  Please contact the website administrator.<br>";
 		}
-
 	}
 
 
@@ -95,13 +90,10 @@ if ( ! empty($_POST['submit']) ) {
 
 
 if ( empty($_POST['submit']) ) {
-
 	$orderoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
-
 		$orderoptions .= "<option value='".$row['forumcategory_id']."'>".filterText($row['name'])."</option>";
-
 	}
 
 	if ($result->num_rows == 0) {
@@ -151,5 +143,4 @@ if ( empty($_POST['submit']) ) {
 		
 		
 	";
-
 }

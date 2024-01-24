@@ -25,7 +25,6 @@ class ConsoleCategory extends BasicOrder {
 		$this->strTableKey = "consolecategory_id";
 		$this->strAssociateTableName = $this->MySQL->get_tablePrefix()."console";
 		$this->strAssociateKeyName = "console_id";
-
 	}
 
 	public function delete() {
@@ -39,11 +38,9 @@ class ConsoleCategory extends BasicOrder {
 			else {
 				$this->MySQL->displayError("basic.php");
 			}
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -67,15 +64,12 @@ class ConsoleCategory extends BasicOrder {
 
 		$intRankID = $this->intTableKeyValue;
 		if ($intRankID != null) {
-
 			$intNewRankOrderNum = 0;
 			$arrRanks = array();
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." ORDER BY ordernum");
 			$x = 1;
 			while ($row = $result->fetch_assoc()) {
-
 				if ($row[$this->strTableKey] == $intRankID) {
-
 					if ($strBeforeAfter == "after") {
 						$intNewRankOrderNum = $x;
 						$x++;
@@ -88,7 +82,6 @@ class ConsoleCategory extends BasicOrder {
 						$intNewRankOrderNum = $x;
 						$x++;
 					}
-
 				}
 				else {
 					$arrRanks[$x] = $row[$this->strTableKey];
@@ -103,26 +96,21 @@ class ConsoleCategory extends BasicOrder {
 			}
 
 			if (is_numeric($intNewRankOrderNum)) {
-
 				$intOriginalRank = $this->intTableKeyValue;
 
 				foreach ($arrRanks as $key => $value) {
-
 					$arrColumns[0] = "ordernum";
 					$arrValues[0] = $key;
 
 					$this->select($value);
 					$this->update($arrColumns, $arrValues);
-
 				}
 
 				$this->select($intOriginalRank);
-
 			}
 
 			return $intNewRankOrderNum;
 		}
-
 	}
 
 

@@ -34,20 +34,16 @@ $cID = $consoleObj->findConsoleIDByName("Manage My Events");
 $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESSION['btEventID'])) {
-
 	$eventID = $eventObj->get_info("event_id");
 
 	$memberInfo = $member->get_info_filtered();
 
 	if ($member->hasAccess($consoleObj) && ($eventObj->memberHasAccess($memberInfo['member_id'], "invitemembers") || $memberInfo['rank_id'] == 1)) {
-
 		$arrInviteList = $eventObj->getInvitedMembers(true);
 		$arrInviteList = array_merge($arrInviteList, $_SESSION['btInviteList']);
 
 		switch ($_POST['action']) {
-
 			case "add":
-
 				if ($objInviteMember->select($_POST['memberID'])) {
 					$inviteMemberInfo = $objInviteMember->get_info_filtered();
 
@@ -55,7 +51,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESS
 						$_SESSION['btInviteList'][] = $inviteMemberInfo['member_id'];
 					}
 					else {
-
 						echo "
 							<div id='dupInviteDiv' style='display: none'>
 								<p class='main' align='center'>
@@ -89,10 +84,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESS
 								});
 							</script>
 						";
-
 					}
-
-
 				}
 
 
@@ -102,9 +94,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESS
 			case "delete":
 				unset($_SESSION['btInviteList'][$_POST['memberID']]);
 				break;
-
-
-
 		}
 
 
@@ -114,7 +103,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESS
 			echo "
 				<div class='mttPlayerSlot' style='width: 95%'>".$objInviteMember->get_info_filtered("username")."<div class='mttDeletePlayer'><a href='javascript:void(0)' onclick=\"removeMember('".$key."')\">X</a></div></div>
 			";
-
 		}
 
 		if (count($_SESSION['btInviteList']) == 0) {
@@ -143,9 +131,5 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESS
 		
 			</script>
 		";
-
-
 	}
-
-
 }

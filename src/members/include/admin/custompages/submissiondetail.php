@@ -2,7 +2,6 @@
 
 
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
-
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/customform.php");
@@ -29,7 +28,6 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !is
 	else {
 		exit();
 	}
-
 }
 else {
 	$memberInfo = $member->get_info();
@@ -44,7 +42,6 @@ $arrSubmissions = $customFormPageObj->getSubmissions();
 
 
 foreach ($arrSubmissions as $submissionID) {
-
 	$customFormPageObj->objSubmission->select($submissionID);
 	if ($customFormPageObj->objSubmission->get_info("seenstatus") == 0) {
 		$customFormPageObj->objSubmission->update(array("seenstatus"), array("1"));
@@ -68,7 +65,6 @@ foreach ($arrSubmissions as $submissionID) {
 
 
 	foreach ($arrSubmissionDetail['components'] as $componentID => $formValue) {
-
 		$customFormPageObj->objComponent->select($componentID);
 		$componentInfo = $customFormPageObj->objComponent->get_info_filtered();
 
@@ -77,34 +73,26 @@ foreach ($arrSubmissions as $submissionID) {
 				<tr>
 					<td class='formLabel' valign='top'>".$componentInfo['name'].":</td>";
 			if (!is_array($formValue)) {
-
 				echo "
 					<td class='main' valign='top'>".nl2br($formValue)."</td>
 				</tr>
 				";
-
 			}
 			else {
-
 				echo "
 					<td class='main' valign='top'>
 					";
 				$counter = 1;
 				foreach ($formValue as $multiValue) {
-
 					echo $counter.". ".nl2br($multiValue)."<br>";
 
 					$counter++;
-
 				}
 
 				echo "</td></tr>";
-
 			}
-
 		}
 		else {
-
 			echo "
 				<tr>
 					<td colspan='2' class='main'><br>
@@ -115,9 +103,7 @@ foreach ($arrSubmissions as $submissionID) {
 				</tr>
 			
 			";
-
 		}
-
 	}
 
 	echo "
@@ -127,12 +113,10 @@ foreach ($arrSubmissions as $submissionID) {
 			</td>
 		</tr>	
 	</table></div>";
-
 }
 
 
 if (count($arrSubmissions) == 0) {
-
 	echo "
 	
 		<div class='shadedBox main' style='width: 35%; margin-left: auto; margin-right: auto'>
@@ -147,5 +131,4 @@ if (count($arrSubmissions) == 0) {
 		</div>
 	
 	";
-
 }

@@ -33,12 +33,9 @@ $_GET['cID'] = $cID;
 
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
 	$memberInfo = $member->get_info_filtered();
 
 	if ($member->hasAccess($consoleObj) && $profileOptionObj->select($_POST['oID'])) {
-
 		define("MEMBERRANK_ID", $memberInfo['rank_id']);
 
 
@@ -50,12 +47,8 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$profileOptionName = $profileOptionObj->get_info_filtered("name");
 			echo "<p align='center'>Are you sure you want to delete the profile option <b>".$profileOptionName."</b>?</p>";
 		}
-
 	}
 	elseif (!$profileOptionObj->select($_POST['oID'])) {
-
 		echo "<p align='center'>Unable find the selected profile option.  Please try again or contact the website administrator.</p>";
-
 	}
-
 }

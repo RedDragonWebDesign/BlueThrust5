@@ -47,7 +47,6 @@ else {
 
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2) && is_numeric($componentIndex) && is_numeric($_POST['intDeleteKey'])) {
-
 	unset($arrSelectValues[$_POST['intDeleteKey']]);
 
 	if ($blnAddComponent) {
@@ -59,5 +58,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 
 	require_once("selectvaluecache.php");
-
 }

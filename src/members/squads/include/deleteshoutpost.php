@@ -40,7 +40,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$memberInfo = $member->get_info_filtered();
 
 	if ($squadObj->select($_GET['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], "manageshoutbox")) {
-
 		$squadInfo = $squadObj->get_info();
 
 		$squadNewsObj = new Basic($mysqli, "squadnews", "squadnews_id");
@@ -50,9 +49,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		}
 
 		$blnManageShoutbox = true;
-
 	}
-
 }
 
 $squadMemberList = $squadObj->getMemberList();

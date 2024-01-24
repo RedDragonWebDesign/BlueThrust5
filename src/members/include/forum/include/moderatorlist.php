@@ -43,7 +43,6 @@ $boardObj = new ForumBoard($mysqli);
 $LOGIN_FAIL = true;
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
 	echo "
 	
 		<table class='formTable' style='margin-bottom: 20px'>
@@ -58,31 +57,24 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	if (isset($_POST['mID']) && $memberModObj->select($_POST['mID'])) {
 		$memberModInfo = $memberModObj->get_info_filtered();
 		if ($_POST['action'] == "add") {
-
 			if (substr($_POST['bID'], 0, 4) == "cat_") {
 				$catID = str_replace("cat_", "", $_POST['bID']);
 				if ($categoryObj->select($catID)) {
-
 					$arrBoards = $categoryObj->getAssociateIDs();
 					foreach ($arrBoards as $boardID) {
 						$boardObj->select($boardID);
 						$boardObj->addMod($memberModInfo['member_id']);
 					}
-
 				}
-
 			}
 			elseif (substr($_POST['bID'], 0, 6) == "board_") {
-
 				$boardID = str_replace("board_", "", $_POST['bID']);
 				if ($boardObj->select($boardID)) {
 					$boardObj->addMod($memberModInfo['member_id']);
 				}
 			}
-
 		}
 		elseif ($_POST['action'] == "delete") {
-
 			if ($boardObj->select($_POST['bID'])) {
 				$boardObj->removeMod($memberModInfo['member_id']);
 			}
@@ -92,7 +84,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."forum_moderator WHERE member_id = '".$memberModInfo['member_id']."' ORDER BY dateadded DESC");
 		while ($row = $result->fetch_assoc()) {
-
 			$boardObj->select($row['forumboard_id']);
 			$boardInfo = $boardObj->get_info_filtered();
 
@@ -103,11 +94,9 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					<td class='main' align='center'><a href='javascript:void(0)' onclick=\"deleteMod('".$row['forumboard_id']."', '".$row['member_id']."')\" title='Remove'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' style='width: 24px; height: 24px'></a></td>
 				</tr>					
 			";
-
 		}
 
 		if ($result->num_rows == 0) {
-
 			echo "
 				<tr>
 					<td colspan='3' align='center'>
@@ -119,12 +108,9 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					</td>
 				</tr>
 			";
-
 		}
-
 	}
 	else {
-
 		echo "
 		
 				<tr>
@@ -147,5 +133,4 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		</table>
 		
 	";
-
 }

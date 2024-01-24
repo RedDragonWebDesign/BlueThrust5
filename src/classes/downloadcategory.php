@@ -25,7 +25,6 @@ class DownloadCategory extends Rank {
 		$this->strTableKey = "downloadcategory_id";
 		$this->strAssociateTableName = $this->MySQL->get_tablePrefix()."downloads";
 		$this->strAssociateKeyName = "download_id";
-
 	}
 
 
@@ -40,11 +39,9 @@ class DownloadCategory extends Rank {
 			$this->arrObjInfo = $result->fetch_assoc();
 			$returnVal = true;
 			$this->intTableKeyValue = $this->arrObjInfo[$this->strTableKey];
-
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -68,30 +65,23 @@ class DownloadCategory extends Rank {
 				$returnVal = true;
 			}
 			$this->resortOrder();
-
 		}
 
 		return $returnVal;
-
 	}
 
 
-	public function getExtensions($returnIDs=true) {
+	public function getExtensions($returnIDs = true) {
 
 		$arrExtensions = array();
 		if ($this->intTableKeyValue != "") {
-
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."download_extensions WHERE downloadcategory_id = '".$this->intTableKeyValue."' ORDER BY extension_id");
 			while ($row = $result->fetch_assoc()) {
-
 				$arrExtensions[] = ($returnIDs) ? $row['extension_id'] : $row['extension'];
-
 			}
-
 		}
 
 		return $arrExtensions;
-
 	}
 
 	public function get_privileges() {

@@ -1,7 +1,8 @@
 <?php
 
 	if (!defined("CAMPAIGN_FORM")) {
-exit(); }
+exit();
+    }
 
 	$arrPaypalCurrencyCodes = $campaignObj->getCurrencyCodes();
 	$arrPaypalCurrencyInfo = $campaignObj->getCurrencyCodeInfo();
@@ -175,7 +176,6 @@ exit(); }
 			"db_name" => "awardmedal",
 			"options" => $medalOptions
 		);
-
 	}
 
 	$consoleObj->select($cID);
@@ -259,7 +259,6 @@ exit(); }
 			$_POST['recurring'] = 0;
 		}
 		else {
-
 			switch ($_POST['recurringunit']) {
 				case "days":
 					$_POST['recurring'] = date($formObj->objSave->DAY);
@@ -274,7 +273,6 @@ exit(); }
 					$_POST['recurring'] = date($formObj->objSave->YEAR);
 					break;
 			}
-
 		}
 
 		if ($_POST['rununtil'] == "forever") {
@@ -287,7 +285,5 @@ exit(); }
 			if ($campaignInfo['recurringunit'] == $_POST['recurringunit'] && $campaignInfo['recurringamount'] == $_POST['recurringamount']) {
 				$_POST['recurring'] = $campaignInfo['currentperiod'];
 			}
-
 		}
-
 	}

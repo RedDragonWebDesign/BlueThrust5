@@ -25,18 +25,17 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
 $LOGGED_IN = false;
-if (isset($_SESSION['btUsername']) AND isset($_SESSION['btPassword'])) {
+if (isset($_SESSION['btUsername']) and isset($_SESSION['btPassword'])) {
 	$memberObj = new Member($mysqli);
 	if ($memberObj->select($_SESSION['btUsername'])) {
 		if ($memberObj->authorizeLogin($_SESSION['btPassword'])) {
@@ -50,7 +49,6 @@ $downloadObj = new Download($mysqli);
 $blnShowDownload = false;
 
 if ($downloadObj->select($_GET['dID'])) {
-
 	$downloadInfo = $downloadObj->get_info_filtered();
 	$downloadCatObj->select($downloadInfo['downloadcategory_id']);
 
@@ -68,21 +66,17 @@ if ($downloadObj->select($_GET['dID'])) {
 	$fileContents2 = file_get_contents($downloadInfo['splitfile2']);
 
 	if ($blnShowDownload && $fileContents1 !== false && $fileContents2 !== false) {
-
 		header("Content-Description: File Transfer");
 		header("Content-Length: ".$downloadInfo['filesize'].";");
 		header("Content-disposition: attachment; filename=".$downloadInfo['filename']);
 		header("Content-type: ".$downloadInfo['mimetype']);
 
 		echo $fileContents1.$fileContents2;
-
 	}
-
 }
 
 
 if (!$blnShowDownload) {
-
 	// Start Page
 	$PAGE_NAME = "Download - ";
 	$dispBreadCrumb = "";
@@ -102,5 +96,4 @@ if (!$blnShowDownload) {
 	";
 
 	require_once($prevFolder."themes/".$THEME."/_footer.php");
-
 }

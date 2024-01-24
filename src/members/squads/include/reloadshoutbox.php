@@ -42,13 +42,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$memberInfo = $member->get_info_filtered();
 
 	if ($squadObj->select($_POST['sID'])) {
-
 		$squadInfo = $squadObj->get_info();
 
 		if ($squadObj->memberHasAccess($memberInfo['member_id'], "manageshoutbox")) {
 			$blnManageShoutbox = true;
 		}
-
 	}
 }
 
@@ -63,7 +61,6 @@ elseif ($squadInfo['privateshoutbox'] == 0) {
 }
 
 if ($blnShowShoutBox) {
-
 	$shoutboxObj = new Shoutbox($mysqli, "squadnews", "squadnews_id");
 
 	$shoutboxObj->strDivID = "squadsShoutbox";
@@ -79,7 +76,6 @@ if ($blnShowShoutBox) {
 
 
 	echo $shoutboxObj->dispShoutbox();
-
 }
 else {
 	echo "no";

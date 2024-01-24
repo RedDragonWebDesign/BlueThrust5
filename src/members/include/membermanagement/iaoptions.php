@@ -36,7 +36,6 @@ $cID = $_GET['cID'];
 $dispError = "";
 $countErrors = 0;
 if ($memberInfo['rank_id'] == 1) {
-
 	$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
  	$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
 
@@ -45,12 +44,10 @@ if ($memberInfo['rank_id'] == 1) {
  		$row = $result->fetch_assoc();
  		$rankInfo['promotepower'] = $row['rank_id'];
  	}
-
 }
 
 $rankObj = new Rank($mysqli);
 if ( ! empty($_POST['submit']) ) {
-
 	if ($countErrors == 0) {
 		$time = time();
 
@@ -76,12 +73,13 @@ if ( ! empty($_POST['submit']) ) {
 		$arrValues = ($_POST['ia'] == 1) ? array(1) : array(0);
 
 		if ($_POST['ia'] = "1") {
-$ia_NAME = "On Leave"; } else {
-$ia_NAME = "Off Leave"; }
+$ia_NAME = "On Leave";
+        } else {
+$ia_NAME = "Off Leave";
+        }
 
 
 		if ($member->update($arrColumns, $arrValues)) {
-
 			// Check for pending IA request and delete
 			$checkRequested = $member->requestedIA(true);
 			if ($checkRequested !== false) {
@@ -103,42 +101,36 @@ $ia_NAME = "Off Leave"; }
 			";
 
 			if ($_POST['why'] != "I") {
-$reasonWHY = " Until $reason"; } else {
-$reasonWHY = ""; }
+$reasonWHY = " Until $reason";
+            } else {
+$reasonWHY = "";
+            }
 			$member->postNotification("You are ".$ia_NAME.$reasonWHY);
 
 			$dispIAMember = $member->getMemberLink();
 
 			$member->select($memberInfo['member_id']);
 			$member->logAction("Set ".$dispIAMember." IA status to ".$ia_NAME);
-
-
 		}
 
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 		}
-
-
 	}
 
 	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-
 }
 
 
 if ( empty($_POST['submit']) ) {
-
  	$memberoptions = "";
 	$result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.name FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."ranks.rank_id = ".$dbprefix."members.rank_id AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id != '1' ORDER BY ".$dbprefix."ranks.ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
-
 		$memberoptions .= "<option value='".$row['member_id']."'>".filterText($row['name'])." ".filterText($row['username'])."</option>";
-
 	}
 
 
@@ -193,5 +185,4 @@ if ( empty($_POST['submit']) ) {
   
   
  ";
-
 }

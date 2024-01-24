@@ -47,7 +47,6 @@ $_SESSION['btAccessCacheTypes'][$accessObj->cacheID] = json_encode($accessObj->a
 $arrPostSelected = array();
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Question
 	if (trim($_POST['pollquestion']) == "") {
 		$countErrors++;
@@ -90,7 +89,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-
 		$setEndDate = 0;
 		if ($_POST['enddate'] == "choose") {
 			$setEndDate = $_POST['realenddate']/1000;
@@ -133,7 +131,6 @@ if ( ! empty($_POST['submit']) ) {
 					popupDialog('Create a Poll', '".$MAIN_ROOT."members', 'successBox');
 				</script>			
 			";
-
 		}
 		else {
 			$countErrors++;
@@ -143,7 +140,6 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors > 0) {
-
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 
@@ -162,16 +158,12 @@ if ( ! empty($_POST['submit']) ) {
 		$arrPostSelected['pollend']['forever'] = ($_POST['enddate'] == "forever") ? " selected" : "";
 
 		$arrPostSelected['endAMPM'] = ($_POST['endAMPM'] == "PM") ? " selected" : "";
-
 	}
-
-
 }
 
 
 $addMenuItemCID = $consoleObj->findConsoleIDByName("Add Menu Item");
 if ( empty($_POST['submit']) ) {
-
 	echo "
 	
 		<div class='formDiv'>
@@ -470,5 +462,4 @@ if ( empty($_POST['submit']) ) {
 			
 		</script>		
 	";
-
 }

@@ -20,7 +20,6 @@ require_once($prevFolder."_setup.php");
 require_once($prevFolder."classes/member.php");
 
 if (!isset($_GET['code'])) {
-
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."'
@@ -35,13 +34,12 @@ $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if (time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
 	}
 	else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -58,9 +56,7 @@ if ($result->num_rows > 0) {
 	$row = $result->fetch_assoc();
 	$diplomacyRequestObj->select($row['diplomacyrequest_id']);
 	if ($diplomacyRequestObj->update(array("confirmemail"), array("1"))) {
-
 		$confirmMessage = "E-mail Address Confirmed!<br><br>Please wait for your application to be reviewed by a diplomacy manager.  You will be e-mailed when a decision is made.";
-
 	}
 	else {
 		$confirmMessage = "Unable to save information to the database.  Please contact the website administrator.";

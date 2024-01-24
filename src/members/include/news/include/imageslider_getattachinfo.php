@@ -46,8 +46,6 @@ $eventObj = new Event($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
-
-
 	$arrTypes = array("news", "tournament", "event");
 
 	$arrTypeObj['news']['obj'] = $newsObj;
@@ -83,7 +81,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 
 		if ($checkInfo) {
-
 			$attachObj = $arrTypeObj[$_POST['attachtype']]['obj'];
 			$attachTitle = $arrTypeObj[$_POST['attachtype']]['title'];
 			$attachMessage = $arrTypeObj[$_POST['attachtype']]['message'];
@@ -109,12 +106,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 				
 			";
-
 		}
-
-
-
 	}
-
 } else {
-echo "no"; }
+echo "no";
+}

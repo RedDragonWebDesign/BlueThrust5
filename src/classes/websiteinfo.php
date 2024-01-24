@@ -21,7 +21,7 @@ class WebsiteInfo extends Basic {
 	}
 
 
-	public function select($intIDNum, $numericIDOnly=true) {
+	public function select($intIDNum, $numericIDOnly = true) {
 		$temp = $this->arrObjInfo;
 		$returnVal = parent::select($intIDNum, $numericIDOnly);
 
@@ -39,7 +39,6 @@ class WebsiteInfo extends Basic {
 		}
 
 		return $returnVal;
-
 	}
 
 
@@ -48,30 +47,24 @@ class WebsiteInfo extends Basic {
 		$countErrors = 0;
 		foreach ($arrSettings as $key => $settingName) {
 			if ($this->select($this->arrKeys[$settingName])) {
-
 				if (!$this->update(array("value"), array($arrValues[$key]))) {
 					$countErrors++;
 				}
-
 			}
 			else {
-
 				if (!$this->addNew(array("name", "value"), array($settingName, $arrValues[$key]))) {
 					$countErrors++;
 				}
-
 			}
 		}
 
 		return ($countErrors == 0);
-
 	}
 
 	public function update($arrColumns, $arrValues) {
 
 		$this->blnRefreshInfo = true;
 		return parent::update($arrColumns, $arrValues);
-
 	}
 
 

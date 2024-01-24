@@ -19,14 +19,12 @@
 
 			$this->MySQL = $sqlConnection;
 			$this->objPlugin = new btPlugin($sqlConnection);
-
 		}
 
 
 		public function setPluginTables($arrTables) {
 
 			$this->arrPluginTables = $arrTables;
-
 		}
 
 		public function setPluginDirectory($pluginDir) {
@@ -41,7 +39,6 @@
 			else {
 				$this->sql = $strSQL;
 			}
-
 		}
 
 		public function isInstalled() {
@@ -77,7 +74,6 @@
 			$consoleCatID = $this->addConsoleCategory();
 
 			$this->addConsoleOptions($consoleCatID);
-
 		}
 
 
@@ -110,17 +106,13 @@
 			foreach ($this->pluginConsoleOptions as $consoleOptionInfo) {
 				$consoleObj->addNew(array("consolecategory_id", "pagetitle", "filename", "sortnum"), array($consoleCatID, $consoleOptionInfo['pagetitle'], $consoleOptionInfo['filename'], $newSortNum++));
 			}
-
 		}
 
 		public function addPluginPages() {
 
 			foreach ($this->pluginPages as $pluginPageInfo) {
-
 				$this->objPlugin->pluginPage->addNew(array("plugin_id", "page", "pagepath"), array($this->pluginID, $pluginPageInfo['page'], $pluginPageInfo['pagepath']));
-
 			}
-
 		}
 
 		public function importSQL() {
@@ -128,19 +120,16 @@
 			$returnVal = true;
 			if ($this->sql != "") {
 				if ($this->MySQL->multi_query($this->sql)) {
-
 					do {
 						if ($result = $this->MySQL->store_result()) {
 							$result->free();
 						}
 					}
 					while ($this->MySQL->next_result());
-
 				}
 				else {
 					$returnVal = false;
 				}
-
 			}
 
 			return $returnVal;
@@ -153,7 +142,6 @@
 
 			$this->pluginID = $this->objPlugin->get_info("plugin_id");
 			$this->objPlugin->pluginPage->setCategoryKeyValue($this->pluginID);
-
 		}
 
 
@@ -161,7 +149,6 @@
 
 			$returnVal['result'] = "fail";
 			if ($this->pluginName != "" && $this->pluginDir != "" && !$this->checkTableConflicts() && !$this->isInstalled() && $this->importSQL()) {
-
 				$this->addPlugin();
 
 				$this->addPluginPages();
@@ -169,14 +156,11 @@
 				$this->addNewConsoleItems();
 
 				$returnVal['result'] = "success";
-
 			}
 
 			if (count($this->errors) > 0) {
-
 				$returnVal['result'] = "fail";
 				$returnVal['errors'] = $this->errors;
-
 			}
 
 			echo json_encode($returnVal);
@@ -186,14 +170,11 @@
 		public function dropPluginPageTables() {
 
 			foreach ($this->arrPluginTables as $tableName) {
-
 				$dropSQL = "DROP TABLE `".$tableName."`";
 				if ($this->MySQL->query($dropSQL)) {
 					$countDrops++;
 				}
-
 			}
-
 		}
 
 		public function removeConsoleOptions() {
@@ -201,12 +182,9 @@
 			foreach ($this->pluginConsoleOptions as $consoleOptionInfo) {
 				$consoleOptionID = $consoleObj->findConsoleIDByName($consoleOptionInfo['pagetitle']);
 				if ($consoleObj->select($consoleOptionID)) {
-
 					$consoleObj->delete();
-
 				}
 			}
-
 		}
 
 		public function uninstall() {
@@ -215,18 +193,15 @@
 			$this->objPlugin->select($this->pluginID);
 
 			if ($this->objPlugin->delete()) {
-
 				$this->dropPluginPageTables();
 				$this->removeConsoleOptions();
 
 				$returnVal['result'] = "success";
 			}
 			else {
-
 				$returnVal['result'] = "fail";
 			}
 
 			echo json_encode($returnVal);
-
 		}
 	}

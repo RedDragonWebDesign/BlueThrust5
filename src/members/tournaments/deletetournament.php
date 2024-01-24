@@ -31,19 +31,14 @@ $tID = $_POST['tID'];
 $arrMembers = array();
 echo $tID;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID) && $member->hasAccess($consoleObj)) {
-
 	$memberInfo = $member->get_info();
 	$tmemberID = $tournamentObj->get_info("member_id");
 
 	if ($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1") {
-
-
 		$tournamentObj->delete();
 
 		echo "deleted";
 	}
-
-
 }
 else {
 	echo "no";
