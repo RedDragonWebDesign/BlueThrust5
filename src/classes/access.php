@@ -274,7 +274,7 @@ class Access {
 					</table>
 				";
 
-		if (count($_SESSION['btMemberAccess'][$this->cacheID]) == 0) {
+		if (is_array($_SESSION['btMemberAccess'][$this->cacheID]) && count($_SESSION['btMemberAccess'][$this->cacheID]) == 0) {
 			echo "
 					<p class='main' align='center'>
 						<i>No special member access rules set!</i>
