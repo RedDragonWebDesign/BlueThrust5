@@ -27,7 +27,7 @@ if(!$diplomacyObj->select($_GET['dID'])) {
 		</script>
 	";
 	exit();
-	
+
 }
 
 

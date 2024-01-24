@@ -30,16 +30,16 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$squadInfo = $squadObj->get_info_filtered();
 	$memberInfo = $member->get_info_filtered();
 	$intFounderRankID = $squadObj->getFounderRankID();
-	
-	
+
+
 	if($squadObj->objSquadRank->select($_POST['rID']) && $_POST['rID'] != $intFounderRankID) {
-		
+
 		$squadRankInfo = $squadObj->objSquadRank->get_info_filtered();
-		
-		
+
+
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."squads_members WHERE squad_id = '".$squadRankInfo['squad_id']."' AND squadrank_id = '".$squadRankInfo['squadrank_id']."'");
 		$totalMembers = $result->num_rows;
-		
+
 		if($totalMembers > 0) {
 			echo "hi
 				<div id='newDeleteMessage' style='display: none'>
@@ -73,11 +73,11 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			";
 		}
 		elseif($totalMembers == 0 && $_POST['confirm'] == 1) {
-			
+
 			$squadObj->objSquadRank->delete();
-			
+
 			require_once("ranklist.php");
-			
+
 		}
 		else {
 
@@ -86,11 +86,11 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 					Are you sure you want to delete the rank: <b>".$squadRankInfo['name']."</b>?
 				</p>
 			";
-			
+
 		}
-		
+
 	}
-	
-	
-	
+
+
+
 }

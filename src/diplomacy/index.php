@@ -69,40 +69,40 @@ $breadcrumbObj->addCrumb("Diplomacy");
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy ORDER BY clanname");
 		while($row = $result->fetch_assoc()) {
 			$diplomacyStatusObj->select($row['diplomacystatus_id']);
-			
+
 			$statusInfo = $diplomacyStatusObj->get_info_filtered();
 
-			
+
 			if($statusInfo['imageurl'] == "") {
-				$dispStatus = $statusInfo['name'];	
+				$dispStatus = $statusInfo['name'];
 			}
 			else {
-				
+
 				if(strpos($statusInfo['imageurl'], "http://") === false) {
-					$statusInfo['imageurl'] = "../".$statusInfo['imageurl'];	
+					$statusInfo['imageurl'] = "../".$statusInfo['imageurl'];
 				}
-				
-				
+
+
 				$dispImgWidth = "";
 				$dispImgHeight = "";
 				if($statusInfo['imagewidth'] != 0) {
-					$dispImgWidth = " width = '".$statusInfo['imagewidth']."' ";	
+					$dispImgWidth = " width = '".$statusInfo['imagewidth']."' ";
 				}
-				
+
 				if($statusInfo['imageheight'] != 0) {
 					$dispImgWidth = " height = '".$statusInfo['imageheight']."' ";
 				}
-				
+
 				$dispStatus = "<img src='".$statusInfo['imageurl']."'".$dispImgWidth.$dispImgHeight." title='".$statusInfo['name']."'>";
-				
+
 			}
-			
+
 			$addCSS = "";
 			if($counter%2 == 0) {
 				$addCSS = " alternateBGColor";
 			}
 			$counter++;
-			
+
 			echo "
 				<tr>
 					<td class='main".$addCSS."' style='padding: 3px'><a href='info.php?dID=".$row['diplomacy_id']."'>".filterText($row['clanname'])."</a></td>
@@ -111,9 +111,9 @@ $breadcrumbObj->addCrumb("Diplomacy");
 				</tr>
 			
 			";
-			
+
 		}
-	
+
 	?>
 	
 </table>
@@ -132,31 +132,31 @@ $breadcrumbObj->addCrumb("Diplomacy");
 						<td colspan='2' class='formTitle' align='center'>Status Key</td>
 					</tr>
 			";
-		
+
 		while($row = $result->fetch_assoc()) {
-			
-			
+
+
 			if(strpos($row['imageurl'], "http://") === false) {
 				$row['imageurl'] = "../".$row['imageurl'];
 			}
-			
+
 			$dispImgWidth = "";
 			$dispImgHeight = "";
 			if( isset($statusInfo['imagewidth']) && $statusInfo['imagewidth'] != 0) {
 				$dispImgWidth = " width = '".$statusInfo['imagewidth']."' ";
 			}
-			
+
 			if( isset($statusInfo['imageheight']) && $statusInfo['imageheight'] != 0) {
 				$dispImgWidth = " height = '".$statusInfo['imageheight']."' ";
 			}
-			
-			
+
+
 			$addCSS = "";
 			if($counter%2 == 0) {
 				$addCSS = " alternateBGColor";
 			}
 			$counter++;
-			
+
 			echo "
 				<tr>
 					<td class='main".$addCSS."' style='width: 200px' align='center'>".filterText($row['name'])."</td>
@@ -164,14 +164,14 @@ $breadcrumbObj->addCrumb("Diplomacy");
 				</tr>
 			";
 		}
-		
+
 		echo "
 			</table>
 			</div>
 		
 		";
 	}
-		
+
 ?>
 </div>
 

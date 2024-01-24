@@ -30,11 +30,11 @@ $consoleObj = new ConsoleOption($mysqli);
 
 if(!isset($member)) {
 	$member = new Member($mysqli);
-	
+
 	if(isset($_SESSION['btUsername']) AND isset($_SESSION['btPassword']) && $member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
 
 		$memberInfo = $member->get_info_filtered();
-			
+
 	}
 }
 
@@ -42,7 +42,7 @@ if(!$squadObj->select($_GET['sID'])) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>");
 }
 else {
-	$squadInfo = $squadObj->get_info_filtered();	
+	$squadInfo = $squadObj->get_info_filtered();
 }
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
@@ -81,19 +81,19 @@ $arrPublicNews = $squadObj->getNewsPostList(1);
 $arrPrivateNews = array();
 
 if(isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
-	
+
 	$member->select($_SESSION['btUsername']);
 	if($member->authorizeLogin($_SESSION['btPassword'])) {
 		$memberInfo = $member->get_info_filtered();
-		
+
 		if(in_array($memberInfo['member_id'], $squadMemberList)) {
-			
+
 			$arrPrivateNews = $squadObj->getNewsPostList(2);
-			
+
 		}
-		
+
 	}
-		
+
 }
 
 $squadNewsObj = new Basic($mysqli, "squadnews", "squadnews_id");
@@ -101,28 +101,28 @@ $arrAllNews = array_merge($arrPublicNews, $arrPrivateNews);
 rsort($arrAllNews);
 $dispSquadNews = "";
 foreach($arrAllNews as $newsPostID) {
-	
+
 	$squadNewsObj->select($newsPostID);
 	$squadNewsInfo = $squadNewsObj->get_info_filtered();
-	
+
 	$member->select($squadNewsInfo['member_id']);
 	$newsMemberInfo = $member->get_info_filtered();
 	$dispMemberLink = $member->getMemberLink();
-	
-	
+
+
 	if($newsMemberInfo['avatar'] == "") {
 		$newsMemberInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 	}
 	else {
-		$newsMemberInfo['avatar'] = $MAIN_ROOT.$newsMemberInfo['avatar'];	
+		$newsMemberInfo['avatar'] = $MAIN_ROOT.$newsMemberInfo['avatar'];
 	}
-	
+
 	$dispNewsType = "<span class='publicNewsColor' style='font-style: italic'>Public News</span>";
-	
+
 	if($squadNewsInfo['newstype'] == 2) {
 		$dispNewsType = "<span class='privateNewsColor' style='font-style: italic'>Private News</span>";
 	}
-	
+
 	$dispSquadNews .= "
 		
 		<div class='squadNewsPost'>
@@ -140,11 +140,11 @@ foreach($arrAllNews as $newsPostID) {
 		</div>
 	
 	";
-	
+
 }
 
 if($dispSquadNews == "") {
-	$dispSquadNews = "<p align='center' class='main'><i>No Squad News Posted!</i></p>";	
+	$dispSquadNews = "<p align='center' class='main'><i>No Squad News Posted!</i></p>";
 }
 
 $squadRankList = $squadObj->getRankList();
@@ -160,11 +160,11 @@ foreach($squadRankList as $squadRankID) {
 $arrSquadMembers = array();
 foreach($squadMemberList as $realMemberID) {
 	$squadMemberID = $squadObj->getSquadMemberID($realMemberID);
-	
+
 	$squadObj->objSquadMember->select($squadMemberID);
 	$squadObj->objSquadRank->select($squadObj->objSquadMember->get_info("squadrank_id"));
 	$squadRankInfo = $squadObj->objSquadRank->get_info();
-	$arrSquadMembers[$realMemberID] = $squadRankInfo['sortnum'];	
+	$arrSquadMembers[$realMemberID] = $squadRankInfo['sortnum'];
 }
 
 asort($arrSquadMembers);
@@ -174,7 +174,7 @@ $blnManageShoutbox = false;
 $blnManageNewsPost = false;
 foreach($arrSquadMembers as $key => $sortnum) {
 	// $key = member_id
-	
+
 	$squadMemberID = $squadObj->getSquadMemberID($key);
 	$squadObj->objSquadMember->select($squadMemberID);
 	$squadMemberInfo = $squadObj->objSquadMember->get_info();
@@ -183,37 +183,37 @@ foreach($arrSquadMembers as $key => $sortnum) {
 
 	$member->select($key);
 	$dispMemberLink = $member->getMemberLink();
-	
-	
+
+
 	// Check if squad member is looking at the profile page.
 	// See if squad member has any squad privileges
-	
+
 	if($memberInfo['member_id'] == $squadMemberInfo['member_id'] && $squadObj->memberHasAccess($memberInfo['member_id'], "postshoutbox")) {
 		$blnPost = true;
-		
+
 		if($squadObj->memberHasAccess($memberInfo['member_id'], "managenews")) {
-			$blnManageNewsPost = true;	
+			$blnManageNewsPost = true;
 		}
-		
+
 		if($squadObj->memberHasAccess($memberInfo['member_id'], "manageshoutbox")) {
-			$blnManageShoutbox = true;	
+			$blnManageShoutbox = true;
 		}
-		
+
 	}
-	
+
 	if(substr($member->get_info_filtered("profilepic"), 0, 4) == "http") {
 		$squadMemberProfilePic = $member->get_info_filtered("profilepic");
 	}
 	else {
 		$squadMemberProfilePic = $MAIN_ROOT.$member->get_info_filtered("profilepic");
 	}
-	
-	
-	
+
+
+
 	if($squadMemberProfilePic == $MAIN_ROOT) {
 		$squadMemberProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
 	}
-	
+
 	if($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
@@ -222,18 +222,18 @@ foreach($arrSquadMembers as $key => $sortnum) {
 		$addCSS = "";
 		$counter = 1;
 	}
-	
+
 	$dispLastPromotion = "<span style='font-style: italic'>Never</span>";
 	$dispLastDemotion = "<span style='font-style: italic'>Never</span>";
-	
+
 	if($squadMemberInfo['lastpromotion'] != 0) {
 		$dispLastPromotion = getPreciseTime($squadMemberInfo['lastpromotion']);
 	}
-	
+
 	if($squadMemberInfo['lastdemotion'] != 0) {
 		$dispLastDemotion = getPreciseTime($squadMemberInfo['lastdemotion']);
 	}
-	
+
 	$dispMemberList .= "
 		<tr>
 			<td class='main profilePic".$addCSS."' valign='top'><img src='".$squadMemberProfilePic."'></td>
@@ -247,7 +247,7 @@ foreach($arrSquadMembers as $key => $sortnum) {
 		</tr>
 	
 	";
-	
+
 }
 
 
@@ -261,7 +261,7 @@ $shoutboxObj->intDispHeight = 400;
 $shoutboxObj->strSQLSort = " AND squad_id ='".$squadInfo['squad_id']."'";
 
 if($blnPost) { $shoutboxObj->strPostLink = $MAIN_ROOT."members/squads/include/postshoutbox.php?sID=".$squadInfo['squad_id']; }
-if($blnManageShoutbox) { 
+if($blnManageShoutbox) {
 	$shoutboxObj->strEditLink = $MAIN_ROOT."members/squads/managesquad.php?pID=ManageShoutbox&sID=".$squadInfo['squad_id']."&nID=";
 	$shoutboxObj->strDeleteLink = $MAIN_ROOT."members/squads/include/deleteshoutpost.php?sID=".$squadInfo['squad_id'];
 }
@@ -312,7 +312,7 @@ echo "
 					<b>Total Members:</b> ".$squadObj->countMembers()."<br><br>
 					
 					";
-					
+
 					if($squadInfo['website'] != "") {
 						echo "
 							<b>Website:</b> <a href='".$squadInfo['website']."' target='_blank'>View Site</a><br><br>
@@ -325,19 +325,19 @@ echo "
 						<div class='dottedLine' style='margin: 5px 0px'></div>
 						<p align='center' class='largeFont main'><b><a href='".$MAIN_ROOT."members/console.php?cID=".$consoleObj->findConsoleIDByName("View Your Squads")."&select=".$squadInfo['squad_id']."'>Manage Squad</a></b></p>
 					";
-					
+
 				}
 				else {
-					
+
 					echo "
 					
 						<div class='dottedLine' style='margin: 5px 0px'></div>
 						<p align='center' class='largeFont main'><b><a href='".$MAIN_ROOT."members/console.php?cID=".$consoleObj->findConsoleIDByName("Apply to a Squad")."&select=".$squadInfo['squad_id']."'>Apply to this Squad</a></b></p>
 					";
-					
+
 				}
-			
-				
+
+
 				echo "
 					
 				</div>
@@ -356,10 +356,10 @@ echo "
 				echo $dispShoutbox;
 			}
 			elseif($squadInfo['privateshoutbox'] == 1) {
-				echo $dispShoutbox;	
+				echo $dispShoutbox;
 			}
-				
-				
+
+
 				echo "
 				<div class='squadInfoTitle'>RANKINGS</div>
 				<div class='squadInfoBox'>

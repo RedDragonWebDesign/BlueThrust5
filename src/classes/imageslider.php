@@ -28,80 +28,77 @@ class ImageSlider extends BasicOrder {
 	public $strDisplayHeightUnit = "px";
 	public $arrImageIDs;
 	public $strTheme;
-	
-	
+
+
 	public function __construct($sqlConnection) {
-		
-		
+
 		$this->MySQL = $sqlConnection;
 		$this->strTableName = $this->MySQL->get_tablePrefix()."imageslider";
 		$this->strTableKey = "imageslider_id";
-		
-		
+
 	}
 
-	
+
 	/**
 	 * - getLocalImageURL Function -
-	 * 
+	 *
 	 * Used to determine if the image attached to the selected rank is a local image or external image.
-	 * 
+	 *
 	 * Returns FALSE when the image is an external url.
 	 * Returns the local image address when the image is on the server.
-	 * 
+	 *
 	 */
 	function getLocalImageURL() {
 		global $MAIN_ROOT;
 		$returnVal = false;
 		if($this->intTableKeyValue != "") {
-	
+
 			if(strpos($this->arrObjInfo['imageurl'], "http://") === false) {
-	
+
 				$returnVal = $this->arrObjInfo['imageurl'];
-	
+
 			}
-	
+
 		}
-	
+
 		return $returnVal;
 	}
-	
+
 
 	function getImageIDs() {
-		
+
 		$this->arrImageIDs = array();
 		$filterSQL = ($this->blnLoggedIn) ? " OR membersonly = '1' " : " OR membersonly = '2' ";
-		
+
 		$result = $this->MySQL->query("SELECT imageslider_id FROM ".$this->strTableName." WHERE membersonly = '0'".$filterSQL."ORDER BY ordernum DESC");
 		while($row = $result->fetch_assoc()) {
 			$this->arrImageIDs[] = $row['imageslider_id'];
 		}
-		
+
 		return $this->arrImageIDs;
-		
+
 	}
-	
-	
+
+
 	function selectRandomImage() {
-		
+
 		$this->getImageIDs();
 		$intRandomKey = array_rand($this->arrImageIDs);
-		
+
 		$this->select($this->arrImageIDs[$intRandomKey]);
-		
+
 	}
-	
-	
+
+
 	function dispHomePageImage() {
 		global $websiteInfo;
 		$this->getImageIDs();
-		
+
 		if(count($this->arrImageIDs) == 0) {
-			echo "";			
+			echo "";
 		}
 		elseif(count($this->arrImageIDs) == 1 && $this->select($this->arrImageIDs[0]) && $this->arrObjInfo['fillstretch'] == "stretch") {
-		
-			
+
 			$addOverlay = "";
 			if($this->arrObjInfo['message'] != "" || $this->arrObjInfo['messagetitle'] != "") {
 				$addOverlay = "
@@ -115,10 +112,10 @@ class ImageSlider extends BasicOrder {
 					</div>
 				";
 			}
-			
+
 			$addLink = ($this->arrObjInfo['link'] != "") ? "<a href='".$this->arrObjInfo['link']."' target='".$this->arrObjInfo['linktarget']."'>" : "";
 			$closeLinkTag = ($addLink != "") ? "</a>" : "";
-			
+
 			echo "
 			
 				<div class='hp_imgScrollContainer' style='width: ".$this->intDisplayWidth.$this->strDisplayWidthUnit."; height: ".$this->intDisplayHeight.$this->strDisplayHeightUnit."'>
@@ -126,13 +123,12 @@ class ImageSlider extends BasicOrder {
 				</div>
 			
 			";
-		
+
 		}
 		elseif(count($this->arrImageIDs) == 1 && $this->select($this->arrImageIDs[0]) && $this->arrObjInfo['fillstretch'] == "fill") {
-			
+
 			$this->select($this->arrImageIDs[0]);
-			
-			
+
 			$addOverlay = "";
 			if($this->arrObjInfo['message'] != "" || $this->arrObjInfo['messagetitle'] != "") {
 				$addOverlay = "
@@ -146,22 +142,21 @@ class ImageSlider extends BasicOrder {
 				</div>
 				";
 			}
-			
+
 			$addLink = ($this->arrObjInfo['link'] != "") ? "<a href='".$this->arrObjInfo['link']."' target='".$this->arrObjInfo['linktarget']."'>" : "";
 			$closeLinkTag = ($addLink != "") ? "</a>" : "";
-			
-			
+
 			echo "
 			
 				".$addLink."<div class='hp_imgScrollContainer' style=\"background: url('".$this->arrObjInfo['imageurl']."'); width: ".$this->intDisplayWidth.$this->strDisplayWidthUnit."; height: ".$this->intDisplayHeight.$this->strDisplayHeightUnit."\">".$addOverlay."</div>".$closeLinkTag."
 			
 			";
-			
+
 		}
 		elseif($this->strDisplayStyle == "random" && count($this->arrImageIDs) > 1) {
 
 			$this->selectRandomImage();
-			
+
 			$addOverlay = "";
 			if($this->arrObjInfo['message'] != "" || $this->arrObjInfo['messagetitle'] != "") {
 				$addOverlay = "
@@ -173,12 +168,12 @@ class ImageSlider extends BasicOrder {
 							".$this->arrObjInfo['message']."
 						</div>
 					</div>
-				";				
+				";
 			}
-			
+
 			$addLink = ($this->arrObjInfo['link'] != "") ? "<a href='".$this->arrObjInfo['link']."' target='".$this->arrObjInfo['linktarget']."'>" : "";
 			$closeLinkTag = ($addLink != "") ? "</a>" : "";
-			
+
 			if($this->arrObjInfo['fillstretch'] == "stretch") {
 			echo "
 				<div class='hp_imgScrollContainer'>
@@ -187,18 +182,17 @@ class ImageSlider extends BasicOrder {
 			";
 			}
 			else {
-				
+
 				echo "
 					".$addLink."<div class='hp_imgScrollContainer' style=\"background: url('".$this->arrObjInfo['imageurl']."'); width: ".$this->intDisplayWidth.$this->strDisplayWidthUnit."; height: ".$this->intDisplayHeight.$this->strDisplayHeightUnit."\">".$addOverlay."</div>".$closeLinkTag."
 				";
 			}
-			
 
 		}
 		elseif($this->strDisplayStyle == "slider" && count($this->arrImageIDs) > 1) {
-	
+
 			foreach($this->arrImageIDs as $imgID) {
-				
+
 				$this->select($imgID);
 				$arrImages[] = $this->arrObjInfo['imageurl'];
 				$arrImageLinks[] = $this->arrObjInfo['link'];
@@ -211,8 +205,7 @@ class ImageSlider extends BasicOrder {
 				$arrImageTitle[] = filterText($this->arrObjInfo['messagetitle']);
 				$arrImageDescription[] = filterText(str_replace(array("\r", "\n"), "\\n", $this->arrObjInfo['message']));
 			}
-			
-			
+
 			$dispImages = "'".implode("','", $arrImages)."'";
 			$dispImageLinks = "'".implode("','", $arrImageLinks)."'";
 			$dispImageLinkTarget = "'".implode("','", $arrImageLinkTarget)."'";
@@ -253,27 +246,23 @@ class ImageSlider extends BasicOrder {
 				</script>
 				
 			";
-			
-			
-			
-			
+
 		}
-		
-		
+
 	}
-	
+
 	public function delete() {
-		
+
 		$returnVal = false;
 		if($this->intTableKeyValue != "") {
-		
+
 			$info = $this->arrObjInfo;
 			$returnVal = parent::delete();
-			
+
 			deleteFile(BASE_DIRECTORY.$info['imageurl']);
 		}
-		
+
 	}
-	
-	
+
+
 }

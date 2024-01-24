@@ -70,8 +70,8 @@ echo "
 				</tr>
 			</table>
 	";
-	
-	
+
+
 	echo "
 		<div id='availableDiv'>
 	";

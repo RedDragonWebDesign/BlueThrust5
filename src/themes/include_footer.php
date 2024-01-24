@@ -10,13 +10,13 @@
 	
 	<div id='refreshMenusDiv' style='display: none'></div>
 		<?php
-		
+
 			if(constant('LOGGED_IN')) {
-				
+
 				$memberObj = new Member($mysqli);
 				$memberObj->select($_SESSION['btUsername']);
 				$memberInfo = $memberObj->get_info();
-				
+
 				echo "
 					<audio id='notificationSound'>
 				";
@@ -26,11 +26,11 @@
 						<source src='".$MAIN_ROOT."themes/".$THEME."/notification.ogg'></source>
 					";
 				}
-				
+
 				echo "
 					</audio>
 					";
-				
+
 				if($memberInfo['notifications'] == 0 || $memberInfo['notifications'] == 1) {
 					echo "
 			
@@ -65,10 +65,10 @@
 						checkForNotification();
 					</script>
 				";
-					
+
 				}
 			}
-			
+
 		?>
 
 		

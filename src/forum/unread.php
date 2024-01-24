@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /*
  * BlueThrust Clan Scripts
@@ -72,7 +72,7 @@ else {
 $NUM_OF_PAGES = ceil($totalPosts/$NUM_PER_PAGE);
 
 if($NUM_OF_PAGES == 0) {
-	$NUM_OF_PAGES = 1;	
+	$NUM_OF_PAGES = 1;
 }
 
 
@@ -99,7 +99,7 @@ while($row = $result->fetch_assoc()) {
 
 	echo "<div class='largeFont' style='position:relative;'><b>".$boardObj->getLink(true)." - ".$boardObj->objPost->getLink(true)."</b></div>";
 	$boardObj->objPost->show(true);
-	
+
 	if($count != $result->num_rows) {
 		echo "<br><div class='dottedLine'></div><br>";
 	}
@@ -120,7 +120,7 @@ if($result->num_rows == 0) {
 		</div>
 	
 	";
-	
+
 }
 
 

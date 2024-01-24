@@ -37,40 +37,40 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
 	if($member->hasAccess($consoleObj) && $menuItemObj->select($_POST['itemID'])) {
-		
+
 		$menuItemInfo = $menuItemObj->get_info_filtered();
-		
+
 		if(($_POST['confirm'] ?? '') == "1") {
-			
+
 			$menuCatObj->select($menuItemInfo['menucategory_id']);
-			
+
 			$refreshSection = $menuCatObj->get_info("section");
-			
+
 			$menuItemObj->delete();
 			$menuItemObj->resortOrder();
 			require_once("include/menuitemlist.php");
 			/*
 			echo "
-			
+
 				<script type='text/javascript'>
-			
+
 					$(document).ready(function() {
-					
+
 						$.post('".$MAIN_ROOT."themes/_refreshmenus.php', { refreshSectionID: '".$refreshSection."' }, function(data) {
-							$('#menuSection_".$refreshSection."').html(data);		
+                            $('#menuSection_".$refreshSection."').html(data);
 						});
-					
+
 					});
-				
+
 				</script>
-			
-			
+
+
 			";
 			*/
 		}
 		else {
 			echo "<div id='confirmDelete'><p align='center'>Are you sure you want to delete the menu item <b>".$menuItemInfo['name']."</b>?</p></div>";
-			
+
 			echo "
 			<script type='text/javascript'>
 				$(document).ready(function() {
@@ -109,13 +109,13 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			
 			";
 		}
-		
+
 	}
 	elseif(!$menuCatObj->select($_POST['mcID'])) {
-	
+
 		echo "<div id='confirmDelete'><p align='center'>Unable find the selected menu category.  Please try again or contact the website administrator.</p></div>";
-	
-		
+
+
 		echo "
 		
 			<script type='text/javascript'>
@@ -140,15 +140,15 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			</script>
 		
 		";
-		
+
 	}
 	else {
-		echo "hi2";	
+		echo "hi2";
 	}
-	
-	
-	
-	
+
+
+
+
 }
 else {
 	echo "hi";

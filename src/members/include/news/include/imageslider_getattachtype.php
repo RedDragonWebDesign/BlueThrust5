@@ -41,17 +41,17 @@ $newsObj = new News($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
-	
+
 	echo "<option value=''>Select</option>";
-	
+
 	$arrTypes = array("news", "tournament", "event");
 	if(in_array($_POST['attachtype'], $arrTypes)) {
-		
+
 		switch($_POST['attachtype']) {
 			case "news":
 				$result = $mysqli->query("SELECT * FROM ".$dbprefix."news WHERE newstype != '3' ORDER BY dateposted DESC");
 				while($row = $result->fetch_assoc()) {
-					echo "<option value='".$row['news_id']."'>".$row['postsubject']."</option>";	
+					echo "<option value='".$row['news_id']."'>".$row['postsubject']."</option>";
 				}
 				break;
 			case "tournament":
@@ -65,13 +65,13 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 				while($row = $result->fetch_assoc()) {
 					echo "<option value='".$row['event_id']."'>".$row['title']."</option>";
 				}
-				break;	
+				break;
 		}
-		
-	}	
-	
-	
+
+	}
+
+
 }
 else {
-	echo "no";	
+	echo "no";
 }

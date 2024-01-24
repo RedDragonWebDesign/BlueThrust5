@@ -46,24 +46,24 @@ $eventObj = new Event($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
-	
-	
+
+
 	$arrTypes = array("news", "tournament", "event");
-	
+
 	$arrTypeObj['news']['obj'] = $newsObj;
 	$arrTypeObj['tournament']['obj'] = $tournamentObj;
 	$arrTypeObj['event']['obj'] = $eventObj;
-	
+
 	$arrTypeObj['news']['title'] = "postsubject";
 	$arrTypeObj['tournament']['title'] = "name";
 	$arrTypeObj['event']['title'] = "title";
-	
+
 	$arrTypeObj['news']['message'] = "newspost";
 	$arrTypeObj['tournament']['message'] = "description";
 	$arrTypeObj['event']['message'] = "description";
-	
-	
-	
+
+
+
 	if(in_array($_POST['attachtype'], $arrTypes)) {
 		$checkInfo = false;
 		switch($_POST['attachtype']) {
@@ -78,18 +78,18 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 			case "event":
 				$checkInfo = $eventObj->select($_POST['attachID']);
 				$linkURL = $MAIN_ROOT."events/info.php?eID=".$_POST['attachID'];
-				break;	
+				break;
 		}
 
-		
+
 		if($checkInfo) {
-			
+
 			$attachObj = $arrTypeObj[$_POST['attachtype']]['obj'];
 			$attachTitle = $arrTypeObj[$_POST['attachtype']]['title'];
 			$attachMessage = $arrTypeObj[$_POST['attachtype']]['message'];
-			
+
 			$attachInfo = $attachObj->get_info_filtered();
-			
+
 			$attachMessage = str_replace(array("\r", "\n"), "\\n", $attachInfo[$attachMessage]);
 			echo "
 			
@@ -109,11 +109,11 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 
 				
 			";
-			
+
 		}
-		
-		
-		
-	}	
-	
+
+
+
+	}
+
 } else { echo "no"; }

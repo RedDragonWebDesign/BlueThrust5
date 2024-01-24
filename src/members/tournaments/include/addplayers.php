@@ -37,58 +37,58 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 
 	if($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
-		
+
 		$arrPlayers = $tournamentObj->getPlayers();
 		$playerList = urlencode($_POST['players']);
 		$arrNewPlayers = explode("%0A", $playerList);
-	
+
 		$maxPlayers = $tournamentInfo['playersperteam']*$tournamentInfo['maxteams'];
-		
-		
-		
+
+
+
 		if((count($arrNewPlayers)+count($arrPlayers)) <= $maxPlayers) {
-		
-		
+
+
 			foreach($arrNewPlayers as $newPlayer) {
 				$newPlayer = urldecode($newPlayer);
-				
+
 				$arrPlayers = $tournamentObj->getPlayers();
 
 					if($member->select($newPlayer)) {
 						$newPlayerID = $member->get_info("member_id");
-						
+
 						if(!in_array($newPlayerID, $arrPlayers)) { // Prevent multiple entries of same person
-						
+
 							$tournamentObj->objPlayer->addNew(array("member_id", "tournament_id"), array($newPlayerID, $tID));
-					
+
 						}
-					
+
 					}
 					elseif($tournamentInfo['access'] != 1) {
-						
+
 						if(!in_array($newPlayer, $arrPlayers)) { // Prevent multiple entries of same person
-						
+
 							$tournamentObj->objPlayer->addNew(array("displayname", "tournament_id"), array($newPlayer, $tID));
-						
+
 						}
 					}
-					
-					
+
+
 					if($tournamentInfo['playersperteam'] == 1) {
-						
+
 						$arrUnfilledTeams = $tournamentObj->getUnfilledTeams();
 						if(count($arrUnfilledTeams) > 0) {
-							
-							
+
+
 							$newTeam = $arrUnfilledTeams[0];
 							$tournamentObj->objPlayer->update(array("team_id"), array($newTeam));
-														
+
 						}
 					}
 
 			}
-		
-		
+
+
 			echo "
 				<script type='text/javascript'>
 					$(document).ready(function() {
@@ -96,10 +96,10 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 					});
 				</script>
 			";
-			
+
 	}
 	else {
-		
+
 		$filterPlayers = filterText($_POST['players']);
 		echo "
 			
@@ -132,63 +132,63 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 			</script>
 		
 		";
-		
+
 	}
-		
-		
+
+
 		$arrPlayers = $tournamentObj->getPlayers();
 		$counter = 1;
 		foreach($arrPlayers as $playerID) {
-		
+
 			$tPlayerID = $tournamentObj->getTournamentPlayerID($playerID);
-			
+
 			$tournamentObj->objPlayer->select($tPlayerID);
 			$playerInfo = $tournamentObj->objPlayer->get_info();
-			
+
 			if($member->select($playerID)) {
-		
+
 				$dispPlayer = $member->get_info_filtered("username");
-				
-				
+
+
 			}
 			else {
-				
+
 				$dispPlayer = $playerID;
-				
+
 			}
-			
+
 			$teamID = $playerInfo['team_id'];
 			$arrSortPlayers[$teamID] = strtolower($dispPlayer);
-			
+
 			$arrDispPlayer[$teamID] = "
 				<a href='javascript:void(0)' onclick=\"setPlayerSeed('".$playerInfo['team_id']."')\">".$dispPlayer."</a><div class='mttDeletePlayer'><a href='javascript:void(0)' onclick=\"deletePlayer('".$playerInfo['tournamentplayer_id']."')\">X</a></div>
 			";
-			
-			
-		
+
+
+
 			//$counter++;
 		}
-		
+
 		asort($arrSortPlayers);
 		foreach($arrSortPlayers as $key=>$value) {
 			echo "<div class='mttPlayerSlot main'>".$counter.". ".$arrDispPlayer[$key]."</div>";
 			$counter++;
 		}
-		
+
 		if(count($arrPlayers) < $maxPlayers) {
-			
+
 			for($i=$counter; $i<=$maxPlayers; $i++) {
 				echo "
 					<div class='mttPlayerSlot main'>".$i.". <span style='font-style: italic'>Empty Player Slot</span></div>
 				";
 			}
-			
+
 		}
-		
-		
-		
-		
+
+
+
+
 	}
-	
-	
+
+
 }

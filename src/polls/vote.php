@@ -12,28 +12,28 @@
 	 * License: http://www.bluethrust.com/license.php
 	 *
 	 */
-	
-	
+
+
 	// Config File
 	$prevFolder = "../";
-	
+
 	require_once($prevFolder."_setup.php");
-	
+
 	require_once($prevFolder."classes/member.php");
 	require_once($prevFolder."classes/poll.php");
 
-	
+
 	$consoleObj = new ConsoleOption($mysqli);
 	$pollObj = new Poll($mysqli);
 	$member = new Member($mysqli);
-	
+
 	$arrReturn = array("result" => "fail");
 	$pollOptionSelector = "poll_".$_POST['pollID'];
 	if($pollObj->select($_POST['pollID'])) {
-	
+
 		$pollInfo = $pollObj->get_info_filtered();
 		$pollObj->objAccess->arrAccessFor = array("keyName" => "poll_id", "keyValue" => $pollInfo['poll_id']);
-		
+
 		$blnVote = false;
 		$member->select($_SESSION['btUsername']);
 		$memberID = "";
@@ -47,11 +47,11 @@
 		}
 		elseif($pollInfo['accesstype'] == "public") {
 			$memberID = ($member->authorizeLogin($_SESSION['btPassword'])) ? $member->get_info("member_id") : "";
-			$blnVote = true;	
+			$blnVote = true;
 		}
-		
-		
-		
+
+
+
 		if($blnVote) {
 			foreach(json_decode($_POST['pollOptionID'],true) as $pollOptionID) {
 				$pollObj->objPollOption->select($pollOptionID);
@@ -60,9 +60,9 @@
 			}
 		}
 		else {
-			$arrReturn['errors'] = "You do not have permission to vote on this poll.";	
+			$arrReturn['errors'] = "You do not have permission to vote on this poll.";
 		}
-				
+
 	}
 
 	echo json_encode($arrReturn);

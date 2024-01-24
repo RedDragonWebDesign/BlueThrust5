@@ -34,35 +34,35 @@ $checkAccess = $checkAccess1 || $checkAccess2;
 
 if($member->authorizeLogin($_SESSION['btPassword'])) {
 
-	
-	$memberInfo = $member->get_info_filtered();
-	
-	if($checkAccess && isset($_SESSION['btProfileCache'][$_POST['editKey']])) {
-		
 
-		
+	$memberInfo = $member->get_info_filtered();
+
+	if($checkAccess && isset($_SESSION['btProfileCache'][$_POST['editKey']])) {
+
+
+
 		if ( ! empty($_POST['submit']) ) {
-			
-			
+
+
 			if(trim($_POST['editValue']) != "") {
-				
+
 				if($_SESSION['btProfileCache'][$_POST['editKey']] != $_POST['editValue']) {
 					$_SESSION['btProfileCacheRefresh'] = true;
 				}
-				
+
 				$_SESSION['btProfileCache'][$_POST['editKey']] = $_POST['editValue'];
-				
-				
+
+
 				require_once("view.php");
-				
-			
+
+
 			}
-			
-			
+
+
 		}
-		
+
 		if ( empty($_POST['submit']) ) {
-			
+
 			echo "
 			
 				<p align='center' class='main'>
@@ -71,12 +71,12 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			
 			
 			";
-			
-			
+
+
 		}
-		
-		
-		
+
+
+
 	}
-	
+
 }

@@ -66,21 +66,21 @@ while($row = $result->fetch_assoc()) {
 	if($rankCatInfo['useimage'] == 1 && $rankCatInfo['imageurl'] != "") {
 		if($rankCatInfo['imagewidth'] == 0) {
 			$imageURL = $rankCatObj->getLocalImageURL();
-	
+
 			$imageSize = getimagesize($imageURL);
 			$rankCatInfo['imagewidth'] = $imageSize[0];
-			
+
 		}
-		
+
 		if($rankCatInfo['imageheight'] == 0) {
 			$imageURL = $rankCatObj->getLocalImageURL();
 			$imageSize = getimagesize($imageURL);
-	
+
 			$rankCatInfo['imageheight'] = $imageSize[1];
 		}
-		
-		
-		
+
+
+
 		echo "
 			<tr>
 				<td class='main' align='center' colspan='2'><img src='".$rankCatInfo['imageurl']."' width='".$rankCatInfo['imagewidth']."' height='".$rankCatInfo['imageheight']."' onmouseover=\"showToolTip('<b>".$rankCatInfo['name']."</b><br>".$rankCatInfo['description']."')\" onmouseout='hideToolTip()'></td>
@@ -88,41 +88,41 @@ while($row = $result->fetch_assoc()) {
 		";
 	}
 	else {
-		
+
 		$dispCatDesc = "";
 		if($rankCatInfo['description'] != "") {
-			$dispCatDesc = " style='cursor: pointer' onmouseover=\"showToolTip('<b>".$rankCatInfo['name']."</b><br>".$rankCatInfo['description']."')\" onmouseout='hideToolTip()'";	
+			$dispCatDesc = " style='cursor: pointer' onmouseover=\"showToolTip('<b>".$rankCatInfo['name']."</b><br>".$rankCatInfo['description']."')\" onmouseout='hideToolTip()'";
 		}
-		
+
 		echo "
 			<tr>
 				<td class='formTitle' align='center' colspan='2'><span".$dispCatDesc.">".$rankCatInfo['name']."</span></td>
 			</tr>
 		";
 	}
-	
+
 	$arrRanks = $rankCatObj->getAssociateIDs("ORDER BY ordernum DESC");
 	foreach($arrRanks as $rankID) {
 		$rankObj->select($rankID);
 		$rankInfo = $rankObj->get_info_filtered();
-		
+
 		if($rankInfo['hiderank'] == 0) {
 			if($rankInfo['imagewidth'] == 0) {
 				$imageURL = $rankObj->getLocalImageURL();
-			
+
 				$imageSize = getimagesize($imageURL);
 				$rankInfo['imagewidth'] = $imageSize[0];
-			
+
 			}
-			
+
 			if($rankInfo['imageheight'] == 0) {
 				$imageURL = $rankObj->getLocalImageURL();
 				$imageSize = getimagesize($imageURL);
-			
+
 				$rankInfo['imageheight'] = $imageSize[1];
 			}
-			
-			
+
+
 			echo "
 				<tr>
 					<td align='center' valign='top' style='width: 50%'>
@@ -136,10 +136,10 @@ while($row = $result->fetch_assoc()) {
 				<tr><td colspan='2'><br></td></tr>
 			";
 		}
-		
+
 	}
 	echo "<tr><td colspan='2'><br></td></tr>";
-	
+
 }
 echo "</table>";
 

@@ -30,7 +30,7 @@ if(!isset($_GET['page']) || !is_numeric($_GET['page']) || $_GET['page'] < 1) {
 }
 
 if(!isset($_GET['show']) || !in_array($_GET['show'], $arrShowPerPage)) {
-	$_GET['show'] = 25;	
+	$_GET['show'] = 25;
 }
 
 
@@ -40,36 +40,36 @@ $result = $mysqli->query("SELECT * FROM ".$dbprefix."logs");
 $numOfPages = ceil($result->num_rows/$_GET['show']);
 
 if($numOfPages == 0) {
-	$numOfPages = 1;	
+	$numOfPages = 1;
 }
 
 if($numOfPages < $_GET['page']) {
-	$_GET['page'] = $numOfPages;	
+	$_GET['page'] = $numOfPages;
 }
 
 
 for($i=1; $i<=$numOfPages; $i++) {
-	
+
 	$dispSelected = "";
 	if($_GET['page'] == $i) {
 		$dispSelected = " selected";
 	}
-	
-	$pageoptions .= "<option value='".$i."'".$dispSelected.">".$i."</option>";	
+
+	$pageoptions .= "<option value='".$i."'".$dispSelected.">".$i."</option>";
 }
 
 
 if($_GET['page'] == 1) {
-	$startLimit = 0;	
+	$startLimit = 0;
 }
 else {
-	$startLimit = ($_GET['page']-1)*$_GET['show'];	
+	$startLimit = ($_GET['page']-1)*$_GET['show'];
 }
 
 
 $dispLinks = "";
 if($_GET['page'] == 1 && $numOfPages > 1) {
-	$dispLinks = "<a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&page=".($_GET['page']+1)."&show=".$_GET['show']."'>Next</a> &raquo;";	
+	$dispLinks = "<a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&page=".($_GET['page']+1)."&show=".$_GET['show']."'>Next</a> &raquo;";
 }
 elseif($_GET['page'] != 1 && $numOfPages > $_GET['page']) {
 	$dispLinks = "&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&page=".($_GET['page']-1)."&show=".$_GET['show']."'>Previous</a> | <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&page=".($_GET['page']+1)."&show=".$_GET['show']."'>Next</a> &raquo;";
@@ -82,10 +82,10 @@ elseif($_GET['page'] != 1 && $numOfPages == $_GET['page']) {
 foreach($arrShowPerPage as $numShowPerPage) {
 	$dispSelected = "";
 	if($numShowPerPage == $_GET['show']) {
-		$dispSelected = " selected";	
+		$dispSelected = " selected";
 	}
-	
-	$showoptions .= "<option value='".$numShowPerPage."'".$dispSelected.">".$numShowPerPage." entries per page</option>";	
+
+	$showoptions .= "<option value='".$numShowPerPage."'".$dispSelected.">".$numShowPerPage." entries per page</option>";
 }
 
 echo "
@@ -108,9 +108,9 @@ echo "
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."logs ORDER BY logdate DESC LIMIT ".$startLimit.",".$_GET['show']);
 while($row = $result->fetch_assoc()) {
 
-	$member->select($row['member_id']);	
+	$member->select($row['member_id']);
 	$formatDate = getPreciseTime($row['logdate']);
-	
+
 	echo "
 		<tr>
 			<td class='formLabel'>Log ID#:</td>
@@ -132,7 +132,7 @@ while($row = $result->fetch_assoc()) {
 			<td colspan='2' align='center'><br><div class='dottedLine' style='width: 90%'></div><br></td>
 		</tr>
 	";
-	
+
 }
 
 echo "</table>

@@ -43,23 +43,23 @@ $downloadCatObj = new DownloadCategory($mysqli);
 
 
 if($downloadObj->select($_POST['dlID']) && isset($_POST['confirm'])) {
-	$downloadInfo = $downloadObj->get_info_filtered();	
+	$downloadInfo = $downloadObj->get_info_filtered();
 	$downloadObj->delete();
-	
+
 	unlink("../../../../".$downloadInfo['splitfile1']);
 	unlink("../../../../".$downloadInfo['splitfile2']);
 
-	
+
 	require_once("downloadlist.php");
-	
+
 }
 elseif($downloadObj->select($_POST['dlID'])) {
-	
+
 	$downloadInfo = $downloadObj->get_info_filtered();
 	echo "
 		<p align='center' class='main'>Are you sure you want to delete the download: <b>".$downloadInfo['name']."</b>?</p>	
 	";
-	
+
 }
 else {
 	echo "

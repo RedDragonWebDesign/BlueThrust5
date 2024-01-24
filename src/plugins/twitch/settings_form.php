@@ -162,7 +162,7 @@ $setupFormArgs = array(
 
 function saveTwitchSettings() {
 	global $pluginObj;
-	
+
 	$pluginObj->addConfigValue("twitchsocial_id", $_POST['twitchsocial_id']);
 	$pluginObj->addConfigValue("stream_width", $_POST['stream_width']);
 	$pluginObj->addConfigValue("stream_height", $_POST['stream_height']);

@@ -33,14 +33,14 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	if($member->hasAccess($consoleObj) && $imageSliderObj->select($_POST['imgID'])) {
 
 		$imageSliderInfo = $imageSliderObj->get_info_filtered();
-		
+
 		if(isset($_POST['confirm'])) {
-			
+
 			unlink("../../../../".$imageSliderInfo['imageurl']);
 			$imageSliderObj->delete();
-			
+
 			require_once("imagelist.php");
-			
+
 		}
 		else {
 			echo "
@@ -83,8 +83,8 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 			
 			";
 		}
-		
+
 	}
-	
-	
+
+
 }

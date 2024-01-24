@@ -50,39 +50,39 @@ $downloadObj = new Download($mysqli);
 $blnShowDownload = false;
 
 if($downloadObj->select($_GET['dID'])) {
-	
+
 	$downloadInfo = $downloadObj->get_info_filtered();
 	$downloadCatObj->select($downloadInfo['downloadcategory_id']);
-	
+
 	$accessType = $downloadCatObj->get_info("accesstype");
-	
-	
+
+
 	if($accessType == 1 && $LOGGED_IN) {
-		$blnShowDownload = true;	
+		$blnShowDownload = true;
 	}
 	elseif($accessType == 0) {
-		$blnShowDownload = true;	
+		$blnShowDownload = true;
 	}
-	
+
 	$fileContents1 = file_get_contents($downloadInfo['splitfile1']);
 	$fileContents2 = file_get_contents($downloadInfo['splitfile2']);
-	
+
 	if($blnShowDownload && $fileContents1 !== false && $fileContents2 !== false) {
-		
+
 		header("Content-Description: File Transfer");
 		header("Content-Length: ".$downloadInfo['filesize'].";");
 		header("Content-disposition: attachment; filename=".$downloadInfo['filename']);
 		header("Content-type: ".$downloadInfo['mimetype']);
 
 		echo $fileContents1.$fileContents2;
-		
+
 	}
 
 }
 
 
 if(!$blnShowDownload) {
-	
+
 	// Start Page
 	$PAGE_NAME = "Download - ";
 	$dispBreadCrumb = "";
@@ -100,7 +100,7 @@ if(!$blnShowDownload) {
 			</p>
 		</div>
 	";
-	
+
 	require_once($prevFolder."themes/".$THEME."/_footer.php");
-	
+
 }

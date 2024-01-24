@@ -69,9 +69,9 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 	$blnShowPage = false;
 	// Check Squad ID
-	
+
 	if(($squadObj->select($_GET['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], $pID)) || $blnManageAllSquads) {
-		$blnShowPage = true;		
+		$blnShowPage = true;
 	}
 	elseif($squadObj->select($_GET['sID']) && !$squadObj->memberHasAccess($memberInfo['member_id'], $pID)) {
 		$blnShowPage = false;
@@ -84,18 +84,18 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		";
 		exit();
 	}
-	
+
 	if($pID == "closesquad") {
 		if($memberInfo['member_id'] == $squadObj->get_info("member_id") || $blnManageAllSquads) {
-			$blnShowPage = true;	
+			$blnShowPage = true;
 		}
 	}
 	elseif($pID == "leavesquad") {
 		if($memberInfo['member_id'] != $squadObj->get_info("member_id")) {
 			$blnShowPage = true;
-		}		
+		}
 	}
-		
+
 }
 
 
@@ -120,7 +120,7 @@ $dispBreadCrumb
 </div>
 ";
 if($blnShowPage) {
-	
+
 	if($_GET['nID'] != "") {
 		echo "
 		<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=ManageNews'>Go Back</a></p>
@@ -136,8 +136,8 @@ if($blnShowPage) {
 		<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&select=".$sID."'>Go Back</a></p>
 		";
 	}
-	
-	
+
+
 	$squadInfo = $squadObj->get_info_filtered();
 	switch($pID) {
 		case "postnews":
@@ -180,10 +180,10 @@ if($blnShowPage) {
 			echo "
 				<script type='text/javascript'>window.location = '".$MAIN_ROOT."members/console.php?cID=".$cID."'</script>
 			";
-			break;		
+			break;
 	}
-	
-	
+
+
 	if($_GET['nID'] != "") {
 		echo "
 		<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=ManageNews'>Go Back</a></p></div>
@@ -199,7 +199,7 @@ if($blnShowPage) {
 		<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&select=".$sID."'>Go Back</a></p></div>
 		";
 	}
-	
+
 }
 else {
 
@@ -213,7 +213,7 @@ else {
 
 	
 	";
-		
+
 }
 
 require_once("../../themes/".$THEME."/_footer.php");

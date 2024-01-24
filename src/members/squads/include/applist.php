@@ -13,7 +13,7 @@
  */
 
 if(!isset($prevFolder)) {
-	$prevFolder = "../../../";	
+	$prevFolder = "../../../";
 }
 
 require_once($prevFolder."_setup.php");
@@ -49,17 +49,17 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		$counter = 0;
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."squadapps WHERE squad_id = '".$squadInfo['squad_id']."' AND status = '0' ORDER BY applydate DESC");
 		while($row = $result->fetch_assoc()) {
-		
+
 			$member->select($row['member_id']);
 			$newMemberInfo = $member->get_info_filtered();
-		
+
 			$squadObj->select($row['squad_id']);
 			$squadInfo = $squadObj->get_info_filtered();
-		
+
 			if($newMemberInfo['avatar'] == "") {
 				$newMemberInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 			}
-		
+
 			if(trim($row['message']) == "") {
 				$row['message'] = "None";
 			}
@@ -81,13 +81,13 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			</div>
 
 			";
-		
+
 			$counter++;
 		}
-		
-		
+
+
 		if($counter == 0) {
-		
+
 			echo "
 			<div class='shadedBox' style='width: 300px; margin-top: 50px; margin-left: auto; margin-right: auto; font-style: italic'>
 				<p class='main' align='center'>
@@ -97,9 +97,9 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			<br>
 			";
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 }

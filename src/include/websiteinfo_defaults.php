@@ -9,7 +9,7 @@ if(!isset($websiteInfo['emailqueue_delay']) || $websiteInfo['emailqueue_delay'] 
 }
 
 if(!isset($websiteInfo['split_downloads'])) {
-	$websiteInfo['split_downloads'] = false;	
+	$websiteInfo['split_downloads'] = false;
 }
 
 if(!isset($websiteInfo['default_timezone']) || $websiteInfo['default_timezone'] == "") {

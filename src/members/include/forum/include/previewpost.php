@@ -34,29 +34,29 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$memberInfo = $member->get_info_filtered();
 	$rankObj->select($memberInfo['rank_id']);
 	$posterRankInfo = $rankObj->get_info_filtered();
-	
+
 	$_POST['wysiwygHTML'] = str_replace("<?", "&lt;?", $_POST['wysiwygHTML']);
 	$_POST['wysiwygHTML'] = str_replace("?>", "?&gt;", $_POST['wysiwygHTML']);
 	$_POST['wysiwygHTML'] = str_replace("<script", "&lt;script", $_POST['wysiwygHTML']);
 	$_POST['wysiwygHTML'] = str_replace("</script>", "&lt;/script&gt;", $_POST['wysiwygHTML']);
-	
+
 	if($memberInfo['avatar'] == "") {
 		$memberInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 	}
 	else {
 		$memberInfo['avatar'] = $MAIN_ROOT.$memberInfo['avatar'];
 	}
-	
+
 	$dispSetAvatarWidth = "";
 	$dispSetAvatarHeight = "";
 	if($websiteInfo['forum_avatarwidth'] > 0) {
 		$dispSetAvatarWidth = " width: ".$websiteInfo['forum_avatarwidth'].$websiteInfo['forum_avatarwidthunit'].";";
 	}
-	
+
 	if($websiteInfo['forum_avatarheight'] > 0) {
 		$dispSetAvatarHeight = " height: ".$websiteInfo['forum_avatarheight'].$websiteInfo['forum_avatarheightunit'].";";
 	}
-	
+
 	echo "
 		<div class='breadCrumbTitle'>Preview - ".filterText($_POST['previewSubject'] ?? '')."</div>
 		<table class='forumTable'>
@@ -80,6 +80,6 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			</tr>
 		</table>
 	";
-	
-	
+
+
 }

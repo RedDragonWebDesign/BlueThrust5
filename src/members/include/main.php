@@ -26,61 +26,61 @@ if($checkMember) {
 
 	if($member->authorizeLogin($_SESSION['btPassword'])) {
 		$LOGIN_FAIL = false;
-		
+
 		$memberInfo = $member->get_info();
 		$memberRankID = $memberInfo['rank_id'];
-		
+
 		$memberRank = new Rank($mysqli);
 		$memberRank->select($memberRankID);
 		$rankPrivileges = $memberRank->get_privileges();
-		
+
 		$strPrivileges = implode(",", $rankPrivileges);
-		
+
 		$result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."consolecategory ORDER BY ordernum");
-		
+
 		while($row = $result->fetch_assoc()) {
 			$arrConsoleCats[] = $row['consolecategory_id'];
 		}
-		
-		
+
+
 		$arrFullySortedConsole = array();
 		$consoleObj = new ConsoleOption($mysqli);
 		foreach($rankPrivileges as $consoleoption) {
-		
+
 			$consoleObj->select($consoleoption);
 			$consoleInfo = $consoleObj->get_info();
-			
+
 			$sortNum = array_search($consoleInfo['consolecategory_id'], $arrConsoleCats);
-			
+
 			$arrFullySortedConsole[$sortNum][] = $consoleoption;
-		
+
 		}
 		$consoleCatObj = new basic($mysqli, "consolecategory", "consolecategory_id");
-		
+
 		foreach($arrConsoleCats as $key => $categoryID) {
-			
+
 			$consoleCatObj->select($categoryID);
 			$consoleCatInfo = $consoleCatObj->get_info();
 			echo "<b>".$consoleCatInfo['name']."</b>";
 			echo "<br>";
-			
+
 			$arrConsoleOptions = $arrFullySortedConsole[$key];
-			
+
 				foreach($arrConsoleOptions as $consoleOptionID) {
-			
+
 					$consoleObj->select($consoleOptionID);
 					$consoleInfo = $consoleObj->get_info();
-					
+
 					echo " - ".$consoleInfo['pagetitle']."<br>";
 				}
-					
-		
+
+
 		}
-		
-		
-		
-		
-		
+
+
+
+
+
 	}
 
 }

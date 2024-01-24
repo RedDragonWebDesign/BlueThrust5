@@ -27,10 +27,10 @@ else {
 
 $rankInfo = $memberRank->get_info_filtered();
 if($memberInfo['promotepower'] != 0) {
-	$rankInfo['promotepower'] = $memberInfo['promotepower'];	
+	$rankInfo['promotepower'] = $memberInfo['promotepower'];
 }
 elseif($memberInfo['promotepower'] == -1) {
-	$rankInfo['promotepower'] = 0;	
+	$rankInfo['promotepower'] = 0;
 }
 
 $cID = $_GET['cID'];
@@ -62,9 +62,9 @@ while($row = $result->fetch_assoc()) {
 
 
 if ( ! empty($_POST['submit']) ) {
-	
+
 	// Check Member
-	
+
 	if(!$member->select($_POST['member'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member.<br>";
@@ -73,29 +73,29 @@ if ( ! empty($_POST['submit']) ) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not change that member's password.<br>";
 	}
-	
-	
-	
+
+
+
 	// Check Password
-	
+
 	if(strlen($_POST['newpassword']) < 4) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Your password must be at least 4 characters long.<br>";
 	}
-	
-	
+
+
 	if($_POST['newpassword'] != $_POST['newpassword1']) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Your passwords did not match.<br>";
 	}
-	
-	
+
+
 	if($countErrors == 0) {
-		
+
 		$logMessage = "Changed ".$member->getMemberLink()."'s password.";
-		
+
 		if($member->set_password($_POST['newpassword'])) {
-			
+
 			echo "
 				<div style='display: none' id='successBox'>
 					<p align='center' class='main'>
@@ -107,53 +107,53 @@ if ( ! empty($_POST['submit']) ) {
 					popupDialog('Reset Password', '".$MAIN_ROOT."members', 'successBox');
 				</script>
 			";
-			
+
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-		
+
 		$member->select($memberInfo['member_id']);
 		$member->logAction($logMessage);
-		
+
 	}
-	
-	
+
+
 	if($countErrors > 0) {
-		$_POST['submit'] = false;	
+		$_POST['submit'] = false;
 	}
-	
-	
+
+
 }
 
 
 
 
 if ( empty($_POST['submit']) ) {
-	
+
 	$rankObj->select($rankInfo['promotepower']);
 	$maxRankInfo = $rankObj->get_info_filtered();
-	
+
 	$sqlRanks = "('".implode("','", $arrRanks)."')";
 	$memberoptions = "<option value=''>Select</option>";
 	$result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.* FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id IN ".$sqlRanks." ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
 	while($row = $result->fetch_assoc()) {
-		
-		
+
+
 		$memberoptions .= "<option value='".$row['member_id']."'>".filterText($row['name'])." ".filterText($row['username'])."</option>";
-	
+
 	}
-	
-	
-	
-	
+
+
+
+
 	echo "
 		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
 			<div class='formDiv'>
 			
 			";
-	
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -162,7 +162,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
+
 	echo "
 				Use the form below to reset a member's password.<br><br>
 				<table class='formTable'>
@@ -219,5 +219,5 @@ if ( empty($_POST['submit']) ) {
 		</script>
 		
 	";
-	
+
 }

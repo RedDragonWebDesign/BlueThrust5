@@ -114,7 +114,6 @@
 
 					$url = html_entity_decode($url);
 
-
 					#
 					# remove trailing punctuation from url
 					#
@@ -131,7 +130,6 @@
 							$cursor--;
 						}
 					}
-
 
 					#
 					# nice-i-fy url here
@@ -151,11 +149,10 @@
 
 					$display_url = autolink_label($display_url, $limit);
 
-
 					#
 					# add the url
 					#
-					
+
 					if ($display_url != $link_url && !preg_match('@title=@msi',$tagfill) && $auto_title) {
 
 						$display_quoted = preg_quote($display_url, '!');
@@ -170,7 +167,7 @@
 					$display_url_enc = HtmlSpecialChars($display_url);
 
 					$buffer .= "<a href=\"{$link_url_enc}\"$tagfill>{$display_url_enc}</a>";
-				
+
 				}else{
 					#echo "fail 3 at $cursor<br />\n";
 

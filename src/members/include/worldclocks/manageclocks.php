@@ -17,20 +17,20 @@
 	if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 		exit();
 	}
-	else {	
+	else {
 		$memberInfo = $member->get_info_filtered();
 		$consoleObj->select($_GET['cID']);
 		if(!$member->hasAccess($consoleObj)) {
 			exit();
 		}
-		
+
 	}
-	
-	
+
+
 	$objManageList = new btOrderManageList($clockObj);
 	$objManageList->strMainListLink = BASE_DIRECTORY."members/include/worldclocks/main.php";
 
-	
+
 	$action = $_GET['action'] ?? '';
 	$clockID = $_GET['clockID'] ?? '';
 	$itemID = $_POST['itemID'] ?? '';

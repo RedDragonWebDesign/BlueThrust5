@@ -46,56 +46,56 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$squadNewsObj = new Basic($mysqli, "squadnews", "squadnews_id");
 	if($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], "manageshoutbox") && $squadNewsObj->select($_POST['nID'])) {
 
-		
-		
-		
-		
+
+
+
+
 		if ( ! empty($_POST['submit']) ) {
-			
+
 			// Check Message
-			
+
 			if(trim($_POST['message']) == "") {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not make a blank shoutbox post.<br>";
 			}
-			
+
 			if($countErrors == 0) {
 				$time = time();
 				$arrColumns = array("newspost", "lasteditmember_id", "lasteditdate");
 				$arrValues = array($_POST['message'], $memberInfo['member_id'], $time);
-			
-				
+
+
 				if($squadNewsObj->update($arrColumns, $arrValues)) {
-			
+
 					$_POST['cancel'] = true;
-			
+
 				}
 				else {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 				}
-			
-			
+
+
 			}
-			
+
 			if($countErrors > 0) {
 				$_POST = filterArray($_POST);
 				$_POST['submit'] = false;
 			}
-			
-			
-			
-		
+
+
+
+
 		}
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
 		if(!$_POST['submit'] && !$_POST['cancel']) {
 			$squadNewsInfo = $squadNewsObj->get_info_filtered();
-			
+
 			if($dispError != "") {
 				echo "
 				<div class='errorDiv'>
@@ -104,9 +104,9 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				</div>
 				";
 			}
-			
-			
-			
+
+
+
 			echo "
 			
 					<table class='formTable'>
@@ -127,29 +127,29 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			
 			";
 		}
-		
-		
-		
+
+
+
 		if($_POST['cancel']) {
 			$squadNewsInfo = $squadNewsObj->get_info_filtered();
-		
-			
+
+
 			$member->select($squadNewsInfo['member_id']);
 			$squadMemberInfo = $member->get_info_filtered();
-		
+
 			if($squadMemberInfo['avatar'] == "") {
 				$squadMemberInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 			}
-		
-			
+
+
 			$dispLastEdit = "";
 			if($member->select($squadNewsInfo['lasteditmember_id'])) {
 				$dispLastEditTime = getPreciseTime($squadNewsInfo['lasteditdate']);
-				$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";	
+				$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";
 			}
-			
+
 			$member->select($squadNewsInfo['member_id']);
-			
+
 			echo "
 			<img src='".$squadMemberInfo['avatar']."' class='avatarImg'>
 			<div class='postInfo'>
@@ -164,17 +164,17 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			<div class='main' style='margin-top: 0px; margin-bottom: 10px; padding-left: 5px'>".$dispLastEdit."</div>
 			<p style='padding: 0px; margin: 0px' align='right'><b><a href='javascript:void(0)' onclick=\"editNews('".$squadNewsInfo['squad_id']."', '".$squadNewsInfo['squadnews_id']."')\">EDIT</a> | <a href='javascript:void(0)' onclick=\"deleteNews('".$squadNewsInfo['squad_id']."', '".$squadNewsInfo['squadnews_id']."')\">DELETE</a></b></p>
 			";
-		
-		
+
+
 		}
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
 
 	}
-	
-	
+
+
 }

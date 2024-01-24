@@ -39,7 +39,7 @@ if(isset($_GET['menuID']) && $menuItemObj->select($_GET['menuID']) && $_GET['act
 	require_once("include/admin/managemenu/edit_item.php");
 }
 else {
-	
+
 	echo "
 		<table class='formTable'>
 			<tr>
@@ -56,9 +56,9 @@ else {
 		
 		<div id='menuItemDiv'>
 	";
-	
+
 	require_once("include/admin/managemenu/include/menuitemlist.php");
-	
+
 	echo "
 		</div>
 		<div id='deleteMessage'></div>
@@ -97,7 +97,7 @@ else {
 		</script>
 		
 	";
-	
-	
-	
+
+
+
 }

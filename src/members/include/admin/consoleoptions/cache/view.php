@@ -52,22 +52,22 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				</tr>
 				
 			";
-		
+
 		$counter=0;
 		foreach($_SESSION['btAccessRules'] as $key => $accessInfo) {
 			if($member->select($accessInfo['mID']) AND ($accessInfo['accessRule'] == "allow" OR $accessInfo['accessRule'] == "deny")) {
-		
+
 				$tempMemInfo = $member->get_info_filtered();
 				$rank->select($tempMemInfo['rank_id']);
 				$dispRankName = $rank->get_info_filtered("name");
-				
-				if($accessInfo['accessRule'] == "allow") { 
+
+				if($accessInfo['accessRule'] == "allow") {
 					$dispAccess = "<span class='allowText'>Allow</span>";
 				}
 				else {
 					$dispAccess = "<span class='denyText'>Deny</span>";
 				}
-				
+
 				echo "
 					<tr>
 						<td class='main'><a href='".$MAIN_ROOT."profile.php?mID=".$tempMemInfo['username']."'>".$dispRankName." ".$tempMemInfo['username']."</a></td>
@@ -78,7 +78,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				$counter++;
 			}
 		}
-		
+
 		if($counter == 0) {
 			echo "
 				<tr>
@@ -87,15 +87,15 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					</td>
 				</tr>
 			";
-			
+
 		}
 		echo "
 				
 			</table>
 		
 		";
-		
+
 	}
-	
-	
+
+
 }

@@ -25,10 +25,10 @@ else {
 
 $rankInfo = $memberRank->get_info_filtered();
 if($memberInfo['promotepower'] != 0) {
-	$rankInfo['promotepower'] = $memberInfo['promotepower'];	
+	$rankInfo['promotepower'] = $memberInfo['promotepower'];
 }
 elseif($memberInfo['promotepower'] == -1) {
-	$rankInfo['promotepower'] = 0;	
+	$rankInfo['promotepower'] = 0;
 }
 
 
@@ -53,21 +53,21 @@ $rankObj = new Rank($mysqli);
 
 
 if ( ! empty($_POST['submit']) ) {
-	
+
 	$rankObj->select($rankInfo['promotepower']);
 	$maxRankInfo = $rankObj->get_info_filtered();
-	
+
 	if($rankInfo['rank_id'] == 1) {
 		$maxRankInfo['ordernum'] += 1;
 	}
-	
+
 	$arrRanks = array();
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
 	while($row = $result->fetch_assoc()) {
 		$arrRanks[] = $row['rank_id'];
 	}
-	
-	
+
+
 	// Check Member
 	$newRank = 0;
 	if(!$member->select($_POST['member']) || $_POST['member'] == $memberInfo['member_id']) {
@@ -79,41 +79,41 @@ if ( ! empty($_POST['submit']) ) {
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not change the selected member's rank.<br>";
 	}
 	else {
-		
+
 		$rankObj->select($member->get_info("rank_id"));
 		$newRankOrder = $rankObj->get_info("ordernum")+1;
-		
+
 		$rankObj->selectByOrder($newRankOrder);
 		$newRank = $rankObj->get_info("rank_id");
-		
+
 	}
-	
+
 	// Check Rank
 	if(!in_array($newRank, $arrRanks)) {
 		$countErrors++;
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not promote this member any higher.<br>";
 	}
-	
-	
-	
+
+
+
 	if($countErrors == 0) {
-		
+
 		$arrColumns = array("rank_id", "lastpromotion");
 		$arrValues = array($newRank, time());
-		
+
 		$member->select($_POST['member']);
-		
+
 		$rankObj->select($newRank);
 		$newRankInfo = $rankObj->get_info_filtered();
-		
+
 		$rankObj->select($member->get_info("rank_id"));
 		$oldRankInfo = $rankObj->get_info_filtered();
-		
+
 		if($member->update($arrColumns, $arrValues)) {
-			
+
 			$logMessage = $member->getMemberLink()." promoted to rank ".$newRankInfo['name']." from ".$oldRankInfo['name'].".";
 			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
-			
+
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -127,32 +127,32 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			
 			";
-			
+
 			$member->postNotification("You have been promoted to ".$newRankInfo['name']."!", "promotion");
-			
+
 			$member->select($memberInfo['member_id']);
 			$member->logAction($logMessage);
-			
-			
-			
+
+
+
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 	if($countErrors > 0) {
 		$_POST = filterArray($_POST);
-		$_POST['submit'] = false;	
+		$_POST['submit'] = false;
 	}
-	
-	
-	
-	
+
+
+
+
 }
 
 

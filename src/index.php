@@ -12,11 +12,11 @@
  *
  */
 
- 
+
 //Installer Code - Can Be Deleted After Install For Security
 function deleteDir($path) {
 	$i = new DirectoryIterator($path);
-	
+
 	foreach($i as $f) {
 		if($f->isFile()) {
 			unlink($f->getRealPath());
@@ -26,7 +26,7 @@ function deleteDir($path) {
 			rmdir($f->getRealPath());
 		}
 	}
-	
+
 	rmdir($path);
 }
 
@@ -35,18 +35,18 @@ if ((!file_exists("_config.php")) && (file_exists("installer/lock.txt"))) {
 }
 elseif (((!file_exists("_config.php")) && (!file_exists("installer/lock.txt"))) || ((file_exists("installer/_installrunning.txt")) && (file_get_contents("installer/_installrunning.txt") != "done"))) {
 	file_put_contents("installer/_installrunning.txt", "");
-	
+
 	echo "
 		<script type='text/javascript'>
 			window.location = 'installer/index.php'
 		</script>
 	";
-	
+
 	die;
 }
 
 //End Installer Code - Can Be Deleted After Install For Security
- 
+
 // Config File
 $prevFolder = "";
 
@@ -70,7 +70,7 @@ $mysqli->query("UPDATE ".$dbprefix."members SET loggedin = '0' WHERE loggedin = 
 $result = $mysqli->query("SELECT member_id FROM ".$dbprefix."members WHERE loggedin = '1' AND rank_id != '1' AND disabled != '1'");
 
 if($result->num_rows > $websiteInfo['mostonline']) {
-	$webInfoObj->multiUpdate(array("mostonline", "mostonlinedate"), array($result->num_rows, time()));	
+	$webInfoObj->multiUpdate(array("mostonline", "mostonlinedate"), array($result->num_rows, time()));
 }
 
 $membersOnlineCount = $result->num_rows;
@@ -88,15 +88,15 @@ while($row = $result->fetch_assoc()) {
 	$member->select($row['member_id']);
 	$arrMembersOnline[] = $member->getMemberLink();
 if(constant('LOGGED_IN')) {
-	
+
 	$rankObj->select($member->get_info("rank_id"));
 	$rankCat = $rankObj->get_info("rankcategory_id");
-	
+
 	$arrRankCatCount[$rankCat] += 1;
-	
+
 	}
 
-	
+
 }
 
 $membersOnlineList = implode(", ", $arrMembersOnline);
@@ -117,7 +117,7 @@ if($result->num_rows == 1) {
 	$dispLastVisitDate = "Your last visit was ".getPreciseTime($lastVisitDate['dateposted']).".";
 }
 else {
-	$dispLastVisitDate = "This is your first visit!";	
+	$dispLastVisitDate = "This is your first visit!";
 }
 
 
@@ -128,23 +128,23 @@ if($websiteInfo['newsticker'] != "") {
 	$blnDisplayNewsTicker = true;
 	$setNewsTickerStyle = "";
 	if($websiteInfo['newstickercolor'] != "") {
-		$setNewsTickerStyle .= "; color: ".$websiteInfo['newstickercolor'].";";	
+		$setNewsTickerStyle .= "; color: ".$websiteInfo['newstickercolor'].";";
 	}
 	$setMarqueeTickerStyle = "";
 	if($websiteInfo['newstickersize'] != 0) {
 		$setNewsTickerStyle .= "; font-size: ".$websiteInfo['newstickersize']."px; height: ".($websiteInfo['newstickersize']+15)."px;";
 		$setMarqueeTickerStyle = " style ='height: ".($websiteInfo['newstickersize']+15)."px;'";
 	}
-	
+
 	if($websiteInfo['newstickerbold'] == 1) {
 		$setNewsTickerStyle .= "; font-weight: bold;";
 	}
-	
+
 	if($websiteInfo['newstickeritalic'] == 1) {
 		$setNewsTickerStyle .= "; font-style: italic;";
 	}
-	
-	
+
+
 	echo "
 	
 
@@ -161,7 +161,7 @@ if($websiteInfo['newsticker'] != "") {
 echo "
 	<div id='hpImageSliderWrapper' style='text-align: center; position: relative; margin-left: auto; margin-right: auto'>
 			";
-	
+
 	$imageSliderObj = new ImageSlider($mysqli);
 	$imageSliderObj->strDisplayStyle = $websiteInfo['hpimagetype'];
 	$imageSliderObj->intDisplayWidth = $websiteInfo['hpimagewidth'];
@@ -170,12 +170,12 @@ echo "
 	$imageSliderObj->strDisplayHeightUnit = $websiteInfo['hpimageheightunit'];
 	$imageSliderObj->blnLoggedIn = constant('LOGGED_IN');
 	$imageSliderObj->strTheme = $websiteInfo['theme'];
-	
+
 	$imageSliderObj->dispHomePageImage();
-	
+
 		//echo "<div id='hpImageScroller'></div>";
-		
-	
+
+
 	echo "	
 	</div>
 		
@@ -198,40 +198,40 @@ while($row = $result->fetch_assoc()) {
 	unset($checkHTMLAccess);
 	$newsObj = new News($mysqli);
 	$newsInfo = filterArray($row);
-	
+
 	if($newsInfo['newstype'] == 1 || ($newsInfo['newstype'] == 2 && constant('LOGGED_IN'))) {
-	
+
 		$newsObj->select($newsInfo['news_id']);
-		
+
 		$member->select($newsInfo['member_id']);
 		$posterInfo = $member->get_info_filtered();
-		
+
 		if($posterInfo['avatar'] == "") {
 			$posterInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 		}
 		else {
 			$posterInfo['avatar'] = $MAIN_ROOT.$posterInfo['avatar'];
 		}
-		
+
 		$dispNewsType = " - <span class='publicNewsColor' style='font-style: italic'>public</span>";
 		if($newsInfo['newstype'] == 2) {
 			$dispNewsType = " - <span class='privateNewsColor' style='font-style: italic'>private</span>";
 		}
-		
+
 		$dispLastEdit = "";
 		if($member->select($newsInfo['lasteditmember_id'])) {
-		
+
 			$dispLastEditTime = getPreciseTime($newsInfo['lasteditdate']);
 			$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";
 		}
-		
+
 		$member->select($newsInfo['member_id']);
-		
+
 		if(!isset($checkHTMLAccess)) { $checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj); }
-		
+
 		$dispNews = ($checkHTMLAccess) ? parseBBCode($newsObj->get_info("newspost")) : nl2br(parseBBCode(filterText($newsInfo['newspost'])));
-		
-		
+
+
 		$dispAnnouncements .= "
 			<div class='newsDiv' id='newsDiv_".$newsInfo['news_id']."'>
 				<div class='postInfo'>
@@ -251,10 +251,10 @@ while($row = $result->fetch_assoc()) {
 		
 		
 		";
-		
-	
+
+
 	}
-	
+
 }
 
 
@@ -267,35 +267,35 @@ if($result->num_rows > 0) {
 	while($row = $result->fetch_assoc()) {
 		unset($checkHTMLAccess);
 		$newsObj = new News($mysqli);
-		
+
 		$newsInfo = filterArray($row);
 		$newsObj->select($newsInfo['news_id']);
-		
+
 		$member->select($newsInfo['member_id']);
 		$posterInfo = $member->get_info_filtered();
-		
+
 		if($posterInfo['avatar'] == "") {
 			$posterInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 		}
-		
-	
+
+
 		$dispNewsType = " - <span class='publicNewsColor' style='font-style: italic'>public</span>";
-	
+
 		$dispLastEdit = "";
 		if($member->select($newsInfo['lasteditmember_id'])) {
-		
+
 			$dispLastEditTime = getPreciseTime($newsInfo['lasteditdate']);
 			$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";
 		}
-		
+
 		$member->select($newsInfo['member_id']);
-		
+
 		if(!isset($checkHTMLAccess)) { $checkHTMLAccess = $member->hasAccess($checkHTMLConsoleObj); }
-		
+
 		$dispNews = ($checkHTMLAccess) ? parseBBCode($newsObj->get_info("newspost")) : nl2br(parseBBCode(filterText($newsInfo['newspost'])));
-		
-		
-		
+
+
+
 		$dispHPNews .= "		
 			<div class='newsDiv' id='newsDiv_".$newsInfo['news_id']."'>
 				<div class='postInfo'>
@@ -320,22 +320,22 @@ if($result->num_rows > 0) {
 
 
 if($dispAnnouncements != "") {
-	
+
 echo "<p class='main' style='font-size: 18px; font-weight: bold; padding-left: 15px'>Announcements</p>";
 echo $dispAnnouncements;
 
 	if($dispHPNews != "") {
-		echo "<br>";	
+		echo "<br>";
 	}
 
 }
 
 
 if($dispHPNews != "") {
-	
+
 echo "<p class='main' style='font-size: 18px; font-weight: bold; padding-left: 15px'>Latest News</p>";
-echo $dispHPNews;	
-	
+echo $dispHPNews;
+
 }
 
 echo "

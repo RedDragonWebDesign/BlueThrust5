@@ -33,7 +33,7 @@ $arrFolders = $pmFolderObj->listFolders($memberInfo['member_id']);
 
 $folderList = "";
 foreach($arrFolders as $folderID => $folderName) {
-	$folderList .= "<option value='".$folderID."'>".filterText($folderName)."</option>";	
+	$folderList .= "<option value='".$folderID."'>".filterText($folderName)."</option>";
 }
 
 ?>
@@ -87,12 +87,12 @@ foreach($arrFolders as $folderID => $folderName) {
 		var intCheckAll = 0;
 
 
-		<?php 
+		<?php
 
 			if(isset($_GET['folder']) && is_numeric($_GET['folder'])) {
 				echo "$('#selectFolder').val('".$_GET['folder']."');";
 			}
-				
+
 		?>
 				
 		

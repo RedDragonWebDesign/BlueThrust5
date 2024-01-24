@@ -31,8 +31,8 @@ $intAddStatusCID = $consoleObj->findConsoleIDByName("Add Diplomacy Status");
 
 
 if(!isset($_GET['sID'])) {
-	
-	
+
+
 	echo "
 	
 		<table class='formTable' style='border-spacing: 1px'>
@@ -56,10 +56,10 @@ if(!isset($_GET['sID'])) {
 		<div id='statusListDiv' style='margin: 0px; padding: 0px'>
 	
 	";
-	
+
 	require_once("include/main_managestatuses.php");
-	
-	
+
+
 	echo "
 		</div>
 		<div id='deleteDivInfo' style='display: none'></div>
@@ -100,5 +100,5 @@ if(!isset($_GET['sID'])) {
 
 }
 elseif($_GET['action'] == "edit" && isset($_GET['sID'])) {
-	require_once("include/editstatus.php");	
+	require_once("include/editstatus.php");
 }

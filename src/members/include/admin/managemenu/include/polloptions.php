@@ -9,7 +9,7 @@ foreach($arrPolls as $eachPoll) {
 }
 
 if(count($pollOptions) == 0) {
-	$pollOptions = array("No Polls Added");	
+	$pollOptions = array("No Polls Added");
 }
 
 $pollOptionComponents = array(

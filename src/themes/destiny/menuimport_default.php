@@ -93,8 +93,8 @@ if($mysqli->multi_query($fullSQL)) {
 		}
 	}
 	while($mysqli->next_result());
-	
+
 	echo "Menus restored to default!";
-	
-	
+
+
 }

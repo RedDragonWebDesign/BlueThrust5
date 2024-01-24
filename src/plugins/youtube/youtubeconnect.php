@@ -11,118 +11,118 @@
 	 * License: http://www.bluethrust.com/license.php
 	 *
 	 */
-	
+
 	$accessedByConsole = false;
 	if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
-		
+
 		$prevFolder = "../../";
 		require_once("../../_setup.php");
 		require_once("../../classes/member.php");
 		require_once("../../classes/rank.php");
 		require_once("../../classes/consolecategory.php");
-		
+
 		// Plugin Info
-		
+
 		$PLUGIN_TABLE_NAME = $dbprefix."youtube";
 		$PLUGIN_NAME = "Youtube Connect";
-		
-		
+
+
 		// Start Page
-		
+
 		$consoleObj = new ConsoleOption($mysqli);
-		
+
 		$cID = $consoleObj->findConsoleIDByName("Youtube Connect");
 		$consoleObj->select($cID);
 		$consoleInfo = $consoleObj->get_info_filtered();
-		
-		
+
+
 		$member = new Member($mysqli);
 		$member->select($_SESSION['btUsername']);
 		$memberInfo = $member->get_info_filtered();
 		// Check Login
 		$LOGIN_FAIL = true;
 		if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-			$LOGIN_FAIL = false;			
+			$LOGIN_FAIL = false;
 		}
 		else {
-			die($MAIN_ROOT."members");	
+			die($MAIN_ROOT."members");
 		}
-		
+
 		require_once("youtube.php");
-		
+
 	}
 	else {
 		$memberInfo = $member->get_info_filtered();
 		$consoleObj->select($_GET['cID']);
-		
+
 		require_once("../plugins/youtube/youtube.php");
-		
+
 		if(!$member->hasAccess($consoleObj)) {
 			exit();
 		}
-		
+
 		$accessedByConsole = true;
 		require_once("../plugins/youtube/ytbuttoncss.php");
 	}
-	
-	
-	
-	
+
+
+
+
 	if(trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 		$dispHTTP = "http://";
 	}
 	else {
 		$dispHTTP = "https://";
 	}
-	
-	
+
+
 	$ytObj = new Youtube($mysqli);
-	
+
 	if(!$ytObj->hasYoutube($memberInfo['member_id'])) {
 		$countErrors = 0;
 		$dispError = "";
-		
+
 		if($accessedByConsole && !isset($_GET['error'])) {
-			
+
 			echo "
 				<script type='text/javascript'>
 					window.location = '".$MAIN_ROOT."plugins/youtube/youtubeconnect.php';
 				</script>
 			";
-			
-			exit();	
+
+			exit();
 		}
-		
+
 		if(isset($_GET['code']) && $_GET['state'] == $_SESSION['btYoutubeNonce'] && !isset($_GET['error'])) {
 			$arrURLInfo = parse_url($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
-	
+
 			$response = $ytObj->getAccessToken($_GET['code'], $arrURLInfo['scheme']."://".$arrURLInfo['host'].$arrURLInfo['path']);
-			
+
 			if(isset($response['access_token'])) {
-				
+
 				$ytObj->accessToken = $response['access_token'];
 				$ytObj->refreshToken = $response['refresh_token'];
 				$channelInfo = $ytObj->getChannelInfo();
 				$channelSnippet = $ytObj->getChannelInfo("snippet");
 				$channelStats = $ytObj->getChannelInfo("statistics");
 				// Add User
-				
+
 				$arrColumns = array("member_id", "channel_id", "uploads_id", "thumbnail", "access_token", "refresh_token", "lastupdate", "subscribers", "title", "videocount", "viewcount", "loginhash");
 				$arrValues = array($memberInfo['member_id'], $channelInfo['items'][0]['id'], $channelInfo['items'][0]['contentDetails']['relatedPlaylists']['uploads'], $channelSnippet['items'][0]['snippet']['thumbnails']['medium']['url'], $response['access_token'], $response['refresh_token'], time(), $channelStats['items'][0]['statistics']['subscriberCount'], $channelSnippet['items'][0]['snippet']['title'], $channelStats['items'][0]['statistics']['videoCount'], $channelStats['items'][0]['statistics']['viewCount'], md5($channelInfo['items'][0]['id']));
-				
+
 				$ytObj->addNew($arrColumns, $arrValues);
 				$ytObj->updateVideos();
-				
+
 				echo "
 					<script type='text/javascript'>
 						window.location = '".$MAIN_ROOT."members/console.php?cID=".$cID."';
 					</script>
 				";
 				exit();
-				
+
 			}
 			else {
-				
+
 				echo "
 				
 					<script type='text/javascript'>
@@ -132,20 +132,20 @@
 				";
 				exit();
 			}
-			
-			
+
+
 		}
 		elseif(isset($_GET['error'])) {
-			
+
 			$countErrors++;
 			$dispError = "Unable to connect to Youtube! Please try again.";
-			
+
 		}
 		elseif(!isset($_GET['error']) && !isset($_GET['code'])) {
-			
+
 			$loginLink = $ytObj->getConnectLink($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 			$_SESSION['btYoutubeNonce'] = $ytObj->tokenNonce;
-			
+
 			echo "
 			
 				<p class='main'>Redirecting to Youtube...</p>
@@ -155,13 +155,13 @@
 				</script>
 			
 			";
-			
+
 			exit();
 		}
-		
-		
+
+
 		if($dispError != "") {
-			
+
 			echo "	
 			
 				<div class='shadedBox' style='margin-left: auto; margin-right: auto; width: 50%'>
@@ -174,32 +174,32 @@
 				</div>
 			
 			";
-			
+
 		}
-		
-	
+
+
 	}
 	else {
 		// Has Connected Youtube Account
-		
+
 		$countErrors = 0;
 		$dispError = "";
 		$dispSuccess = false;
-		
+
 		if ( ! empty($_POST['submit']) ) {
-			
+
 			// Check Video Display
 			$arrVideoDisplayCheck = array(0,1,2,3,4,5);
 			if(!in_array($_POST['showvideos'], $arrVideoDisplayCheck) || !is_numeric($_POST['showvideos'])) {
 				$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid video display amount.<br>";
 				$countErrors++;
 			}
-			
-			
+
+
 			if($countErrors == 0) {
 				$setShowInfoCard = ($_POST['showinfocard'] == 1) ? 1 : 0;
 				$setAllowLogin = ($_POST['allowlogin'] == 1) ? 1 : 0;
-			
+
 				if($ytObj->update(array("allowlogin", "showsubscribe", "showvideos"), array($_POST['allowlogin'], $_POST['showinfocard'], $_POST['showvideos']))) {
 					$dispSuccess = true;
 				}
@@ -207,26 +207,26 @@
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 				}
-				
+
 			}
-			
-			
+
+
 		}
-		
+
 		$ytInfo = $ytObj->get_info_filtered();
-		
+
 		$checkVideos = array();
 		if($ytInfo['showvideos'] == 0) {
-			$checkVideos[0] = " selected";	
+			$checkVideos[0] = " selected";
 		}
 		elseif($ytInfo['showvideos'] == 1) {
-			$checkVideos[1] = " selected";	
+			$checkVideos[1] = " selected";
 		}
-		
-		
+
+
 		$checkInfoCard = ($ytInfo['showsubscribe'] == 1) ? " checked" : "";
 		$checkAllowLogin = ($ytInfo['allowlogin'] == 1) ? " checked" : "";
-		
+
 		echo "
 			<div id='loadingSpiralDisconnect' class='loadingSpiral'>
 				<p align='center'>
@@ -237,7 +237,7 @@
 			<form action='".$MAIN_ROOT."members/console.php?cID=".$_GET['cID']."' method='post'>
 			<div class='formDiv'>
 			";
-		
+
 		if($dispError != "") {
 			echo "
 			<div class='errorDiv'>
@@ -246,8 +246,8 @@
 			</div>
 			";
 		}
-		
-		
+
+
 		echo "
 			
 				<table class='formTable'>
@@ -295,11 +295,11 @@
 					for($i=2; $i<=5; $i++) {
 						$dispChecked = "";
 						if($ytInfo['showvideos'] == $i) {
-							$dispChecked = " selected";	
+							$dispChecked = " selected";
 						}
-						echo "<option value='".$i."'".$dispChecked.">".$i." Most Recent Videos</option>";						
+						echo "<option value='".$i."'".$dispChecked.">".$i." Most Recent Videos</option>";
 					}
-		
+
 		echo "
 							</select>
 						</td>
@@ -378,10 +378,10 @@
 		</script>
 			
 		";
-		
-		
+
+
 		if((time()-$ytInfo['lastupdate']) > 1800) {
-			
+
 			echo "
 				
 				<script type='text/javascript'>
@@ -415,10 +415,10 @@
 			
 			";
 		}
-		
-		
+
+
 		if($dispSuccess) {
-			
+
 			echo "
 				<div id='successDiv' style='display: none'>
 					<p align='center' class='main'>
@@ -449,7 +449,7 @@
 				
 				</script>
 			";
-			
+
 		}
-		
+
 	}

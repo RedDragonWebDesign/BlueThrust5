@@ -62,8 +62,8 @@ $blnPostReply = false;
 $addToForm = "";
 if(isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {
 	$blnPostReply = true;
-	$topicInfo = $boardObj->objTopic->get_info();		
-	
+	$topicInfo = $boardObj->objTopic->get_info();
+
 	// Check if topic is actually in the selected board
 	if($topicInfo['forumboard_id'] != $boardInfo['forumboard_id']) {
 		echo "<script type='text/javascript'>window.location = '".$MAIN_ROOT."members'</script>";
@@ -100,23 +100,23 @@ if(isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {
 				});
 			</script>
 		";
-		
+
 		exit();
-		
+
 	}
-	
-	
+
+
 	$boardObj->objPost->select($topicInfo['forumpost_id']);
 	$postInfo = $boardObj->objPost->get_info_filtered();
-	
+
 	$dispTopicName = "<tr><td colspan='2' class='largeFont'><b>".$postInfo['title']."</b><input type='hidden' id='postSubject' value='".$postInfo['title']."'><br><br></td></tr>";
 	$arrTopicName = array(
 		"type" => "custom",
 		"sortorder" => 1,
-		"html" => "<span class='largeFont'><b>".$postInfo['title']."</b></span><input type='hidden' id='postSubject' value='".$postInfo['title']."'>"	
+		"html" => "<span class='largeFont'><b>".$postInfo['title']."</b></span><input type='hidden' id='postSubject' value='".$postInfo['title']."'>"
 	);
-	
-	
+
+
 	$addToForm = "&tID=".$_GET['tID'];
 	echo "
 	<script type='text/javascript'>
@@ -130,10 +130,10 @@ if(isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {
 	</script>
 	";
 	$postActionWord = "reply";
-	
+
 }
 else {
-	
+
 	echo "
 	<script type='text/javascript'>
 		$(document).ready(function() {
@@ -143,7 +143,7 @@ else {
 		});
 	</script>
 	";
-	
+
 
 	$arrTopicName = array(
 		"type" => "text",
@@ -153,13 +153,13 @@ else {
 		"db_name" => "title",
 		"validate" => array("NOT_BLANK")
 	);
-	
+
 	$postActionWord = "topic";
 }
 
 
 // Check Full Access
-	
+
 	$topicOrReply = (isset($_GET['tID'])) ? "Reply" : "Topic";
 
 	if(!$boardObj->memberHasAccess($memberInfo, true)) {
@@ -219,12 +219,12 @@ $arrComponents = array(
 		"db_name" => "message",
 		"validate" => array("NOT_BLANK")
 	)
-		
+
 );
 
 
 if($blnCheckForumAttachments) {
-	
+
 	$arrAttachmentComponents = array(
 		"attachments" => array(
 			"type" => "custom",
@@ -235,15 +235,15 @@ if($blnCheckForumAttachments) {
 						</div>
 						<a href='javascript:void(0)' id='addMoreAttachments'>Add More Attachments</a></div>
 						<input type='hidden' id='numOfAttachments' value='1' name='numofattachments'>"
-				
+
 		)
-			
+
 	);
-	
-	
-	
+
+
+
 	$arrComponents = array_merge($arrComponents, $arrAttachmentComponents);
-	
+
 }
 
 
@@ -252,7 +252,7 @@ $arrPostButtons = array(
 		"type" => "submit",
 		"sortorder" => $i++,
 		"value" => "Post",
-		"attributes" => array("class" => "formSubmitButton submitButton")		
+		"attributes" => array("class" => "formSubmitButton submitButton")
 	),
 	"preview" => array(
 		"type" => "button",
@@ -268,7 +268,7 @@ $arrPostButtons = array(
 							<img src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral.gif'><br>Loading
 						</p>
 					</div>
-					<div id='previewPost'></div>"			
+					<div id='previewPost'></div>"
 	)
 );
 
@@ -337,56 +337,52 @@ echo "
 
 function saveAdditionalPostData() {
 	global $formObj, $blnPostReply, $boardObj, $mysqli, $topicInfo;
-	
+
 	if(!$blnPostReply) {
 		// New Topic
 		$postInfo = $boardObj->objPost->get_info();
 		$arrColumns = array("forumboard_id", "forumpost_id", "lastpost_id");
 		$arrValues = array($_GET['bID'], $postInfo['forumpost_id'], $postInfo['forumpost_id']);
 		$boardObj->objTopic->addNew($arrColumns, $arrValues);
-		
-		$boardObj->objPost->update(array("forumtopic_id"), array($boardObj->objTopic->get_info("forumtopic_id")));		
+
+		$boardObj->objPost->update(array("forumtopic_id"), array($boardObj->objTopic->get_info("forumtopic_id")));
 	}
 	else {
 		$boardObj->objPost->update(array("forumtopic_id"), array($topicInfo['forumtopic_id']));
 		$newReplies = $topicInfo['replies']+1;
 		$boardObj->objTopic->update(array("replies", "lastpost_id"), array($newReplies, $boardObj->objPost->get_info("forumpost_id")));
-		
+
 	}
-	
+
 	$boardObj->objPost->sendNotifications();
-	
+
 	$formObj->saveLink = $boardObj->objPost->getLink();
-	
+
 	$arrDownloadID = checkForAttachments();
 	if(is_array($arrDownloadID)) {
 		$forumAttachmentObj = new Basic($mysqli, "forum_attachments", "forumattachment_id");
 		foreach($arrDownloadID as $downloadID) {
 			$forumAttachmentObj->addNew(array("download_id", "forumpost_id"), array($downloadID, $boardObj->objPost->get_info("forumpost_id")));
-		}	
-		
+		}
+
 	}
-	
-	
+
 }
 
 function checkForAttachments() {
 	global $formObj, $mysqli, $blnCheckForumAttachments, $prevFolder, $websiteInfo;
-	
-	
-	
+
 	$returnVal = false;
 	if($blnCheckForumAttachments) {
 		$attachmentObj = new Download($mysqli);
 		$downloadCatObj = new DownloadCategory($mysqli);
 		$downloadCatObj->selectBySpecialKey("forumattachments");
 		$forumAttachmentCatID = $downloadCatObj->get_info("downloadcategory_id");
-		
 
 		$arrDownloadID = array();
 		$arrDLColumns = array("downloadcategory_id", "member_id", "dateuploaded", "filename", "mimetype", "filesize", "splitfile1", "splitfile2");
 		for ( $i = 1; $i <= ($_POST['numofattachments'] ?? 0); $i++ ) {
-			
+
 			$tempPostName = "forumattachment_".$i;
 
 			if($_FILES[$tempPostName]['name'] != "" && $attachmentObj->uploadFile($_FILES[$tempPostName], $prevFolder."downloads/files/forumattachment/", $forumAttachmentCatID)) {
@@ -394,11 +390,11 @@ function checkForAttachments() {
 				$splitFiles = $attachmentObj->getSplitNames();
 				$fileSize = $attachmentObj->getFileSize();
 				$mimeType = $attachmentObj->getMIMEType();
-				
+
 				$splitFile2Name = ($websiteInfo['split_downloads']) ? "downloads/files/forumattachment/".$splitFiles[1] : "";
-				
+
 				$arrDLValues = array($forumAttachmentCatID, $memberInfo['member_id'], time(), $_FILES[$tempPostName]['name'], $mimeType, $fileSize, "downloads/files/forumattachment/".$splitFiles[0], $splitFile2Name);
-				
+
 				if($attachmentObj->addNew($arrDLColumns, $arrDLValues)) {
 					$arrDownloadID[] = $attachmentObj->get_info("download_id");
 				}
@@ -407,8 +403,8 @@ function checkForAttachments() {
 			elseif($_FILES[$tempPostName]['name'] != "") {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload attachment #".$i.": ".$_FILES[$tempPostName]['name'].".<br>";
-			}	
-			
+			}
+
 		}
 		$returnVal = $arrDownloadID;
 

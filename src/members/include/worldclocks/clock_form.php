@@ -14,7 +14,7 @@
 
 	if(!defined("MAIN_ROOT")) { exit(); }
 
-	$arrTimezoneOptions = $clockObj->getTimezones();	
+	$arrTimezoneOptions = $clockObj->getTimezones();
 
 	$clockOrderObj = new Clock($mysqli);
 	$arrClocks = array();
@@ -22,14 +22,14 @@
 	while($row = $result->fetch_assoc()) {
 		$arrClocks[$row['clock_id']] = filterText($row['name']);
 	}
-	
+
 	if(count($arrClocks) == 0) {
-		$arrClocks['first'] = "(first clock)";	
+		$arrClocks['first'] = "(first clock)";
 	}
 
 	$i=0;
 	$arrComponents = array(
-	
+
 		"name" => array(
 			"type" => "text",
 			"sortorder" => $i++,
@@ -67,9 +67,9 @@
 			"attributes" => array("class" => "formSubmitButton submitButton"),
 			"value" => "Add Clock"
 		)
-	
+
 	);
-	
+
 	$setupFormArgs = array(
 		"name" => "console-".$cID,
 		"components" => $arrComponents,

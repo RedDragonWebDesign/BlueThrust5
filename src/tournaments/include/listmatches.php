@@ -45,9 +45,9 @@ $tournamentInfo = $tournamentObj->get_info_filtered();
 
 
 
-		
+
 if(!isset($_POST['roundSelected']) || !is_numeric($_POST['roundSelected'])) {
-	$_POST['roundSelected'] = 1;	
+	$_POST['roundSelected'] = 1;
 }
 $arrMatches = $tournamentObj->getMatches($_POST['roundSelected']);
 
@@ -56,28 +56,28 @@ foreach($arrMatches as $matchID) {
 	$matchCount++;
 	$tournamentObj->objMatch->select($matchID);
 	$matchInfo = $tournamentObj->objMatch->get_info();
-	
+
 	$teamScore[1] = $matchInfo['team1score'];
 	$teamScore[2] = $matchInfo['team2score'];
-	
+
 	$addStyle[1] = "";
 	$addStyle[2] = "";
 	if($matchInfo['outcome'] == 1) {
 		$addStyle[1] = " class='successFont' style='font-weight: bold'";
-		$addStyle[2] = " class='failedFont'";		
+		$addStyle[2] = " class='failedFont'";
 	}
 	elseif($matchInfo['outcome'] == 2) {
 		$addStyle[2] = " class='successFont' style='font-weight: bold'";
 		$addStyle[1] = " class='failedFont'";
 	}
-	
+
 	echo "
 		<div class='main dottedBox' style='float: left; width: 95%'>
 	";
-	
-		
+
+
 		for($i=1; $i<=2; $i++) {
-			
+
 			$teamColumn = "team".$i."_id";
 			$dispName = "Empty Spot";
 			$dispSeed = "";
@@ -86,15 +86,15 @@ foreach($arrMatches as $matchID) {
 				$dispSeed = "#".$teamInfo['seed'];
 				//$arrPlayers = $tournamentObj->getTeamPlayers($matchInfo[$teamColumn], true);
 				$dispName = $tournamentObj->getPlayerName();
-			
+
 				if($dispName == "") {
-					$dispName = "Bye";	
+					$dispName = "Bye";
 				}
-				
+
 			}
-			
-			
-			
+
+
+
 			echo "
 			<div class='shadedBox' style='position: relative; border: 0px; margin-bottom: 2px'>".$dispName."
 			
@@ -102,16 +102,16 @@ foreach($arrMatches as $matchID) {
 				<div style='position: absolute; width: 25px; right: 3px; top: 5px; z-index: 9999'><a href='javascript:void(0)' onmouseover=\"showToolTip('Seed')\" onmouseout='hideToolTip()'>".$dispSeed."</a></div>
 			</div>					
 			";
-	
+
 		}
 
-		
-		
 
-	
-	
-	
-	
-	echo "</div><div style='clear:both'></div>";	
-	
+
+
+
+
+
+
+	echo "</div><div style='clear:both'></div>";
+
 }

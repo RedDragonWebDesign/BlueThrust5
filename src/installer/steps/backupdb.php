@@ -72,7 +72,7 @@ else {
 
 
 if($_POST['checkBackup']) {
-	
+
 	foreach($arrTableMatches as $tableName) {
 
 		// Get table structure
@@ -91,7 +91,7 @@ if($_POST['checkBackup']) {
 
 			$arrColumnNames[] = $row['Field'];
 
-			
+
 		}
 
 
@@ -111,7 +111,7 @@ if($_POST['checkBackup']) {
 			$sqlInsertColumnValues = implode("','", $arrColumnValues);
 
 			$arrInsertStmts[] = $insertStmt.$sqlInsertColumnValues."');";
-			
+
 
 		}
 
@@ -127,7 +127,7 @@ if($_POST['checkBackup']) {
 		$mysqli->query("DROP TABLE ".$tableName);
 
 	}
-	
+
 	//print_r($arrOldInsertStmts);
 
 	echo "

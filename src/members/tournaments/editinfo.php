@@ -50,7 +50,7 @@ $arrComponents['starttime']['value'] = $tournamentInfo['startdate']*1000;
 $arrComponents['startdate']['value'] = $tournamentInfo['startdate']*1000;
 
 if($tournamentInfo['requirereplay'] == 1) {
-	$arrComponents['requirereplay']['checked'] = true;	
+	$arrComponents['requirereplay']['checked'] = true;
 }
 
 $datePick = new DateTime();
@@ -101,7 +101,7 @@ function removeTournamentPassword() {
 	if($_POST['removepw'] == 1) {
 		$formObj->saveAdditional['password'] = "";
 	}
-	
+
 }
 
 

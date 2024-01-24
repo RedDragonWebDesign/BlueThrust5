@@ -116,7 +116,7 @@ function changePasswordChecks() {
 // Custom Save Function
 
 function savePassword() {
-	global $member;	
+	global $member;
 	$member->set_password($_POST['newpassword']);
 	$_SESSION['btPassword'] = $member->get_info("password");
 }

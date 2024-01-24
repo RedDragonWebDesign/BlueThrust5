@@ -16,13 +16,13 @@
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 }
-else {	
+else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
 	if(!$member->hasAccess($consoleObj)) {
 		exit();
 	}
-	
+
 }
 
 $cID = $_GET['cID'];
@@ -39,14 +39,14 @@ if($_GET['campaignID'] != "" && $campaignObj->select($_GET['campaignID']) && $_G
 elseif($_GET['action'] == "delete" && $campaignObj->select($_POST['itemID'])) {
 	$info = $campaignObj->get_info_filtered();
 	$objManageList->strDeleteName = $info['title'];
-	$objManageList->strDeletePostVarID = "campaignID";	
+	$objManageList->strDeletePostVarID = "campaignID";
 }
 elseif($_GET['p'] == "log" && $campaignObj->select($_GET['campaignID'])) {
-	require_once(BASE_DIRECTORY."plugins/donations/console/donationlog.php");	
+	require_once(BASE_DIRECTORY."plugins/donations/console/donationlog.php");
 }
 elseif(isset($_GET['donationID']) && $campaignObj->donationObj->select($_GET['donationID'])) {
-	require_once(BASE_DIRECTORY."plugins/donations/console/donationdetails.php");	
+	require_once(BASE_DIRECTORY."plugins/donations/console/donationdetails.php");
 }
 else {
-	require_once($objManageList->strMainListLink);	
+	require_once($objManageList->strMainListLink);
 }

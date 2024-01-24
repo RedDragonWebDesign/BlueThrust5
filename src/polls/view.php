@@ -30,7 +30,7 @@ if(!$pollObj->select($_GET['pID'])) {
 	echo "
 		<script type='text/javascript'>window.location = '".$MAIN_ROOT."';</script>
 	";
-	
+
 	exit();
 }
 
@@ -42,11 +42,11 @@ $pollInfo = $pollObj->get_info_filtered();
 $member->select($_SESSION['btUsername']);
 $blnMemberVoted = false;
 if($member->authorizeLogin($_SESSION['btPassword']) && $pollObj->hasVoted($member->get_info("member_id"))) {
-	$blnMemberVoted = true;	
+	$blnMemberVoted = true;
 }
 
 if($member->authorizeLogin($_SESSION['btPassword'])) {
-	$memberInfo = $member->get_info_filtered();	
+	$memberInfo = $member->get_info_filtered();
 }
 
 $blnShowResults = false;
@@ -69,10 +69,10 @@ if($blnShowResults) {
 		$x++;
 		$countTotalVotes += $votes;
 	}
-	
+
 	$jsResults = implode(",", $arrResults);
 	$jsSliceOptions = implode(",", $arrOptions);
-	
+
 	$googleChart = "
 	 <script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>
 	    <script type=\"text/javascript\">
@@ -96,8 +96,8 @@ if($blnShowResults) {
 	      }
 	    </script>
 	";
-	
-	
+
+
 	$EXTERNAL_JAVASCRIPT .= $googleChart;
 }
 // Start Page
@@ -142,7 +142,7 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 <?php echo $pollInfo['question']; ?>
 </p>
 
-<?php 
+<?php
 	if($blnShowResults) {
 ?>
 
@@ -151,8 +151,8 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 
 	<div class='pollLegend'>
 		<b>Legend:</b><br><br>
-		<?php 
-		
+		<?php
+
 			foreach($pollObj->getPollOptions() as $pollOptionID) {
 				$pollObj->objPollOption->select($pollOptionID);
 				$pollOptionInfo = $pollObj->objPollOption->get_info_filtered();
@@ -160,7 +160,7 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 					<div class='pollLegendSquare' style='background-color: ".$pollOptionInfo['color']."'></div><div class='pollLegendText'>".$pollOptionInfo['optionvalue']."</div><br>
 				";
 			}
-			
+
 		?>	
 	</div>
 
@@ -191,7 +191,7 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 				<td class='pollInfoLabel'>Total Votes:</td>
 				<td class='main'><?php echo $countTotalVotes; ?></td>
 			</tr>
-		<?php 
+		<?php
 			if($pollInfo['lastedit_date'] != 0 && $member->select($pollInfo['lastedit_memberid'])) {
 				echo "
 					<tr>
@@ -203,9 +203,9 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 		?>
 		</table>
 	</div>
-	<?php 
-	
-		
+	<?php
+
+
 		if($pollInfo['displayvoters'] == 1 || ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword']) && ($member->hasAccess($consoleObj) || $member->get_info("member_id") == $pollInfo['member_id']))) {
 			echo "
 				<br><br>
@@ -213,7 +213,7 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 				<div class='pollInfoDiv dashedBox'>
 					<table class='formTable'>
 						";
-			
+
 			$memberVoters = 0;
 			$counter = 0;
 			foreach($pollObj->getVoterInfo() as $memberID => $voteInfo) {
@@ -221,38 +221,38 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 					$memberVoters++;
 					if($counter == 0) {
 						$addCSS = "";
-						$counter = 1;	
+						$counter = 1;
 					}
 					else {
 						$addCSS = " alternateBGColor";
 						$counter = 0;
 					}
-					
+
 					$pollMemberInfo = $member->get_info_filtered();
-					
+
 					if($pollMemberInfo['profilepic'] == "") {
 						$pollMemberInfo['profilepic'] = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
 					}
 					else {
 						$pollMemberInfo['profilepic'] = $MAIN_ROOT.$pollMemberInfo['profilepic'];
 					}
-					
+
 					$dispVoteDetails = "";
 					$dispTimesVoted = 0;
 					$dispLastVoted = 0;
 					foreach($voteInfo as $pollOptionID => $info) {
 						$pollObj->objPollOption->select($pollOptionID);
-						
+
 						$addS = ($info['votes'] > 1) ? "s" : "";
-						
+
 						$dispVoteDetails .= $pollObj->objPollOption->get_info_filtered("optionvalue").": ".$info['votes']." vote".$addS."<br>";
-						
+
 						$dispLastVoted = ($dispLastVoted < $info['lastvoted']) ? $info['lastvoted'] : $dispLastVoted;
 						$dispTimesVoted += $info['votes'];
 					}
-					
+
 					$addS = ($dispTimesVoted > 1) ? "s" : "";
-										
+
 					echo "
 						<tr>
 							<td class='pollProfilePic main".$addCSS."' valign='top'><img src='".$pollMemberInfo['profilepic']."' class='pollProfilePic'></td>
@@ -270,7 +270,7 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 					";
 				}
 			}
-			
+
 			if($memberVoters == 0) {
 
 				echo "
@@ -280,16 +280,16 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 					</p>
 				
 				";
-				
+
 			}
-			
-			
+
+
 			echo "
 					</table>
 				</div>
 			";
 		}
-		
+
 	?>
 </div>
 
@@ -299,9 +299,9 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 	else {
 
 		if($pollObj->totalVotes() == 0) {
-			$pollInfo['resultvisibility'] = "novotes";	
+			$pollInfo['resultvisibility'] = "novotes";
 		}
-		
+
 		switch($pollInfo['resultvisibility']) {
 			case "votedonly":
 				$dispReason = ", you must vote first!";
@@ -315,10 +315,10 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 			default:
 				$dispReason = ".";
 		}
-		
-	
-		
-		
+
+
+
+
 		echo "
 		
 			<div class='shadedBox' style='margin: 20px auto; width: 45%'>
@@ -328,7 +328,7 @@ elseif($pollInfo['accesstype'] == "memberslimited") {
 			</div>
 		
 		";
-		
+
 	}
-	
+
 require_once($prevFolder."themes/".$THEME."/_footer.php");

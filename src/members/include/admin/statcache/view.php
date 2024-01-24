@@ -41,11 +41,11 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
 	if($checkAccess) {
-		
 
-		
+
+
 		if(is_array($_SESSION['btStatCache']) AND count($_SESSION['btStatCache']) > 0) {
-			
+
 			echo "
 			
 				<table align='left' border='0' cellspacing='2' cellpadding='2' width=\"90%\">
@@ -56,21 +56,21 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 						<td class='formTitle'>Actions:</td>
 					</tr>
 				";
-				
+
 			$counter = 0;
 			$totalStats = count($_SESSION['btStatCache']);
 			foreach($_SESSION['btStatCache'] as $key => $statInfo) {
 				$statInfo = filterArray($statInfo);
 				$counter++;
-				
+
 				$statType = "Input";
 				$dispFormula = "<i>none</i>";
 				if($statInfo['statType'] == "calculate") {
 						$statType = "Auto-Calculated";
-						
+
 						$dispFirstStat = filterText($_SESSION['btStatCache'][$statInfo['firstStat']]['statName']);
 						$dispSecondStat = filterText($_SESSION['btStatCache'][$statInfo['secondStat']]['statName']);
-						
+
 						$dispOp = "";
 						switch($statInfo['calcOperation']) {
 							case "add":
@@ -86,21 +86,21 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 								$dispOp = " / ";
 								break;
 						}
-						
+
 						$dispFormula = $dispFirstStat.$dispOp.$dispSecondStat;
-						
+
 				}
-				
+
 				$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveStat('up', '".$key."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' title='Move Up' width='24' height='24'></a>";
 				if($counter == 1) {
 					$dispUpArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' width='24' height='24'>";
 				}
-				
+
 				$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveStat('down', '".$key."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' title='Move Down' width='24' height='24'></a>";
 				if($totalStats == $counter) {
 					$dispDownArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' width='24' height='24'>";
 				}
-					
+
 				echo "
 					<tr>
 						<td class='main'>".$statInfo['statName']."</td>
@@ -113,20 +113,20 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 						</td>
 					</tr>
 				";
-				
-				
+
+
 			}
-			
+
 			echo "
 				</table>
 			";
 
 		}
 		else {
-			echo "<i>No Stats Added Yet!</i>";	
+			echo "<i>No Stats Added Yet!</i>";
 		}
-		
-		
+
+
 	}
-	
+
 }

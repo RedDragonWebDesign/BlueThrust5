@@ -49,45 +49,45 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 $dispError = "";
 if ( ! empty($_POST['submit']) ) {
-	
+
 	$countErrors = 0;
-	
-	
+
+
 	// Check Cat Name
-	
+
 	if(trim($_POST['catname']) == "") {
 		$countErrors++;
-		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a Category Name.<br>";		
+		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a Category Name.<br>";
 	}
-	
-	
+
+
 	// Check Category Order
-	
+
 	$intNewOrderSpot = $profileCatObj->validateOrder($_POST['catorder'], $_POST['beforeafter'], true, $profileCatInfo['ordernum']);
-	
-	
+
+
 	if($intNewOrderSpot === false) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order.<br>";
 	}
-	
-	
+
+
 	if($countErrors == 0) {
-		
+
 		$arrUpdateColumn = array("name");
 		$arrUpdateValues = array($_POST['catname']);
-		
+
 		$resortOrder = false;
 		if($intNewOrderSpot != $profileCatInfo['ordernum']) {
 			$arrUpdateColumn[] = "ordernum";
 			$arrUpdateValues[] = $intNewOrderSpot;
 			$resortOrder = true;
 		}
-		
-		
+
+
 		$profileCatObj->select($profileCatInfo['profilecategory_id']);
 		if($profileCatObj->update($arrUpdateColumn, $arrUpdateValues)) {
-			
+
 			echo "
 			<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -100,70 +100,70 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 			
 			";
-			
-			
-			$profileCatObj->resortOrder();	
-			
-			
-			
+
+
+			$profileCatObj->resortOrder();
+
+
+
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database! Please contact the website administrator.<br>";
 		}
-		
-		
-		
+
+
+
 	}
-	
-	
+
+
 	if($countErrors == 1) {
-		
+
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
-		
+
 	}
-	
-	
+
+
 }
 
 
 if ( empty($_POST['submit']) ) {
-	
+
 	$countCategories = 0;
-	
+
 	$afterSelected = "";
 	if($profileCatInfo['ordernum'] == 1) {
 		$selectCat = $profileCatInfo['ordernum']+1;
 		$afterSelected = "selected";
 	}
 	else {
-		$selectCat = $profileCatInfo['ordernum']-1;	
+		$selectCat = $profileCatInfo['ordernum']-1;
 	}
-	
+
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory WHERE profilecategory_id != '".$profileCatInfo['profilecategory_id']."' ORDER BY ordernum DESC");
 	while($row = $result->fetch_assoc()) {
-		
+
 		$strSelected = "";
 		if($selectCat == $row['ordernum']) {
 			$strSelected = "selected";
 		}
-		
+
 		$catOrderOptions .= "<option value='".$row['profilecategory_id']."' ".$strSelected.">".filterText($row['name'])."</option>";
 		$countCategories++;
 	}
-	
+
 	if($countCategories == 0) {
-		$catOrderOptions = "<option value='first'>(no other categories)</option>";	
+		$catOrderOptions = "<option value='first'>(no other categories)</option>";
 	}
-	
-	
+
+
 	echo "
 	<form action='console.php?cID=".$cID."&catID=".$profileCatInfo['profilecategory_id']."&action=edit' method='post'>
 	<div class='formDiv'>
 	
 	";
-	
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -172,9 +172,9 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
-	
-	
+
+
+
 	echo "
 	
 	Fill out the form below to edit the selected profile category.<br><br>
@@ -201,6 +201,6 @@ if ( empty($_POST['submit']) ) {
 	</form>
 
 	";
-	
-	
+
+
 }

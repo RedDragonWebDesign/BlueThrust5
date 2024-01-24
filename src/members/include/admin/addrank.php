@@ -30,24 +30,24 @@ $cID = $_GET['cID'];
 
 if(isset($_POST['submit']) && $_POST['submit']) {
 	$countErrors = 0;
-	
-	
+
+
 	// Check Rank Name
 	$checkRankName = trim($_POST['rankname']);
 	if($checkRankName == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not enter a blank rank name.<br>";
 	}
-	
+
 	// Check Rank Category
 	$rankCatObj = new RankCategory($mysqli);
 	if(!$rankCatObj->select($_POST['rankcat'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid rank category.<br>";
 	}
-	
+
 	// Check Image Height
-	
+
 	if(!is_numeric($_POST['rankimageheight']) AND trim($_POST['rankimageheight']) != "") {
 		$countErrors++;
 		$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a numeric value.<br>";
@@ -56,14 +56,14 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Height must be a value greater than 0.<br>";
 	}
-	
+
 	if($_FILES['rankimagefile']['name'] == "" AND (trim($_POST['rankimageheight']) == "" OR $_POST['rankimageheight'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must supply an image height for images that aren't uploaded.<br>";
 	}
-	
+
 	// Check Image Width
-	
+
 	if(!is_numeric($_POST['rankimagewidth']) AND trim($_POST['rankimagewidth']) != "") {
 		$countErrors++;
 		$dispError .="&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a numeric value.<br>";
@@ -72,17 +72,17 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The Image Width must be a value greater than 0.<br>";
 	}
-	
+
 	if($_FILES['rankimagefile']['name'] == "" AND (trim($_POST['rankimagewidth']) == "" OR $_POST['rankimagewidth'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must supply an image width for images that aren't uploaded.<br>";
 	}
-	
+
 	// Check Before/After and Rank
-	
+
 	$beforeAfterRankOK = false;
 	$rankObj = new Rank($mysqli);
-	
+
 	if($_POST['rankorder'] != "first") {
 		if(!$rankObj->select($_POST['rankorder'])) {
 			$countErrors++;
@@ -91,24 +91,24 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 		else {
 			$beforeAfterRankInfo = $rankObj->get_info();
 			$beforeAfterRankOK = true;
-			
+
 			// Check to see if we can get a new rank order number
-			
+
 			$intNewRankOrderNum = $rankObj->makeRoom($_POST['beforeafter']);
-			
+
 			if(!is_numeric($intNewRankOrderNum)) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid rank order. (rank)<br>";
 			}
-			
+
 		}
-	
+
 	}
 	else {
-		
+
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 		$num_rows = $result->num_rows;
-		
+
 		if($num_rows != 0) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid rank order.<br>";
@@ -116,23 +116,23 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 		else {
 			$intNewRankOrderNum = 1;
 		}
-		
-		
+
+
 	}
-	
+
 	if($_POST['beforeafter'] != "after" AND $_POST['beforeafter'] != "before") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid rank order. (before/after)<br>";
 	}
-	
-	
 
-	
-	
+
+
+
+
 	// Check Max Rank to Promote
-	
+
 	if($_POST['promoterank'] != "0") {
-		
+
 		if($_POST['promoterank'] != "-1") {
 			if(!$rankObj->select($_POST['promoterank'])) {
 				$countErrors++;
@@ -146,33 +146,33 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 				}
 			}
 		}
-		
+
 	}
-	
+
 	// Check Auto Days
-	
+
 	if($_POST['autodays'] != "") {
 		if(!is_numeric($_POST['autodays']) OR (is_numeric($_POST['autodays']) AND $_POST['autodays'] < 0)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Auto days must either be blank or a positive numeric value.<br>";
 		}
 	}
-	
-	
+
+
 	if($_POST['autodisable'] != "") {
 		if(!is_numeric($_POST['autodisable']) OR (is_numeric($_POST['autodisable']) AND $_POST['autodisable'] < 0)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Auto disable must either be blank or a positive numeric value.<br>";
 		}
 	}
-	
-	
+
+
 	// If everything is ok, try uploading the image
 	if($countErrors == 0) {
 		// Check Rank Image File
 		if($_FILES['rankimagefile']['name'] != "") {
 			$uploadFile = new BTUpload($_FILES['rankimagefile'], "rank_", "../images/ranks/", array(".jpg",".png",".gif",".bmp"));
-			
+
 			if(!$uploadFile->uploadFile()) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload rank image file.  Please make sure the file extension is either .jpg, .png, .gif or .bmp<br>";
@@ -183,7 +183,7 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 
 		}
 		else {
-			
+
 			if(trim($_POST['rankimageurl']) == "") {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must include a rank image.<br>";
@@ -193,11 +193,11 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 			}
 		}
 	}
-	
+
 	if($countErrors > 0) {
-		
+
 		$_POST = filterArray($_POST);
-		
+
 		$_POST['submit'] = false;
 	}
 	else {
@@ -205,33 +205,33 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 		$newRank = new Rank($mysqli);
 		$arrColumns = array("rankcategory_id", "name", "description", "imageurl", "ordernum", "autodays", "hiderank", "promotepower", "autodisable", "color", "imagewidth", "imageheight");
 		$arrValues = array($_POST['rankcat'], $_POST['rankname'], $_POST['rankdesc'], $rankImgURL, $intNewRankOrderNum, ((isset($_POST['autodays'])) ? $_POST['autodays'] : 0), ((isset($_POST['hiderank'])) ? $_POST['hiderank'] : 0), ((isset($_POST['promoterank'])) ? $_POST['promoterank'] : 0), ((isset($_POST['autodisable'])) ? $_POST['autodisable'] : 0), $_POST['rankcolor'], $_POST['rankimagewidth'], $_POST['rankimageheight']);
-		
+
 		if($newRank->addNew($arrColumns, $arrValues)) {
 			// Added Rank! Now give the rank its privileges
-			
+
 			$newRankInfo = $newRank->get_info_filtered();
-			
+
 			// If maximum rank is set to "(this rank)", set the promotepower to the new rank's rank_id
 			if($_POST['promoterank'] == -1) {
 				$newRank->update(array("promotepower"), array($newRankInfo['rank_id']));
 			}
-			
+
 			$arrColumns = array("rank_id", "console_id");
-			
+
 			$privObj = new Basic($mysqli, "rank_privileges", "privilege_id");
-			
+
 			$result = $mysqli->query("SELECT * FROM ".$dbprefix."console ORDER BY sortnum");
 			$rankOptions = "";
 			while($row = $result->fetch_assoc()) {
-				
+
 				$strPostVarName = "consoleid_".$row['console_id'];
-				
+
 				if(isset($_POST[$strPostVarName]) && $_POST[$strPostVarName] == 1) {
 					$arrValues = array($newRankInfo['rank_id'], $row['console_id']);
 					$privObj->addNew($arrColumns, $arrValues);
 				}
 			}
-		
+
 		$manageRanksCID = $consoleObj->findConsoleIDByName("Manage Ranks");
 		echo "
 			<div style='display: none' id='successBox'>
@@ -244,13 +244,13 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 				popupDialog('Add New Rank', '".$MAIN_ROOT."members/console.php?cID=".$manageRanksCID."', 'successBox');
 			</script>
 		";
-		
+
 		}
 		else {
 			$_POST['submit'] = false;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to add new rank.  Please try again.<br>";
 		}
-		
+
 	}
 }
 
@@ -258,35 +258,35 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 
 if(!isset($_POST['submit']) || !$_POST['submit']) {
 	$rankCategories = $mysqli->query("SELECT * FROM ".$dbprefix."rankcategory ORDER BY ordernum");
-	
+
     $rankCatOptions = "";
 	while($arrRankCat = $rankCategories->fetch_assoc()) {
 		$rankCatName = filterText($arrRankCat['name']);
 		$rankCatOptions .= "<option value='".$arrRankCat['rankcategory_id']."'>".$arrRankCat['name']."</option>";
-	
+
 	}
-	
+
 	$getRanks = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1' ORDER BY ordernum");
 	$rankOptions = "";
 	while($arrRanks = $getRanks->fetch_assoc()) {
 		$rankName = filterText($arrRanks['name']);
 		$rankOptions .= "<option value='".$arrRanks['rank_id']."'>".$rankName."</option>";
-	
+
 	}
-	
+
 	$firstRankOption = "";
 	if($rankOptions == "") {
 		$firstRankOption = "<option value='1'>(first rank)</option>";
 	}
-	
-	
+
+
 	echo "
 	
 	<form action='console.php?cID=$cID' method='post' enctype='multipart/form-data'>
 		<div class='formDiv'>
 		
 	";
-		
+
 	if(isset($dispError) && $dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -295,7 +295,7 @@ if(!isset($_POST['submit']) || !$_POST['submit']) {
 		</div>
 		";
 	}
-	
+
 	echo "
 	
 	<script type='text/javascript'>
@@ -397,27 +397,27 @@ if(!isset($_POST['submit']) || !$_POST['submit']) {
 					<p align='center'>
 						<div class='main' style='margin-left: 15px; overflow-y: auto; width: 75%; height: 300px'>
 							";
-							
+
 							$consoleCategories = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory ORDER BY ordernum DESC");
 							while($arrConsoleCats = $consoleCategories->fetch_assoc()) {
 								$tempNum = $arrConsoleCats['consolecategory_id'];
 								$arrFormatOptions[$tempNum] = array();
 							}
-							
+
 							$consoleOptions = $mysqli->query("SELECT * FROM ".$dbprefix."console ORDER BY sortnum");
 							$rankOptions = "";
 							while($arrConsoleOptions = $consoleOptions->fetch_assoc()) {
 								$tempCat = $arrConsoleOptions['consolecategory_id'];
 								$arrFormatOptions[$tempCat][] = $arrConsoleOptions['console_id'];
 							}
-							
+
 							$countConsoleCats = 0;
 							$consoleCatObj = new Basic($mysqli, "consolecategory", "consolecategory_id");
                             $consoleJSCode = "";
 							foreach($arrFormatOptions as $key=>$arrOptions) {
 								$consoleCatObj->select($key);
 								$consoleCatInfo = $consoleCatObj->get_info();
-								
+
 								if(count($arrOptions) > 0) {
 									$countConsoleCats++;
 									echo "<br>
@@ -428,29 +428,29 @@ if(!isset($_POST['submit']) || !$_POST['submit']) {
 									foreach($arrOptions as $consoleOption) {
 										$consoleObj->select($consoleOption);
 										$consoleOptionInfo = $consoleObj->get_info();
-										
+
 										$consoleJSCode .= "arrConsoleIDs[".$consoleOptionInfo['console_id']."] = $('#consoleid_".$consoleOptionInfo['console_id']."').attr('checked'); 
 			";
-										
+
 										if($consoleOptionInfo['pagetitle'] != "-separator-") {
-											
+
 											echo "&nbsp;&nbsp;<input type='checkbox' name='consoleid_".$consoleOptionInfo['console_id']."' value='1'> ".$consoleOptionInfo['pagetitle']."<br>";
-										
+
 										}
 										elseif($consoleOptionInfo['pagetitle'] == "-separator-") {
 											$dispSeparator = "<div class='dashedLine' style='width: 250px; margin: 6px 1px; padding: 0px; float: left'></div>";
 											echo "<div style='float: left'>&nbsp;&nbsp;<input type='checkbox' name='consoleid_".$consoleOptionInfo['console_id']."' value='1'>&nbsp;</div>".$dispSeparator;
 											echo "<div style='clear: both'></div>";
 										}
-									
+
 									}
-									
+
 									echo "</div>";
-								
+
 								}
-							
+
 							}
-							
+
 							echo "
 						</div>
 					</p>

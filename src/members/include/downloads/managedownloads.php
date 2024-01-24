@@ -31,17 +31,17 @@ $downloadCatObj = new DownloadCategory($mysqli);
 
 
 if(isset($_GET['dlID']) && $downloadObj->select($_GET['dlID'])) {
-	
+
 	$downloadInfo = $downloadObj->get_info_filtered();
 	$downloadCatObj->select($downloadInfo['downloadcategory_id']);
 	$downloadCatInfo = $downloadCatObj->get_info_filtered();
 	require_once("include/edit.php");
-	
+
 }
 else {
-	
+
 	$addDLCID = $consoleObj->findConsoleIDByName("Add Download");
-	
+
 	echo "
 			
 			<table class='formTable'>
@@ -62,9 +62,9 @@ else {
 			<div id='downloadList'>
 			
 				";
-	
+
 	require_once("include/downloadlist.php");
-	
+
 	echo "
 			
 			</div>
@@ -107,5 +107,5 @@ else {
 			
 			</script>
 	";
-	
+
 }

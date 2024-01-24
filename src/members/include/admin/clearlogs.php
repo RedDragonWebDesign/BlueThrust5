@@ -35,16 +35,16 @@ $countErrors = 0;
 
 
 if ( ! empty($_POST['submit']) ) {
-	
+
 	$checkArr = array(1,2,3,4,5,6);
-	
+
 	if(!in_array($_POST['clearlogs'], $checkArr)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an delete option.<br>";
 		$countErrors++;
 	}
 
 	if($countErrors == 0) {
-	
+
 		switch($_POST['clearlogs']) {
 			case 1:
 				$deleteDate = time()-(60*60*24*15);
@@ -60,7 +60,7 @@ if ( ! empty($_POST['submit']) ) {
 				$deleteDate = time()-(60*60*24*45);
 				$query = "DELETE FROM ".$dbprefix."logs WHERE logdate < '".$deleteDate."'";
 				$successMessage = "cleared logs older than 45 days";
-				break;	
+				break;
 			case 4:
 				$deleteDate = time()-(60*60*24*60);
 				$query = "DELETE FROM ".$dbprefix."logs WHERE logdate < '".$deleteDate."'";
@@ -76,9 +76,9 @@ if ( ! empty($_POST['submit']) ) {
 				$successMessage = "cleared all logs";
 				break;
 		}
-		
+
 		if($mysqli->query($query)) {
-			
+
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -92,35 +92,35 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			
 			";
-			
+
 			$mysqli->query("OPTIMIZE TABLE `".$dbprefix."logs`");
 			$logMessage = ucfirst($successMessage).".";
 			$member->logAction($logMessage);
-			
+
 		}
 		else {
 			$countErrors++;
-			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";			
+			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-		
-		
-		
+
+
+
 	}
-	
+
 	if($countErrors > 0) {
-		$_POST['submit'] = false;	
+		$_POST['submit'] = false;
 	}
-	
+
 }
 
 if ( empty($_POST['submit']) ) {
-	
+
 	echo "
 		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
 			<div class='formDiv'>
 			
 			";
-	
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -129,8 +129,8 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
-	
+
+
 	echo "
 				Use the form below to clear the website's logs.
 				<table class='formTable'>

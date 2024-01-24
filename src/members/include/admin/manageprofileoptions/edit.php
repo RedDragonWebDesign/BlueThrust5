@@ -52,32 +52,32 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 $dispError = "";
 
 if ( ! empty($_POST['submit']) ) {
-	
+
 	// Check Option Name
-	
+
 	if(trim($_POST['optionname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must give the profile option a name.<br>";
 	}
-	
-	
+
+
 	// Check Category
-	
+
 	if(!$profileCatObj->select($_POST['optioncategory'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile category.<br>";
 	}
 	else {
-	
+
 		// Check Order
 		$arrProfileOptionIDs = $profileCatObj->getAssociateIDs();
-	
+
 		$blnOrderCheck1 = $_POST['optionorder'] == "first" && count($arrProfileOptionIDs) > 1 && $profileOptionInfo['profilecategory_id'] == $_POST['optioncategory'];
 		$blnOrderCheck2 = !in_array($_POST['optionorder'], $arrProfileOptionIDs) && $_POST['optionorder'] != "first";
 		$blnOrderCheck3 = !$profileOptionObj->select($_POST['optionorder']) && $_POST['optionorder'] != "first";
 		$blnOrderCheck4 = $_POST['optionorder'] == "first" && $_POST['optioncategory'] != $profileOptionInfo['profilecategory_id'] && count($arrProfileOptionIDs) > 0;
-	
-	
+
+
 		if($blnOrderCheck1 || $blnOrderCheck2 || $blnOrderCheck3 || $blnOrderCheck4) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile option order.<br>";
@@ -86,56 +86,56 @@ if ( ! empty($_POST['submit']) ) {
 			$intNewSortNum = 1;
 		}
 		else {
-	
+
 			if($_POST['beforeafter'] == "before" || $_POST['beforeafter'] == "after") {
-	
+
 				$intNewSortNum = $profileOptionObj->makeRoom($_POST['beforeafter']);
-	
+
 			}
 			else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile option order.<br>";
 			}
-	
-	
+
+
 		}
-	
-	
+
+
 	}
-	
-	
+
+
 	if($countErrors == 0) {
-	
+
 		if($_POST['optiontype'] != "select") {
 			$_POST['optiontype'] = "input";
 		}
-	
-	
-	
+
+
+
 		$arrColumnNames = array("profilecategory_id", "name", "optiontype", "sortnum");
 		$arrColumnValues = array($_POST['optioncategory'], $_POST['optionname'], $_POST['optiontype'], $intNewSortNum);
-	
+
 		$profileOptionObj->select($profileOptionInfo['profileoption_id']);
 		if($profileOptionObj->update($arrColumnNames, $arrColumnValues)) {
-	
+
 			if($_POST['optiontype'] == "select" && $_SESSION['btProfileCacheRefresh']) {
-	
+
 				$counter = 1;
-				
+
 				$result = $mysqli->query("DELETE FROM ".$dbprefix."profileoptions_select WHERE profileoption_id = '".$profileOptionInfo['profileoption_id']."'");
-				
+
 				foreach($_SESSION['btProfileCache'] as $selectValue) {
-	
+
 					$profileOptionObj->addNewSelectValue($selectValue, $counter);
 					$counter++;
-	
+
 				}
-	
+
 			}
 			$profileOptionObj->resortOrder();
-			
+
 			$newProfileInfo = $profileOptionObj->get_info_filtered();
-			
+
 			echo "
 			<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -147,27 +147,27 @@ if ( ! empty($_POST['submit']) ) {
 				popupDialog('Edit Profile Option', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'successBox');
 			</script>
 			";
-	
-	
-	
-	
+
+
+
+
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database!  Please contact the website administrator.<br>";
 		}
-	
-	
-	
-	
+
+
+
+
 	}
-	
-	
+
+
 	if($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-	
+
 }
 
 if ( empty($_POST['submit']) ) {
@@ -177,21 +177,21 @@ if ( empty($_POST['submit']) ) {
 	$catoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");
 	while($row = $result->fetch_assoc()) {
-		
+
 		$selectCat = "";
 		if($profileOptionInfo['profilecategory_id'] == $row['profilecategory_id']) {
-			$selectCat = "selected";	
+			$selectCat = "selected";
 		}
-		
+
 		$catoptions .= "<option value='".$row['profilecategory_id']."' ".$selectCat.">".$row['name']."</option>";
 	}
-	
+
 	if($result->num_rows == 0) {
 		$catoptions = "<option value='none'>No Categories Added!</option>";
 	}
-	
-	
-	
+
+
+
 	$profileCatObj->select($profileOptionInfo['profilecategory_id']);
 	$arrOptions = $profileCatObj->getAssociateIDs("ORDER BY sortnum");
 	$highestIndex = count($arrOptions)-1;
@@ -199,7 +199,7 @@ if ( empty($_POST['submit']) ) {
 	if($arrOptions[$highestIndex] == $profileOptionInfo['profileoption_id']) {
 		$afterSelected = "selected";
 	}
-	
+
 	$selectSelected = "";
 	if($profileOptionInfo['optiontype'] == "select") {
 		$selectSelected = "selected";
@@ -207,20 +207,20 @@ if ( empty($_POST['submit']) ) {
 		foreach($arrSelectValues as $strSelectValue) {
 			$tempArr[] = $strSelectValue;
 		}
-		
-		
+
+
 		$_SESSION['btProfileCache'] = $tempArr;
 
 	}
-	
-	
-	
-	
+
+
+
+
 	echo "
 	<form action='console.php?cID=".$cID."&oID=".$_GET['oID']."&action=edit' method='post'>
 	<div class='formDiv'>
 	";
-	
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -229,8 +229,8 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
-	
+
+
 	echo "
 	Fill out the form below to edit the selected profile option.<br><br>
 			
@@ -293,9 +293,9 @@ if ( empty($_POST['submit']) ) {
 				</div>
 				<div id='selectValueList' style='margin-top: 25px'>
 				";
-	
+
 				require_once("include/admin/manageprofileoptions/cache/view.php");
-	
+
 			echo "
 				</div>
 				<br><br>

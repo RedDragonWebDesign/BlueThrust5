@@ -41,62 +41,62 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
 	if($checkAccess) {
-		
+
 		if(isset($_SESSION['btStatCache'][$_POST['sID']]) AND is_numeric($_POST['sID'])) {
-			
+
 			$moveUp = $_POST['sID']-1;
 			$moveDown = $_POST['sID']+1;
-			
+
 			$newSpot = "none";
 			if($_POST['statDir'] == "up" AND isset($_SESSION['btStatCache'][$moveUp])) {
-				
+
 
 				$newSpot = $moveUp;
-				
-				
+
+
 			}
 			elseif($_POST['statDir'] == "down" AND isset($_SESSION['btStatCache'][$moveDown])) {
-				
+
 				$newSpot = $moveDown;
-				
+
 			}
 
-			
+
 			if(is_numeric($newSpot)) {
-				
+
 				$temp = $_SESSION['btStatCache'][$newSpot];
 				$temp2 = $_SESSION['btStatCache'][$_POST['sID']];
-				
+
 				$_SESSION['btStatCache'][$_POST['sID']] = $temp;
 				$_SESSION['btStatCache'][$newSpot] = $temp2;
-				
-				
+
+
 				foreach($_SESSION['btStatCache'] as $key => $statInfo) {
-					
+
 					if($statInfo['firstStat'] == $newSpot) {
 						$_SESSION['btStatCache'][$key]['firstStat'] = $_POST['sID'];
 					}
 					elseif($statInfo['firstStat'] == $_POST['sID']) {
 						$_SESSION['btStatCache'][$key]['firstStat'] = $newSpot;
 					}
-					
+
 					if($statInfo['secondStat'] == $newSpot) {
 						$_SESSION['btStatCache'][$key]['secondStat'] = $_POST['sID'];
 					}
 					elseif($statInfo['secondStat'] == $_POST['sID']) {
 						$_SESSION['btStatCache'][$key]['secondStat'] = $newSpot;
 					}
-					
-					
+
+
 				}
-				
-				
+
+
 			}
-			
-			
+
+
 		}
-		
-		
+
+
 		echo "
 		<script type='text/javascript'>
 			$(document).ready(function() {
@@ -115,7 +115,7 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		</script>
 
 		";
-		
+
 	}
-	
+
 }

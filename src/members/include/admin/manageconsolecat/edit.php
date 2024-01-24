@@ -29,7 +29,7 @@ $consoleCatObj = new ConsoleCategory($mysqli);
 
 
 if(!$consoleCatObj->select($_GET['catID'])) {
-	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");	
+	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");
 }
 
 
@@ -45,20 +45,20 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 ";
 
 if ( ! empty($_POST['submit']) ) {
-	
+
 	$resortOrder = false;
 	// Check Category Name
-	
+
 	if(trim($_POST['catname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a Category Name.<br>";
 	}
-	
-	
-	
+
+
+
 	// Check Cat Order
-	
-	
+
+
 	$intNewOrderSpot = "";
 	if(!$consoleCatObj->select($_POST['catorder']) AND $_POST['catorder'] != "first") {
 		$countErrors++;
@@ -66,10 +66,10 @@ if ( ! empty($_POST['submit']) ) {
 	}
 	elseif($_POST['catorder'] == "first") {
 		// "(no other categories)" selected, check to see if there are actually no other categories
-	
+
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory WHERE adminoption = '0'");
 		$num_rows = $result->num_rows;
-	
+
 		if($num_rows > 1) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (category)<br>";
@@ -77,53 +77,53 @@ if ( ! empty($_POST['submit']) ) {
 		else {
 			$intNewOrderSpot = 1;
 		}
-	
+
 	}
 	else {
-	
+
 		if($_POST['beforeafter'] != "before" AND $_POST['beforeafter'] != "after") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (before/after)<br>";
 		}
 		else {
-			
+
 			$catOrderOrderNum = $consoleCatObj->get_info("ordernum");
-			
+
 			$addTo = -1;
 			if($_POST['beforeafter'] == "before") {
-				$addTo = 1;	
+				$addTo = 1;
 			}
-			
+
 			$checkOrderNum = $catOrderOrderNum+$addTo;
 			if($checkOrderNum != $consoleCatInfo['ordernum']) {
 				$intNewOrderSpot = $consoleCatObj->makeRoom($_POST['beforeafter']);
 			}
-			
+
 		}
-	
-	
+
+
 	}
-	
-	
-	
+
+
+
 	if($countErrors == 0) {
-	
-		
+
+
 		$updateColumns = array("name");
 		$updateValues = array($_POST['catname']);
-		
+
 		if($intNewOrderSpot != "") {
 			$resortOrder = true;
-			
+
 			$updateColumns[] = "ordernum";
 			$updateValues[] = $intNewOrderSpot;
-			
+
 		}
-		
+
 		$consoleCatObj->select($consoleCatInfo['consolecategory_id']);
 		if($consoleCatObj->update($updateColumns, $updateValues)) {
-	
-	
+
+
 			echo "
 			<div style='display: none' id='successBox'>
 			<p align='center'>
@@ -135,19 +135,19 @@ if ( ! empty($_POST['submit']) ) {
 			popupDialog('Edit Console Category', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'successBox');
 			</script>
 			";
-			
+
 			if($resortOrder) {
-				$consoleCatObj->resortOrder();	
+				$consoleCatObj->resortOrder();
 			}
-			
+
 		}
-	
+
 	}
 	else {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-	
+
 }
 
 
@@ -155,42 +155,42 @@ if ( ! empty($_POST['submit']) ) {
 if ( empty($_POST['submit']) ) {
 
 	$countCategories = 0;
-	
-	
+
+
 	$intHighestOrderNum = $consoleCatObj->getHighestOrderNum();
 	$afterSelected = "";
-	
+
 	if($consoleCatInfo['ordernum'] == 1) {
 		$selectCat = $consoleCatInfo['ordernum']+1;
 		$afterSelected = "selected";
 	}
 	else {
-		$selectCat = $consoleCatInfo['ordernum']-1;	
+		$selectCat = $consoleCatInfo['ordernum']-1;
 	}
-	
+
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory WHERE adminoption = '0' AND consolecategory_id != '".$consoleCatInfo['consolecategory_id']."' ORDER BY ordernum DESC");
 	while($row = $result->fetch_assoc()) {
-		
+
 		$strSelected = "";
 		if($selectCat == $row['ordernum']) {
 			$strSelected = "selected";
 		}
-		
+
 		$catOrderOptions .= "<option value='".$row['consolecategory_id']."' ".$strSelected.">".filterText($row['name'])."</option>";
 		$countCategories++;
 	}
-	
+
 	if($countCategories == 0) {
-		$catOrderOptions = "<option value='first'>(no other categories)</option>";	
+		$catOrderOptions = "<option value='first'>(no other categories)</option>";
 	}
-	
+
 	echo "
 	
 		<form action='console.php?cID=".$cID."&catID=".$_GET['catID']."&action=edit' method='post' enctype='multipart/form-data'>
 			<div class='formDiv'>
 		";
-	
-	
+
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -199,8 +199,8 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
-	
+
+
 	echo "
 				Use the form below to edit the selected console category.<br><br>
 				
@@ -227,5 +227,5 @@ if ( empty($_POST['submit']) ) {
 		</form>
 	
 	";
-	
+
 }

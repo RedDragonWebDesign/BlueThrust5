@@ -26,7 +26,7 @@ $manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."news WHERE newstype = '3' ORDER BY dateposted DESC");
 while($row = $result->fetch_assoc()) {
 	$dispPoster = ($member->select($row['member_id'])) ? $member->getMemberLink() : "Unknown";
-	
+
 	if($counter == 0) {
 		$addCSS = "";
 		$counter = 1;
@@ -35,7 +35,7 @@ while($row = $result->fetch_assoc()) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
 	}
-	
+
 	echo "
 		<tr>
 			<td class='pmInbox main solidLine".$addCSS."' style='padding-left: 0px' width=\"5%\"><input type='checkbox' value='".$row['news_id']."' class='textBox'></td>
@@ -44,7 +44,7 @@ while($row = $result->fetch_assoc()) {
 			<td class='pmInbox main solidLine".$addCSS."' style='padding-left: 5px' width=\"30%\">".getPreciseTime($row['dateposted'])."</td>
 		</tr>
 	";
-	
+
 }
 
 if($result->num_rows == 0) {

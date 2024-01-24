@@ -43,28 +43,28 @@ $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$LOGIN_FAIL = false;
 	$memberInfo = $member->get_info_filtered();
-	
+
 	if($squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], $pID)) {
-		
+
 		if(!$_POST['filterShoutbox']) {
-			$filterNewsType = "(newstype = '1' OR newstype = '2')";	
+			$filterNewsType = "(newstype = '1' OR newstype = '2')";
 		}
 		else {
-			$filterNewsType = "newstype = '3'";	
+			$filterNewsType = "newstype = '3'";
 		}
-		
-		
+
+
 		$squadInfo = $squadObj->get_info_filtered();
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."squadnews WHERE squad_id = '".$squadInfo['squad_id']."' AND ".$filterNewsType." ORDER BY dateposted DESC");
-		
+
 		while($row = $result->fetch_assoc()) {
 			$member->select($row['member_id']);
 			$squadMemberInfo = $member->get_info_filtered();
-			
+
 			if($squadMemberInfo['avatar'] == "") {
 				$squadMemberInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 			}
-			
+
 			if($row['newstype'] == 1) {
 				$dispNewsType = " - <span class='publicNewsColor' style='font-style: italic'>public</span>";
 			}
@@ -74,14 +74,14 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			elseif($row['newstype'] == 3) {
 				$dispNewsType = "";
 			}
-			
+
 			$dispLastEdit = "";
 			if($member->select($row['lasteditmember_id'])) {
 
 				$dispLastEditTime = getPreciseTime($row['lasteditdate']);
 				$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";
 			}
-			
+
 			$member->select($row['member_id']);
 			echo "
 				<div class='newsDiv' id='newsDiv_".$row['squadnews_id']."'>
@@ -100,12 +100,12 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 					<p style='padding: 0px; margin: 0px' align='right'><b><a href='javascript:void(0)' onclick=\"editNews('".$row['squad_id']."', '".$row['squadnews_id']."')\">EDIT</a> | <a href='javascript:void(0)' onclick=\"deleteNews('".$row['squad_id']."', '".$row['squadnews_id']."')\">DELETE</a></b></p>
 				</div>
 			";
-			
-			
+
+
 			$counter++;
-			
+
 		}
-		
+
 		if($counter == 0) {
 			echo "
 				<div class='shadedBox' style='width: 300px; font-style: italic; margin-left: auto; margin-right: auto; margin-bottom: 20px'>
@@ -115,11 +115,11 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				</div>
 			";
 		}
-		
 
-		
+
+
 	}
 
-	
-	
+
+
 }

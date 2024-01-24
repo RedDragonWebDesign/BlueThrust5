@@ -44,7 +44,7 @@ $breadcrumbObj->addCrumb("Diplomacy Request");
 $result = $mysqli->query("SELECT ipaddress FROM ".$dbprefix."diplomacy_request WHERE ipaddress = '".$IP_ADDRESS."'");
 if($result->num_rows >= $websiteInfo['maxdiplomacy']) {
 
-	
+
 	echo "
 		<div id='maxRequestDialog' style='display: none'>
 			<p class='main' align='center'>
@@ -56,7 +56,7 @@ if($result->num_rows >= $websiteInfo['maxdiplomacy']) {
 			popupDialog('Diplomacy Request', '".$MAIN_ROOT."', 'maxRequestDialog');
 		</script>
 	";
-	
+
 	$_POST['submit'] = "block";
 }
 
@@ -64,7 +64,7 @@ if($result->num_rows >= $websiteInfo['maxdiplomacy']) {
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status ORDER BY ordernum DESC");
 while($row = $result->fetch_assoc()) {
 
-	$statusoptions .= "<option value='".$row['diplomacystatus_id']."'>".filterText($row['name'])."</option>";	
+	$statusoptions .= "<option value='".$row['diplomacystatus_id']."'>".filterText($row['name'])."</option>";
 	$arrStatuses[] = $row['diplomacystatus_id'];
 }
 
@@ -75,33 +75,33 @@ require_once($prevFolder."include/breadcrumb.php");
 
 
 	<?php
-	
+
 	$countErrors = 0;
 	$dispError = "";
 	if( isset($_POST['submit']) && $_POST['submit'] && $_POST['submit'] != "block") {
-	
+
 		// Check Required Fields not Blank
-		
+
 		$arrRequiredFields = array("Your Name"=>"requestername", "Your E-mail"=>"requesteremail", "Clan Name"=>"clanname", "Diplomacy Status"=>"diplomacystatus", "Games Played"=>"gamesplayed", "Clan Leaders"=>"clanleaders");
-		
+
 		foreach($_POST as $key => $value) {
 			if(in_array($key, $arrRequiredFields) && trim($value) == "") {
 				$fieldTitle = array_search($key, $arrRequiredFields);
-				
+
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> ".$fieldTitle." may not be blank!<br>";
 				$countErrors++;
-				
+
 			}
 		}
-		
-		
+
+
 		// Check valid e-mail
-		
+
 		if(strpos($_POST['requesteremail'], "@") === false || strpos($_POST['requesteremail'], ".") === false) {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You entered an invalid e-mail address.<br>";
-			$countErrors++;			
+			$countErrors++;
 		}
-		
+
 		if($countErrors == 0) {
 			$result = $mysqli->query("SELECT email FROM ".$dbprefix."diplomacy_request WHERE email = '".$mysqli->real_escape_string($_POST['requesteremail'])."'");
 			if($result->num_rows > 0) {
@@ -109,19 +109,19 @@ require_once($prevFolder."include/breadcrumb.php");
 				$countErrors++;
 			}
 		}
-		
-		
+
+
 		// Check Diplomacy Status
-		
+
 		if(!in_array($_POST['diplomacystatus'], $arrStatuses)) {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid diplomacy status.<br>";
 			$countErrors++;
 		}
-		
+
 		// Check Captcha
 		$filterIP = $mysqli->real_escape_string($IP_ADDRESS);
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."app_captcha WHERE ipaddress = '".$filterIP."' AND appcomponent_id = '-1'");
-		
+
 		if($result->num_rows > 0) {
 			$captchaRow = $result->fetch_assoc();
 			if($captchaRow['captchatext'] != strtolower($_POST['captchatext'])) {
@@ -133,13 +133,13 @@ require_once($prevFolder."include/breadcrumb.php");
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> *You entered incorrect text in the captcha box.<br>";
 		}
-		
-		
+
+
 		if($countErrors == 0) {
-			
+
 			$emailCode = md5(time().uniqid());
-			
-			
+
+
 			// Send E-mail Confirmation
 			$emailTo = $_POST['requesteremail'];
 			$emailFrom = "confirmemail@bluethrust.com";
@@ -159,21 +159,21 @@ Thanks,\n
 				$emailCode = 1;
 				$sendMail = true;
 			}
-			
+
 			if($sendMail) {
-				
+
 				$diplomacyRequestObj = new Basic($mysqli, "diplomacy_request", "diplomacyrequest_id");
-				
+
 				$arrColumns = array("ipaddress", "dateadded", "diplomacystatus_id", "email", "name", "clanname", "clantag", "clansize", "gamesplayed", "website", "leaders", "message", "confirmemail");
 				$arrValues = array($IP_ADDRESS, time(), $_POST['diplomacystatus'], $_POST['requesteremail'], $_POST['requestername'], $_POST['clanname'], $_POST['clantag'], $_POST['clansize'], $_POST['gamesplayed'], $_POST['website'], $_POST['clanleaders'], $_POST['message'], $emailCode);
-				
+
 				if($emailCode == 1) {
 					$dispConfirmMessage = "A request has been sent to the diplomacy managers.  Please wait while a decision is made.";
 				}
 				else {
 					$dispConfirmMessage = "Almost Done!  You need to first confirm your e-mail address before the diplomacy request can go through.  Check your spam!";
 				}
-				
+
 				if($diplomacyRequestObj->addNew($arrColumns, $arrValues)) {
 					echo "
 					
@@ -193,35 +193,35 @@ Thanks,\n
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 				}
-				
-				
+
+
 			}
 			else {
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to send confirmation e-mail.<br>";
 				$countErrors++;
 			}
-			
-			
+
+
 		}
-		
-		
-		
+
+
+
 		if($countErrors > 0) {
 			$_POST = filterArray($_POST);
-			$_POST['submit'] = false;	
+			$_POST['submit'] = false;
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 	if( empty($_POST['submit']) ) {
 		echo "
 	
 		<div class='formDiv'>
 			<form action='request.php' method='post'>
 		";
-		
+
 		if($dispError != "") {
 			echo "
 			<div class='errorDiv'>
@@ -231,7 +231,7 @@ Thanks,\n
 			";
 		}
 
-		
+
 		echo "
 				Use the form below to send a diplomacy request.  A notification will be sent to the clan diplomacy managers and they will review your request.  Your e-mail address must be confirmed before the request goes through.  An e-mail will be sent to you when a decision is made regarding your request.
 				<br><br>

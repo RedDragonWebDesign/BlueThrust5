@@ -40,24 +40,24 @@ if($_POST['whichValue'] == "" || !is_numeric($_POST['whichValue'])) {
 	$blnAddComponent = true;
 }
 else {
-	$componentIndex = $_POST['whichValue'];	
+	$componentIndex = $_POST['whichValue'];
 	$arrSelectValues = $_SESSION['btFormComponentTempSelectValues'];
 	$blnAddComponent = false;
 }
 
 
 if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2) && is_numeric($componentIndex) && is_numeric($_POST['intDeleteKey'])) {
-	
+
 	unset($arrSelectValues[$_POST['intDeleteKey']]);
-	
+
 	if($blnAddComponent) {
 		$_SESSION['btFormComponent'][$componentIndex]['cOptions'] = $arrSelectValues;
 	}
 	else {
 		$_SESSION['btFormComponentTempSelectValues'] = $arrSelectValues;
 	}
-	
-	
+
+
 	require_once("selectvaluecache.php");
-	
+
 }

@@ -53,8 +53,8 @@ while($row = $result->fetch_assoc()) {
 	$customFormPageObj->select($row['customform_id']);
 	$totalUnseen = $customFormPageObj->countSubmissions(true);
 	$totalSubmissions = $customFormPageObj->countSubmissions();
-	
-	
+
+
 	$dispPages .= "
 	<tr>
 		<td class='dottedLine".$addCSS."' style='height: 24px' width=\"60%\">&nbsp;&nbsp;<span class='main'><b><a href='console.php?cID=".$cID."&cfID=".$row['customform_id']."&action=edit'>".$row['name']."</a></b></td>

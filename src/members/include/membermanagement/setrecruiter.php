@@ -33,8 +33,8 @@ $countErrors = 0;
 $rankObj = new Rank($mysqli);
 $memberObj = new Member($mysqli);
 if ( ! empty($_POST['submit']) ) {
-	
-	
+
+
 	// Check Member
 	if(!$memberObj->select($_POST['member'])) {
 		$countErrors++;
@@ -45,9 +45,9 @@ if ( ! empty($_POST['submit']) ) {
 		$memberObj->select($newMemberInfo['recruiter']);
 		$oldRecruiterInfo = $memberObj->get_info_filtered();
 	}
-	
-	
-	// Check Recruiter 
+
+
+	// Check Recruiter
 	if(!$memberObj->select($_POST['newrecruiter'])) {
 		$countErrors++;
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid Recruiter.<br>";
@@ -55,19 +55,19 @@ if ( ! empty($_POST['submit']) ) {
 	else {
 		$newRecruiterInfo = $memberObj->get_info_filtered();
 	}
-	
-	
+
+
 	if($countErrors == 0) {
-		
+
 		$arrColumns = array("recruiter");
 		$arrValues = array($_POST['newrecruiter']);
-		
+
 		$memberObj->select($_POST['member']);
 		if($memberObj->update($arrColumns, $arrValues)) {
-			
+
 			$logMessage = $member->getMemberLink()." changed ".$newMemberInfo['username']."'s recruiter from ".$oldRecruiterInfo['username']." to ".$newRecruiterInfo['username'].".";
 			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
-			
+
 			echo "
 				<div style='display: none' id='successBox'>
 					<p align='center'>
@@ -80,36 +80,36 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			
 			";
-			
+
 			$memberObj->postNotification("Your recruiter has been set to ".$newMemberInfo['username']."!");
-			
+
 			$member->select($memberInfo['member_id']);
 			$member->logAction($logMessage);
-			
-			
+
+
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-		
+
 	}
-	
-	
+
+
 	if($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-	
+
 }
 
 
 $result = $mysqli->query("SELECT ".$dbprefix."members.* FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."ranks.rank_id = ".$dbprefix."members.rank_id AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id != '1' ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
 while($row = $result->fetch_assoc()) {
-	
+
 	$rankObj->select($row['rank_id']);
 	$memberoptions .= "<option value='".$row['member_id']."'>".$rankObj->get_info_filtered("name")." ".filterText($row['username'])."</option>";
-	
+
 }
 
 
@@ -127,7 +127,7 @@ echo "
 		</div>
 		";
 	}
-	
+
 	echo "
 			Use the form below to set a member's recruiter.<br><br>
 			<table class='formTable'>

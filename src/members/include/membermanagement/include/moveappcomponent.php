@@ -33,16 +33,16 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$memberInfo = $member->get_info_filtered();
 
 	if($appComponentObj->select($_POST['acID'])) {
-		
+
 		$member->logAction("Modified the member application component order.");
-		
+
 		$appComponentObj->move($_POST['acDir']);
-		
+
 		require_once("appcomponentlist.php");
-		
-		
-		
+
+
+
 	}
-	
-	
+
+
 }

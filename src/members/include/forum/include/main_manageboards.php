@@ -17,7 +17,7 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !iss
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/forumboard.php");
-	
+
 	// Start Page
 
 	$consoleObj = new ConsoleOption($mysqli);
@@ -36,8 +36,8 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !iss
 	$categoryObj = new BasicOrder($mysqli, "forum_category", "forumcategory_id");
 	$categoryObj->set_assocTableName("forum_board");
 	$categoryObj->set_assocTableKey("forumboard_id");
-	
-	
+
+
 	// Check Login
 	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
@@ -58,26 +58,25 @@ else {
 
 function dispManageTable($arrBoards, $indent=0) {
 	global $mysqli, $MAIN_ROOT, $THEME, $cID;
-	
+
 	$boardObj = new ForumBoard($mysqli);
 	$counter = 0;
 	$x = 0;
 	foreach($arrBoards as $boardID) {
 		$boardObj->select($boardID);
 		$boardInfo = $boardObj->get_info_filtered();
-		
+
 		$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveBoard('up', '".$boardInfo['forumboard_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 		$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveBoard('down', '".$boardInfo['forumboard_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' width='24' height='24' title='Move Down'></a>";
-		
+
 		if($x == 0) {
-			$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height='24'>";	
+			$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height='24'>";
 		}
-		
-		
+
 		if($boardObj->getHighestSortNum() == $boardInfo['sortnum']) {
 			$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height='24'>";
 		}
-		
+
 		if($counter == 1) {
 			$addCSS = " alternateBGColor";
 			$counter = 0;
@@ -86,7 +85,7 @@ function dispManageTable($arrBoards, $indent=0) {
 			$addCSS = "";
 			$counter = 1;
 		}
-		
+
 		echo "
 			<tr>
 				<td class='dottedLine main".$addCSS."' style='width: 76%; padding-left: 10px'>".str_repeat("&nbsp;&nbsp;", $indent)."<b><a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&bID=".$boardInfo['forumboard_id']."&action=edit'>".$boardInfo['name']."</a></b></td>
@@ -96,17 +95,16 @@ function dispManageTable($arrBoards, $indent=0) {
 				<td class='dottedLine main".$addCSS."' style='width: 6%' align='center'><a href='javascript:void(0)' onclick=\"deleteBoard('".$boardInfo['forumboard_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' width='24' height='24' title='Delete Board'></a></td>
 			</tr>
 		";
-		
+
 		$x++;
-		
+
 		$arrSubForums = $boardObj->getSubForums();
 		if(count($arrSubForums) > 0) {
 			dispManageTable($arrSubForums, ($indent+1));
 		}
-		
-	}	
-	
-	
+
+	}
+
 }
 
 
@@ -123,12 +121,12 @@ $totalBoards = $result->num_rows;
 if($totalBoards > 0) {
 	$result = $mysqli->query("SELECT forumcategory_id FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
 	while($row = $result->fetch_assoc()) {
-		
+
 		$categoryObj->select($row['forumcategory_id']);
 		$arrBoards = $categoryObj->getAssociateIDs("AND subforum_id = '0' ORDER BY sortnum", true);
-		
+
 		$catInfo = $categoryObj->get_info_filtered();
-		
+
 		echo "
 			<tr><td colspan='5' style='padding-top: 3px'></td></tr>
 			<tr>
@@ -138,7 +136,7 @@ if($totalBoards > 0) {
 			</tr>
 		
 		";
-		
+
 		dispManageTable($arrBoards);
 	}
 
@@ -146,7 +144,7 @@ if($totalBoards > 0) {
 echo "</table>";
 
 if($totalBoards == 0) {
-	
+
 	echo "
 	
 		<div class='shadedBox' style='width: 40%; margin: 20px auto'>
@@ -158,5 +156,5 @@ if($totalBoards == 0) {
 		</div>
 	
 	";
-	
+
 }

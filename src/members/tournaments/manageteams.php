@@ -88,7 +88,7 @@ foreach($arrTeams as $teamID) {
 // Get Squads
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."squads ORDER BY name");
 while($row = $result->fetch_assoc()) {
-	$squadoptions .= "<option value='".$row['squad_id']."'>".filterText($row['name'])."</option>";	
+	$squadoptions .= "<option value='".$row['squad_id']."'>".filterText($row['name'])."</option>";
 }
 
 echo "
@@ -139,7 +139,7 @@ echo "
 	<div id='playerListDiv'>
 	";
 
-	
+
 	echo "
 	</div>
 	</div>

@@ -20,7 +20,7 @@ ini_set('session.use_only_cookies', 1);
 ini_set('session.gc_maxlifetime', 60*60*24*3);
 
 if(!isset($prevFolder)) {
-	$prevFolder = "";	
+	$prevFolder = "";
 }
 
 
@@ -141,7 +141,7 @@ if ( $SQL_CACHE_ENABLED ) {
 		'rankcategory' => 'rankcategory_id',
 		'ranks' => 'rank_id',
 	];
-	
+
 	foreach ( $tablesToCache as $table => $primaryKey ) {
 		$sqlCache[$table] = [];
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix.$table);
@@ -169,7 +169,7 @@ if ( $SQL_CACHE_ENABLED ) {
 			$sqlCache['rank_privileges'][] = $row;
 		}
 	}
-	
+
 	// classes/consoleoptions.php::findConsoleIDByName()
 	$sqlCache['console-pagetitle'] = [];
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."console");

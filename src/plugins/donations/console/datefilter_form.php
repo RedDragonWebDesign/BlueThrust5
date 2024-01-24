@@ -6,24 +6,24 @@
 
 	$maxYear = date("Y")+10;
 	$maxDate = "new Date(".$maxYear.",12,31)";
-	
+
 	$dateObj = new DateTime();
 	$dateObj->setTimezone(new DateTimeZone("UTC"));
-	
+
 	$setStartValue = $_GET['start'];
 	$setEndValue = $_GET['end'];
-	
+
 	if(is_numeric($_GET['start'])) {
 
 		$dateObj->setTimestamp($_GET['start']);
-				
+
 	}
 	else {
 		$startDate = explode("-", $_GET['start']);
 		$dateObj->setDate($startDate[2], $startDate[0], $startDate[1]);
 		$setStartValue = $dateObj->getTimestamp();
 	}
-	
+
 	$defaultStartDate = $dateObj->format("M j, Y");
 
 	if(is_numeric($_GET['end'])) {
@@ -36,8 +36,8 @@
 	}
 
 	$defaultEndDate = $dateObj->format("M j, Y");
-	
-	
+
+
 	$i=0;
 	$arrComponents = array(
 		"sectionLeft" => array(
@@ -58,7 +58,7 @@
 					"html" => "<div class='formInput'>".$totalDonations."</div>"
 				)
 			)
-			
+
 		),
 		"sectionRight" => array(
 			"type" => "section",
@@ -70,12 +70,12 @@
 					"display_name" => "Start Date",
 					"attributes" => array("style" => "cursor: pointer", "id" => "jsStartDate", "class" => "textBox formInput"),
 					"sortorder" => $i++,
-					"options" => array("changeMonth" => "true", 
-							   "changeYear" => "true", 
-							   "dateFormat" => "M d, yy", 
-							   "minDate" => "new Date(50, 1, 1)", 
-							   "maxDate" => $maxDate, 
-							   "yearRange" => "1950:".$maxYear, 
+					"options" => array("changeMonth" => "true",
+							   "changeYear" => "true",
+							   "dateFormat" => "M d, yy",
+							   "minDate" => "new Date(50, 1, 1)",
+							   "maxDate" => $maxDate,
+							   "yearRange" => "1950:".$maxYear,
 							   "altField" => "realStartDate",
 							   "defaultDate" => $defaultStartDate),
 					"value" => $setStartValue*1000
@@ -85,12 +85,12 @@
 					"display_name" => "End Date",
 					"attributes" => array("style" => "cursor: pointer", "id" => "jsEndDate", "class" => "textBox formInput"),
 					"sortorder" => $i++,
-					"options" => array("changeMonth" => "true", 
-							   "changeYear" => "true", 
-							   "dateFormat" => "M d, yy", 
-							   "minDate" => "new Date(50, 1, 1)", 
-							   "maxDate" => $maxDate, 
-							   "yearRange" => "1950:".$maxYear, 
+					"options" => array("changeMonth" => "true",
+							   "changeYear" => "true",
+							   "dateFormat" => "M d, yy",
+							   "minDate" => "new Date(50, 1, 1)",
+							   "maxDate" => $maxDate,
+							   "yearRange" => "1950:".$maxYear,
 							   "altField" => "realEndDate",
 							   "defaultDate" => $defaultEndDate),
 					"value" => $setEndValue*1000
@@ -101,10 +101,10 @@
 					"sortorder" => $i++
 				)
 			)
-			
+
 		)
 	);
-	
+
 	$filterButtonJS = "
 		$(document).ready(function() {
 			$('#filterButton').click(function() {
@@ -114,10 +114,10 @@
 			});
 		});
 	";
-	
-	
-	
-	
+
+
+
+
 	$setupDonationFormArgs = array(
 		"name" => "console-".$cID."-donationlog",
 		"components" => $arrComponents,
@@ -126,7 +126,7 @@
 		"wrapper" => array("<div class='formDiv' style='overflow: auto'>", "</div>"),
 		"embedJS" => $filterButtonJS
 	);
-	
+
 	$donationLogForm->buildForm($setupDonationFormArgs);
-	
+
 	$donationLogForm->show();

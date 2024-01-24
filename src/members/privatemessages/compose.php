@@ -77,11 +77,11 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 
 	$memberInfo = $member->get_info_filtered();
 	$formObj = new Form();
-	
-	
+
+
 	require_once(BASE_DIRECTORY."members/privatemessages/include/compose_submit.php");
 	require_once(BASE_DIRECTORY."members/privatemessages/include/compose_setup.php");
-	
+
 	$i = 1;
 	$arrComponents = array(
 		"tomember" => array(
@@ -94,7 +94,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 									<div style='clear: both'></div>
 								</div>",
 			"sortorder" => $i++,
-		
+
 		),
 		"subject" => array(
 			"type" => "text",
@@ -114,7 +114,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			"type" => "submit",
 			"value" => "Send Message",
 			"attributes" => array("class" => "submitButton formSubmitButton"),
-			"sortorder" => $i++	
+			"sortorder" => $i++
 		),
 		"pmsessionid" => array(
 			"type" => "hidden",
@@ -122,34 +122,34 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			"hidden" => true,
 			"sortorder" => $i++
 		)
-	
+
 	);
-	
-	
+
+
 	if(isset($_GET['threadID']) && is_numeric($_GET['threadID'])) {
 		$replyPMID = $_GET['threadID'];
 	}
 	else {
 		$replyPMID = 0;
 	}
-	
-	
+
+
 	$arrComponents['replypmid'] = array(
 		"type" => "hidden",
 		"value" => $replyPMID,
 		"hidden" => true,
 		"sortorder" => $i++
 	);
-	
-	
+
+
 	// Send as Email
 	$emailPMCID = $consoleObj->findConsoleIDByName("Email Private Messages");
 	$consoleObj->select($emailPMCID);
 	if($member->hasAccess($consoleObj)) {
-				
+
 		$formObj->addComponentSortSpace(2, $arrComponents);
 		$arrComponents = $formObj->components;
-		
+
 		$arrComponents['emailpm'] = array(
 			"type" => "checkbox",
 			"value" => 1,
@@ -158,10 +158,10 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			"tooltip" => "Checking this box will force an e-mail to be sent to the member(s) as well.",
 			"attributes" => array("class" => "formInput")
 		);
-				
+
 	}
 	$consoleObj->select($cID);
-	
+
 	$setupFormArgs = array(
 		"name" => "console-".$cID."-compose",
 		"components" => $arrComponents,
@@ -170,12 +170,12 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		"description" => "Use the form below to send a private message.<br><br><b><u>Extra Information:</u></b><br>You may send private messages in batches to squads, tournaments, or ranks by typing in their associated name.  Typing in a squad name, tournament title or rank name will send to that group.<br><br>",
 		"embedJS" => $composePageJS
 	);
-	
-	
-	
+
+
+
 	require_once(BASE_DIRECTORY."members/console.form.php");
-	
-	
+
+
 }
 else {
 

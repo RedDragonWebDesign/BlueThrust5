@@ -78,7 +78,7 @@ else {
 		</p>
 	</div>
 	<div id='ipBanList'>
-		<?php 
+		<?php
 			define("SHOW_BANLIST", true);
 			require_once("ipbanning/ipbanlist.php");
 		?>

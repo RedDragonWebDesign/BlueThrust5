@@ -26,10 +26,10 @@ else {
 
 $rankInfo = $memberRank->get_info_filtered();
 if($memberInfo['promotepower'] != 0) {
-	$rankInfo['promotepower'] = $memberInfo['promotepower'];	
+	$rankInfo['promotepower'] = $memberInfo['promotepower'];
 }
 elseif($memberInfo['promotepower'] == -1) {
-	$rankInfo['promotepower'] = 0;	
+	$rankInfo['promotepower'] = 0;
 }
 
 $cID = $_GET['cID'];
@@ -62,7 +62,7 @@ while($row = $result->fetch_assoc()) {
 
 
 if ( ! empty($_POST['submit']) ) {
-	
+
 	// Check Member
 
 	if(!$member->select($_POST['member']) || $_POST['member'] == $memberInfo['member_id']) {
@@ -73,14 +73,14 @@ if ( ! empty($_POST['submit']) ) {
 		$countErrors++;
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not undisable the selected member.<br>";
 	}
-	
-	
+
+
 	if($countErrors == 0) {
-		
+
 		if($member->update(array("disabled", "lastlogin"), array(0, time()))) {
 			$logMessage = "Undisabled ".$member->getMemberLink().".";
 			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
-			
+
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -95,48 +95,48 @@ if ( ! empty($_POST['submit']) ) {
 			
 			
 			";
-			
+
 			$member->select($memberInfo['member_id']);
 			$member->logAction($logMessage);
-			
+
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 	if($countErrors > 0) {
-		
-		
-		
+
+
+
 	}
-	
-	
+
+
 
 }
 
 
 if ( empty($_POST['submit']) ) {
-	
+
 	$sqlRanks = "('".implode("','", $arrRanks)."')";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '1' ORDER BY ".$dbprefix."ranks.ordernum DESC");
 	while($row = $result->fetch_assoc()) {
-	
+
 		$rankObj->select($row['rank_id']);
 		$memberoptions .= "<option value='".$row['member_id']."'>".$rankObj->get_info_filtered("name")." ".filterText($row['username'])."</option>";
-	
+
 	}
-	
+
 	echo "
 	
 	<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
 	<div class='formDiv'>
 	";
-	
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -145,7 +145,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
+
 	echo "
 		Use the form below to undisable a member. <br><br>
 		<b><u>NOTE:</u></b> You may only undisable a member who you normally would be able to disable.  A higher ranked member may be needed if you want to undisable a member with a high rank.<br><br>
@@ -169,7 +169,7 @@ if ( empty($_POST['submit']) ) {
 	
 	
 	";
-	
+
 
 
 }

@@ -15,43 +15,43 @@
 
 
 	if(!isset($member)|| substr($_SERVER['PHP_SELF'], -strlen("console.php")) != "console.php") {
-	
+
 		exit();
 	}
 	else {
 		// This is a little repeatative, but for security.
-	
+
 		$memberInfo = $member->get_info();
 		$consoleObj->select($cID);
-	
+
 		if(!$member->hasAccess($consoleObj)) {
-	
+
 			exit();
 		}
 	}
 	require_once("../classes/tournament.php");
 
 	$tMemberObj = new Member($mysqli);
-	
+
 	$countErrors = 0;
 	$dispError = "";
 
 	$tournamentObj = new Tournament($mysqli);
-	
+
 	$arrTournaments = $member->getTournamentList();
 
 
 	$tournamentSQL = "('".implode("','", $arrTournaments)."')";
-	
+
 	$tournamentOptions[''] = "Select";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournaments WHERE tournament_id NOT IN ".$tournamentSQL." ORDER BY name");
-	while($row = $result->fetch_assoc()) {		
+	while($row = $result->fetch_assoc()) {
 		$tournamentOptions[$row['tournament_id']] = filterText($row['name']);
 	}
-	
+
 	if($result->num_rows > 0) {
-	
-		
+
+
 		$arrComponents = array(
 			"tournament" => array(
 				"display_name" => "Tournament",
@@ -84,7 +84,7 @@
 				"value" => "submit",
 				"attributes" => array("style" => "display: none", "id" => "btnSubmit"),
 				"sortorder" => 4,
-				"hidden" => true				
+				"hidden" => true
 			),
 			"tournamentpassword" => array(
 				"type" => "hidden",
@@ -92,11 +92,11 @@
 				"sortorder" => 99,
 				"hidden" => true
 			)
-		
-		
+
+
 		);
-		
-		
+
+
 		$setupFormArgs = array(
 			"name" => "console-".$cID,
 			"components" => $arrComponents,
@@ -132,8 +132,8 @@
 			</script>
 		
 		";
-		
-	
+
+
 	}
 	else {
 
@@ -145,6 +145,6 @@
 			</div>
 		";
 	}
-	
+
 
 	require_once(BASE_DIRECTORY."members/include/tournaments/include/jointournamentfunctions.php");

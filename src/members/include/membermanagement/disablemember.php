@@ -26,10 +26,10 @@ else {
 
 $rankInfo = $memberRank->get_info_filtered();
 if($memberInfo['promotepower'] != 0) {
-	$rankInfo['promotepower'] = $memberInfo['promotepower'];	
+	$rankInfo['promotepower'] = $memberInfo['promotepower'];
 }
 elseif($memberInfo['promotepower'] == -1) {
-	$rankInfo['promotepower'] = 0;	
+	$rankInfo['promotepower'] = 0;
 }
 
 $cID = $_GET['cID'];
@@ -58,7 +58,7 @@ if($rankInfo['rank_id'] == 1) {
 	$maxRankInfo['ordernum'] += 1;
 }
 else {
-	$maxRankInfo['ordernum'] -= 1;	
+	$maxRankInfo['ordernum'] -= 1;
 }
 
 $arrRanks = array();
@@ -69,7 +69,7 @@ while($row = $result->fetch_assoc()) {
 
 
 if ( ! empty($_POST['submit']) ) {
-	
+
 	// Check Member
 
 	if(!$member->select($_POST['member']) || $_POST['member'] == $memberInfo['member_id']) {
@@ -80,14 +80,14 @@ if ( ! empty($_POST['submit']) ) {
 		$countErrors++;
 		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not disable the selected member.<br>";
 	}
-	
-	
+
+
 	if($countErrors == 0) {
-		
+
 		if($member->update(array("disabled", "disableddate"), array(1, time()))) {
 			$logMessage = "Disabled ".$member->getMemberLink().".";
 			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
-			
+
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -102,27 +102,27 @@ if ( ! empty($_POST['submit']) ) {
 			
 			
 			";
-			
+
 			$member->select($memberInfo['member_id']);
 			$member->logAction($logMessage);
-			
+
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 	if($countErrors > 0) {
-		
-		
-		
+
+
+
 	}
-	
-	
+
+
 
 }
 

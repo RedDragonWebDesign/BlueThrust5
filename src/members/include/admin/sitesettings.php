@@ -31,22 +31,22 @@ $themeOptions = "";
 
 
 foreach($arrThemes as $themeName) {
-	
+
 	$themeURL = "../themes/".$themeName;
-	
+
 	if(is_dir($themeURL) && $themeName != "." && $themeName != "..") {
-		
+
 		$dispThemeName = "";
 		if(is_readable($themeURL."/THEMENAME.txt")) {
 			$dispThemeName = file_get_contents($themeURL."/THEMENAME.txt");
 		}
-		
+
 		$dispSelected = "";
-		
+
 		if($themeName == $websiteInfo['theme']) {
-			$dispSelected = " selected";	
+			$dispSelected = " selected";
 		}
-		
+
 		if($dispThemeName != "") {
 			$themeOptions .= "<option value='".$themeName."'".$dispSelected.">".$dispThemeName."</option>";
 		}
@@ -54,7 +54,7 @@ foreach($arrThemes as $themeName) {
 }
 
 if($themeOptions == "") {
-	$themeOptions = "<option value=''>No Themes Installed!</option>";	
+	$themeOptions = "<option value=''>No Themes Installed!</option>";
 }
 
 
@@ -64,23 +64,23 @@ foreach($arrMedalDisplayOrder as $key => $value) {
 	if($websiteInfo['medalorder'] == $key) {
 		$dispSelected = " selected";
 	}
-	$medaldisplayorder .= "<option value='".$key."'".$dispSelected.">".$value."</option>";	
+	$medaldisplayorder .= "<option value='".$key."'".$dispSelected.">".$value."</option>";
 }
 
 $selectDebugOn = "";
 if($websiteInfo['debugmode'] == 1) {
-	$selectDebugOn = " selected";	
+	$selectDebugOn = " selected";
 }
 
 $selectHideInactive = "";
 if($websiteInfo['hideinactive'] == 1) {
-	$selectHideInactive = " selected";	
+	$selectHideInactive = " selected";
 }
 
 $selectShowNewsPosts = "";
 
 if($websiteInfo['hpnews'] == 0) {
-	$selectShowNewsPosts = " selected";	
+	$selectShowNewsPosts = " selected";
 }
 else {
 	$showCustomAmount = "";
@@ -108,7 +108,7 @@ else {
 			$selectNumOfNewsPosts[6] = " selected";
 			$showCustomAmount = $websiteInfo['hpnews'];
 	}
-	
+
 }
 
 $websiteLogoInfo = $webInfoObj->get_info_filtered("logourl");

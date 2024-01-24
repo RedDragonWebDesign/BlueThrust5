@@ -79,38 +79,38 @@ if($tournamentInfo['seedtype'] != 3 && !$tournamentObj->checkForPools()) {
 			<div style='float: left; width: 600px; padding-bottom: 25px'>
 		
 		<?php
-		
+
 			$arrPools = $tournamentObj->getPoolList();
 			$dispPoolLetter = "A";
 			foreach($arrPools as $poolID) {
 
 				$tournamentObj->objTournamentPool->select($poolID);
 				$arrTeamsInPool = $tournamentObj->objTournamentPool->getTeamsInPool();
-				
+
 				echo "<p class='main' align='left'><b><u>Pool ".$dispPoolLetter.":</u></b></p>";
 				$counter = 0;
-				
+
 				$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentpools_teams WHERE pool_id = '".$poolID."'");
 				while($row = $result->fetch_assoc()) {
-					
+
 					$dispTeamOne = $tournamentObj->getPlayerName($row['team1_id']);
 					$dispTeamTwo = $tournamentObj->getPlayerName($row['team2_id']);
-					
+
 					if($dispTeamOne == "") {
-						$dispTeamOne = "<i>Empty Spot</i>";	
+						$dispTeamOne = "<i>Empty Spot</i>";
 					}
-					
+
 					if($dispTeamTwo == "") {
-						$dispTeamTwo = "<i>Empty Spot</i>";	
+						$dispTeamTwo = "<i>Empty Spot</i>";
 					}
-					
+
 					if($row['winner'] == 1) {
-						$dispTeamOne = "<span class='successFont' style='font-weight: bold'>".$dispTeamOne."</span>";	
+						$dispTeamOne = "<span class='successFont' style='font-weight: bold'>".$dispTeamOne."</span>";
 					}
 					elseif($row['winner'] == 2) {
 						$dispTeamTwo = "<span class='successFont' style='font-weight: bold'>".$dispTeamTwo."</span>";
 					}
-					
+
 					echo "
 						<div class='dottedBox main' style='width: 280px; float: left'>
 							<div class='shadedBox main' style='position: relative; border-width: 0px; text-align: left'>
@@ -126,19 +126,19 @@ if($tournamentInfo['seedtype'] != 3 && !$tournamentObj->checkForPools()) {
 							</div>
 						</div>
 					";
-					
+
 					$counter++;
 					if($counter == 2) {
 						$counter = 0;
-						echo "<div style='clear: both'></div>";	
+						echo "<div style='clear: both'></div>";
 					}
 				}
-				
-				
+
+
 				$dispPoolLetter++;
 			}
-		
-		
+
+
 		?>
 		
 		</div>

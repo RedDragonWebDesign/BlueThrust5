@@ -31,14 +31,14 @@ foreach($arrComments as $commentID) {
 
 	$newsObj->objComment->select($commentID);
 	$commentInfo = $newsObj->objComment->get_info_filtered();
-	
+
 	$member->select($commentInfo['member_id']);
 	$dispDelete = "";
 	if($blnShowDeleteComment) {
 		$dispDelete = " - <a href='javascript:void(0)' onclick=\"deleteComment('".$commentID."')\">DELETE</a>";
 	}
-	
-	
+
+
 	echo "
 		
 		

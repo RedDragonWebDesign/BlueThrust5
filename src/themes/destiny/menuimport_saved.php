@@ -20,8 +20,8 @@ $menuSQL = file_get_contents("savemenu.sql");
 if($menuSQL !== false) {
 
 	//$menuSQL = str_replace("INSERT INTO `", "INSERT INTO `".$dbprefix, $menuSQL);
-	
-	
+
+
 	$emptyMenusSQL = "TRUNCATE `".$dbprefix."menuitem_customblock`;";
 	$emptyMenusSQL .= "TRUNCATE `".$dbprefix."menuitem_custompage`;";
 	$emptyMenusSQL .= "TRUNCATE `".$dbprefix."menuitem_image`;";
@@ -29,23 +29,23 @@ if($menuSQL !== false) {
 	$emptyMenusSQL .= "TRUNCATE `".$dbprefix."menuitem_shoutbox`;";
 	$emptyMenusSQL .= "TRUNCATE `".$dbprefix."menu_category`;";
 	$emptyMenusSQL .= "TRUNCATE `".$dbprefix."menu_item`;";
-	
-	
+
+
 	$fullSQL = $emptyMenusSQL.$menuSQL;
-	
+
 	if($mysqli->multi_query($fullSQL)) {
-	
-	
+
+
 		do {
 			if($result = $mysqli->store_result()) {
 				$result->free();
 			}
 		}
 		while($mysqli->next_result());
-		
+
 		echo "1";
-		
-		
+
+
 	}
 
 }

@@ -55,7 +55,7 @@ foreach($arrConsoleCatIDs as $consoleCatID) {
 	$consoleCatObj->select($consoleCatID);
 	$consoleCatInfo = $consoleCatObj->get_info_filtered();
 	$catAssoc = $consoleCatObj->getAssociateIDs("ORDER BY sortnum");
-	
+
 	$dispConsoles .= "<tr><td class='dottedLine main' style='text-decoration: underline; padding-top: 5px; padding-bottom: 5px'><b>".$consoleCatInfo['name']."</b></td><td colspan='2' class='dottedLine' align='center'><a href='javascript:void(0)' onclick=\"addSeparator('".$consoleCatInfo['consolecategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/insertseparator1.png' title='Insert Separator in ".$consoleCatInfo['name']."'></td><td colspan='2' class='dottedLine' align='center'><a href='".$MAIN_ROOT."members/console.php?cID=".$intManageConsoleCatCID."&catID=".$consoleCatInfo['consolecategory_id']."&action=edit'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/edit.png' width='24' height='24' title='Edit Console Category'></a></tr>";
 	$intHighestOrder = count($catAssoc);
 	$counter = 0;
@@ -63,7 +63,7 @@ foreach($arrConsoleCatIDs as $consoleCatID) {
 	foreach($catAssoc as $consoleID) {
 		$consoleObj->select($consoleID);
 		$consoleInfo = $consoleObj->get_info_filtered();
-		
+
 		if($counter == 1) {
 			$addCSS = " alternateBGColor";
 			$counter = 0;
@@ -72,21 +72,21 @@ foreach($arrConsoleCatIDs as $consoleCatID) {
 			$addCSS = "";
 			$counter = 1;
 		}
-		
+
 		if($x == 1) {
 			$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 		}
 		else {
 			$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveConsole('up', '".$consoleInfo['console_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 		}
-		
+
 		if($x == $intHighestOrder) {
 			$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 		}
 		else {
 			$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveConsole('down', '".$consoleInfo['console_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' width='24' height='24' title='Move Down'></a>";
 		}
-		
+
 
 		$dispConsoles .= "
 		<tr>
@@ -99,7 +99,7 @@ foreach($arrConsoleCatIDs as $consoleCatID) {
 		";
 		$x++;
 	}
-	
+
 	$dispConsoles .= "<tr><td colspan='5' style='padding-top: 3px'></td></tr>";
 }
 

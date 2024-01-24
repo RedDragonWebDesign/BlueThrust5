@@ -31,29 +31,29 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
 	if($member->hasAccess($consoleObj) && $customPageObj->select($_POST['cpID'])) {
-		
+
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
-	
+
 		$customPageInfo = $customPageObj->get_info_filtered();
-		
+
 		if($_POST['confirm'] == "1") {
-			
+
 			$customPageObj->delete();
 			require_once("main.php");
-			
+
 		}
 		else {
 			echo "<p align='center'>Are you sure you want to delete the custom page <b>".$customPageInfo['pagename']."</b>?";
 		}
-		
+
 	}
 	elseif(!$customPageObj->select($_POST['cpID'])) {
-	
+
 		echo "<p align='center'>Unable find the selected custom page.  Please try again or contact the website administrator.</p>";
-	
+
 	}
-	
-	
-	
-	
+
+
+
+
 }

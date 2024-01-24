@@ -16,7 +16,7 @@ class btMySQL extends MySQLi {
 
 	protected $bt_TablePrefix;
 	protected $bt_TestingMode;
-	
+
 	/** In debug mode, this query() override method will enable SQL query profiling. That is, it will keep track of every query made, and it will be printed at the bottom of the page. */
 	function query($query, $resultmode = MYSQLI_STORE_RESULT) {
 		global $SQL_PROFILER, $debug;
@@ -35,7 +35,7 @@ class btMySQL extends MySQLi {
 		}
 		return $result;
 	}
-	
+
 	public function __construct($host, $username, $passwd, $dbname = "", $port=null, $socket=null) {
 
 		$host = !isset($host) ? ini_get("mysqli.default_host") : $host;
@@ -43,33 +43,32 @@ class btMySQL extends MySQLi {
 		$passwd = !isset($passwd) ? ini_get("mysqli.default_pw") : $passwd;
 		$port = !isset($port) ? ini_get("mysqli.default_port") : $port;
 		$socket = !isset($socket) ? ini_get("mysqli.default_socket") : $socket;
-		
+
 		parent::__construct($host, $username, $passwd, $dbname, $port, $socket);
-		
+
 		$this->query("SET SESSION sql_mode = ''");
-		
-		
+
 	}
-	
-	
+
+
 	public function set_tablePrefix($tablePrefix) {
 		$this->bt_TablePrefix = $tablePrefix;
 	}
-	
+
 	public function get_tablePrefix() {
 		return $this->bt_TablePrefix;
 	}
-	
+
 	public function set_testingMode($testModeValue) {
 		$this->bt_TestingMode = $testModeValue;
 	}
-	
+
 	public function displayError($pageName="") {
 		if($this->bt_TestingMode) {
 			die($pageName." - ".$this->error);
 		}
 	}
-	
+
 	public function getParamTypes($arrValues) {
 		$strParamTypes = "";
 		if(is_array($arrValues)) {
@@ -85,23 +84,22 @@ class btMySQL extends MySQLi {
 					default:
 						$strParamTypes .= "s";
 				}
-				
+
 			}
 		}
 		return $strParamTypes;
 	}
-	
+
 	public function bindParams($objMySQLiStmt, $arrValues) {
 		$returnVal = false;
 		$strParamTypes = $this->getParamTypes($arrValues);
-		
+
 		$tmpParams = array_merge(array($strParamTypes), $arrValues);
 		$arrParams = array();
 		foreach($tmpParams as $key=>$value) {
 			$arrParams[$key] = &$tmpParams[$key];
 		}
-		
-		
+
 		if(!call_user_func_array(array($objMySQLiStmt, "bind_param"), $arrParams)) {
 			$returnVal = false;
 			echo $objMySQLiStmt->error;
@@ -111,25 +109,24 @@ class btMySQL extends MySQLi {
 		else {
 			$returnVal = $objMySQLiStmt;
 		}
-	
-		
+
 		return $returnVal;
-		
+
 	}
-	
+
 	public function optimizeTables() {
 		$tables = array();
 		$result = $this->query("SHOW TABLE STATUS WHERE Data_free > 0");
 		while($row = $result->fetch_assoc()) {
 			$tables[] = "`".$row['Name']."`";
 		}
-		
+
 		$optimizeTables = implode(", ", $tables);
-		
+
 		if(count($tables) > 0) {
 			$this->query("OPTIMIZE TABLE ".$optimizeTables);
 		}
-		
+
 	}
 
 }

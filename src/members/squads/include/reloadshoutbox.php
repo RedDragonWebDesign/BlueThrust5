@@ -42,13 +42,13 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$memberInfo = $member->get_info_filtered();
 
 	if($squadObj->select($_POST['sID'])) {
-		
+
 		$squadInfo = $squadObj->get_info();
-		
+
 		if($squadObj->memberHasAccess($memberInfo['member_id'], "manageshoutbox")) {
 			$blnManageShoutbox = true;
 		}
-				
+
 	}
 }
 
@@ -65,22 +65,22 @@ elseif($squadInfo['privateshoutbox'] == 0) {
 if($blnShowShoutBox) {
 
 	$shoutboxObj = new Shoutbox($mysqli, "squadnews", "squadnews_id");
-	
+
 	$shoutboxObj->strDivID = "squadsShoutbox";
 	$shoutboxObj->intDispWidth = 205;
 	$shoutboxObj->intDispHeight = 400;
 	$shoutboxObj->blnUpdateShoutbox = true;
 	$shoutboxObj->strSQLSort = " AND squad_id ='".$squadInfo['squad_id']."'";
-	
+
 	if($blnManageShoutbox) {
 		$shoutboxObj->strEditLink = $MAIN_ROOT."members/squads/managesquad.php?&pID=ManageShoutbox&sID=".$squadInfo['squad_id']."&nID=";
 		$shoutboxObj->strDeleteLink = $MAIN_ROOT."members/squads/include/deleteshoutpost.php?sID=".$squadInfo['squad_id'];
 	}
-	
-	
+
+
 	echo $shoutboxObj->dispShoutbox();
 
 }
 else {
-	echo "no";	
+	echo "no";
 }

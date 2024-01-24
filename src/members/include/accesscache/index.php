@@ -11,7 +11,7 @@
  * License: http://www.bluethrust.com/license.php
  *
  */
-	
+
 	// YOU SHOULD NOT BE VIEWING THIS!
 
 	header("HTTP/1.0 404 Not Found");

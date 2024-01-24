@@ -105,7 +105,7 @@ $blnPageSelect = false;
 $NUM_OF_PAGES = ceil(count($arrTopics)/$NUM_PER_PAGE);
 
 if($NUM_OF_PAGES == 0) {
-	$NUM_OF_PAGES = 1;	
+	$NUM_OF_PAGES = 1;
 }
 
 if($_GET['pID'] > $NUM_OF_PAGES) {
@@ -135,7 +135,7 @@ if(($_GET['pID']-1) > 0) {
 for($i=1; $i<=$NUM_OF_PAGES; $i++) {
 	$selectPage = "";
 	if($i == $_GET['pID']) {
-		$selectPage = " selected";	
+		$selectPage = " selected";
 	}
 	$pageoptions .= "<option value='".$i."'".$selectPage.">".$i."</option>";
 }
@@ -147,7 +147,7 @@ if($blnPageSelect) {
 	<p style='margin-top: 0px'><b>Page:</b> <select id='pageSelectTop' class='textBox'>".$pageoptions."</select> <input type='button' id='btnPageSelectTop' class='submitButton' value='GO' style='width: 40px'></p>
 	<p style='margin-top: 0px'>".$dispPreviousPage.$dispNextPage."</p>
 	";
-	
+
 	$dispPageSelectBottom = "
 	<p style='margin-top: 0px'><b>Page:</b> <select id='pageSelectBottom' class='textBox'>".$pageoptions."</select> <input type='button' id='btnPageSelectBottom' class='submitButton' value='GO' style='width: 40px'></p>
 	<p style='margin-top: 0px'>".$dispPreviousPage.$dispNextPage."</p>
@@ -161,59 +161,59 @@ $subForumObj = new ForumBoard($mysqli);
 $arrSubForums = $boardObj->getSubForums();
 $dispSubForums = "";
 foreach($arrSubForums as $boardID) {
-	
+
 	$subForumObj->select($boardID);
-	
+
 	if($subForumObj->memberHasAccess($memberInfo)) {
 		$subForumInfo = $subForumObj->get_info_filtered();
 		$arrForumTopics = $subForumObj->getForumTopics();
-		
+
 		$newTopicBG = "";
 		$dispNewTopicIMG = "";
-		
+
 		if($LOGGED_IN && $subForumObj->hasNewTopics($memberInfo['member_id'])) {
 			$dispNewTopicIMG = " <img style='margin-left: 5px' src='".$MAIN_ROOT."themes/".$THEME."/images/forum-new.png' title='New Posts!'>";
 			$newTopicBG = " boardNewPostBG";
 		}
-		
+
 		// Get Last Post Display Info
 		if(count($arrForumTopics) > 0) {
 			$subForumObj->objPost->select($arrForumTopics[0]);
 			$firstPostInfo = $subForumObj->objPost->get_info_filtered();
-			
+
 			$subForumObj->objTopic->select($firstPostInfo['forumtopic_id']);
 			$lastPostID = $subForumObj->objTopic->get_info("lastpost_id");
-			
+
 			$subForumObj->objPost->select($lastPostID);
 			$lastPostInfo = $subForumObj->objPost->get_info_filtered();
-			
+
 			$postMemberObj->select($lastPostInfo['member_id']);
-			
+
 			$dispLastPost = "<div class='boardLastPostTitle'><a href='viewtopic.php?tID=".$firstPostInfo['forumtopic_id']."#".$lastPostID."' title='".$firstPostInfo['title']."'>".$firstPostInfo['title']."</a></div>by ".$postMemberObj->getMemberLink()."<br>".getPreciseTime($lastPostInfo['dateposted']);
 		}
 		else {
-			$dispLastPost = "<div style='text-align: center'>No Posts</div>";	
+			$dispLastPost = "<div style='text-align: center'>No Posts</div>";
 		}
-		
+
 		$dispTopicCount = $subForumObj->countTopics();
 		$dispPostCount = $subForumObj->countPosts();
-		
+
 		$arrDispMoreSubForums = array();
 		$arrMoreSubForums = $subForumObj->getSubForums();
-	
+
 		foreach($arrMoreSubForums as $value) {
 			$subForumObj->select($value);
 			$subForumInfo = $subForumObj->get_info_filtered();
-			
+
 			$arrDispMoreSubForums[] = "<a href='".$MAIN_ROOT."forum/viewboard.php?bID=".$value."'>".$subForumInfo['name']."</a>";
 		}
-		
-		
+
+
 		$dispMoreSubForums = "";
 		if(count($arrDispMoreSubForums) > 0) {
-			$dispMoreSubForums = "<br><br><b>Sub-Forums:</b><br>&nbsp;&nbsp;".implode("&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;", $arrDispMoreSubForums);	
+			$dispMoreSubForums = "<br><br><b>Sub-Forums:</b><br>&nbsp;&nbsp;".implode("&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;", $arrDispMoreSubForums);
 		}
-		
+
 		$subForumObj->select($boardID);
 		$subForumInfo = $subForumObj->get_info_filtered();
 		$dispSubForums .= "
@@ -225,7 +225,7 @@ foreach($arrSubForums as $boardID) {
 			
 			</tr>
 		";
-		
+
 	}
 
 }
@@ -273,7 +273,7 @@ if($dispSubForums != "") {
 			<td class='boardTitles forumTopicCount'>Posts:</td>
 		</tr>
 	";
-	
+
 	echo $dispSubForums;
 	echo "<tr><td colspan='4'><br><br></td></tr>";
 }
@@ -287,17 +287,17 @@ $pageSelector->setLink(MAIN_ROOT."forum/viewboard.php?bID=".$_GET['bID']."&pID="
 echo "
 	<tr>
 		<td colspan='2' class='main' valign='bottom'>
-			"; 
-			if(LOGGED_IN && $boardObj->memberHasAccess($memberInfo, true)) { 
-				echo "<p style='margin-top: 0px'><b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$boardInfo['forumboard_id']."'>NEW TOPIC</a> &laquo;</b></p>"; 
+			";
+			if(LOGGED_IN && $boardObj->memberHasAccess($memberInfo, true)) {
+				echo "<p style='margin-top: 0px'><b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$boardInfo['forumboard_id']."'>NEW TOPIC</a> &laquo;</b></p>";
 			}
 		echo "
 		</td>
 		<td colspan='2' align='right' class='main'>
 			";
-		
+
 		$pageSelector->show();
-		
+
 echo "
 		</td>
 	</tr>
@@ -315,46 +315,46 @@ echo "
 $arrPageTopics = $boardObj->getForumTopics(" ft.stickystatus DESC, fp.dateposted DESC", " LIMIT ".$intOffset.", ".$NUM_PER_PAGE);
 
 foreach($arrPageTopics as $postID) {
-	
+
 	$boardObj->objPost->select($postID);
 	$postInfo = $boardObj->objPost->get_info_filtered();
 
 	$boardObj->objTopic->select($postInfo['forumtopic_id']);
 	$topicInfo = $boardObj->objTopic->get_info();
-	
+
 	$postMemberObj->select($postInfo['member_id']);
 	$dispTopicPoster = $postMemberObj->getMemberLink();
-	
+
 	$boardObj->objPost->select($topicInfo['lastpost_id']);
 	$lastPostInfo = $boardObj->objPost->get_info_filtered();
-	
+
 	$postMemberObj->select($lastPostInfo['member_id']);
 	$dispLastPoster = $postMemberObj->getMemberLink();
-	
+
 	$dispTopicIconsIMG = "";
 	$newTopicBG = "";
-	
+
 	$showNewTopic = true;
 	if($websiteInfo['forum_newindicator'] != 0) {
 		$showNewTopic = ($lastPostInfo['dateposted']+(60*60*24*$websiteInfo['forum_newindicator'])) > time();
 	}
-	
+
 	if($LOGGED_IN && !$member->hasSeenTopic($topicInfo['forumtopic_id']) && $showNewTopic) {
 		$newTopicBG = " boardNewPostBG";
 		$dispTopicIconsIMG = " <img style='margin-left: 5px' src='".$MAIN_ROOT."themes/".$THEME."/images/forum-new.png' title='New Posts!'>";
 	}
-	
+
 	if($topicInfo['stickystatus'] == 1) {
 		$newTopicBG = " boardNewPostBG";
 		$dispTopicIconsIMG .= " <img src='".$MAIN_ROOT."themes/".$THEME."/images/forum-sticky.png' title='Sticky' style='margin-left: 5px'>";
 	}
-	
+
 	if($topicInfo['lockstatus'] == 1) {
 		$newTopicBG = " boardNewPostBG";
 		$dispTopicIconsIMG .= " <img src='".$MAIN_ROOT."themes/".$THEME."/images/forum-locked.png' title='Locked' style='margin-left: 5px'>";
 	}
-	
-	
+
+
 	echo "
 		<tr class='boardRows".$newTopicBG."'>
 			<td class='boardName dottedLine".$newTopicBG."'><a href='viewtopic.php?tID=".$postInfo['forumtopic_id']."'>".$postInfo['title']."</a>".$dispTopicIconsIMG."<br><span class='boardDescription'>by ".$dispTopicPoster." - ".getPreciseTime($postInfo['dateposted'])."</span></td>
@@ -363,7 +363,7 @@ foreach($arrPageTopics as $postID) {
 			<td class='boardLastPost dottedLine".$newTopicBG."'>by ".$dispLastPoster."<br>".getPreciseTime($lastPostInfo['dateposted'])."</td>
 		</tr>
 	";
-	
+
 }
 
 echo "
@@ -389,7 +389,7 @@ echo "
 ";
 
 if(count($arrTopics) == 0) {
-	
+
 	echo "
 		<div class='shadedBox' style='width: 40%; margin: 20px auto'>
 			<p class='main' align='center'>
@@ -397,8 +397,8 @@ if(count($arrTopics) == 0) {
 				<a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$_GET['bID']."'>Be the first!</a>
 			</p>
 		</div>
-	";	
-	
+	";
+
 }
 
 if($blnPageSelect) {

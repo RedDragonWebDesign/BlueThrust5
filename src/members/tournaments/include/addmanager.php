@@ -36,17 +36,17 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($_
 
 	$tournamentInfo = $tournamentObj->get_info_filtered();
 	$tmemberID = $tournamentInfo['member_id'];
-	
-	
+
+
 	if($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1") {
-			
+
 		$tournamentObj->addManager($_POST['managerID']);
-		
+
 		define("SHOW_MANAGERLIST", true);
 		require_once("managerlist.php");
-		
-		
+
+
 	}
-	
-	
+
+
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  * BlueThrust Clan Scripts
  * Copyright 2014

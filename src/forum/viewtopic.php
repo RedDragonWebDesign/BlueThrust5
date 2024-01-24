@@ -95,7 +95,7 @@ if($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION
 	$memberInfo = $member->get_info_filtered();
 	$LOGGED_IN = true;
 	$NUM_PER_PAGE = $memberInfo['postsperpage'];
-	
+
 	if(!$member->hasSeenTopic($topicInfo['forumtopic_id'])) {
 		$mysqli->query("INSERT INTO ".$dbprefix."forum_topicseen (member_id, forumtopic_id) VALUES ('".$memberInfo['member_id']."', '".$topicInfo['forumtopic_id']."')");
 	}
@@ -138,7 +138,7 @@ $blnPageSelect = false;
 $NUM_OF_PAGES = ceil($totalPosts/$NUM_PER_PAGE);
 
 if($NUM_OF_PAGES == 0) {
-	$NUM_OF_PAGES = 1;	
+	$NUM_OF_PAGES = 1;
 }
 
 if($_GET['pID'] > $NUM_OF_PAGES) {
@@ -183,28 +183,28 @@ if($LOGGED_IN) {
 		$dispPostReply = "<b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$topicInfo['forumboard_id']."&tID=".$topicInfo['forumtopic_id']."'>POST REPLY</a> &laquo;</b>";
 	}
 	else {
-		$dispPostReply = "<b>&raquo; LOCKED &laquo;</b>";	
+		$dispPostReply = "<b>&raquo; LOCKED &laquo;</b>";
 	}
-	
+
 	$consoleObj->select($intManagePostsCID);
 	if($boardObj->memberIsMod($memberInfo['member_id']) || $member->hasAccess($consoleObj)) {
 		$blnManagePosts = true;
-		
+
 		if($topicInfo['stickystatus'] == 0) {
 			$dispManagePosts .= "<b>&raquo <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&tID=".$topicInfo['forumtopic_id']."&action=sticky'>STICKY TOPIC</a> &laquo;</b>&nbsp;&nbsp;&nbsp;";
 		}
 		else {
 			$dispManagePosts .= "<b>&raquo <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&tID=".$topicInfo['forumtopic_id']."&action=sticky'>UNSTICKY TOPIC</a> &laquo;</b>&nbsp;&nbsp;&nbsp;";
 		}
-		
-		
+
+
 		if($topicInfo['lockstatus'] == 0) {
 			$dispManagePosts .= "<b>&raquo <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&tID=".$topicInfo['forumtopic_id']."&action=lock'>LOCK TOPIC</a> &laquo;</b>&nbsp;&nbsp;&nbsp;";
 		}
 		else {
 			$dispManagePosts .= "<b>&raquo <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&tID=".$topicInfo['forumtopic_id']."&action=lock'>UNLOCK TOPIC</a> &laquo;</b>&nbsp;&nbsp;&nbsp;";
 		}
-		
+
 		$dispManagePosts .= "<b>&raquo <a href='javascript:void(0)' onclick='deleteTopic()'>DELETE TOPIC</a> &laquo;</b>&nbsp;&nbsp;&nbsp;";
 		$dispManagePosts .= "<b>&raquo <a href='".$MAIN_ROOT."members/console.php?cID=".$moveTopicCID."&topicID=".$_GET['tID']."'>MOVE TOPIC</a> &laquo;</b>&nbsp;&nbsp;&nbsp;";
 	}
@@ -233,12 +233,12 @@ $result = $mysqli->query("SELECT forumpost_id FROM ".$dbprefix."forum_post WHERE
 while($row = $result->fetch_assoc()) {
 	$boardObj->objPost->select($row['forumpost_id']);
 	$boardObj->objPost->blnManageable = $blnManagePosts;
-	
+
 	if($boardObj->objPost->get_info("member_id") == $memberInfo['member_id'] || $blnManagePosts) {
 		$countManagablePosts++;
 		$boardObj->objPost->blnManageable = true;
 	}
-	
+
 	$boardObj->objPost->show();
 }
 
@@ -252,12 +252,12 @@ echo "
 ";
 
 if(LOGGED_IN && $topicInfo['lockstatus'] == 0) {
-	
+
 	$forumConsoleObj = new ConsoleOption($mysqli);
 	$postCID = $forumConsoleObj->findConsoleIDByName("Post Topic");
 	$forumConsoleObj->select($postCID);
 	$postReplyLink = $forumConsoleObj->getLink();
-	
+
 	$i = 1;
 	$arrComponents = array(
 		"message" => array(
@@ -274,14 +274,14 @@ if(LOGGED_IN && $topicInfo['lockstatus'] == 0) {
 			"value" => "Post"
 		)
 	);
-	
+
 	$arrSetupReplyForm = array(
 		"name" => "forum-quick-reply",
 		"components" => $arrComponents,
 		"wrapper" => array(),
 		"attributes" => array("method" => "post", "action" => $postReplyLink."&bID=".$boardInfo['forumboard_id']."&tID=".$topicInfo['forumtopic_id'])
 	);
-	
+
 	$quickReplyForm->buildForm($arrSetupReplyForm);
 	echo "
 
@@ -289,9 +289,9 @@ if(LOGGED_IN && $topicInfo['lockstatus'] == 0) {
 			<b>Quick Reply:</b>
 
 			";
-		
+
 		$quickReplyForm->show();
-	
+
 	echo "
 		</div>
 	
@@ -400,7 +400,7 @@ if($countManagablePosts > 0) {
 			}
 		</script>
 	";
-	
+
 }
 
 require_once($prevFolder."themes/".$THEME."/_footer.php");

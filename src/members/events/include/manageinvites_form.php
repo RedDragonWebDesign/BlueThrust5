@@ -33,41 +33,41 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 	$memberInfo = $member->get_info_filtered();
 
 	if($eventObj->select($eventID) && $member->hasAccess($consoleObj) && (($eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites") || $eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm")) || $memberInfo['rank_id'] == 1)) {
-		
+
 		$formObj = new Form();
 		$eventInfo = $eventObj->get_info_filtered();
 		$eventMemberInfo = $eventObj->objEventMember->get_info_filtered();
 		$objInviteMember = new Member($mysqli);
 		$objInviteMember->select($eventMemberInfo['member_id']);
 		$inviteMemberInfo = $objInviteMember->get_info_filtered();
-				
+
 		$dispAttendenceStatus = $eventObj->arrInviteStatus[$eventMemberInfo['status']];
 		$positionOptions = array("None");
 		foreach($eventObj->getPositions() as $value) {
-			
+
 			$eventObj->objEventPosition->select($value);
 			$dispPositionName = $eventObj->objEventPosition->get_info_filtered("name");
-			
+
 			$positionOptions[$value] = $dispPositionName;
-			
+
 		}
-		
+
 		$dispConfirmAttendence = array(
 			"type" => "hidden",
 			"hidden" => true,
 			"attributes" => array("id" => "confirmAttendence")
 		);
-		
-		
+
+
 
 		if($eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm")) {
-			
+
 			$dispSelected = "";
 			if($eventMemberInfo['attendconfirm_admin'] == 1) {
-				$dispSelected = " selected";	
+				$dispSelected = " selected";
 			}
-			
-			
+
+
 			$dispDisabledInfo = "";
 			$dispDisableForm = "";
 			if($eventInfo['startdate'] > time()) {
@@ -83,10 +83,10 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 				"options" => array("Not Confirmed", "Confirmed", "Excused", "Unexcused"),
 				"value" => $eventMemberInfo['attendconfirm_admin']
 			);
-			
-			
+
+
 		}
-		
+
 		$i = 1;
 		$arrComponents = array(
 			"attendancestatus" => array(
@@ -94,11 +94,11 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 				"type" => "custom",
 				"html" => "<div class='formInput'>".$dispAttendenceStatus."</div>",
 				"sortorder" => $i++
-			)		
+			)
 		);
-		
+
 		if($eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites")) {
-			
+
 			$arrComponents['selectposition'] = array(
 				"display_name" => "Set Position",
 				"type" => "select",
@@ -107,49 +107,49 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 				"attributes" => array("class" => "formInput textBox", "id" => "selectPositionID"),
 				"value" => $eventMemberInfo['position_id']
 			);
-			
+
 		}
-		
-		
+
+
 		$arrComponents['confirmattendance'] = $dispConfirmAttendence;
 		$arrComponents['confirmattendance']['sortorder'] = $i++;
-		
+
 		$arrComponents['submit'] = array(
 			"type" => "button",
 			"sortorder" => $i++,
 			"attributes" => array("class" => "formSubmitButton submitButton", "onclick" => "btnSaveClicked()"),
 			"value" => "Save"
-		
+
 		);
-		
-		
+
+
 		$setupFormArgs = array(
 			"name" => "console-".$cID."-manageinvites",
 			"components" => $arrComponents,
 			"wrapper" => array("<div>", "</div>")
 		);
-		
+
 		$formObj->buildForm($setupFormArgs);
-		
-		
+
+
 		if ( ! empty($_POST['submit']) ) {
 			require_once(BASE_DIRECTORY."members/events/include/manageinvites_submit.php");
 		}
-		
-		
-		
+
+
+
 		$formObj->show();
 
 		if(isset($_POST['submit']) && $countErrors == 0) {
-		
+
 			echo "
 				<p class='successFont' align='center'>
 					<b>Save Successfull!</b>
 				</p>
 			";
-		
+
 		}
-		
+
 		echo "
 
 			
@@ -167,23 +167,23 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 					$('#selectEventMemberID').removeAttr('disabled');
 					
 					";
-		
+
 		if($eventObj->memberHasAccess($memberID, "manageinvites")) {
 			echo "
 					$('#uninviteLinkDiv').html($('#uninviteLink').html());
 					$('#uninviteLinkDiv').show();
 				";
 		}
-		
+
 		echo "
 					$('#errorDiv').hide();
 					$('#noMemberSelectedDiv').hide();
 
 		";
 
-		
+
 		if(isset($_POST['submit']) && $countErrors > 0) {
-		
+
 			echo "
 				
 				$('#dispErrorSpan').html($('#dispErrorDiv').html());
@@ -191,10 +191,10 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 				$('#errorDiv').fadeIn(250);
 				
 			";
-		
+
 		}
-		
-		
+
+
 		echo "
 					
 				});
@@ -241,7 +241,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMember
 			</script>
 		";
 
-		
+
 	}
-	
+
 }

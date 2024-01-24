@@ -22,7 +22,7 @@
 			setcookie("btSessionID", session_id(), $cookieExpTime);
 		}
 	}
-	
+
 	require_once("../classes/btmysql.php");
 	require_once("../classes/btmail.php");
 	require_once("../classes/member.php");
@@ -34,7 +34,7 @@
 	require_once("consoleinfo.php");
 	$countErrors = 0;
 	$dispError = "";
-	
+
 ?>
 
 <!DOCTYPE html>
@@ -61,11 +61,11 @@
 			<div class='contentContainerTop'></div>
 			<div class='contentContainerCenter'>
 		<?php
-		
-		
-		
+
+
+
 		if(!file_exists("../_config.php")) {
-			
+
 			if(file_put_contents("../_config.php", "") === false) {
 
 				echo "
@@ -75,28 +75,28 @@
 				";
 
 			}
-			
+
 		}
 		elseif(file_exists("../_config.php") && !is_writable("../_config.php")) {
-				
+
 			echo "
 				<div class='noteDiv'>
 					<b>Note:</b> Unable to write to config file.  You can fix this by setting the file permissions on the _config.php file to 775.  Otherwise, you will need to manually create and fill out the _config.php file.
 				</div>
 			";
-			
+
 		}
-		
-		
-		
+
+
+
 		if($_GET['step'] == "" || $_GET['step'] == 1) {
-			require_once("steps/step1.php");			
+			require_once("steps/step1.php");
 		}
 		elseif($_GET['step'] == 2) {
 			require_once("steps/step2.php");
 		}
 		elseif($_GET['step'] == 3) {
-			require_once("steps/step3.php");	
+			require_once("steps/step3.php");
 		}
 		?>
 		

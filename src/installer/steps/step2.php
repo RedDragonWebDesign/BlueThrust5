@@ -1,10 +1,10 @@
 <?php
-	
+
 	$countErrors = 0;
 	if($_POST['step1submit']) {
-		
+
 		$mysqli = new btmysql($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass'], $_POST['dbname']);
-		
+
 		if($mysqli->connect_errno !== 0) {
 			$dispError .= "
 				&nbsp;&nbsp;<b>&middot;</b> Unable to connect to database!  Make sure you entered the correct information.<br><br>
@@ -12,13 +12,13 @@
 
 			$countErrors++;
 		}
-		
+
 		if($countErrors == 0) {
 
 			echo "
 				<div class='pageTitle'>Step 2</div>
 				";
-			
+
 			if($dispError != "") {
 				echo "
 				<div class='errorDiv'>
@@ -27,12 +27,12 @@
 				</div>
 				";
 			}
-			
+
 			$selectUpdateInstall = "";
 			if($_POST['installType'] == 2) {
-				$selectUpdateInstall = " selected";	
+				$selectUpdateInstall = " selected";
 			}
-			
+
 			echo "
 				<form action='index.php?step=3' method='post'>
 				<table class='mainTable'>
@@ -112,12 +112,12 @@
 		else {
 			$_POST['step1submit'] = false;
 		}
-		
-		
-		
+
+
+
 	}
-	
+
 	if(!$_POST['step1submit']) {
-		
-		require_once("step1.php");	
+
+		require_once("step1.php");
 	}

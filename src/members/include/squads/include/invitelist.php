@@ -20,7 +20,7 @@ require_once("../../../../classes/squad.php");
 
 // Start Page
 
-	
+
 $consoleObj = new ConsoleOption($mysqli);
 
 $cID = $consoleObj->findConsoleIDByName("View Squad Invitations");
@@ -43,29 +43,29 @@ $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$LOGIN_FAIL = false;
 	$memberInfo = $member->get_info_filtered();
-	
+
 	$counter = 0;
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."squadinvites WHERE receiver_id = '".$memberInfo['member_id']."' AND status = '0' ORDER BY datesent DESC");
 	while($row = $result->fetch_assoc()) {
-	
+
 		$member->select($row['sender_id']);
 		$squadMemberInfo = $member->get_info_filtered();
-		
+
 		$squadObj->select($row['squad_id']);
 		$squadInfo = $squadObj->get_info_filtered();
-		
+
 		if($squadMemberInfo['avatar'] == "") {
 			$squadMemberInfo['avatar'] = $MAIN_ROOT."themes/".$THEME."/images/defaultavatar.png";
 		}
 		else {
 			$squadMemberInfo['avatar'] = $MAIN_ROOT.$squadMemberInfo['avatar'];
 		}
-		
+
 		if(trim($row['message']) == "") {
-			$row['message'] = "None";	
+			$row['message'] = "None";
 		}
 		$squadObj->objSquadRank->select($row['startingrank_id']);
-		
+
 		echo "
 			<div class='newsDiv'>
 			
@@ -89,13 +89,13 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			</div>
 
 		";
-	
+
 		$counter++;
 	}
-	
-	
+
+
 	if($counter == 0) {
-		
+
 		echo "
 			<div class='shadedBox' style='width: 300px; margin-top: 50px; margin-left: auto; margin-right: auto; font-style: italic'>
 				<p class='main' align='center'>
@@ -105,5 +105,5 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			<br>
 		";
 	}
-	
+
 }

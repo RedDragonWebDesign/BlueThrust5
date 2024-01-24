@@ -15,7 +15,7 @@
 	$prevFolder = "../../";
 	require_once("../../_setup.php");
 	require_once("youtube.php");
-	
+
 	$ytObj = new Youtube($mysqli);
 	$arrReturn = array();
 	if(isset($_POST['yID']) && is_numeric($_POST['yID']) && $ytObj->select($_POST['yID'])) {
@@ -24,7 +24,7 @@
 
 		if((time()-$ytInfo['lastupdate']) > 1800) {
 			$ytObj->reloadCache();
-			
+
 			$arrReturn['result'] = "success";
 			$arrReturn['html'] = $ytObj->dispSubscribeButton();
 			$arrReturn['time'] = getPreciseTime(time());
@@ -32,14 +32,14 @@
 		}
 		else {
 			$arrReturn['result'] = "error";
-			$arrReturn['message'] = "Reload Limit Reached";	
+			$arrReturn['message'] = "Reload Limit Reached";
 		}
-		
+
 	}
 	else {
 		$arrReturn['result'] = "error";
 		$arrReturn['message'] = "Invalid yID";
 	}
-	
-	
+
+
 	echo json_encode($arrReturn);

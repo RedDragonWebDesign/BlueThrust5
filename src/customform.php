@@ -62,38 +62,38 @@ $dispError = "";
 $countErrors = 0;
 
 if ( ! empty($_POST['submit']) ) {
-	
+
 	// Check for multi submissions
-	
+
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."customform_submission WHERE ipaddress = '".$IP_ADDRESS."' ORDER BY submitdate DESC LIMIT 1");
 	if($result->num_rows > 0) {
 		$row = $result->fetch_assoc();
 		if((time()-$row['submitdate']) < 120) {
 			$countErrors++;
-			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> To prevent abuse you must wait 2 minutes before submitting again.<br>";			
+			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> To prevent abuse you must wait 2 minutes before submitting again.<br>";
 		}
 	}
-	
+
 	if($countErrors == 0) {
-		
+
 		$arrColumns = array("submitdate", "ipaddress", "customform_id");
 		$arrValues = array(time(), $IP_ADDRESS, $customPageInfo['customform_id']);
-		
+
 		if($customFormObj->objSubmission->addNew($arrColumns, $arrValues)) {
 			$submissionInfo = $customFormObj->objSubmission->get_info();
 			foreach($arrComponents as $componentID) {
 				$customFormObj->objComponent->select($componentID);
 				$componentInfo = $customFormObj->objComponent->get_info_filtered();
-				
+
 				if($componentInfo['componenttype'] == "separator") {
-					continue;	
+					continue;
 				}
-				
-				
+
+
 				$formComponentName = "customform_".$componentID;
-				
+
 				$arrSelectValues = $customFormObj->getSelectValues($componentID);
-				
+
 				// Check if required
 				if($componentInfo['required'] == 1 && $componentInfo['componenttype'] != "multiselect" && trim($_POST[$formComponentName]) == "") {
 					$countErrors++;
@@ -107,21 +107,21 @@ if ( ! empty($_POST['submit']) ) {
 							$countMultiSelect++;
 						}
 					}
-					
+
 					if($countMultiSelect == 0) {
 						$countErrors++;
 						$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> ".$componentInfo['name']." may not be blank.<br>";
 					}
 				}
-				
+
 				// Check Select Value
-				
+
 				if($componentInfo['componenttype'] == "select" && !in_array($_POST[$formComponentName], $arrSelectValues)) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid value for ".$componentInfo['name'].".<br>";
 				}
-				
-				
+
+
 				if($countErrors == 0) {
 					$arrColumns = array("submission_id", "component_id", "formvalue");
 					if($componentInfo['componenttype'] == "multiselect") {
@@ -133,7 +133,7 @@ if ( ! empty($_POST['submit']) ) {
 								$countErrors++;
 								$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 							}
-							
+
 						}
 					}
 					elseif($componentInfo['componenttype'] == "select") {
@@ -143,48 +143,48 @@ if ( ! empty($_POST['submit']) ) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 						}
-						
+
 					}
 					elseif(($componentInfo['componenttype'] == "input" || $componentInfo['componenttype'] == "largeinput") && !$customFormObj->objFormValue->addNew($arrColumns, array($submissionInfo['submission_id'], $componentID, $_POST[$formComponentName]))) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 					}
-					
+
 				}
 				else {
-					
+
 					$mysqli->query("DELETE FROM ".$dbprefix."customform_values WHERE submission_id = '".$submissionInfo['submission_id']."'");
 					$customFormObj->objSubmission->delete();
-					
-					break;	
+
+					break;
 				}
 
-				
+
 			}
-		
+
 		}
 		else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 		}
-		
-		
-		
+
+
+
 	}
-	
-	
-	
+
+
+
 	if($countErrors == 0) {
-		
+
 		if($customPageInfo['submitmessage'] == "") {
-			$customPageInfo['submitmessage'] = "<p align='center'>Success!</p>";	
-		}
-		
-		if($customPageInfo['submitlink'] == "") {
-			$customPageInfo['submitlink'] = $MAIN_ROOT;	
+			$customPageInfo['submitmessage'] = "<p align='center'>Success!</p>";
 		}
 
-		
+		if($customPageInfo['submitlink'] == "") {
+			$customPageInfo['submitlink'] = $MAIN_ROOT;
+		}
+
+
 		if($customPageInfo['specialform'] == "") {
 			echo "
 			
@@ -197,23 +197,23 @@ if ( ! empty($_POST['submit']) ) {
 			";
 		}
 		else {
-			
+
 			echo "
 				<div style='display: none' id='successBox'>
 					".$customPageInfo['submitmessage']."
 				
 					<form action='".$customPageInfo['submitlink']."' method='post'>
 						";
-	
+
 					foreach($arrComponents as $value) {
-						
+
 						$tempName = "customform_".$value;
 						echo "	
 							<input type='hidden' name='".$tempName."' value='".$_POST[$tempName]."'>
 						";
-						
+
 					}
-								
+
 					echo "
 						<input type='submit' name='submit' id='btnSubmitCustomForm' style='display: none'>
 					</form>
@@ -246,31 +246,31 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			
 			";
-			
+
 		}
-		
+
 		$member = new Member($mysqli);
 		$member->selectAdmin();
-		
-		
+
+
 		$consoleObj = new ConsoleOption($mysqli);
 		$viewSubmissionsCID = $consoleObj->findConsoleIDByName("View Custom Form Submissions");
 		$member->postNotification("There is a new submission for custom form: <b>".$customPageInfo['name']."</b><br><a href='".$MAIN_ROOT."members/console.php?cID=".$viewSubmissionsCID."'>View Form Submissions</a>");
-		
-		
+
+
 	}
-	
+
 	if($countErrors > 0) {
 		$_POST = filterArray($_POST);
-		$_POST['submit'] = false;	
-		
+		$_POST['submit'] = false;
+
 	}
-	
+
 }
 
 if ( empty($_POST['submit']) ) {
 	echo "<div class='formDiv'>";
-	
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -279,18 +279,18 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
-	
+
+
 	echo $customPageInfo['pageinfo'];
-	
+
 	echo "
 	
 		<form action='".$MAIN_ROOT."customform.php?pID=".$_GET['pID']."' method='post'>
 			<table class='formTable'>
 			";
-			
+
 			foreach($arrComponents as $componentID) {
-				
+
 				$customFormObj->objComponent->select($componentID);
 				$componentInfo = $customFormObj->objComponent->get_info_filtered();
 				$dispInput = "";
@@ -307,7 +307,7 @@ if ( empty($_POST['submit']) ) {
 							$selectValue = $customFormObj->objSelectValue->get_info_filtered("componentvalue");
 							$selectoptions .= "<option value='".$selectValueID."'>".$selectValue."</option>";
 						}
-					
+
 						$dispInput = "<select name='".$componentFormName."' class='textBox'>".$selectoptions."</select>";
 						break;
 					case "multiselect":
@@ -320,21 +320,21 @@ if ( empty($_POST['submit']) ) {
 						}
 						break;
 					case "input":
-						
-						$dispInput = "<input type='text' value='".$_POST[$componentFormName]."' name='".$componentFormName."' class='textBox' style='width: 150px'>";			
+
+						$dispInput = "<input type='text' value='".$_POST[$componentFormName]."' name='".$componentFormName."' class='textBox' style='width: 150px'>";
 				}
-				
+
 				$dispRequired = "";
 				if($componentInfo['required'] == 1) {
-					$dispRequired = "<span class='failFont' title='Required' style='cursor: default'>*</span>";	
+					$dispRequired = "<span class='failFont' title='Required' style='cursor: default'>*</span>";
 				}
-				
+
 				$dispToolTip = "";
 				if($componentInfo['tooltip'] != "") {
-					$dispToolTip = "<div style='display: none' id='tooltip_".$componentID."'>".nl2br($componentInfo['tooltip'])."</div> <a href='javascript:void(0)' onmouseover=\"showToolTip($('#tooltip_".$componentID."').html())\" onmouseout='hideToolTip()'><b>(?)</b></a>";				
+					$dispToolTip = "<div style='display: none' id='tooltip_".$componentID."'>".nl2br($componentInfo['tooltip'])."</div> <a href='javascript:void(0)' onmouseover=\"showToolTip($('#tooltip_".$componentID."').html())\" onmouseout='hideToolTip()'><b>(?)</b></a>";
 				}
-				
-				
+
+
 				if($componentInfo['componenttype'] != "separator") {
 					echo "
 						<tr>
@@ -357,10 +357,10 @@ if ( empty($_POST['submit']) ) {
 						</tr>
 					";
 				}
-				
-	
+
+
 			}
-	
+
 			echo "
 				<tr>
 					<td class='main' align='center' colspan='2'><br><br>
@@ -372,8 +372,8 @@ if ( empty($_POST['submit']) ) {
 			</table>
 		</form>
 	";
-	
-	
+
+
 	echo "</div>";
 
 }

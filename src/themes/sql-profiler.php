@@ -1,4 +1,4 @@
-	<?php if ( $debug ): ?>
+<?php if ( $debug ): ?>
 		<?php
 			$count = count($SQL_PROFILER);
 			$color = "color: limegreen;";
@@ -9,7 +9,7 @@
 				$color = "color: red;";
 			}
 			$rowIDCounter = 0;
-			
+
 			foreach ( $SQL_PROFILER as $key => $value ) {
 				$SQL_PROFILER[$key]['query'] = htmlspecialchars($SQL_PROFILER[$key]['query']);
 				// stack trace gets sanitized in the function it uses, to prevent sanitizing the <br />s it inserts
@@ -61,7 +61,7 @@
 			
 			<?php
 				$repeatedQueries = $SQL_PROFILER;
-				
+
 				// delete all data except for query
 				foreach ( $repeatedQueries as $key => $value ) {
 					$repeatedQueries[$key] = [
@@ -70,13 +70,13 @@
 						'count' => 1,
 					];
 				}
-				
+
 				// sort alphabetically
 				function compareByName($a, $b) {
 					return strcmp($a["query"], $b["query"]);
 				}
 				usort($repeatedQueries, 'compareByName');
-				
+
 				// then start merging duplicates
 				$currentKey = 0;
 				$currentValue = $repeatedQueries[0];
@@ -90,12 +90,12 @@
 						$currentValue = $value;
 					}
 				}
-				
+
 				// sort by sub-key "count"
 				usort($repeatedQueries, function ($b, $a) {
 					return $a['count'] <=> $b['count'];
 				});
-				
+
 				$repeatedQueries = array_slice($repeatedQueries, 0, 5);
 			?>
 			

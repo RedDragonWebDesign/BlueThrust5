@@ -7,15 +7,15 @@
 
 	$dispName = $donationInfo['name'];
 	if($donationInfo['name'] == "" && $dispMemberName == "") {
-		$dispName = "Anonymous";	
+		$dispName = "Anonymous";
 	}
 	elseif($donationInfo['name'] != "" && $dispMemberName != "") {
-		$dispName = $dispMemberName." <i>(".$donationInfo['name'].")</i>";	
+		$dispName = $dispMemberName." <i>(".$donationInfo['name'].")</i>";
 	}
-	
+
 
 	$dispMessage = ($donationInfo['message'] == "") ? "None" : nl2br(parseBBCode($donationInfo['message']));
-	
+
 	$i=0;
 	$arrComponents = array(
 		"campaign" => array(
@@ -55,8 +55,8 @@
 			"display_name" => "Message"
 		)
 	);
-	
-	
+
+
 	$setupFormArgs = array(
 		"name" => "console-".$cID."-donationdetails-".$donationInfo['donation_id'],
 		"components" => $arrComponents

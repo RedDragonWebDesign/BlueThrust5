@@ -50,23 +50,23 @@ echo "
 				The member's only page tagger is currently <b>on</b>.<br><br>
 			
 				<a href='javascript:void(0)' onclick='setMembersOnlyTaggerStatus()'>Turn Off Member's Only Page Tagger</a>
-			";			
+			";
 		}
 		else {
-			
+
 			echo "
 				The member's only page tagger is currently <b>off</b>.<br><br>
 			
 				<a href='javascript:void(0)' onclick='setMembersOnlyTaggerStatus()'>Turn On Member's Only Page Tagger</a>
 			";
-			
+
 		}
-		
+
 		$selectPrivateForum = "";
 		if($websiteInfo['privateforum'] == 1) {
-			$selectPrivateForum = " selected";	
+			$selectPrivateForum = " selected";
 		}
-		
+
 		$selectPrivateProfile = "";
 		if($websiteInfo['privateprofile'] == 1) {
 			$selectPrivateProfile = " selected";
@@ -105,9 +105,9 @@ echo "
 		
 		<div id='membersOnlyPageList'>
 		";
-		
+
 		require_once("membersonlypageslist.php");
-		
+
 		echo "
 		</div>
 	</div>	

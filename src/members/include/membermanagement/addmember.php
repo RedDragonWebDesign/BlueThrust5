@@ -54,18 +54,18 @@ $setRankCID = $consoleObj->findConsoleIDByName("Set Member's Rank");
 $consoleObj->select($setRankCID);
 $dispSetRank = false;
 if($member->hasAccess($consoleObj)) {
-	
+
 	// Get Ranks
 	$sqlRanks = "('".implode("','", $arrRanks)."')";
-	
-	
+
+
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id IN ".$sqlRanks." AND rank_id != '1' ORDER BY ordernum");
 	while($row = $result->fetch_assoc()) {
 		$rankOptions[$row['rank_id']] = filterText($row['name']);
 	}
-	
+
 	$dispSetRank = true;
-	
+
 }
 $consoleObj->select($cID);
 
@@ -182,7 +182,7 @@ $member->select($memberInfo['member_id']);
 
 function addMemberSavePassword() {
 	global $formObj;
-	
+
 	$formObj->objSave->set_password($_POST['password']);
 }
 

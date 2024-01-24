@@ -44,48 +44,48 @@ $pluginObj = new btPlugin($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-	
-	
+
+
 	$countErrors = 0;
 	$dispError = array();
-	
+
 	// Check if installed
-	
+
 	if(!in_array($_POST['pluginDir'], $pluginObj->getPlugins("filepath"))) {
 		$countErrors++;
 		$dispError[] = "The selected plugin is not installed!";
 	}
-	
-	
-	
+
+
+
 	// Start Uninstall
-	
+
 	$countDrops = 0;
 	foreach($arrPluginTables as $tableName) {
 
 		$dropSQL = "DROP TABLE `".$tableName."`";
 		if($mysqli->query($dropSQL)) {
-			$countDrops++;	
+			$countDrops++;
 		}
-		
+
 	}
-	
+
 	if($countDrops == count($arrPluginTables)) {
 		// Remove Plugin from plugin table
 		$pluginID = array_search($_POST['pluginDir'], $pluginObj->getPlugins("filepath"));
-		
+
 		$pluginObj->select($pluginID);
 		$checkDeletePlugin = $pluginObj->delete();
-		
-		
-		
+
+
+
 		// Remove Console Option
-		
+
 		$arrDeleteConsoleOptions = array(
 			"Create a Donation Campaign",
 			"Manage Donation Campaigns"
 		);
-		
+
 		$countDrops = 0;
 		foreach($arrDeleteConsoleOptions as $consoleOptionName) {
 			$consoleOptionID = $consoleObj->findConsoleIDByName($consoleOptionName);
@@ -94,26 +94,26 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				$countDrops = ($consoleObj->delete()) ? $countDrops+1 : $countDrops;
 			}
 		}
-		
+
 		$checkDeleteConsole = (count($arrDeleteConsoleOptions) == $countDrops);
-		
+
 		if(!$checkDeletePlugin) {
 			$countErrors++;
 			$dispError[] = "Unable to delete plugin from database table.  You will have to manually delete it. - ".$pluginID;
 		}
-		
+
 		if(!$checkDeleteConsole) {
 			$countErrors++;
-			$dispError[] = "Unable to delete ".$PLUGIN_NAME." console options.  You will have to manually delete them.";	
+			$dispError[] = "Unable to delete ".$PLUGIN_NAME." console options.  You will have to manually delete them.";
 		}
-		
+
 	}
 	else {
 		$countErrors++;
 		$dispError[] = "Unable to delete plugin database table.";
 	}
-	
-	
+
+
 	$arrReturn = array();
 	if($countErrors == 0) {
 		$arrReturn['result'] = "success";
@@ -123,9 +123,9 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		$arrReturn['result'] = "fail";
 		$arrReturn['errors'] = $dispError;
 	}
-	
+
 	$mysqli->optimizeTables();
-	
+
 	echo json_encode($arrReturn);
-	
+
 }

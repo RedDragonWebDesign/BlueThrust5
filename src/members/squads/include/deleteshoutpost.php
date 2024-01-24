@@ -44,15 +44,15 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		$squadInfo = $squadObj->get_info();
 
 		$squadNewsObj = new Basic($mysqli, "squadnews", "squadnews_id");
-		
+
 		if($squadNewsObj->select($_POST['postID'])) {
 			$squadNewsObj->delete();
 		}
-		
+
 		$blnManageShoutbox = true;
-	
+
 	}
-	
+
 }
 
 $squadMemberList = $squadObj->getMemberList();
@@ -61,23 +61,23 @@ if(in_array($memberInfo['member_id'], $squadMemberList) && $squadInfo['privatesh
 	$blnShowShoutBox = true;
 }
 elseif($squadInfo['privateshoutbox'] == 0) {
-	$blnShowShoutBox = true;	
+	$blnShowShoutBox = true;
 }
 
 if($blnShowShoutBox) {
 	$shoutboxObj = new Shoutbox($mysqli, "squadnews", "squadnews_id");
-			
+
 	$shoutboxObj->strDivID = "squadsShoutbox";
 	$shoutboxObj->intDispWidth = 205;
 	$shoutboxObj->intDispHeight = 400;
 	$shoutboxObj->blnUpdateShoutbox = true;
 	$shoutboxObj->strSQLSort = " AND squad_id ='".$squadInfo['squad_id']."'";
-	
+
 	if($blnManageShoutbox) {
 		$shoutboxObj->strEditLink = $MAIN_ROOT."members/squads/managesquad.php?&pID=ManageShoutbox&sID=".$squadInfo['squad_id']."&nID=";
 		$shoutboxObj->strDeleteLink = $MAIN_ROOT."members/squads/include/deleteshoutpost.php?sID=".$squadInfo['squad_id'];
 	}
-	
-	
+
+
 	echo $shoutboxObj->dispShoutbox();
 }

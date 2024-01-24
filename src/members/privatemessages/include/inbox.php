@@ -35,7 +35,7 @@ $multiMemPMObj = $pmObj->multiMemPMObj;
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {	
+if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 $memberInfo = $member->get_info_filtered();
 $arrPM = array();
@@ -62,7 +62,7 @@ elseif($isFolderSet && $condition1 && !in_array($_POST['folder'], $arrStandardFo
 	exit();
 }
 elseif(in_array($_POST['folder'], $arrStandardFolders)) {
-	$pmFolderObj->setFolder($_POST['folder']);	
+	$pmFolderObj->setFolder($_POST['folder']);
 }
 
 
@@ -80,23 +80,23 @@ foreach($arrPM as $key => $value) {
 	$pmInfo = $pmObj->get_info_filtered();
 
 	$useAltBG = " alternateBGColor";
-	
+
 	if(isset($arrPMMID[$key]) && $multiMemPMObj->select($arrPMMID[$key]) && $multiMemPMObj->get_info("seenstatus") == 1) {
-		$useAltBG = "";	
+		$useAltBG = "";
 	}
 	elseif(!isset($arrPMMID[$key]) && $pmInfo['status'] == 1) {
 		$useAltBG = "";
 	}
-	
+
 	$addToPMValue = "";
 	$addToPMURL = "";
 	if(isset($arrPMMID[$key])) {
 		$addToPMValue = "_".$arrPMMID[$key];
-		$addToPMURL = "&pmMID=".$arrPMMID[$key];	
+		$addToPMURL = "&pmMID=".$arrPMMID[$key];
 	}
-	
+
 	$member->select($pmInfo['sender_id']);
-	
+
 	if($_POST['folder'] == "-1" && $pmInfo['receiver_id'] != 0) {
 		$member->select($pmInfo['receiver_id']);
 		$dispSender = $member->getMemberLink();
@@ -108,7 +108,7 @@ foreach($arrPM as $key => $value) {
 	else {
 		$dispSender = $member->getMemberLink();
 	}
-	
+
 
 	echo "
 	<tr>

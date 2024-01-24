@@ -1,24 +1,24 @@
 <?php
 
 	if(!defined("SHOW_FORUMSEARCH")) {
-		exit();	
+		exit();
 	}
-	
+
 	$setFilterTopic = empty($filterTopic) ? "" : "data-topic='".$filterTopic."'";
 	$setFilterBoard = empty($filterBoard) ? "" : "data-board='".$filterBoard."'";
-	
+
 	$arrSearchFilterURL = array();
 	if($setFilterTopic != "") {
 		$arrSearchFilterURL[] = "topic=".$filterTopic;
 	}
-	
+
 	if($setFilterBoard != "") {
-		$arrSearchFilterURL[] = "filterboards[]=".$filterBoard;	
+		$arrSearchFilterURL[] = "filterboards[]=".$filterBoard;
 	}
-	
+
 	$addToURL = addslashes(implode("&", $arrSearchFilterURL));
 	if($addToURL != "") { $addToURL = "&".$addToURL; }
-	
+
 	echo "
 	
 		<div class='formDiv' style='border: 0px; background: none; overflow: auto'>

@@ -11,7 +11,7 @@
  * License: http://www.bluethrust.com/license.php
  *
  */
-	
+
 // Config File
 $prevFolder = "../";
 
@@ -62,21 +62,21 @@ if(count($_GET) > 0) {
 	$_POST['filterposts_newold'] = 0;
 	$_POST['sortresults'] = 0;
 	$_POST['sortresults_ascdesc'] = 0;
-	
+
 	if(count($_GET['filterboards']) == 0) {
-		$_POST['filterboards'][] = 0;	
+		$_POST['filterboards'][] = 0;
 	}
-	
+
 	foreach($_GET as $key => $value) {
 		$_POST[$key] = $_GET[$key];
 	}
-	
+
 }
 
 if(count($_POST) > 0) {
 	$breadcrumbObj->popCrumb();
 	$breadcrumbObj->addCrumb("Search Forum", $MAIN_ROOT."forum/search.php");
-	$breadcrumbObj->addCrumb("Search Results");	
+	$breadcrumbObj->addCrumb("Search Results");
 }
 
 
@@ -86,7 +86,7 @@ require_once($prevFolder."include/breadcrumb.php");
 $arrMemberList = array();
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '0' AND rank_id != '1' ORDER BY username");
 while($row = $result->fetch_assoc()) {
-	$arrMemberList[] = array("id" => $row['member_id'], "value" => filterText($row['username']));	
+	$arrMemberList[] = array("id" => $row['member_id'], "value" => filterText($row['username']));
 }
 
 $memberList = json_encode($arrMemberList);
@@ -96,45 +96,45 @@ $result = $mysqli->query("SELECT ".$dbprefix."forum_board.forumboard_id FROM ".$
 while($row = $result->fetch_assoc()) {
 	$boardObj->select($row['forumboard_id']);
 	if($boardObj->memberHasAccess($memberInfo)) {
-		
-		$filterBoardOptions[$row['forumboard_id']] = $boardObj->get_info_filtered("name");	
-		
+
+		$filterBoardOptions[$row['forumboard_id']] = $boardObj->get_info_filtered("name");
+
 		if(count($boardObj->getSubForums()) > 0) {
-			
-			recurseSubForums("&nbsp;&nbsp;&nbsp;&nbsp;");			
-			
-		}		
+
+			recurseSubForums("&nbsp;&nbsp;&nbsp;&nbsp;");
+
+		}
 	}
 }
 
 function recurseSubForums($spacing) {
-	global $filterBoardOptions, $boardObj, $memberInfo;	
-	
+	global $filterBoardOptions, $boardObj, $memberInfo;
+
 	$arrSubforums = $boardObj->getSubForums();
 	foreach($arrSubforums as $boardID) {
 		$boardObj->select($boardID);
 		if($boardObj->memberHasAccess($memberInfo)) {
 			$filterBoardOptions[$boardObj->get_info("forumboard_id")] = $spacing.$boardObj->get_info_filtered("name");
-			if(count($boardObj->getSubForums()) > 0) {			
+			if(count($boardObj->getSubForums()) > 0) {
 				recurseSubForums("&nbsp;&nbsp;&nbsp;&nbsp;".$spacing);
 			}
 		}
 	}
-	
+
 }
 
 function check_filter_boards() {
 	global $boardObj, $formObj;
-	
+
 	$countErrors = 0;
 	foreach($_POST['filterboards'] as $value) {
 		if(!$boardObj->select($value) && $value != 0) {
-			$countErrors++;	
+			$countErrors++;
 		}
 	}
-	
+
 	if($countErrors > 0) {
-		$formObj->errors[] = "You selected an invalid board filter.";	
+		$formObj->errors[] = "You selected an invalid board filter.";
 	}
 }
 
@@ -234,7 +234,7 @@ $formComponents = array(
 		"display_name" => "Include Sub-Forums",
 		"attributes" => array("class" => "formInput", "checked" => "checked"),
 		"sortorder" => $i++
-		
+
 	),
 	"submit" => array(
 		"type" => "submit",
@@ -258,11 +258,11 @@ $formObj = new Form($setupFormArgs);
 
 if(isset($_POST['submit']) && $formObj->validate()) {
 	$_SESSION['btLastSearch'] = time();
-	
+
 	define("SHOW_SEARCHRESULTS", true);
 	require_once("search_results.php");
 
-	
+
 }
 else {
 
@@ -272,19 +272,19 @@ else {
 
 
 function search_checks() {
-	
+
 	global $formObj;
-	
+
 	if(trim($_POST['keyword']) == "" && trim($_POST['fakesearchuser']) == "") {
 		$formObj->errors[] = "You must enter at least a search keyword or username.";
 	}
-	
+
 	if(isset($_SESSION['btLastSearch']) && time()-$_SESSION['btLastSearch'] < 15) {
-		//$formObj->errors[] = "Please wait 15 seconds before searching again.";	
+		//$formObj->errors[] = "Please wait 15 seconds before searching again.";
 	}
-	
+
 	if(!is_numeric($_POST['filtertopics_replies'])) {
-		$formObj->errors[] = "The number of topic replies must be a positive numeric value.";	
+		$formObj->errors[] = "The number of topic replies must be a positive numeric value.";
 	}
 
 }

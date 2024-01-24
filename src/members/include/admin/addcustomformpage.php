@@ -33,29 +33,29 @@ $customFormPageObj = new CustomForm($mysqli, "custompages", "custompage_id");
 $countErrors = 0;
 $dispError = "";
 if ( ! empty($_POST['submit']) ) {
-	
-	
+
+
 	if(trim($_POST['pagename']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a page name for your custom page.<br>";
 	}
-	
-	
-	
+
+
+
 	if($countErrors == 0) {
-		
+
 		$_POST['wysiwygHTML'] = str_replace("<?", "", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("?>", "", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("&lt;?", "", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("?&gt;", "", $_POST['wysiwygHTML']);
-		
+
 		$_POST['submitMessageHTML'] = str_replace("<?", "", $_POST['submitMessageHTML']);
 		$_POST['submitMessageHTML'] = str_replace("?>", "", $_POST['submitMessageHTML']);
 		$_POST['submitMessageHTML'] = str_replace("&lt;?", "", $_POST['submitMessageHTML']);
 		$_POST['submitMessageHTML'] = str_replace("?&gt;", "", $_POST['submitMessageHTML']);
-		
+
 		$postResults = ($_POST['postresults'] == "yes") ? "yes" : "";
-		
+
 		if($customFormPageObj->addNew(array("name", "pageinfo", "submitmessage", "submitlink", "specialform"), array($_POST['pagename'], $_POST['wysiwygHTML'], $_POST['submitMessageHTML'], $_POST['submitlink'], $postResults)) && $customFormPageObj->addComponents($_SESSION['btFormComponent'])) {
 
 			$intManageCustomPagesID = $consoleObj->findConsoleIDByName("Manage Custom Form Pages");
@@ -72,8 +72,8 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			";
 
-			
-			
+
+
 		}
 		else {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to add custom page.  Please try again!<br>";
@@ -81,27 +81,27 @@ if ( ! empty($_POST['submit']) ) {
 			$_POST['wysiwygHTML'] = addslashes($_POST['wysiwygHTML']);
 			$_POST['submitMessageHTML'] = addslashes($_POST['submitMessageHTML']);
 		}
-		
+
 	}
 	else {
 		$_POST['submit'] = false;
 		$_POST['wysiwygHTML'] = addslashes($_POST['wysiwygHTML']);
 		$_POST['submitMessageHTML'] = addslashes($_POST['submitMessageHTML']);
 	}
-	
-	
+
+
 }
 
 
 if ( empty($_POST['submit']) ) {
 	$addMenuItemCID = $consoleObj->findConsoleIDByName("Add Menu Item");
-	
+
 	echo "
 	<form action='console.php?cID=".$cID."' method='post'>
 	<div class='formDiv'>
 	
 	";
-	
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -112,9 +112,9 @@ if ( empty($_POST['submit']) ) {
 	}
 	else {
 		$_SESSION['btFormComponentCount'] = 0;
-		$_SESSION['btFormComponent'] = array();	
+		$_SESSION['btFormComponent'] = array();
 	}
-	
+
 	echo "
 		Fill out the form below to add a custom page.  In order to display a custom form page in the menu, go to the <a href='".$MAIN_ROOT."members/console.php?cID=".$addMenuItemCID."'>Add Menu Item</a> page.
 		<br><br>
@@ -198,11 +198,11 @@ if ( empty($_POST['submit']) ) {
 						</p>
 					
 					";
-					
-	
-					
-	
-	
+
+
+
+
+
 					echo "
 					
 					</div>
@@ -298,14 +298,14 @@ if ( empty($_POST['submit']) ) {
 			});
 
 	";
-	
+
 	if($dispError != "") {
 		echo "
 			$('#wysiwygDiv').html('".$_POST['wysiwygHTML']."');
 			
 		";
 	}
-	
+
 	echo "
 
 	
@@ -406,8 +406,8 @@ if ( empty($_POST['submit']) ) {
 	
 		</script>
 	";
-	
-	
-	
-	
+
+
+
+
 }

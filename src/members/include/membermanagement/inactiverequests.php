@@ -41,7 +41,7 @@ echo "
 		</div>
 		
 		<div id='iaRequestList'>
-		";		
+		";
 
 require_once("include/inactiverequestlist.php");
 

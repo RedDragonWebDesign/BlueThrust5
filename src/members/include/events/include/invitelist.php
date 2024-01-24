@@ -14,32 +14,32 @@
 
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
-	
+
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/event.php");
-	
+
 	// Start Page
-	
+
 	$consoleObj = new ConsoleOption($mysqli);
-	
+
 	$cID = $consoleObj->findConsoleIDByName("View Event Invitations");
 	$consoleObj->select($cID);
 	$consoleInfo = $consoleObj->get_info_filtered();
-	
+
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);
-	
+
 	$eventObj = new Event($mysqli);
-	
+
 	// Check Login
 	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
 	}
 	else {
-		exit();	
+		exit();
 	}
-	
+
 }
 else {
 	$memberInfo = $member->get_info();
@@ -54,14 +54,14 @@ $result = $mysqli->query("SELECT em.* FROM ".$dbprefix."events_members em, ".$db
 
 
 if($result->num_rows > 0) {
-	
+
 	echo "<table class='formTable' style='margin-top: 0px; border-spacing: 0px'>";
 	$counter = 0;
 	while($row = $result->fetch_assoc()) {
 		$row = filterArray($row);
 		$eventObj->select($row['event_id']);
 		$eventInfo = $eventObj->get_info_filtered();
-		
+
 		if($member->select($row['invitedbymember_id'])) {
 			$dispInvitedByLink = $member->getMemberLink();
 		}
@@ -69,9 +69,9 @@ if($result->num_rows > 0) {
 			$dispInvitedByLink = $member->getMemberLink();
 		}
 		else {
-			$dispInvitedByLink = "<i>Unknown</i>";	
+			$dispInvitedByLink = "<i>Unknown</i>";
 		}
-		
+
 		if($counter == 1) {
 			$addCSS = " alternateBGColor";
 			$counter = 0;
@@ -80,8 +80,8 @@ if($result->num_rows > 0) {
 			$addCSS = "";
 			$counter = 1;
 		}
-		
-		
+
+
 		if($row['status'] == 0 && time() < $eventInfo['startdate']) {
 			$dispActions = "<a href='javascript:void(0)' onclick=\"rsvpEvent('".$row['eventmember_id']."', '1')\">Accept</a> - <a href='javascript:void(0)' onclick=\"rsvpEvent('".$row['eventmember_id']."', '2')\">Decline</a>";
 		}
@@ -89,7 +89,7 @@ if($result->num_rows > 0) {
 			$dispActions = "You are going - <a href='javascript:void(0)' onclick=\"rsvpEvent('".$row['eventmember_id']."', '2')\" title='Decline Invitation'>Change your mind?</a>";
 		}
 		elseif($row['status'] == 1 && time() >= $eventInfo['startdate'] && ($row['attendconfirm_member'] == 0 && $row['attendconfirm_admin'] == 0)) {
-			$dispActions = "Attended - <a href='javascript:void(0)' onclick=\"confirmAttendence('".$row['eventmember_id']."')\">Confirm Attendance</a> - <a href='javascript:void(0)' onclick=\"hideEvent('".$row['eventmember_id']."')\" onmouseover=\"showToolTip('Hide this event if you didn\'t attend.')\" onmouseout='hideToolTip()'>Hide</a>";	
+			$dispActions = "Attended - <a href='javascript:void(0)' onclick=\"confirmAttendence('".$row['eventmember_id']."')\">Confirm Attendance</a> - <a href='javascript:void(0)' onclick=\"hideEvent('".$row['eventmember_id']."')\" onmouseover=\"showToolTip('Hide this event if you didn\'t attend.')\" onmouseout='hideToolTip()'>Hide</a>";
 		}
 		elseif($row['status'] == 1 && time() >= $eventInfo['startdate'] && $row['attendconfirm_member'] == 1) {
 			$dispActions = "Attendance Confirmed - <a href='javascript:void(0)' onclick=\"hideEvent('".$row['eventmember_id']."')\">Hide</a>";
@@ -100,8 +100,8 @@ if($result->num_rows > 0) {
 		elseif(($row['status'] == 2 || $row['status'] == 0) && time() >= $eventInfo['startdate']) {
 			$dispActions = "Did not attend - <a href='javascript:void(0)' onclick=\"hideEvent('".$row['eventmember_id']."')\">Hide</a>";
 		}
-		
-		
+
+
 		echo "
 			<tr>
 				<td class='main dottedLine".$addCSS."' style='height: 32px; width: 40%'><a href='".$MAIN_ROOT."events/info.php?eID=".$eventInfo['event_id']."'>".$eventInfo['title']."</a></td>
@@ -111,7 +111,7 @@ if($result->num_rows > 0) {
 			</tr>
 		";
 	}
-	
+
 	echo "</table>";
 	$member->select($memberInfo['member_id']);
 }

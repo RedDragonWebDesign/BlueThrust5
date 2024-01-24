@@ -41,40 +41,40 @@ $appComponentObj = $customFormObj->objComponent;
 $_SESSION['btFormComponent'] = array_values($_SESSION['btFormComponent']);
 
 if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
-	
-	
+
+
 	echo "
 	
 		<table class='formTable' style='width: 90%; margin-top: 3px'>
 		
 
 	";
-	
+
 	$totalComponents = count($_SESSION['btFormComponent'])-1;
 	$counter = 0;
 	foreach($_SESSION['btFormComponent'] as $key => $value) {
-		
+
 		$dispUpArrow = "";
 		if($counter != 0) {
 			$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveComponent('".$key."', 'up')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' style='width: 24px; height: 24px; border: 0px'></a>";
 		}
-		
+
 		$dispDownArrow = "";
 		if($counter != $totalComponents) {
 			$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveComponent('".$key."', 'down')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' style='width: 24px; height: 24px; border: 0px'></a>";
 		}
-		
+
 		$counter++;
-		
+
 		$dispType = ucfirst($value['type']);
 		if($value['type'] == "multiselect") {
 			$dispType = "Multi-Select";
 		}
 		elseif($value['type'] == "largeinput") {
-			$dispType = "Large-Input";	
+			$dispType = "Large-Input";
 		}
-		
-		
+
+
 		echo "
 			<tr>
 				<td class='main' style='width: 50%'><a href='javascript:void(0)' onclick=\"editComponent('".$key."')\">".$value['name']."</a></td>
@@ -85,14 +85,14 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 				<td class='main' style='width: 6%' align='center'><a href='javascript:void(0)' onclick=\"deleteComponent('".$key."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' style='width: 24px; height: 24px; border: 0px'></a></td>
 			</tr>
 		";
-		
+
 	}
 
-	
+
 	echo "
 		</table>
 	";
-	
+
 	if(count($_SESSION['btFormComponent']) == 0) {
 		echo "
 			<p class='main' align='center'>
@@ -100,5 +100,5 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 			</p>
 		";
 	}
-	
+
 }

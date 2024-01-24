@@ -30,15 +30,15 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
 	if($member->hasAccess($consoleObj) && $medalObj->select($_POST['itemID'])) {
-		
+
 		define("LOGGED_IN", true);
-		
+
 		$medalObj->move($_POST['moveDir']);
-		
+
 		require_once("main.php");
 		require_once("../../../console.managelist.list.php");
-		
+
 	}
-	
-	
+
+
 }

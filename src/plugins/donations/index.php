@@ -31,8 +31,8 @@ switch($_GET['p']) {
 	default:
 		if(isset($_GET['custom']) && isset($_GET['payment_status'])) {
 			$customVars = json_decode($_GET['custom'], true);
-			header("Location: ".FULL_SITE_URL."plugins/donations/?campaign_id=".$customVars['campaign_id']."&p=thankyou");	
-		} 
+			header("Location: ".FULL_SITE_URL."plugins/donations/?campaign_id=".$customVars['campaign_id']."&p=thankyou");
+		}
 		else {
 			$webInfoObj->setPage("plugins/donations/include/main.php");
 		}

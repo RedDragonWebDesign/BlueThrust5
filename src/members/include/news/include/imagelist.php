@@ -39,19 +39,19 @@ $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."imageslider ORDER BY ordernum DESC");
-	
+
 	echo "
 		<table class='formTable' style='border-spacing: 0px; margin-top: 0px; margin-bottom: 20px'>
 			<tr><td class='dottedLine' colspan='5'></td></tr>
 		";
-	
+
 	$intHighestOrderNum = $imageSliderObj->getHighestOrderNum();
 	$counter = 1;
 	while($row = $result->fetch_assoc()) {
-		
+
 		$dispUpArrow = ($counter == 1) ? "<img src='".$MAIN_ROOT."images/transparent.png' class='manageListActionButton'>" : "<a href='javascript:void(0)' onclick=\"moveImg('".$row['imageslider_id']."', 'up')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' class='manageListActionButton'></a>";
 		$dispDownArrow = ($counter == $intHighestOrderNum) ? "<img src='".$MAIN_ROOT."images/transparent.png' class='manageListActionButton'>" : "<a href='javascript:void(0)' onclick=\"moveImg('".$row['imageslider_id']."', 'down')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' class='manageListActionButton'></a>";
-		
+
 		echo "
 			<tr>
 				<td class='main manageList dottedLine' style='width: 76%; font-weight: bold'><a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&imgID=".$row['imageslider_id']."&action=edit'>".parseBBCode(filterText($row['name']))."</a></td>
@@ -61,12 +61,12 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				<td class='main manageList dottedLine' style='width: 6%'><a href='javascript:void(0)' onclick=\"deleteImg('".$row['imageslider_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' class='manageListActionButton'></a></td>
 			</tr>
 		";
-		
+
 		$counter++;
 	}
-	
+
 	echo "</table>";
-	
+
 	if($result->num_rows == 0) {
 		echo "
 

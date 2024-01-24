@@ -29,59 +29,59 @@ $cID = $_GET['cID'];
 
 
 if(isset($_POST['submit']) && $_POST['submit']) {
-	
+
 	$countErrors = 0;
 	$dispError = "";
-	
-	
+
+
 	// Check Category Name
-	
+
 	if(trim($_POST['catname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a Category Name.<br>";
 	}
-	
+
 	// Check Before/After
-	
+
 	if($_POST['beforeafter'] != "before" AND $_POST['beforeafter'] != "after") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (before/after).<br>";
 	}
 
-	
+
 	// Check image width
-	
+
 	if($_FILES['catimagefile']['name'] == "" AND trim($_POST['catimageurl']) != "" AND $_POST['useimage'] == "1" AND (trim($_POST['catimagewidth']) == "" OR $_POST['catimagewidth'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a valid image width when using an external image.<br>";
 	}
-	
-	
+
+
 	// Check image height
-	
+
 	if($_FILES['catimagefile']['name'] == "" AND trim($_POST['catimageurl']) != "" AND $_POST['useimage'] == "1" AND (trim($_POST['catimageheight']) == "" OR $_POST['catimageheight'] <= 0)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a valid image height when using an external image.<br>";
 	}
 
-	
+
 	// Check Order
-	
+
 	$rankCatObj = new RankCategory($mysqli);
-	
+
 	if($_POST['catorder'] != "first") {
 		if(!$rankCatObj->select($_POST['catorder'])) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (category).<br>";
 		}
 		else {
-			
+
 			$intNewCatOrderNum = $rankCatObj->makeRoom($_POST['beforeafter']);
 			if($intNewCatOrderNum == "false") {
 				$countErrors++;
-				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (category).<br>";			
+				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid category order (category).<br>";
 			}
-			
+
 		}
 	}
 	else {
@@ -94,21 +94,21 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 			$intNewCatOrderNum = 1;
 		}
 	}
-	
-	
+
+
 	$strCatImageURL = "";
 	// Check Image
 	if(isset($_POST['useimage']) && $_POST['useimage'] == 1) {
-		
+
 		// Use Image Selected, check for no errors
-		
+
 		if($countErrors == 0) {
-			
+
 			if($_FILES['catimagefile']['name'] != "") {
 				// Image File Selected.... Upload it
-				
+
 				$uploadFile = new BTUpload($_FILES['catimagefile'], "rankcat_", "../images/ranks/", array(".jpg",".png",".gif",".bmp"));
-				
+
 				if(!$uploadFile->uploadFile()) {
 					$countErrors++;
 					$dispError .= "<b>&middot;</b> Unable to upload category image file.  Please make sure the file extension is either .jpg, .png, .gif or .bmp<br>";
@@ -116,42 +116,42 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 				else {
 					$strCatImageURL = "images/ranks/".$uploadFile->getUploadedFileName();
 				}
-				
-				
+
+
 			}
 			else {
-				
+
 				$strCatImageURL = $_POST['catimageurl'];
-				
+
 			}
-			
+
 		}
-		
+
 		if($strCatImageURL == "") {
 			$_POST['useimage'] = 0;
 		}
-		
+
 	}
-	
+
 	if($countErrors == 0) {
 		// No errors... Add to DB
-		
-		
+
+
 		$arrColumns = array("name", "imageurl", "ordernum", "hidecat", "useimage", "description", "imagewidth", "imageheight", "color");
 		$arrValues = array($_POST['catname'], $strCatImageURL, $intNewCatOrderNum, $_POST['hidecat'], $_POST['useimage'], $_POST['catdesc'], $_POST['catimagewidth'], $_POST['catimageheight'], $_POST['rankcolor']);
-		
+
 		$newCat = new RankCategory($mysqli);
 		if($newCat->addNew($arrColumns, $arrValues)) {
-			
-			
+
+
 			// Added New Category... Now set the ranks in this category
-			
+
 			$newCatInfo = $newCat->get_info();
 			$rankObj = new Rank($mysqli);
 			$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 			while($row = $result->fetch_assoc()) {
 				$postVar = "rankid_".$row['rank_id'];
-				
+
 				if(isset($_POST[$postVar]) && $_POST[$postVar] == 1) {
 					if($rankObj->select($row['rank_id'])) {
 						$arrColumn = array("rankcategory_id");
@@ -159,9 +159,9 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 						$rankObj->update($arrColumn, $arrValue);
 					}
 				}
-				
+
 			}
-			
+
 			echo "
 			<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -178,56 +178,56 @@ if(isset($_POST['submit']) && $_POST['submit']) {
 			$_POST['submit'] = false;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to add category.  Please try again.<br>";
 		}
-		
+
 	}
 	else {
 		$_POST['submit'] = false;
 	}
-	
-	
+
+
 }
 
 
 
 if(!isset($_POST['submit']) || !$_POST['submit']) {
-	
-	
+
+
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."rankcategory ORDER BY ordernum DESC");
 	$orderoptions = "";
 	while($row = $result->fetch_assoc()) {
 		$rankCatName = filterText($row['name']);
 		$orderoptions .= "<option value='".$row['rankcategory_id']."'>".$rankCatName."</option>";
 	}
-	
+
 	if($orderoptions == "") {
 		$orderoptions = "<option value='first'>(first category)</option>";
 	}
-	
-	
+
+
 	$rankoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1' ORDER BY ordernum DESC");
-	
+
 	$rankcounter = 1;
 	while($row = $result->fetch_assoc()) {
 		$rankcounter++;
 		$rankoptions .= "<input type='checkbox' value='1' class='textBox' style='cursor: pointer' name='rankid_".$row['rank_id']."'> ".$row['name']."<br>";
 	}
-	
+
 	$rankoptionheight = 20*$rankcounter;
-	
+
 	if($rankoptionheight > 300) { $rankoptionheight = 300; }
-	
+
 	if($rankoptions == "") {
 		$rankoptions = "(no ranks added yet)";
 	}
-	
+
 	echo "
 	
 	<form action='console.php?cID=$cID' method='post' enctype='multipart/form-data'>
 		<div class='formDiv'>
 		
 		";
-	
+
 	if(isset($dispError) && $dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -236,7 +236,7 @@ if(!isset($_POST['submit']) || !$_POST['submit']) {
 		</div>
 		";
 	}
-	
+
 	echo "
 	
 	<script type='text/javascript'>
@@ -353,7 +353,7 @@ if(!isset($_POST['submit']) || !$_POST['submit']) {
 	
 	";
 
-	
-	
-	
+
+
+
 }

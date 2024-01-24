@@ -37,14 +37,14 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($t
 
 	if($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1") {
 
-		
+
 		$tournamentObj->delete();
-		
+
 		echo "deleted";
 	}
-	
-	
+
+
 }
 else {
-	echo "no";	
+	echo "no";
 }

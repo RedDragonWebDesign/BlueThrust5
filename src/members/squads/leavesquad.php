@@ -48,22 +48,22 @@ $countErrors = 0;
 
 
 if($_POST['submitted']) {
-	
-	
+
+
 	$squadMemberID = $squadObj->getSquadMemberID($memberInfo['member_id']);
 	$squadObj->objSquadMember->select($squadMemberID);
-	
+
 	if($squadObj->objSquadMember->delete()) {
-		
+
 		$dispMessage = "Successfully left squad: <b>".$squadInfo['name']."</b>";
-		
+
 	}
 	else {
-		
+
 		$dispMessage = "Unabled to close squad!";
-		
+
 	}
-	
+
 	echo "
 	
 	<div style='display: none' id='successBox'>
@@ -77,13 +77,13 @@ if($_POST['submitted']) {
 	</script>
 	
 	";
-	
+
 }
 
 
 
 if(!$_POST['submitted']) {
-	
+
 	echo "
 		
 	<form action='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=LeaveSquad' method='post' id='leaveSquadForm'>
@@ -145,5 +145,5 @@ if(!$_POST['submitted']) {
 		</script>
 	
 	";
-	
+
 }

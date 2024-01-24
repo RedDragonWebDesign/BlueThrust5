@@ -32,7 +32,7 @@ $cID = $_GET['cID'];
 
 
 if($_GET['cpID'] == "") {
-	
+
 	echo "
 	<div id='loadingSpiral' class='loadingSpiral'>
 		<p align='center'>
@@ -44,7 +44,7 @@ if($_GET['cpID'] == "") {
 	
 	";
 	require_once("custompages/main.php");
-	
+
 	echo "
 	</div>
 	<div id='deleteMessage' style='display: none'></div>
@@ -94,9 +94,9 @@ if($_GET['cpID'] == "") {
 	}
 	</script>
 	";
-	
-	
+
+
 }
 elseif($_GET['cpID'] != "" AND $_GET['action'] == "edit") {
-	require_once("custompages/edit.php");	
+	require_once("custompages/edit.php");
 }

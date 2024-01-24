@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  * BlueThrust Clan Scripts
  * Copyright 2014
@@ -59,19 +59,19 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					});
 				</script>
 			";
-			
+
 		}
 		else {
-			
+
 			$pmFolderObj->delete();
-			
+
 		}
-				
-		
+
+
 		define("SHOW_FOLDERLIST", true);
 		require_once("folderlist.php");
-		
+
 
 	}
-	
+
 }

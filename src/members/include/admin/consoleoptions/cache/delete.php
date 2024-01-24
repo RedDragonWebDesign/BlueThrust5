@@ -40,14 +40,14 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
 	if(($checkAccess1 || $checkAccess2) && is_numeric($_POST['kID']) && isset($_SESSION['btAccessRules'][$_POST['kID']])) {
-		
-		
+
+
 		unset($_SESSION['btAccessRules'][$_POST['kID']]);
 
-		
+
 	}
 
 
 	require_once("view.php");
-	
+
 }

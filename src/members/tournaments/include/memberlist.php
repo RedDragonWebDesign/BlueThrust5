@@ -31,26 +31,26 @@ $tID = $_GET['tID'];
 $arrMembers = array();
 
 if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID) && $member->hasAccess($consoleObj) && strlen($_GET['term']) >= 3) {
-	
+
 	$memberInfo = $member->get_info();
 	$tmemberID = $tournamentObj->get_info("member_id");
-	
+
 	if($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
-		
+
 		$tournamentPlayers = $tournamentObj->getPlayers();
 		$memberSQL = "('".implode("','", $tournamentPlayers)."')";
-		
-		
+
+
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE username LIKE '".$_GET['term']."%' ORDER BY username");
 		while($row = $result->fetch_assoc()) {
-			
+
 			$arrMembers[] = array("id" => $row['member_id'], "value" => $row['username']);
-			
+
 		}
-		
+
 		echo json_encode($arrMembers);
-		
-		
+
+
 	}
-	
+
 }

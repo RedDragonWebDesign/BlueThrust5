@@ -30,7 +30,7 @@ $cID = $_GET['cID'];
 $regOptionsCID = $consoleObj->findConsoleIDByName("Registration Options");
 
 
-	
+
 echo "
 	<div class='formDiv'>
 

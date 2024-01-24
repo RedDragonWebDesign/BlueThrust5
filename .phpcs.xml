@@ -1,9 +1,15 @@
 <ruleset>
     <arg name="tab-width" value="4"/>
+
+    <!-- don't touch files that aren't in git -->
     <exclude-pattern>/.github/</exclude-pattern>
     <exclude-pattern>/.vscode/</exclude-pattern>
     <exclude-pattern>/gitignore/</exclude-pattern>
     <exclude-pattern>/screenshots/</exclude-pattern>
     <exclude-pattern>/vendor/</exclude-pattern>
+
+    <!-- only check *.php files -->
+    <exclude-pattern>*\.(?!php$)</exclude-pattern>
+
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>  
 </ruleset>

@@ -47,20 +47,20 @@ $dispError = "";
 $countErrors = 0;
 
 if ( ! empty($_POST['submit']) ) {
-	
+
 	// Check position name
 	if(trim($_POST['positionname']) == "") {
 		$countErrors++;
-		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not enter a blank position name.<br>";	
+		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not enter a blank position name.<br>";
 	}
-	
+
 	// Check display order
 	$intNewOrderNum = $eventObj->objEventPosition->validateOrder($_POST['displayorder'], $_POST['beforeafter']);
 	if($intNewOrderNum === false) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
 	}
-	
+
 	// Filter Position Options
 	$arrPositionOptions = $eventObj->arrPositionOptions;
 	foreach($arrPositionOptions as $positionOptionName) {
@@ -68,10 +68,10 @@ if ( ! empty($_POST['submit']) ) {
 			$_POST[$positionOptionName] = 1;
 		}
 	}
-	
-	
+
+
 	if($countErrors == 0) {
-		
+
 		$arrColumns = array("event_id", "name", "sortnum", "modchat", "invitemembers", "manageinvites", "postmessages", "managemessages", "attendenceconfirm", "editinfo", "eventpositions", "description");
 		$arrValues = array($eventInfo['event_id'], $_POST['positionname'], $intNewOrderNum, $_POST['modchat'], $_POST['invitemembers'], $_POST['manageinvites'], $_POST['postmessages'], $_POST['managemessages'], $_POST['attendenceconfirm'], $_POST['editinfo'], $_POST['eventpositions'], $_POST['description']);
 		if($eventObj->objEventPosition->addNew($arrColumns, $arrValues)) {
@@ -93,44 +93,44 @@ if ( ! empty($_POST['submit']) ) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-		
+
 	}
-	
-	
+
+
 	if($countErrors > 0) {
 		$_POST = filterArray($_POST);
-		$_POST['submit'] = false;		
+		$_POST['submit'] = false;
 	}
-	
+
 }
 
 
 if ( empty($_POST['submit']) ) {
-	
+
 	$arrPositions = $eventObj->getPositions(" ORDER BY sortnum");
-	
+
 	foreach($arrPositions as $positionID) {
 		$eventObj->objEventPosition->select($positionID);
 		$positionInfo = $eventObj->objEventPosition->get_info_filtered();
-		$orderoptions .= "<option value='".$positionID."'>".$positionInfo['name']."</option>";	
+		$orderoptions .= "<option value='".$positionID."'>".$positionInfo['name']."</option>";
 	}
-	
+
 	if(count($arrPositions) == 0) {
 		$orderoptions = "<option value='first'>(first position)</option>";
 	}
-	
+
 	$postMessages = "";
 	if($eventInfo['messages'] == 1) {
 		$postMessages = " onmouseover=\"showToolTip('You have allowed all invited members to post messages on the event page.  Uncheck this box to create a position that will prevent members posting messages.')\" onmouseout='hideToolTip()' checked";
 	}
-	
+
 	echo "
 		<form action='".$MAIN_ROOT."members/events/manage.php?eID=".$eID."&pID=AddPosition' method='post'>
 			<div class='formDiv'>
 			
 			";
-	
-	
+
+
 	if($dispError != "") {
 		echo "
 		<div class='errorDiv'>
@@ -139,7 +139,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
+
 	echo "
 				Event positions allow you to give certain members who will be attending the event greater responsibilities.  Create the position below and assign invited members a position on the <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$eID."&pID=ManageInvites'>Manage Invites</a> page.
 				<br><br>

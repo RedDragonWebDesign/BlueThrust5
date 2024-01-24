@@ -48,7 +48,7 @@ if($_GET['catID'] == "") {
 		<div id='deleteMessage' style='display: none'></div>
 	
 	";
-	
+
 	echo "
 	
 	<script type='text/javascript'>
@@ -111,11 +111,11 @@ if($_GET['catID'] == "") {
 			
 	</script>
 	";
-	
-	
+
+
 }
 elseif($_GET['catID'] != "" AND $_GET['action'] == "edit") {
-	
+
 	require_once("manageconsolecat/edit.php");
-	
+
 }

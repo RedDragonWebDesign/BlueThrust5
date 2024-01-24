@@ -31,7 +31,7 @@ $gameObj = new Game($mysqli);
 $gameStatsObj = new Basic($mysqli, "gamestats", "gamestats_id");
 
 if($_GET['gID'] == "") {
-	
+
 	echo "
 		<div id='loadingSpiral' class='loadingSpiral'>
 			<p align='center'>
@@ -40,9 +40,9 @@ if($_GET['gID'] == "") {
 		</div>
 		<div id='contentDiv'>
 	";
-	
+
 	require_once("gamesplayed/main.php");
-	
+
 	echo "
 		</div>
 		<div id='deleteMessage' style='display: none'></div>
@@ -110,7 +110,7 @@ if($_GET['gID'] == "") {
 			
 		</script>
 	";
-	
+
 }
 elseif($_GET['gID'] != "" AND $_GET['action'] == "edit") {
 	require_once("gamesplayed/edit.php");

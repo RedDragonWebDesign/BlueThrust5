@@ -49,7 +49,7 @@ $intAddCustomPageID = $consoleObj->findConsoleIDByName("Add Custom Page");
 $counter = 0;
 $result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."custompages ORDER BY pagename");
 while($row = $result->fetch_assoc()) {
-	
+
 	if($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
@@ -58,8 +58,8 @@ while($row = $result->fetch_assoc()) {
 		$addCSS = "";
 		$counter = 1;
 	}
-	
-	
+
+
 	$dispPages .= "
 	<tr>
 		<td class='dottedLine".$addCSS."' width=\"80%\">&nbsp;&nbsp;<span class='main'><b><a href='console.php?cID=".$cID."&cpID=".$row['custompage_id']."&action=edit'>".$row['pagename']."</a></b></td>
@@ -70,7 +70,7 @@ while($row = $result->fetch_assoc()) {
 }
 
 if($result->num_rows == 0) {
-	
+
 	$dispPages = "<tr><td colspan='3'><br><p align='center' class='main'><i>No custom pages added yet!</i></p></td></tr>";
 }
 

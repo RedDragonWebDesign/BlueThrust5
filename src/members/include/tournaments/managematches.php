@@ -40,15 +40,15 @@ $countErrors = 0;
 
 
 if(isset($_GET['mID']) && $tournamentObj->objMatch->select($_GET['mID'])) {
-	
+
 	require_once("include/managematch.php");
-	
-	
+
+
 }
 elseif(isset($_GET['pID']) && $tournamentObj->objTournamentPool->objTournamentPoolMatch->select($_GET['pID'])) {
 
 	require_once("include/managepoolmatch.php");
-	
+
 }
 else {
 
@@ -62,33 +62,33 @@ else {
 	";
 	$counter = 0;
 	foreach($arrTournaments as $tournamentID) {
-		
+
 		$tournamentObj->select($tournamentID);
 		$tournamentName = $tournamentObj->get_info_filtered("name");
 		$playerID = $tournamentObj->getTournamentPlayerID($memberInfo['member_id']);
-		
+
 		$tournamentObj->objPlayer->select($playerID);
-		
+
 		$teamID = $tournamentObj->objPlayer->get_info("team_id");
-		
+
 		// Get matches
-		
+
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentpools_teams WHERE tournament_id='".$tournamentID."' AND ((team1_id != '0' AND team2_id = '".$teamID."') OR (team2_id != '0' AND team1_id = '".$teamID."')) AND (team1approve = '0' OR team2approve = '0')");
 		while($row = $result->fetch_assoc()) {
 			$counter++;
-			
+
 			if($row['team1_id'] != $teamID) {
 				$dispOpponent = $tournamentObj->getPlayerName($row['team1_id']);
 			}
 			else {
-				$dispOpponent = $tournamentObj->getPlayerName($row['team2_id']);	
+				$dispOpponent = $tournamentObj->getPlayerName($row['team2_id']);
 			}
 			$tournamentObj->objPlayer->select($playerID);
-			
+
 			if($tMemberObj->select($dispOpponent)) {
-				$dispOpponent = $tMemberObj->getMemberLink();	
+				$dispOpponent = $tMemberObj->getMemberLink();
 			}
-			
+
 			$dispPools .= "
 				<tr>
 					<td class='main' style='height: 20px'><a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&pID=".$row['poolteam_id']."'>".$tournamentName."</a></td>
@@ -97,16 +97,16 @@ else {
 				</tr>
 			";
 		}
-		
-		
-		
+
+
+
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentmatch WHERE tournament_id='".$tournamentID."' AND ((team1_id != '0' AND team2_id = '".$teamID."') OR (team2_id != '0' AND team1_id = '".$teamID."')) AND (team1approve = '0' OR team2approve = '0') ORDER BY round");
-		
-		
+
+
 		while($row = $result->fetch_assoc()) {
 			$counter++;
-		
-			
+
+
 			if($row['team1_id'] != $teamID) {
 				$dispOpponent = $tournamentObj->getPlayerName($row['team1_id']);
 			}
@@ -114,38 +114,38 @@ else {
 				$dispOpponent = $tournamentObj->getPlayerName($row['team2_id']);
 			}
 			$tournamentObj->objPlayer->select($playerID);
-			
+
 			if($tMemberObj->select($dispOpponent)) {
 				$dispOpponent = $tMemberObj->getMemberLink();
 			}
 
-			
+
 			$arrDispMatches[$row['round']] .= "
 				<tr>
 					<td class='main' style='height: 25px'><a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&mID=".$row['tournamentmatch_id']."'>".$tournamentName."</a></td>
 					<td class='main' style='height: 25px; padding-left: 10px'>".$dispOpponent."</td>
 					<td class='main' style='height: 25px' align='center'>".$row['round']."</td>
 				</tr>
-				";		
+				";
 		}
-		
-		
-		
+
+
+
 	}
-	
+
 	echo $dispPools;
-	
+
 	foreach($arrDispMatches as $value) {
-		echo $value;	
+		echo $value;
 	}
-	
-	
-	
+
+
+
 	echo "</table>";
-	
-	
+
+
 	if($counter == 0) {
-	
+
 		echo "
 			<div class='shadedBox' style='width: 40%; margin: 25px auto'>
 				<p class='main' align='center'>
@@ -153,10 +153,10 @@ else {
 				</p>
 			</div>
 		";
-	
+
 	}
 	else {
-		
+
 	echo "	
 		
 		<script type='text/javascript'>
@@ -171,7 +171,7 @@ else {
 		</script>
 		
 	";
-	
+
 	}
 
 

@@ -41,31 +41,31 @@ $pluginObj = new btPlugin($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-	
-	
+
+
 	$countErrors = 0;
 	$dispError = array();
-	
+
 	// Check if installed
-	
+
 	if(!in_array($_POST['pluginDir'], $pluginObj->getPlugins("filepath"))) {
 		$countErrors++;
 		$dispError[] = "The selected plugin is not installed!";
 	}
-	
-	
-	
+
+
+
 	// Start Uninstall
-	
+
 	$sql = "DROP TABLE `".$PLUGIN_TABLE_NAME."`";
-	
+
 	if($mysqli->query($sql)) {
 		// Remove Plugin from plugin table
 		$pluginID = array_search($_POST['pluginDir'], $pluginObj->getPlugins("filepath"));
-		
+
 		$pluginObj->select($pluginID);
 		$checkDeletePlugin = $pluginObj->delete();
-		
+
 		// Remove Console Option
 		$twitterConnectCID = $consoleObj->findConsoleIDByName($PLUGIN_NAME);
 		if($twitterConnectCID !== false) {
@@ -73,26 +73,26 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			$checkDeleteConsole = $consoleObj->delete();
 		}
 		else {
-			$checkDeleteConsole = false;	
+			$checkDeleteConsole = false;
 		}
-		
+
 		if(!$checkDeletePlugin) {
 			$countErrors++;
 			$dispError[] = "Unable to delete plugin from database table.  You will have to manually delete it. - ".$pluginID;
 		}
-		
+
 		if(!$checkDeleteConsole) {
 			$countErrors++;
-			$dispError[] = "Unable to delete ".$PLUGIN_NAME." console option.  You will have to manually delete it.";	
+			$dispError[] = "Unable to delete ".$PLUGIN_NAME." console option.  You will have to manually delete it.";
 		}
-		
+
 	}
 	else {
 		$countErrors++;
 		$dispError[] = "Unable to delete plugin database table.";
 	}
-	
-	
+
+
 	$arrReturn = array();
 	if($countErrors == 0) {
 		$arrReturn['result'] = "success";
@@ -102,8 +102,8 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		$arrReturn['result'] = "fail";
 		$arrReturn['errors'] = $dispError;
 	}
-	
-	
+
+
 	echo json_encode($arrReturn);
-	
+
 }

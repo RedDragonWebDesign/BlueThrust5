@@ -36,7 +36,7 @@ echo "
 		
 		<div id='diplomacyRequests'>
 	";
-		
+
 		require_once("include/diplomacyrequests.php");
 
 	echo "

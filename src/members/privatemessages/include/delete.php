@@ -37,38 +37,38 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	$pmObj = new Basic($mysqli, "privatemessages", "pm_id");
 
 	$arrPMIDS = json_decode($_POST['deletePMs'], true);
-	
-	
+
+
 	foreach($arrPMIDS as $pmID) {
-		
+
 		if(!is_numeric($pmID)) {
 			$arrMultiMemPM = explode("_", $pmID);
-			
+
 			$pmID = $arrMultiMemPM[0];
 			$pmMID = $arrMultiMemPM[1];
-			
+
 		}
 
-		
+
 		$pmObj->select($pmID);
 		$pmInfo = $pmObj->get_info();
-		
+
 		if($pmInfo['receiver_id'] == 0) {
 			$multiMemPMObj = new Basic($mysqli, "privatemessage_members", "pmmember_id");
-			
+
 			$multiMemPMObj->select($pmMID);
-			
-			
+
+
 			$multiMemPMInfo = $multiMemPMObj->get_info();
-			
+
 			if($multiMemPMInfo['member_id'] == $memberInfo['member_id'] && $multiMemPMInfo['pmfolder_id'] == -2) {
 				$multiMemPMObj->update(array("deletestatus"), array(1));
 			}
 			elseif($multiMemPMInfo['member_id'] == $memberInfo['member_id']) {
-				$multiMemPMObj->update(array("pmfolder_id"), array(-2));	
+				$multiMemPMObj->update(array("pmfolder_id"), array(-2));
 			}
-			
-			
+
+
 		}
 		elseif($pmInfo['receiver_id'] == $memberInfo['member_id'] && $pmInfo['receiverfolder_id'] == -2) {
 			$pmObj->update(array("deletereceiver"), array(1));
@@ -82,7 +82,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		elseif($pmInfo['sender_id'] == $memberInfo['member_id']) {
 			$pmObj->update(array("senderfolder_id"), array(-2));
 		}
-		
+
 	}
 
 

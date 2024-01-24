@@ -44,7 +44,7 @@ if($boardObj->select($_GET['bID']) && $_GET['action'] == "edit") {
 
 }
 else {
-	
+
 	echo "
 	
 		<table class='formTable'>
@@ -70,9 +70,9 @@ else {
 	
 	
 	";
-	
+
 	require_once("include/main_manageboards.php");
-	
+
 	echo "
 		</div>
 		<div id='deleteBoardDiv' style='display: none'></div>

@@ -60,10 +60,10 @@ if($result->num_rows > 0) {
 				<td class='formTitle' style='width: 20%'>Untag Page:</td>
 			</tr>
 		";
-		
+
 		$counter = 0;
 		while($row = $result->fetch_assoc()) {
-			
+
 			if($counter == 0) {
 				$addCSS = "";
 				$counter = 1;
@@ -72,8 +72,8 @@ if($result->num_rows > 0) {
 				$addCSS = " alternateBGColor";
 				$counter = 0;
 			}
-			
-			
+
+
 			echo "
 				<tr>
 					<td class='main dottedLine".$addCSS."' style='padding-left: 5px; width: 40%'><a href='http://".$row['pageurl']."' target='_blank'>".filterText($row['pagename'])."</a></td>
@@ -81,9 +81,9 @@ if($result->num_rows > 0) {
 					<td class='main dottedLine".$addCSS."' style='width: 20%' align='center'><a href='javascript:void(0)' onclick=\"untagPage('".$row['page_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' title='Untag Page' width='24' height='24'></a></td>
 				</tr>
 			";
-			
+
 		}
-	
+
 	echo "
 		</table>
 	

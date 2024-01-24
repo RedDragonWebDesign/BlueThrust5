@@ -14,35 +14,35 @@
 
 
 if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
-	
+
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
-	
+
 	// Start Page
-	
+
 	$consoleObj = new ConsoleOption($mysqli);
-	
+
 	$cID = $consoleObj->findConsoleIDByName("Manage Forum Categories");
 	$intAddCategoryCID = $consoleObj->findConsoleIDByName("Add Forum Category");
 	$consoleObj->select($cID);
 	$consoleInfo = $consoleObj->get_info_filtered();
-	
+
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);
-	
-	
+
+
 	$categoryObj = new BasicOrder($mysqli, "forum_category", "forumcategory_id");
 	$categoryObj->set_assocTableName("forum_board");
 	$categoryObj->set_assocTableKey("forumboard_id");
-	
+
 	// Check Login
 	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
 	}
 	else {
-		exit();	
+		exit();
 	}
-	
+
 }
 else {
 	$memberInfo = $member->get_info();
@@ -61,7 +61,7 @@ echo "
 $counter = 0;
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
 while($row = $result->fetch_assoc()) {
-	
+
 	$categoryObj->select($row['forumcategory_id']);
 	$addCSS = "";
 	if($counter == 1) {
@@ -69,22 +69,22 @@ while($row = $result->fetch_assoc()) {
 		$counter = 0;
 	}
 	else {
-		$counter = 1;	
+		$counter = 1;
 	}
-	
+
 	$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveCat('up', '".$row['forumcategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 	$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveCat('down', '".$row['forumcategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' width='24' height='24' title='Move Down'></a>";
-	
+
 	if($categoryObj->getHighestOrderNum() == $row['ordernum']) {
 		$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height='24'>";
 	}
-	
-	
+
+
 	if($row['ordernum'] == 1) {
 		$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height='24'>";
 	}
-	
-	
+
+
 	echo "
 	
 		<tr>
@@ -102,7 +102,7 @@ while($row = $result->fetch_assoc()) {
 echo "</table>";
 
 if($result->num_rows == 0) {
-	
+
 	echo "
 	
 		<div class='shadedBox' style='width: 40%; margin: 20px auto'>
@@ -112,5 +112,5 @@ if($result->num_rows == 0) {
 		</div>
 	
 	";
-	
+
 }

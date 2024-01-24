@@ -55,14 +55,14 @@ while($row = $result->fetch_assoc()) {
 		$addCSS = "";
 		$counter = 1;
 	}
-	
+
 	if($x == 1) {
 		$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 	}
 	else {
-		$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveGame('up', '".$row['gamesplayed_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";	
+		$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveGame('up', '".$row['gamesplayed_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 	}
-	
+
 	if($x == $intHighestOrder) {
 		$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 	}
@@ -80,13 +80,13 @@ while($row = $result->fetch_assoc()) {
 		<td align='center' class='dottedLine".$addCSS."' width=\"6%\"><a href='javascript:void(0)' onclick=\"deleteGame('".$row['gamesplayed_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' width='24' height='24' title='Delete Game'></a></td>
 	</tr>
 	";
-	
+
 	$x++;
 }
 
 
 if($x == 1) {
-	$dispGames = "<tr><td colspan='5'><br><p align='center' class='main'><i>No games added yet!</i></p></td></tr>";	
+	$dispGames = "<tr><td colspan='5'><br><p align='center' class='main'><i>No games added yet!</i></p></td></tr>";
 }
 
 echo "
