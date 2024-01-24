@@ -54,10 +54,10 @@ class Member extends Basic {
 				return false;
 			}
 
-		if ($result->num_rows > 0) {
-			$this->arrObjInfo = $result->fetch_assoc();
-			$this->intTableKeyValue = $this->arrObjInfo['member_id'];
-			$returnVal = true;
+			if ($result->num_rows > 0) {
+				$this->arrObjInfo = $result->fetch_assoc();
+				$this->intTableKeyValue = $this->arrObjInfo['member_id'];
+				$returnVal = true;
 
 				$this->objRank->select($this->arrObjInfo['rank_id']);
 			}
