@@ -47,13 +47,17 @@ class Member extends Basic {
 				$returnVal = true;
 			}
 		} else {
-			$memberID = $this->MySQL->real_escape_string($memberID);
-			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE username = '$memberID'");
+			if ($memberID !== null) {
+				$memberID = $this->MySQL->real_escape_string($memberID);
+				$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE username = '$memberID'");
+			} else {
+				return false;
+			}
 
-			if ($result->num_rows > 0) {
-				$this->arrObjInfo = $result->fetch_assoc();
-				$this->intTableKeyValue = $this->arrObjInfo['member_id'];
-				$returnVal = true;
+		if ($result->num_rows > 0) {
+			$this->arrObjInfo = $result->fetch_assoc();
+			$this->intTableKeyValue = $this->arrObjInfo['member_id'];
+			$returnVal = true;
 
 				$this->objRank->select($this->arrObjInfo['rank_id']);
 			}
