@@ -165,7 +165,7 @@ if ($postMemberInfo['forumsignature'] != "" && $websiteInfo['forum_hidesignature
 }
 
 		echo "<div class='forumManageLinks'>";
-if ($this->blnManageable || $postMemberInfo['member_id'] == $memberInfo['member_id']) {
+if ($this->blnManageable || ($postMemberInfo['member_id'] ?? '') == $memberInfo['member_id']) {
 	echo "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&pID=".$postInfo['forumpost_id']."'>EDIT POST</a> &laquo;&nbsp&nbsp;&nbsp;";
 	echo "&raquo; <a href='javascript:void(0)' onclick=\"deletePost('".$postInfo['forumpost_id']."')\">DELETE POST</a> &laquo;&nbsp&nbsp;&nbsp;";
 	$countManagablePosts++;
