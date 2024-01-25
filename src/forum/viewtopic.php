@@ -173,6 +173,7 @@ require_once($prevFolder."include/breadcrumb.php");
 
 $blnManagePosts = false;
 $dispManagePosts = "";
+$dispPostReply = '';
 if ($LOGGED_IN) {
 	if ($topicInfo['lockstatus'] == 0) {
 		$dispPostReply = "<b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$topicInfo['forumboard_id']."&tID=".$topicInfo['forumtopic_id']."'>POST REPLY</a> &laquo;</b>";
@@ -224,7 +225,7 @@ while ($row = $result->fetch_assoc()) {
 	$boardObj->objPost->select($row['forumpost_id']);
 	$boardObj->objPost->blnManageable = $blnManagePosts;
 
-	if ($boardObj->objPost->get_info("member_id") == $memberInfo['member_id'] || $blnManagePosts) {
+	if ($boardObj->objPost->get_info("member_id") == ($memberInfo['member_id'] ?? '') || $blnManagePosts) {
 		$countManagablePosts++;
 		$boardObj->objPost->blnManageable = true;
 	}
