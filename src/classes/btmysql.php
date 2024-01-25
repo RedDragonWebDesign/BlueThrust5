@@ -88,10 +88,19 @@ class btMySQL extends MySQLi {
 		return $strParamTypes;
 	}
 
+	/**
+	 * Binds variables to an SQL prepared statement as parameters. Similar to what PDO does with its 'WHERE field1 = ? AND field2 = ?' syntax. The params are inserted where the question marks are.
+	 * @param object $objMySQLiStmt
+	 * @param array $arrValues The values to bind to the statement, in order. For example, ['paramValue1', 'paramValue2']
+	 * @return object $objMySQLiStmt
+	 */
 	public function bindParams($objMySQLiStmt, $arrValues) {
 		$returnVal = false;
+
+		// Get a string of letter codes corresponding to the types of each parameter. For example, if you have 3 parameters and they are all strings, the code is "sss". If you have 2 parameters and one is a double and one is an int, the code is "di".
 		$strParamTypes = $this->getParamTypes($arrValues);
 
+		// Create an array whose first value (spot 0) is the $strParamTypes, and all additional values are the param values, in order. For example, ['ss', 'paramValue1', 'paramValue2']
 		$params = array($strParamTypes);
 		foreach ($arrValues as $key => $value) {
 			$params[] = &$arrValues[$key];
