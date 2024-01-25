@@ -31,8 +31,12 @@
 			</p>
 			
 			<h1>
-				$_SESSION
+			$_SESSION
 			</h1>
+
+			<p>
+			Values at END of page load.
+			</p>
 			
 			<table style="border: 3px solid blue; border-collapse: collapse; font-size: 11pt; table-layout: fixed; margin: 1em 0; width: 100%;">
 				<tr>
@@ -54,7 +58,36 @@
 					</tr>
 				<?php endforeach; ?>
 			</table>
+
+			<h1>
+			$_COOKIE
+			</h1>
+
+			<p>
+			Values at END of page load.
+			</p>
 			
+			<table style="border: 3px solid blue; border-collapse: collapse; font-size: 11pt; table-layout: fixed; margin: 1em 0; width: 100%;">
+				<tr>
+					<th style="border: 3px solid blue; width: 30%;">
+						Variable
+					</th>
+					<th style="border: 3px solid blue; width: 70%;">
+						Value
+					</th>
+				</tr>
+				<?php foreach ( ($_COOKIE ?? []) as $key => $value ): ?>
+					<tr>
+						<td style="border: 3px solid blue;">
+							$_COOKIE['<?php echo $key; ?>']
+						</td>
+						<td style="border: 3px solid blue;">
+							<?php var_export($value); ?>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+			</table>
+
 			<h1>
 				5 Most Repeated Queries
 			</h1>
