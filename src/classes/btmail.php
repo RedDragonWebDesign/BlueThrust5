@@ -6,7 +6,7 @@ class btMail {
 	private $objPHPMailer;
 
 	/** General e-mail function using PHPMailer */
-	public function sendMail($to, $subject = "", $message, $additional = array()) {
+	public function sendMail($to, $subject, $message, $additional = array()) {
 
 		$mail = new PHPMailer();
 		$this->objPHPMailer = $mail;
