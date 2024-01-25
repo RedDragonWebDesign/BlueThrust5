@@ -86,10 +86,6 @@ class Access {
 		$rankCounter = 0;
 		$rankoptions = "";
 
-		if (!isset($_SESSION['btAccessCache'])) {
-			$_SESSION['btAccessCache'] = [];
-		}
-
 		$result = $this->MySQL->query("SELECT rankcategory_id FROM ".$this->MySQL->get_tablePrefix()."rankcategory ORDER BY ordernum DESC");
 		while ($row = $result->fetch_assoc()) {
 			$this->objRankCat->select($row['rankcategory_id']);
