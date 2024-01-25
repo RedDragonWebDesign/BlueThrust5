@@ -1,7 +1,7 @@
-src/_config.php
-gitignore/
-.vscode/
-src/themes/bluegrid
 *savemenu.sql
-vendor/
 /.idea/
+/.vscode/
+/node_modules/
+/src/_config.php
+/src/themes/bluegrid/
+/vendor/
