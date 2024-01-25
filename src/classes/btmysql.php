@@ -91,15 +91,13 @@ class btMySQL extends MySQLi {
 	public function bindParams($objMySQLiStmt, $arrValues) {
 		$returnVal = false;
 		$strParamTypes = $this->getParamTypes($arrValues);
-		
-		$params = array($strParamTypes); 
+
+		$params = array($strParamTypes);
 		foreach ($arrValues as $key => $value) {
 			$params[] = &$arrValues[$key];
 		}
-		
-		
-		if (!call_user_func_array(array($objMySQLiStmt, "bind_param"), $params)) {
 
+		if (!call_user_func_array(array($objMySQLiStmt, "bind_param"), $params)) {
 			$returnVal = false;
 			echo $objMySQLiStmt->error;
 			echo "<br><br>";
