@@ -98,9 +98,11 @@ class Access {
 				foreach ($arrRanks as $rankID) {
 					$dispRankAccess = "";
 
-					foreach ($this->arrAccessTypes as $accessTypeInfo) {
-						if ($_SESSION['btAccessCache'][$this->cacheID]["rankaccess_".$rankID] == $accessTypeInfo['value']) {
-							$dispRankAccess = " - <span class='".$accessTypeInfo['css']."' style='font-style: italic'>".$accessTypeInfo['displayValue']."</span>";
+					if (isset($_SESSION['btAccessCache'][$this->cacheID])) {
+						foreach ($this->arrAccessTypes as $accessTypeInfo) {
+							if ($_SESSION['btAccessCache'][$this->cacheID]["rankaccess_".$rankID] == $accessTypeInfo['value']) {
+								$dispRankAccess = " - <span class='".$accessTypeInfo['css']."' style='font-style: italic'>".$accessTypeInfo['displayValue']."</span>";
+							}
 						}
 					}
 
@@ -268,7 +270,7 @@ class Access {
 					</table>
 				";
 
-		if (count($_SESSION['btMemberAccess'][$this->cacheID]) == 0) {
+		if (is_array($_SESSION['btMemberAccess'][$this->cacheID]) && count($_SESSION['btMemberAccess'][$this->cacheID]) == 0) {
 			echo "
 					<p class='main' align='center'>
 						<i>No special member access rules set!</i>
