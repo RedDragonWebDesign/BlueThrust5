@@ -23,10 +23,9 @@ $member->select($_SESSION['btUsername']);
 
 $twitterObj = new Twitter($mysqli);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $twitterObj->hasTwitter($member->get_info("member_id"))) {
-	
+if ($member->authorizeLogin($_SESSION['btPassword']) && $twitterObj->hasTwitter($member->get_info("member_id"))) {
 	$twitterObj->delete();
-	
+
 	echo "
 		
 		<div class='shadedBox' style='width: 75%; margin-left: auto; margin-right: auto'>
@@ -39,5 +38,4 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $twitterObj->hasTwitter($
 		</div>
 	
 	";
-	
 }

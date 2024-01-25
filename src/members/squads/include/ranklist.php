@@ -19,21 +19,29 @@ require_once("../../../classes/squad.php");
 
 
 // Start Page
-if(!isset($consoleObj)) { $consoleObj = new ConsoleOption($mysqli); }
+if (!isset($consoleObj)) {
+	$consoleObj = new ConsoleOption($mysqli);
+}
 
-if(!isset($cID)) { $cID = $consoleObj->findConsoleIDByName("View Your Squads"); $consoleObj->select($cID); }
+if (!isset($cID)) {
+	$cID = $consoleObj->findConsoleIDByName("View Your Squads"); $consoleObj->select($cID);
+}
 
 
-if(!isset($consoleInfo)) { $consoleInfo = $consoleObj->get_info_filtered(); }
+if (!isset($consoleInfo)) {
+	$consoleInfo = $consoleObj->get_info_filtered();
+}
 
 
 
-if(!isset($member)) { $member = new Member($mysqli); $member->select($_SESSION['btUsername']); }
+if (!isset($member)) {
+	$member = new Member($mysqli); $member->select($_SESSION['btUsername']);
+}
 
 
 $pID = "manageranks";
 
-if(!isset($squadObj)) {
+if (!isset($squadObj)) {
 	$squadObj = new Squad($mysqli);
 	$squadObj->select($_POST['sID']);
 }
@@ -42,14 +50,14 @@ $arrSquadPrivileges = $squadObj->arrSquadPrivileges;
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $squadObj->memberHasAccess($member->get_info("member_id"), $pID)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $squadObj->memberHasAccess($member->get_info("member_id"), $pID)) {
 	$LOGIN_FAIL = false;
 	$memberInfo = $member->get_info_filtered();
-	
-	
-		
-	
-	
+
+
+
+
+
 	echo "
 	
 	<script type='text/javascript'>
@@ -59,44 +67,41 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	});
 	</script>
 	";
-	
+
 	$intFounderRankID = $squadObj->getFounderRankID();
 	$intHighestOrder = $squadObj->countRanks();
 	$x = 1;
 	$counter = 0;
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."squadranks WHERE squad_id = '".$squadInfo['squad_id']."' ORDER BY sortnum");
 	$dispRanks = "";
-	while($row = $result->fetch_assoc()) {
-		if($counter == 1) {
+	while ($row = $result->fetch_assoc()) {
+		if ($counter == 1) {
 			$addCSS = " alternateBGColor";
 			$counter = 0;
-		}
-		else {
+		} else {
 			$addCSS = "";
 			$counter = 1;
 		}
-	
+
 		$dispDeleteButton = "<a href='javascript:void(0)' onclick=\"deleteRank('".$_GET['sID']."', '".$row['squadrank_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' title='Delete Rank'></a>";
-		
-		if($row['squadrank_id'] == $intFounderRankID) {
-			$dispDeleteButton = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";	
+
+		if ($row['squadrank_id'] == $intFounderRankID) {
+			$dispDeleteButton = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
 		}
-		
-		if($x == 1 || $x == 2) {
+
+		if ($x == 1 || $x == 2) {
 			$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
-		}
-		else {
+		} else {
 			$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveRank('up', '".$squadInfo['squad_id']."', '".$row['squadrank_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 		}
-	
-		if($x == $intHighestOrder || $x == 1) {
+
+		if ($x == $intHighestOrder || $x == 1) {
 			$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
-		}
-		elseif($x != 1) {
+		} elseif ($x != 1) {
 			$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveRank('down', '".$squadInfo['squad_id']."', '".$row['squadrank_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' width='24' height='24' title='Move Down'></a>";
 		}
-	
-	
+
+
 		$dispRanks .= "
 		<tr>
 		<td class='dottedLine".$addCSS."' width=\"80%\">&nbsp;&nbsp;<span class='main'><b><a href='managesquad.php?sID=".$_GET['sID']."&pID=ManageRanks&rID=".$row['squadrank_id']."'>".$row['name']."</a></b></td>
@@ -106,15 +111,15 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 		<td align='center' class='dottedLine".$addCSS."' width=\"10%\">".$dispDeleteButton."</td>
 		</tr>
 		";
-	
+
 		$x++;
 	}
-	
-	
-	if($x == 0) {
+
+
+	if ($x == 0) {
 		$dispRanks = "<tr><td colspan='3' align='center'><br><p class='main'><i>No ranks added yet!</i></p></td></tr>";
 	}
-	
+
 	echo "
 	
 	
@@ -138,6 +143,4 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 	<br><br><br>
 	
 	";
-
-
 }

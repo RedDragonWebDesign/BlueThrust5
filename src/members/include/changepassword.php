@@ -12,13 +12,12 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -107,7 +106,7 @@ echo "
 
 function changePasswordChecks() {
 	global $formObj, $member;
-	if(!$member->authorizeLogin($_POST['currentpassword'], 1)) {
+	if (!$member->authorizeLogin($_POST['currentpassword'], 1)) {
 		$formObj->errors[] = "You entered an incorrect current password.";
 	}
 }
@@ -116,7 +115,7 @@ function changePasswordChecks() {
 // Custom Save Function
 
 function savePassword() {
-	global $member;	
+	global $member;
 	$member->set_password($_POST['newpassword']);
 	$_SESSION['btPassword'] = $member->get_info("password");
 }

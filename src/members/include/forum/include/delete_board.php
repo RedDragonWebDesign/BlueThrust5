@@ -30,23 +30,20 @@ $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage Boards");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $boardObj->select($_POST['bID'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $boardObj->select($_POST['bID'])) {
 	$boardInfo = $boardObj->get_info_filtered();
-	
-	if(isset($_POST['confirm'])) {
-		
+
+	if (isset($_POST['confirm'])) {
 		$boardObj->delete();
 		$member->logAction("Deleted Forum Board: ".$boardInfo['name']);
-		
+
 		require_once("main_manageboards.php");
-		
-	}
-	else {
+	} else {
 		$addMessage = "";
-		if(count($boardObj->getSubForums()) > 0) {
-			$addMessage = "<br><br>All sub-forums will be moved to the parent category/sub-forum.";	
+		if (count($boardObj->getSubForums()) > 0) {
+			$addMessage = "<br><br>All sub-forums will be moved to the parent category/sub-forum.";
 		}
-		
+
 		echo "
 		
 			<p class='main' align='center'>
@@ -54,9 +51,5 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $boardObj->select($_POST[
 			</p>
 		
 		";
-		
-		
-	}	
-
-	
+	}
 }

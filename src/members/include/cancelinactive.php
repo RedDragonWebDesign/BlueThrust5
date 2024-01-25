@@ -1,5 +1,5 @@
 <?php
- 
+
 /*
  * BlueThrust Clan Scripts
  * Copyright 2014
@@ -11,25 +11,23 @@
  * License: http://www.bluethrust.com/license.php
  *
  */
- 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
- 
- 
- 
+
+
+
 $cID = $_GET['cID'];
- 
-  
-if($member->update(array("onia"), array(0))) { 
-   
+
+
+if ($member->update(array("onia"), array(0))) {
 	echo "
 		<div style='display: none' id='successBox'>
 			<p align='center'>
@@ -41,5 +39,4 @@ if($member->update(array("onia"), array(0))) {
 			popupDialog('End Inactive Period', '".$MAIN_ROOT."members', 'successBox');
 		</script>
 	";
-
 }

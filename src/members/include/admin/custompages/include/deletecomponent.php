@@ -40,15 +40,13 @@ $componentIndex = $_POST['whichComponent'];
 
 
 
-if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2) && is_numeric($componentIndex)) {
-	
-	if(isset($_SESSION['btFormComponent'][$componentIndex]['component_id'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2) && is_numeric($componentIndex)) {
+	if (isset($_SESSION['btFormComponent'][$componentIndex]['component_id'])) {
 		$_SESSION['btDeleteFormComponent'][] = $_SESSION['btFormComponent'][$componentIndex]['component_id'];
 	}
-	
-	
+
+
 	unset($_SESSION['btFormComponent'][$componentIndex]);
-	
+
 	require_once("componentcache.php");
-	
 }

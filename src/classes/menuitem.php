@@ -17,52 +17,50 @@ require_once("basicsort.php");
 
 
 class MenuItem extends BasicSort {
-	
+
 	public $objLink;
 	public $objImage;
 	public $objShoutbox;
 	public $objCustomPage;
 	public $objCustomBlock;
-	
+
 	public function __construct($sqlConnection) {
-		
+
 		$this->MySQL = $sqlConnection;
 		$this->strTableName = $this->MySQL->get_tablePrefix()."menu_item";
 		$this->strTableKey = "menuitem_id";
 		$this->strCategoryKey = "menucategory_id";
-		
+
 		$this->objLink = new Basic($this->MySQL, "menuitem_link", "menulink_id");
 		$this->objImage = new Basic($this->MySQL, "menuitem_image", "menuimage_id");
 		$this->objShoutbox = new Basic($this->MySQL, "menuitem_shoutbox", "menushoutbox_id");
 		$this->objCustomPage = new Basic($this->MySQL, "menuitem_custompage", "menucustompage_id");
 		$this->objCustomBlock = new Basic($this->MySQL, "menuitem_customblock", "menucustomblock_id");
-		
-		
 	}
-	
-	public function getItems($intCategory, $intAccessType=1, $intHide=0) {
+
+	public function getItems($intCategory, $intAccessType = 1, $intHide = 0) {
 		$returnArr = array();
-		
+
 		$accessTypeSQL = " OR accesstype = '".$intAccessType."'";
-		if($intAccessType == 3) {
+		if ($intAccessType == 3) {
 			$accessTypeSQL = " OR accesstype = '1' OR accesstype = '2'";
 		}
 
-		if(is_numeric($intAccessType) && is_numeric($intHide) && is_numeric($intCategory)) {
+		if (is_numeric($intAccessType) && is_numeric($intHide) && is_numeric($intCategory)) {
 			$result = $this->MySQL->query("SELECT menuitem_id FROM ".$this->strTableName." WHERE (accesstype = '0'".$accessTypeSQL.") AND hide = '".$intHide."' AND menucategory_id = '".$intCategory."' ORDER BY sortnum");
-			while($row = $result->fetch_assoc()) {
+			while ($row = $result->fetch_assoc()) {
 				$returnArr[] = $row['menuitem_id'];
 			}
 		}
-		
+
 		return $returnArr;
 	}
-	
-	
+
+
 	public function delete() {
-		
-		if($this->intTableKeyValue != "") {
-			switch($this->arrObjInfo['itemtype']) {
+
+		if ($this->intTableKeyValue != "") {
+			switch ($this->arrObjInfo['itemtype']) {
 				case "link":
 					$this->objLink->select($this->arrObjInfo['itemtype_id']);
 					$this->objLink->delete();
@@ -93,14 +91,10 @@ class MenuItem extends BasicSort {
 					$this->objCustomBlock->select($this->arrObjInfo['itemtype_id']);
 					$this->objCustomBlock->delete();
 					break;
-					
 			}
-			
-			
+
 			return parent::delete();
-		}	
-		
-		
+		}
 	}
-	
+
 }

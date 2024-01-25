@@ -12,43 +12,39 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
-	
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/basicorder.php");
-	
-	
-	
+
+
+
 	$consoleObj = new ConsoleOption($mysqli);
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);
-	
+
 	$cID = $consoleObj->findConsoleIDByName("View Member Applications");
 	$consoleObj->select($cID);
-	
-	
-	if(!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
-	
+
+
+	if (!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
 		exit();
-	
 	}
-	
 }
 
 $diplomacyStatusObj = new Basic($mysqli, "diplomacy_status", "diplomacystatus_id");
 $addClanCID = $consoleObj->findConsoleIDByName("Diplomacy: Add a Clan");
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_request WHERE confirmemail = '1'");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$row = filterArray($row);
-	
-	foreach($row as $key=>$value) {
-		if($value == "") {
+
+	foreach ($row as $key => $value) {
+		if ($value == "") {
 			$row[$key] = "Not Set";
 		}
 	}
-	
+
 	$diplomacyStatusObj->select($row['diplomacystatus_id']);
 	$dispRequestStatus = $diplomacyStatusObj->get_info_filtered("name");
 	echo "
@@ -103,11 +99,10 @@ while($row = $result->fetch_assoc()) {
 			</table>
 		</div>
 	";
-	
 }
 
 
-if($result->num_rows == 0) {
+if ($result->num_rows == 0) {
 	echo "
 		<div class='shadedBox' style='width: 400px; margin-top: 50px; margin-left: auto; margin-right: auto'>
 			<p class='main' align='center'>

@@ -28,22 +28,18 @@ $cID = $consoleObj->findConsoleIDByName("Manage Console Categories");
 $consoleObj->select($cID);
 $_GET['cID'] = $cID;
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $consoleCatObj->select($_POST['catID'])) {
-		
+	if ($member->hasAccess($consoleObj) && $consoleCatObj->select($_POST['catID'])) {
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 		$consoleCatInfo = $consoleCatObj->get_info_filtered();
-		
+
 		$arrCats = $consoleCatObj->getAssociateIDs();
-		
-		if(count($arrCats) > 0) {
-			
+
+		if (count($arrCats) > 0) {
 			echo "<div id='newDeleteMessage' style='display: none'><p align='center'>There are currently console options in the console category <b>".$consoleCatInfo['name']."</b>.  Please move all console options out of this category before deleting it.</p></div>";
-			
+
 			echo "
 				<script type='text/javascript'>
 					$(document).ready(function() {
@@ -66,27 +62,13 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					});
 				</script>
 			";
-		
-			
-		}
-		elseif($_POST['confirm'] == "1") {
-			
+		} elseif ($_POST['confirm'] == "1") {
 			$consoleCatObj->delete();
 			require_once("main.php");
-			
-		}
-		else {
+		} else {
 			echo "<p align='center'>Are you sure you want to delete the console category <b>".$consoleCatInfo['name']."</b>?";
 		}
-		
-	}
-	elseif(!$consoleCatObj->select($_POST['catID'])) {
-	
+	} elseif (!$consoleCatObj->select($_POST['catID'])) {
 		echo "<p align='center'>Unable find the selected console category.  Please try again or contact the website administrator.</p>";
-	
 	}
-	
-	
-	
-	
 }

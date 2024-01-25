@@ -12,13 +12,12 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -27,30 +26,27 @@ $cID = $_GET['cID'];
 
 $newsObj = new News($mysqli);
 
-if(isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
-
+if (isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
 	$newsInfo = $newsObj->get_info_filtered();
-	
+
 	define("POSTNEWS_FORM", true);
 	require_once(BASE_DIRECTORY."members/include/news/postnews_form.php");
-	
+
 	$breadcrumbObj->popCrumb();
 
-	if($newsInfo['newstype'] != 3) {
+	if ($newsInfo['newstype'] != 3) {
 		$arrComponents['newstype']['value'] = $newsInfo['newstype'];
 		$arrComponents['pintohp']['value'] = $newsInfo['hpsticky'];
 		$arrComponents['subject']['value'] = $newsInfo['postsubject'];
 
 		$breadcrumbObj->addCrumb($consoleTitle, $MAIN_ROOT."members/console.php?cID=".$cID);
 		$breadcrumbObj->addCrumb("<b>Edit Post:</b> ".$newsInfo['postsubject']);
-	
-	}
-	else {
+	} else {
 		unset($arrComponents['newstype']);
 		unset($arrComponents['pintohp']);
 		unset($arrComponents['subject']);
 		$arrComponents['newspost']['type'] = "textarea";
-		
+
 		$manageShoutboxCID = $consoleObj->findConsoleIDByName("Manage Shoutbox Posts");
 		$consoleObj->select($manageShoutboxCID);
 		$manageShoutboxName = $consoleObj->get_info_filtered("pagetitle");
@@ -58,7 +54,7 @@ if(isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
 		$breadcrumbObj->addCrumb($manageShoutboxName, $MAIN_ROOT."members/console.php?cID=".$manageShoutboxCID);
 		$breadcrumbObj->addCrumb("Edit Post");
 		$breadcrumbObj->setTitle($manageShoutboxName);
-		
+
 		echo "
 			<script type='text/javascript'>
 				$(document).ready(function() {
@@ -68,13 +64,12 @@ if(isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
 				});
 			</script>
 		";
-		
 	}
-	
+
 	$arrComponents['newspost']['value'] = $newsInfo['newspost'];
 	$arrComponents['submit']['value'] = "Edit Post";
-	
-	
+
+
 	$setupFormArgs['components'] = $arrComponents;
 	$setupFormArgs['saveType'] = "update";
 	$setupFormArgs['saveAdditional'] = array("lasteditmember_id" => $memberInfo['member_id'], "lasteditdate" => time());
@@ -82,16 +77,11 @@ if(isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
 	$setupFormArgs['description'] = "Use the form below to edit the selected news post.";
 	$setupFormArgs['attributes']['action'] .= "&newsID=".$newsInfo['news_id'];
 
-	
+
 	$breadcrumbObj->updateBreadcrumb();
-	
-	
-}
-else {
-	
-	
+} else {
 	$postNewsCID = $consoleObj->findConsoleIDByName("Post News");
-	
+
 	echo "
 	
 		<p align='right' class='main' style='padding-right: 20px'>
@@ -188,7 +178,4 @@ else {
 		</script>
 		
 	";
-	
-	
-	
 }

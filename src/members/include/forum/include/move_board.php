@@ -28,19 +28,14 @@ $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage Boards");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
-	if(($memberInfo['rank_id'] == 1 || $member->hasAccess($consoleObj)) && $boardObj->select($_POST['bID'])) {
-
+	if (($memberInfo['rank_id'] == 1 || $member->hasAccess($consoleObj)) && $boardObj->select($_POST['bID'])) {
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 
 		$boardObj->move($_POST['bDir']);
 
 		require_once("main_manageboards.php");
-
 	}
-
 }

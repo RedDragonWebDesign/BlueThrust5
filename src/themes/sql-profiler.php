@@ -1,26 +1,26 @@
-	<?php if ( $debug ): ?>
+<?php if ( $debug ): ?>
 		<?php
 			$count = count($SQL_PROFILER);
 			$color = "color: limegreen;";
-			if ( $count > 100 ) {
-				$color = "color: yellow;";
-			}
-			if ( $count > 200 ) {
-				$color = "color: red;";
-			}
+		if ( $count > 100 ) {
+			$color = "color: yellow;";
+		}
+		if ( $count > 200 ) {
+			$color = "color: red;";
+		}
 			$rowIDCounter = 0;
-			
-			foreach ( $SQL_PROFILER as $key => $value ) {
-				$SQL_PROFILER[$key]['query'] = htmlspecialchars($SQL_PROFILER[$key]['query']);
-				// stack trace gets sanitized in the function it uses, to prevent sanitizing the <br />s it inserts
-			}
+
+		foreach ( $SQL_PROFILER as $key => $value ) {
+			$SQL_PROFILER[$key]['query'] = htmlspecialchars($SQL_PROFILER[$key]['query']);
+			// stack trace gets sanitized in the function it uses, to prevent sanitizing the <br />s it inserts
+		}
 		?>
 		
 		<div id="sql-profiler-float" style="position: absolute; top: 0; right: 0; border: 3px solid blue; background-color: black; font-size: 12pt; z-index: 100; <?php echo $color; ?>">
 			SQL Queries: <strong><?php echo $count; ?><strong>
 		</div>
 	
-		<div id="sql-profiler" style="margin: 0 15px;">
+		<div id="sql-profiler" style="margin: 0 15px; overflow-wrap: break-word;">
 			<p style="font-size: 14pt;">
 				Debug mode is on. To turn off these notifications, please go to My Account -> Administrator Options -> Website Settings -> Debug Mode and set to "Off"
 			</p>
@@ -31,8 +31,12 @@
 			</p>
 			
 			<h1>
-				$_SESSION
+			$_SESSION
 			</h1>
+
+			<p>
+			Values at END of page load.
+			</p>
 			
 			<table style="border: 3px solid blue; border-collapse: collapse; font-size: 11pt; table-layout: fixed; margin: 1em 0; width: 100%;">
 				<tr>
@@ -54,48 +58,77 @@
 					</tr>
 				<?php endforeach; ?>
 			</table>
+
+			<h1>
+			$_COOKIE
+			</h1>
+
+			<p>
+			Values at END of page load.
+			</p>
 			
+			<table style="border: 3px solid blue; border-collapse: collapse; font-size: 11pt; table-layout: fixed; margin: 1em 0; width: 100%;">
+				<tr>
+					<th style="border: 3px solid blue; width: 30%;">
+						Variable
+					</th>
+					<th style="border: 3px solid blue; width: 70%;">
+						Value
+					</th>
+				</tr>
+				<?php foreach ( ($_COOKIE ?? []) as $key => $value ): ?>
+					<tr>
+						<td style="border: 3px solid blue;">
+							$_COOKIE['<?php echo $key; ?>']
+						</td>
+						<td style="border: 3px solid blue;">
+							<?php var_export($value); ?>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+			</table>
+
 			<h1>
 				5 Most Repeated Queries
 			</h1>
 			
 			<?php
 				$repeatedQueries = $SQL_PROFILER;
-				
+
 				// delete all data except for query
-				foreach ( $repeatedQueries as $key => $value ) {
-					$repeatedQueries[$key] = [
-						'query' => $value['query'],
-						'stack_trace' => $value['stack_trace'],
-						'count' => 1,
-					];
-				}
-				
+			foreach ( $repeatedQueries as $key => $value ) {
+				$repeatedQueries[$key] = [
+					'query' => $value['query'],
+					'stack_trace' => $value['stack_trace'],
+					'count' => 1,
+				];
+			}
+
 				// sort alphabetically
-				function compareByName($a, $b) {
-					return strcmp($a["query"], $b["query"]);
-				}
+			function compareByName($a, $b) {
+				return strcmp($a["query"], $b["query"]);
+			}
 				usort($repeatedQueries, 'compareByName');
-				
+
 				// then start merging duplicates
 				$currentKey = 0;
 				$currentValue = $repeatedQueries[0];
-				for ( $i = 1; $i < count($repeatedQueries); $i++ ) {
-					$value = $repeatedQueries[$i];
-					if ( $value == $currentValue ) {
-						$repeatedQueries[$currentKey]['count']++;
-						unset($repeatedQueries[$i]);
-					} else {
-						$currentKey = $i;
-						$currentValue = $value;
-					}
+			for ( $i = 1; $i < count($repeatedQueries); $i++ ) {
+				$value = $repeatedQueries[$i];
+				if ( $value == $currentValue ) {
+					$repeatedQueries[$currentKey]['count']++;
+					unset($repeatedQueries[$i]);
+				} else {
+					$currentKey = $i;
+					$currentValue = $value;
 				}
-				
+			}
+
 				// sort by sub-key "count"
 				usort($repeatedQueries, function ($b, $a) {
 					return $a['count'] <=> $b['count'];
 				});
-				
+
 				$repeatedQueries = array_slice($repeatedQueries, 0, 5);
 			?>
 			
@@ -323,4 +356,4 @@
 				</tbody>
 			</table>
 		</div>
-	<?php endif; ?>
+<?php endif; ?>

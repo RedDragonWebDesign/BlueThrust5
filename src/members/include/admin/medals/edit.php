@@ -12,13 +12,12 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -31,7 +30,7 @@ $cID = $_GET['cID'];
 $medalObj = new Medal($mysqli);
 
 
-if(!$medalObj->select($_GET['mID'])) {
+if (!$medalObj->select($_GET['mID'])) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");
 }
 
@@ -50,31 +49,30 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 </script>
 ";
 
-	
+
 	$medalValidateObj = new Medal($mysqli);
 	$arrMedals = $medalObj->get_entries(array(), "ordernum DESC");
 	$medalOptions = array();
-	foreach($arrMedals as $eachMedalInfo) {
-		$medalName = filterText($eachMedalInfo['name']);
-		$medalOptions[$eachMedalInfo['medal_id']] = $medalName;
-	
-	}
-        
+foreach ($arrMedals as $eachMedalInfo) {
+	$medalName = filterText($eachMedalInfo['name']);
+	$medalOptions[$eachMedalInfo['medal_id']] = $medalName;
+}
 
-	if(count($medalOptions) == 0) {
-		$medalOptions['first'] = "(first medal)";
-	}
-	
-	
+
+if (count($medalOptions) == 0) {
+	$medalOptions['first'] = "(first medal)";
+}
+
+
 	$medalOrder = $medalValidateObj->findBeforeAfter();
-	
+
 	$medalInfo['imageurl'] = substr($medalInfo['imageurl'], strlen($MAIN_ROOT));
 	$i = 1;
 	$arrComponents = array(
 		"generalinfo" => array(
 			"type" => "section",
 			"options" => array("section_title" => "General Information:"),
-			"sortorder" => $i++,			
+			"sortorder" => $i++,
 		),
 		"medalname" => array(
 			"type" => "text",
@@ -122,7 +120,7 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 			"db_name" => "description",
 			"sortorder" => $i++,
 			"display_name" => "Description",
-			"value" => $medalInfo['description']	
+			"value" => $medalInfo['description']
 		),
 		"displayorder" => array(
 			"type" => "beforeafter",
@@ -135,7 +133,7 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 			"value" => $medalInfo['medal_id'],
 			"before_after_value" => $medalOrder[0],
 			"after_selected" => $medalOrder[1]
-		
+
 		),
 		"autoawardinfo" => array(
 			"type" => "section",
@@ -162,13 +160,13 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 			"type" => "submit",
 			"attributes" => array("class" => "submitButton formSubmitButton"),
 			"value" => "Edit Medal",
-			"sortorder" => $i++		
+			"sortorder" => $i++
 		)
 	);
 
 
 
-$setupFormArgs = array(
+	$setupFormArgs = array(
 	"name" => "console-".$cID,
 	"components" => $arrComponents,
 	"description" => "Fill out the form below to edit the selected medal.<br><br><b><u>NOTE:</u></b> When setting the Medal Image, if both the File and URL are filled out, the File will be used.",
@@ -177,4 +175,4 @@ $setupFormArgs = array(
 	"saveType" => "update",
 	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID."&mID=".$medalInfo['medal_id']."&action=edit", "method" => "post"),
 	"beforeAfter" => true
-);
+	);

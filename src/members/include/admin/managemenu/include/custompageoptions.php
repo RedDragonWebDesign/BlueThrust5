@@ -6,12 +6,12 @@
 $customPageObj = new Basic($mysqli, "custompages", "custompage_id");
 $arrCustomPages = $customPageObj->get_entries();
 $customPageOptions = array();
-foreach($arrCustomPages as $eachCustomPage) {
-	$customPageOptions[$eachCustomPage['custompage_id']] = $eachCustomPage['pagename'];	
+foreach ($arrCustomPages as $eachCustomPage) {
+	$customPageOptions[$eachCustomPage['custompage_id']] = $eachCustomPage['pagename'];
 }
 
-if(count($customPageOptions) == 0) {
-	$customPageOptions = array("No Custom Pages");	
+if (count($customPageOptions) == 0) {
+	$customPageOptions = array("No Custom Pages");
 }
 
 $customPageOptionComponents = array(

@@ -34,14 +34,10 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 
 
 $rank = new Rank($mysqli);
-if($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
-	if($checkAccess1 || $checkAccess2) {
-
-
+	if ($checkAccess1 || $checkAccess2) {
 		echo "
 		
 			<table align='left' border='0' cellspacing='2' cellpadding='2' width=\"90%\">
@@ -52,22 +48,20 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				</tr>
 				
 			";
-		
+
 		$counter=0;
-		foreach($_SESSION['btAccessRules'] as $key => $accessInfo) {
-			if($member->select($accessInfo['mID']) AND ($accessInfo['accessRule'] == "allow" OR $accessInfo['accessRule'] == "deny")) {
-		
+		foreach ($_SESSION['btAccessRules'] as $key => $accessInfo) {
+			if ($member->select($accessInfo['mID']) and ($accessInfo['accessRule'] == "allow" or $accessInfo['accessRule'] == "deny")) {
 				$tempMemInfo = $member->get_info_filtered();
 				$rank->select($tempMemInfo['rank_id']);
 				$dispRankName = $rank->get_info_filtered("name");
-				
-				if($accessInfo['accessRule'] == "allow") { 
+
+				if ($accessInfo['accessRule'] == "allow") {
 					$dispAccess = "<span class='allowText'>Allow</span>";
-				}
-				else {
+				} else {
 					$dispAccess = "<span class='denyText'>Deny</span>";
 				}
-				
+
 				echo "
 					<tr>
 						<td class='main'><a href='".$MAIN_ROOT."profile.php?mID=".$tempMemInfo['username']."'>".$dispRankName." ".$tempMemInfo['username']."</a></td>
@@ -78,8 +72,8 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				$counter++;
 			}
 		}
-		
-		if($counter == 0) {
+
+		if ($counter == 0) {
 			echo "
 				<tr>
 					<td class='main' colspan='3'>
@@ -87,15 +81,11 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					</td>
 				</tr>
 			";
-			
 		}
 		echo "
 				
 			</table>
 		
 		";
-		
 	}
-	
-	
 }

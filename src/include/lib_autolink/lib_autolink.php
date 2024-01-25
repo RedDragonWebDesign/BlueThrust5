@@ -25,35 +25,31 @@
 
 	####################################################################
 
-	function autolink($text, $limit=30, $tagfill=' target="_blank"', $auto_title = true){
+	function autolink($text, $limit = 30, $tagfill = ' target="_blank"', $auto_title = true) {
 
-		$text = autolink_do($text, '![a-z][a-z-]+://!i',	$limit, $tagfill, $auto_title);
-		$text = autolink_do($text, '!(mailto|skype):!i',	$limit, $tagfill, $auto_title);
-		$text = autolink_do($text, '!www\\.!i',			$limit, $tagfill, $auto_title, 'http://');
+		$text = autolink_do($text, '![a-z][a-z-]+://!i', $limit, $tagfill, $auto_title);
+		$text = autolink_do($text, '!(mailto|skype):!i', $limit, $tagfill, $auto_title);
+		$text = autolink_do($text, '!www\\.!i', $limit, $tagfill, $auto_title, 'http://');
 		return $text;
 	}
 
 	####################################################################
 
-	function autolink_do($text, $sub, $limit, $tagfill, $auto_title, $force_prefix=null){
+	function autolink_do($text, $sub, $limit, $tagfill, $auto_title, $force_prefix = null) {
 
 		$text_l = StrToLower($text);
 		$cursor = 0;
 		$loop = 1;
 		$buffer = '';
 
-		while (($cursor < strlen($text)) && $loop){
-
+		while (($cursor < strlen($text)) && $loop) {
 			$ok = 1;
 			$matched = preg_match($sub, $text_l, $m, PREG_OFFSET_CAPTURE, $cursor);
 
-			if (!$matched){
-
+			if (!$matched) {
 				$loop = 0;
 				$ok = 0;
-
-			}else{
-
+			} else {
 				$pos = $m[0][1];
 				$sub_len = strlen($m[0][0]);
 
@@ -71,8 +67,7 @@
 
 				$bits = preg_split("!</a>!i", $pre);
 				$last_bit = array_pop($bits);
-				if (preg_match("!<a\s!i", $last_bit)){
-
+				if (preg_match("!<a\s!i", $last_bit)) {
 					#echo "fail 1 at $cursor<br />\n";
 
 					$ok = 0;
@@ -86,11 +81,9 @@
 			# to see if there was whitespace before this match
 			#
 
-			if ($ok){
-
-				if ($pre){
-					if (!preg_match('![\s\(\[\{>]$!s', $pre)){
-
+			if ($ok) {
+				if ($pre) {
+					if (!preg_match('![\s\(\[\{>]$!s', $pre)) {
 						#echo "fail 2 at $cursor ($pre)<br />\n";
 
 						$ok = 0;
@@ -104,9 +97,8 @@
 			# we want to autolink here - find the extent of the url
 			#
 
-			if ($ok){
-				if (preg_match('/^([a-z0-9\-\.\/\-_%~!?=,:;&+*#@\(\)\$]+)/i', $post, $matches)){
-
+			if ($ok) {
+				if (preg_match('/^([a-z0-9\-\.\/\-_%~!?=,:;&+*#@\(\)\$]+)/i', $post, $matches)) {
 					$url = $hit.$matches[1];
 
 					$cursor += strlen($url) + strlen($pre_hit);
@@ -114,24 +106,22 @@
 
 					$url = html_entity_decode($url);
 
-
 					#
 					# remove trailing punctuation from url
 					#
 
-					while (preg_match('|[.,!;:?]$|', $url)){
+					while (preg_match('|[.,!;:?]$|', $url)) {
 						$url = substr($url, 0, strlen($url)-1);
 						$cursor--;
 					}
-					foreach (array('()', '[]', '{}') as $pair){
+					foreach (array('()', '[]', '{}') as $pair) {
 						$o = substr($pair, 0, 1);
 						$c = substr($pair, 1, 1);
-						if (preg_match("!^(\\$c|^)[^\\$o]+\\$c$!", $url)){
+						if (preg_match("!^(\\$c|^)[^\\$o]+\\$c$!", $url)) {
 							$url = substr($url, 0, strlen($url)-1);
 							$cursor--;
 						}
 					}
-
 
 					#
 					# nice-i-fy url here
@@ -140,28 +130,26 @@
 					$link_url = $url;
 					$display_url = $url;
 
-					if ($force_prefix) $link_url = $force_prefix.$link_url;
+					if ($force_prefix) {
+						$link_url = $force_prefix.$link_url;
+					}
 
-					if ($GLOBALS['autolink_options']['strip_protocols']){
-						if (preg_match('!^(http|https)://!i', $display_url, $m)){
-
+					if ($GLOBALS['autolink_options']['strip_protocols']) {
+						if (preg_match('!^(http|https)://!i', $display_url, $m)) {
 							$display_url = substr($display_url, strlen($m[1])+3);
 						}
 					}
 
 					$display_url = autolink_label($display_url, $limit);
 
-
 					#
 					# add the url
 					#
-					
-					if ($display_url != $link_url && !preg_match('@title=@msi',$tagfill) && $auto_title) {
 
+					if ($display_url != $link_url && !preg_match('@title=@msi', $tagfill) && $auto_title) {
 						$display_quoted = preg_quote($display_url, '!');
 
-						if (!preg_match("!^(http|https)://{$display_quoted}$!i", $link_url)){
-
+						if (!preg_match("!^(http|https)://{$display_quoted}$!i", $link_url)) {
 							$tagfill .= ' title="'.$link_url.'"';
 						}
 					}
@@ -170,8 +158,7 @@
 					$display_url_enc = HtmlSpecialChars($display_url);
 
 					$buffer .= "<a href=\"{$link_url_enc}\"$tagfill>{$display_url_enc}</a>";
-				
-				}else{
+				} else {
 					#echo "fail 3 at $cursor<br />\n";
 
 					$ok = 0;
@@ -179,7 +166,6 @@
 					$buffer .= $fail_text;
 				}
 			}
-
 		}
 
 		#
@@ -193,11 +179,13 @@
 
 	####################################################################
 
-	function autolink_label($text, $limit){
+	function autolink_label($text, $limit) {
 
-		if (!$limit){ return $text; }
+		if (!$limit) {
+			return $text;
+		}
 
-		if (strlen($text) > $limit){
+		if (strlen($text) > $limit) {
 			return substr($text, 0, $limit-3).'...';
 		}
 
@@ -206,7 +194,7 @@
 
 	####################################################################
 
-	function autolink_email($text, $tagfill=''){
+	function autolink_email($text, $tagfill = '') {
 
 		$atom = '[^()<>@,;:\\\\".\\[\\]\\x00-\\x20\\x7f]+'; # from RFC822
 
@@ -217,8 +205,7 @@
 		$loop = 1;
 		$buffer = '';
 
-		while(($cursor < strlen($text)) && $loop){
-
+		while (($cursor < strlen($text)) && $loop) {
 			#
 			# find an '@' symbol
 			#
@@ -226,13 +213,10 @@
 			$ok = 1;
 			$pos = strpos($text_l, '@', $cursor);
 
-			if ($pos === false){
-
+			if ($pos === false) {
 				$loop = 0;
 				$ok = 0;
-
-			}else{
-
+			} else {
 				$pre = substr($text, $cursor, $pos-$cursor);
 				$hit = substr($text, $pos, 1);
 				$post = substr($text, $pos + 1);
@@ -248,8 +232,7 @@
 
 				$bits = preg_split("!</a>!i", $pre);
 				$last_bit = array_pop($bits);
-				if (preg_match("!<a\s!i", $last_bit)){
-
+				if (preg_match("!<a\s!i", $last_bit)) {
 					#echo "fail 1 at $cursor<br />\n";
 
 					$ok = 0;
@@ -262,9 +245,8 @@
 			# check backwards
 			#
 
-			if ($ok){
-				if (preg_match("!($atom(\.$atom)*)\$!", $pre, $matches)){
-
+			if ($ok) {
+				if (preg_match("!($atom(\.$atom)*)\$!", $pre, $matches)) {
 					# move matched part of address into $hit
 
 					$len = strlen($matches[1]);
@@ -272,9 +254,7 @@
 
 					$hit = substr($pre, $plen-$len).$hit;
 					$pre = substr($pre, 0, $plen-$len);
-
-				}else{
-
+				} else {
 					#echo "fail 2 at $cursor ($pre)<br />\n";
 
 					$ok = 0;
@@ -287,17 +267,15 @@
 			# check forwards
 			#
 
-			if ($ok){
-				if (preg_match("!^($atom(\.$atom)*)!", $post, $matches)){
-
+			if ($ok) {
+				if (preg_match("!^($atom(\.$atom)*)!", $post, $matches)) {
 					# move matched part of address into $hit
 
 					$len = strlen($matches[1]);
 
 					$hit .= substr($post, 0, $len);
 					$post = substr($post, $len);
-
-				}else{
+				} else {
 					#echo "fail 3 at $cursor ($post)<br />\n";
 
 					$ok = 0;
@@ -311,13 +289,10 @@
 			#
 
 			if ($ok) {
-
 				$cursor += strlen($pre) + strlen($hit);
 				$buffer .= $pre;
 				$buffer .= "<a href=\"mailto:$hit\"$tagfill>$hit</a>";
-
 			}
-
 		}
 
 		#

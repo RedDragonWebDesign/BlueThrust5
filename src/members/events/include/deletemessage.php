@@ -33,45 +33,35 @@ $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage My Events");
 $consoleObj->select($cID);
 
-if($_POST['comment'] == 1) {
+if ($_POST['comment'] == 1) {
 	$checkMessage = $eventObj->objEventMessageComment->select($_POST['messageID']);
 	$objMessage = $eventObj->objEventMessageComment;
-	
+
 	$eventMessageID = $objMessage->get_info("eventmessage_id");
 	$eventObj->objEventMessage->select($eventMessageID);
 	$eventID = $eventObj->objEventMessage->get_info("event_id");
-	
-	
-}
-else {
+} else {
 	$checkMessage = $eventObj->objEventMessage->select($_POST['messageID']);
 	$objMessage = $eventObj->objEventMessage;
-	
-	
+
+
 	$eventID = $objMessage->get_info("event_id");
-	
 }
 
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $checkMessage) {
-	
-	
+if ($member->authorizeLogin($_SESSION['btPassword']) && $checkMessage) {
 	$eventObj->select($eventID);
-	
-	$eventInfo = $eventObj->get_info_filtered();
-	
-	$memberInfo = $member->get_info_filtered();
-	
-	
-	
-	if(($member->hasAccess($consoleObj) && ($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) || $memberInfo['rank_id'] == 1)) {
-		
-		$objMessage->delete();
-		
-	}
-	
-	
-	require_once("eventmessages.php");
 
-	
+	$eventInfo = $eventObj->get_info_filtered();
+
+	$memberInfo = $member->get_info_filtered();
+
+
+
+	if (($member->hasAccess($consoleObj) && ($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) || $memberInfo['rank_id'] == 1)) {
+		$objMessage->delete();
+	}
+
+
+	require_once("eventmessages.php");
 }

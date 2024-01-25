@@ -12,32 +12,30 @@
  *
  */
 
-if(!isset($menuXML)) {
+if (!isset($menuXML)) {
 	$prevFolder = "../../../../../";
 	require_once($prevFolder."_setup.php");
 
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);
-	
+
 	$consoleObj = new ConsoleOption($mysqli);
-	
-	
+
+
 	$menuCatObj = new MenuCategory($mysqli);
-	
-	if(trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
+
+	if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 		$dispHTTP = "http://";
-	}
-	else {
+	} else {
 		$dispHTTP = "https://";
 	}
-	
+
 	$siteDomain = $_SERVER['SERVER_NAME'];
 
 	try {
-		$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", NULL, true);
-	}
-	catch(Exception $e) {
-		$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", NULL, true);
+		$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", 0, true);
+	} catch (Exception $e) {
+		$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", 0, true);
 	}
 }
 
@@ -50,58 +48,50 @@ $checkAccess1 = $member->hasAccess($consoleObj);
 $consoleObj->select($intEditMenuCatCID);
 $checkAccess2 = $member->hasAccess($consoleObj);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
-
-	if(isset($_POST['section']) && is_numeric($_POST['section'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
+	if (isset($_POST['section']) && is_numeric($_POST['section'])) {
 		$orderoptions = "";
 		$selectCatID = "";
-		if(!isset($_POST['mcID'])) {
-			$_POST['mcID'] = "";	
-		}
-		else {
+		if (!isset($_POST['mcID'])) {
+			$_POST['mcID'] = "";
+		} else {
 			$menuCatObj->select($_POST['mcID']);
 			$selectCatID = $menuCatObj->findBeforeAfter();
 			$selectCatID = $selectCatID[0];
 		}
-		
+
 		$lastCategory = "";
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_category WHERE section = '".$_POST['section']."' ORDER BY sortnum");
-		while($row = $result->fetch_assoc()) {
-			if($_POST['mcID'] != $row['menucategory_id']) {
-				
+		while ($row = $result->fetch_assoc()) {
+			if ($_POST['mcID'] != $row['menucategory_id']) {
 				$dispSelected = "";
-				if($selectCatID == $row['menucategory_id']) {
-					$dispSelected = " selected";	
+				if ($selectCatID == $row['menucategory_id']) {
+					$dispSelected = " selected";
 				}
-				
+
 				$orderoptions .= "<option value='".$row['menucategory_id']."'".$dispSelected.">".filterText($row['name'])."</option>";
 			}
-			
+
 			$lastCategory = $row['menucategory_id'];
 		}
-		
-		if($result->num_rows == 0 || ($result->num_rows == 1 && $_POST['mcID'] != "" && $_POST['mcID'] == $lastCategory)) {
-			$orderoptions = "<option value='first'>(first category)</option>";	
+
+		if ($result->num_rows == 0 || ($result->num_rows == 1 && $_POST['mcID'] != "" && $_POST['mcID'] == $lastCategory)) {
+			$orderoptions = "<option value='first'>(first category)</option>";
 		}
-		
+
 		echo $orderoptions;
-	}
-	elseif(isset($_POST['manage'])) {
-		
+	} elseif (isset($_POST['manage'])) {
 		$arrDispSectionNames = array();
-		for($x=0; $x<$menuXML->info->section->count(); $x++) {
-		
+		for ($x=0; $x<$menuXML->info->section->count(); $x++) {
 			$arrDispSectionNames[$x] = $menuXML->info->section[$x];
-			
 		}
-	
+
 		echo "<table class='formTable' style='margin-top: 0px; border-spacing: 0px'><tr><td colspan='5' class='dottedLine'></td></tr>";
-		
+
 		$intSection = "";
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_category ORDER BY section, sortnum");
-		while($row = $result->fetch_assoc()) {
-			
-			if($intSection != $row['section']) {
+		while ($row = $result->fetch_assoc()) {
+			if ($intSection != $row['section']) {
 				$intSection = $row['section'];
 				$counter = 0;
 
@@ -113,33 +103,30 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 						<td class='dottedLine main manageList' colspan='4' align='center'><a href='".$MAIN_ROOT."members/console.php?cID=".$intAddMenuCatCID."&sectionID=".$intSection."'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/add.png' class='manageListActionButton' title='Add menu category to ".$arrDispSectionNames[$intSection]."'></a></td>
 					</tr>
 				";
-				
 			}
-			
+
 			$addCSS = "";
-			
-			if(($counter%2) == 1) {
+
+			if (($counter%2) == 1) {
 				$addCSS = " alternateBGColor";
 			}
-			
+
 			$menuCatObj->setCategoryKeyValue($intSection);
 			$intHighestSortNum = $menuCatObj->getHighestSortNum();
-			
-			if($counter == 0) {
+
+			if ($counter == 0) {
 				$dispUpArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' class='manageListActionButton'>";
-			}
-			else {
+			} else {
 				$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveCat('up', '".$row['menucategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' class='manageListActionButton' title='Move Up'></a>";
 			}
-			
-			if(($counter+1) == $intHighestSortNum) {
+
+			if (($counter+1) == $intHighestSortNum) {
 				$dispDownArrow = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/transparent.png' class='manageListActionButton'>";
-			}
-			else {
+			} else {
 				$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveCat('down', '".$row['menucategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' class='manageListActionButton' title='Move Down'></a>";
 			}
-			
-			
+
+
 			echo "
 				<tr>
 					<td class='dottedLine main manageList".$addCSS."' style='font-weight: bold; padding-left: 10px; width: 76%'><a href='".$MAIN_ROOT."members/console.php?cID=".$intEditMenuCatCID."&mcID=".$row['menucategory_id']."&action=edit'>".filterText($row['name'])."</a></td>
@@ -149,13 +136,13 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 					<td class='dottedLine main manageList".$addCSS."' style='width: 6%' align='center'><a href='javascript:void(0)' onclick=\"deleteCat('".$row['menucategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' class='manageListActionButton' title='Delete Category'></a></td>
 				</tr>
 			";
-			
-			
-			
+
+
+
 			$counter++;
 		}
-		
-		if($result->num_rows == 0) {
+
+		if ($result->num_rows == 0) {
 			$orderoptions = "
 			<div class='shadedBox' style='width: 40%'>
 				<p class='main' align='center'>
@@ -164,8 +151,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkA
 			</div>
 			";
 		}
-		
+
 		echo "</table>";
 	}
-	
 }

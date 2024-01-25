@@ -13,11 +13,9 @@
  */
 
 
-if(!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
-
+if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -26,14 +24,13 @@ else {
 	$squadObj->select($sID);
 
 
-	if(!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "addrank")) {
-
+	if (!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "addrank")) {
 		exit();
 	}
 }
 
 
-if($_GET['rID'] == "") {
+if ($_GET['rID'] == "") {
 	echo "
 		<div id='loadingSpiral' class='loadingSpiral'>
 			<p align='center'>
@@ -119,14 +116,12 @@ if($_GET['rID'] == "") {
 	
 	</script>
 	";
-	
-}
-elseif($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $squadObj->objSquadRank->get_info("squad_id") == $squadInfo['squad_id']) {
+} elseif ($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $squadObj->objSquadRank->get_info("squad_id") == $squadInfo['squad_id']) {
 	$dispError = "";
 	$countErrors = 0;
-	
+
 	$squadRankInfo = $squadObj->objSquadRank->get_info_filtered();
-	
+
 	echo "
 	
 	<script type='text/javascript'>
@@ -136,70 +131,62 @@ elseif($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $s
 		});
 	</script>
 	";
-	
-	
-	
+
+
+
 	if ( ! empty($_POST['submit']) ) {
-		
 		// Check Rank Name
-		
-		if(trim($_POST['rankname'] == "")) {
+
+		if (trim($_POST['rankname'] == "")) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not enter a blank rank name.<br>";
 		}
-		
+
 		// Check Display Order
-		
+
 		$arrRankList = $squadObj->getRankList();
 		$intFounderRankID = $squadObj->getFounderRankID();
-		
-		if($intFounderRankID != $squadRankInfo['squadrank_id']) {
+
+		if ($intFounderRankID != $squadRankInfo['squadrank_id']) {
 			$blnCheckOrder1 = $_POST['rankorder'] == "first" && count($arrRankList) > 2;
 			$blnCheckOrder2 = $_POST['rankorder'] == $intFounderRankID;
 			$blnCheckOrder3 = $_POST['rankorder'] != "first" && !$squadObj->objSquadRank->select($_POST['rankorder']);
 			$blnCheckOrder4 = $_POST['beforeafter'] != "before" && $_POST['beforeafter'] != "after";
-			
-			
-			if($blnCheckOrder1 || $blnCheckOrder2 || $blnCheckOrder3 || $blnCheckOrder4) {
+
+
+			if ($blnCheckOrder1 || $blnCheckOrder2 || $blnCheckOrder3 || $blnCheckOrder4) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid rank order.<br>";
-			}
-			elseif($_POST['rankorder'] == "first" && count($arrRankList) == 2) {
+			} elseif ($_POST['rankorder'] == "first" && count($arrRankList) == 2) {
 				$intNewOrderNum = 2;
-			}
-			elseif($_POST['rankorder'] != "first" && $squadObj->objSquadRank->select($_POST['rankorder'])) {
-			
+			} elseif ($_POST['rankorder'] != "first" && $squadObj->objSquadRank->select($_POST['rankorder'])) {
 				$intNewOrderNum = $squadObj->objSquadRank->makeRoom($_POST['beforeafter']);
-			
-				if($intNewOrderNum === false) {
+
+				if ($intNewOrderNum === false) {
 					$countErrors++;
 					$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You have selected an invalid rank order.<br>";
 				}
-			
 			}
 		}
 		// Filter Rank Privileges
 		$arrRankPrivileges = $squadObj->arrSquadPrivileges;
-		foreach($arrRankPrivileges as $squadPriv) {
-			if($_POST[$squadPriv] != 1) {
+		foreach ($arrRankPrivileges as $squadPriv) {
+			if ($_POST[$squadPriv] != 1) {
 				$_POST[$squadPriv] = 0;
 			}
 		}
-		
-		
-		if($countErrors == 0) {
-		
-			if($intFounderRankID == $squadRankInfo['squadrank_id']) {
+
+
+		if ($countErrors == 0) {
+			if ($intFounderRankID == $squadRankInfo['squadrank_id']) {
 				$arrColumns = array("name");
 				$arrValues = array($_POST['rankname']);
-			}
-			else {
+			} else {
 				$arrColumns = array("name", "sortnum", "postnews", "managenews", "postshoutbox", "manageshoutbox", "addrank", "manageranks", "editprofile", "sendinvites", "acceptapps", "setrank", "removemember");
 				$arrValues = array($_POST['rankname'], $intNewOrderNum, $_POST['postnews'], $_POST['managenews'], $_POST['postshoutbox'], $_POST['manageshoutbox'], $_POST['addrank'], $_POST['manageranks'], $_POST['editprofile'], $_POST['sendinvites'], $_POST['acceptapps'], $_POST['setrank'], $_POST['removemember']);
 			}
 			$squadObj->objSquadRank->select($squadRankInfo['squadrank_id']);
-			if($squadObj->objSquadRank->update($arrColumns, $arrValues)) {
-		
+			if ($squadObj->objSquadRank->update($arrColumns, $arrValues)) {
 				echo "
 				<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -213,115 +200,97 @@ elseif($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $s
 		
 				";
 				$squadObj->objSquadRank->resortOrder();
-			}
-			else {
+			} else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 			}
-		
-		
 		}
-		
-		
-		if($countErrors > 0) {
+
+
+		if ($countErrors > 0) {
 			$_POST = filterArray($_POST);
 			$_POST['submit'] = false;
 		}
-		
-		
 	}
-	
-	
+
+
 	if ( empty($_POST['submit']) ) {
-		
 		$countRanks = 0;
 		$rankoptions = "";
 		$arrSquadRanks = $squadObj->getRankList();
 		$intFounderRankID = $squadObj->getFounderRankID();
-		
+
 		$strDisplayOrderToolTip = "Squad members will be shown on the squad profile page in the order of their rank\'s display order.";
 		$strRankPrivToolTip = "";
-		if($intFounderRankID == $squadRankInfo['squadrank_id']) {
+		if ($intFounderRankID == $squadRankInfo['squadrank_id']) {
 			$strDisplayOrderToolTip = "You may not edit the founder\'s rank display order.  It will always be listed first.";
 			$strRankPrivToolTip = " <a href='javascript:void(0)' onmouseover=\"showToolTip('You may not edit the founder\'s rank privileges.')\" onmouseout='hideToolTip()'><b>(?)</b></a>";
 		}
-		
-		
+
+
 		// Figure out Before/After Rank Display Order
 		$intHighestSortNum = $squadObj->countRanks();
 		$selectAfter = "";
-		if($squadRankInfo['sortnum'] == $intHighestSortNum) {
+		if ($squadRankInfo['sortnum'] == $intHighestSortNum) {
 			$selectAfter = "selected";
 
-			if($squadObj->objSquadRank->select($arrSquadRanks[$intHighestSortNum-2])) {
+			if ($squadObj->objSquadRank->select($arrSquadRanks[$intHighestSortNum-2])) {
 				$selectRank = $arrSquadRanks[$intHighestSortNum-2];
 			}
-			
-		}
-		else {
-			
-			if($squadObj->objSquadRank->select($arrSquadRanks[$squadRankInfo['sortnum']])) {
+		} else {
+			if ($squadObj->objSquadRank->select($arrSquadRanks[$squadRankInfo['sortnum']])) {
 				$selectRank = $arrSquadRanks[$squadRankInfo['sortnum']];
 			}
-			
 		}
-		
-		foreach($arrSquadRanks as $squadRankID) {
-		
-			if($squadRankID != $intFounderRankID && $squadRankID != $squadRankInfo['squadrank_id']) {
+
+		foreach ($arrSquadRanks as $squadRankID) {
+			if ($squadRankID != $intFounderRankID && $squadRankID != $squadRankInfo['squadrank_id']) {
 				$dispSelected = "";
-				if($selectRank == $squadRankID) {
-					$dispSelected = "selected";	
+				if ($selectRank == $squadRankID) {
+					$dispSelected = "selected";
 				}
-				
+
 				$countRanks++;
 				$squadObj->objSquadRank->select($squadRankID);
 				$dispRankName = $squadObj->objSquadRank->get_info_filtered("name");
 				$rankoptions .= "<option value='".$squadRankID."' ".$dispSelected.">".$dispRankName."</option>";
-		
 			}
-		
 		}
-		
-		
-		if($countRanks == 0) {
+
+
+		if ($countRanks == 0) {
 			$rankoptions = "<option value='first'>(first rank)</option>";
 		}
-		
+
 		$arrSquadOptions = $squadObj->arrSquadPrivileges;
 		$arrSquadOptionsDispName = array("Post News", "Manage News", "Post in Shoutbox", "Manage Shoutbox Posts", "Add Rank", "Manage Ranks", "Set Member Rank", "Edit Squad Profile", "Send Squad Invites", "View Applications", "Remove Member");
 		$arrSquadOptionDescriptions = array("", "", "", "", "", "", "", "Edit Squad Information, squad name, recruiting status, etc.", "Send invitations for new members to join.", "Review and Accept/Decline new member applications.", "");
-		
-		foreach($arrSquadOptions as $key=>$squadOption) {
-		
+
+		foreach ($arrSquadOptions as $key => $squadOption) {
 			$showTip = "";
-			
+
 			$dispChecked = "";
-			if($squadRankInfo['squadrank_id'] == $intFounderRankID) {
+			if ($squadRankInfo['squadrank_id'] == $intFounderRankID) {
 				$dispChecked = "disabled='disabled' checked";
+			} elseif ($squadRankInfo[$squadOption] == 1) {
+				$dispChecked = "checked";
 			}
-			elseif($squadRankInfo[$squadOption] == 1) {
-				$dispChecked = "checked";	
-			}
-			
-			if($arrSquadOptionDescriptions[$key] != "") {
+
+			if ($arrSquadOptionDescriptions[$key] != "") {
 				$showTip = "<a href='javascript:void(0)' onmouseover=\"showToolTip('".$arrSquadOptionDescriptions[$key]."')\" onmouseout='hideToolTip()'><b>(?)</b></a>";
 			}
-		
+
 			$dispRankPrivileges .= "<li><input type='checkbox' class='textBox' value='1' name='".$squadOption."' id='".$squadOption."' ".$dispChecked."> <label for='".$squadOption."' style='cursor: pointer'>".$arrSquadOptionsDispName[$key]." ".$showTip."</label></li>";
-		
-		
-		
-		}		
-		
+		}
+
 		echo "
 		
 		<form action='managesquad.php?sID=".$_GET['sID']."&pID=ManageRanks&rID=".$_GET['rID']."' method='post'>
 			<div class='formDiv'>
 			
 			";
-		
-		if($dispError != "") {
+
+		if ($dispError != "") {
 			echo "
 			<div class='errorDiv'>
 			<strong>Unable to edit squad rank because the following errors occurred:</strong><br><br>
@@ -329,7 +298,7 @@ elseif($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $s
 			</div>
 			";
 		}
-		
+
 		echo "
 				Use the form below to edit the selected squad rank.<br><br>
 				<table class='formTable'>
@@ -341,17 +310,16 @@ elseif($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $s
 						<td class='formLabel' valign='top'>Display Order: <a href='javascript:void(0)' onmouseover=\"showToolTip('".$strDisplayOrderToolTip."')\" onmouseout='hideToolTip()'><b>(?)</b></a></td>
 						<td class='main'>
 						";
-		
-						if($squadRankInfo['squadrank_id'] != $intFounderRankID) {
-							echo "
+
+		if ($squadRankInfo['squadrank_id'] != $intFounderRankID) {
+			echo "
 							<select name='beforeafter' class='textBox'><option value='before'>Before</option><option value='after' ".$selectAfter.">After</option></select><br>
 							<select name='rankorder' class='textBox'>".$rankoptions."</select>
 							";
-						}
-						else {
-							echo "<span style='font-weight: bold; font-style: italic'>Founder Rank</span>";
-						}
-						
+		} else {
+			echo "<span style='font-weight: bold; font-style: italic'>Founder Rank</span>";
+		}
+
 							echo "
 						</td>
 					</tr>
@@ -379,18 +347,5 @@ elseif($_GET['rID'] != "" && $squadObj->objSquadRank->select($_GET['rID']) && $s
 		
 		
 		";
-		
-		
-		
-		
-		
-		
 	}
-	
-	
-	
-	
-	
-	
-	
 }

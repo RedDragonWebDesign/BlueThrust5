@@ -22,24 +22,22 @@ require_once($prevFolder."classes/download.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
 $LOGGED_IN = false;
-if(isset($_SESSION['btUsername']) AND isset($_SESSION['btPassword'])) {
+if (isset($_SESSION['btUsername']) and isset($_SESSION['btPassword'])) {
 	$memberObj = new Member($mysqli);
-	if($memberObj->select($_SESSION['btUsername'])) {
-		if($memberObj->authorizeLogin($_SESSION['btPassword'])) {
+	if ($memberObj->select($_SESSION['btUsername'])) {
+		if ($memberObj->authorizeLogin($_SESSION['btPassword'])) {
 			$LOGGED_IN = true;
 		}
 	}
@@ -49,39 +47,34 @@ $downloadCatObj = new DownloadCategory($mysqli);
 $downloadObj = new Download($mysqli);
 $blnShowDownload = false;
 
-if($downloadObj->select($_GET['dID'])) {
-	
+if ($downloadObj->select($_GET['dID'])) {
 	$downloadInfo = $downloadObj->get_info_filtered();
 	$downloadCatObj->select($downloadInfo['downloadcategory_id']);
-	
+
 	$accessType = $downloadCatObj->get_info("accesstype");
-	
-	
-	if($accessType == 1 && $LOGGED_IN) {
-		$blnShowDownload = true;	
+
+
+	if ($accessType == 1 && $LOGGED_IN) {
+		$blnShowDownload = true;
+	} elseif ($accessType == 0) {
+		$blnShowDownload = true;
 	}
-	elseif($accessType == 0) {
-		$blnShowDownload = true;	
-	}
-	
-	
+
+
 	$fileContents = file_get_contents($prevFolder.$downloadInfo['splitfile1']);
-	
-	if($websiteInfo['split_downloads']) {
-		
+
+	if ($websiteInfo['split_downloads']) {
 		$fileContents2 = file_get_contents($prevFolder.$downloadInfo['splitfile2']);
-		
-		if($fileContents !== false && $fileContents2 !== false) {
+
+		if ($fileContents !== false && $fileContents2 !== false) {
 			$fileContents .= $fileContents2;
 		}
-	
 	}
-	
-	if($blnShowDownload) {
 
+	if ($blnShowDownload) {
 		$numOfHits = $downloadObj->get_info("downloadcount")+1;
 		$downloadObj->update(array("downloadcount"), array($numOfHits));
-		
+
 		header("Content-Description: File Transfer");
 		header("Content-Length: ".$downloadInfo['filesize'].";");
 		header("Content-Type: application/force-download");
@@ -89,18 +82,15 @@ if($downloadObj->select($_GET['dID'])) {
 		header("Content-Type: application/download");
 		//header("Content-Type: text/plain");//".$downloadInfo['mimetype']);
 		header("Content-Disposition: attachment; filename=".$downloadInfo['filename']);
-	
+
 		echo $fileContents;
-	}
-	else {
+	} else {
 		echo "File Not Found!";
 	}
-	
 }
 
 
-if(!$blnShowDownload) {
-	
+if (!$blnShowDownload) {
 	// Start Page
 	$PAGE_NAME = "Download - ";
 	$dispBreadCrumb = "";
@@ -118,7 +108,6 @@ if(!$blnShowDownload) {
 			</p>
 		</div>
 	";
-	
+
 	require_once($prevFolder."themes/".$THEME."/_footer.php");
-	
 }

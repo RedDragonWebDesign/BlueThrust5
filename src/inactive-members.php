@@ -27,16 +27,14 @@ require_once($prevFolder."classes/game.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -62,25 +60,25 @@ $gameObj = new Game($mysqli);
 		<td class='formTitle'>Main Game:</td>
 		<td class='formTitle'>Inactive Since:</td>
 	</tr>
-<?php 
+<?php
 
 	$result = $mysqli->query("SELECT ".$dbprefix."members.member_id, ".$dbprefix."ranks.ordernum FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id AND ".$dbprefix."members.onia = '1' AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id != '1' ORDER BY ".$dbprefix."ranks.ordernum DESC");
-	while($row = $result->fetch_assoc()) {
-		$member->select($row['member_id']);
-		$rankObj->select($member->get_info("rank_id"));
-		
-		$memberListInfo = $member->get_info_filtered();
-		$rankListInfo = $rankObj->get_info_filtered();
-		
-		$dispMainGame = "Not Set";
-		if($gameObj->select($memberListInfo['maingame_id'])) {
-			$gameObj->refreshImageSize();
-			$gameInfo = $gameObj->get_info_filtered();
-			$dispMainGame = "<img src='".$gameInfo['imageurl']."' width='".$gameInfo['imagewidth']."' height='".$gameInfo['imageheight']."' onmouseover=\"showToolTip('".$gameInfo['name']."')\" onmouseout='hideToolTip()'>";
-		}
+while ($row = $result->fetch_assoc()) {
+	$member->select($row['member_id']);
+	$rankObj->select($member->get_info("rank_id"));
 
-		
-		echo "
+	$memberListInfo = $member->get_info_filtered();
+	$rankListInfo = $rankObj->get_info_filtered();
+
+	$dispMainGame = "Not Set";
+	if ($gameObj->select($memberListInfo['maingame_id'])) {
+		$gameObj->refreshImageSize();
+		$gameInfo = $gameObj->get_info_filtered();
+		$dispMainGame = "<img src='".$gameInfo['imageurl']."' width='".$gameInfo['imagewidth']."' height='".$gameInfo['imageheight']."' onmouseover=\"showToolTip('".$gameInfo['name']."')\" onmouseout='hideToolTip()'>";
+	}
+
+
+	echo "
 			<tr>
 				<td class='main' align='center'>
 					<img src='".$rankListInfo['imageurl']."' width='".$rankListInfo['imagewidth']."' height='".$rankListInfo['imageheight']."' onmouseover=\"showToolTip('".$rankListInfo['name']."')\" onmouseout='hideToolTip()'>
@@ -91,23 +89,20 @@ $gameObj = new Game($mysqli);
 			</tr>
 		
 		";
-		
-	}
+}
 
 ?>
 </table>
 
-<?php 
+<?php
 
-if($result->num_rows > 0) {
+if ($result->num_rows > 0) {
 	echo "
 		<p align='center'>
 			<b>Total Inactive Members:</b>	<?php echo $result->num_rows; ?>
 		</p>
 	";
-}
-else {
-	
+} else {
 	echo "
 	
 		<div class='shadedBox' style='width: 40%; margin: 20px auto'>
@@ -117,7 +112,6 @@ else {
 		</div>
 		
 	";
-	
 }
 
 require_once($prevFolder."themes/".$THEME."/_footer.php");

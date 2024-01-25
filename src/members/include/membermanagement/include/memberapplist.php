@@ -13,8 +13,7 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
-
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/basicorder.php");
@@ -29,12 +28,9 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	$consoleObj->select($cID);
 
 
-	if(!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
-
+	if (!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
 		exit();
-
 	}
-
 }
 
 $memberAppObj = new MemberApp($mysqli);
@@ -50,13 +46,12 @@ $setupMemberAppForm = array(
 );
 
 $result = $mysqli->query("SELECT memberapp_id FROM ".$dbprefix."memberapps ORDER BY applydate DESC");
-while($row = $result->fetch_assoc()) {
-
+while ($row = $result->fetch_assoc()) {
 	$memberAppObj->select($row['memberapp_id']);
 	$memberAppInfo = $memberAppObj->get_info_filtered();
-	
+
 	$dispApplyDate = getPreciseTime($memberAppInfo['applydate']);
-	
+
 	// Default Info
 	$i = 0;
 	$arrDefaultInfo = array(
@@ -85,79 +80,73 @@ while($row = $result->fetch_assoc()) {
 			"html" => "<div class='main formInput'><a href='mailto:".$memberAppInfo['email']."'>".$memberAppInfo['email']."</a></div>"
 		)
 	);
-	
+
 	// Custom Info
 
 	$customAppInfo = $memberAppObj->getAppValues();
 
 	$arrCompInfo = array();
-	foreach($customAppInfo as $componentID => $customInfo) {
+	foreach ($customAppInfo as $componentID => $customInfo) {
 		$appComponentObj->select($componentID);
 		$appCompName = $appComponentObj->get_info_filtered("name");
 		$compName = "appcomponent_".$componentID;
-		
+
 		$dispCompValue = "";
-		if(count($customInfo['display_values']) > 1) {
+		if (count($customInfo['display_values']) > 1) {
 			$displayValueCounter = 1;
-			foreach($customInfo['display_values'] as $value) {
-				$dispCompValue .= $displayValueCounter.". ".$value."<br>";				
+			foreach ($customInfo['display_values'] as $value) {
+				$dispCompValue .= $displayValueCounter.". ".$value."<br>";
 				$displayValueCounter++;
 			}
-		}
-		elseif(isset($customInfo['display_values'][0]) && $customInfo['display_values'][0] != "") {
+		} elseif (isset($customInfo['display_values'][0]) && $customInfo['display_values'][0] != "") {
 			$dispCompValue = $customInfo['display_values'][0];
+		} else {
+			$dispCompValue = "Not Set";
 		}
-		else {
-			$dispCompValue = "Not Set";	
-		}
-		
+
 		$arrCompInfo[$compName] = array(
 			"type" => "custom",
 			"sortorder" => $i++,
 			"display_name" => $appCompName,
 			"html" => "<div class='main formInput'>".$dispCompValue."</div>"
-		
+
 		);
-		
 	}
-	
+
 	$setRankOptions = memberAppSetRank();
-	
-	if($memberAppInfo['memberadded'] == 0) {
-		
+
+	if ($memberAppInfo['memberadded'] == 0) {
 		$addJS = "";
-		if(count($setRankOptions) > 0) {
-			$addJS = ", $('#newRankID_".$memberAppInfo['memberapp_id']."').val()";	
+		if (count($setRankOptions) > 0) {
+			$addJS = ", $('#newRankID_".$memberAppInfo['memberapp_id']."').val()";
 		}
-		
+
 		$memberAppOptions = "<a href='javascript:void(0)' onclick=\"acceptApp('".$memberAppInfo['memberapp_id']."'".$addJS.")\"><b>Accept</b></a> - <a href='javascript:void(0)' onclick=\"declineApp('".$memberAppInfo['memberapp_id']."')\"><b>Decline</b></a>";
-	}
-	else {
+	} else {
 		$memberAppOptions = "<span class='successFont' style='font-weight: bold'>Member Added!</span> - <a href='javascript:void(0)' onclick=\"removeApp('".$memberAppInfo['memberapp_id']."')\"><b>Remove</b></a>";
 	}
-	
-	
+
+
 	$arrCompInfo['app_options'] = array(
 		"type" => "custom",
 		"sortorder" => $i++,
 		"html" => "<br><p align='center'>".$memberAppOptions."</p>"
-	
+
 	);
-	
+
 	$arrComponents = array_merge($arrDefaultInfo, $arrCompInfo, $setRankOptions);
-	
+
 	$setupMemberAppForm['components'] = $arrComponents;
-	
-	
+
+
 	$memberAppForm->buildForm($setupMemberAppForm);
-	
+
 	$memberAppForm->show();
 }
 
 
 
-if($result->num_rows == 0) {
-
+if ($result->num_rows == 0) {
 	echo "
 		<div class='shadedBox' style='width: 400px; margin-top: 50px; margin-left: auto; margin-right: auto'>
 			<p class='main' align='center'>
@@ -165,8 +154,6 @@ if($result->num_rows == 0) {
 			</p>
 		</div>
 	";
-	
-}
-else {
-	$mysqli->query("UPDATE ".$dbprefix."memberapps SET seenstatus = '1' WHERE seenstatus = '0'");	
+} else {
+	$mysqli->query("UPDATE ".$dbprefix."memberapps SET seenstatus = '1' WHERE seenstatus = '0'");
 }

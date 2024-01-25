@@ -25,35 +25,21 @@ $consoleObj->select($cID);
 
 $customPageObj = new CustomForm($mysqli);
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $customPageObj->select($_POST['cpID'])) {
-		
+	if ($member->hasAccess($consoleObj) && $customPageObj->select($_POST['cpID'])) {
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
-	
+
 		$customPageInfo = $customPageObj->get_info_filtered();
-		
-		if($_POST['confirm'] == "1") {
-			
+
+		if ($_POST['confirm'] == "1") {
 			$customPageObj->delete();
 			require_once("main_customforms.php");
-			
-		}
-		else {
+		} else {
 			echo "<p align='center'>Are you sure you want to delete the custom form <b>".$customPageInfo['name']."</b>?<br><br>All submissions related to this form will also be deleted.";
 		}
-		
-	}
-	elseif(!$customPageObj->select($_POST['cpID'])) {
-	
+	} elseif (!$customPageObj->select($_POST['cpID'])) {
 		echo "<p align='center'>Unable find the selected custom form.  Please try again or contact the website administrator.</p>";
-	
 	}
-	
-	
-	
-	
 }

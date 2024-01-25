@@ -12,13 +12,12 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -30,20 +29,19 @@ $cID = $_GET['cID'];
 	$manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
 	$postNewsCID = $consoleObj->findConsoleIDByName("Post News");
 
-	
+
 	$dispPostNews = "";
 	$dispManageNews = "";
-	
-	
-	if($consoleObj->select($postNewsCID) && $member->hasAccess($consoleObj)) {
-	
-		$dispPostNews = "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$postNewsCID."'>Post News</a> &laquo; &nbsp; ";
-	}
-	
-	if($consoleObj->select($manageNewsCID) && $member->hasAccess($consoleObj)) {
-		$dispManageNews = "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$manageNewsCID."'>Manage News</a> &laquo;";
-	}
-	
+
+
+if ($consoleObj->select($postNewsCID) && $member->hasAccess($consoleObj)) {
+	$dispPostNews = "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$postNewsCID."'>Post News</a> &laquo; &nbsp; ";
+}
+
+if ($consoleObj->select($manageNewsCID) && $member->hasAccess($consoleObj)) {
+	$dispManageNews = "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$manageNewsCID."'>Manage News</a> &laquo;";
+}
+
 	$consoleObj->select($cID);
 	$newsObj = new News($mysqli);
 	echo "
@@ -55,21 +53,16 @@ $cID = $_GET['cID'];
 	";
 
 	$arrPosts = $newsObj->getPosts(2);
-	
-	if(count($arrPosts) > 0) {
-		foreach($arrPosts as $post) {
-			
-			$newsObj->select($post['news_id']);
-			$newsObj->show();			
-			
-		}
-		
-		$newsObj->displayPageSelector(2, MAIN_ROOT."members/console.php?cID=".$cID."&page=");
-		
+
+if (count($arrPosts) > 0) {
+	foreach ($arrPosts as $post) {
+		$newsObj->select($post['news_id']);
+		$newsObj->show();
 	}
-	else {
-		
-		echo "
+
+	$newsObj->displayPageSelector(2, MAIN_ROOT."members/console.php?cID=".$cID."&page=");
+} else {
+	echo "
 		
 			<div class='shadedBox' style='width: 300px; margin-left: auto; margin-right: auto'>
 				<p class='main' align='center'>
@@ -78,5 +71,4 @@ $cID = $_GET['cID'];
 			</div>
 		
 		";
-		
-	}
+}

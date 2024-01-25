@@ -21,16 +21,14 @@ require_once("facebook.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -68,22 +66,18 @@ $dispBreadCrumb
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-	
-	
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$fbObj = new Facebook($mysqli);
 	$pluginObj->selectByName("Facebook Login");
-	
+
 	if ( ! empty($_POST['submit']) ) {
-		
 		$arrAPIKey = array(
 			'appID' => $_POST['appid'],
 			'appSecret' => $_POST['appsecret']
 		);
-		
+
 		$jsonAPIKey = json_encode($arrAPIKey);
-		if($pluginObj->update(array("apikey"), array($jsonAPIKey))) {
-		
+		if ($pluginObj->update(array("apikey"), array($jsonAPIKey))) {
 			echo "
 				<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -96,35 +90,29 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				</script>
 				
 			";
-				
+
 			$member->logAction("Changed Facebook Login Plugin Settings.");
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 		}
-		
-		
 	}
-	
-	
-	
+
+
+
 	if ( empty($_POST['submit']) ) {
 		$dispNote = "";
-			
+
 		$arrFacebookAPIKeys = array("App ID"=>$fbObj->getAppID(), "App Secret"=>$fbObj->getAppSecret());
-		
-		foreach($arrFacebookAPIKeys as $key=>$value) {
-			
-			if($value == "") {
+
+		foreach ($arrFacebookAPIKeys as $key => $value) {
+			if ($value == "") {
 				$dispNote .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> ".$key."<br>";
 			}
-	
+
 			$dispFacebookAPIKey[$key] = filterText($value);
-			
-			
 		}
-		
+
 		echo "
 			<p align='right' style='margin-bottom: 10px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."'>Return to Plugin Manager</a></p>
 			
@@ -132,26 +120,26 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			<div class='formDiv'>
 		
 			";
-		
-			if($dispError != "") {
-				echo "
+
+		if ($dispError != "") {
+			echo "
 				<div class='errorDiv'>
 				<strong>Unable to save Facebook Login settings because the following errors occurred:</strong><br><br>
 				$dispError
 				</div>
 				";
-			}
-		
-			if($dispNote != "") {
-				echo "
+		}
+
+		if ($dispNote != "") {
+			echo "
 					<div class='errorDiv'>
 						<strong><u>NOTE:</u> In order for Facebook Login to work you must set the following variables in the facebook.php plugin file.</strong><br><br>
 						".$dispNote."
 					</div>
 				";
-			}
-		
-		
+		}
+
+
 		echo "
 				
 				Your Facebook Login plugin settings are listed below.  You must set App ID and App Secret in order for the plugin to work properly.
@@ -176,11 +164,8 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."'>Return to Plugin Manager</a></p>
 		";
 	}
-}
-else {
-
+} else {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
-
 }
 
 

@@ -32,7 +32,7 @@ $appComponentObj = $memberAppObj->objAppComponent;
 $appSelectValueObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
 $profileOptionObj = new ProfileOption($mysqli);
 
-if( $websiteInfo['memberregistration'] == 1 ) {
+if ( $websiteInfo['memberregistration'] == 1 ) {
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."'
@@ -50,24 +50,23 @@ require_once(BASE_DIRECTORY."include/signup_form.php");
 
 if ( ! empty($_POST['submit']) ) {
 	$additionalSuccessInfo = "<br><br>You must wait to be approved by a member to become a full member on the website.";
-	
-	if($memberAppObj->save() && $websiteInfo['memberapproval'] == 0) {
+
+	if ($memberAppObj->save() && $websiteInfo['memberapproval'] == 0) {
 		$memberAppObj->addMember();
 		$additionalSuccessInfo = "<br><br>You may now log in to your account.";
 	}
-	
+
 	if ( ! empty($_POST['submit']) ) {
 		$signUpForm->saveMessage = "<span class='main'>".$signUpForm->saveMessage.$additionalSuccessInfo."</span>";
-		
+
 		$signUpForm->showSuccessDialog();
 	}
 }
 
 if ( empty($_POST['submit']) ) {
-
 	$signUpForm->show();
-	
-	
+
+
 	echo "
 	<script type='text/javascript'>
 	
@@ -92,7 +91,6 @@ if ( empty($_POST['submit']) ) {
 	</script>
 	
 	";
-
 } ?>
 
 <?php require_once($prevFolder."themes/".$THEME."/_footer.php");

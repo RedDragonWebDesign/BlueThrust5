@@ -15,7 +15,7 @@
 
 $diplomacyClanObj = new Basic($mysqli, "diplomacy", "diplomacy_id");
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !$diplomacyClanObj->select($_GET['dID'])) {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !$diplomacyClanObj->select($_GET['dID'])) {
 	exit();
 }
 
@@ -27,45 +27,42 @@ $countErrors = 0;
 
 $arrDiplomacyStatus = array();
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
 	$arrDiplomacyStatus[$row['diplomacystatus_id']] = filterText($row['name']);
 }
 
 
 if ( ! empty($_POST['submit']) ) {
-
 	$diplomacyStatusObj = new Basic($mysqli, "diplomacy_status", "diplomacystatus_id");
 	// Check for clan name
-	
-	if(trim($_POST['clanname']) == "") {
+
+	if (trim($_POST['clanname']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Clan name may not be blank.<br>";
 		$countErrors++;
 	}
-	
+
 	// Check Status
-	
+
 	$allowedStatuses = array_keys($arrDiplomacyStatus);
-	if(!in_array($_POST['status'], $allowedStatuses) || !$diplomacyStatusObj->select($_POST['status'])) {
+	if (!in_array($_POST['status'], $allowedStatuses) || !$diplomacyStatusObj->select($_POST['status'])) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid status.<br>";
 		$countErrors++;
 	}
-	
+
 	// Check Clan Size
-	
+
 	$allowedSizes = array("large", "medium", "small");
-	if(!in_array($_POST['clansize'], $allowedSizes)) {
+	if (!in_array($_POST['clansize'], $allowedSizes)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid clan size.<br>";
 		$countErrors++;
 	}
-	
-	
-	if($countErrors == 0) {
-		
+
+
+	if ($countErrors == 0) {
 		$arrColumns = array("clanname", "diplomacystatus_id", "website", "clansize", "clantag", "skill", "gamesplayed", "extrainfo", "leaders");
 		$arrValues = array($_POST['clanname'], $_POST['status'], $_POST['website'], $_POST['clansize'], $_POST['tag'], $_POST['skill'], $_POST['gamesplayed'], $_POST['extrainfo'], $_POST['leaders']);
-		
-		if($diplomacyClanObj->update($arrColumns, $arrValues)) {
 
+		if ($diplomacyClanObj->update($arrColumns, $arrValues)) {
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -79,32 +76,25 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			
 			";
-			
+
 			$member->logAction("Edited ".$_POST['clanname']." diplomacy page information.  Set status to ".$diplomacyStatusObj->get_info_filtered("name"));
-			
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-		
-		
-		
 	}
-	
-	
-	if($countErrors > 0) {
+
+
+	if ($countErrors > 0) {
 		$_POST['submit'] = false;
 	}
-	
 }
 
 
 if ( empty($_POST['submit']) ) {
-	
 	echo "<div class='formDiv'>";
-	
-	if($dispError != "") {
+
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to edit clan information because the following errors occurred:</strong><br><br>
@@ -112,8 +102,8 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
-	
+
+
 	echo "
 	
 			<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."&dID=".$_GET['dID']."&action=edit' method='post'>
@@ -128,16 +118,15 @@ if ( empty($_POST['submit']) ) {
 						<td class='main'>
 							<select name='status' class='textBox'>
 							";
-								
-								foreach($arrDiplomacyStatus as $key=>$value) {
-									$dispSelected = "";
-									if($diplomacyClanInfo['diplomacystatus_id'] == $key) {
-										$dispSelected = " selected";	
-									}
-									echo "<option value='".$key."'".$dispSelected.">".$value."</option>";
-									
-								}
-		
+
+	foreach ($arrDiplomacyStatus as $key => $value) {
+		$dispSelected = "";
+		if ($diplomacyClanInfo['diplomacystatus_id'] == $key) {
+			$dispSelected = " selected";
+		}
+		echo "<option value='".$key."'".$dispSelected.">".$value."</option>";
+	}
+
 							echo "
 							</select>
 						</td>
@@ -165,16 +154,15 @@ if ( empty($_POST['submit']) ) {
 								
 								";
 							$arrClanSize = array("Small", "Medium", "Large");
-							foreach($arrClanSize as $clanSize) {
-								$dispSelected = "";
-								$clanSizeLC = strtolower($clanSize);
-								if($diplomacyClanInfo['clansize'] == $clanSizeLC) {
-									$dispSelected = " selected";	
-								}
-								
-								echo "<option value='".$clanSizeLC."'".$dispSelected.">".$clanSize."</option>";
-								
-							}
+	foreach ($arrClanSize as $clanSize) {
+		$dispSelected = "";
+		$clanSizeLC = strtolower($clanSize);
+		if ($diplomacyClanInfo['clansize'] == $clanSizeLC) {
+			$dispSelected = " selected";
+		}
+
+		echo "<option value='".$clanSizeLC."'".$dispSelected.">".$clanSize."</option>";
+	}
 							echo "
 							
 							</select>
@@ -202,6 +190,4 @@ if ( empty($_POST['submit']) ) {
 		</div>	
 	
 	";
-	
-	
 }

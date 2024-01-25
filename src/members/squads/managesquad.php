@@ -20,16 +20,14 @@ require_once("../../classes/squad.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -57,26 +55,26 @@ $arrSquadPrivileges = $squadObj->arrSquadPrivileges;
 
 $pID = strtolower($_GET['pID']);
 
-if($pID == "viewapps") { $pID = "acceptapps"; }
+if ($pID == "viewapps") {
+	$pID = "acceptapps";
+}
 
 $sID = $_GET['sID'];
 
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword'])) {
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$LOGIN_FAIL = false;
 	$memberInfo = $member->get_info_filtered();
 	$blnShowPage = false;
 	// Check Squad ID
-	
-	if(($squadObj->select($_GET['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], $pID)) || $blnManageAllSquads) {
-		$blnShowPage = true;		
-	}
-	elseif($squadObj->select($_GET['sID']) && !$squadObj->memberHasAccess($memberInfo['member_id'], $pID)) {
+
+	if (($squadObj->select($_GET['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], $pID)) || $blnManageAllSquads) {
+		$blnShowPage = true;
+	} elseif ($squadObj->select($_GET['sID']) && !$squadObj->memberHasAccess($memberInfo['member_id'], $pID)) {
 		$blnShowPage = false;
-	}
-	else {
+	} else {
 		echo "
 			<script type='text/javascript'>
 				window.location = '".$MAIN_ROOT."'
@@ -84,22 +82,20 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 		";
 		exit();
 	}
-	
-	if($pID == "closesquad") {
-		if($memberInfo['member_id'] == $squadObj->get_info("member_id") || $blnManageAllSquads) {
-			$blnShowPage = true;	
+
+	if ($pID == "closesquad") {
+		if ($memberInfo['member_id'] == $squadObj->get_info("member_id") || $blnManageAllSquads) {
+			$blnShowPage = true;
+		}
+	} elseif ($pID == "leavesquad") {
+		if ($memberInfo['member_id'] != $squadObj->get_info("member_id")) {
+			$blnShowPage = true;
 		}
 	}
-	elseif($pID == "leavesquad") {
-		if($memberInfo['member_id'] != $squadObj->get_info("member_id")) {
-			$blnShowPage = true;
-		}		
-	}
-		
 }
 
 
-if($LOGIN_FAIL) {
+if ($LOGIN_FAIL) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
 }
 
@@ -119,27 +115,24 @@ echo "
 $dispBreadCrumb
 </div>
 ";
-if($blnShowPage) {
-	
-	if($_GET['nID'] != "") {
+if ($blnShowPage) {
+	if ($_GET['nID'] != "") {
 		echo "
 		<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=ManageNews'>Go Back</a></p>
 		";
-	}
-	elseif($_GET['rID'] != "") {
+	} elseif ($_GET['rID'] != "") {
 		echo "
 		<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=ManageRanks'>Go Back</a></p>
 		";
-	}
-	else {
+	} else {
 		echo "
 		<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&select=".$sID."'>Go Back</a></p>
 		";
 	}
-	
-	
+
+
 	$squadInfo = $squadObj->get_info_filtered();
-	switch($pID) {
+	switch ($pID) {
 		case "postnews":
 			require_once("postnews.php");
 			break;
@@ -180,29 +173,24 @@ if($blnShowPage) {
 			echo "
 				<script type='text/javascript'>window.location = '".$MAIN_ROOT."members/console.php?cID=".$cID."'</script>
 			";
-			break;		
+			break;
 	}
-	
-	
-	if($_GET['nID'] != "") {
+
+
+	if ($_GET['nID'] != "") {
 		echo "
 		<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=ManageNews'>Go Back</a></p></div>
 		";
-	}
-	elseif($_GET['rID'] != "") {
+	} elseif ($_GET['rID'] != "") {
 		echo "
 		<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=ManageRanks'>Go Back</a></p></div>
 		";
-	}
-	else {
+	} else {
 		echo "
 		<div style='clear: both'><p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."&select=".$sID."'>Go Back</a></p></div>
 		";
 	}
-	
-}
-else {
-
+} else {
 	echo "
 
 	<div class='shadedBox' style='width: 400px; margin-top: 50px; margin-bottom: 50px; margin-left: auto; margin-right: auto;'>
@@ -213,7 +201,6 @@ else {
 
 	
 	";
-		
 }
 
 require_once("../../themes/".$THEME."/_footer.php");

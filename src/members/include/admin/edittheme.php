@@ -13,13 +13,12 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -106,7 +105,7 @@ $websiteSettingsCID = $consoleObj->findConsoleIDByName("Website Settings");
 			</td>
 		</tr>
 		
-		<?php 
+		<?php
 		/*
 		<tr>
 			<td id='globalcss' class='formLabel' colspan='2'>
@@ -118,7 +117,7 @@ $websiteSettingsCID = $consoleObj->findConsoleIDByName("Website Settings");
 				<div style='position: relative; background-color: white'>
 					<div class='codeEditor' id='globalCSSEditor'><?php echo $globalCSSCode; ?></div>
 				</div>
-			
+
 				<?php //<textarea cols='68' rows='12' id='globalcsscode'><?php echo $globalCSSCode; </textarea><br><br> ?>
 			</td>
 		</tr>

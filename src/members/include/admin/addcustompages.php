@@ -12,13 +12,12 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -29,22 +28,19 @@ $customPageObj = new Basic($mysqli, "custompages", "custompage_id");
 $countErrors = 0;
 $dispError = "";
 if ( ! empty($_POST['submit']) ) {
-	
-	
-	if(trim($_POST['pagename']) == "") {
+	if (trim($_POST['pagename']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a page name for your custom page.<br>";
 	}
-	
-	
-	if($countErrors == 0) {
-		
+
+
+	if ($countErrors == 0) {
 		$_POST['wysiwygHTML'] = str_replace("<?", "", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("?>", "", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("&lt;?", "", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("?&gt;", "", $_POST['wysiwygHTML']);
-		
-		if($customPageObj->addNew(array("pagename", "pageinfo"), array($_POST['pagename'], $_POST['wysiwygHTML']))) {
+
+		if ($customPageObj->addNew(array("pagename", "pageinfo"), array($_POST['pagename'], $_POST['wysiwygHTML']))) {
 			$intManageCustomPagesID = $consoleObj->findConsoleIDByName("Manage Custom Pages");
 			$customPageInfo = $customPageObj->get_info();
 			echo "
@@ -58,37 +54,28 @@ if ( ! empty($_POST['submit']) ) {
 					popupDialog('Add Custom Pages', '".$MAIN_ROOT."members/console.php?cID=".$intManageCustomPagesID."&cpID=".$customPageInfo['custompage_id']."&action=edit', 'successBox');
 				</script>
 			";
-			
-			
-			
-		}
-		else {
+		} else {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to add custom page.  Please try again!<br>";
 			$_POST['submit'] = false;
 			$_POST['wysiwygHTML'] = addslashes($_POST['wysiwygHTML']);
 		}
-		
-	}
-	else {
+	} else {
 		$_POST['submit'] = false;
 		$_POST['wysiwygHTML'] = addslashes($_POST['wysiwygHTML']);
 	}
-	
-	
 }
 
 
 if ( empty($_POST['submit']) ) {
-	
 	$addMenuItemCID = $consoleObj->findConsoleIDByName("Add Menu Item");
-	
+
 	echo "
 	<form action='console.php?cID=".$cID."' method='post'>
 	<div class='formDiv'>
 	
 	";
-	
-	if($dispError != "") {
+
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to add custom page because the following errors occurred:</strong><br><br>
@@ -96,7 +83,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
+
 	echo "
 		Fill out the form below to add a custom page.  In order to display a custom page in the menu, go to the <a href='".$MAIN_ROOT."members/console.php?cID=".$addMenuItemCID."'>Add Menu Item</a> page.
 		<br><br>
@@ -147,20 +134,16 @@ if ( empty($_POST['submit']) ) {
 			});
 
 	";
-	
-	if($dispError != "") {
+
+	if ($dispError != "") {
 		echo "
 			$('#wysiwygDiv').html('".$_POST['wysiwygHTML']."');
 			
 		";
 	}
-	
+
 	echo "
 
 		</script>
 	";
-	
-	
-	
-	
 }

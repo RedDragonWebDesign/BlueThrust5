@@ -12,13 +12,12 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -33,84 +32,65 @@ $profileCatObj = new ProfileCategory($mysqli);
 $profileOptionObj = new ProfileOption($mysqli);
 
 if ( ! empty($_POST['submit']) ) {
-
 	// Check Option Name
-	
-	if(trim($_POST['optionname']) == "") {
+
+	if (trim($_POST['optionname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must give the profile option a name.<br>";
 	}
 
-	
+
 	// Check Category
-	
-	if(!$profileCatObj->select($_POST['optioncategory'])) {
+
+	if (!$profileCatObj->select($_POST['optioncategory'])) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile category.<br>";
-	}
-	else {
-		
+	} else {
 		// Check Order
 		$arrProfileOptionIDs = $profileCatObj->getAssociateIDs();
-		
+
 		$blnOrderCheck1 = $_POST['optionorder'] == "first" && count($arrProfileOptionIDs) > 0;
 		$blnOrderCheck2 = !in_array($_POST['optionorder'], $arrProfileOptionIDs) && $_POST['optionorder'] != "first";
 		$blnOrderCheck3 = !$profileOptionObj->select($_POST['optionorder']) && $_POST['optionorder'] != "first";
-		
-		
-		if($blnOrderCheck1 || $blnOrderCheck2 || $blnOrderCheck3) {
+
+
+		if ($blnOrderCheck1 || $blnOrderCheck2 || $blnOrderCheck3) {
 			$countErrors++;
-			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile option order.<br>";	
-		}
-		elseif($_POST['optionorder'] == "first") {
+			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile option order.<br>";
+		} elseif ($_POST['optionorder'] == "first") {
 			$intNewSortNum = 1;
-		}
-		else {
-			
-			if($_POST['beforeafter'] == "before" || $_POST['beforeafter'] == "after") {
-				
+		} else {
+			if ($_POST['beforeafter'] == "before" || $_POST['beforeafter'] == "after") {
 				$intNewSortNum = $profileOptionObj->makeRoom($_POST['beforeafter']);
-				
-			}
-			else {
+			} else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid profile option order.<br>";
 			}
-			
-			
 		}
-		
-		
 	}
-	
 
-	if($countErrors == 0) {
-		
-		if($_POST['optiontype'] != "select") {
+
+	if ($countErrors == 0) {
+		if ($_POST['optiontype'] != "select") {
 			$_POST['optiontype'] = "input";
 		}
-		
-		
-		
+
+
+
 		$arrColumnNames = array("profilecategory_id", "name", "optiontype", "sortnum");
 		$arrColumnValues = array($_POST['optioncategory'], $_POST['optionname'], $_POST['optiontype'], $intNewSortNum);
-		
-		
-		if($profileOptionObj->addNew($arrColumnNames, $arrColumnValues)) {
-			
-			if($_POST['optiontype'] == "select") {
-				
+
+
+		if ($profileOptionObj->addNew($arrColumnNames, $arrColumnValues)) {
+			if ($_POST['optiontype'] == "select") {
 				$counter = 1;
-				foreach($_SESSION['btProfileCache'] as $selectValue) {
-					
+				foreach ($_SESSION['btProfileCache'] as $selectValue) {
 					$profileOptionObj->addNewSelectValue($selectValue, $counter);
 					$counter++;
-										
 				}
-				
 			}
 			$newProfileInfo = $profileOptionObj->get_info_filtered();
-			
+
 			echo "
 			<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -122,47 +102,37 @@ if ( ! empty($_POST['submit']) ) {
 			popupDialog('Add New Profile Option', '".$MAIN_ROOT."members/console.php', 'successBox');
 			</script>
 			";
-			
-			
-			
-			
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database!  Please contact the website administrator.<br>";
 		}
-		
-		
-		
-		
-	}
-	
-	
-	if($countErrors > 0) {
-		$_POST = filterArray($_POST);
-		$_POST['submit'] = false;	
 	}
 
+
+	if ($countErrors > 0) {
+		$_POST = filterArray($_POST);
+		$_POST['submit'] = false;
+	}
 }
 
 if ( empty($_POST['submit']) ) {
 	$_SESSION['btProfileCache'] = array();
 	$catoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$catoptions .= "<option value='".$row['profilecategory_id']."'>".$row['name']."</option>";
 	}
 
-	if($result->num_rows == 0) {
-		$catoptions = "<option value='none'>No Categories Added!</option>";	
+	if ($result->num_rows == 0) {
+		$catoptions = "<option value='none'>No Categories Added!</option>";
 	}
-	
+
 	echo "
 	<form action='console.php?cID=".$cID."' method='post'>
 		<div class='formDiv'>
 	";
-	
-	if($dispError != "") {
+
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to add new profile option because the following errors occurred:</strong><br><br>
@@ -170,8 +140,8 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
-	
+
+
 	echo "
 			Fill out the form below to add a new profile option.<br><br>
 			
@@ -296,5 +266,4 @@ if ( empty($_POST['submit']) ) {
 		
 	</script>
 	";
-
 }

@@ -13,11 +13,9 @@
  */
 
 
-if(!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
-
+if (!isset($member) || !isset($tournamentObj) || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -26,8 +24,7 @@ else {
 	$tournamentObj->select($tID);
 
 
-	if(!$member->hasAccess($consoleObj)) {
-
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -49,8 +46,8 @@ $arrComponents['starttime']['options']['selected_timezone'] = $tournamentInfo['t
 $arrComponents['starttime']['value'] = $tournamentInfo['startdate']*1000;
 $arrComponents['startdate']['value'] = $tournamentInfo['startdate']*1000;
 
-if($tournamentInfo['requirereplay'] == 1) {
-	$arrComponents['requirereplay']['checked'] = true;	
+if ($tournamentInfo['requirereplay'] == 1) {
+	$arrComponents['requirereplay']['checked'] = true;
 }
 
 $datePick = new DateTime();
@@ -62,8 +59,7 @@ $arrComponents['startdate']['options']['defaultDate'] = $datePick->format("M j, 
 $arrComponents['tournamentpw']['validate'][] = "resetTournamentPassword";
 $arrComponents['tournamentpw']['tooltip'] = "If you don't want to change the current password, leave both password inputs blank.";
 
-if($tournamentInfo['password'] != "") {
-
+if ($tournamentInfo['password'] != "") {
 	$lastComponentOrder = $arrComponents['submit']['sortorder'];
 	$arrComponents['removepw'] = array(
 		"type" => "checkbox",
@@ -98,17 +94,16 @@ unset($setupFormArgs['saveAdditional']['password']);
 function removeTournamentPassword() {
 	global $formObj;
 
-	if($_POST['removepw'] == 1) {
+	if ($_POST['removepw'] == 1) {
 		$formObj->saveAdditional['password'] = "";
 	}
-	
 }
 
 
 function resetTournamentPassword() {
 	global $formObj;
 
-	if($_POST['tournamentpw'] != "" && $_POST['removepw'] != 1) {
+	if ($_POST['tournamentpw'] != "" && $_POST['removepw'] != 1) {
 		$formObj->saveAdditional['password'] = md5($_POST['tournamentpw']);
 	}
 }

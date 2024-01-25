@@ -14,8 +14,8 @@
 
 require_once("rank.php");
 class RankCategory extends Rank {
-	
-	
+
+
 	function __construct($sqlConnection) {
 		$this->MySQL = $sqlConnection;
 		$this->strTableName = $this->MySQL->get_tablePrefix()."rankcategory";
@@ -23,58 +23,49 @@ class RankCategory extends Rank {
 		$this->strAssociateTableName = $this->MySQL->get_tablePrefix()."ranks";
 		$this->strAssociateKeyName = "rank_id";
 	}
-	
-	
+
+
 	function get_privileges() {
-		
-		
+
 		return false;
 	}
-	
-	
+
+
 	/**
 	 * - getRanks Function -
-	 * 
+	 *
 	 * Returns an array of rank ids for all ranks with the selected Rank Category
-	 * 
+	 *
 	 */
 	function getRanks() {
-		
+
 		$arrRanks = array();
-		
-		if($this->intTableKeyValue != "") {
-			
+
+		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."ranks WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."' ORDER BY ordernum DESC");
-			while($row = $result->fetch_assoc()) {
-				
+			while ($row = $result->fetch_assoc()) {
 				$arrRanks[] = $row['rank_id'];
-				
 			}
-			
 		}
-		
+
 		return $arrRanks;
-		
 	}
-	
-	
+
+
 	public function delete() {
 		$returnVal = false;
-		if($this->intTableKeyValue != "") {
+		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("DELETE FROM ".$this->strTableName." WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 			$this->resortOrder();
-			if(!$this->MySQL->error) {
+			if (!$this->MySQL->error) {
 				$returnVal = true;
-			}
-			else {
+			} else {
 				$this->MySQL->displayError("basic.php");
 			}
-	
 		}
-	
+
 		return $returnVal;
-	
 	}
-	
-	
+
+
 }

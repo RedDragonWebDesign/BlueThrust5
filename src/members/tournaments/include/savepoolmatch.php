@@ -32,8 +32,7 @@ $dispError = "";
 
 $tournamentObj = new Tournament($mysqli);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->select($_POST['teamID']) && $tournamentObj->objTournamentPool->select($_POST['poolID']) && $tournamentObj->objTournamentPool->objTournamentPoolMatch->select($_POST['poolTeamID']) && $member->hasAccess($consoleObj)) {
-
+if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->select($_POST['teamID']) && $tournamentObj->objTournamentPool->select($_POST['poolID']) && $tournamentObj->objTournamentPool->objTournamentPoolMatch->select($_POST['poolTeamID']) && $member->hasAccess($consoleObj)) {
 	$memberInfo = $member->get_info();
 
 	$teamInfo = $tournamentObj->objTeam->get_info_filtered();
@@ -47,69 +46,57 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam->
 	$tmemberID = $tournamentInfo['member_id'];
 
 
-	if(($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) && $poolInfo['tournament_id'] == $teamInfo['tournament_id'] && $poolTeamInfo['tournament_id'] == $teamInfo['tournament_id']) {
-		
-		
+	if (($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) && $poolInfo['tournament_id'] == $teamInfo['tournament_id'] && $poolTeamInfo['tournament_id'] == $teamInfo['tournament_id']) {
 		// Check Match Score
-		if(!is_numeric($_POST['teamScore']) || !is_numeric($_POST['opponentScore'])) {
+		if (!is_numeric($_POST['teamScore']) || !is_numeric($_POST['opponentScore'])) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Scores must be a numeric value.";
 		}
-		
-		
+
+
 		// Check Winner
 		$arrMatchWinners = array(0,1,2);
-		if(!in_array($_POST['matchWinner'], $arrMatchWinners)) {
+		if (!in_array($_POST['matchWinner'], $arrMatchWinners)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid match winner.";
 		}
-		
+
 		// Check Match Details
-		
-		if($teamInfo['tournamentteam_id'] != $poolTeamInfo['team1_id'] && $teamInfo['tournamentteam_id'] != $poolTeamInfo['team2_id']) {
+
+		if ($teamInfo['tournamentteam_id'] != $poolTeamInfo['team1_id'] && $teamInfo['tournamentteam_id'] != $poolTeamInfo['team2_id']) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The selected teams do not face each other.";
 		}
-		
+
 		// Check if correct pools
-		
-		if($poolInfo['tournamentpool_id'] != $poolTeamInfo['pool_id']) {
+
+		if ($poolInfo['tournamentpool_id'] != $poolTeamInfo['pool_id']) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> The selected match is not in the selected pool.";
 		}
-		
-		
-		
-	}
-	else {
+	} else {
 		$countErrors++;
-		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to verify tournament information.";	
+		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to verify tournament information.";
 	}
-	
-	
-	
-}
-else {
+} else {
 	$countErrors++;
 	$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to verify tournament information.";
 }
 
 
 
-if($countErrors == 0) {
-	
+if ($countErrors == 0) {
 	$arrUpdateColumns = array("team1score", "team2score", "winner");
-	
-	if($poolTeamInfo['team1_id'] == $teamInfo['tournamentteam_id']) {
+
+	if ($poolTeamInfo['team1_id'] == $teamInfo['tournamentteam_id']) {
 		$arrUpdateValues = array($_POST['teamScore'], $_POST['opponentScore'], $_POST['matchWinner']);
-	}
-	else {
+	} else {
 		$arrUpdateValues = array($_POST['opponentScore'], $_POST['teamScore'], $_POST['matchWinner']);
 	}
-	
+
 	$checkSave = $tournamentObj->objTournamentPool->objTournamentPoolMatch->update($arrUpdateColumns, $arrUpdateValues);
-	
-	if($checkSave) {
+
+	if ($checkSave) {
 		echo "
 	
 			<div style='display: none' id='successBox'>
@@ -139,17 +126,15 @@ if($countErrors == 0) {
 			
 			</script>
 		";
-	}
-	else {
+	} else {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 	}
-
 }
 
 
- 
-if($countErrors > 0) {
+
+if ($countErrors > 0) {
 	echo "
 		<div class='errorDiv'>
 			<strong>Unable to edit tournament info because the following errors occurred:</strong><br><br>

@@ -14,13 +14,12 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -30,19 +29,14 @@ require_once($prevFolder."classes/imageslider.php");
 $cID = $_GET['cID'];
 $imageSliderObj = new ImageSlider($mysqli);
 
-if($_GET['action'] == "edit" && $imageSliderObj->select($_GET['imgID'])) {
-	
+if ($_GET['action'] == "edit" && $imageSliderObj->select($_GET['imgID'])) {
 	require_once("include/news/include/editimage.php");
-	
-}
-else {
-	
-	
+} else {
 	$addImageCID = $consoleObj->findConsoleIDByName("Add Home Page Image");
 	$selectWidthUnit = ($websiteInfo['hpimagewidthunit'] == "px") ? "" : " selected";
 	$selectHeightUnit = ($websiteInfo['hpimageheightunit'] == "px") ? "" : " selected";
 	$selectDisplayStyle = ($websiteInfo['hpimagetype'] == "slider") ? "" : " selected";
-	
+
 		echo "
 			<div class='formDiv'>
 				Use this page to manage the home page image slider.  You can attach news posts, tournaments, events or any kind of custom message that you want to the images in the image slider.
@@ -177,6 +171,4 @@ else {
 			
 			
 		";
-
-
 }

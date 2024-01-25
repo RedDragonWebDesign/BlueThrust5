@@ -10,29 +10,28 @@
 	
 	<div id='refreshMenusDiv' style='display: none'></div>
 		<?php
-		
-			if(constant('LOGGED_IN')) {
-				
-				$memberObj = new Member($mysqli);
-				$memberObj->select($_SESSION['btUsername']);
-				$memberInfo = $memberObj->get_info();
-				
-				echo "
+
+		if (constant('LOGGED_IN')) {
+			$memberObj = new Member($mysqli);
+			$memberObj->select($_SESSION['btUsername']);
+			$memberInfo = $memberObj->get_info();
+
+			echo "
 					<audio id='notificationSound'>
 				";
-				if($memberInfo['notifications'] == 0) {
-					echo "
+			if ($memberInfo['notifications'] == 0) {
+				echo "
 						<source src='".$MAIN_ROOT."themes/".$THEME."/notification.mp3'></source>
 						<source src='".$MAIN_ROOT."themes/".$THEME."/notification.ogg'></source>
 					";
-				}
-				
-				echo "
+			}
+
+			echo "
 					</audio>
 					";
-				
-				if($memberInfo['notifications'] == 0 || $memberInfo['notifications'] == 1) {
-					echo "
+
+			if ($memberInfo['notifications'] == 0 || $memberInfo['notifications'] == 1) {
+				echo "
 			
 					<script type='text/javascript'>
 						var intCountNotificationCheck = 0;
@@ -50,14 +49,14 @@
 							});
 				
 							";
-							if ( ! $debug ) {
-								echo "
+				if ( ! $debug ) {
+					echo "
 							if(intCountNotificationCheck < 5) {
 								setTimeout(\"checkForNotification()\", 120000);
 							}
 								";
-							}
-							echo "
+				}
+						echo "
 							
 							intCountNotificationCheck++;
 						}
@@ -65,10 +64,9 @@
 						checkForNotification();
 					</script>
 				";
-					
-				}
 			}
-			
+		}
+
 		?>
 
 		

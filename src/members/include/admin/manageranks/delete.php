@@ -28,32 +28,23 @@ $member = new Member($mysqli);
 
 $checkMember = $member->select($_SESSION['btUsername']);
 
-if($checkMember) {
-
-	if($member->authorizeLogin($_SESSION['btPassword'])) {
-
+if ($checkMember) {
+	if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		//$cID = $cOptObj->findConsoleIDByName("Add New Rank");
-		
+
 		$memberInfo = $member->get_info();
-		
-		if($member->hasAccess($cOptObj)) {
-			
-			
-			
+
+		if ($member->hasAccess($cOptObj)) {
 			$rank = new Rank($mysqli);
-			if($rank->select($_POST['rID'])) {
+			if ($rank->select($_POST['rID'])) {
 				$rankInfo = $rank->get_info_filtered();
-				
-				if(!isset($_POST['confirm']) || $_POST['confirm'] == "") {
+
+				if (!isset($_POST['confirm']) || $_POST['confirm'] == "") {
 					echo "
 						Are you sure you want to delete the rank <b>".$rankInfo['name']."?</b>
 					";
-				}
-				else {
-					
-					
-					if($rank->countMembers() > 0) {
-				
+				} else {
+					if ($rank->countMembers() > 0) {
 						echo "
 						<script type='text/javascript'>
 							
@@ -76,13 +67,10 @@ if($checkMember) {
 								
 						</script>
 						";
-					
-					}
-					else {
-						
-						if($rank->delete()) {
+					} else {
+						if ($rank->delete()) {
 							echo "";
-							
+
 							echo "
 							
 							<script type='text/javascript'>
@@ -122,11 +110,9 @@ if($checkMember) {
 							
 							</script>
 							";
-							
-						}
-						else {
+						} else {
 							echo "";
-							
+
 							echo "
 							<script type='text/javascript'>
 							
@@ -149,14 +135,10 @@ if($checkMember) {
 								
 							</script>
 							";
-						
 						}
-						
 					}
 				}
-				
 			}
-			
 		}
 	}
 }

@@ -15,7 +15,9 @@ $prevFolder = "../";
 require_once("../_setup.php");
 $pluginObj = new btPlugin($mysqli);
 
-if(!isset($_GET['plugin']) || !$pluginObj->selectByName($_GET['plugin'])) { echo "<script type='text/javascript'>window.location = '".$MAIN_ROOT."';"; exit(); }
+if (!isset($_GET['plugin']) || !$pluginObj->selectByName($_GET['plugin'])) {
+	echo "<script type='text/javascript'>window.location = '".$MAIN_ROOT."';"; exit();
+}
 
 $pluginInfo = $pluginObj->get_info_filtered();
 
@@ -41,8 +43,8 @@ $EXTERNAL_JAVASCRIPT .= "
 ";
 
 $formObj = new Form();
-require_once(BASE_DIRECTORY."plugins/".$pluginInfo['filepath']."/settings_form.php");	
-$hooksObj->run("pluginsettings-".$pluginInfo['filepath']);	
+require_once(BASE_DIRECTORY."plugins/".$pluginInfo['filepath']."/settings_form.php");
+$hooksObj->run("pluginsettings-".$pluginInfo['filepath']);
 
 
 require_once(BASE_DIRECTORY."themes/".$THEME."/_header.php");
@@ -57,24 +59,19 @@ require_once(BASE_DIRECTORY."include/breadcrumb.php");
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+	$formObj->buildForm($setupFormArgs);
 
-	$formObj->buildForm($setupFormArgs);	
-	
-	if($_POST['submit'] && $formObj->save()) {
+	if ($_POST['submit'] && $formObj->save()) {
 		$formObj->saveMessageTitle = $pluginInfo['name']." Plugin Settings";
 		$formObj->showSuccessDialog();
 	}
-	
-	
-	
-	$formObj->show();	
-	
-}
-else {
 
+
+
+	$formObj->show();
+} else {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
-
 }
 
 

@@ -21,16 +21,14 @@ require_once("twitter.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -68,62 +66,57 @@ $dispBreadCrumb
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$twitterObj = new Twitter($mysqli);
 	$memberInfo = $member->get_info_filtered();
-	
+
 	$pluginObj->selectByName("Twitter Connect");
 	//$result = $mysqli->query("SELECT * FROM ".$dbprefix."plugins WHERE name = 'Twitter Connect'");
 	$pluginInfo = $pluginObj->get_info();
-	
+
 	$pluginObj->pluginPage->setCategoryKeyValue($pluginInfo['plugin_id']);
-	
+
 	$pluginPageInfo = $pluginObj->getPluginPage("profile", $pluginInfo['plugin_id']);
-	
+
 	$arrProfileModules = array("User Information", "Custom Profile Options", "Games Statistics", "Squads", "Medals");
-	
+
 	$countErrors = 0;
 	$dispError = "";
-	
+
 	if ( ! empty($_POST['submit']) ) {
-			
-		
 		// Check Display Order (before/after)
-		if($_POST['beforeafter'] != "before" && $_POST['beforeafter'] != "after") {
+		if ($_POST['beforeafter'] != "before" && $_POST['beforeafter'] != "after") {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order (before/after).<br>";
 			$countErrors++;
 		}
-		
+
 		// Check Display Order
-		
-		if(!in_array($_POST['displayorder'], array_keys($arrProfileModules))) {
+
+		if (!in_array($_POST['displayorder'], array_keys($arrProfileModules))) {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
 			$countErrors++;
 		}
-		
-		if($countErrors == 0) {
-			
+
+		if ($countErrors == 0) {
 			$arrAPIKey = array(
 				'consumerKey' => $_POST['consumerkey'],
 				'consumerSecret' => $_POST['consumersecret'],
 				'widgetID' => $_POST['widgetid']
-			
+
 			);
-			
+
 			$jsonAPIKey = json_encode($arrAPIKey);
 			$setSortNum = $_POST['displayorder'];
-			if($_POST['beforeafter'] == "after") {
+			if ($_POST['beforeafter'] == "after") {
 				$setSortNum = $_POST['displayorder']+1;
 			}
-			
-			
-			if($_POST['profiledisplay'] == "no") {
-				$setSortNum = -1;	
+
+
+			if ($_POST['profiledisplay'] == "no") {
+				$setSortNum = -1;
 			}
-			
-			if($pluginObj->update(array("apikey"), array($jsonAPIKey)) && $pluginObj->pluginPage->update(array("sortnum"), array($setSortNum))) {
-				
+
+			if ($pluginObj->update(array("apikey"), array($jsonAPIKey)) && $pluginObj->pluginPage->update(array("sortnum"), array($setSortNum))) {
 				echo "
 				<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -136,49 +129,42 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				</script>
 				
 				";
-				
+
 				$member->logAction("Changed Twitter Connect Plugin Settings.");
-			}
-			else {
+			} else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 			}
-		
-			
-			
 		}
-		
-		if($countErrors > 0) {
+
+		if ($countErrors > 0) {
 			$_POST['submit'] = false;
 		}
-		
-		
 	}
-	
+
 	if ( empty($_POST['submit']) ) {
-		
 		$selectAfter = "";
-		if(count($arrProfileModules) == $pluginPageInfo[0]['sortnum']) {
-			$selectAfter = " selected";	
+		if (count($arrProfileModules) == $pluginPageInfo[0]['sortnum']) {
+			$selectAfter = " selected";
 		}
-		
+
 		$selectNoDisplay = "";
-		if($pluginPageInfo[0]['sortnum'] == -1) {
-			$selectNoDisplay = " selected";	
+		if ($pluginPageInfo[0]['sortnum'] == -1) {
+			$selectNoDisplay = " selected";
 		}
-		
+
 		$dispNote = "";
-		
+
 		$arrTwitterAPIKeys = array("Consumer Key"=>$twitterObj->getConsumerKey(), "Consumer Secret"=>$twitterObj->getConsumerSecret(), "Widget ID"=>$twitterObj->widgetID);
-		
-		foreach($arrTwitterAPIKeys as $key=>$value) {
-			if($value == "") {
+
+		foreach ($arrTwitterAPIKeys as $key => $value) {
+			if ($value == "") {
 				$dispNote .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> ".$key."<br>";
 			}
-			
+
 			$dispTwitterAPIKey[$key] = filterText($value);
 		}
-		
+
 		echo "
 			<p align='right' style='margin-bottom: 10px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."'>Return to Plugin Manager</a></p>
 		
@@ -186,8 +172,8 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				<div class='formDiv'>
 					
 				";
-		
-		if($dispError != "") {
+
+		if ($dispError != "") {
 			echo "
 			<div class='errorDiv'>
 			<strong>Unable to save Twitter Connect settings because the following errors occurred:</strong><br><br>
@@ -195,9 +181,9 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			</div>
 			";
 		}
-		
-		
-		if($dispNote != "") {
+
+
+		if ($dispNote != "") {
 			echo "
 				<div class='errorDiv'>
 					<strong><u>NOTE:</u> In order for Twitter Connect to work you must set the following variables.</strong><br><br>
@@ -205,8 +191,8 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 				</div>
 			";
 		}
-		
-		
+
+
 		echo "
 				
 				
@@ -248,20 +234,18 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 								<select name='beforeafter' class='textBox'><option value='before'>Before</option><option value='after'".$selectAfter.">After</option></select><br>
 								<select name='displayorder' class='textBox'>
 								";
-		
-		foreach($arrProfileModules as $key=>$module) {
-			
+
+		foreach ($arrProfileModules as $key => $module) {
 			$selectKey = "";
-			if($pluginPageInfo[0]['sortnum'] == $key) {
+			if ($pluginPageInfo[0]['sortnum'] == $key) {
+				$selectKey = " selected";
+			} elseif ($key == (count($arrProfileModules)-1) && $selectAfter == " selected") {
 				$selectKey = " selected";
 			}
-			elseif($key == (count($arrProfileModules)-1) && $selectAfter == " selected") {
-				$selectKey = " selected";	
-			}
-			
+
 			echo "<option value='".$key."'".$selectKey.">".$module."</option>";
 		}
-		
+
 		echo "
 								</select>
 							</td>
@@ -277,15 +261,9 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			<p align='right' style='margin-bottom: 20px; margin-right: 20px;'>&laquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$cID."'>Return to Plugin Manager</a></p>
 	
 		";
-	
 	}
-	
-	
-}
-else {
-
+} else {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
-
 }
 
 

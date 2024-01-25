@@ -37,53 +37,48 @@ $squadObj = new Squad($mysqli);
 $arrSquadPrivileges = $squadObj->arrSquadPrivileges;
 
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$LOGIN_FAIL = false;
 	$memberInfo = $member->get_info_filtered();
 
-	if($squadObj->select($_GET['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], "postshoutbox")) {
-		
+	if ($squadObj->select($_GET['sID']) && $squadObj->memberHasAccess($memberInfo['member_id'], "postshoutbox")) {
 		$squadInfo = $squadObj->get_info();
-		
+
 		$squadNewsObj = new Basic($mysqli, "squadnews", "squadnews_id");
 		$arrColumns = array("member_id", "squad_id", "dateposted", "newspost", "newstype");
 		$arrValues = array($memberInfo['member_id'], $squadInfo['squad_id'], time(), $_POST['message'], 3);
-		
+
 		$squadNewsObj->addNew($arrColumns, $arrValues);
-		
-		if($squadObj->memberHasAccess($memberInfo['member_id'], "manageshoutbox")) {
+
+		if ($squadObj->memberHasAccess($memberInfo['member_id'], "manageshoutbox")) {
 			$blnManageShoutbox = true;
 		}
-				
 	}
 }
 
 
 $squadMemberList = $squadObj->getMemberList();
 $blnShowShoutBox = false;
-if(in_array($memberInfo['member_id'], $squadMemberList) && $squadInfo['privateshoutbox'] == 1) {
+if (in_array($memberInfo['member_id'], $squadMemberList) && $squadInfo['privateshoutbox'] == 1) {
 	$blnShowShoutBox = true;
-}
-elseif($squadInfo['privateshoutbox'] == 0) {
+} elseif ($squadInfo['privateshoutbox'] == 0) {
 	$blnShowShoutBox = true;
 }
 
-if($blnShowShoutBox) {
-
+if ($blnShowShoutBox) {
 	$shoutboxObj = new Shoutbox($mysqli, "squadnews", "squadnews_id");
-	
+
 	$shoutboxObj->strDivID = "squadsShoutbox";
 	$shoutboxObj->intDispWidth = 205;
 	$shoutboxObj->intDispHeight = 400;
 	$shoutboxObj->blnUpdateShoutbox = true;
 	$shoutboxObj->strSQLSort = " AND squad_id ='".$squadInfo['squad_id']."'";
-	
-	if($blnManageShoutbox) {
+
+	if ($blnManageShoutbox) {
 		$shoutboxObj->strEditLink = $MAIN_ROOT."members/squads/managesquad.php?&pID=ManageShoutbox&sID=".$squadInfo['squad_id']."&nID=";
 		$shoutboxObj->strDeleteLink = $MAIN_ROOT."members/squads/include/deleteshoutpost.php?sID=".$squadInfo['squad_id'];
 	}
-	
-	
-	echo $shoutboxObj->dispShoutbox();
 
+
+	echo $shoutboxObj->dispShoutbox();
 }

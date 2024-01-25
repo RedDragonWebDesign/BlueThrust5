@@ -1,6 +1,8 @@
 <?php
 
-if(!defined("POSTNEWS_FORM")) { exit(); }
+if (!defined("POSTNEWS_FORM")) {
+	exit();
+}
 
 $newsTextbox = $member->hasAccess($newsObj->getHTMLNewsConsole()) ? "richtextbox" : "textarea";
 
@@ -89,12 +91,11 @@ echo "
 
 function formFilterNewsPost() {
 	global $member, $newsObj;
-	
-	if($member->hasAccess($newsObj->getHTMLNewsConsole())) {
+
+	if ($member->hasAccess($newsObj->getHTMLNewsConsole())) {
 		$_POST['newspost'] = str_replace("<?", "", $_POST['newspost']);
 		$_POST['newspost'] = str_replace("?>", "", $_POST['newspost']);
 		$_POST['newspost'] = str_replace("<script", "", $_POST['newspost']);
 		$_POST['newspost'] = str_replace("</script>", "", $_POST['newspost']);
 	}
-	
 }

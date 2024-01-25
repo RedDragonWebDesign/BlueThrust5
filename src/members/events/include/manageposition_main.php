@@ -13,8 +13,7 @@
  */
 
 
-if(!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
-
+if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 	require_once("../../../_setup.php");
 	require_once("../../../classes/member.php");
 	require_once("../../../classes/event.php");
@@ -34,24 +33,20 @@ if(!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen(
 	$eventObj = new Event($mysqli);
 	$memberInfo = $member->get_info();
 	// Check Login
-	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $eventObj->select($_GET['eID']) && ($eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions") || $memberInfo['rank_id'] == 1)) {
-		
+	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $eventObj->select($_GET['eID']) && ($eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions") || $memberInfo['rank_id'] == 1)) {
 		$eventInfo = $eventObj->get_info_filtered();
-	}
-	else {
+	} else {
 		exit();
 	}
-
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($consoleObj->findConsoleIDByName("Manage My Events"));
-	if(!$member->hasAccess($consoleObj) || !$eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions")) {
+	if (!$member->hasAccess($consoleObj) || !$eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions")) {
 		exit();
 	}
 }
 
-	
+
 echo "
 <table class='formTable' style='border-spacing: 0px; margin-top: 0px'>
 	<tr><td colspan='5' class='dottedLine'></td></tr>
@@ -62,30 +57,25 @@ $x = 1;
 $eventObj->objEventPosition->setCategoryKeyValue($eventInfo['event_id']);
 $intHighestOrder = $eventObj->objEventPosition->getHighestSortNum();
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."eventpositions WHERE event_id = '".$eventInfo['event_id']."' ORDER BY sortnum");
-while($row = $result->fetch_assoc()) {
-
-
-	if($counter == 1) {
+while ($row = $result->fetch_assoc()) {
+	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
-	}
-	else {
+	} else {
 		$addCSS = "";
 		$counter = 1;
 	}
 
-	if($x == 1) {
+	if ($x == 1) {
 		$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
-	}
-	else {
+	} else {
 		$dispUpArrow = "<a href='javascript:void(0)' onclick=\"movePosition('up', '".$row['position_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 	}
-	
-	
-	if($x == $intHighestOrder) {
+
+
+	if ($x == $intHighestOrder) {
 		$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
-	}
-	else {
+	} else {
 		$dispDownArrow = "<a href='javascript:void(0)' onclick=\"movePosition('down', '".$row['position_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' width='24' height='24' title='Move Down'></a>";
 	}
 
@@ -102,15 +92,12 @@ while($row = $result->fetch_assoc()) {
 	";
 
 	$x++;
-
-
 }
 
 echo "</table>";
 
 
-if($result->num_rows == 0) {
-	
+if ($result->num_rows == 0) {
 	echo "
 	
 		<div class='shadedBox' style='width: 40%; margin: 20px auto'>
@@ -119,6 +106,5 @@ if($result->num_rows == 0) {
 			</p>
 		</div>
 	
-	";	
-	
+	";
 }

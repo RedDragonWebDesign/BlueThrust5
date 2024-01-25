@@ -13,11 +13,9 @@
  */
 
 
-if(!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
-
+if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -26,8 +24,7 @@ else {
 	$squadObj->select($sID);
 
 
-	if(!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "addrank")) {
-
+	if (!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "addrank")) {
 		exit();
 	}
 }
@@ -47,8 +44,7 @@ $dispError = "";
 $countErrors = 0;
 $squadRankList = $squadObj->getRankList();
 
-if(count($squadRankList) < 2) {
-
+if (count($squadRankList) < 2) {
 	echo "
 		<div style='display: none' id='errorBox'>
 			<p align='center'>
@@ -60,12 +56,7 @@ if(count($squadRankList) < 2) {
 			popupDialog('Send Squad Invite', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'errorBox');
 		</script>
 	";
-
-
-
-}
-elseif($squadInfo['recruitingstatus'] == 0) {
-
+} elseif ($squadInfo['recruitingstatus'] == 0) {
 	echo "
 		<div style='display: none' id='errorBox'>
 			<p align='center'>
@@ -77,73 +68,59 @@ elseif($squadInfo['recruitingstatus'] == 0) {
 			popupDialog('Send Squad Invite', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'errorBox');
 		</script>
 	";
-
-
-}
-else {
-
+} else {
 	$squadMemberList = $squadObj->getMemberList();
 	$intFounderRankID = $squadObj->getFounderRankID();
-	
+
 	if ( ! empty($_POST['submit']) ) {
-		
 		$squadInvitesOutstanding = $squadObj->getOutstandingInvites();
-		
+
 		// Check Member
-		
-		if($_POST['newmemberid'] == "" && trim($_POST['newmember']) == "") {
+
+		if ($_POST['newmemberid'] == "" && trim($_POST['newmember']) == "") {
 			$countErrors++;
-			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a member to invite!";	
-		}
-		elseif(($_POST['newmemberid'] != "" && !$member->select($_POST['newmemberid'])) || ($_POST['newmemberid'] == "" && trim($_POST['newmember']) != "" && !$member->select($_POST['newmember']))) {
+			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a member to invite!";
+		} elseif (($_POST['newmemberid'] != "" && !$member->select($_POST['newmemberid'])) || ($_POST['newmemberid'] == "" && trim($_POST['newmember']) != "" && !$member->select($_POST['newmember']))) {
 			$countErrors++;
-			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member!";	
+			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid member!";
+		} else {
+			$intNewMemberID = $member->get_info("member_id");
 		}
-		else {
-			$intNewMemberID = $member->get_info("member_id");	
-		}
-		
-		if(in_array($intNewMemberID, $squadMemberList)) {
+
+		if (in_array($intNewMemberID, $squadMemberList)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> This member is already in your squad!";
-		}
-		elseif(in_array($intNewMemberID, $squadInvitesOutstanding)) {
+		} elseif (in_array($intNewMemberID, $squadInvitesOutstanding)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> This member was already sent an invitation!";
 		}
-		
-		
+
+
 		// Check Starting Rank
-		
-		if($squadObj->memberHasAccess($memberInfo['member_id'], "setrank")) {
-			
-			if(!$squadObj->objSquadRank->select($_POST['startingrank']) || $_POST['startingrank'] == $intFounderRankID) {
+
+		if ($squadObj->memberHasAccess($memberInfo['member_id'], "setrank")) {
+			if (!$squadObj->objSquadRank->select($_POST['startingrank']) || $_POST['startingrank'] == $intFounderRankID) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid starting rank!";
 			}
-
-		}
-		else {
+		} else {
 			$startRankKey = max(array_keys($squadRankList));
 			$_POST['startingrank'] = $squadRankList[$startRankKey];
 		}
-		
-		
-		
-		if($countErrors == 0) {
-			
-			
+
+
+
+		if ($countErrors == 0) {
 			$arrColumns = array("squad_id", "sender_id", "receiver_id", "datesent", "message", "startingrank_id");
 			$arrValues = array($squadInfo['squad_id'], $memberInfo['member_id'], $intNewMemberID, time(), $_POST['message'], $_POST['startingrank']);
-			
+
 			$squadInviteObj = new Basic($mysqli, "squadinvites", "squadinvite_id");
-			
-			if($squadInviteObj->addNew($arrColumns, $arrValues)) {
-				
+
+			if ($squadInviteObj->addNew($arrColumns, $arrValues)) {
 				$intViewSquadInvitesCID = $consoleObj->findConsoleIDByName("View Squad Invitations");
-				
+
 				$member->postNotification("You have received a squad invitation from <b><a href='".$MAIN_ROOT."squads/profile.php?sID=".$squadInfo['squad_id']."'>".$squadInfo['name']."</a></b>!<br><br><a href='".$MAIN_ROOT."members/console.php?cID=".$intViewSquadInvitesCID."'>Click Here</a> to view your Squad Invitations.");
-				
+
 				echo "
 				
 					<div style='display: none' id='successBox'>
@@ -157,57 +134,45 @@ else {
 					</script>
 				
 				";
-				
-			}
-			else {
+			} else {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 			}
-			
-			
 		}
-		
-		
-		if($countErrors > 0) {
+
+
+		if ($countErrors > 0) {
 			$_POST = filterArray($_POST);
 			$_POST['submit'] = false;
 		}
-		
-		
-		
 	}
-	
-	
+
+
 	if ( empty($_POST['submit']) ) {
-	
 		$sqlMemberList = "('".implode("','", $squadMemberList)."')";
-		
+
 		$arrMembers = array();
-		
+
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE member_id NOT IN ".$sqlMemberList." AND disabled = '0' ORDER BY username");
-		while($row = $result->fetch_assoc()) {
-	
+		while ($row = $result->fetch_assoc()) {
 			$arrMembers[] = array("id" => $row['member_id'], "value" => filterText($row['username']));
-			
 		}
-		
-		
+
+
 		$dispSetRank = "";
 		$setrankoptions = "";
-		
-		if($squadObj->memberHasAccess($memberInfo['member_id'], "setrank")) {
-			$intFounderRankID = $squadObj->getFounderRankID();
-	
-			foreach($squadRankList as $squadRank) {
 
-				if($squadRank != $intFounderRankID) {
+		if ($squadObj->memberHasAccess($memberInfo['member_id'], "setrank")) {
+			$intFounderRankID = $squadObj->getFounderRankID();
+
+			foreach ($squadRankList as $squadRank) {
+				if ($squadRank != $intFounderRankID) {
 					$squadObj->objSquadRank->select($squadRank);
 					$squadRankInfo = $squadObj->objSquadRank->get_info_filtered();
 					$setrankoptions .= "<option value='".$squadRankInfo['squadrank_id']."'>".$squadRankInfo['name']."</option>";
 				}
-						
 			}
-			
+
 			$dispSetRank = "
 	
 			<tr>
@@ -216,20 +181,19 @@ else {
 			</tr>
 			
 			";
-			
 		}
-		
-		
+
+
 		$arrJSONMembers = json_encode($arrMembers);
-		
+
 		echo "
 			<form action='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=SendInvites' method='post'>
 				<div class='formDiv'>
 				
 			";
-		
-		
-		if($dispError != "") {
+
+
+		if ($dispError != "") {
 			echo "
 			<div class='errorDiv'>
 			<strong>Unable to send squad invite because the following errors occurred:</strong><br><br>
@@ -237,7 +201,7 @@ else {
 			</div>
 			";
 		}
-		
+
 		echo "
 					Use the form below to send invitations to clan members so they can join your squad.  The member must accept the invitation in order to add them to your squad.
 					<br><br>
@@ -288,8 +252,5 @@ else {
 			</script>
 			
 		";
-	
-		
 	}
-
 }

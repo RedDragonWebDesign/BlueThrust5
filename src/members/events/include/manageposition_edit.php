@@ -14,11 +14,9 @@
 
 
 
-if(!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
-
+if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -26,8 +24,7 @@ else {
 
 	$eventObj->select($eID);
 
-	if(!$member->hasAccess($consoleObj) || !$eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions")) {
-
+	if (!$member->hasAccess($consoleObj) || !$eventObj->memberHasAccess($memberInfo['member_id'], "eventpositions")) {
 		exit();
 	}
 }
@@ -48,37 +45,34 @@ $countErrors = 0;
 $dispError = "";
 
 if ( ! empty($_POST['submit']) ) {
-	
 	// Check position name
-	if(trim($_POST['positionname']) == "") {
+	if (trim($_POST['positionname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not enter a blank position name.<br>";
 	}
-	
+
 	// Check display order
 	$intNewOrderNum = $eventObj->objEventPosition->validateOrder($_POST['displayorder'], $_POST['beforeafter'], true, $eventPositionInfo['sortnum']);
-	if($intNewOrderNum === false) {
+	if ($intNewOrderNum === false) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
 	}
-	
+
 	// Filter Position Options
 	$arrPositionOptions = $eventObj->arrPositionOptions;
-	foreach($arrPositionOptions as $positionOptionName) {
-		if($_POST[$positionOptionName] != 0) {
+	foreach ($arrPositionOptions as $positionOptionName) {
+		if ($_POST[$positionOptionName] != 0) {
 			$_POST[$positionOptionName] = 1;
 		}
 	}
-	
-	
-	if($countErrors == 0) {
-		
+
+
+	if ($countErrors == 0) {
 		$arrColumns = array("name", "sortnum", "modchat", "invitemembers", "manageinvites", "postmessages", "managemessages", "attendenceconfirm", "editinfo", "eventpositions", "description");
 		$arrValues = array($_POST['positionname'], $intNewOrderNum, $_POST['modchat'], $_POST['invitemembers'], $_POST['manageinvites'], $_POST['postmessages'], $_POST['managemessages'], $_POST['attendenceconfirm'], $_POST['editinfo'], $_POST['eventpositions'], $_POST['description']);
 		$eventObj->objEventPosition->select($eventPositionInfo['position_id']);
-		
-		if($eventObj->objEventPosition->update($arrColumns, $arrValues)) {
-			
+
+		if ($eventObj->objEventPosition->update($arrColumns, $arrValues)) {
 			echo "
 			
 				<div style='display: none' id='successBox'>
@@ -92,78 +86,67 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			
 			";
-			
+
 			$eventObj->objEventPosition->resortOrder();
-			
-		}
-		else {
+		} else {
 			$countErrors++;
-			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";			
+			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-	
 	}
-	
-	if($countErrors > 0) {
+
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
-		$_POST['submit'] = false;	
+		$_POST['submit'] = false;
 	}
-	
-	
 }
 
 if ( empty($_POST['submit']) ) {
-	
-	
 	$arrPositions = $eventObj->getPositions(" ORDER BY sortnum");
 	$orderoptions = "";
-	
+
 	$findBeforeAfter = $eventObj->objEventPosition->findBeforeAfter();
-	
-	foreach($arrPositions as $positionID) {
-		
-		if($positionID != $eventPositionInfo['position_id']) {
-			
+
+	foreach ($arrPositions as $positionID) {
+		if ($positionID != $eventPositionInfo['position_id']) {
 			$dispSelected = "";
-			if($findBeforeAfter[0] == $positionID) {
-				$dispSelected = " selected";	
+			if ($findBeforeAfter[0] == $positionID) {
+				$dispSelected = " selected";
 			}
-			
+
 			$eventObj->objEventPosition->select($positionID);
 			$positionInfo = $eventObj->objEventPosition->get_info_filtered();
 			$orderoptions .= "<option value='".$positionID."'".$dispSelected.">".$positionInfo['name']."</option>";
 		}
 	}
-	
-	$afterSelected = "";
-	if($findBeforeAfter[1] == "first") {
-		$orderoptions = "<option value='first'>(first position)</option>";
-	}
-	elseif($findBeforeAfter[1] == "after") {
-		$afterSelected = " selected";	
-	}
-	
 
-	foreach($eventObj->arrPositionOptions as $optionName) {
-		if($eventPositionInfo[$optionName] == 1) {
+	$afterSelected = "";
+	if ($findBeforeAfter[1] == "first") {
+		$orderoptions = "<option value='first'>(first position)</option>";
+	} elseif ($findBeforeAfter[1] == "after") {
+		$afterSelected = " selected";
+	}
+
+
+	foreach ($eventObj->arrPositionOptions as $optionName) {
+		if ($eventPositionInfo[$optionName] == 1) {
 			$arrCheckOption[$optionName] = " checked";
-		}
-		else {
+		} else {
 			$arrCheckOption[$optionName] = "";
 		}
 	}
-	
+
 	$postMessages = "";
-	if($eventInfo['messages'] == 1) {
+	if ($eventInfo['messages'] == 1) {
 		$postMessages = " onmouseover=\"showToolTip('You have allowed all invited members to post messages on the event page.  Uncheck this box to create a position that will prevent members posting messages.')\" onmouseout='hideToolTip()'";
 	}
-	
+
 	echo "
 	
 		<form action='".$MAIN_ROOT."members/events/manage.php?eID=".$eventInfo['event_id']."&pID=ManagePositions&posID=".$eventPositionInfo['position_id']."&action=edit' method='post'>
 			<div class='formDiv'>
 			";
-	
-	if($dispError != "") {
+
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to edit event position because the following errors occurred:</strong><br><br>
@@ -171,7 +154,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
+
 	echo "
 				Event positions allow you to give certain members who will be attending the event to have greater responsibilities.  Assign invited members a position on the <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$eID."&pID=ManageInvites'>Manage Invites</a> page.
 				<br><br>
@@ -248,5 +231,4 @@ if ( empty($_POST['submit']) ) {
 		</form>
 	
 	";
-	
 }

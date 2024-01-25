@@ -26,16 +26,14 @@ require_once($prevFolder."classes/rank.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -65,29 +63,25 @@ require_once($prevFolder."include/breadcrumb.php");
 		$memberObj = new Member($mysqli);
 		$counter = 0;
 		$result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."squads ORDER BY name");
-		while($row = $result->fetch_assoc()) {
-			
-			
-			if($row['recruitingstatus'] == 1) {
-				$dispRecruiting = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/bluedot.png' title='Recruiting Open'>";	
-			}
-			else {
-				$dispRecruiting = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/graydot.png' title='Recruiting Closed'>";
-			}
-			
-			$memberObj->select($row['member_id']);
-			$dispMemberLink = $memberObj->getMemberLink();
-			
-			if($counter == 1) {
-				$addCSS = " alternateBGColor";
-				$counter = 0;
-			}
-			else {
-				$addCSS = "";
-				$counter = 1;
-			}
-			
-			echo "
+	while ($row = $result->fetch_assoc()) {
+		if ($row['recruitingstatus'] == 1) {
+			$dispRecruiting = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/bluedot.png' title='Recruiting Open'>";
+		} else {
+			$dispRecruiting = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/graydot.png' title='Recruiting Closed'>";
+		}
+
+		$memberObj->select($row['member_id']);
+		$dispMemberLink = $memberObj->getMemberLink();
+
+		if ($counter == 1) {
+			$addCSS = " alternateBGColor";
+			$counter = 0;
+		} else {
+			$addCSS = "";
+			$counter = 1;
+		}
+
+		echo "
 				<tr>
 					<td class='main ".$addCSS."'><a href='".$MAIN_ROOT."squads/profile.php?sID=".$row['squad_id']."'>".filterText($row['name'])."</a></td>
 					<td class='main ".$addCSS."'>".$dispMemberLink."</td>
@@ -95,11 +89,10 @@ require_once($prevFolder."include/breadcrumb.php");
 					<td class='main ".$addCSS."' align='center'>".$dispRecruiting."</td>
 				</tr>
 			";
-		}
-		
-		if($result->num_rows == 0) {
-			
-			echo "
+	}
+
+	if ($result->num_rows == 0) {
+		echo "
 				<tr>
 					<td class='main' colspan='4'>
 						<p align='center'>
@@ -109,10 +102,9 @@ require_once($prevFolder."include/breadcrumb.php");
 				</tr>
 			
 			";
-			
-		}
-		
-		
+	}
+
+
 	?>
 	<tr>
 		<td class='main' colspan='4' valign='top'>

@@ -40,67 +40,60 @@ $pluginObj = new btPlugin($mysqli);
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-	
-	
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$countErrors = 0;
 	$dispError = array();
-	
+
 	// Check if installed
-	
-	if(!in_array($_POST['pluginDir'], $pluginObj->getPlugins("filepath"))) {
+
+	if (!in_array($_POST['pluginDir'], $pluginObj->getPlugins("filepath"))) {
 		$countErrors++;
 		$dispError[] = "The selected plugin is not installed!";
 	}
-	
+
 	// Start Uninstall
-	
+
 	$sql = "DROP TABLE `".$PLUGIN_TABLE_NAME."`";
-	
-	if($mysqli->query($sql)) {
+
+	if ($mysqli->query($sql)) {
 		// Remove Plugin from plugin table
 		$pluginID = array_search($_POST['pluginDir'], $pluginObj->getPlugins("filepath"));
-		
+
 		$pluginObj->select($pluginID);
 		$checkDeletePlugin = $pluginObj->delete();
-		
+
 		// Remove Console Option
 		$fbLoginCID = $consoleObj->findConsoleIDByName($PLUGIN_NAME);
 		$checkDeleteConsole = false;
-		if($consoleObj->select($fbLoginCID)) {
+		if ($consoleObj->select($fbLoginCID)) {
 			$checkDeleteConsole = $consoleObj->delete();
 		}
 
-		
-		if(!$checkDeletePlugin) {
+
+		if (!$checkDeletePlugin) {
 			$countErrors++;
 			$dispError[] = "Unable to delete plugin from database table.  You will have to manually delete it. - ".$pluginID;
 		}
-		
-		if(!$checkDeleteConsole) {
+
+		if (!$checkDeleteConsole) {
 			$countErrors++;
-			$dispError[] = "Unable to delete ".$PLUGIN_NAME." console option.  You will have to manually delete it.";	
+			$dispError[] = "Unable to delete ".$PLUGIN_NAME." console option.  You will have to manually delete it.";
 		}
-		
-	}
-	else {
+	} else {
 		$countErrors++;
 		$dispError[] = "Unable to delete plugin database table.";
 	}
-	
-	
+
+
 	$arrReturn = array();
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		$arrReturn['result'] = "success";
 		$member->logAction("Uninstalled ".$PLUGIN_NAME." Plugin.");
-	}
-	else {
+	} else {
 		$arrReturn['result'] = "fail";
 		$arrReturn['errors'] = $dispError;
 	}
-	
-	
+
+
 	echo json_encode($arrReturn);
-	
-	
 }

@@ -1,9 +1,11 @@
 <?php
 
-	if(!isset($pluginInstaller)) { exit(); }
+if (!isset($pluginInstaller)) {
+	exit();
+}
 
 	$pluginInstaller->setPluginDirectory("twitch");
-	
+
 	$pluginInstaller->pluginName = "Twitch";
 	$pluginInstaller->pluginPages = array(
 		array(

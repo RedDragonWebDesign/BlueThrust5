@@ -36,49 +36,38 @@ $checkAccess2 = $member->hasAccess($consoleObj);
 $checkAccess = $checkAccess1 || $checkAccess2;
 
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
-	if($checkAccess) {
-		
-		
-		if(isset($_SESSION['btStatCache'][$_POST['sID']])) {
-		
-			
+	if ($checkAccess) {
+		if (isset($_SESSION['btStatCache'][$_POST['sID']])) {
 			$countErrors = 0;
-			if($_SESSION['btStatCache'][$_POST['sID']]['statType'] == "input") {
-				
-				foreach($_SESSION['btStatCache'] as $statInfo) {
-					if($statInfo['statType'] == "calculate" AND ($statInfo['firstStat'] == $_POST['sID'] OR $statInfo['secondStat'] == $_POST['sID'])) {
+			if ($_SESSION['btStatCache'][$_POST['sID']]['statType'] == "input") {
+				foreach ($_SESSION['btStatCache'] as $statInfo) {
+					if ($statInfo['statType'] == "calculate" and ($statInfo['firstStat'] == $_POST['sID'] or $statInfo['secondStat'] == $_POST['sID'])) {
 						$countErrors++;
 					}
 				}
-				
 			}
-			
-			
-			if($countErrors == 0) {
-				
-				if($gameStatsObj->select($_SESSION['btStatCache'][$_POST['sID']]['gamestatsID'])) {
+
+
+			if ($countErrors == 0) {
+				if ($gameStatsObj->select($_SESSION['btStatCache'][$_POST['sID']]['gamestatsID'])) {
 					$gameStatsObj->delete();
 				}
-				
-				
+
+
 				unset($_SESSION['btStatCache'][$_POST['sID']]);
-				
+
 				$x = 0;
 				$tempArray = array();
-				foreach($_SESSION['btStatCache'] as $statInfo) {
+				foreach ($_SESSION['btStatCache'] as $statInfo) {
 					$tempArray[$x] = $statInfo;
 					$x++;
 				}
-				
+
 				$_SESSION['btStatCache'] = $tempArray;
-				
-			}
-			else {
+			} else {
 				echo "
 					<div id='errorPopup' style='display: none'><p align='center'>There is currently an auto-calculated stat using <b>".filterText($_SESSION['btStatCache'][$_POST['sID']]['statName'])."</b>.  Please delete all auto-calculated stats that are using <b>".filterText($_SESSION['btStatCache'][$_POST['sID']]['statName'])."</b> to continue.</p></div>
 				
@@ -108,9 +97,8 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					</script>
 				
 				";
-				
 			}
-			
+
 			echo "
 			<script type='text/javascript'>
 				$(document).ready(function() {
@@ -128,9 +116,6 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 				});
 			</script>
 			";
-			
-			
 		}
 	}
-	
 }

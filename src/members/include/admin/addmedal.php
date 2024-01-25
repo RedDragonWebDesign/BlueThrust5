@@ -12,13 +12,12 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -29,26 +28,25 @@ require_once($prevFolder."classes/medal.php");
 $cID = $_GET['cID'];
 $medalObj = new Medal($mysqli);
 
-	
+
 	$getMedals = $mysqli->query("SELECT * FROM ".$dbprefix."medals ORDER BY ordernum DESC");
 	$medalOptions = array();
-	while($arrMedals = $getMedals->fetch_assoc()) {
-		$medalName = filterText($arrMedals['name']);
-		$medalOptions[$arrMedals['medal_id']] = $medalName;
-	
-	}
-        
+while ($arrMedals = $getMedals->fetch_assoc()) {
+	$medalName = filterText($arrMedals['name']);
+	$medalOptions[$arrMedals['medal_id']] = $medalName;
+}
 
-	if(count($medalOptions) == 0) {
-		$medalOptions['first'] = "(first medal)";
-	}
-	
+
+if (count($medalOptions) == 0) {
+	$medalOptions['first'] = "(first medal)";
+}
+
 	$i = 1;
 	$arrComponents = array(
 		"generalinfo" => array(
 			"type" => "section",
 			"options" => array("section_title" => "General Information:"),
-			"sortorder" => $i++,			
+			"sortorder" => $i++,
 		),
 		"medalname" => array(
 			"type" => "text",
@@ -92,7 +90,7 @@ $medalObj = new Medal($mysqli);
 			"attributes" => array("class" => "textBox formInput", "rows" => 5, "cols" => 40),
 			"db_name" => "description",
 			"sortorder" => $i++,
-			"display_name" => "Description"		
+			"display_name" => "Description"
 		),
 		"displayorder" => array(
 			"type" => "beforeafter",
@@ -102,7 +100,7 @@ $medalObj = new Medal($mysqli);
 			"db_name" => "ordernum",
 			"sortorder" => $i++,
 			"validate" => array(array("name" => "VALIDATE_ORDER", "orderObject" => $medalObj))
-		
+
 		),
 		"autoawardinfo" => array(
 			"type" => "section",
@@ -127,7 +125,7 @@ $medalObj = new Medal($mysqli);
 			"type" => "submit",
 			"attributes" => array("class" => "submitButton formSubmitButton"),
 			"value" => "Add Medal",
-			"sortorder" => $i++		
+			"sortorder" => $i++
 		)
 	);
 

@@ -13,11 +13,9 @@
  */
 
 
-if(!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
-
+if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -26,8 +24,7 @@ else {
 	$squadObj->select($sID);
 
 
-	if(!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "removemember")) {
-
+	if (!$member->hasAccess($consoleObj) || !$squadObj->memberHasAccess($memberInfo['member_id'], "removemember")) {
 		exit();
 	}
 }
@@ -48,41 +45,37 @@ $countErrors = 0;
 
 $squadMemberList = $squadObj->getMemberListSorted();
 
-if($_POST['submitted']) {
-	
+if ($_POST['submitted']) {
 	// Check the Member
-	
-	if(!in_array($_POST['squadmember'], $squadMemberList)) {
+
+	if (!in_array($_POST['squadmember'], $squadMemberList)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid squad member1.<br>";
 	}
-	
+
 	$intSquadMemberID = $squadObj->getSquadMemberID($_POST['squadmember']);
-	
-	if(!$squadObj->objSquadMember->select($intSquadMemberID)) {
+
+	if (!$squadObj->objSquadMember->select($intSquadMemberID)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid squad member2.<br>";
-	}
-	elseif($squadObj->objSquadMember->get_info("squad_id") != $squadInfo['squad_id']) {
+	} elseif ($squadObj->objSquadMember->get_info("squad_id") != $squadInfo['squad_id']) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid squad member3.<br>";
 	}
 
-	
-	if($squadInfo['member_id'] == $_POST['squadmember']) {
+
+	if ($squadInfo['member_id'] == $_POST['squadmember']) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not remove the squad founder from the squad.<br>";
 	}
-	
-	
-	if($countErrors == 0) {
-		
-		if($squadObj->objSquadMember->delete()) {
-			
+
+
+	if ($countErrors == 0) {
+		if ($squadObj->objSquadMember->delete()) {
 			$member->select($_POST['squadmember']);
 			$member->postNotification("You were removed from the squad squad: <b><a href='".$MAIN_ROOT."squads/profile.php?sID=".$squadInfo['squad_id']."'>".$squadInfo['name']."</a></b>.");
-			
-			
+
+
 			echo "
 			<div style='display: none' id='successBox'>
 			<p align='center'>
@@ -95,42 +88,32 @@ if($_POST['submitted']) {
 			</script>
 			
 			";
-			
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to database! Please contact the website administrator.<br>";
 		}
-		
-		
 	}
-	
-	
-	if($countErrors > 0) {
-		$_POST['submitted'] = false;	
+
+
+	if ($countErrors > 0) {
+		$_POST['submitted'] = false;
 	}
-	
-	
-	
 }
 
-if(!$_POST['submitted']) {
-	
-	
-	foreach($squadMemberList as $memberID) {
-		
+if (!$_POST['submitted']) {
+	foreach ($squadMemberList as $memberID) {
 		$member->select($memberID);
-		if($squadInfo['member_id'] != $memberID) {
+		if ($squadInfo['member_id'] != $memberID) {
 			$squadmemberoptions .= "<option value='".$memberID."'>".$member->get_info_filtered("username")."</option>";
 		}
 	}
-	
+
 	echo "
 		<form action='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=RemoveMember' method='post' id='removeMemberForm'>
 			<div class='formDiv'>
 		";
-	
-	if($dispError != "") {
+
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to remove member because the following errors occurred:</strong><br><br>
@@ -138,8 +121,8 @@ if(!$_POST['submitted']) {
 		</div>
 		";
 	}
-	
-	
+
+
 	echo "
 				Use the form below to remove a member from the squad.
 			
@@ -205,6 +188,4 @@ if(!$_POST['submitted']) {
 		
 		</script>
 	";
-	
-	
 }

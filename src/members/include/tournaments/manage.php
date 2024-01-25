@@ -13,13 +13,12 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -41,25 +40,22 @@ echo "
 ";
 
 $clickCounter = 0;
-if(count($arrTournaments) > 0) {
-
-	foreach($arrTournaments as $tournamentID) {
-		
-		if($tournamentObj->select($tournamentID)) {
-
+if (count($arrTournaments) > 0) {
+	foreach ($arrTournaments as $tournamentID) {
+		if ($tournamentObj->select($tournamentID)) {
 			$categoryCSS = "consoleCategory_clicked";
 			$hideoptions = "";
-			if($counter > 0) {
+			if ($counter > 0) {
 				$hideoptions = "style='display: none'";
 				$categoryCSS = "consoleCategory";
 			}
 			$counter++;
 			$tournamentInfo = $tournamentObj->get_info_filtered();
-			
-			if($_GET['select'] == $tournamentInfo['tournament_id']) {
+
+			if ($_GET['select'] == $tournamentInfo['tournament_id']) {
 				$clickCounter = $counter;
 			}
-			
+
 			$dispTournamentNames .= "<div class='".$categoryCSS."' style='width: 200px; margin: 3px' id='categoryName".$counter."' onmouseover=\"moverCategory('".$counter."')\" onmouseout=\"moutCategory('".$counter."')\" onclick=\"selectCategory('".$counter."')\">".$tournamentInfo['name']."</div>";
 			$dispTournamentOptions .= "<div id='categoryOption".$counter."' ".$hideoptions.">";
 			$dispTournamentOptions .= "
@@ -68,43 +64,39 @@ if(count($arrTournaments) > 0) {
 			</div>
 			<div style='padding-left: 5px'><ul style='padding: 0px; padding-left: 15px'>
 			";
-			
-			
+
+
 			$arrTournamentOptionsPageID = array("ManageMatches", "ManageTeams", "EditTournamentInfo");
 			$arrTournamentOptionsDispName = array("Manage Matches", "Manage Teams/Players", "Edit Tournament Info");
-			
-			if($tournamentInfo['seedtype'] != 3) {
+
+			if ($tournamentInfo['seedtype'] != 3) {
 				$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=ManageMatches'>Manage Matches</a></li>";
-			}
-			else {
+			} else {
 				$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=ManagePools'>Manage Pools</a></li>";
 			}
-			
-			if($tournamentInfo['playersperteam'] > 1) { 
-				$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=ManageTeams'>Manage Teams</a></li>"; 
-			}
-			else {
+
+			if ($tournamentInfo['playersperteam'] > 1) {
+				$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=ManageTeams'>Manage Teams</a></li>";
+			} else {
 				$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=ManagePlayers'>Manage Players</a></li>";
 			}
-			
-			
-			if($tournamentInfo['member_id'] == $memberInfo['member_id']) {
-				$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=SetManagers'>Set Tournament Managers</a></li>";	
+
+
+			if ($tournamentInfo['member_id'] == $memberInfo['member_id']) {
+				$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=SetManagers'>Set Tournament Managers</a></li>";
 				$dispTournamentOptions .= "<li><a href='javascript:void(0)' onclick=\"deleteTournament('".$tournamentInfo['tournament_id']."')\">Delete Tournament</a></li>";
 			}
-			
+
 			$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=EditTournamentInfo'>Edit Tournament Info</a></li>";
-			$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."tournaments/view.php?tID=".$tournamentInfo['tournament_id']."'>View Tournament Page</a></li>";		
+			$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."tournaments/view.php?tID=".$tournamentInfo['tournament_id']."'>View Tournament Page</a></li>";
 			$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."tournaments/bracket.php?tID=".$tournamentInfo['tournament_id']."' target='_blank'>View Bracket</a></li>";
-			if($tournamentInfo['seedtype'] == 3 && $tournamentObj->poolsComplete()) {
+			if ($tournamentInfo['seedtype'] == 3 && $tournamentObj->poolsComplete()) {
 				$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=StartMatches'>Start Tournament Matches</li>";
 			}
 			$dispTournamentOptions .= "</ul></div></div>";
-			
 		}
-		
 	}
-	
+
 	echo "
 	
 		<div style='float: left; text-align: left; width: 225px; padding: 10px 0px 0px 40px'>
@@ -160,19 +152,15 @@ if(count($arrTournaments) > 0) {
 		
 		
 	";
-	
-	if($clickCounter != 0) {
-		
+
+	if ($clickCounter != 0) {
 		echo "
 			<script type='text/javascript'>
 				selectCategory('".$clickCounter."');
 			</script>
 		";
-		
 	}
-	
-}
-else {
+} else {
 	$intCreateATournamentCID = $consoleObj->findConsoleIDByName("Create A Tournament");
 	echo "
 	<div class='shadedBox' style='width: 400px; margin-top: 50px; margin-bottom: 50px; margin-left: auto; margin-right: auto;'>
@@ -181,6 +169,4 @@ else {
 		</p>
 	</div>
 	";
-	
-	
 }

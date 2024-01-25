@@ -14,13 +14,12 @@
 
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -33,15 +32,9 @@ $categoryObj = new BasicOrder($mysqli, "forum_category", "forumcategory_id");
 $categoryObj->set_assocTableName("forum_board");
 $categoryObj->set_assocTableKey("forumboard_id");
 
-if($categoryObj->select($_GET['catID']) && $_GET['action'] == "edit") {
-
+if ($categoryObj->select($_GET['catID']) && $_GET['action'] == "edit") {
 	require_once("include/edit_category.php");
-
-}
-else {
-	
-	
-	
+} else {
 	echo "
 	
 		<table class='formTable'>
@@ -65,9 +58,9 @@ else {
 		
 		<div id='categoryList'>
 	";
-	
+
 	require_once("include/main_managecategory.php");
-	
+
 	echo "
 		</div>
 		<div id='deleteCatDiv' style='display: none'></div>
@@ -102,5 +95,4 @@ else {
 		</script>
 		
 	";
-	
 }

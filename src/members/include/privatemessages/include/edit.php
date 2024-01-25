@@ -13,38 +13,36 @@
  */
 
 
-if(!defined("EDIT_FOLDER")) {
-	exit();	
+if (!defined("EDIT_FOLDER")) {
+	exit();
 }
 
 $folderInfo = $pmFolderObj->get_info_filtered();
 
 if ( ! empty($_POST['submit']) ) {
-	
-// Check Folder Name
-	if(trim($_POST['foldername']) == "") {
-		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Your folder name may not be blank.";	
+	// Check Folder Name
+	if (trim($_POST['foldername']) == "") {
+		$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Your folder name may not be blank.";
 		$countErrors++;
 	}
-	
+
 	// Check Folder Order
 	$pmFolderObj->setCategoryKeyValue($memberInfo['member_id']);
 	$intNewOrderSpot = $pmFolderObj->validateOrder($_POST['folderorder'], $_POST['beforeafter'], true, $folderInfo['sortnum']);
-	
-	if($intNewOrderSpot === false) {
+
+	if ($intNewOrderSpot === false) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid folder order.<br>";
 	}
-	
+
 	$pmFolderObj->select($folderInfo['pmfolder_id']);
-	if($countErrors == 0) {
+	if ($countErrors == 0) {
 		$arrColumns = array("name", "sortnum");
 		$arrValues = array($_POST['foldername'], $intNewOrderSpot);
-		
-		if($pmFolderObj->update($arrColumns, $arrValues)) {
-			
+
+		if ($pmFolderObj->update($arrColumns, $arrValues)) {
 			$folderInfo = $pmFolderObj->get_info_filtered();
-			
+
 			echo "
 			<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -56,53 +54,46 @@ if ( ! empty($_POST['submit']) ) {
 				popupDialog('Edit PM Folder', '".$MAIN_ROOT."members', 'successBox');
 			</script>
 			";
-			
+
 			$pmFolderObj->resortOrder();
-			
-		}
-		else {
+		} else {
 			$countErrors++;
-			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save folder to the database.  Please contact the website administrator.<br>";	
+			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save folder to the database.  Please contact the website administrator.<br>";
 		}
-		
 	}
-	
-	
-	
-	if($countErrors > 0) {		
+
+
+
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-	
-	
 }
 
 
 if ( empty($_POST['submit']) ) {
-	
-	
 	$findBeforeAfter = $pmFolderObj->findBeforeAfter();
 	$afterSelected = ($findBeforeAfter[1] == "after") ? " selected" : "";
-	
+
 	$pmFolderObj->select($folderInfo['pmfolder_id']);
-	
+
 	$folderOptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."privatemessage_folders WHERE pmfolder_id != '".$folderInfo['pmfolder_id']."' AND member_id = '".$memberInfo['member_id']."' ORDER BY sortnum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$dispSelected = ($findBeforeAfter[0] == $row['pmfolder_id']) ? " selected" : "";
-		$folderOptions .= "<option value='".$row['pmfolder_id']."'".$dispSelected.">".filterText($row['name'])."</option>";	
+		$folderOptions .= "<option value='".$row['pmfolder_id']."'".$dispSelected.">".filterText($row['name'])."</option>";
 	}
-	
-	if($folderOptions == "") {
-		$folderOptions = "<option value='first'>(first folder')</option>";	
+
+	if ($folderOptions == "") {
+		$folderOptions = "<option value='first'>(first folder')</option>";
 	}
-	
+
 	echo "
 		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."&fID=".$folderInfo['pmfolder_id']."&action=edit' method='post'>
 			<div class='formDiv'>
 		";
-	
-	if($dispError != "") {
+
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to edit folder because the following errors occurred:</strong><br><br>
@@ -110,7 +101,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
+
 	echo "
 				Use the form below to edit the selected folder.
 				<table class='formTable'>
@@ -136,5 +127,4 @@ if ( empty($_POST['submit']) ) {
 			</div>
 		</form>
 	";
-	
 }

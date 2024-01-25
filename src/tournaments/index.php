@@ -25,16 +25,14 @@ require_once($prevFolder."classes/tournament.php");
 $tournamentObj = new Tournament($mysqli);
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -63,50 +61,45 @@ require_once($prevFolder."include/breadcrumb.php");
 	
 	<?php
 		$memberObj = new Member($mysqli);
-	
+
 		$counter = 0;
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournaments ORDER BY startdate DESC");
-		
-		while($row = $result->fetch_assoc()) {
-			
-			
-			$tournamentObj->select($row['tournament_id']);
-			$memberObj->select($row['member_id']);
-			$dispManager = $memberObj->getMemberLink();
-			
-			$dateTimeObj = new DateTime();
-			$dateTimeObj->setTimestamp($row['startdate']);
-			$includeTimezone = "";
-			$dateTimeObj->setTimezone(new DateTimeZone("UTC"));
-			$dispStartDate = $dateTimeObj->format("M j, Y g:i A");
-			
-			if($row['timezone'] != "") { 
-				$dateTimeObj->setTimezone(new DateTimeZone($row['timezone']));
-				$includeTimezone = " T"; 
-			}
-			
-			$dispStartDate .= $dateTimeObj->format($includeTimezone);
-			
-			if($row['startdate'] < time() && $tournamentObj->getTournamentWinner() == 0) {
-				$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/bluedot.png' title='Started'>";	
-			}
-			elseif($row['startdate'] > time()) {
-				$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/orangedot.png' title='Forming'>";
-			}
-			elseif($row['startdate'] < time() && $tournamentObj->getTournamentWinner() != 0) {
-				$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/graydot.png' title='Finished'>";	
-			}
-			
-			if($counter == 1) {
-				$addCSS = " alternateBGColor";
-				$counter = 0;
-			}
-			else {
-				$addCSS = "";
-				$counter = 1;
-			}
-			
-			echo "
+
+	while ($row = $result->fetch_assoc()) {
+		$tournamentObj->select($row['tournament_id']);
+		$memberObj->select($row['member_id']);
+		$dispManager = $memberObj->getMemberLink();
+
+		$dateTimeObj = new DateTime();
+		$dateTimeObj->setTimestamp($row['startdate']);
+		$includeTimezone = "";
+		$dateTimeObj->setTimezone(new DateTimeZone("UTC"));
+		$dispStartDate = $dateTimeObj->format("M j, Y g:i A");
+
+		if ($row['timezone'] != "") {
+			$dateTimeObj->setTimezone(new DateTimeZone($row['timezone']));
+			$includeTimezone = " T";
+		}
+
+		$dispStartDate .= $dateTimeObj->format($includeTimezone);
+
+		if ($row['startdate'] < time() && $tournamentObj->getTournamentWinner() == 0) {
+			$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/bluedot.png' title='Started'>";
+		} elseif ($row['startdate'] > time()) {
+			$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/orangedot.png' title='Forming'>";
+		} elseif ($row['startdate'] < time() && $tournamentObj->getTournamentWinner() != 0) {
+			$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/graydot.png' title='Finished'>";
+		}
+
+		if ($counter == 1) {
+			$addCSS = " alternateBGColor";
+			$counter = 0;
+		} else {
+			$addCSS = "";
+			$counter = 1;
+		}
+
+		echo "
 				<tr>
 					<td class='main ".$addCSS."'><a href='".$MAIN_ROOT."tournaments/view.php?tID=".$row['tournament_id']."'>".filterText($row['name'])."</a></td>
 					<td class='main ".$addCSS."'>".$dispManager."</td>
@@ -115,13 +108,10 @@ require_once($prevFolder."include/breadcrumb.php");
 				</tr>
 			
 			";
-			
-		}
-		
-		if($result->num_rows == 0) {
-			
+	}
 
-			echo "
+	if ($result->num_rows == 0) {
+		echo "
 				<tr>
 					<td class='main' colspan='4'>
 						<p align='center'>
@@ -130,9 +120,8 @@ require_once($prevFolder."include/breadcrumb.php");
 					</td>
 				</tr>
 			";
-			
-		}
-		?>
+	}
+	?>
 		
 		<tr>
 		<td class='main' colspan='4' valign='top'>

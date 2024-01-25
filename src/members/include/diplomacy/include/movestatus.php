@@ -29,21 +29,14 @@ $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage Diplomacy Statuses");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
-	if(($memberInfo['rank_id'] == 1 || $member->hasAccess($consoleObj)) && $diplomacyStatusObj->select($_POST['sID'])) {
-
+	if (($memberInfo['rank_id'] == 1 || $member->hasAccess($consoleObj)) && $diplomacyStatusObj->select($_POST['sID'])) {
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 
 		$diplomacyStatusObj->move($_POST['sDir']);
 
 		require_once("main_managestatuses.php");
-
 	}
-
-
-
 }

@@ -28,12 +28,11 @@ $consoleObj = new ConsoleOption($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage Forum Categories");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $categoryObj->select($_POST['catID'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $categoryObj->select($_POST['catID'])) {
 	$categoryInfo = $categoryObj->get_info_filtered();
 	$arrBoards = $categoryObj->getAssociateIDs();
-	
-	if(count($arrBoards) > 0) {
-		
+
+	if (count($arrBoards) > 0) {
 		echo "
 		
 			<div id='deleteMessage' style='display: none'>
@@ -69,10 +68,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $categoryObj->select($_PO
 			</script>
 		
 		";
-		
-	}
-	elseif(count($arrBoards) == 0 && !isset($_POST['confirm'])) {
-		
+	} elseif (count($arrBoards) == 0 && !isset($_POST['confirm'])) {
 		echo "
 		
 			<div id='deleteMessage' style='display: none'>
@@ -124,15 +120,9 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $categoryObj->select($_PO
 		
 		
 		";
-		
-	}
-	elseif(count($arrBoards) == 0 && isset($_POST['confirm'])) {
-		
+	} elseif (count($arrBoards) == 0 && isset($_POST['confirm'])) {
 		$categoryObj->delete();
 		$categoryObj->resortOrder();
 		require_once("main_managecategory.php");
-		
 	}
-	
-	
 }

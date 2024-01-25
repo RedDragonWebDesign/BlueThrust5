@@ -26,17 +26,14 @@ $consoleObj->select($cID);
 $_GET['cID'] = $cID;
 
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $medalObj->select($_POST['itemID'])) {
-		
+	if ($member->hasAccess($consoleObj) && $medalObj->select($_POST['itemID'])) {
 		define("LOGGED_IN", true);
-		
-		
-		if($_POST['confirm'] == 1) {
+
+
+		if ($_POST['confirm'] == 1) {
 			$medalObj->delete();
 
 			$objManageList = new btOrderManageList($medalObj);
@@ -44,18 +41,11 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 
 			require_once($objManageList->strMainListLink);
 			require_once(BASE_DIRECTORY."members/console.managelist.list.php");
-			
-		}
-		else {
+		} else {
 			$medalName = $medalObj->get_info_filtered("name");
 			echo "<p align='center'>Are you sure you want to delete the medal <b>".$medalName."</b>?</p>";
 		}
-		
-	}
-	elseif(!$medalObj->select($_POST['itemID'])) {
-		
+	} elseif (!$medalObj->select($_POST['itemID'])) {
 		echo "<p align='center'>Unable find the selected medal.  Please try again or contact the website administrator.</p>";
-		
 	}
-	
 }

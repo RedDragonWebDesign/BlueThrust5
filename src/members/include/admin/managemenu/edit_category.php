@@ -13,13 +13,12 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -44,93 +43,84 @@ echo "
 
 $arrCheckType = array("image", "customcode", "customformat");
 if ( ! empty($_POST['submit']) ) {
-	
 	// Check Name
-	if(trim($_POST['categoryname']) == "") {
+	if (trim($_POST['categoryname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You may not enter a blank category name.<br>";
 	}
-	
+
 	// Check Section
-	
-	if(!is_numeric($_POST['section']) || $_POST['section'] >= $menuXML->info->section->count() || $_POST['section'] < 0) {
+
+	if (!is_numeric($_POST['section']) || $_POST['section'] >= $menuXML->info->section->count() || $_POST['section'] < 0) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid menu section.<br>";
 	}
-	
+
 	// Check Header Type
-	if(!in_array($_POST['headertype'], $arrCheckType)) {
+	if (!in_array($_POST['headertype'], $arrCheckType)) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid header type.<br>";
 	}
-	
-	
+
+
 	// Check Display Order
 	$menuCatObj->setCategoryKeyValue($_POST['section']);
 	$intNewOrderNum = $menuCatObj->validateOrder($_POST['displayorder'], $_POST['beforeafter'], true, $menuCatInfo['sortnum']);
-	if($intNewOrderNum === false) {
+	if ($intNewOrderNum === false) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
 	}
-	
-	
-	if($_POST['accesstype'] != "0" && $_POST['accesstype'] != "1" && $_POST['accesstype'] != "2") {
+
+
+	if ($_POST['accesstype'] != "0" && $_POST['accesstype'] != "1" && $_POST['accesstype'] != "2") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid access type.<br>";
 	}
-	
-	if($_POST['hidecategory'] != "1") {
+
+	if ($_POST['hidecategory'] != "1") {
 		$_POST['hidecategory'] = 0;
 	}
-	
-	
-	if($_POST['headertype'] == "customcode") {
+
+
+	if ($_POST['headertype'] == "customcode") {
 		$headerImageURL = $_POST['headercustomcode'];
-	}
-	elseif($_POST['headertype'] == "customformat") {
+	} elseif ($_POST['headertype'] == "customformat") {
 		$headerImageURL = $_POST['wysiwygHTML'];
 	}
-	
+
 	$newImage = false;
-	if($countErrors == 0) {
-		
-		if($_POST['headertype'] == "image" && $_FILES['headerimagefile']['name'] != "") {
+	if ($countErrors == 0) {
+		if ($_POST['headertype'] == "image" && $_FILES['headerimagefile']['name'] != "") {
 			$newImage = true;
 			$btUploadObj = new BTUpload($_FILES['headerimagefile'], "menuheader_", "../images/menu/", array(".jpg", ".png", ".bmp", ".gif"));
-		}
-		elseif($_POST['headertype'] == "image" && $_POST['headerimageurl'] != "") {
+		} elseif ($_POST['headertype'] == "image" && $_POST['headerimageurl'] != "") {
 			$newImage = true;
 			$btUploadObj = new BTUpload($_POST['headerimageurl'], "menuheader_", "../images/menu/", array(".jpg", ".png", ".bmp", ".gif"), 4, true);
 		}
-	
-		if($newImage && $_POST['headertype'] == "image" && $btUploadObj->uploadFile()) {
+
+		if ($newImage && $_POST['headertype'] == "image" && $btUploadObj->uploadFile()) {
 			$headerImageURL = "images/menu/".$btUploadObj->getUploadedFileName();
-		}
-		elseif($newImage && $_POST['headertype'] == "image") {
+		} elseif ($newImage && $_POST['headertype'] == "image") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload selected image.  Make sure it's the correct file extension and not too big.<br>";
 		}
-	
 	}
-	
-	
-	if($countErrors == 0) {
-	
-		if(($newImage || $_POST['headertype'] != "image") && $menuCatInfo['headertype'] == "image") {
+
+
+	if ($countErrors == 0) {
+		if (($newImage || $_POST['headertype'] != "image") && $menuCatInfo['headertype'] == "image") {
 			unlink($prevFolder.$menuCatInfo['headercode']);
-		}
-		elseif(!$newImage && $menuCatInfo['headertype'] == "image" && $_POST['headertype'] == "image") {
+		} elseif (!$newImage && $menuCatInfo['headertype'] == "image" && $_POST['headertype'] == "image") {
 			$headerImageURL = $menuCatInfo['headercode'];
 		}
-		
+
 		$arrColumns = array("section", "name", "sortnum", "headertype", "headercode", "accesstype", "hide");
 		$arrValues = array($_POST['section'], $_POST['categoryname'], $intNewOrderNum, $_POST['headertype'], $headerImageURL, $_POST['accesstype'], $_POST['hidecategory']);
-	
+
 		$menuCatObj->select($menuCatInfo['menucategory_id']);
-		if($menuCatObj->update($arrColumns, $arrValues)) {
-	
+		if ($menuCatObj->update($arrColumns, $arrValues)) {
 			$menuCatInfo = $menuCatObj->get_info_filtered();
-	
+
 			echo "
 				<div style='display: none' id='successBox'>
 					<p align='center'>
@@ -143,74 +133,67 @@ if ( ! empty($_POST['submit']) ) {
 				</script>
 			";
 		}
-	
+
 		$menuCatObj->resortOrder();
-	
 	}
-	
-	if($countErrors > 0) {
+
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-	
-	
 }
 
 if ( empty($_POST['submit']) ) {
-	
-	for($i=0; $i<$menuXML->info->section->count(); $i++) {
+	for ($i=0; $i<$menuXML->info->section->count(); $i++) {
 		$dispSelected = "";
-		if($menuCatInfo['section'] == $i) {
+		if ($menuCatInfo['section'] == $i) {
 			$dispSelected = " selected";
 		}
 		$sectionoptions .= "<option value='".$i."'".$dispSelected.">".$menuXML->info->section[$i]."</option>";
 	}
-	
+
 	$afterSelected = "";
 	$dispBeforeAfter = $menuCatObj->findBeforeAfter();
-	if($dispBeforeAfter[1] == "after") {
-		$afterSelected = " selected";	
+	if ($dispBeforeAfter[1] == "after") {
+		$afterSelected = " selected";
 	}
-	
-	
-	foreach($arrCheckType as $typeName) {
-		if($menuCatInfo['headertype'] == $typeName) {
+
+
+	foreach ($arrCheckType as $typeName) {
+		if ($menuCatInfo['headertype'] == $typeName) {
 			$arrMenuTypes[$typeName] = " selected";
-		}
-		else {
+		} else {
 			$arrMenuTypes[$typeName] = "";
 		}
 	}
-	
+
 	$arrShowWhen[0] = "";
 	$arrShowWhen[1] = "";
 	$arrShowWhen[2] = "";
-	
-	if($menuCatInfo['accesstype'] == 1) {
+
+	if ($menuCatInfo['accesstype'] == 1) {
 		$arrShowWhen[1] = " selected";
+	} elseif ($menuCatInfo['accesstype'] == 2) {
+		$arrShowWhen[2] = " selected";
 	}
-	elseif($menuCatInfo['accesstype'] == 2) {
-		$arrShowWhen[2] = " selected";	
-	}
-	
+
 	$dispHideChecked = ($menuCatInfo['hide'] == 1) ? " checked" : "";
-	
+
 	$dispCustomFormat = "";
 	$dispCustomCode = "";
-	if($menuCatInfo['headertype'] == "customformat") {
+	if ($menuCatInfo['headertype'] == "customformat") {
 		$dispCustomFormat = $menuCatInfo['headercode'];
-	}
-	elseif($menuCatInfo['headertype'] == "customcode") {
+	} elseif ($menuCatInfo['headertype'] == "customcode") {
 		$dispCustomCode = filterText($menuCatInfo['headercode']);
 	}
-	
+
 	echo "
 		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."&mcID=".$_GET['mcID']."&action=edit' method='post' enctype='multipart/form-data'>
 			<div class='formDiv'>
 	
 	";
-	
-	if($dispError != "") {
+
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to edit menu category because the following errors occurred:</strong><br><br>
@@ -218,7 +201,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
+
 	echo "
 	
 				Use the form below to edit the selected menu category.
@@ -253,10 +236,10 @@ if ( empty($_POST['submit']) ) {
 							<div id='addMenuHeaderImage'>
 								File:<br><input type='file' name='headerimagefile' class='textBox' style='width: 250px; border: 0px'><br>
 								<span style='font-size: 10px'>File Types: .jpg, .gif, .png, .bmp | <a href='javascript:void(0)' onmouseover=\"showToolTip('The file size upload limit is controlled by your PHP settings in the php.ini file.')\" onmouseout='hideToolTip()'>File Size: ".ini_get("upload_max_filesize")."B or less</a></span>
-								"; 
-								if($menuCatInfo['headertype'] == "image") { 
-									echo "<br><i>Current Image: <a href='javascript:void(0)' id='previewImageLink'>View Image</a></i>"; 
-								} 
+								";
+	if ($menuCatInfo['headertype'] == "image") {
+		echo "<br><i>Current Image: <a href='javascript:void(0)' id='previewImageLink'>View Image</a></i>";
+	}
 							echo "
 								<p><b><i>OR</i></b></p>
 								URL:<br><input type='text' name='headerimageurl' value='' class='textBox' style='width: 250px'>
@@ -289,28 +272,27 @@ if ( empty($_POST['submit']) ) {
 		</form>
 		
 		";
-	
-	if($menuCatInfo['headertype'] == "image") {
-		
+
+	if ($menuCatInfo['headertype'] == "image") {
 		$checkURL = parse_url($menuCatInfo['headercode']);
 		$dispImgWidth = 400;
 		$dispImgHeight = 200;
-		if($checkURL['scheme'] == "") {
+		if ($checkURL['scheme'] == "") {
 			$imageSize = getimagesize($prevFolder.$menuCatInfo['headercode']);
 			$menuCatInfo['headercode'] = $MAIN_ROOT.$menuCatInfo['headercode'];
 			$dispImgWidth = $imageSize[0]+25;
 			$dispImgHeight = $imageSize[1]+25;
 		}
-		
+
 		echo "
 			<div id='previewImageDiv' style='display: none'>
 				<div style='margin-left: auto; margin-right: auto; width: ".$dispImgWidth."px; height: ".$dispImgHeight."px'>
 					<p align='center'><img src='".$menuCatInfo['headercode']."' style='max-width: 100%; max-height: 100%'></p>
 				</div>
 			</div>
-		";	
+		";
 	}
-	
+
 	echo "
 		<script type='text/javascript'>
 		
@@ -397,5 +379,4 @@ if ( empty($_POST['submit']) ) {
 	
 	
 	";
-	
 }

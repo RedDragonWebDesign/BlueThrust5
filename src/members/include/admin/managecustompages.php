@@ -15,13 +15,12 @@
 
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -31,8 +30,7 @@ $cID = $_GET['cID'];
 
 
 
-if($_GET['cpID'] == "") {
-	
+if ($_GET['cpID'] == "") {
 	echo "
 	<div id='loadingSpiral' class='loadingSpiral'>
 		<p align='center'>
@@ -44,7 +42,7 @@ if($_GET['cpID'] == "") {
 	
 	";
 	require_once("custompages/main.php");
-	
+
 	echo "
 	</div>
 	<div id='deleteMessage' style='display: none'></div>
@@ -94,9 +92,6 @@ if($_GET['cpID'] == "") {
 	}
 	</script>
 	";
-	
-	
-}
-elseif($_GET['cpID'] != "" AND $_GET['action'] == "edit") {
-	require_once("custompages/edit.php");	
+} elseif ($_GET['cpID'] != "" and $_GET['action'] == "edit") {
+	require_once("custompages/edit.php");
 }

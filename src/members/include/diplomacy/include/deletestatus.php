@@ -30,14 +30,12 @@ $diplomacyStatusObj->set_assocTableName("diplomacy");
 $diplomacyStatusObj->set_assocTableKey("diplomacy_id");
 
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $diplomacyStatusObj->select($_POST['sID']) && $member->hasAccess($consoleObj)) {
-	
+if ($member->authorizeLogin($_SESSION['btPassword']) && $diplomacyStatusObj->select($_POST['sID']) && $member->hasAccess($consoleObj)) {
 	$statusName = $diplomacyStatusObj->get_info_filtered("name");
-	
+
 	$arrAssociates = $diplomacyStatusObj->getAssociateIDs();
 
-	if(count($arrAssociates) > 0) {
-		
+	if (count($arrAssociates) > 0) {
 		echo "
 			
 			<div id='deleteDialogBox' style='display: none'>
@@ -71,9 +69,7 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $diplomacyStatusObj->sele
 			</script>
 			
 		";
-		
-	}
-	elseif(count($arrAssociates) == 0 && !isset($_POST['confirmDelete'])) {
+	} elseif (count($arrAssociates) == 0 && !isset($_POST['confirmDelete'])) {
 		echo "
 			
 			<div id='deleteDialogBox' style='display: none'>
@@ -124,19 +120,12 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $diplomacyStatusObj->sele
 			
 			
 		";
-		
-	}
-	elseif(count($arrAssociates) == 0 && isset($_POST['confirmDelete'])) {
-		
+	} elseif (count($arrAssociates) == 0 && isset($_POST['confirmDelete'])) {
 		$diplomacyStatusObj->set_assocTableName("");
 		$diplomacyStatusObj->delete();
-		
+
 		$member->logAction("Deleted the ".$statusName." diplomacy status.");
-		
+
 		require_once("main_managestatuses.php");
-		
 	}
-	
-	
-	
 }

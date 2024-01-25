@@ -25,37 +25,30 @@ $menuCatObj = new MenuCategory($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage Menu Categories");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $menuCatObj->select($_POST['mcID'])) {
-		
-		
-		
+	if ($member->hasAccess($consoleObj) && $menuCatObj->select($_POST['mcID'])) {
 		$menuCatObj->move($_POST['cDir']);
-		
+
 		require_once("include/menucategorylist.php");
 		/*
 		$menuCatObj->select($_POST['mcID']);
 		echo "
-		
+
 			<script type='text/javascript'>
-		
+
 				$(document).ready(function() {
-				
+
 					$.post('".$MAIN_ROOT."themes/_refreshmenus.php', { refreshSectionID: '".$menuCatObj->get_info("section")."' }, function(data) {
-						$('#menuSection_".$menuCatObj->get_info("section")."').html(data);		
+						$('#menuSection_".$menuCatObj->get_info("section")."').html(data);
 					});
-				
+
 				});
-			
+
 			</script>
-		
+
 		";
 		*/
 	}
-	
-	
 }

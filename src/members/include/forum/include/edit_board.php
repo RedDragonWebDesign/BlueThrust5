@@ -13,13 +13,12 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -45,85 +44,73 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 
 
 if ( ! empty($_POST['submit']) ) {
-	
 	// Check Board Name
-	
-	if(trim($_POST['boardname']) == "") {
+
+	if (trim($_POST['boardname']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Board name may not be blank.<br>";
 		$countErrors++;
 	}
-	
+
 	// Check Category
-	
-	if(!$categoryObj->select($_POST['forumcat'])) {
+
+	if (!$categoryObj->select($_POST['forumcat'])) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid forum category.<br>";
 		$countErrors++;
 	}
-	
-	
+
+
 	// Check Subforum
-	
-	if($_POST['subforum'] == 1 && $boardObj->select($_POST['subforumboard'])) {
+
+	if ($_POST['subforum'] == 1 && $boardObj->select($_POST['subforumboard'])) {
 		$setSubForum = $_POST['subforumboard'];
-	}
-	else {
+	} else {
 		$setSubForum = 0;
 	}
-	
-	
+
+
 	$boardObj->select($_GET['bID']);
 	$boardObj->setSubForumID($setSubForum);
-	
+
 	// Check Order
-	
+
 	$boardObj->setCategoryKeyValue($categoryObj->get_info("forumcategory_id"));
 	$intNewOrderSpot = $boardObj->validateOrder($_POST['displayorder'], $_POST['beforeafter'], true, $boardInfo['sortnum']);
-	
-	if($intNewOrderSpot === false) {
+
+	if ($intNewOrderSpot === false) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
 		$countErrors++;
 	}
-	
-	
+
+
 	// Forum Access
-	
-	if($_POST['accesstype'] != 1) {
+
+	if ($_POST['accesstype'] != 1) {
 		$_POST['accesstype'] = 0;
 		$arrRanks = array();
 		$arrMembers = array();
-	}
-	else {
-	
+	} else {
 		$result = $mysqli->query("SELECT rank_id FROM ".$dbprefix."ranks WHERE rank_id != '1'");
-		while($row = $result->fetch_assoc()) {
-	
+		while ($row = $result->fetch_assoc()) {
 			$checkboxName = "rankaccess_".$row['rank_id'];
-			if($_SESSION['btRankAccessCache'][$checkboxName] == "1") {
+			if ($_SESSION['btRankAccessCache'][$checkboxName] == "1") {
 				$arrRanks[$row['rank_id']] = 1;
-			}
-			elseif($_SESSION['btRankAccessCache'][$checkboxName] == "2") {
+			} elseif ($_SESSION['btRankAccessCache'][$checkboxName] == "2") {
 				$arrRanks[$row['rank_id']] = 0;
 			}
-	
 		}
-	
-		foreach($_SESSION['btMemberAccessCache'] as $memID => $accessRule) {
-	
-			if($accessRule != "" && $tempMemObj->select($memID)) {
+
+		foreach ($_SESSION['btMemberAccessCache'] as $memID => $accessRule) {
+			if ($accessRule != "" && $tempMemObj->select($memID)) {
 				$arrMembers[$memID] = $accessRule;
 			}
-	
 		}
-	
-	
 	}
-	
-	if($countErrors == 0) {
-		
+
+	if ($countErrors == 0) {
 		$arrColumns = array("forumcategory_id", "name", "description", "sortnum", "accesstype", "subforum_id");
 		$arrValues = array($_POST['forumcat'], $_POST['boardname'], $_POST['boarddesc'], $intNewOrderSpot, $_POST['accesstype'], $setSubForum);
 		$boardObj->select($boardInfo['forumboard_id']);
-		if($boardObj->update($arrColumns, $arrValues) && $boardObj->secureBoard($arrRanks, $arrMembers)) {
+		if ($boardObj->update($arrColumns, $arrValues) && $boardObj->secureBoard($arrRanks, $arrMembers)) {
 			$boardInfo = $boardObj->get_info_filtered();
 			echo "
 				<div style='display: none' id='successBox'>
@@ -136,86 +123,76 @@ if ( ! empty($_POST['submit']) ) {
 				popupDialog('Edit Board', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'successBox');
 			</script>
 			";
-		
+
 			$boardObj->resortOrder();
-			
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
 		}
-		
-		
 	}
-	
-	
-	if($countErrors > 0) {
 
+
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
-		
 	}
-	
-	
-	
 }
 
 
 if ( empty($_POST['submit']) ) {
-	
 	$_SESSION['btMemberAccessCache'] = $boardObj->getMemberAccessRules();
 	$rankAccessRules = $boardObj->getRankAccessRules();
 
-	if($dispError == "") {
+	if ($dispError == "") {
 		$_SESSION['btRankAccessCache'] = array();
-		foreach($rankAccessRules as $rankID => $accessValue) {
+		foreach ($rankAccessRules as $rankID => $accessValue) {
 			$keyName = "rankaccess_".$rankID;
-			
+
 			$setAccessValue = ($accessValue == 0) ? 2 : 1;
-			
+
 			$_SESSION['btRankAccessCache'][$keyName] = $setAccessValue;
 		}
 	}
-	
+
 	$result = $mysqli->query("SELECT rank_id FROM ".$dbprefix."ranks ORDER BY ordernum DESC");
 	$rankCounter = $result->num_rows;
-	
-	
+
+
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$selectCat = "";
-		if($row['forumcategory_id'] == $boardInfo['forumcategory_id']) {
-			$selectCat = " selected";	
+		if ($row['forumcategory_id'] == $boardInfo['forumcategory_id']) {
+			$selectCat = " selected";
 		}
-		$catoptions .= "<option value='".$row['forumcategory_id']."'".$selectCat.">".filterText($row['name'])."</option>";		
+		$catoptions .= "<option value='".$row['forumcategory_id']."'".$selectCat.">".filterText($row['name'])."</option>";
 	}
-	
+
 	$arrBeforeAfter = $boardObj->findBeforeAfter();
-	
+
 	$selectAfter = "";
-	if($arrBeforeAfter[1] == "after") {
-		$selectAfter = " selected";		
+	if ($arrBeforeAfter[1] == "after") {
+		$selectAfter = " selected";
 	}
-	
+
 	$selectLimited = "";
-	if($boardInfo['accesstype'] == 1) {
+	if ($boardInfo['accesstype'] == 1) {
 		$selectLimited = " selected";
 	}
-	
+
 	$blnIsSubforum = 0;
 	$checkSubForumBox = "";
-	if($boardInfo['subforum_id'] != 0) {
+	if ($boardInfo['subforum_id'] != 0) {
 		$blnIsSubforum = 1;
 		$checkSubForumBox = " checked";
 	}
-	
-	
+
+
 	echo "
 		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."&bID=".$_GET['bID']."&action=edit' method='post'>
 		<div class='formDiv'>
 	";
-	
-	if($dispError != "") {
+
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to edit board because the following errors occurred:</strong><br><br>
@@ -223,7 +200,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
+
 	echo "
 			Use the form below to edit the selected board.
 			<table class='formTable'>
@@ -267,26 +244,24 @@ if ( empty($_POST['submit']) ) {
 						</td>
 					</tr>
 					";
-	
-	
+
+
 	$rankOptionsHeight = $rankCounter*20;
-	
-	if($rankOptionsHeight > 300) {
+
+	if ($rankOptionsHeight > 300) {
 		$rankOptionsHeight = 300;
 	}
-	
-	
-	
+
+
+
 	$memberOptions = "<option value='select'>[SELECT]</option>";
 	$result = $mysqli->query("SELECT ".$dbprefix."members.*, ".$dbprefix."ranks.ordernum FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id != '1' AND ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id ORDER BY ".$dbprefix."ranks.ordernum DESC");
-	while($row = $result->fetch_assoc()) {
-	
+	while ($row = $result->fetch_assoc()) {
 		$memberRank->select($row['rank_id']);
 		$dispRankName = $memberRank->get_info_filtered("name");
 		$memberOptions .= "<option value='".$row['member_id']."'>".$dispRankName." ".filterText($row['username'])."</option>";
-	
 	}
-	
+
 		echo "
 					<tr>
 						<td class='main' colspan='2'>
@@ -365,9 +340,9 @@ if ( empty($_POST['submit']) ) {
 			$(document).ready(function() {
 				var intSubForumClick = ".$blnIsSubforum.";
 				";
-		if($blnIsSubforum == 0) {
-			echo "$('#subForumBoard').attr('disabled', 'disabled');";
-		}
+	if ($blnIsSubforum == 0) {
+		echo "$('#subForumBoard').attr('disabled', 'disabled');";
+	}
 		echo "
 			
 				$('#isSubForum').click(function() {	
@@ -456,9 +431,9 @@ if ( empty($_POST['submit']) ) {
 				
 				
 				";
-		
-			if($dispError != "") {
-				echo "
+
+	if ($dispError != "") {
+		echo "
 					$('#loadingSpiral').show();
 					$('#boardMemberAccess').hide();
 					
@@ -470,9 +445,9 @@ if ( empty($_POST['submit']) ) {
 	
 					});
 				";
-			}		
-		
-				
+	}
+
+
 		echo "
 				$('#setRankAccess').click(function() {
 					var intAccessCount = 0;
@@ -547,5 +522,4 @@ if ( empty($_POST['submit']) ) {
 		</script>
 	
 	";
-	
 }

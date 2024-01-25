@@ -25,22 +25,20 @@ $member->select($_SESSION['btUsername']);
 $pID = "manageranks";
 $squadObj = new Squad($mysqli);
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($member->get_info("member_id"), $pID)) {
-
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $squadObj->select($_POST['sID']) && $squadObj->memberHasAccess($member->get_info("member_id"), $pID)) {
 	$squadInfo = $squadObj->get_info_filtered();
 	$memberInfo = $member->get_info_filtered();
 	$intFounderRankID = $squadObj->getFounderRankID();
-	
-	
-	if($squadObj->objSquadRank->select($_POST['rID']) && $_POST['rID'] != $intFounderRankID) {
-		
+
+
+	if ($squadObj->objSquadRank->select($_POST['rID']) && $_POST['rID'] != $intFounderRankID) {
 		$squadRankInfo = $squadObj->objSquadRank->get_info_filtered();
-		
-		
+
+
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."squads_members WHERE squad_id = '".$squadRankInfo['squad_id']."' AND squadrank_id = '".$squadRankInfo['squadrank_id']."'");
 		$totalMembers = $result->num_rows;
-		
-		if($totalMembers > 0) {
+
+		if ($totalMembers > 0) {
 			echo "hi
 				<div id='newDeleteMessage' style='display: none'>
 				<p align='center' class='main'>
@@ -71,26 +69,16 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 					});
 				</script>
 			";
-		}
-		elseif($totalMembers == 0 && $_POST['confirm'] == 1) {
-			
+		} elseif ($totalMembers == 0 && $_POST['confirm'] == 1) {
 			$squadObj->objSquadRank->delete();
-			
-			require_once("ranklist.php");
-			
-		}
-		else {
 
+			require_once("ranklist.php");
+		} else {
 			echo "
 				<p align='center' class='main'>
 					Are you sure you want to delete the rank: <b>".$squadRankInfo['name']."</b>?
 				</p>
 			";
-			
 		}
-		
 	}
-	
-	
-	
 }

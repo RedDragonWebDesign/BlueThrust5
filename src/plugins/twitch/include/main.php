@@ -1,24 +1,25 @@
 <?php
 
-	if(!defined("MAIN_ROOT")) { exit(); }
+if (!defined("MAIN_ROOT")) {
+	exit();
+}
 
 	global $pluginObj;
-	
+
 	$twitchObj = new Twitch($mysqli);
 	$pluginInfo = $pluginObj->get_info_filtered();
-	
+
 
 ?>
 
 <div class='streamPageContainer'>
 
-<?php 
+<?php
 
-	$totalTwitchUsers = $twitchObj->displayAllMemberCards(); 
-	
-	if($totalTwitchUsers == 0) {
+	$totalTwitchUsers = $twitchObj->displayAllMemberCards();
 
-		echo "
+if ($totalTwitchUsers == 0) {
+	echo "
 			
 			<div class='shadedBox' style='margin: 20px auto; width: 45%'>
 			
@@ -29,9 +30,8 @@
 			</div>
 		
 		";
-		
-	}
-	
+}
+
 ?>
 
 </div>

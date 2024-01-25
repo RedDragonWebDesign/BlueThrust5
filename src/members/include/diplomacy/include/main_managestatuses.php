@@ -13,8 +13,7 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
-
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !isset($_GET['cID'])) {
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 
@@ -31,18 +30,15 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php" || !iss
 	$member->select($_SESSION['btUsername']);
 
 	// Check Login
-	if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+	if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 		$memberInfo = $member->get_info();
-	}
-	else {
+	} else {
 		exit();
 	}
-
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($consoleObj->findConsoleIDByName("Manage Diplomacy Statuses"));
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -53,7 +49,7 @@ echo "
 	<tr><td colspan='5' class='dottedLine'></td></tr>
 ";
 
-if(!isset($diplomacyStatusObj)) {
+if (!isset($diplomacyStatusObj)) {
 	$diplomacyStatusObj = new BasicOrder($mysqli, "diplomacy_status", "diplomacystatus_id");
 }
 
@@ -62,29 +58,25 @@ $x = 1;
 $intHighestOrder = $diplomacyStatusObj->getHighestOrderNum();
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
-
-	if($counter == 1) {
+while ($row = $result->fetch_assoc()) {
+	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
-	}
-	else {
+	} else {
 		$addCSS = "";
 		$counter = 1;
 	}
 
-	if($x == 1) {
+	if ($x == 1) {
 		$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
-	}
-	else {
+	} else {
 		$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveStatus('up', '".$row['diplomacystatus_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' width='24' height='24' title='Move Up'></a>";
 	}
-	
-	
-	if($x == $intHighestOrder) {
+
+
+	if ($x == $intHighestOrder) {
 		$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
-	}
-	else {
+	} else {
 		$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveStatus('down', '".$row['diplomacystatus_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' width='24' height='24' title='Move Down'></a>";
 	}
 
@@ -101,8 +93,6 @@ while($row = $result->fetch_assoc()) {
 	";
 
 	$x++;
-
-
 }
 
 echo "</table>";

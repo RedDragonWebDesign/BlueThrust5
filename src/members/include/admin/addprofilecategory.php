@@ -12,13 +12,12 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -31,36 +30,34 @@ $cID = $_GET['cID'];
 
 
 if ( ! empty($_POST['submit']) ) {
-	
 	$countErrors = 0;
-	
+
 	// Check Category Name
-	
-	if(trim($_POST['catname']) == "") {
+
+	if (trim($_POST['catname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a Category Name.<br>";
 	}
-	
-	
+
+
 	// Check Category Order
-	
+
 	$intNewOrderSpot = $profileCatObj->validateOrder($_POST['catorder'], $_POST['beforeafter']);
-	
-	
-	if($intNewOrderSpot === false) {
+
+
+	if ($intNewOrderSpot === false) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order.<br>";
 	}
-	
-	
 
-	
-	if($countErrors == 0) {
-		
+
+
+
+	if ($countErrors == 0) {
 		$arrColumns = array("name", "ordernum");
 		$arrValues = array($_POST['catname'], $intNewOrderSpot);
-		
-		if($profileCatObj->addNew($arrColumns, $arrValues)) {
+
+		if ($profileCatObj->addNew($arrColumns, $arrValues)) {
 			$profileCatInfo = $profileCatObj->get_info_filtered();
 			echo "
 			<div style='display: none' id='successBox'>
@@ -73,53 +70,41 @@ if ( ! empty($_POST['submit']) ) {
 				popupDialog('Add Profile Category', '".$MAIN_ROOT."members', 'successBox');
 			</script>
 			";
-			
-			
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save category to the database.  Please contact the website administrator.<br>";
 		}
-		
-		
 	}
-	
-	
-	
-	if($countErrors > 0) {
-		
+
+
+
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
-		
 	}
-	
-	
 }
 
 if ( empty($_POST['submit']) ) {
-	
-	
-	
 	$countCategories = 0;
-	
+
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
+	while ($row = $result->fetch_assoc()) {
 		$catOrderOptions .= "<option value='".$row['profilecategory_id']."'>".filterText($row['name'])."</option>";
 		$countCategories++;
 	}
 
-	if($countCategories == 0) {
+	if ($countCategories == 0) {
 		$catOrderOptions = "<option value='first'>(no other categories)</option>";
 	}
-	
-	
+
+
 	echo "
 	<form action='console.php?cID=".$cID."' method='post'>
 		<div class='formDiv'>
 		
 		";
-	
-	if($dispError != "") {
+
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to add new profile category because the following errors occurred:</strong><br><br>
@@ -127,9 +112,9 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
-	
-	
+
+
+
 	echo "
 		
 			Fill out the form below to add a new profile category.<br><br>
@@ -155,5 +140,4 @@ if ( empty($_POST['submit']) ) {
 		</div>
 	</form>
 	";
-	
 }

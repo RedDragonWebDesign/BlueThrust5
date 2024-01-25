@@ -13,13 +13,12 @@
  */
 
 $cID = $_GET['cID'];
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -32,7 +31,7 @@ $consoleCatObj = new ConsoleCategory($mysqli);
 
 
 
-if($_GET['catID'] == "") {
+if ($_GET['catID'] == "") {
 	echo "
 	
 		<div id='loadingSpiral' class='loadingSpiral'>
@@ -48,7 +47,7 @@ if($_GET['catID'] == "") {
 		<div id='deleteMessage' style='display: none'></div>
 	
 	";
-	
+
 	echo "
 	
 	<script type='text/javascript'>
@@ -111,11 +110,6 @@ if($_GET['catID'] == "") {
 			
 	</script>
 	";
-	
-	
-}
-elseif($_GET['catID'] != "" AND $_GET['action'] == "edit") {
-	
+} elseif ($_GET['catID'] != "" and $_GET['action'] == "edit") {
 	require_once("manageconsolecat/edit.php");
-	
 }

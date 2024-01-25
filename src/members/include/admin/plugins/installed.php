@@ -12,37 +12,33 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
-
-
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	require_once("../../../../_setup.php");
 	require_once("../../../../classes/member.php");
 	require_once("../../../../classes/rank.php");
 	require_once("../../../../classes/btplugin.php");
-	
+
 	$consoleObj = new ConsoleOption($mysqli);
-	
+
 	$cID = $consoleObj->findConsoleIDByName("Plugin Manager");
 	$consoleObj->select($cID);
-	
+
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);
-	
-	if(!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
+
+	if (!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj)) {
 		exit();
 	}
-	
+
 	$pluginObj = new btPlugin($mysqli);
-	
 }
 
 echo "<table class='formTable' style='margin-top: 0px; border-spacing: 0px'>";
 
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."plugins ORDER BY name");
-	
-	if($result->num_rows == 0) {
-		
-		echo "
+
+if ($result->num_rows == 0) {
+	echo "
 			<tr>
 				<td colspan='2'>
 					<div class='shadedBox' style='width: 50%; margin: 20px auto'>
@@ -53,46 +49,41 @@ echo "<table class='formTable' style='margin-top: 0px; border-spacing: 0px'>";
 				</td>
 			</tr>
 		";
-		
-	}
+}
 
 	$x = 0;
-	while($row = $result->fetch_assoc()) {
-		
-		if($x == 0) {
-			$x = 1;
-			$addCSS = "";	
-		}
-		else {
-			$x = 0;
-			$addCSS = " alternateBGColor";	
-		}
-		
-		$arrInstalledPlugins[] = $row['filepath'];
-		
-		$dispPluginName = filterText($row['name']);
-		
-		if(file_exists(BASE_DIRECTORY."plugins/".$row['filepath']."/settings.php")) {
-			$settingsLink = $MAIN_ROOT."plugins/".$row['filepath']."/settings.php";
-		}
-		else {
-			$settingsLink = $MAIN_ROOT."plugins/settings.php?plugin=".$row['filepath'];
-		}
-		
-		$installJSData = "";
-		if(file_exists(BASE_DIRECTORY."plugins/".$row['filepath']."/install_setup.php")) {
-			$installJSData = " data-install='1'";
-		}
-		
-		echo "
+while ($row = $result->fetch_assoc()) {
+	if ($x == 0) {
+		$x = 1;
+		$addCSS = "";
+	} else {
+		$x = 0;
+		$addCSS = " alternateBGColor";
+	}
+
+	$arrInstalledPlugins[] = $row['filepath'];
+
+	$dispPluginName = filterText($row['name']);
+
+	if (file_exists(BASE_DIRECTORY."plugins/".$row['filepath']."/settings.php")) {
+		$settingsLink = $MAIN_ROOT."plugins/".$row['filepath']."/settings.php";
+	} else {
+		$settingsLink = $MAIN_ROOT."plugins/settings.php?plugin=".$row['filepath'];
+	}
+
+	$installJSData = "";
+	if (file_exists(BASE_DIRECTORY."plugins/".$row['filepath']."/install_setup.php")) {
+		$installJSData = " data-install='1'";
+	}
+
+	echo "
 			<tr>
 				<td class='dottedLine main manageList".$addCSS."'>".$dispPluginName."</td>
 				<td align='center' class='dottedLine main manageList".$addCSS."' style='width: 12%'><a href='".$settingsLink."'><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/edit.png' class='manageListActionButton' title='Settings'></a></td>
 				<td align='center' class='dottedLine main manageList".$addCSS."' style='width: 12%'><a id='uninstallPlugin' style='cursor: pointer' data-plugin='".$row['filepath']."' data-clicked='0' data-pluginname='".$dispPluginName."'".$installJSData."><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' class='manageListActionButton' title='Uninstall'></a></td>
 			</tr>		
 		";
-		
-	}
+}
 
 	echo "</table>
 	<div id='uninstallMessage' style='display: none'></div>

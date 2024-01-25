@@ -13,13 +13,12 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -32,11 +31,9 @@ require_once($prevFolder."classes/btupload.php");
 $menuCatObj = new MenuCategory($mysqli);
 $intAddNewMenuCatID = $consoleObj->findConsoleIDByName("Add Menu Category");
 
-if(isset($_GET['action']) && $_GET['action'] == "edit" && $menuCatObj->select($_GET['mcID'])) {	
-	require_once("managemenu/edit_category.php");	
-}
-elseif(!isset($_GET['action']) || (isset($_GET['action']) && !$menuCatObj->select($_GET['mcID']))) {
-	
+if (isset($_GET['action']) && $_GET['action'] == "edit" && $menuCatObj->select($_GET['mcID'])) {
+	require_once("managemenu/edit_category.php");
+} elseif (!isset($_GET['action']) || (isset($_GET['action']) && !$menuCatObj->select($_GET['mcID']))) {
 	echo "
 		<table class='formTable'>
 			<tr>
@@ -58,7 +55,7 @@ elseif(!isset($_GET['action']) || (isset($_GET['action']) && !$menuCatObj->selec
 		
 		<div id='menuCategoryDiv'>
 		";
-	
+
 	$_POST['manage'] = 1;
 	require_once("include/admin/managemenu/include/menucategorylist.php");
 	echo "
@@ -119,6 +116,4 @@ elseif(!isset($_GET['action']) || (isset($_GET['action']) && !$menuCatObj->selec
 			
 		</script>
 	";
-	
-	
 }

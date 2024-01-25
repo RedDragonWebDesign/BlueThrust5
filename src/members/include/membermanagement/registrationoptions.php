@@ -14,13 +14,12 @@
 
 $dispError = '';
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -32,25 +31,23 @@ $cID = $_GET['cID'];
 
 
 if ( ! empty($_POST['submit']) ) {
-	
 	$setRegistration = 1;
 	$setMemberApproval = 0;
-	if($_POST['registrationstatus'] != 1) {
+	if ($_POST['registrationstatus'] != 1) {
 		$setRegistration = 0;
-		if($_POST['memberapproval'] == 1) {
-			$setMemberApproval = 1;	
+		if ($_POST['memberapproval'] == 1) {
+			$setMemberApproval = 1;
 		}
 	}
-	
+
 	$updateColumns = array("memberregistration", "memberapproval");
 	$updateValues = array($setRegistration, $setMemberApproval);
-	
-	
-	
-	if($webInfoObj->multiUpdate($updateColumns, $updateValues)) {
-		
+
+
+
+	if ($webInfoObj->multiUpdate($updateColumns, $updateValues)) {
 		$member->logAction("Modified website registration options.");
-		
+
 		echo "
 		<div style='display: none' id='successBox'>
 			<p align='center' class='main'>
@@ -63,44 +60,37 @@ if ( ! empty($_POST['submit']) ) {
 		</script>
 		
 		";
-		
-		
-	}
-	else {
+	} else {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save information to the database.  Please contact the website administrator.<br>";
-		$_POST['submit'] = false;		
+		$_POST['submit'] = false;
 	}
-	
-	
-	
 }
 
 
 if ( empty($_POST['submit']) ) {
-	
 	$selectOpen = "";
 	$checkApproval = "";
-	if($websiteInfo['memberregistration'] != 1) {
+	if ($websiteInfo['memberregistration'] != 1) {
 		$selectOpen = " selected";
-		if($websiteInfo['memberapproval'] == 1) {
-			$checkApproval = " checked";	
+		if ($websiteInfo['memberapproval'] == 1) {
+			$checkApproval = " checked";
 		}
 	}
-	
-	
+
+
 	echo "
 	
 		<div class='formDiv'>
 		";
-		if($dispError != "") {
-			echo "
+	if ($dispError != "") {
+		echo "
 				<div class='errorDiv'>
 					<strong>Unable to save registration options because the following errors occurred:</strong><br><br>
 					$dispError
 				</div>
 			";
-		}
-		
+	}
+
 		echo "
 		
 			Use the form below to manage the member registration options for the clan.  New members are automatically given the lowest rank in the clan.
@@ -153,7 +143,4 @@ if ( empty($_POST['submit']) ) {
 		</script>
 		
 	";
-	
 }
-
-

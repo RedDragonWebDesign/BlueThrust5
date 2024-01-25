@@ -19,10 +19,9 @@ $prevFolder = "../../";
 require_once($prevFolder."_setup.php");
 require_once(BASE_DIRECTORY."plugins/twitch/twitch.php");
 
-if(isset($_GET['user']) && setupStreamPage()) {
+if (isset($_GET['user']) && setupStreamPage()) {
 	$webInfoObj->setPage("plugins/twitch/include/stream.php");
-}
-else {
+} else {
 	$webInfoObj->setPage("plugins/twitch/include/main.php");
 }
 

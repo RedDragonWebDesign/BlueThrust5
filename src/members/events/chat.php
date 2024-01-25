@@ -14,28 +14,25 @@
 
 require_once("../../classes/chatroom.php");
 
-if(!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
-
+if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
 	$consoleObj->select($cID);
 
-	
 
-	if(!$member->hasAccess($consoleObj) || !$eventObj->select($eID)) {
 
+	if (!$member->hasAccess($consoleObj) || !$eventObj->select($eID)) {
 		exit();
 	}
-	
+
 	$eventInfo = $eventObj->get_info_filtered();
 }
 
 
-if($eventInfo['member_id'] != $memberInfo['member_id'] && !in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true))) {
+if ($eventInfo['member_id'] != $memberInfo['member_id'] && !in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true))) {
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."members';
@@ -50,8 +47,7 @@ $eventChatID = $eventObj->chatRoomStarted();
 
 
 
-if($eventChatID === false && $memberInfo['member_id'] != $eventInfo['member_id']) {
-	
+if ($eventChatID === false && $memberInfo['member_id'] != $eventInfo['member_id']) {
 	echo "
 		<div style='display: none' id='successBox'>
 			<p align='center'>
@@ -63,23 +59,15 @@ if($eventChatID === false && $memberInfo['member_id'] != $eventInfo['member_id']
 			popupDialog('Event Chatroom', '".$MAIN_ROOT."members/console.php?cID=".$cID."&select=".$eventInfo['event_id']."', 'successBox');
 		</script>
 	";
-	
-	
+
+
 	exit();
-}
-elseif($eventChatID === false && $memberInfo['member_id'] == $eventInfo['member_id']) {
-	
+} elseif ($eventChatID === false && $memberInfo['member_id'] == $eventInfo['member_id']) {
 	$eventChatObj->addNew(array("event_id", "datestarted"), array($eventInfo['event_id'], time()));
-	
+
 	$eventObj->notifyEventInvites("A chatroom has been started for the event, <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$eventInfo['event_id']."&pID=Chat'>".$eventInfo['title']."</a>!");
-	
-	
-}
-elseif($eventChatObj->select($eventChatID)) {
-	
+} elseif ($eventChatObj->select($eventChatID)) {
 	$eventChatInfo = $eventChatObj->get_info_filtered();
-	
-	
 }
 
 

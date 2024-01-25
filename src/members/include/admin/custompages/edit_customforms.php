@@ -17,19 +17,18 @@
 require_once("../classes/customform.php");
 $customFormPageObj = new CustomForm($mysqli, "custompages", "custompage_id");
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
 
 
-if(!$customFormPageObj->select($_GET['cfID'])) {
+if (!$customFormPageObj->select($_GET['cfID'])) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");
 }
 
@@ -53,42 +52,38 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 $countErrors = 0;
 $dispError = "";
 if ( ! empty($_POST['submit']) ) {
-	
-	
-	if(trim($_POST['pagename']) == "") {
+	if (trim($_POST['pagename']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a page name for your custom page.<br>";
 	}
-	
-	
-	if($countErrors == 0) {
-		
+
+
+	if ($countErrors == 0) {
 		$_POST['wysiwygHTML'] = str_replace("<?", "", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("?>", "", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("&lt;?", "", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("?&gt;", "", $_POST['wysiwygHTML']);
-		
+
 		$_POST['submitMessageHTML'] = str_replace("<?", "", $_POST['submitMessageHTML']);
 		$_POST['submitMessageHTML'] = str_replace("?>", "", $_POST['submitMessageHTML']);
 		$_POST['submitMessageHTML'] = str_replace("&lt;?", "", $_POST['submitMessageHTML']);
 		$_POST['submitMessageHTML'] = str_replace("?&gt;", "", $_POST['submitMessageHTML']);
-		
-		$postResults = ($_POST['postresults'] == "yes") ? "yes" : "";
-		
-		if($customFormPageObj->update(array("name", "pageinfo", "submitmessage", "submitlink", "specialform"), array($_POST['pagename'], $_POST['wysiwygHTML'], $_POST['submitMessageHTML'], $_POST['submitlink'], $postResults)) && $customFormPageObj->addComponents($_SESSION['btFormComponent'])) {
 
-			foreach($_SESSION['btDeleteFormComponent'] as $deleteKey) {
-				if($customFormPageObj->objComponent->select($deleteKey)) {
+		$postResults = ($_POST['postresults'] == "yes") ? "yes" : "";
+
+		if ($customFormPageObj->update(array("name", "pageinfo", "submitmessage", "submitlink", "specialform"), array($_POST['pagename'], $_POST['wysiwygHTML'], $_POST['submitMessageHTML'], $_POST['submitlink'], $postResults)) && $customFormPageObj->addComponents($_SESSION['btFormComponent'])) {
+			foreach ($_SESSION['btDeleteFormComponent'] as $deleteKey) {
+				if ($customFormPageObj->objComponent->select($deleteKey)) {
 					$checkFormID = $customFormPageObj->get_info("customform_id");
-					if($checkFormID == $customFormInfo['customform_id']) {
+					if ($checkFormID == $customFormInfo['customform_id']) {
 						$customFormPageObj->objComponent->delete();
 						$mysqli->query("DELETE FROM ".$dbprefix."customform_selectvalues WHERE component_id = '".$checkFormID."'");
 						$mysqli->query("DELETE FROM ".$dbprefix."customform_values WHERE component_id = '".$checkFormID."'");
-					}					
-				}	
+					}
+				}
 			}
-			
-			
+
+
 			$intManageCustomPagesID = $consoleObj->findConsoleIDByName("Manage Custom Form Pages");
 			$customPageInfo = $customFormPageObj->get_info_filtered();
 			echo "
@@ -102,88 +97,74 @@ if ( ! empty($_POST['submit']) ) {
 					popupDialog('Edit Custom Form Page', '".$MAIN_ROOT."members/console.php?cID=".$intManageCustomPagesID."&cfID=".$customPageInfo['customform_id']."&action=edit', 'successBox');
 				</script>
 			";
-
-			
-			
-		}
-		else {
+		} else {
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to add custom page.  Please try again!<br>";
 			$_POST['submit'] = false;
 			$_POST['wysiwygHTML'] = addslashes($_POST['wysiwygHTML']);
 			$_POST['submitMessageHTML'] = addslashes($_POST['submitMessageHTML']);
 		}
-		
-	}
-	else {
+	} else {
 		$_POST['submit'] = false;
 		$_POST['wysiwygHTML'] = addslashes($_POST['wysiwygHTML']);
 		$_POST['submitMessageHTML'] = addslashes($_POST['submitMessageHTML']);
 	}
-	
-	
 }
 
 
 if ( empty($_POST['submit']) ) {
-	
 	echo "
 	<form action='console.php?cID=".$cID."&cfID=".$customFormInfo['customform_id']."&action=edit' method='post'>
 	<div class='formDiv'>
 	
 	";
-	
-	if($dispError != "") {
+
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to add custom page because the following errors occurred:</strong><br><br>
 		$dispError
 		</div>
 		";
-	}
-	else {
-		
+	} else {
 		$_SESSION['btFormComponent'] = array();
 		$x = 0; // Form Component Counter
 		$arrFormComponents = $customFormPageObj->getComponents();
-		foreach($arrFormComponents as $formComponentID) {
-			
+		foreach ($arrFormComponents as $formComponentID) {
 			$customFormPageObj->objComponent->select($formComponentID);
-			
+
 			$tempComponentInfo = $customFormPageObj->objComponent->get_info_filtered();
-			
+
 			$_SESSION['btFormComponent'][$x]['name'] = $tempComponentInfo['name'];
 			$_SESSION['btFormComponent'][$x]['type'] = $tempComponentInfo['componenttype'];
 			$_SESSION['btFormComponent'][$x]['required'] = $tempComponentInfo['required'];
 			$_SESSION['btFormComponent'][$x]['tooltip'] = $tempComponentInfo['tooltip'];
 			$_SESSION['btFormComponent'][$x]['component_id'] = $tempComponentInfo['component_id'];
-			
-			
-			if($tempComponentInfo['componenttype'] == "select" || $tempComponentInfo['componenttype'] == "multiselect") {
-				$arrSelectValues = $customFormPageObj->getSelectValues($formComponentID);
-				foreach($arrSelectValues as $selectValueID) {
 
+
+			if ($tempComponentInfo['componenttype'] == "select" || $tempComponentInfo['componenttype'] == "multiselect") {
+				$arrSelectValues = $customFormPageObj->getSelectValues($formComponentID);
+				foreach ($arrSelectValues as $selectValueID) {
 					$customFormPageObj->objSelectValue->select($selectValueID);
 					$selectValue = $customFormPageObj->objSelectValue->get_info_filtered("componentvalue");
 					$_SESSION['btFormComponent'][$x]['cOptions'][] = $selectValue;
-				
 				}
 			}
-			
+
 			$x++;
 		}
-		
-		
+
+
 		$_SESSION['btFormComponentCount'] = $x;
 		$_SESSION['btDeleteFormComponent'] = array();
 	}
-	
-	
+
+
 	$postResultsYes = "";
-	if($customFormInfo['specialform'] == "yes") {
-		$postResultsYes = " selected";	
+	if ($customFormInfo['specialform'] == "yes") {
+		$postResultsYes = " selected";
 	}
 	$addMenuItemCID = $consoleObj->findConsoleIDByName("Add Menu Item");
-	
+
 	echo "
 		Use the form below to edit the selected custom form page.  Remember to hit the save button!
 		<br><br>
@@ -271,11 +252,11 @@ if ( empty($_POST['submit']) ) {
 
 					
 					";
-					
-	
-					
-	
-	
+
+
+
+
+
 					echo "
 					
 					</div>
@@ -382,14 +363,14 @@ if ( empty($_POST['submit']) ) {
 			});
 
 	";
-	
-	if($dispError != "") {
+
+	if ($dispError != "") {
 		echo "
 			$('#wysiwygDiv').html('".$_POST['wysiwygHTML']."');
 			
 		";
 	}
-	
+
 	echo "
 
 	
@@ -490,8 +471,4 @@ if ( empty($_POST['submit']) ) {
 	
 		</script>
 	";
-	
-	
-	
-	
 }

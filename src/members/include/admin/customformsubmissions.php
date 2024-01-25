@@ -15,13 +15,12 @@
 
 require_once("../classes/customform.php");
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -32,9 +31,7 @@ $customFormPageObj = new CustomForm($mysqli, "custompages", "custompage_id");
 
 
 
-if(isset($_GET['cfID']) && $customFormPageObj->select($_GET['cfID'])) {
-	
-	
+if (isset($_GET['cfID']) && $customFormPageObj->select($_GET['cfID'])) {
 	echo "
 	
 		<div id='loadingSpiral' style='display: none'>
@@ -48,7 +45,7 @@ if(isset($_GET['cfID']) && $customFormPageObj->select($_GET['cfID'])) {
 	";
 	require_once("custompages/submissiondetail.php");
 	echo "</div>";
-	
+
 	echo "
 
 		<script type='text/javascript'>
@@ -75,13 +72,6 @@ if(isset($_GET['cfID']) && $customFormPageObj->select($_GET['cfID'])) {
 		</script>
 	
 	";
-	
-	
-}
-else {
-	
-	
+} else {
 	require_once("custompages/main_submissions.php");
-	
-	
 }

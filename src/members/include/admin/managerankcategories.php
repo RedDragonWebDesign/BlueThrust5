@@ -12,13 +12,12 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -30,8 +29,7 @@ $rankCatObj = new RankCategory($mysqli);
 
 
 
-if(!isset($_GET['rID']) || $_GET['rID'] == "") {
-	
+if (!isset($_GET['rID']) || $_GET['rID'] == "") {
 	echo "
 		<div id='loadingSpiral' class='loadingSpiral'>
 			<p align='center'>
@@ -40,10 +38,10 @@ if(!isset($_GET['rID']) || $_GET['rID'] == "") {
 		</div>
 		<div id='contentDiv'>
 	";
-	
+
 	require_once("managerankcat/main.php");
-	
-	
+
+
 	echo "
 		</div>
 		<div id='deleteMessage' style='display: none'></div>
@@ -113,11 +111,6 @@ if(!isset($_GET['rID']) || $_GET['rID'] == "") {
 			
 		</script>
 	";
-	
-
-	
-	
-}
-elseif($_GET['rID'] != "" AND $_GET['action'] == "edit") {
+} elseif ($_GET['rID'] != "" and $_GET['action'] == "edit") {
 	require_once("managerankcat/edit.php");
 }

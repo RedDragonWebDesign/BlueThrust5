@@ -12,11 +12,9 @@
  *
  */
 
-if(!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
-
+if (!isset($member) || !isset($squadObj) || substr($_SERVER['PHP_SELF'], -strlen("managesquad.php")) != "managesquad.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -25,8 +23,7 @@ else {
 	$squadObj->select($sID);
 	$arrSquadMembers = $squadObj->getMemberList();
 
-	if(!$member->hasAccess($consoleObj) || $squadInfo['member_id'] == $memberInfo['member_id'] || !in_array($memberInfo['member_id'], $arrSquadMembers)) {
-
+	if (!$member->hasAccess($consoleObj) || $squadInfo['member_id'] == $memberInfo['member_id'] || !in_array($memberInfo['member_id'], $arrSquadMembers)) {
 		exit();
 	}
 }
@@ -47,23 +44,16 @@ $countErrors = 0;
 
 
 
-if($_POST['submitted']) {
-	
-	
+if ($_POST['submitted']) {
 	$squadMemberID = $squadObj->getSquadMemberID($memberInfo['member_id']);
 	$squadObj->objSquadMember->select($squadMemberID);
-	
-	if($squadObj->objSquadMember->delete()) {
-		
+
+	if ($squadObj->objSquadMember->delete()) {
 		$dispMessage = "Successfully left squad: <b>".$squadInfo['name']."</b>";
-		
-	}
-	else {
-		
+	} else {
 		$dispMessage = "Unabled to close squad!";
-		
 	}
-	
+
 	echo "
 	
 	<div style='display: none' id='successBox'>
@@ -77,13 +67,11 @@ if($_POST['submitted']) {
 	</script>
 	
 	";
-	
 }
 
 
 
-if(!$_POST['submitted']) {
-	
+if (!$_POST['submitted']) {
 	echo "
 		
 	<form action='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$_GET['sID']."&pID=LeaveSquad' method='post' id='leaveSquadForm'>
@@ -145,5 +133,4 @@ if(!$_POST['submitted']) {
 		</script>
 	
 	";
-	
 }

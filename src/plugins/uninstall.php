@@ -32,17 +32,14 @@ $pluginObj = new btPlugin($mysqli);
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && isset($_GET['plugin'])) {
-	
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && isset($_GET['plugin'])) {
 	$pluginInstaller = new PluginInstaller($mysqli);
 
-	require_once(BASE_DIRECTORY."plugins/".$_GET['plugin']."/install_setup.php");	
-	
+	require_once(BASE_DIRECTORY."plugins/".$_GET['plugin']."/install_setup.php");
+
 	$pluginInstaller->uninstall();
-	
-	if(!$pluginInstaller->isInstalled()) {
-		$member->logAction("Uninstalled ".$pluginInstaller->pluginName." Plugin.");		
+
+	if (!$pluginInstaller->isInstalled()) {
+		$member->logAction("Uninstalled ".$pluginInstaller->pluginName." Plugin.");
 	}
-	
-	
 }

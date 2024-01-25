@@ -5,12 +5,12 @@
 $customFormPageObj = new CustomForm($mysqli);
 $arrCustomFormPages = $customFormPageObj->get_entries();
 $customFormPageOptions = array();
-foreach($arrCustomFormPages as $eachCustomFormPage) {
-	$customFormPageOptions[$eachCustomFormPage['customform_id']] = $eachCustomFormPage['name'];	
+foreach ($arrCustomFormPages as $eachCustomFormPage) {
+	$customFormPageOptions[$eachCustomFormPage['customform_id']] = $eachCustomFormPage['name'];
 }
 
-if(count($customFormPageOptions) == 0) {
-	$customFormPageOptions = array("No Custom Form Pages");	
+if (count($customFormPageOptions) == 0) {
+	$customFormPageOptions = array("No Custom Form Pages");
 }
 
 $customFormOptionComponents = array(

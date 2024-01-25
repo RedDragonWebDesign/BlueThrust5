@@ -21,30 +21,26 @@ require_once("../../../../classes/forumboard.php");
 // List all subforums function
 
 
-function listSubForums($forumID, $filterOut, $indent=1) {
+function listSubForums($forumID, $filterOut, $indent = 1) {
 	global $mysqli;
 
-	
 	$boardObj = new ForumBoard($mysqli);
-	
+
 	$boardObj->select($forumID);
 	$arrSubForums = $boardObj->getSubForums();
 
-	foreach($arrSubForums as $value) {
-		
-		if($filterOut != $value) {
+	foreach ($arrSubForums as $value) {
+		if ($filterOut != $value) {
 			$boardObj->select($value);
 			$boardInfo = $boardObj->get_info_filtered();
 			echo "<option value='".$boardInfo['forumboard_id']."'>".str_repeat("&nbsp;&nbsp;&nbsp;", $indent)."&middot; ".$boardInfo['name']."</option>";
-			
+
 			$moreSubForums = $boardObj->getSubForums();
-			if(count($moreSubForums) > 0) {
-				listSubForums($value, $filterOut, ($indent+1));		
+			if (count($moreSubForums) > 0) {
+				listSubForums($value, $filterOut, ($indent+1));
 			}
 		}
-		
 	}
-	
 }
 
 
@@ -73,51 +69,40 @@ $boardObj = new ForumBoard($mysqli);
 $LOGIN_FAIL = true;
 
 $arrSelectBoard = "";
-if(isset($_POST['bID']) && $boardObj->select($_POST['bID'])) {
-	$arrSelectBoard = $boardObj->findBeforeAfter();	
+if (isset($_POST['bID']) && $boardObj->select($_POST['bID'])) {
+	$arrSelectBoard = $boardObj->findBeforeAfter();
 
-	if($boardObj->get_info("subforum_id") != 0) {
+	if ($boardObj->get_info("subforum_id") != 0) {
 		$arrSelectBoard[0] = $boardObj->get_info("subforum_id");
 	}
-
-}
-else {
-	$_POST['bID'] = "";	
+} else {
+	$_POST['bID'] = "";
 }
 
 
 
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-	
-
-	if($categoryObj->select($_POST['catID'])) {
-
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
+	if ($categoryObj->select($_POST['catID'])) {
 		$arrBoards = $categoryObj->getAssociateIDs("AND subforum_id = '0' ORDER BY sortnum", true);
-		
-		foreach($arrBoards as $value) {
 
-			if($_POST['bID'] != $value) {
-			
+		foreach ($arrBoards as $value) {
+			if ($_POST['bID'] != $value) {
 				$boardObj->select($value);
 				$boardInfo = $boardObj->get_info_filtered();
-				
+
 				$selectBoard = "";
-				if($_POST['bID'] != "" && $arrSelectBoard[0] == $boardInfo['forumboard_id']) {
+				if ($_POST['bID'] != "" && $arrSelectBoard[0] == $boardInfo['forumboard_id']) {
 					$selectBoard = " selected";
 				}
-				
+
 				echo "<option value='".$boardInfo['forumboard_id']."'".$selectBoard.">".$boardInfo['name']."</option>";
-				
+
 				listSubForums($boardInfo['forumboard_id'], $_POST['bID']);
 			}
-			
 		}
-		
-		if(count($arrBoards) == 0 || ($_POST['bID'] != "" && count($arrBoards) == 1)) {
-			echo "<option value='first'>(first board)</option>";	
-		}
-	
-	}
 
-	
+		if (count($arrBoards) == 0 || ($_POST['bID'] != "" && count($arrBoards) == 1)) {
+			echo "<option value='first'>(first board)</option>";
+		}
+	}
 }

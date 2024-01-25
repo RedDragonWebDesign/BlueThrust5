@@ -26,19 +26,18 @@ $PAGE_NAME = "View Post - ";
 require_once(BASE_DIRECTORY."forum/templates/_header.php");
 
 
-if($boardObj->objPost->select($_GET['post'])) {
+if ($boardObj->objPost->select($_GET['post'])) {
 	$topicInfo = $boardObj->objPost->getTopicInfo(true);
 	$boardObj->select($topicInfo['forumboard_id']);
-	
+
 	echo "
 		<div class='largeFont' style='padding-top: 20px; position:relative;'>
 			<b>".$boardObj->getLink(true)." - ".$boardObj->objPost->getLink(true)."</b>
 		</div>
 	";
-	
+
 	$boardObj->objPost->show(true);
-}
-else {
+} else {
 	echo "
 		<div class='shadedBox' style='width: 45%; margin-left: auto; margin-right: auto; margin-top: 20px'>
 			<p align='center'>

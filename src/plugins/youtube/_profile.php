@@ -12,22 +12,20 @@
 	 *
 	 */
 
-	if(!defined("SHOW_PROFILE_MAIN")) {
-		exit();	
-	}
+if (!defined("SHOW_PROFILE_MAIN")) {
+	exit();
+}
 
 	require_once($prevFolder."plugins/youtube/youtube.php");
 	require_once($prevFolder."plugins/youtube/ytbuttoncss.php");
 	$ytObj = new Youtube($mysqli);
 
-	
-	if($ytObj->hasYoutube($memberInfo['member_id'])) {
-		
-		$ytInfo = $ytObj->get_info_filtered();
-		
-		if(($ytInfo['showsubscribe']+$ytInfo['showvideos']) > 0) {
-		
-			echo "
+
+if ($ytObj->hasYoutube($memberInfo['member_id'])) {
+	$ytInfo = $ytObj->get_info_filtered();
+
+	if (($ytInfo['showsubscribe']+$ytInfo['showvideos']) > 0) {
+		echo "
 					<div class='formTitle' style='position: relative; text-align: center; margin-top: 20px'>Youtube</div>
 					
 					<table class='profileTable' style='border-top-width: 0px'>
@@ -39,10 +37,9 @@
 								</p>
 							</div>
 				";
-			
-			if($ytInfo['showsubscribe'] == 1) {
-				
-				echo "
+
+		if ($ytInfo['showsubscribe'] == 1) {
+			echo "
 
 					<div id='ytInfoCard'>".$ytObj->dispSubscribeButton()."</div>
 					<div style='font-style: italic; text-align: center; margin-top: 3px; margin-left: auto; margin-right: auto; margin-bottom: 25px; position: relative' class='main'>
@@ -50,33 +47,30 @@
 					</div>
 
 				";
-				
-			}
-			
-			if($ytInfo['showvideos'] > 0) {
-				
-				echo "
+		}
+
+		if ($ytInfo['showvideos'] > 0) {
+			echo "
 
 					<div id='ytVideosContainer' class='ytProfileVideos'>
 						<div style='position: absolute'>
 						";
-				
-				$result = $mysqli->query("SELECT * FROM ".$dbprefix."youtube_videos WHERE youtube_id = '".$ytInfo['youtube_id']."' ORDER BY youtubevideo_id LIMIT ".$ytInfo['showvideos']);
-				while($row = $result->fetch_assoc()) {
-					
-					echo "<div class='ytVideo'><a href='http://www.youtube.com/watch?v=".$row['video_id']."' target='_blank'><img src='".$row['thumbnail']."' width='185' height='104' style='border: 0px'><p class='main' style='padding-top: 2px; margin-top: 0px'>".$row['title']."</a></p></div>";
-				}
-								
-				
-				echo "
+
+			$result = $mysqli->query("SELECT * FROM ".$dbprefix."youtube_videos WHERE youtube_id = '".$ytInfo['youtube_id']."' ORDER BY youtubevideo_id LIMIT ".$ytInfo['showvideos']);
+			while ($row = $result->fetch_assoc()) {
+				echo "<div class='ytVideo'><a href='http://www.youtube.com/watch?v=".$row['video_id']."' target='_blank'><img src='".$row['thumbnail']."' width='185' height='104' style='border: 0px'><p class='main' style='padding-top: 2px; margin-top: 0px'>".$row['title']."</a></p></div>";
+			}
+
+
+			echo "
 						</div>
 					</div>
 					
 				";
-				
-				
-				
-				echo "
+
+
+
+			echo "
 					<div class='videoScroller'></div>
 					
 				
@@ -112,21 +106,18 @@
 		
 					
 				";
-				
-				
-			}
-			
-			
-			echo "
+		}
+
+
+		echo "
 							</td>
 						</tr>
 					</table>		
 				";
-			
-			
-			if((time()-$ytInfo['lastupdate']) > 1800) {
-				
-				echo "
+
+
+		if ((time()-$ytInfo['lastupdate']) > 1800) {
+			echo "
 					
 					<script type='text/javascript'>
 					
@@ -158,9 +149,6 @@
 					</script>
 				
 				";
-			}
-		
 		}
-		
-		
 	}
+}

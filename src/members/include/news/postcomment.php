@@ -34,33 +34,31 @@ $newsObj = new News($mysqli);
 
 // Check Login
 $LOGIN_FAIL = true;
-if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $newsObj->select($_POST['nID'])) {
+if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj) && $newsObj->select($_POST['nID'])) {
 	$memberInfo = $member->get_info();
 	$newsInfo = $newsObj->get_info();
 	$blnPostComment = false;
-	if($newsInfo['newstype'] == 2) {
+	if ($newsInfo['newstype'] == 2) {
 		$privateNewsCID = $consoleObj->findConsoleIDByName("View Private News");
 		$consoleObj->select($privateNewsCID);
-		
-		if($member->hasAccess($consoleObj)) {
+
+		if ($member->hasAccess($consoleObj)) {
 			$blnPostComment	= true;
 		}
+	} else {
+		$blnPostComment = true;
+	}
 
-	}
-	else {
-		$blnPostComment = true;	
-	}
-	
-	
-	if($blnPostComment) {
+
+	if ($blnPostComment) {
 		$newsObj->postComment($memberInfo['member_id'], $_POST['comment']);
 	}
 
 	$arrComments = $newsObj->getComments();
 	$commentCount = $newsObj->countComments();
-	
+
 	require_once("../../../news/comments.php");
-	
+
 	echo "
 		<script type='text/javascript'>
 			$(document).ready(function() {
@@ -68,5 +66,4 @@ if($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($conso
 			});
 		</script>
 	";
-	
 }

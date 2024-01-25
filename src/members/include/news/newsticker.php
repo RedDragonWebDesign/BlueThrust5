@@ -13,13 +13,12 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -39,7 +38,7 @@ $arrComponents = array(
 	"displaysettings" => array(
 		"type" => "section",
 		"options" => array("section_title" => "Display Settings"),
-		"sortorder" => $i++		
+		"sortorder" => $i++
 	),
 	"color" => array(
 		"type" => "colorpick",
@@ -88,7 +87,7 @@ $arrComponents = array(
 		"value" => "Save",
 		"sortorder" => $i++,
 		"attributes" => array("class" => "submitButton formSubmitButton"),
-		"type" => "submit"		
+		"type" => "submit"
 	)
 );
 
@@ -104,9 +103,9 @@ $setupFormArgs = array(
 
 function saveNewsTicker() {
 	global $webInfoObj;
-	
+
 	$arrColumns = array("newsticker", "newstickercolor", "newstickersize", "newstickerbold", "newstickeritalic");
 	$arrValues = array($_POST['newsticker'], $_POST['color'], $_POST['fontsize'], $_POST['boldtext'], $_POST['italictext']);
-	
+
 	$webInfoObj->multiUpdate($arrColumns, $arrValues);
 }

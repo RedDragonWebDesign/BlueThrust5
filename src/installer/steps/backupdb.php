@@ -9,8 +9,7 @@ Attempting to save backup copy...<br><br>
 $backupFileName = "dbbackup_".time().".txt";
 
 
-if(file_put_contents($backupFileName, "") === false && !isset($_POST['checkBackup'])) {
-
+if (file_put_contents($backupFileName, "") === false && !isset($_POST['checkBackup'])) {
 	echo "
 
 	<div id='showConfirm' style='display: none'>
@@ -65,16 +64,13 @@ window.location = 'index.php'
 
 
 	exit();
-}
-else {
+} else {
 	$_POST['checkBackup'] = true;
 }
 
 
-if($_POST['checkBackup']) {
-	
-	foreach($arrTableMatches as $tableName) {
-
+if ($_POST['checkBackup']) {
+	foreach ($arrTableMatches as $tableName) {
 		// Get table structure
 		$result = $mysqli->query("SHOW CREATE TABLE ".$tableName);
 		$row = $result->fetch_array();
@@ -87,11 +83,8 @@ if($_POST['checkBackup']) {
 
 		$arrColumnNames = array();
 		$result = $mysqli->query("DESCRIBE ".$tableName);
-		while($row = $result->fetch_assoc()) {
-
+		while ($row = $result->fetch_assoc()) {
 			$arrColumnNames[] = $row['Field'];
-
-			
 		}
 
 
@@ -102,36 +95,32 @@ if($_POST['checkBackup']) {
 		$arrInsertStmts = array();
 
 		$result = $mysqli->query("SELECT * FROM ".$tableName);
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
 			$arrColumnValues = array();
-			foreach($arrColumnNames as $columnName) {
+			foreach ($arrColumnNames as $columnName) {
 				$arrColumnValues[] = $mysqli->real_escape_string($row[$columnName]);
 			}
 
 			$sqlInsertColumnValues = implode("','", $arrColumnValues);
 
 			$arrInsertStmts[] = $insertStmt.$sqlInsertColumnValues."');";
-			
-
 		}
 
 		$createTableSQL .= ";\n\n";
 		file_put_contents($backupFileName, $createTableSQL, FILE_APPEND);
 
-		foreach($arrInsertStmts as $insertStatement) {
+		foreach ($arrInsertStmts as $insertStatement) {
 			$insertStatement .= "\n";
 			file_put_contents($backupFileName, $insertStatement, FILE_APPEND);
 		}
 
 
 		$mysqli->query("DROP TABLE ".$tableName);
-
 	}
-	
+
 	//print_r($arrOldInsertStmts);
 
 	echo "
 	Backup created successfully.  <a href='".$backupFileName."' target='_blank'>Click Here</a> to view.<br><br>
 	";
-
 }

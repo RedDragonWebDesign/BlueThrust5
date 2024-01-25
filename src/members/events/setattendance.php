@@ -12,11 +12,9 @@
  *
  */
 
-if(!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
-
+if (!isset($member) || !isset($eventObj) || substr($_SERVER['PHP_SELF'], -strlen("manage.php")) != "manage.php") {
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -24,7 +22,7 @@ else {
 
 	$eventObj->select($eID);
 
-	if(!$member->hasAccess($consoleObj) || (!$eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm") && $memberInfo['rank_id'] != 1)) {
+	if (!$member->hasAccess($consoleObj) || (!$eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm") && $memberInfo['rank_id'] != 1)) {
 		exit();
 	}
 }
@@ -65,56 +63,51 @@ $statusSelectBox->setOptions(array("Unconfirmed", "Attended", "Excused Absence",
 			<td class='formTitle' style='border-right: 0px' align='center'><span id='checkAllX' style='cursor: pointer'>X</span></td>
 			<td class='formTitle' style='border-left: 0px'>Member:</td>
 		</tr>
-	<?php 
-		
-		if ( ! empty($_POST['submit']) ) {
-			
-			$arrColumns = array("attendconfirm_admin");
-			$arrValues = array($_POST['status']);
-			foreach($_POST as $value) {
-				
-				if(is_numeric($value) && $eventObj->objEventMember->select($value)) {
-					$checkEventID = $eventObj->objEventMember->get_info("event_id");
-					if($checkEventID == $eventInfo['event_id']) {
-						$eventObj->objEventMember->update($arrColumns, $arrValues);
-					}
+	<?php
+
+	if ( ! empty($_POST['submit']) ) {
+		$arrColumns = array("attendconfirm_admin");
+		$arrValues = array($_POST['status']);
+		foreach ($_POST as $value) {
+			if (is_numeric($value) && $eventObj->objEventMember->select($value)) {
+				$checkEventID = $eventObj->objEventMember->get_info("event_id");
+				if ($checkEventID == $eventInfo['event_id']) {
+					$eventObj->objEventMember->update($arrColumns, $arrValues);
 				}
-	
 			}
-		
-			$formObj = new Form();
-			$formObj->saveLink = MAIN_ROOT."members/events/manage.php?eID=".$eventInfo['event_id']."&pID=SetAttendance";
-			$formObj->saveMessageTitle = "Set Attendance";
-			$formObj->saveMessage = "Successfully set attendance!";
-			$formObj->showSuccessDialog();
 		}
-	
+
+		$formObj = new Form();
+		$formObj->saveLink = MAIN_ROOT."members/events/manage.php?eID=".$eventInfo['event_id']."&pID=SetAttendance";
+		$formObj->saveMessageTitle = "Set Attendance";
+		$formObj->saveMessage = "Successfully set attendance!";
+		$formObj->showSuccessDialog();
+	}
+
 		$counter = 0;
 		$eventMemberObj = new Member($mysqli);
-		while($row = $result->fetch_assoc()) {
-			
-			if($counter == 1) {
-				$addCSS = " alternateBGColor";
-				$counter = 0;
-			}
-			else {
-				$addCSS = "";
-				$counter = 1;
-			}
-			
-			$eventMemberObj->select($row['member_id']);
-			$eventMemberID = $eventObj->getEventMemberID($row['member_id']);
-			
-			$formComponentName = "eventmember_".$eventMemberID;
+	while ($row = $result->fetch_assoc()) {
+		if ($counter == 1) {
+			$addCSS = " alternateBGColor";
+			$counter = 0;
+		} else {
+			$addCSS = "";
+			$counter = 1;
+		}
 
-			echo "
+		$eventMemberObj->select($row['member_id']);
+		$eventMemberID = $eventObj->getEventMemberID($row['member_id']);
+
+		$formComponentName = "eventmember_".$eventMemberID;
+
+		echo "
 			<tr>
 				<td class='main manageList dottedLine".$addCSS."' align='center'><input type='checkbox' name='".$formComponentName."' value='".$eventMemberID."'></td>
 				<td class='main manageList dottedLine".$addCSS."'><b>".$eventMemberObj->getMemberLink()."</b></td>	
 			</tr>
 			";
-		}
-	
+	}
+
 	?>
 	
 	</table>

@@ -20,30 +20,27 @@ require_once($prevFolder."_setup.php");
 
 $diplomacyObj = new Basic($mysqli, "diplomacy", "diplomacy_id");
 
-if(!$diplomacyObj->select($_GET['dID'])) {
+if (!$diplomacyObj->select($_GET['dID'])) {
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."diplomacy'
 		</script>
 	";
 	exit();
-	
 }
 
 
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -58,28 +55,25 @@ $diplomacyStatusObj->select($diplomacyInfo['diplomacystatus_id']);
 $statusInfo = $diplomacyStatusObj->get_info_filtered();
 
 
-if($statusInfo['imageurl'] == "") {
+if ($statusInfo['imageurl'] == "") {
 	$dispStatus = $statusInfo['name'];
-}
-else {
-
-	if(strpos($statusInfo['imageurl'], "http://") === false) {
+} else {
+	if (strpos($statusInfo['imageurl'], "http://") === false) {
 		$statusInfo['imageurl'] = "../".$statusInfo['imageurl'];
 	}
 
 
 	$dispImgWidth = "";
 	$dispImgHeight = "";
-	if($statusInfo['imagewidth'] != 0) {
+	if ($statusInfo['imagewidth'] != 0) {
 		$dispImgWidth = " width = '".$statusInfo['imagewidth']."' ";
 	}
 
-	if($statusInfo['imageheight'] != 0) {
+	if ($statusInfo['imageheight'] != 0) {
 		$dispImgWidth = " height = '".$statusInfo['imageheight']."' ";
 	}
 
 	$dispStatus = "<img src='".$statusInfo['imageurl']."'".$dispImgWidth.$dispImgHeight." title='".$statusInfo['name']."'>";
-
 }
 
 

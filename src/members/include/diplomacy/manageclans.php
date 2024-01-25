@@ -13,13 +13,12 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -28,8 +27,7 @@ else {
 $cID = $_GET['cID'];
 $intAddClanCID = $consoleObj->findConsoleIDByName("Diplomacy: Add a Clan");
 
-if(!isset($_GET['dID'])) {
-	
+if (!isset($_GET['dID'])) {
 	echo "
 		
 		<table class='formTable' style='border-spacing: 1px'>
@@ -52,9 +50,9 @@ if(!isset($_GET['dID'])) {
 		
 		<div id='clanListDiv' style='margin: 0px; padding: 0px'>
 	";
-	
+
 	require_once("include/main_manageclans.php");
-	
+
 	echo "
 		</div>
 		<div id='confirmDelete' style='display: none'></div>
@@ -102,10 +100,6 @@ if(!isset($_GET['dID'])) {
 		</script>
 	
 	";
-	
-}
-elseif(isset($_GET['dID']) && $_GET['action'] == "edit") {
-	
+} elseif (isset($_GET['dID']) && $_GET['action'] == "edit") {
 	require_once("include/editclan.php");
-	
 }

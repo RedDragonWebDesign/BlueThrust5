@@ -28,22 +28,18 @@ $cID = $consoleObj->findConsoleIDByName("Manage Profile Categories");
 $_GET['cID'] = $cID;
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $profileCatObj->select($_POST['catID'])) {
-		
+	if ($member->hasAccess($consoleObj) && $profileCatObj->select($_POST['catID'])) {
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
 		$profileCatInfo = $profileCatObj->get_info_filtered();
-		
+
 		$arrCats = $profileCatObj->getAssociateIDs();
-		
-		if(count($arrCats) > 0) {
-			
+
+		if (count($arrCats) > 0) {
 			echo "<div id='newDeleteMessage' style='display: none'><p align='center'>There are currently profile options with the profile category <b>".$profileCatInfo['name']."</b>.  Please move all profile options out of this category before deleting it.</p></div>";
-			
+
 			echo "
 				<script type='text/javascript'>
 					$(document).ready(function() {
@@ -66,27 +62,13 @@ if($member->authorizeLogin($_SESSION['btPassword'])) {
 					});
 				</script>
 			";
-		
-			
-		}
-		elseif($_POST['confirm'] == "1") {
-			
+		} elseif ($_POST['confirm'] == "1") {
 			$profileCatObj->delete();
 			require_once("main.php");
-			
-		}
-		else {
+		} else {
 			echo "<p align='center'>Are you sure you want to delete the profile category <b>".$profileCatInfo['name']."</b>?";
 		}
-		
-	}
-	elseif(!$profileCatObj->select($_POST['catID'])) {
-	
+	} elseif (!$profileCatObj->select($_POST['catID'])) {
 		echo "<p align='center'>Unable find the selected profile category.  Please try again or contact the website administrator.</p>";
-	
 	}
-	
-	
-	
-	
 }

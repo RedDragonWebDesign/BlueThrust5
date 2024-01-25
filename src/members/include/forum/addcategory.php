@@ -16,13 +16,12 @@
 
 require_once("../classes/basicorder.php");
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -40,31 +39,28 @@ $categoryObj->set_assocTableName("forum_board");
 $categoryObj->set_assocTableKey("forumboard_id");
 
 
-if( ! empty($_POST['submit']) ) {
-	
+if ( ! empty($_POST['submit']) ) {
 	// Check Name
-	if(trim($_POST['catname']) == "") {
+	if (trim($_POST['catname']) == "") {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Category name may not be blank.<br>";
-		$countErrors++;	
+		$countErrors++;
 	}
-	
-	
+
+
 	// Check Order
-	
+
 	$intNewOrderSpot = $categoryObj->validateOrder($_POST['displayorder'], $_POST['beforeafter']);
-	
-	if($intNewOrderSpot === false) {
+
+	if ($intNewOrderSpot === false) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid display order.<br>";
 		$countErrors++;
 	}
-	
-	
-	if($countErrors == 0) {
-		
+
+
+	if ($countErrors == 0) {
 		$arrColumns = array("name", "ordernum");
 		$arrValues = array($_POST['catname'], $intNewOrderSpot);
-		if($categoryObj->addNew($arrColumns, $arrValues)) {
-
+		if ($categoryObj->addNew($arrColumns, $arrValues)) {
 			$forumCatInfo = $categoryObj->get_info_filtered();
 			echo "
 			<div style='display: none' id='successBox'>
@@ -77,45 +73,39 @@ if( ! empty($_POST['submit']) ) {
 				popupDialog('Add Forum Category', '".$MAIN_ROOT."members', 'successBox');
 			</script>
 			";
-			
-		}
-		else {
+		} else {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save category to the database.  Please contact the website administrator.<br>";
 		}
-		
 	}
-	
-	
-	if($countErrors > 0) {
+
+
+	if ($countErrors > 0) {
 		$_POST = filterArray($_POST);
-		$_POST['submit'] = false;	
+		$_POST['submit'] = false;
 	}
 }
 
 
-if( empty($_POST['submit']) ) {
-	
+if ( empty($_POST['submit']) ) {
 	$orderoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
-	while($row = $result->fetch_assoc()) {
-		
+	while ($row = $result->fetch_assoc()) {
 		$orderoptions .= "<option value='".$row['forumcategory_id']."'>".filterText($row['name'])."</option>";
-		
 	}
-	
-	if($result->num_rows == 0) {
-		$orderoptions = "<option value='first'>(first category)</option>";		
+
+	if ($result->num_rows == 0) {
+		$orderoptions = "<option value='first'>(first category)</option>";
 	}
-	
-	
+
+
 	echo "
 	
 		<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
 			<div class='formDiv'>
 			";
-	
-	if($dispError != "") {
+
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to add new forum category because the following errors occurred:</strong><br><br>
@@ -123,9 +113,9 @@ if( empty($_POST['submit']) ) {
 		</div>
 		";
 	}
-	
-	
-	
+
+
+
 	echo "
 				Use the form below to add a new forum category.<br>
 				<table class='formTable'>
@@ -151,5 +141,4 @@ if( empty($_POST['submit']) ) {
 		
 		
 	";
-	
 }

@@ -13,13 +13,12 @@
  */
 
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -28,7 +27,7 @@ else {
 $cID = $_GET['cID'];
 
 
-if($cID == "") {
+if ($cID == "") {
 	$cID = $consoleObj->findConsoleIDByName("View Custom Form Submissions");
 }
 
@@ -38,13 +37,11 @@ $intManageCustomFormID = $consoleObj->findConsoleIDByName("Manage Custom Form Pa
 
 $counter = 0;
 $result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."customform ORDER BY name");
-while($row = $result->fetch_assoc()) {
-
-	if($counter == 1) {
+while ($row = $result->fetch_assoc()) {
+	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
-	}
-	else {
+	} else {
 		$addCSS = "";
 		$counter = 1;
 	}
@@ -53,8 +50,8 @@ while($row = $result->fetch_assoc()) {
 	$customFormPageObj->select($row['customform_id']);
 	$totalUnseen = $customFormPageObj->countSubmissions(true);
 	$totalSubmissions = $customFormPageObj->countSubmissions();
-	
-	
+
+
 	$dispPages .= "
 	<tr>
 		<td class='dottedLine".$addCSS."' style='height: 24px' width=\"60%\">&nbsp;&nbsp;<span class='main'><b><a href='console.php?cID=".$cID."&cfID=".$row['customform_id']."&action=edit'>".$row['name']."</a></b></td>
@@ -65,8 +62,7 @@ while($row = $result->fetch_assoc()) {
 	";
 }
 
-if($result->num_rows == 0) {
-
+if ($result->num_rows == 0) {
 	$dispPages = "<tr><td colspan='3'><br><p align='center' class='main'><i>No custom form pages added yet!</i></p></td></tr>";
 }
 

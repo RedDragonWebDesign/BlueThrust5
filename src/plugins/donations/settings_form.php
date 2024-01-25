@@ -13,7 +13,9 @@
  */
 
 
-if(!isset($pluginObj)) { exit(); }
+if (!isset($pluginObj)) {
+	exit();
+}
 require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
 
 
@@ -37,7 +39,7 @@ $arrComponents = array(
 		"type" => "select",
 		"attributes" => array("class" => "textBox formInput"),
 		"display_name" => "Mode",
-		"options" => array("" => "Sandbox", "live" => "Live"),	
+		"options" => array("" => "Sandbox", "live" => "Live"),
 		"sortorder" => $i++,
 		"value" => $configInfo['mode'],
 		"validate" => array("RESTRICT_TO_OPTIONS"),
@@ -78,9 +80,9 @@ $arrComponents = array(
 		"type" => "submit",
 		"value" => "Save",
 		"sortorder" => $i++,
-		"attributes" => array("class" => "submitButton formSubmitButton")			
+		"attributes" => array("class" => "submitButton formSubmitButton")
 	)
-		
+
 );
 
 
@@ -96,19 +98,18 @@ $setupFormArgs = array(
 
 function saveDonationSettings() {
 	global $pluginObj;
-	
+
 	$arrFilter = array("<?", "?>", "<script>", "</script>");
-	foreach($arrFilter as $filterOut) {
+	foreach ($arrFilter as $filterOut) {
 		$_POST['thankyou'] = str_replace($filterOut, "", $_POST['thankyou']);
 	}
-	
+
 	$pluginObj->addConfigValue("email", $_POST['email']);
 	$pluginObj->addConfigValue("mode", $_POST['mode']);
 	$pluginObj->addConfigValue("currency", $_POST['defaultcurrency']);
 	$pluginObj->addConfigValue("thankyou", $_POST['thankyou']);
 	$pluginObj->addConfigValue("goalprogresscolor", $_POST['goalprogresscolor']);
 	$pluginObj->addConfigValue("goalprogressbackcolor", $_POST['goalprogressbackcolor']);
-	
 }
 
 $EXTERNAL_JAVASCRIPT .= $formObj->getRichtextboxJSFile();

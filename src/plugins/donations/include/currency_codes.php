@@ -1,12 +1,12 @@
-<?php 
-	
+<?php
+
 	/*
 	 * Paypal Currency Codes
 	 * https://developer.paypal.com/docs/classic/api/currency_codes/
 	 */
 
 	$arrPaypalCurrencyCodes = array(
-	
+
 		"AUD" => "Australian Dollar",
 		"BRL" => "Brazilian Real",
 		"CAD" => "Canadian Dollar",
@@ -32,9 +32,9 @@
 		"THB" => "Thai Baht",
 		"TRY" => "Turkish Lira",
 		"USD" => "U.S. Dollar"
-		
+
 	);
-	
+
 	$arrPaypalCurrencyInfo = array(
 		"AUD" => array("symbol" => "A$", "position" => "left"),
 		"BRL" => array("symbol" => "R$", "position" => "left"),

@@ -22,103 +22,85 @@ require_once("twitter.php");
 require_once($prevFolder."classes/member.php");
 
 
-if(trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
+if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
-}
-else {
+} else {
 	$dispHTTP = "https://";
 }
 
 $twitterObj = new Twitter($mysqli);
 
 
-if(!isset($_GET['oauth_token']) || !isset($_GET['oauth_verifier']) || $_GET['oauth_token'] != $_SESSION['btOauth_Token']) {
-
+if (!isset($_GET['oauth_token']) || !isset($_GET['oauth_verifier']) || $_GET['oauth_token'] != $_SESSION['btOauth_Token']) {
 	// CONNECT
-			
+
 	$response = $twitterObj->getRequestToken($dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
-	if($response !== false) {
-		parse_str($response, $arrOutput);	
-		
+	if ($response !== false) {
+		parse_str($response, $arrOutput);
+
 		$_SESSION['btOauth_Token'] = $arrOutput['oauth_token'];
 		$_SESSION['btOauth_Token_Secret'] = $arrOutput['oauth_token_secret'];
-		
-		
+
+
 		header("Location: ".$twitterObj->authorizeURL."?oauth_token=".$arrOutput['oauth_token']);
 		exit();
 	}
-
-
-}
-elseif(isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oauth_token'] == $_SESSION['btOauth_Token']) {
+} elseif (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oauth_token'] == $_SESSION['btOauth_Token']) {
 	// CALLBACK
-	
-	
+
+
 	$twitterObj->oauthTokenSecret = $_SESSION['btOauth_Token_Secret'];
 	$response = $twitterObj->getAccessToken($_GET['oauth_token'], $_GET['oauth_verifier']);
-	
-	if($twitterObj->httpCode == 200) {
+
+	if ($twitterObj->httpCode == 200) {
 		parse_str($response, $oauthArray);
 
-		if($twitterObj->authorizeLogin($oauthArray['oauth_token'], $oauthArray['oauth_token_secret'])) {
+		if ($twitterObj->authorizeLogin($oauthArray['oauth_token'], $oauthArray['oauth_token_secret'])) {
 			$twitterInfo = $twitterObj->get_info();
-			if($twitterInfo['allowlogin'] == 1) {
+			if ($twitterInfo['allowlogin'] == 1) {
 				// LOGGED IN!
-				
+
 				// Update Twitter Stats
-				
+
 				$twitterObj->oauthToken = $twitterObj->get_info("oauth_token");
 				$twitterObj->oauthTokenSecret = $twitterObj->get_info("oauth_tokensecret");
-				
-				$twitterObj->reloadCacheInfo();				
-				
+
+				$twitterObj->reloadCacheInfo();
+
 				$memberObj = new Member($mysqli);
 				$memberObj->select($twitterInfo['member_id']);
 				$memberInfo = $memberObj->get_info();
-				
+
 				$_SESSION['btUsername'] = $memberInfo['username'];
 				$_SESSION['btPassword'] = $memberInfo['password'];
 				$_SESSION['btRememberMe'] = $_POST['rememberme'];
-				
+
 				$newLastLogin = time();
 				$newTimesLoggedIn = $memberInfo['timesloggedin']+1;
 				$newIP = $_SERVER['REMOTE_ADDR'];
-				
+
 				$memberObj->update(array("lastlogin", "timesloggedin", "ipaddress", "loggedin"), array($newLastLogin, $newTimesLoggedIn, $newIP, 1));
-				
+
 				$memberObj->autoPromote();
-				
+
 				echo "
 					<script type='text/javascript'>
 						window.location = '".$MAIN_ROOT."index.php';
 					</script>
 				";
-				
+
 				exit();
-				
-				
-			}
-			else {
+			} else {
 				$dispError = "You may not use twitter to log in to this account.  To change this setting, log in to your account regularly and change your Twitter Connect settings.<br><br>";
-			}		
-		}
-		else {
-
+			}
+		} else {
 			$dispError = "There is no user associated with this Twitter account.  You must connect your Twitter account while logged in before using this feature.";
-			
 		}
-		
-		
-	}
-	else {
-
+	} else {
 		$dispError = "Unable to connect to Twitter!  Please <a href='".$MAIN_ROOT."plugins/twitter/login.php'>Try Again</a>.";
 	}
-	
-	
-}
-else {
-	$dispError = "You entered an incorrect username/password combination!";	
+} else {
+	$dispError = "You entered an incorrect username/password combination!";
 }
 
 
@@ -127,15 +109,13 @@ else {
 $dispBreadCrumb = "<a href='".$MAIN_ROOT."'>Home</a> > Log In";
 require_once($prevFolder."themes/".$THEME."/_header.php");
 
-if(constant("LOGGED_IN")) {
-	
+if (constant("LOGGED_IN")) {
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."members'
 		</script>
 	";
 	exit();
-	
 }
 
 

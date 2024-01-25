@@ -13,17 +13,15 @@
  */
 
 
-if(!isset($member) || !isset($tournamentObj) || !$tournamentObj->poolsComplete() || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
-
+if (!isset($member) || !isset($tournamentObj) || !$tournamentObj->poolsComplete() || substr($_SERVER['PHP_SELF'], -strlen("managetournament.php")) != "managetournament.php") {
 	echo "
 		<script type='text/javascript'>
 			window.location = '".$MAIN_ROOT."members/console.php?cID=".$cID."';
 		</script>
 	";
-	
+
 	exit();
-}
-else {
+} else {
 	// This is a little repeatative, but for security.
 
 	$memberInfo = $member->get_info();
@@ -32,8 +30,7 @@ else {
 	$tournamentObj->select($tID);
 
 
-	if(!$member->hasAccess($consoleObj)) {
-
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -52,21 +49,19 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 $dispError = "";
 $countErrors = 0;
 
-if($tournamentInfo['playersperteam'] == 1) {
-	$dispTeamOrPlayer = "Player";	
-}
-else {
-	$dispTeamOrPlayer = "Team";	
+if ($tournamentInfo['playersperteam'] == 1) {
+	$dispTeamOrPlayer = "Player";
+} else {
+	$dispTeamOrPlayer = "Team";
 }
 
 
 if ( ! empty($_POST['submit']) ) {
-	
-	$mysqli->query("DELETE FROM ".$dbprefix."tournamentmatches WHERE tournament_id = '".$tournamentInfo['tournament_id']."'");	
+	$mysqli->query("DELETE FROM ".$dbprefix."tournamentmatches WHERE tournament_id = '".$tournamentInfo['tournament_id']."'");
 	$tournamentObj->update(array("seedtype"), array(1));
-	
+
 	$tournamentObj->resetMatches();
-	
+
 	echo "
 	
 		<div style='display: none' id='successBox'>
@@ -80,70 +75,57 @@ if ( ! empty($_POST['submit']) ) {
 			</script>
 	
 	";
-	
-	
-	
-}
-elseif ( empty($_POST['submit']) ) {
-
+} elseif ( empty($_POST['submit']) ) {
 	$arrPools = $tournamentObj->getPoolList();
 	$arrPoolTeams = array();
 	$arrTeams = $tournamentObj->getTeams(true);
-	
-	
+
+
 	$totalPoolCount = 0;
 	$totalPoolsFinished = 0;
-	foreach($arrPools as $poolID) {
+	foreach ($arrPools as $poolID) {
 		$tournamentObj->objTournamentPool->select($poolID);
 		$totalPoolCount++;
 		$poolInfo = $tournamentObj->objTournamentPool->get_info();
-		if($poolInfo['finished'] == 0) {
-			$tournamentObj->objTournamentPool->update(array("finished"), array(1));	
-		}
-		else {
+		if ($poolInfo['finished'] == 0) {
+			$tournamentObj->objTournamentPool->update(array("finished"), array(1));
+		} else {
 			$totalPoolsFinished++;
 		}
-		
 	}
-	
-	
-	if($totalPoolCount != $totalPoolsFinished) {
-		
-		foreach($arrTeams as $teamID) {
+
+
+	if ($totalPoolCount != $totalPoolsFinished) {
+		foreach ($arrTeams as $teamID) {
 			$arrWinCount[$teamID] = 0;
 		}
-		
+
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentpools_teams WHERE tournament_id = '".$tID."'");
-		while($row = $result->fetch_assoc()) {
-		
-			if($row['winner'] == 1) {
+		while ($row = $result->fetch_assoc()) {
+			if ($row['winner'] == 1) {
 				$winningTeam = $row['team1_id'];
-			}
-			else {
+			} else {
 				$winningTeam = $row['team2_id'];
 			}
-	
+
 			$arrWinCount[$winningTeam] += 1;
-		
 		}
-		
+
 		arsort($arrWinCount);
-		
+
 		$seedCount = 1;
-		foreach($arrWinCount as $teamID => $wins) {
-			
+		foreach ($arrWinCount as $teamID => $wins) {
 			$tournamentObj->objTeam->select($teamID);
 			$tournamentObj->objTeam->update(array("seed"), array($seedCount));
-			
+
 			$seedCount++;
 		}
-		
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	echo "
 	
 		<div class='formDiv' style='border: 0px; background: none'>
@@ -165,29 +147,28 @@ elseif ( empty($_POST['submit']) ) {
 				</tr>
 			
 				";
-	
-			
+
+
 			$arrTeams = $tournamentObj->getTeams(true, "ORDER BY seed");
-			foreach($arrTeams as $teamID) {	
-				$dispName = $tournamentObj->getPlayerName($teamID);
-				$tournamentObj->objTeam->select($teamID);
-				$dispSeed = $tournamentObj->objTeam->get_info("seed");
-				$teamPoolID = $tournamentObj->getTeamPoolID($teamID);
-				$tournamentObj->objTournamentPool->select($teamPoolID);
-				$tournamentObj->objTournamentPool->getTeamRecord($teamID);
-				
-				echo "
+	foreach ($arrTeams as $teamID) {
+		$dispName = $tournamentObj->getPlayerName($teamID);
+		$tournamentObj->objTeam->select($teamID);
+		$dispSeed = $tournamentObj->objTeam->get_info("seed");
+		$teamPoolID = $tournamentObj->getTeamPoolID($teamID);
+		$tournamentObj->objTournamentPool->select($teamPoolID);
+		$tournamentObj->objTournamentPool->getTeamRecord($teamID);
+
+		echo "
 					<tr>
 						<td class='main' align='center'>".$dispSeed.".</td>
 						<td class='main' style='padding-left: 5px'><a href='javascript:void(0)' onclick=\"setSeed('".$teamID."')\">".$dispName."</a> (".$tournamentObj->objTournamentPool->getTeamRecord($teamID).")</td>
 					</tr>
 				";
-				
-				
-				$seedCount++;
-				
-			}
-			
+
+
+		$seedCount++;
+	}
+
 			echo "
 				
 			</table>
@@ -283,6 +264,4 @@ elseif ( empty($_POST['submit']) ) {
 		</script>
 		
 	";
-
-
 }

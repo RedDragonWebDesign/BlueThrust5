@@ -12,59 +12,55 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
-	
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	// Posted Message?
-	
+
 	require_once("../../_setup.php");
 	require_once("../../classes/member.php");
 
 	$consoleObj = new ConsoleOption($mysqli);
 	$member = new Member($mysqli);
 	$member->select($_SESSION['btUsername']);
-	
+
 	$cID = $consoleObj->findConsoleIDByName("Inactive Request");
 	$consoleObj->select($cID);
 
 
-	if(!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj) || !$member->requestedIA()) {
+	if (!$member->authorizeLogin($_SESSION['btPassword']) || !$member->hasAccess($consoleObj) || !$member->requestedIA()) {
 		exit();
 	}
-	
+
 	$memberInfo = $member->get_info_filtered();
-	
+
 	$iaRequestObj = new Basic($mysqli, "iarequest", "iarequest_id");
 	$iaRequestObj->select($member->requestedIA(true));
-	
+
 	$requestInfo = $iaRequestObj->get_info_filtered();
-	
-	
-	if(trim($_POST['message']) != "" && $requestInfo['requeststatus'] == 0) {
+
+
+	if (trim($_POST['message']) != "" && $requestInfo['requeststatus'] == 0) {
 		$iaRequestMessageObj = new Basic($mysqli, "iarequest_messages", "iamessage_id");
-		
+
 		$arrColumns = array("iarequest_id", "member_id", "messagedate", "message");
 		$arrValues = array($requestInfo['iarequest_id'], $memberInfo['member_id'], time(), $_POST['message']);
-		
+
 		$iaRequestMessageObj->addNew($arrColumns, $arrValues);
-		
 	}
-	
-	
-	
+
+
+
 	$iaMember = new Member($mysqli);
 	$counter = 1;
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."iarequest_messages WHERE iarequest_id = '".$requestInfo['iarequest_id']."' ORDER BY messagedate DESC");
-	while($row = $result->fetch_assoc()) {
-		
-		if($counter == 0) {
+	while ($row = $result->fetch_assoc()) {
+		if ($counter == 0) {
 			$addCSS = "";
 			$counter = 1;
-		}
-		else {
-			$addCSS = " alternateBGColor";		
+		} else {
+			$addCSS = " alternateBGColor";
 			$counter = 0;
 		}
-		
+
 		$iaMember->select($row['member_id']);
 		echo "
 			<div class='dottedLine".$addCSS."' style='padding: 10px 5px; width: 80%; margin-left: auto; margin-right: auto;'>
@@ -72,37 +68,31 @@ if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 				<div style='padding-left: 5px'>".nl2br(filterText($row['message']))."</div>
 			</div>
 		";
-		
 	}
-	
 
-	if($result->num_rows == 0) {
 
+	if ($result->num_rows == 0) {
 		echo "
 			<div class='shadedBox' style='margin: 20px auto; width: 50%'>
 				<p align='center'><i>No Messages</i></p>					
 			</div>
 		";
-		
+	} else {
+		echo "<br><br>";
 	}
-	else {
-		echo "<br><br>";	
-	}
-	
+
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
 
 
 
-if(!$member->requestedIA()) {
-
+if (!$member->requestedIA()) {
 	$i = 1;
 	$arrComponents = array(
 		"reason" => array(
@@ -118,7 +108,7 @@ if(!$member->requestedIA()) {
 			"sortorder" => $i++,
 			"type" => "submit")
 	);
-	
+
 	$requestIAObj = new Basic($mysqli, "iarequest", "iarequest_id");
 	$setupFormArgs = array(
 		"name" => "console-".$cID,
@@ -130,31 +120,28 @@ if(!$member->requestedIA()) {
 		"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
 		"description" => "Use the form below to request to be inactive.  When inactive, you will be able to log in, however you will not have access to any console options.  A higher ranking member will have to approve your request before your status is set to inactive."
 	);
-
-}
-else {
+} else {
 	// Already requested to be inactive
 	$iaRequestObj = new Basic($mysqli, "iarequest", "iarequest_id");
 	$iaRequestObj->select($member->requestedIA(true));
-	
-	$requestInfo = $iaRequestObj->get_info_filtered();	
-	
-	
+
+	$requestInfo = $iaRequestObj->get_info_filtered();
+
+
 	$dispRequestStatus = "<span class='pendingFont'>Pending</span>";
 	$dispSendMessages = " You may send additional messages using the form below.";
-	if($requestInfo['requeststatus'] == 1) {
+	if ($requestInfo['requeststatus'] == 1) {
 		$member->select($requestInfo['reviewer_id']);
 		$dispRequestStatus = "<span class='allowText'>Approved</span> by ".$member->getMemberLink()." - ".getPreciseTime($requestInfo['reviewdate']);
 		$member->select($memberInfo['member_id']);
 		$dispSendMessages = "  A higher ranking member must delete the request before you can issue another request.";
-	}
-	elseif($requestInfo['requeststatus'] == 2) {
+	} elseif ($requestInfo['requeststatus'] == 2) {
 		$member->select($requestInfo['reviewer_id']);
 		$dispRequestStatus = "<span class='denyText'>Denied</span> by ".$member->getMemberLink()." - ".getPreciseTime($requestInfo['reviewdate']);
 		$member->select($memberInfo['member_id']);
 		$dispSendMessages = "  A higher ranking member must delete the request before you can issue another one.";
 	}
-	
+
 	$i = 1;
 	$arrComponents = array(
 		"requestinfosection" => array(
@@ -188,40 +175,39 @@ else {
 		"messages" => array(
 			"type" => "custom",
 			"sortorder" => $i++,
-			"html" => "<div id='loadingSpiral' style='display: none'><p align='center' class='main'><img src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral2.gif'><br>Loading</p></div><div id='iaMessages'></div>"		
+			"html" => "<div id='loadingSpiral' style='display: none'><p align='center' class='main'><img src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral2.gif'><br>Loading</p></div><div id='iaMessages'></div>"
 		)
-	
+
 	);
-	
-	if($requestInfo['requeststatus'] == 0) {
+
+	if ($requestInfo['requeststatus'] == 0) {
 		$arrSendMesssageComponents = array(
 			"txtmessage" => array(
 				"display_name" => "Leave Message",
 				"attributes" => array("class" => "textBox formInput", "style" => "width: 35%", "rows" => "4", "id" => "txtMessage"),
 				"type" => "textarea",
-				"sortorder" => $i++		
+				"sortorder" => $i++
 			),
 			"sendmessagebutton" => array(
 				"type" => "button",
 				"value" => "Send Message",
 				"attributes" => array("class" => "submitButton formSubmitButton", "id" => "btnSend"),
-				"sortorder" => $i++			
+				"sortorder" => $i++
 			)
 		);
-		
+
 		$arrComponents = array_merge($arrComponents, $arrSendMesssageComponents);
+	} else {
+		echo "<input type='hidden' id='btnSend'>";
 	}
-	else {
-		echo "<input type='hidden' id='btnSend'>";	
-	}
-	
+
 	$setupFormArgs = array(
 		"name" => "console-".$cID,
 		"description" => "You currently have an open inactive request.".$dispSendMessages,
 		"components" => $arrComponents
 	);
-	
-	
+
+
 	echo "		
 		<script type='text/javascript'>
 			
@@ -250,5 +236,4 @@ else {
 		</script>
 		
 	";
-	
 }

@@ -7,19 +7,16 @@ $arrLoginInfo = array();
 $taggerObj = new Basic($mysqli, "membersonlypage", "pageurl");
 $siteDomain = $_SERVER['SERVER_NAME'];
 
-if( ! isset($_SERVER['HTTPS']) || trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
+if ( ! isset($_SERVER['HTTPS']) || trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 	$dispHTTP = "http://";
-}
-else {
+} else {
 	$dispHTTP = "https://";
 }
 
 // If user's user/pass cookies are broken, and they had previously selected "Remember Me", fix them
-if(
-	(
-		! isset($_COOKIE['btUsername']) ||
-		! isset($_COOKIE['btPassword'])
-	) &&
+$hasMissingCookies = ! isset($_COOKIE['btUsername']) ||	! isset($_COOKIE['btPassword']);
+if (
+	$hasMissingCookies &&
 	isset($_SESSION['btRememberMe']) &&
 	$_SESSION['btRememberMe'] == 1 &&
 	isset($_SESSION['btUsername']) &&
@@ -29,31 +26,28 @@ if(
 	setcookie("btPassword", $_SESSION['btPassword'], $COOKIE_EXP_TIME, $MAIN_ROOT);
 }
 
-
-$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", NULL, true);
+$menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", 0, true);
 
 // Check if user is logged in
-if(isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
-
+if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 	$memberObj = new Member($mysqli);
-	if($memberObj->select($_SESSION['btUsername'])) {
-
-		if($memberObj->authorizeLogin($_SESSION['btPassword'])) {
+	if ($memberObj->select($_SESSION['btUsername'])) {
+		if ($memberObj->authorizeLogin($_SESSION['btPassword'])) {
 			define("LOGGED_IN", true);
 
 			$memberInfo = $memberObj->get_info();
 			$memberUsername = $memberInfo['username'];
 			$memberID = $memberInfo['member_id'];
 
-			if($memberInfo['loggedin'] == 0) {
+			if ($memberInfo['loggedin'] == 0) {
 				$memberObj->update(array("loggedin"), array(1));
 			}
 
 
-			$actualPageNameLoc = strrpos($PAGE_NAME," - ");
+			$actualPageNameLoc = strrpos($PAGE_NAME, " - ");
 			$actualPageName = substr($PAGE_NAME, 0, $actualPageNameLoc);
 
-			if($PAGE_NAME == "") {
+			if ($PAGE_NAME == "") {
 				$actualPageName = "Home Page";
 			}
 
@@ -62,7 +56,7 @@ if(isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 			$arrUpdateColLastSeen = array("lastseen", "lastseenlink");
 			$arrUpdateValLastSeen = array(time(), $lastSeenLink);
 
-			if((time()-$memberInfo['lastlogin']) > 3600) {
+			if ((time()-$memberInfo['lastlogin']) > 3600) {
 				$arrUpdateColLastSeen[] = "lastlogin";
 				$arrUpdateValLastSeen[] = time();
 			}
@@ -77,25 +71,23 @@ if(isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 
 			$consoleOptionObj = new ConsoleOption($mysqli);
 
-			
-			// Members Only Tagger			
-			
+
+			// Members Only Tagger
+
 			$dispMembersOnlyTagger = "";
-			if(isset($_SESSION['btMembersOnlyTagger']) && $_SESSION['btMembersOnlyTagger'] == 1 && substr($_SERVER['PHP_SELF'], -11) != "console.php") {
-				
+			if (isset($_SESSION['btMembersOnlyTagger']) && $_SESSION['btMembersOnlyTagger'] == 1 && substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 				$pageTaggerURL = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-				
+
 				$taggerCID = $consoleOptionObj->findConsoleIDByName("Member's Only Pages");
-				
-				if($taggerObj->select($pageTaggerURL, false)) {
+
+				if ($taggerObj->select($pageTaggerURL, false)) {
 					$pageTagStatus = "<span class='pendingFont'>Member's Only</span>";
 					$dispTagOrUntag = "Untag";
-				}
-				else {
+				} else {
 					$pageTagStatus = "<span class='publicNewsColor'>Public</span>";
 					$dispTagOrUntag = "Tag";
 				}
-				
+
 				$dispMembersOnlyTagger = "
 				<div id='membersOnlyTagger'>
 				
@@ -149,22 +141,17 @@ if(isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 				</script>
 				
 				";
-			}			
-			
+			}
 		}
-
 	}
-
-
 }
 
-if(!defined("LOGGED_IN")) {
+if (!defined("LOGGED_IN")) {
 	define("LOGGED_IN", false);
 }
 
 
-if($taggerObj->select($_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'], false) && constant('LOGGED_IN') == false) {
-
+if ($taggerObj->select($_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'], false) && constant('LOGGED_IN') == false) {
 	echo "
 	
 		<script type='text/javascript'>
@@ -174,32 +161,29 @@ if($taggerObj->select($_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'], false) &&
 		</script>
 	
 	";
-	
+
 	exit();
-	
 }
 
 
 $hitCountObj = new Basic($mysqli, "hitcounter", "hit_id");
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."hitcounter WHERE ipaddress = '".$IP_ADDRESS."'");
-if($result->num_rows > 0) {
+if ($result->num_rows > 0) {
 	$hitCountRow = $result->fetch_assoc();
 	$hitCountObj->select($hitCountRow['hit_id']);
 	$updateHits = $hitCountObj->get_info("totalhits")+1;
-	
-	
+
+
 	$updateColumns = array("totalhits", "pagename");
 	$updateValues = array($updateHits, $PAGE_NAME);
-	
-	if(time() > ($hitCountObj->get_info("dateposted")+1800)) {
-		$updateColumns[] = "dateposted";
-		$updateValues[] = time();	
-	}
-	
-	$hitCountObj->update($updateColumns, $updateValues);
 
-}
-else {
+	if (time() > ($hitCountObj->get_info("dateposted")+1800)) {
+		$updateColumns[] = "dateposted";
+		$updateValues[] = time();
+	}
+
+	$hitCountObj->update($updateColumns, $updateValues);
+} else {
 	$hitCountObj->addNew(array("ipaddress", "dateposted", "pagename", "totalhits"), array($IP_ADDRESS, time(), $PAGE_NAME, 1));
 }
 

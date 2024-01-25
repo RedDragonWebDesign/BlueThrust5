@@ -26,16 +26,14 @@ require_once($prevFolder."classes/rank.php");
 
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 
-if($ipbanObj->select($IP_ADDRESS, false)) {
+if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
 
-	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+	if (time() < $ipbanInfo['exptime'] or $ipbanInfo['exptime'] == 0) {
 		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
-	}
-	else {
+	} else {
 		$ipbanObj->delete();
 	}
-
 }
 
 
@@ -52,80 +50,78 @@ $breadcrumbObj->addCrumb("Top Players: Recruiters");
 
 require_once($prevFolder."include/breadcrumb.php");
 
+$arrMembers = [];
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '0' AND rank_id != '1'");
+while ($row = $result->fetch_assoc()) {
+	$member->select($row['member_id']);
 
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '0' AND rank_id != '1'");
-	while($row = $result->fetch_assoc()) {
-		$member->select($row['member_id']);
-		
-		$arrMembers[$row['member_id']] = $member->countRecruits();
-		
-	}
-	
-	
-	if( isset($_GET['sort']) && $_GET['sort'] != "up") {
-		$dispSort = "<a href='".$MAIN_ROOT."top-players/recruiters.php?sort=up'><img src='".$MAIN_ROOT."themes/".$THEME."/images/downarrow.png'></a>";
-		$_GET['sort'] = "down";
-		arsort($arrMembers);
-	}
-	else {
-		$dispSort = "<a href='".$MAIN_ROOT."top-players/recruiters.php?sort=down'><img src='".$MAIN_ROOT."themes/".$THEME."/images/uparrow.png'></a>";
-		$_GET['sort'] = "up";
-		asort($arrMembers);
-	}
-	
-	
-	echo "
+	$arrMembers[$row['member_id']] = $member->countRecruits();
+}
+
+
+if ( isset($_GET['sort']) && $_GET['sort'] != "up") {
+	$dispSort = "<a href='".$MAIN_ROOT."top-players/recruiters.php?sort=up'><img src='".$MAIN_ROOT."themes/".$THEME."/images/downarrow.png'></a>";
+	$_GET['sort'] = "down";
+	arsort($arrMembers);
+} else {
+	$dispSort = "<a href='".$MAIN_ROOT."top-players/recruiters.php?sort=down'><img src='".$MAIN_ROOT."themes/".$THEME."/images/uparrow.png'></a>";
+	$_GET['sort'] = "up";
+	asort($arrMembers);
+}
+
+
+echo "
 		<table class='formTable' style='margin-top: 50px'>
 			<tr>
 				<td class='formTitle' align='center' style='width: 5%; height: 14px'>#</td>
 				<td class='formTitle' style='width: 60%'>Member</td>
 				<td class='formTitle' align='center' style='width: 35%'>Recruits - ".$dispSort."</td>
 			</tr>
-	";
-	
-	
-	$counter = 0;
-	foreach($arrMembers as $memberID => $statValue) {
-		$counter++;
-	
-		$addCSS = "";
-		if($counter%2 == 0) {
-			$addCSS = " alternateBGColor";
-		}
-	
-		$member->select($memberID);
-		echo "
+";
+
+
+$counter = 0;
+foreach ($arrMembers as $memberID => $statValue) {
+	$counter++;
+
+	$addCSS = "";
+	if ($counter%2 == 0) {
+		$addCSS = " alternateBGColor";
+	}
+
+	$member->select($memberID);
+	echo "
 		<tr>
 			<td class='main".$addCSS."' style='height: 30px'>".$counter.".</td>
 			<td class='main".$addCSS."' style='height: 30px; padding-left: 20px'>".$member->getMemberLink()."</td>
 			<td class='main".$addCSS."' align='center' style='height: 30px'>".$statValue."</td>
 		</tr>
 	
-		";
-	
-	
-		if($counter >= 10) {
-			break;
-		}
+	";
+
+
+	if ($counter >= 10) {
+		break;
 	}
-	
-	if($counter < 10) {
-		for($i=($counter+1); $i<=10; $i++) {
-			$addCSS = "";
-			if($i%2 == 0) {
-				$addCSS = " alternateBGColor";
-			}
-	
-	
-			echo "
+}
+
+if ($counter < 10) {
+	for ($i=($counter+1); $i<=10; $i++) {
+		$addCSS = "";
+		if ($i%2 == 0) {
+			$addCSS = " alternateBGColor";
+		}
+
+
+		echo "
 			<tr>
 				<td class='main".$addCSS."' style='height: 30px'>".$i.".</td>
 				<td class='main".$addCSS."' style='height: 30px; padding-left: 20px'><i>Empty</i></td>
 				<td class='main".$addCSS."' align='center' style='height: 30px'>-</td>
 			</tr>
 			";
-		}
 	}
-	
-	echo "</table>";
-	require_once($prevFolder."themes/".$THEME."/_footer.php");
+}
+
+echo "</table>";
+require_once($prevFolder."themes/".$THEME."/_footer.php");
