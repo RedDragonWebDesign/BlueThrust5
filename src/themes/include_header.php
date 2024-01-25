@@ -14,11 +14,9 @@ if ( ! isset($_SERVER['HTTPS']) || trim($_SERVER['HTTPS']) == "" || $_SERVER['HT
 }
 
 // If user's user/pass cookies are broken, and they had previously selected "Remember Me", fix them
+$hasMissingCookies = ! isset($_COOKIE['btUsername']) ||	! isset($_COOKIE['btPassword']);
 if (
-	(
-		! isset($_COOKIE['btUsername']) ||
-		! isset($_COOKIE['btPassword'])
-	) &&
+	$hasMissingCookies &&
 	isset($_SESSION['btRememberMe']) &&
 	$_SESSION['btRememberMe'] == 1 &&
 	isset($_SESSION['btUsername']) &&
@@ -27,7 +25,6 @@ if (
 	setcookie("btUsername", $_SESSION['btUsername'], $COOKIE_EXP_TIME, $MAIN_ROOT);
 	setcookie("btPassword", $_SESSION['btPassword'], $COOKIE_EXP_TIME, $MAIN_ROOT);
 }
-
 
 $menuXML = new SimpleXMLElement(BASE_DIRECTORY."themes/".$THEME."/themeinfo.xml", 0, true);
 
