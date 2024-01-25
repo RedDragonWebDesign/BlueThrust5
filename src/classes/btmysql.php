@@ -96,17 +96,15 @@ class btMySQL extends MySQLi {
 	 */
 	public function bindParams($objMySQLiStmt, $arrValues) {
 		$returnVal = false;
-
-		// Get a string of letter codes corresponding to the types of each parameter. For example, if you have 3 parameters and they are all strings, the code is "sss". If you have 2 parameters and one is a double and one is an int, the code is "di".
 		$strParamTypes = $this->getParamTypes($arrValues);
 
-		// Create an array whose first value (spot 0) is the $strParamTypes, and all additional values are the param values, in order. For example, ['ss', 'paramValue1', 'paramValue2']
-		$params = array($strParamTypes);
-		foreach ($arrValues as $key => $value) {
-			$params[] = &$arrValues[$key];
+		$tmpParams = array_merge(array($strParamTypes), array_values($arrValues));
+		$arrParams = array();
+		foreach ($tmpParams as $key => $value) {
+			$arrParams[$key] = &$tmpParams[$key];
 		}
 
-		if (!call_user_func_array(array($objMySQLiStmt, "bind_param"), $params)) {
+		if (!call_user_func_array(array($objMySQLiStmt, "bind_param"), $arrParams)) {
 			$returnVal = false;
 			echo $objMySQLiStmt->error;
 			echo "<br><br>";
