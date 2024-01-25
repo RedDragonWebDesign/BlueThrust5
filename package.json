@@ -1,0 +1,13 @@
+{
+  "name": "BlueThrust5",
+  "type": "module",
+  "devDependencies": {
+    "@wdio/cli": "^8.29.1",
+    "@wdio/local-runner": "^8.29.1",
+    "@wdio/mocha-framework": "^8.29.1",
+    "@wdio/spec-reporter": "^8.29.1"
+  },
+  "scripts": {
+    "wdio": "wdio run ./wdio.conf.js"
+  }
+}
