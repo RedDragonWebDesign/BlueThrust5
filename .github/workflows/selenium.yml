@@ -12,15 +12,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Install Chromium
+      run: sudo apt-get install chromium-browser
+
     - uses: actions/checkout@v2
 
     - uses: actions/setup-node@v4
 
     - name: npm ci
       run: npm ci
-
-    - name: install Firefox
-      run: sudo apt install firefox
     
-    - name: npm run wdio
-      run: npm run wdio
+    - name: npm run wdio wdio-github.conf.js
+      run: npm run wdio wdio-github.conf.js
