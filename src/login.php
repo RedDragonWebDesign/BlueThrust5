@@ -67,6 +67,31 @@ if ( ! empty($_POST['submit']) ) {
 			$fail = false;
 			echo "
 				<script type='text/javascript'>
+					// Fakhruddin Ujjainwala, CC BY-SA 4.0, https://stackoverflow.com/a/24103596/3480193
+					function setCookie(name,value,days) {
+						var expires = \"\";
+						if (days) {
+							var date = new Date();
+							date.setTime(date.getTime() + (days*24*60*60*1000));
+							expires = \"; expires=\" + date.toUTCString();
+						}
+						document.cookie = name + \"=\" + (value || \"\")  + expires + \"; path=/\";
+					}
+
+					// When logging in, we need to overwrite any existing cookies, to prevent a bug where you can't log in if you got disabled while logged in.
+					// You can't set cookies in PHP after you've written any output.
+					// Therefore, we'll do it in JavaScript.
+					setCookie(
+						'btUsername',
+						'" . $_SESSION['btUsername'] . "',
+						'" . $COOKIE_EXP_TIME . "'
+					);
+					setCookie(
+						'btPassword',
+						'" . $_SESSION['btPassword'] . "',
+						'" . $COOKIE_EXP_TIME . "'
+					);
+
 					window.location = 'members/';
 				</script>
 			";
