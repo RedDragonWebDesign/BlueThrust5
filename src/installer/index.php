@@ -1,6 +1,6 @@
 <?php
 
-	require_once("../_global_setup.php");
+require_once("../_global_setup.php");
 
 if (isset($_COOKIE['btSessionID']) && $_COOKIE['btSessionID'] != "") {
 	session_id($_COOKIE['btSessionID']);
@@ -17,22 +17,21 @@ if (isset($_COOKIE['btSessionID']) && $_COOKIE['btSessionID'] != "") {
 			$_COOKIE['btSessionID'] == ""
 		)
 	) {
-		$cookieExpTime = time()+((60*60*24)*3);
-		setcookie("btSessionID", session_id(), $cookieExpTime);
+		setcookie("btSessionID", session_id(), $COOKIE_EXP_TIME);
 	}
 }
 
-	require_once("../classes/btmysql.php");
-	require_once("../classes/btmail.php");
-	require_once("../classes/member.php");
-	require_once("../classes/consolecategory.php");
-	require_once("../classes/consoleoption.php");
-	require_once("../classes/websiteinfo.php");
-	require_once("tablelist.php");
-	require_once("tablecolumns.php");
-	require_once("consoleinfo.php");
-	$countErrors = 0;
-	$dispError = "";
+require_once("../classes/btmysql.php");
+require_once("../classes/btmail.php");
+require_once("../classes/member.php");
+require_once("../classes/consolecategory.php");
+require_once("../classes/consoleoption.php");
+require_once("../classes/websiteinfo.php");
+require_once("tablelist.php");
+require_once("tablecolumns.php");
+require_once("consoleinfo.php");
+$countErrors = 0;
+$dispError = "";
 
 ?>
 
