@@ -1,0 +1,21 @@
+name: PHP Code Sniffer (Linter)
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: composer install
+      run: composer install --prefer-dist --no-progress
+    
+    - name: composer exec phpcs
+      run: composer exec phpcs
