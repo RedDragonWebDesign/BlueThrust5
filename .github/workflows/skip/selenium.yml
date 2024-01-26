@@ -1,4 +1,4 @@
-name: Selenium
+name: Selenium (Browser Tests)
 
 on:
   push:
