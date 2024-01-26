@@ -74,8 +74,8 @@ echo "
 	<table class='formTable' style='border-spacing: 0px'>
 			";
 
-	$arrUnassignedPlayers = array();
-	$result = $mysqli->query("SELECT tournamentplayer_id FROM ".$dbprefix."tournamentplayers WHERE tournament_id = '".$tID."' AND team_id = '0'");
+$arrUnassignedPlayers = array();
+$result = $mysqli->query("SELECT tournamentplayer_id FROM ".$dbprefix."tournamentplayers WHERE tournament_id = '".$tID."' AND team_id = '0'");
 while ($row = $result->fetch_assoc()) {
 	$tournamentObj->objPlayer->select($row['tournamentplayer_id']);
 	$playerInfo = $tournamentObj->objPlayer->get_info_filtered();
@@ -88,9 +88,9 @@ while ($row = $result->fetch_assoc()) {
 }
 
 
-	asort($arrUnassignedPlayers);
+asort($arrUnassignedPlayers);
 
-	$counter = 0;
+$counter = 0;
 foreach ($arrUnassignedPlayers as $playerID => $playerName) {
 	$tournamentObj->objPlayer->select($playerID);
 	$plainTextUsername = "";
@@ -114,7 +114,7 @@ foreach ($arrUnassignedPlayers as $playerID => $playerName) {
 			";
 }
 
-	echo "
+echo "
 		</table>
 		";
 
@@ -129,7 +129,7 @@ if ($result->num_rows == 0) {
 		";
 }
 
-	$member->select($memberInfo['member_id']);
+$member->select($memberInfo['member_id']);
 
 if (isset($arrUnableToAddPlayer) && count($arrUnableToAddPlayer) > 0) {
 	echo "
@@ -141,12 +141,12 @@ if (isset($arrUnableToAddPlayer) && count($arrUnableToAddPlayer) > 0) {
 					";
 	foreach ($arrUnableToAddPlayer as $playerID) {
 		if ($tournamentObj->objPlayer->select($playerID) && $member->select($tournamentObj->objPlayer->get_info("member_id"))) {
-					echo "
+			echo "
 							<li>".$member->getMemberLink()."</li>
 						";
 		}
 	}
-		echo "
+	echo "
 				</ul>
 			</div>
 			<script type='text/javascript'>
@@ -170,7 +170,7 @@ if (isset($arrUnableToAddPlayer) && count($arrUnableToAddPlayer) > 0) {
 				});
 			</script>
 		";
-		$member->select($memberInfo['member_id']);
+	$member->select($memberInfo['member_id']);
 }
 
 ?><br>

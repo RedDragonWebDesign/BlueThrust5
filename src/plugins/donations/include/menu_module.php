@@ -108,15 +108,15 @@ function donationAddMenuItem() {
 		$afterJS .= $value."\n";
 	}
 
-		$afterJS .= "		
+	$afterJS .= "		
 			});
 			
 		";
 
 		// Apply new components to form
-		$formObj->components = $arrComponents;
-		$formObj->embedJS = $afterJS;
-		$formObj->afterSave[] = "saveDonationMenuItem";
+	$formObj->components = $arrComponents;
+	$formObj->embedJS = $afterJS;
+	$formObj->afterSave[] = "saveDonationMenuItem";
 }
 
 
@@ -208,7 +208,7 @@ function displayDonationMenuModule() {
 			$campaignObj->showDonatorList(false, 2);
 		}
 
-			echo "
+		echo "
 				</div>
 			
 			";
@@ -233,4 +233,4 @@ function initDonationMenuMod() {
 
 
 
-	initDonationMenuMod();
+initDonationMenuMod();

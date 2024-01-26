@@ -180,7 +180,7 @@ if ($tournamentInfo['seedtype'] == 3) {
 							$intBracketConnectorTop = $intTop+$intSlotHeight+($intTeamSeparation/2);
 						}
 
-							$intTop += $intTeamSeparation+$intSlotHeight;
+						$intTop += $intTeamSeparation+$intSlotHeight;
 					}
 				}
 

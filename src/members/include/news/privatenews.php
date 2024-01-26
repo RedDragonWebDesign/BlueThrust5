@@ -25,13 +25,13 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 $cID = $_GET['cID'];
 
-	require_once("../classes/news.php");
-	$manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
-	$postNewsCID = $consoleObj->findConsoleIDByName("Post News");
+require_once("../classes/news.php");
+$manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
+$postNewsCID = $consoleObj->findConsoleIDByName("Post News");
 
 
-	$dispPostNews = "";
-	$dispManageNews = "";
+$dispPostNews = "";
+$dispManageNews = "";
 
 
 if ($consoleObj->select($postNewsCID) && $member->hasAccess($consoleObj)) {
@@ -42,9 +42,9 @@ if ($consoleObj->select($manageNewsCID) && $member->hasAccess($consoleObj)) {
 	$dispManageNews = "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$manageNewsCID."'>Manage News</a> &laquo;";
 }
 
-	$consoleObj->select($cID);
-	$newsObj = new News($mysqli);
-	echo "
+$consoleObj->select($cID);
+$newsObj = new News($mysqli);
+echo "
 	
 		<p align='right' class='main' style='padding-right: 20px'>
 			".$dispPostNews.$dispManageNews."
@@ -52,7 +52,7 @@ if ($consoleObj->select($manageNewsCID) && $member->hasAccess($consoleObj)) {
 	
 	";
 
-	$arrPosts = $newsObj->getPosts(2);
+$arrPosts = $newsObj->getPosts(2);
 
 if (count($arrPosts) > 0) {
 	foreach ($arrPosts as $post) {

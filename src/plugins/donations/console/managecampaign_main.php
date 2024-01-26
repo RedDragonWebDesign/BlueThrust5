@@ -16,15 +16,15 @@ if (!defined("LOGGED_IN") || !LOGGED_IN) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."'</script>");
 }
 
-	$objManageList->intAddCID = $consoleObj->findConsoleIDByName("Create a Donation Campaign");
-	$objManageList->strEditItemLink = MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&campaignID=";
-	$objManageList->strDeleteLink = MAIN_ROOT."members/console.managelist.delete.php?cID=".$_GET['cID'];
-	$objManageList->arrActionList = array("edit", "delete", "dispDonationLogIcon");
-	$objManageList->strItemTitle = "Campaign:";
-	$objManageList->orderBy = "title";
-	$objManageList->strNameTableColumn = "title";
+$objManageList->intAddCID = $consoleObj->findConsoleIDByName("Create a Donation Campaign");
+$objManageList->strEditItemLink = MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&campaignID=";
+$objManageList->strDeleteLink = MAIN_ROOT."members/console.managelist.delete.php?cID=".$_GET['cID'];
+$objManageList->arrActionList = array("edit", "delete", "dispDonationLogIcon");
+$objManageList->strItemTitle = "Campaign:";
+$objManageList->orderBy = "title";
+$objManageList->strNameTableColumn = "title";
 
-	$setupManageListArgs = $objManageList->getListArray();
+$setupManageListArgs = $objManageList->getListArray();
 
 
 function dispDonationLogIcon($campaignID) {

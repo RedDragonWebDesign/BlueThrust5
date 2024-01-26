@@ -308,4 +308,4 @@ Thanks,\n
 </div>
 
 <?php
-	require_once($prevFolder."themes/".$THEME."/_footer.php");
+require_once($prevFolder."themes/".$THEME."/_footer.php");

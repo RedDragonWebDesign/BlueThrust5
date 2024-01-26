@@ -4,9 +4,9 @@ if (!defined("SOCIALMEDIA_FORM")) {
 	exit();
 }
 
-	$socialOrderObj = new Social($mysqli);
-	$socialOptions = array();
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."social ORDER BY ordernum DESC");
+$socialOrderObj = new Social($mysqli);
+$socialOptions = array();
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."social ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$socialOptions[$row['social_id']] = filterText($row['name']);
 }
@@ -15,8 +15,8 @@ if (count($socialOptions) == 0) {
 	$socialOptions['first'] = "(first icon)";
 }
 
-	$i=0;
-	$arrComponents = array(
+$i=0;
+$arrComponents = array(
 		"name" => array(
 			"type" => "text",
 			"sortorder" => $i++,
@@ -88,7 +88,7 @@ if (count($socialOptions) == 0) {
 
 
 
-	$setupFormArgs = array(
+$setupFormArgs = array(
 		"name" => "console-".$cID,
 		"components" => $arrComponents,
 		"description" => "Use the form below to add new social media icons for member profiles.",

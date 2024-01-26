@@ -256,7 +256,7 @@ if ( empty($_POST['submit']) ) {
 		$memberOptions .= "<option value='".$row['member_id']."'>".$dispRankName." ".filterText($row['username'])."</option>";
 	}
 
-		echo "
+	echo "
 					<tr>
 						<td class='main' colspan='2'>
 							<div id='loadingSpiralRankAccess' class='loadingSpiral'>
@@ -424,7 +424,7 @@ if ( empty($_POST['submit']) ) {
 				";
 	}
 
-			echo "
+	echo "
 				
 				$('#setRankAccess').click(function() {
 					var intAccessCount = 0;

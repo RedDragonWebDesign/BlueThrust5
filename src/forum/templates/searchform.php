@@ -4,10 +4,10 @@ if (!defined("SHOW_FORUMSEARCH")) {
 	exit();
 }
 
-	$setFilterTopic = empty($filterTopic) ? "" : "data-topic='".$filterTopic."'";
-	$setFilterBoard = empty($filterBoard) ? "" : "data-board='".$filterBoard."'";
+$setFilterTopic = empty($filterTopic) ? "" : "data-topic='".$filterTopic."'";
+$setFilterBoard = empty($filterBoard) ? "" : "data-board='".$filterBoard."'";
 
-	$arrSearchFilterURL = array();
+$arrSearchFilterURL = array();
 if ($setFilterTopic != "") {
 	$arrSearchFilterURL[] = "topic=".$filterTopic;
 }
@@ -16,12 +16,12 @@ if ($setFilterBoard != "") {
 	$arrSearchFilterURL[] = "filterboards[]=".$filterBoard;
 }
 
-	$addToURL = addslashes(implode("&", $arrSearchFilterURL));
+$addToURL = addslashes(implode("&", $arrSearchFilterURL));
 if ($addToURL != "") {
 	$addToURL = "&".$addToURL;
 }
 
-	echo "
+echo "
 	
 		<div class='formDiv' style='border: 0px; background: none; overflow: auto'>
 			<form id='forumSearchForm' action='".$MAIN_ROOT."forum/search.php' method='get'>
@@ -41,11 +41,11 @@ if ($addToURL != "") {
 			
 				$('#btnSearchForum').click(function() {
 				
-					window.location = '".$MAIN_ROOT."forum/search.php?keyword='+$('#searchTerm').val()+'".$addToURL."';
-				
-				});
-			
+				window.location = '".$MAIN_ROOT."forum/search.php?keyword='+$('#searchTerm').val()+'".$addToURL."';
+
 			});
-		
-		</script>
+			
+		});
+
+	</script>
 	";

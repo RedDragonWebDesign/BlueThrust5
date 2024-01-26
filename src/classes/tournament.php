@@ -662,7 +662,7 @@ class Tournament extends Basic {
 		if ($this->intTableKeyValue != "") {
 			$query = "SELECT ".$this->MySQL->get_tablePrefix()."tournament_managers.tournamentmanager_id, ".$this->MySQL->get_tablePrefix()."tournament_managers.member_id ".
 						"FROM ".$this->MySQL->get_tablePrefix()."tournament_managers, ".
-						$this->MySQL->get_tablePrefix()."members, ".$this->MySQL->get_tablePrefix()."ranks ".
+			$this->MySQL->get_tablePrefix()."members, ".$this->MySQL->get_tablePrefix()."ranks ".
 						"WHERE ".$this->MySQL->get_tablePrefix()."tournament_managers.member_id = ".$this->MySQL->get_tablePrefix()."members.member_id ".
 						"AND ".$this->MySQL->get_tablePrefix()."ranks.rank_id = ".$this->MySQL->get_tablePrefix()."members.rank_id ".
 						"AND ".$this->MySQL->get_tablePrefix()."tournament_managers.tournament_id = '".$this->intTableKeyValue."' ".

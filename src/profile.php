@@ -233,23 +233,23 @@ require_once($prevFolder."include/breadcrumb.php");
 
 	<div class='main userProfileRight'>
 		<?php
-			define("SHOW_PROFILE_MAIN", true);
-			$arrSections[] = "include/profile/_main.php";
-			$arrSections[] = "include/profile/_customoptions.php";
-			$arrSections[] = "include/profile/_gamesplayed.php";
-			$arrSections[] = "include/profile/_squads.php";
-			$arrSections[] = "include/profile/_medals.php";
+		define("SHOW_PROFILE_MAIN", true);
+		$arrSections[] = "include/profile/_main.php";
+		$arrSections[] = "include/profile/_customoptions.php";
+		$arrSections[] = "include/profile/_gamesplayed.php";
+		$arrSections[] = "include/profile/_squads.php";
+		$arrSections[] = "include/profile/_medals.php";
 
-			$pluginObj = new btPlugin($mysqli);
+		$pluginObj = new btPlugin($mysqli);
 
-			$arrPlugins = $pluginObj->getPluginPage("profile");
+		$arrPlugins = $pluginObj->getPluginPage("profile");
 
-			$hooksObj->run("profile_sections");
+		$hooksObj->run("profile_sections");
 
 
-			$arrSections[] = "";
+		$arrSections[] = "";
 
-			$x = 0;
+		$x = 0;
 
 		foreach ($arrSections as $section) {
 			foreach ($arrPlugins as $pluginInfo) {

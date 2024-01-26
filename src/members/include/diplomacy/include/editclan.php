@@ -127,7 +127,7 @@ if ( empty($_POST['submit']) ) {
 		echo "<option value='".$key."'".$dispSelected.">".$value."</option>";
 	}
 
-							echo "
+	echo "
 							</select>
 						</td>
 					</tr>
@@ -153,7 +153,7 @@ if ( empty($_POST['submit']) ) {
 							<select name='clansize' class='textBox'>
 								
 								";
-							$arrClanSize = array("Small", "Medium", "Large");
+	$arrClanSize = array("Small", "Medium", "Large");
 	foreach ($arrClanSize as $clanSize) {
 		$dispSelected = "";
 		$clanSizeLC = strtolower($clanSize);
@@ -163,7 +163,7 @@ if ( empty($_POST['submit']) ) {
 
 		echo "<option value='".$clanSizeLC."'".$dispSelected.">".$clanSize."</option>";
 	}
-							echo "
+	echo "
 							
 							</select>
 						</td>

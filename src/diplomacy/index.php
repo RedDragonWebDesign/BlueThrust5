@@ -63,8 +63,8 @@ $breadcrumbObj->addCrumb("Diplomacy");
 	
 	
 	<?php
-		$counter = 0;
-		$result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy ORDER BY clanname");
+	$counter = 0;
+	$result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy ORDER BY clanname");
 	while ($row = $result->fetch_assoc()) {
 		$diplomacyStatusObj->select($row['diplomacystatus_id']);
 
@@ -113,8 +113,8 @@ $breadcrumbObj->addCrumb("Diplomacy");
 </table>
 
 <?php
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status WHERE imageurl != '' ORDER BY ordernum DESC");
-	$counter = 0;
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status WHERE imageurl != '' ORDER BY ordernum DESC");
+$counter = 0;
 if ($result->num_rows > 0) {
 	echo "
 		

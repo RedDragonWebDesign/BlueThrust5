@@ -4,21 +4,21 @@ if (!defined("SHOW_EDITPOLL")) {
 	exit();
 }
 
-	$pollObj->objAccess->arrAccessFor = array("keyName" => "poll_id", "keyValue" => $pollInfo['poll_id']);
+$pollObj->objAccess->arrAccessFor = array("keyName" => "poll_id", "keyValue" => $pollInfo['poll_id']);
 
-	$accessObj = $pollObj->objAccess;
+$accessObj = $pollObj->objAccess;
 
 if (isset($_POST['accessCacheID'])) {
 	$accessObj->cacheID = $_POST['accessCacheID'];
 }
 
-	$_SESSION['btAccessCacheTables'][$accessObj->cacheID] = json_encode($accessObj->arrAccessTables);
-	$_SESSION['btAccessCacheTypes'][$accessObj->cacheID] = json_encode($accessObj->arrAccessTypes);
+$_SESSION['btAccessCacheTables'][$accessObj->cacheID] = json_encode($accessObj->arrAccessTables);
+$_SESSION['btAccessCacheTypes'][$accessObj->cacheID] = json_encode($accessObj->arrAccessTypes);
 
 
-	$dispPollQuestion = (strlen($pollInfo['question']) > 50) ? substr($pollInfo['question'], 0, 50) : $pollInfo['question'];
+$dispPollQuestion = (strlen($pollInfo['question']) > 50) ? substr($pollInfo['question'], 0, 50) : $pollInfo['question'];
 
-	echo "
+echo "
 		
 		<script type='text/javascript'>
 		$(document).ready(function() {
@@ -284,10 +284,10 @@ if ( empty($_POST['submit']) ) {
 	
 					";
 
-				$accessObj->rankAccessDiv = "rankAccessList";
-				$accessObj->dispSetRankAccess();
+	$accessObj->rankAccessDiv = "rankAccessList";
+	$accessObj->dispSetRankAccess();
 
-			echo "
+	echo "
 				
 					<div class='main' style='margin: 20px auto; width: 95%'>
 						<div class='dottedLine'><b>Member Access:</b></div>
@@ -295,10 +295,10 @@ if ( empty($_POST['submit']) ) {
 					</div>
 				";
 
-				$accessObj->memberAccessDiv = "memberAccessList";
-				$accessObj->dispSetMemberAccess();
+	$accessObj->memberAccessDiv = "memberAccessList";
+	$accessObj->dispSetMemberAccess();
 
-		echo "	
+	echo "	
 			</div>
 			
 			<div class='dottedLine main' style='margin-top: 20px; width: 95%; margin-left: auto; margin-right: auto'>

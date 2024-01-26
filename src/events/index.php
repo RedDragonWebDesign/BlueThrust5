@@ -57,11 +57,11 @@ require_once($prevFolder."include/breadcrumb.php");
 		
 		<?php
 
-			$eventObj = new Event($mysqli);
-			$objMember = new Member($mysqli);
-			$counter = 0;
-			$countEvents = 0;
-			$result = $mysqli->query("SELECT event_id FROM ".$dbprefix."events ORDER BY startdate");
+		$eventObj = new Event($mysqli);
+		$objMember = new Member($mysqli);
+		$counter = 0;
+		$countEvents = 0;
+		$result = $mysqli->query("SELECT event_id FROM ".$dbprefix."events ORDER BY startdate");
 		while ($row = $result->fetch_assoc()) {
 			$eventObj->select($row['event_id']);
 			$eventInfo = $eventObj->get_info_filtered();

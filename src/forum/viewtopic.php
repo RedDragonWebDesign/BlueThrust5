@@ -280,7 +280,7 @@ if (LOGGED_IN && $topicInfo['lockstatus'] == 0) {
 
 			";
 
-		$quickReplyForm->show();
+	$quickReplyForm->show();
 
 	echo "
 		</div>

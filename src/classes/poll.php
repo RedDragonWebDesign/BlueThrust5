@@ -1,7 +1,7 @@
 <?php
 
-	require_once("basicsort.php");
-	require_once("access.php");
+require_once("basicsort.php");
+require_once("access.php");
 
 class Poll extends Basic {
 
@@ -260,7 +260,7 @@ class Poll extends Basic {
 												$('#pollResultsLink_".$pollInfo['poll_id']."').show();
 											";
 			}
-				echo "							
+			echo "							
 											
 										}
 										else {

@@ -1,12 +1,12 @@
 <?php
 
-	require_once("../../_setup.php");
-	require_once("classes/donate-paypalclass.php");
-	require_once("classes/campaign.php");
+require_once("../../_setup.php");
+require_once("classes/donate-paypalclass.php");
+require_once("classes/campaign.php");
 
-	$donationPlugin = new btPlugin($mysqli);
-	$campaignObj = new DonationCampaign($mysqli);
-	$customVars = array();
+$donationPlugin = new btPlugin($mysqli);
+$campaignObj = new DonationCampaign($mysqli);
+$customVars = array();
 
 if ($donationPlugin->selectByName("Donations") && $donationPlugin->getConfigInfo("email") != "" && $campaignObj->select($_GET['campaign_id'])) {
 	$notifyURL = FULL_SITE_URL."plugins/donations/paypal-ipn.php";

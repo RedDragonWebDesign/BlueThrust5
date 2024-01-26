@@ -56,7 +56,7 @@
 							}
 								";
 				}
-						echo "
+				echo "
 							
 							intCountNotificationCheck++;
 						}

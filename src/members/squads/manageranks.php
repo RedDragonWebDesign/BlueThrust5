@@ -320,7 +320,7 @@ if ($_GET['rID'] == "") {
 			echo "<span style='font-weight: bold; font-style: italic'>Founder Rank</span>";
 		}
 
-							echo "
+		echo "
 						</td>
 					</tr>
 					<tr>

@@ -35,7 +35,7 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 echo "<table class='formTable' style='margin-top: 0px; border-spacing: 0px'>";
 
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."plugins ORDER BY name");
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."plugins ORDER BY name");
 
 if ($result->num_rows == 0) {
 	echo "
@@ -51,7 +51,7 @@ if ($result->num_rows == 0) {
 		";
 }
 
-	$x = 0;
+$x = 0;
 while ($row = $result->fetch_assoc()) {
 	if ($x == 0) {
 		$x = 1;
@@ -85,7 +85,7 @@ while ($row = $result->fetch_assoc()) {
 		";
 }
 
-	echo "</table>
+echo "</table>
 	<div id='uninstallMessage' style='display: none'></div>
 	<div id='confirmDelete' style='display: none'></div>
 	<script type='text/javascript'>

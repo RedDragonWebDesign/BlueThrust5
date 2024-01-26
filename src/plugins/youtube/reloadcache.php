@@ -12,12 +12,12 @@
 	 *
 	 */
 
-	$prevFolder = "../../";
-	require_once("../../_setup.php");
-	require_once("youtube.php");
+$prevFolder = "../../";
+require_once("../../_setup.php");
+require_once("youtube.php");
 
-	$ytObj = new Youtube($mysqli);
-	$arrReturn = array();
+$ytObj = new Youtube($mysqli);
+$arrReturn = array();
 if (isset($_POST['yID']) && is_numeric($_POST['yID']) && $ytObj->select($_POST['yID'])) {
 	$ytInfo = $ytObj->get_info_filtered();
 
@@ -37,4 +37,4 @@ if (isset($_POST['yID']) && is_numeric($_POST['yID']) && $ytObj->select($_POST['
 }
 
 
-	echo json_encode($arrReturn);
+echo json_encode($arrReturn);

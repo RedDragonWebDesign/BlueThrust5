@@ -22,19 +22,19 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	}
 }
 
-	require_once("../classes/medal.php");
+require_once("../classes/medal.php");
 
-	$rankInfo = $memberRank->get_info_filtered();
+$rankInfo = $memberRank->get_info_filtered();
 if ($memberInfo['promotepower'] != 0) {
 	$rankInfo['promotepower'] = $memberInfo['promotepower'];
 } elseif ($memberInfo['promotepower'] == -1) {
 	$rankInfo['promotepower'] = 0;
 }
 
-	$cID = $_GET['cID'];
+$cID = $_GET['cID'];
 
-	$dispError = "";
-	$countErrors = 0;
+$dispError = "";
+$countErrors = 0;
 if ($memberInfo['rank_id'] == 1) {
 	$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 	$arrMaxOrderNum = $maxOrderNum->fetch_array(MYSQLI_NUM);
@@ -46,17 +46,17 @@ if ($memberInfo['rank_id'] == 1) {
 	}
 }
 
-	$rankObj = new Rank($mysqli);
-	$medalObj = new Medal($mysqli);
-	$rankObj->select($rankInfo['promotepower']);
-	$maxRankInfo = $rankObj->get_info_filtered();
+$rankObj = new Rank($mysqli);
+$medalObj = new Medal($mysqli);
+$rankObj->select($rankInfo['promotepower']);
+$maxRankInfo = $rankObj->get_info_filtered();
 
 if ($rankInfo['rank_id'] == 1) {
 	$maxRankInfo['ordernum'] += 1;
 }
 
-	$arrRanks = array();
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum < '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
+$arrRanks = array();
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum < '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$arrRanks[] = $row['rank_id'];
 }
@@ -65,8 +65,8 @@ while ($row = $result->fetch_assoc()) {
 
 
 
-	$sqlRanks = "('".implode("','", $arrRanks)."')";
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."' ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
+$sqlRanks = "('".implode("','", $arrRanks)."')";
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."' ORDER BY ".$dbprefix."ranks.ordernum DESC, ".$dbprefix."members.username");
 while ($row = $result->fetch_assoc()) {
 	$rankObj->select($row['rank_id']);
 	$memberOptions[$row['member_id']] = $rankObj->get_info_filtered("name")." ".filterText($row['username']);
@@ -87,8 +87,8 @@ if ( ! empty($_POST['submit']) ) {
 }
 
 
-	$i = 1;
-	$arrComponents = array(
+$i = 1;
+$arrComponents = array(
 		"member" => array(
 			"type" => "select",
 			"options" => $memberOptions,
@@ -131,7 +131,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	);
 
-	$setupFormArgs = array(
+$setupFormArgs = array(
 		"name" => "console-".$cID,
 		"components" => $arrComponents,
 		"attributes" => array("id" => "formDiv", "action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
@@ -141,7 +141,7 @@ if ( ! empty($_POST['submit']) ) {
 	);
 
 
-	echo "		
+echo "		
 		<script type='text/javascript'>
 			$(document).ready(function() {
 				var blnHidePreview = 0;
@@ -217,40 +217,40 @@ if ( ! empty($_POST['submit']) ) {
 
 	// After Save
 
-	function revokeMedalSave() {
-		global $mysqli, $member, $medalObj, $memberInfo, $formObj;
-		$revokeMedalObj = new Basic($mysqli, "medals_members", "medalmember_id");
-		$arrMemberMedals = $member->getMedalList(true);
-		$memberMedalID = array_search($_POST['medal'], $arrMemberMedals);
+function revokeMedalSave() {
+	global $mysqli, $member, $medalObj, $memberInfo, $formObj;
+	$revokeMedalObj = new Basic($mysqli, "medals_members", "medalmember_id");
+	$arrMemberMedals = $member->getMedalList(true);
+	$memberMedalID = array_search($_POST['medal'], $arrMemberMedals);
 
-		if ($revokeMedalObj->select($memberMedalID) && $revokeMedalObj->delete()) {
+	if ($revokeMedalObj->select($memberMedalID) && $revokeMedalObj->delete()) {
 			// Check if medal is frozen for member already
 
-			$arrFrozenMembers = $medalObj->getFrozenMembersList();
+		$arrFrozenMembers = $medalObj->getFrozenMembersList();
 
-			if (in_array($_POST['member'], $arrFrozenMembers)) {
-				$frozenMedalID = array_search($_POST['member'], $arrFrozenMembers);
-				$medalObj->objFrozenMedal->select($frozenMedalID);
-				$medalObj->objFrozenMedal->delete();
-			}
-
-			$frozenMessage = "";
-			if ($medalObj->get_info("autodays") != 0 || $medalObj->get_info("autorecruits") != 0) {
-				$freezeTime = (86400*$_POST['freezetime'])+time();
-				$medalObj->objFrozenMedal->addNew(array("medal_id", "member_id", "freezetime"), array($_POST['medal'], $_POST['member'], $freezeTime));
-				$dispDays = ($_POST['freezetime'] == 1) ? "day" : "days";
-				$frozenMessage = "  The medal will not be awarded again for ".$_POST['freezetime']." ".$dispDays.".";
-			}
-
-			$logMessage = $member->getMemberLink()." was stripped of the ".$medalObj->get_info_filtered("name")." medal.";
-			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
-
-			$member->postNotification("You were stripped of the medal: <b>".$medalObj->get_info_filtered("name")."</b>");
-
-			$member->select($memberInfo['member_id']);
-			$member->logAction($logMessage);
-		} else {
-			$formObj->blnSaveResult = false;
-			$formObj->errors[] = "Unable to save information to the database.  Please contact the website administrator.";
+		if (in_array($_POST['member'], $arrFrozenMembers)) {
+			$frozenMedalID = array_search($_POST['member'], $arrFrozenMembers);
+			$medalObj->objFrozenMedal->select($frozenMedalID);
+			$medalObj->objFrozenMedal->delete();
 		}
+
+		$frozenMessage = "";
+		if ($medalObj->get_info("autodays") != 0 || $medalObj->get_info("autorecruits") != 0) {
+			$freezeTime = (86400*$_POST['freezetime'])+time();
+			$medalObj->objFrozenMedal->addNew(array("medal_id", "member_id", "freezetime"), array($_POST['medal'], $_POST['member'], $freezeTime));
+			$dispDays = ($_POST['freezetime'] == 1) ? "day" : "days";
+			$frozenMessage = "  The medal will not be awarded again for ".$_POST['freezetime']." ".$dispDays.".";
+		}
+
+		$logMessage = $member->getMemberLink()." was stripped of the ".$medalObj->get_info_filtered("name")." medal.";
+		$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
+
+		$member->postNotification("You were stripped of the medal: <b>".$medalObj->get_info_filtered("name")."</b>");
+
+		$member->select($memberInfo['member_id']);
+		$member->logAction($logMessage);
+	} else {
+		$formObj->blnSaveResult = false;
+		$formObj->errors[] = "Unable to save information to the database.  Please contact the website administrator.";
 	}
+}

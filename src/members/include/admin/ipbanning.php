@@ -78,8 +78,8 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	</div>
 	<div id='ipBanList'>
 		<?php
-			define("SHOW_BANLIST", true);
-			require_once("ipbanning/ipbanlist.php");
+		define("SHOW_BANLIST", true);
+		require_once("ipbanning/ipbanlist.php");
 		?>
 	</div>
 	<br>

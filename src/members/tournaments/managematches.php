@@ -82,7 +82,7 @@ foreach ($arrRounds as $roundNum) {
 	<div id='matchDiv'>
 	<?php
 
-		require_once("include/listmatches.php");
+	require_once("include/listmatches.php");
 
 	?>
 	</div>
@@ -119,7 +119,7 @@ foreach ($arrRounds as $roundNum) {
 	}
 
 
-		echo "
+	echo "
 
 			function setPlayerSeed(intTeamID) {
 			

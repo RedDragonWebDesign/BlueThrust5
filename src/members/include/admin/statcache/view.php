@@ -60,12 +60,12 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				$statType = "Input";
 				$dispFormula = "<i>none</i>";
 				if ($statInfo['statType'] == "calculate") {
-						$statType = "Auto-Calculated";
+					$statType = "Auto-Calculated";
 
-						$dispFirstStat = filterText($_SESSION['btStatCache'][$statInfo['firstStat']]['statName']);
-						$dispSecondStat = filterText($_SESSION['btStatCache'][$statInfo['secondStat']]['statName']);
+					$dispFirstStat = filterText($_SESSION['btStatCache'][$statInfo['firstStat']]['statName']);
+					$dispSecondStat = filterText($_SESSION['btStatCache'][$statInfo['secondStat']]['statName']);
 
-						$dispOp = "";
+					$dispOp = "";
 					switch ($statInfo['calcOperation']) {
 						case "add":
 							$dispOp = " + ";
@@ -81,7 +81,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 							break;
 					}
 
-						$dispFormula = $dispFirstStat.$dispOp.$dispSecondStat;
+					$dispFormula = $dispFirstStat.$dispOp.$dispSecondStat;
 				}
 
 				$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveStat('up', '".$key."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' title='Move Up' width='24' height='24'></a>";

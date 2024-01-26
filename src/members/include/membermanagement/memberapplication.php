@@ -69,10 +69,10 @@ echo "
 						";
 
 
-						require_once("include/appcomponentlist.php");
+require_once("include/appcomponentlist.php");
 
 
-					echo "
+echo "
 					
 					</div>
 					<br>

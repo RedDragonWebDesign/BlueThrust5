@@ -137,8 +137,8 @@ if ( ! empty($_POST['submit']) ) {
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 						}
 					} elseif (($componentInfo['componenttype'] == "input" || $componentInfo['componenttype'] == "largeinput") && !$customFormObj->objFormValue->addNew($arrColumns, array($submissionInfo['submission_id'], $componentID, $_POST[$formComponentName]))) {
-							$countErrors++;
-							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
+						$countErrors++;
+						$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 					}
 				} else {
 					$mysqli->query("DELETE FROM ".$dbprefix."customform_values WHERE submission_id = '".$submissionInfo['submission_id']."'");
@@ -190,7 +190,7 @@ if ( ! empty($_POST['submit']) ) {
 						";
 			}
 
-					echo "
+			echo "
 						<input type='submit' name='submit' id='btnSubmitCustomForm' style='display: none'>
 					</form>
 				</div>
@@ -327,7 +327,7 @@ if ( empty($_POST['submit']) ) {
 		}
 	}
 
-			echo "
+	echo "
 				<tr>
 					<td class='main' align='center' colspan='2'><br><br>
 					

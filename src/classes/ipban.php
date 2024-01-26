@@ -1,10 +1,8 @@
 <?php
 
-	require_once("basic.php");
+require_once("basic.php");
 
 class IPBan extends Basic {
-
-
 	public function __construct($sqlConnection) {
 
 		$this->MySQL = $sqlConnection;
@@ -12,10 +10,7 @@ class IPBan extends Basic {
 		$this->strTableName = $this->MySQL->get_tablePrefix()."ipban";
 	}
 
-
-
 	public function isBanned($ip) {
-
 		$returnVal = false;
 
 		if ($this->select($ip, false)) {

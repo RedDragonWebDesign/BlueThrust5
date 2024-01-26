@@ -107,7 +107,7 @@ if ( empty($_POST['submit']) ) {
 			";
 	}
 
-		echo "
+	echo "
 		
 			Use the form below to delete a member from the website.  You must first <a href='".$MAIN_ROOT."members/console.php?cID=".$disableMemberCID."'>Disable a Member</a> before you can delete them from the website.
 			<table class='formTable'>

@@ -205,7 +205,7 @@ if ($dispError != "") {
 		";
 }
 
-	echo "
+echo "
 			Use the form below to set a member's rank.<br><br>
 			<table class='formTable'>
 				<tr>

@@ -4,10 +4,10 @@ if (!defined("MAIN_ROOT")) {
 	exit();
 }
 
-	global $pluginObj;
+global $pluginObj;
 
-	$twitchObj = new Twitch($mysqli);
-	$pluginInfo = $pluginObj->get_info_filtered();
+$twitchObj = new Twitch($mysqli);
+$pluginInfo = $pluginObj->get_info_filtered();
 
 
 ?>
@@ -16,7 +16,7 @@ if (!defined("MAIN_ROOT")) {
 
 <?php
 
-	$totalTwitchUsers = $twitchObj->displayAllMemberCards();
+$totalTwitchUsers = $twitchObj->displayAllMemberCards();
 
 if ($totalTwitchUsers == 0) {
 	echo "

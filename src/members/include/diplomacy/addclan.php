@@ -156,7 +156,7 @@ if ( empty($_POST['submit']) ) {
 			";
 	}
 
-		echo "
+	echo "
 			<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
 				Use the form below to add a new clan to the diplomacy page.<br><br>
 				<table class='formTable'>
@@ -179,7 +179,7 @@ if ( empty($_POST['submit']) ) {
 		echo "<option value='".$key."'".$dispSelected.">".$value."</option>";
 	}
 
-							echo "
+	echo "
 							</select>
 						</td>
 					</tr>

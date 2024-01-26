@@ -50,9 +50,9 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 ";
 
 
-	$medalValidateObj = new Medal($mysqli);
-	$arrMedals = $medalObj->get_entries(array(), "ordernum DESC");
-	$medalOptions = array();
+$medalValidateObj = new Medal($mysqli);
+$arrMedals = $medalObj->get_entries(array(), "ordernum DESC");
+$medalOptions = array();
 foreach ($arrMedals as $eachMedalInfo) {
 	$medalName = filterText($eachMedalInfo['name']);
 	$medalOptions[$eachMedalInfo['medal_id']] = $medalName;
@@ -64,11 +64,11 @@ if (count($medalOptions) == 0) {
 }
 
 
-	$medalOrder = $medalValidateObj->findBeforeAfter();
+$medalOrder = $medalValidateObj->findBeforeAfter();
 
-	$medalInfo['imageurl'] = substr($medalInfo['imageurl'], strlen($MAIN_ROOT));
-	$i = 1;
-	$arrComponents = array(
+$medalInfo['imageurl'] = substr($medalInfo['imageurl'], strlen($MAIN_ROOT));
+$i = 1;
+$arrComponents = array(
 		"generalinfo" => array(
 			"type" => "section",
 			"options" => array("section_title" => "General Information:"),
@@ -166,7 +166,7 @@ if (count($medalOptions) == 0) {
 
 
 
-	$setupFormArgs = array(
+$setupFormArgs = array(
 	"name" => "console-".$cID,
 	"components" => $arrComponents,
 	"description" => "Fill out the form below to edit the selected medal.<br><br><b><u>NOTE:</u></b> When setting the Medal Image, if both the File and URL are filled out, the File will be used.",

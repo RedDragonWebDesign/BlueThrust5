@@ -223,7 +223,7 @@ if ( empty($_POST['submit']) ) {
 						<td class='formLabel'>Invite Type:</td>
 						<td class='main'><select name='invitetype' class='textBox'><option value='0'>Anyone Can Join</option><option value='1'>Invite Only</option></select>
 					</tr>*/
-					echo "
+	echo "
 					<tr>
 						<td class='formLabel'>Visibility: <a href='javascript:void(0)' onmouseover=\"showToolTip('This allows you to choose who can see the event details page.')\" onmouseout='hideToolTip()'><b>(?)</b></a></td>
 						<td class='main'>
@@ -265,11 +265,11 @@ if ( empty($_POST['submit']) ) {
 				";
 
 
-				$minYear = date("Y");
-				$minMonth = date("n")-1;
-				$minDay = date("j");
+	$minYear = date("Y");
+	$minMonth = date("n")-1;
+	$minDay = date("j");
 
-			echo "
+	echo "
 					changeMonth: true,
 					changeYear: true,
 					dateFormat: 'M d, yy',

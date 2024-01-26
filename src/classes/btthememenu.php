@@ -336,10 +336,10 @@ class btThemeMenu {
 	public function displayMenuItem() {
 		global $hooksObj;
 		$this->menuItemInfo['itemtype'] =
-			($this->menuItemInfo['itemtype'] == "customcode" ||
-			$this->menuItemInfo['itemtype'] == "customformat") ?
+		($this->menuItemInfo['itemtype'] == "customcode" ||
+		$this->menuItemInfo['itemtype'] == "customformat") ?
 			"customblock" :
-			$this->menuItemInfo['itemtype'];
+		$this->menuItemInfo['itemtype'];
 
 		switch ($this->menuItemInfo['itemtype']) {
 			case "link":

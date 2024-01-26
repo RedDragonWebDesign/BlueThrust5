@@ -1,10 +1,10 @@
 <?php
 
-	$prevFolder = "../";
-	require_once($prevFolder."_setup.php");
-	require_once($THEME."/_logindisplay.php");
-	require_once("include_header.php");
-	require_once($THEME."/_menus.php");
+$prevFolder = "../";
+require_once($prevFolder."_setup.php");
+require_once($THEME."/_logindisplay.php");
+require_once("include_header.php");
+require_once($THEME."/_menus.php");
 
 if (isset($_POST['refreshSectionID'])) {
 	dispMenu($_POST['refreshSectionID']);
@@ -59,7 +59,7 @@ if (isset($_POST['refreshSectionID'])) {
 		}
 
 
-			echo "
+		echo "
 					
 					});
 				

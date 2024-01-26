@@ -1,17 +1,17 @@
 <?php
 
 	// Config File
-	$prevFolder = "../";
+$prevFolder = "../";
 
-	require_once($prevFolder."_setup.php");
+require_once($prevFolder."_setup.php");
 
-	require_once($prevFolder."classes/member.php");
-	require_once($prevFolder."classes/poll.php");
+require_once($prevFolder."classes/member.php");
+require_once($prevFolder."classes/poll.php");
 
 
-	$consoleObj = new ConsoleOption($mysqli);
-	$pollObj = new Poll($mysqli);
-	$member = new Member($mysqli);
+$consoleObj = new ConsoleOption($mysqli);
+$pollObj = new Poll($mysqli);
+$member = new Member($mysqli);
 if (!$member->select($_SESSION['btUsername']) || !$member->authorizeLogin($_SESSION['btPassword'])) {
 	$member = new Member($mysqli);
 }

@@ -149,7 +149,7 @@ if ( ! empty($_POST['submit']) ) {
 				";
 
 
-			$arrTeams = $tournamentObj->getTeams(true, "ORDER BY seed");
+	$arrTeams = $tournamentObj->getTeams(true, "ORDER BY seed");
 	foreach ($arrTeams as $teamID) {
 		$dispName = $tournamentObj->getPlayerName($teamID);
 		$tournamentObj->objTeam->select($teamID);
@@ -169,7 +169,7 @@ if ( ! empty($_POST['submit']) ) {
 		$seedCount++;
 	}
 
-			echo "
+	echo "
 				
 			</table>
 			

@@ -52,8 +52,8 @@ echo "
 			
 		<div id='installedDiv'>
 	";
-		require_once("include/admin/plugins/installed.php");
-	echo "
+require_once("include/admin/plugins/installed.php");
+echo "
 		</div>
 		<div id='loadingSpiralInstalled' style='display: none; margin-bottom: 20px'><img src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral.gif'></div>
 			
@@ -71,11 +71,11 @@ echo "
 	";
 
 
-	echo "
+echo "
 		<div id='availableDiv'>
 	";
-	require_once("include/admin/plugins/available.php");
-	echo "
+require_once("include/admin/plugins/available.php");
+echo "
 		</div>
 		<div id='loadingSpiralAvailable' style='display: none'><img src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral.gif'></div>
 		<br>	

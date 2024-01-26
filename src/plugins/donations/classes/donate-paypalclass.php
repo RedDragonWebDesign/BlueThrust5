@@ -182,7 +182,7 @@ class paypal_class {
 				$res = fgets($fp, 1024);
 
 				if (trim($res) == "VERIFIED") {
-					 $returnVal = true;
+					$returnVal = true;
 				}
 
 				$this->ipn_response .= $res;

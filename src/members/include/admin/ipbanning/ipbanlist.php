@@ -39,8 +39,8 @@ if (!defined("SHOW_BANLIST")) {
 
 <table class='formTable' style='margin-top: 0px; border-spacing: 0px; width: 80%'>
 <?php
-	$counter = 0;
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ipban ORDER BY exptime");
+$counter = 0;
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."ipban ORDER BY exptime");
 while ($row = $result->fetch_assoc()) {
 	$row = filterArray($row);
 	if ($counter == 1) {

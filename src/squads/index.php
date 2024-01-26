@@ -60,9 +60,9 @@ require_once($prevFolder."include/breadcrumb.php");
 		<td class='formTitle' width="20%">Status:</td>
 	</tr>
 	<?php
-		$memberObj = new Member($mysqli);
-		$counter = 0;
-		$result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."squads ORDER BY name");
+	$memberObj = new Member($mysqli);
+	$counter = 0;
+	$result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."squads ORDER BY name");
 	while ($row = $result->fetch_assoc()) {
 		if ($row['recruitingstatus'] == 1) {
 			$dispRecruiting = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/bluedot.png' title='Recruiting Open'>";

@@ -132,7 +132,7 @@ if ( empty($_POST['submit']) ) {
 			";
 	}
 
-		echo "
+	echo "
 			<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post' enctype='multipart/form-data'>
 				Use the form below to add a new diplomacy status type to your diplomacy page.
 				<table class='formTable'>

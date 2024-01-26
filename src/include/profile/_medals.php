@@ -6,8 +6,8 @@ if (!defined("SHOW_PROFILE_MAIN")) {
 
 	// MEDALS
 
-	$arrMedals = $member->getMedalList(false, $websiteInfo['medalorder']);
-	$medalObj = new Medal($mysqli);
+$arrMedals = $member->getMedalList(false, $websiteInfo['medalorder']);
+$medalObj = new Medal($mysqli);
 
 if (count($arrMedals) > 0) {
 	foreach ($arrMedals as $medalID) {

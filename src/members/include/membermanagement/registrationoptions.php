@@ -91,7 +91,7 @@ if ( empty($_POST['submit']) ) {
 			";
 	}
 
-		echo "
+	echo "
 		
 			Use the form below to manage the member registration options for the clan.  New members are automatically given the lowest rank in the clan.
 			<form action='".$MAIN_ROOT."members/console.php?cID=".$cID."' method='post'>
