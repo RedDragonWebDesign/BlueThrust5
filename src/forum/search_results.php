@@ -143,7 +143,7 @@ if ($arrFilterDates[$_POST['filterposts']] != "" || $arrFilterDates[$_POST['filt
 
 	// Filter Board
 	$arrFilterBoards = array();
-	$filterBoards = $_POST['filterboards'] ?? []; // Use null coalescing operator to provide a default empty array
+	$filterBoards = $_POST['filterboards'] ?? [];
 
 	if (!in_array(0, $filterBoards)) {
 		$arrFilterBoards = $filterBoards;
