@@ -11,7 +11,7 @@ $(document).ready(function() {
 
 		// TODO: fix
 		// window.location = 'search.php?keyword='+$('#
-	
+
 	});
 
 });
