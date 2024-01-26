@@ -311,7 +311,7 @@ if ($tournamentInfo['seedtype'] != 3) {
 	}
 }
 
-		echo "	
+echo "	
 		</div>
 	
 	</div>

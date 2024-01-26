@@ -16,9 +16,9 @@ if (!defined("SHOW_PROFILE_MAIN")) {
 	exit();
 }
 
-	require_once($prevFolder."plugins/twitter/twitter.php");
+require_once($prevFolder."plugins/twitter/twitter.php");
 
-	$twitterObj = new Twitter($mysqli);
+$twitterObj = new Twitter($mysqli);
 
 
 if ($twitterObj->hasTwitter($memberInfo['member_id'])) {

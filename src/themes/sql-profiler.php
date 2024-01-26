@@ -1,14 +1,14 @@
 <?php if ( $debug ): ?>
 		<?php
-			$count = count($SQL_PROFILER);
-			$color = "color: limegreen;";
+		$count = count($SQL_PROFILER);
+		$color = "color: limegreen;";
 		if ( $count > 100 ) {
 			$color = "color: yellow;";
 		}
 		if ( $count > 200 ) {
 			$color = "color: red;";
 		}
-			$rowIDCounter = 0;
+		$rowIDCounter = 0;
 
 		foreach ( $SQL_PROFILER as $key => $value ) {
 			$SQL_PROFILER[$key]['query'] = htmlspecialchars($SQL_PROFILER[$key]['query']);
@@ -93,7 +93,7 @@
 			</h1>
 			
 			<?php
-				$repeatedQueries = $SQL_PROFILER;
+			$repeatedQueries = $SQL_PROFILER;
 
 				// delete all data except for query
 			foreach ( $repeatedQueries as $key => $value ) {
@@ -108,11 +108,11 @@
 			function compareByName($a, $b) {
 				return strcmp($a["query"], $b["query"]);
 			}
-				usort($repeatedQueries, 'compareByName');
+			usort($repeatedQueries, 'compareByName');
 
 				// then start merging duplicates
-				$currentKey = 0;
-				$currentValue = $repeatedQueries[0];
+			$currentKey = 0;
+			$currentValue = $repeatedQueries[0];
 			for ( $i = 1; $i < count($repeatedQueries); $i++ ) {
 				$value = $repeatedQueries[$i];
 				if ( $value == $currentValue ) {
@@ -125,11 +125,11 @@
 			}
 
 				// sort by sub-key "count"
-				usort($repeatedQueries, function ($b, $a) {
-					return $a['count'] <=> $b['count'];
-				});
+			usort($repeatedQueries, function ($b, $a) {
+				return $a['count'] <=> $b['count'];
+			});
 
-				$repeatedQueries = array_slice($repeatedQueries, 0, 5);
+			$repeatedQueries = array_slice($repeatedQueries, 0, 5);
 			?>
 			
 			<table style="border: 3px solid blue; border-collapse: collapse; font-size: 11pt; table-layout: fixed; margin: 1em 0; width: 100%;">
@@ -158,9 +158,9 @@
 							</td>
 							<td style="border: 3px solid blue;">
 								<?php
-									$rowIDCounter++;
-									$clickToShowID = "click-to-show-id-$rowIDCounter";
-									$contentsToShowID = "contents-to-show-id-$rowIDCounter";
+								$rowIDCounter++;
+								$clickToShowID = "click-to-show-id-$rowIDCounter";
+								$contentsToShowID = "contents-to-show-id-$rowIDCounter";
 								?>
 								<a id="<?php echo $clickToShowID; ?>" onclick="
 									document.getElementById('<?php echo $contentsToShowID; ?>').style.display = 'block';
@@ -182,11 +182,11 @@
 			</h1>
 			
 			<?php
-				$slowQueries = $SQL_PROFILER;
-				usort($slowQueries, function ($b, $a) {
-					return $a['duration'] <=> $b['duration'];
-				});
-				$slowQueries = array_slice($slowQueries, 0, 5);
+			$slowQueries = $SQL_PROFILER;
+			usort($slowQueries, function ($b, $a) {
+				return $a['duration'] <=> $b['duration'];
+			});
+			$slowQueries = array_slice($slowQueries, 0, 5);
 			?>
 			
 			<table style="border: 3px solid blue; border-collapse: collapse; font-size: 11pt; table-layout: fixed; margin: 1em 0; width: 100%;">
@@ -221,9 +221,9 @@
 							</td>
 							<td style="border: 3px solid blue;">
 								<?php
-									$rowIDCounter++;
-									$clickToShowID = "click-to-show-id-$rowIDCounter";
-									$contentsToShowID = "contents-to-show-id-$rowIDCounter";
+								$rowIDCounter++;
+								$clickToShowID = "click-to-show-id-$rowIDCounter";
+								$contentsToShowID = "contents-to-show-id-$rowIDCounter";
 								?>
 								<a id="<?php echo $clickToShowID; ?>" onclick="
 									document.getElementById('<?php echo $contentsToShowID; ?>').style.display = 'block';
@@ -276,9 +276,9 @@
 							</td>
 							<td style="border: 3px solid blue;">
 								<?php
-									$rowIDCounter++;
-									$clickToShowID = "click-to-show-id-$rowIDCounter";
-									$contentsToShowID = "contents-to-show-id-$rowIDCounter";
+								$rowIDCounter++;
+								$clickToShowID = "click-to-show-id-$rowIDCounter";
+								$contentsToShowID = "contents-to-show-id-$rowIDCounter";
 								?>
 								<a id="<?php echo $clickToShowID; ?>" onclick="
 									document.getElementById('<?php echo $contentsToShowID; ?>').style.display = 'block';
@@ -296,9 +296,9 @@
 			</table>
 			
 			<?php
-				$alphabetical = $SQL_PROFILER;
+			$alphabetical = $SQL_PROFILER;
 				// sort alphabetically
-				usort($alphabetical, 'compareByName');
+			usort($alphabetical, 'compareByName');
 			?>
 			
 			<h1>
@@ -337,9 +337,9 @@
 							</td>
 							<td style="border: 3px solid blue;">
 								<?php
-									$rowIDCounter++;
-									$clickToShowID = "click-to-show-id-$rowIDCounter";
-									$contentsToShowID = "contents-to-show-id-$rowIDCounter";
+								$rowIDCounter++;
+								$clickToShowID = "click-to-show-id-$rowIDCounter";
+								$contentsToShowID = "contents-to-show-id-$rowIDCounter";
 								?>
 								<a id="<?php echo $clickToShowID; ?>" onclick="
 									document.getElementById('<?php echo $contentsToShowID; ?>').style.display = 'block';

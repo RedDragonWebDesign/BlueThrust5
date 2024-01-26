@@ -4,10 +4,10 @@ if (!defined("MAIN_ROOT")) {
 	exit();
 }
 
-	$member = new Member($mysqli);
-	$twitchObj = new Twitch($mysqli);
-	$pluginObj = new btPlugin($mysqli);
-	$pluginObj->selectByName("Twitch");
+$member = new Member($mysqli);
+$twitchObj = new Twitch($mysqli);
+$pluginObj = new btPlugin($mysqli);
+$pluginObj->selectByName("Twitch");
 
 if (!$member->select($_GET['user']) || !$twitchObj->hasTwitch($_GET['user'])) {
 	echo "
@@ -16,9 +16,9 @@ if (!$member->select($_GET['user']) || !$twitchObj->hasTwitch($_GET['user'])) {
 	exit();
 }
 
-	$twitchName = $twitchObj->getTwitchName($twitchObj->data['memberID']);
+$twitchName = $twitchObj->getTwitchName($twitchObj->data['memberID']);
 
-	$autoPlay = ($pluginObj->getConfigInfo("autoplay") == "1") ? "true" : "false";
+$autoPlay = ($pluginObj->getConfigInfo("autoplay") == "1") ? "true" : "false";
 
 ?>
 

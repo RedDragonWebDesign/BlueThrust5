@@ -58,18 +58,18 @@ if (isset($_SESSION['btMembersOnlyTagger']) && $_SESSION['btMembersOnlyTagger'] 
 			";
 }
 
-		$selectPrivateForum = "";
+$selectPrivateForum = "";
 if ($websiteInfo['privateforum'] == 1) {
 	$selectPrivateForum = " selected";
 }
 
-		$selectPrivateProfile = "";
+$selectPrivateProfile = "";
 if ($websiteInfo['privateprofile'] == 1) {
 	$selectPrivateProfile = " selected";
 }
 
 
-		echo "
+echo "
 		
 			</p>
 		</div>
@@ -102,9 +102,9 @@ if ($websiteInfo['privateprofile'] == 1) {
 		<div id='membersOnlyPageList'>
 		";
 
-		require_once("membersonlypageslist.php");
+require_once("membersonlypageslist.php");
 
-		echo "
+echo "
 		</div>
 	</div>	
 	

@@ -262,9 +262,9 @@ if ( empty($_POST['submit']) ) {
 				<div id='selectValueList' style='margin-top: 25px'>
 				";
 
-				require_once("include/admin/manageprofileoptions/cache/view.php");
+	require_once("include/admin/manageprofileoptions/cache/view.php");
 
-			echo "
+	echo "
 				</div>
 				<br><br>
 			</div>

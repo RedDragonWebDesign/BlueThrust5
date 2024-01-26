@@ -37,7 +37,7 @@ if ($_GET['action'] == "edit" && $imageSliderObj->select($_GET['imgID'])) {
 	$selectHeightUnit = ($websiteInfo['hpimageheightunit'] == "px") ? "" : " selected";
 	$selectDisplayStyle = ($websiteInfo['hpimagetype'] == "slider") ? "" : " selected";
 
-		echo "
+	echo "
 			<div class='formDiv'>
 				Use this page to manage the home page image slider.  You can attach news posts, tournaments, events or any kind of custom message that you want to the images in the image slider.
 				

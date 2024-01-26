@@ -10,12 +10,12 @@ foreach ($arrTableMatches as $tableName) {
 
 		// Create Insert Statements
 
-		$insertStmt = "INSERT INTO ".$tableName." (";
+	$insertStmt = "INSERT INTO ".$tableName." (";
 
-		$tableNameNoPrefix = ($_POST['tableprefix'] != "") ? substr($tableName, strlen($_POST['tableprefix'])) : $tableName;
+	$tableNameNoPrefix = ($_POST['tableprefix'] != "") ? substr($tableName, strlen($_POST['tableprefix'])) : $tableName;
 
-		$arrColumnNames = array();
-		$result = $mysqli->query("DESCRIBE ".$tableName);
+	$arrColumnNames = array();
+	$result = $mysqli->query("DESCRIBE ".$tableName);
 	while ($row = $result->fetch_assoc()) {
 		if ($row['Field'] != "privilege_id") {
 			$arrColumnNames[] = $row['Field'];
@@ -33,13 +33,13 @@ foreach ($arrTableMatches as $tableName) {
 	}
 
 
-		$sqlInsertColumnNames = implode(", ", $arrColumnNames);
+	$sqlInsertColumnNames = implode(", ", $arrColumnNames);
 
-		$insertStmt .= $sqlInsertColumnNames.") VALUES ('";
+	$insertStmt .= $sqlInsertColumnNames.") VALUES ('";
 
-		$arrInsertStmts = array();
+	$arrInsertStmts = array();
 
-		$result = $mysqli->query("SELECT * FROM ".$tableName);
+	$result = $mysqli->query("SELECT * FROM ".$tableName);
 	while ($row = $result->fetch_assoc()) {
 		$arrColumnValues = array();
 		$blnDoNotAdd = false;

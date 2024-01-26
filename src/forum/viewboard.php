@@ -280,12 +280,12 @@ echo "
 if (LOGGED_IN && $boardObj->memberHasAccess($memberInfo, true)) {
 	echo "<p style='margin-top: 0px'><b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$boardInfo['forumboard_id']."'>NEW TOPIC</a> &laquo;</b></p>";
 }
-		echo "
+echo "
 		</td>
 		<td colspan='2' align='right' class='main'>
 			";
 
-		$pageSelector->show();
+$pageSelector->show();
 
 echo "
 		</td>
@@ -363,13 +363,13 @@ if (LOGGED_IN) {
 				<p style='margin-top: 0px'><b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$boardInfo['forumboard_id']."'>NEW TOPIC</a> &laquo;</b></p>
 			";
 }
-	echo "
+echo "
 		
 		</td>
 		<td colspan='2' style='padding-top: 15px' align='right' class='main'>
 			";
-	$pageSelector->show();
-	echo "
+$pageSelector->show();
+echo "
 		</td>
 	</tr>
 </table>

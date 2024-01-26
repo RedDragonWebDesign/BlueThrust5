@@ -1,6 +1,6 @@
 <?php
 
-	/** Class to make some things simpler with PHPMailer */
+/** Class to make some things simpler with PHPMailer */
 class btMail {
 
 	private $objPHPMailer;

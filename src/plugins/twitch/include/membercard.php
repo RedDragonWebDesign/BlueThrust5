@@ -4,7 +4,7 @@ if (!isset($this->twitchObj->data['memberCard']['memberID'])) {
 	exit();
 }
 
-	$twitchObj = $this->twitchObj;
+$twitchObj = $this->twitchObj;
 
 ?>
 

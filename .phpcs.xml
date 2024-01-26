@@ -116,13 +116,27 @@
         <severity>0</severity>
     </rule>
 
-    <!-- fix wrong indentation -->
     <arg name="tab-width" value="4"/>
     <rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+
+    <!-- fix wrong indentation -->
     <rule ref="Generic.WhiteSpace.ScopeIndent">
     <properties>
         <property name="indent" value="4"/>
         <property name="tabIndent" value="true"/>
+        <property name="exact" value="true"/>
+        <property name="ignoreIndentationTokens" type="array">
+            <element value="T_COMMENT"/>
+            <element value="T_DOC_COMMENT"/>
+            <!-- Long strings and heredoc/nowdoc sometimes start at the beginning of the line -->
+            <element value="T_CONSTANT_ENCAPSED_STRING" />
+            <element value="T_DOUBLE_QUOTED_STRING" />
+            <element value="T_START_HEREDOC" />
+            <element value="T_START_NOWDOC" />
+            <!-- PHP opening and closing tag don't have to be indented -->
+            <element value="T_OPEN_TAG" />
+            <element value="T_CLOSE_TAG" />
+        </property>
     </properties>
     </rule>
 </ruleset>

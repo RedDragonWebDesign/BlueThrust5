@@ -1,6 +1,6 @@
 <?php
 
-	$hooksObj->run("breadcrumb");
+$hooksObj->run("breadcrumb");
 
 ?>
 

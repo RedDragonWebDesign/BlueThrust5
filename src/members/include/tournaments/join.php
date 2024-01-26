@@ -26,22 +26,22 @@ if (!isset($member)|| substr($_SERVER['PHP_SELF'], -strlen("console.php")) != "c
 		exit();
 	}
 }
-	require_once("../classes/tournament.php");
+require_once("../classes/tournament.php");
 
-	$tMemberObj = new Member($mysqli);
+$tMemberObj = new Member($mysqli);
 
-	$countErrors = 0;
-	$dispError = "";
+$countErrors = 0;
+$dispError = "";
 
-	$tournamentObj = new Tournament($mysqli);
+$tournamentObj = new Tournament($mysqli);
 
-	$arrTournaments = $member->getTournamentList();
+$arrTournaments = $member->getTournamentList();
 
 
-	$tournamentSQL = "('".implode("','", $arrTournaments)."')";
+$tournamentSQL = "('".implode("','", $arrTournaments)."')";
 
-	$tournamentOptions[''] = "Select";
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournaments WHERE tournament_id NOT IN ".$tournamentSQL." ORDER BY name");
+$tournamentOptions[''] = "Select";
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournaments WHERE tournament_id NOT IN ".$tournamentSQL." ORDER BY name");
 while ($row = $result->fetch_assoc()) {
 	$tournamentOptions[$row['tournament_id']] = filterText($row['name']);
 }
@@ -138,4 +138,4 @@ if ($result->num_rows > 0) {
 }
 
 
-	require_once(BASE_DIRECTORY."members/include/tournaments/include/jointournamentfunctions.php");
+require_once(BASE_DIRECTORY."members/include/tournaments/include/jointournamentfunctions.php");

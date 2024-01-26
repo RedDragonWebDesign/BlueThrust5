@@ -284,10 +284,10 @@ if ( empty($_POST['submit']) ) {
 	
 					";
 
-					$accessObj->rankAccessDiv = "rankAccessList";
-					$accessObj->dispSetRankAccess();
+	$accessObj->rankAccessDiv = "rankAccessList";
+	$accessObj->dispSetRankAccess();
 
-				echo "
+	echo "
 				
 					<div class='main' style='margin: 20px auto; width: 95%'>
 						<div class='dottedLine'><b>Member Access:</b></div>
@@ -295,10 +295,10 @@ if ( empty($_POST['submit']) ) {
 					</div>
 				";
 
-					$accessObj->memberAccessDiv = "memberAccessList";
-					$accessObj->dispSetMemberAccess();
+	$accessObj->memberAccessDiv = "memberAccessList";
+	$accessObj->dispSetMemberAccess();
 
-			echo "	
+	echo "	
 			</div>
 			
 			<div class='dottedLine main' style='margin-top: 20px; width: 95%; margin-left: auto; margin-right: auto'>

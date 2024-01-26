@@ -121,9 +121,9 @@ if ($blnShowPoolList) {
 		";
 
 
-			$arrPools = $tournamentObj->getPoolList();
-			$arrPoolTeams = array();
-			$startingPoolLetter = "A";
+	$arrPools = $tournamentObj->getPoolList();
+	$arrPoolTeams = array();
+	$startingPoolLetter = "A";
 
 	foreach ($arrPools as $poolID) {
 		$tournamentObj->objTournamentPool->select($poolID);

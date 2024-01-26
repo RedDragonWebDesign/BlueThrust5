@@ -155,21 +155,21 @@ echo "
 	<div id='hpImageSliderWrapper' style='text-align: center; position: relative; margin-left: auto; margin-right: auto'>
 			";
 
-	$imageSliderObj = new ImageSlider($mysqli);
-	$imageSliderObj->strDisplayStyle = $websiteInfo['hpimagetype'];
-	$imageSliderObj->intDisplayWidth = $websiteInfo['hpimagewidth'];
-	$imageSliderObj->intDisplayHeight = $websiteInfo['hpimageheight'];
-	$imageSliderObj->strDisplayWidthUnit = $websiteInfo['hpimagewidthunit'];
-	$imageSliderObj->strDisplayHeightUnit = $websiteInfo['hpimageheightunit'];
-	$imageSliderObj->blnLoggedIn = constant('LOGGED_IN');
-	$imageSliderObj->strTheme = $websiteInfo['theme'];
+$imageSliderObj = new ImageSlider($mysqli);
+$imageSliderObj->strDisplayStyle = $websiteInfo['hpimagetype'];
+$imageSliderObj->intDisplayWidth = $websiteInfo['hpimagewidth'];
+$imageSliderObj->intDisplayHeight = $websiteInfo['hpimageheight'];
+$imageSliderObj->strDisplayWidthUnit = $websiteInfo['hpimagewidthunit'];
+$imageSliderObj->strDisplayHeightUnit = $websiteInfo['hpimageheightunit'];
+$imageSliderObj->blnLoggedIn = constant('LOGGED_IN');
+$imageSliderObj->strTheme = $websiteInfo['theme'];
 
-	$imageSliderObj->dispHomePageImage();
+$imageSliderObj->dispHomePageImage();
 
 		//echo "<div id='hpImageScroller'></div>";
 
 
-	echo "	
+echo "	
 	</div>
 		
 	";

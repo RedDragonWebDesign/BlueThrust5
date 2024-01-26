@@ -4,16 +4,16 @@ if (!defined("MAIN_ROOT")) {
 	exit();
 }
 
-	$donationLogForm = new Form();
+$donationLogForm = new Form();
 
-	$maxYear = date("Y")+10;
-	$maxDate = "new Date(".$maxYear.",12,31)";
+$maxYear = date("Y")+10;
+$maxDate = "new Date(".$maxYear.",12,31)";
 
-	$dateObj = new DateTime();
-	$dateObj->setTimezone(new DateTimeZone("UTC"));
+$dateObj = new DateTime();
+$dateObj->setTimezone(new DateTimeZone("UTC"));
 
-	$setStartValue = $_GET['start'];
-	$setEndValue = $_GET['end'];
+$setStartValue = $_GET['start'];
+$setEndValue = $_GET['end'];
 
 if (is_numeric($_GET['start'])) {
 	$dateObj->setTimestamp($_GET['start']);
@@ -23,7 +23,7 @@ if (is_numeric($_GET['start'])) {
 	$setStartValue = $dateObj->getTimestamp();
 }
 
-	$defaultStartDate = $dateObj->format("M j, Y");
+$defaultStartDate = $dateObj->format("M j, Y");
 
 if (is_numeric($_GET['end'])) {
 	$dateObj->setTimestamp($_GET['end']);
@@ -33,11 +33,11 @@ if (is_numeric($_GET['end'])) {
 	$setEndValue = $dateObj->getTimestamp();
 }
 
-	$defaultEndDate = $dateObj->format("M j, Y");
+$defaultEndDate = $dateObj->format("M j, Y");
 
 
-	$i=0;
-	$arrComponents = array(
+$i=0;
+$arrComponents = array(
 		"sectionLeft" => array(
 			"type" => "section",
 			"attributes" => array("style" => "float: left"),
@@ -103,7 +103,7 @@ if (is_numeric($_GET['end'])) {
 		)
 	);
 
-	$filterButtonJS = "
+$filterButtonJS = "
 		$(document).ready(function() {
 			$('#filterButton').click(function() {
 				
@@ -116,7 +116,7 @@ if (is_numeric($_GET['end'])) {
 
 
 
-	$setupDonationFormArgs = array(
+$setupDonationFormArgs = array(
 		"name" => "console-".$cID."-donationlog",
 		"components" => $arrComponents,
 		"description" => "Use the form below to filter the dates of donations.",
@@ -125,6 +125,6 @@ if (is_numeric($_GET['end'])) {
 		"embedJS" => $filterButtonJS
 	);
 
-	$donationLogForm->buildForm($setupDonationFormArgs);
+$donationLogForm->buildForm($setupDonationFormArgs);
 
-	$donationLogForm->show();
+$donationLogForm->show();

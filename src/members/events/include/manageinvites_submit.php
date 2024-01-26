@@ -5,8 +5,8 @@ if (!defined("MAIN_ROOT")) {
 }
 
 
-	$arrColumns = array();
-	$arrValues = array();
+$arrColumns = array();
+$arrValues = array();
 
 
 if ($eventObj->memberHasAccess($memberInfo['member_id'], "mangeinvites")) {

@@ -319,14 +319,14 @@ if (in_array($memberInfo['member_id'], $squadMemberList)) {
 }
 
 
-				echo "
+echo "
 					
 				</div>
 				";
 
 
 
-			$dispShoutbox = "
+$dispShoutbox = "
 				<div class='squadInfoTitle'>SHOUTBOX</div>
 				<div class='squadInfoBox'>
 					".$shoutboxObj->dispShoutbox("", "", true)."
@@ -340,7 +340,7 @@ if ($squadInfo['privateshoutbox'] == 0 && in_array($memberInfo['member_id'], $sq
 }
 
 
-				echo "
+echo "
 				<div class='squadInfoTitle'>RANKINGS</div>
 				<div class='squadInfoBox'>
 					
@@ -378,7 +378,7 @@ if ($squadInfo['privateshoutbox'] == 0 && in_array($memberInfo['member_id'], $sq
 if ( ! $debug ) {
 	echo "setTimeout('reloadSquadsShoutbox()', ".$SHOUTBOX_RELOAD_MS.");";
 }
-				echo "
+echo "
 			}
 
 
@@ -386,7 +386,7 @@ if ( ! $debug ) {
 if ( ! $debug ) {
 	echo "setTimeout('reloadSquadsShoutbox()', ".$SHOUTBOX_RELOAD_MS.");";
 }
-			echo "
+echo "
 		
 		</script>
 ";

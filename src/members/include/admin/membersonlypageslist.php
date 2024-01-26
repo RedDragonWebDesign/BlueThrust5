@@ -57,7 +57,7 @@ if ($result->num_rows > 0) {
 			</tr>
 		";
 
-		$counter = 0;
+	$counter = 0;
 	while ($row = $result->fetch_assoc()) {
 		if ($counter == 0) {
 			$addCSS = "";

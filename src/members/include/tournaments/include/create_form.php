@@ -8,22 +8,22 @@ if (!isset($tournamentObj)) {
 	$tournamentObj = new Tournament($mysqli);
 }
 
-	$gameObj = new Game($mysqli);
+$gameObj = new Game($mysqli);
 
-	$i=0;
+$i=0;
 
 
 	// Date/Time Options
-	$oneYear = 31536000;
+$oneYear = 31536000;
 
-	$minDate = "new Date(".date("Y").", ".(date("n")-1).", ".date("j").")";
-	$maxDate = "new Date(".date("Y, n, j", time()+($oneYear*8)).")";
-	$defaultDate = date("M j, Y");
-	$yearRange = date("Y").":".date("Y", time()+($oneYear*8));
+$minDate = "new Date(".date("Y").", ".(date("n")-1).", ".date("j").")";
+$maxDate = "new Date(".date("Y, n, j", time()+($oneYear*8)).")";
+$defaultDate = date("M j, Y");
+$yearRange = date("Y").":".date("Y", time()+($oneYear*8));
 
 
 	// Game Options
-	$gameOptions = array();
+$gameOptions = array();
 foreach ($gameObj->getGameList() as $gameID) {
 	$gameObj->select($gameID);
 
@@ -35,22 +35,22 @@ if (count($gameOptions) == 0) {
 }
 
 	// Tournament Structure
-	$seedTypeOptions = array(
+$seedTypeOptions = array(
 		1 => "Manual",
 		2 => "Random",
 		3 => "Pools"
 	);
-	$seedExplaination = "<span style=\'text-decoration:underline; font-weight: bold\'>Manual:</span> Seeds go in numeric order as you add players to the tournament.<br><br><span style=\'text-decoration:underline; font-weight: bold\'>Random:</span> Seeds are randomly set to players as you add them to the tournament.<br><br><span style=\'text-decoration:underline; font-weight: bold\'>Pools:</span> Teams/Players are separated into groups before the main tournament starts.  Each team/player plays one another in their group.  Seeds are determined by the win/loss record within that group.<br><br>With each seed option, you will have the ability to change the first round matches.  The matches will be set up with the top seed facing the lowest seed, second top seed facing the second lowest seed, and so on.";
+$seedExplaination = "<span style=\'text-decoration:underline; font-weight: bold\'>Manual:</span> Seeds go in numeric order as you add players to the tournament.<br><br><span style=\'text-decoration:underline; font-weight: bold\'>Random:</span> Seeds are randomly set to players as you add them to the tournament.<br><br><span style=\'text-decoration:underline; font-weight: bold\'>Pools:</span> Teams/Players are separated into groups before the main tournament starts.  Each team/player plays one another in their group.  Seeds are determined by the win/loss record within that group.<br><br>With each seed option, you will have the ability to change the first round matches.  The matches will be set up with the top seed facing the lowest seed, second top seed facing the second lowest seed, and so on.";
 
-	$eliminationOptions = array(1 => "Single Elimination");
+$eliminationOptions = array(1 => "Single Elimination");
 
-	$maxTeamsPlayers = array(4 => 4, 8 => 8, 16 => 16, 32 => 32, 64 => 64);
-	$playersPerTeam = array();
-	for ($i=1; $i<=16; $i++) {
-		$playersPerTeam[$i] = $i;
-	}
+$maxTeamsPlayers = array(4 => 4, 8 => 8, 16 => 16, 32 => 32, 64 => 64);
+$playersPerTeam = array();
+for ($i=1; $i<=16; $i++) {
+	$playersPerTeam[$i] = $i;
+}
 
-	$arrComponents = array(
+$arrComponents = array(
 
 		"generalinfo" => array(
 			"type" => "section",
@@ -197,7 +197,7 @@ if (count($gameOptions) == 0) {
 
 
 
-	$setupFormArgs = array(
+$setupFormArgs = array(
 		"name" => "console-".$cID,
 		"components" => $arrComponents,
 		"description" => "Use the form below to create a tournament.",

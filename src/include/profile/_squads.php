@@ -7,9 +7,9 @@ if (!defined("SHOW_PROFILE_MAIN")) {
 
 	// SQUADS
 
-	$arrSquads = $member->getSquadList();
-	$squadObj = new Basic($mysqli, "squads", "squad_id");
-	$dispSquads = "";
+$arrSquads = $member->getSquadList();
+$squadObj = new Basic($mysqli, "squads", "squad_id");
+$dispSquads = "";
 
 foreach ($arrSquads as $squadID) {
 	$squadObj->select($squadID);

@@ -114,7 +114,7 @@ if ($dispError != "") {
 		";
 }
 
-	echo "
+echo "
 			Use the form below to set a member's recruiter.<br><br>
 			<table class='formTable'>
 				<tr>

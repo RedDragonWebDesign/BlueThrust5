@@ -55,8 +55,8 @@ echo "
 			</tr>
 			";
 
-	$objAppComponent = new BasicOrder($mysqli, "app_components", "appcomponent_id");
-	$result = $mysqli->query("SELECT appcomponent_id FROM ".$dbprefix."app_components ORDER BY ordernum DESC");
+$objAppComponent = new BasicOrder($mysqli, "app_components", "appcomponent_id");
+$result = $mysqli->query("SELECT appcomponent_id FROM ".$dbprefix."app_components ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$objAppComponent->select($row['appcomponent_id']);
 	$appComponentInfo = $objAppComponent->get_info_filtered();

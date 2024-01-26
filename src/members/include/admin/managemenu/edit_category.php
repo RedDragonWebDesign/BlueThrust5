@@ -240,7 +240,7 @@ if ( empty($_POST['submit']) ) {
 	if ($menuCatInfo['headertype'] == "image") {
 		echo "<br><i>Current Image: <a href='javascript:void(0)' id='previewImageLink'>View Image</a></i>";
 	}
-							echo "
+	echo "
 								<p><b><i>OR</i></b></p>
 								URL:<br><input type='text' name='headerimageurl' value='' class='textBox' style='width: 250px'>
 							</div>

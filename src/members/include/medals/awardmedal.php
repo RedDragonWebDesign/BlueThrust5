@@ -22,9 +22,9 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	}
 }
 
-	require_once("../classes/medal.php");
+require_once("../classes/medal.php");
 
-	$rankInfo = $memberRank->get_info_filtered();
+$rankInfo = $memberRank->get_info_filtered();
 
 if ($memberInfo['promotepower'] != 0) {
 	$rankInfo['promotepower'] = $memberInfo['promotepower'];
@@ -32,7 +32,7 @@ if ($memberInfo['promotepower'] != 0) {
 	$rankInfo['promotepower'] = 0;
 }
 
-	$cID = $_GET['cID'];
+$cID = $_GET['cID'];
 
 if ($memberInfo['rank_id'] == 1) {
 	$maxOrderNum = $mysqli->query("SELECT MAX(ordernum) FROM ".$dbprefix."ranks WHERE rank_id != '1'");
@@ -45,37 +45,37 @@ if ($memberInfo['rank_id'] == 1) {
 	}
 }
 
-	$rankObj = new Rank($mysqli);
-	$medalObj = new Medal($mysqli);
-	$awardMedalObj = new Basic($mysqli, "medals_members", "medalmember_id");
+$rankObj = new Rank($mysqli);
+$medalObj = new Medal($mysqli);
+$awardMedalObj = new Basic($mysqli, "medals_members", "medalmember_id");
 
-	$rankObj->select($rankInfo['promotepower']);
-	$maxRankInfo = $rankObj->get_info_filtered();
+$rankObj->select($rankInfo['promotepower']);
+$maxRankInfo = $rankObj->get_info_filtered();
 
 if ($rankInfo['rank_id'] == 1) {
 	$maxRankInfo['ordernum'] += 1;
 }
 
-	$arrRanks = array();
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
+$arrRanks = array();
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$arrRanks[] = $row['rank_id'];
 }
 
 
-	$sqlRanks = "('".implode("','", $arrRanks)."')";
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."' ORDER BY ".$dbprefix."ranks.ordernum DESC");
+$sqlRanks = "('".implode("','", $arrRanks)."')";
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."members INNER JOIN ".$dbprefix."ranks ON ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id WHERE ".$dbprefix."members.rank_id IN ".$sqlRanks." AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.member_id != '".$memberInfo['member_id']."' ORDER BY ".$dbprefix."ranks.ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$rankObj->select($row['rank_id']);
 	$memberOptions[$row['member_id']] = $rankObj->get_info_filtered("name")." ".filterText($row['username']);
 }
 
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."medals ORDER BY ordernum DESC");
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."medals ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$medalOptions[$row['medal_id']] = filterText($row['name']);
 }
 
-	echo "
+echo "
 		<div class='main' id='medalPopUp' style='display: none; position: relative'>
 			<div class='loadingSpiral' id='loadingSpiral' style='position: relative'><p align='center'><img src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral2.gif'><br><br><i>Loading...</i></p></div>
 			<div id='medalInfoDiv' style='position: relative'></div>
@@ -132,8 +132,8 @@ while ($row = $result->fetch_assoc()) {
 		</script>
 	";
 
-	$i = 1;
-	$arrComponents = array(
+$i = 1;
+$arrComponents = array(
 		"member" => array(
 			"type" => "select",
 			"options" => $memberOptions,
@@ -169,12 +169,12 @@ while ($row = $result->fetch_assoc()) {
 
 	);
 
-	if ( ! empty($_POST['submit']) ) {
-		$member->select($_POST['member']);
-		$medalObj->select($_POST['medal']);
-	}
+if ( ! empty($_POST['submit']) ) {
+	$member->select($_POST['member']);
+	$medalObj->select($_POST['medal']);
+}
 
-	$setupFormArgs = array(
+$setupFormArgs = array(
 		"name" => "console-".$cID,
 		"components" => $arrComponents,
 		"attributes" => array("id" => "formDiv", "action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
@@ -188,14 +188,14 @@ while ($row = $result->fetch_assoc()) {
 
 	// After Save
 
-	function awardMedalSave() {
-		global $member, $medalObj, $memberInfo;
-		$member->select($_POST['member_id']);
-		$logMessage = $member->getMemberLink()." was awarded the ".$medalObj->get_info_filtered("name")." medal.";
-		$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
+function awardMedalSave() {
+	global $member, $medalObj, $memberInfo;
+	$member->select($_POST['member_id']);
+	$logMessage = $member->getMemberLink()." was awarded the ".$medalObj->get_info_filtered("name")." medal.";
+	$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
 
-		$member->postNotification("You were awarded the medal: <b>".$medalObj->get_info_filtered("name")."</b>");
+	$member->postNotification("You were awarded the medal: <b>".$medalObj->get_info_filtered("name")."</b>");
 
-		$member->select($memberInfo['member_id']);
-		$member->logAction($logMessage);
-	}
+	$member->select($memberInfo['member_id']);
+	$member->logAction($logMessage);
+}

@@ -204,7 +204,7 @@ if ($dispError != "") {
 }
 
 
-	echo "
+echo "
 			Use the form below to edit the match details.
 			".$dispApproved."
 			<table class='formTable'>
@@ -250,7 +250,7 @@ if ($checkApprove == 1) {
 	echo "<p style='margin: 2px; padding-left: 5px'>* Clicking the Approve Results button will also upload your replay.</p><br>";
 }
 
-	echo "
+echo "
 					</td>
 				</tr>
 				<tr>
@@ -275,7 +275,7 @@ if ($checkApprove == 1) {
 	echo "<input type='submit' name='approve' value='Approve Results' class='submitButton' style='width: 125px'><br><br>";
 }
 
-				echo "
+echo "
 					
 						<input type='submit' name='submit' value='Update Results' class='submitButton' style='width: 125px'>
 					<br>

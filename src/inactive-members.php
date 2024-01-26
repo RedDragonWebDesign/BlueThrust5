@@ -62,7 +62,7 @@ $gameObj = new Game($mysqli);
 	</tr>
 <?php
 
-	$result = $mysqli->query("SELECT ".$dbprefix."members.member_id, ".$dbprefix."ranks.ordernum FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id AND ".$dbprefix."members.onia = '1' AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id != '1' ORDER BY ".$dbprefix."ranks.ordernum DESC");
+$result = $mysqli->query("SELECT ".$dbprefix."members.member_id, ".$dbprefix."ranks.ordernum FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id = ".$dbprefix."ranks.rank_id AND ".$dbprefix."members.onia = '1' AND ".$dbprefix."members.disabled = '0' AND ".$dbprefix."members.rank_id != '1' ORDER BY ".$dbprefix."ranks.ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$member->select($row['member_id']);
 	$rankObj->select($member->get_info("rank_id"));
@@ -99,7 +99,7 @@ while ($row = $result->fetch_assoc()) {
 if ($result->num_rows > 0) {
 	echo "
 		<p align='center'>
-			<b>Total Inactive Members:</b>	<?php echo $result->num_rows; ?>
+			<b>Total Inactive Members:</b>	$result->num_rows
 		</p>
 	";
 } else {

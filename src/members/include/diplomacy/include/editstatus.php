@@ -155,7 +155,7 @@ if ( empty($_POST['submit']) ) {
 
 
 	if (!isset($popupWidth)) {
-			$popupWidth = $diplomacyStatusInfo['imagewidth']+50;
+		$popupWidth = $diplomacyStatusInfo['imagewidth']+50;
 	}
 
 

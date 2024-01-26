@@ -12,7 +12,7 @@
 	 *
 	 */
 
-	$accessedByConsole = false;
+$accessedByConsole = false;
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	$prevFolder = "../../";
 	require_once("../../_setup.php");
@@ -71,7 +71,7 @@ if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 }
 
 
-	$ytObj = new Youtube($mysqli);
+$ytObj = new Youtube($mysqli);
 
 if (!$ytObj->hasYoutube($memberInfo['member_id'])) {
 	$countErrors = 0;
@@ -267,12 +267,12 @@ if (!$ytObj->hasYoutube($memberInfo['member_id'])) {
 	for ($i=2; $i<=5; $i++) {
 		$dispChecked = "";
 		if ($ytInfo['showvideos'] == $i) {
-						$dispChecked = " selected";
+			$dispChecked = " selected";
 		}
-					echo "<option value='".$i."'".$dispChecked.">".$i." Most Recent Videos</option>";
+		echo "<option value='".$i."'".$dispChecked.">".$i." Most Recent Videos</option>";
 	}
 
-		echo "
+	echo "
 							</select>
 						</td>
 					</tr>

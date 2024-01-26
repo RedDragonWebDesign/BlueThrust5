@@ -5,21 +5,21 @@ if (!defined("MAIN_ROOT")) {
 }
 
 
-	$totalPostsQuery = "SELECT COUNT(*) as totalPosts FROM ".$dbprefix."forum_post";
-	$totalPostsResult = $mysqli->query($totalPostsQuery);
-	$totalPostRow = $totalPostsResult->fetch_assoc();
+$totalPostsQuery = "SELECT COUNT(*) as totalPosts FROM ".$dbprefix."forum_post";
+$totalPostsResult = $mysqli->query($totalPostsQuery);
+$totalPostRow = $totalPostsResult->fetch_assoc();
 
-	$totalPosts = number_format($totalPostRow['totalPosts'], 0);
+$totalPosts = number_format($totalPostRow['totalPosts'], 0);
 
 
-	$totalTopicQuery = "SELECT COUNT(*) as totalTopics FROM ".$dbprefix."forum_topic";
-	$totalTopicResult = $mysqli->query($totalTopicQuery);
-	$totalTopicRow = $totalTopicResult->fetch_assoc();
+$totalTopicQuery = "SELECT COUNT(*) as totalTopics FROM ".$dbprefix."forum_topic";
+$totalTopicResult = $mysqli->query($totalTopicQuery);
+$totalTopicRow = $totalTopicResult->fetch_assoc();
 
-	$totalTopics = number_format($totalTopicRow['totalTopics'], 0);
+$totalTopics = number_format($totalTopicRow['totalTopics'], 0);
 
 	// Find latest post
-	$dispLatestPost = "";
+$dispLatestPost = "";
 if ($arrLatestPostInfo['id'] != 0) {
 	$boardObj->objPost->select($arrLatestPostInfo['id']);
 	$postInfo = $boardObj->objPost->get_info_filtered();

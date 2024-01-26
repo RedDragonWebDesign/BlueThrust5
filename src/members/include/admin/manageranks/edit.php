@@ -500,23 +500,23 @@ if ($checkMember) {
 												<div class='main' style='margin-left: 15px; overflow-y: auto; width: 75%; height: 300px'>
 													";
 
-													$consoleObj = new ConsoleOption($mysqli);
-													$consoleCategories = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory ORDER BY ordernum DESC");
+					$consoleObj = new ConsoleOption($mysqli);
+					$consoleCategories = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory ORDER BY ordernum DESC");
 					while ($arrConsoleCats = $consoleCategories->fetch_assoc()) {
 						$tempNum = $arrConsoleCats['consolecategory_id'];
 						$arrFormatOptions[$tempNum] = array();
 					}
 
-													$consoleOptions = $mysqli->query("SELECT * FROM ".$dbprefix."console ORDER BY sortnum");
-													$rankOptions = "";
+					$consoleOptions = $mysqli->query("SELECT * FROM ".$dbprefix."console ORDER BY sortnum");
+					$rankOptions = "";
 					while ($arrConsoleOptions = $consoleOptions->fetch_assoc()) {
 						$tempCat = $arrConsoleOptions['consolecategory_id'];
 						$arrFormatOptions[$tempCat][] = $arrConsoleOptions['console_id'];
 					}
 
-													$countConsoleCats = 0;
-													$consoleJSCode = "";
-													$consoleCatObj = new Basic($mysqli, "consolecategory", "consolecategory_id");
+					$countConsoleCats = 0;
+					$consoleJSCode = "";
+					$consoleCatObj = new Basic($mysqli, "consolecategory", "consolecategory_id");
 					foreach ($arrFormatOptions as $key => $arrOptions) {
 						$consoleCatObj->select($key);
 						$consoleCatInfo = $consoleCatObj->get_info();
@@ -560,7 +560,7 @@ if ($checkMember) {
 						}
 					}
 
-													echo "
+					echo "
 												</div>
 											</p>
 										</td>

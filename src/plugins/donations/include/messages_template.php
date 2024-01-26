@@ -18,9 +18,9 @@ if (!defined("MAIN_ROOT")) {
 	
 		<?php
 
-			echo
+		echo
 
-				nl2br(parseBBCode($donationInfo['message'])). "
+		nl2br(parseBBCode($donationInfo['message'])). "
 			
 				<br><br>
 				

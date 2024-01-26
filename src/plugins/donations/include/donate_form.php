@@ -4,8 +4,8 @@ if (!defined("MAIN_ROOT")) {
 	exit();
 }
 
-	$usernameMessage = "Not Logged In! - <a href='".MAIN_ROOT."login.php'>Log In</a> to have your account connected to this donation!";
-	$extraNameTooltip = "If left blank, the donation will be from Anonymous.";
+$usernameMessage = "Not Logged In! - <a href='".MAIN_ROOT."login.php'>Log In</a> to have your account connected to this donation!";
+$extraNameTooltip = "If left blank, the donation will be from Anonymous.";
 if (LOGGED_IN) {
 	$member->select($_SESSION['btUsername']);
 	$usernameMessage = $member->getMemberLink();
@@ -16,8 +16,8 @@ if (LOGGED_IN) {
 
 
 
-	$i = 0;
-	$arrComponents = array(
+$i = 0;
+$arrComponents = array(
 		"username" => array(
 			"type" => "custom",
 			"sortorder" => $i++,
@@ -27,30 +27,30 @@ if (LOGGED_IN) {
 	);
 
 
-	if ($campaignInfo['allowname'] == 1) {
-		$arrComponents['name'] = array(
-			"type" => "text",
-			"sortorder" => $i++,
-			"attributes" => array("class" => "formInput textBox bigTextBox"),
-			"display_name" => "Your Name",
-			"tooltip" => "This field is optional.".$extraNameTooltip
-		);
-	}
+if ($campaignInfo['allowname'] == 1) {
+	$arrComponents['name'] = array(
+		"type" => "text",
+		"sortorder" => $i++,
+		"attributes" => array("class" => "formInput textBox bigTextBox"),
+		"display_name" => "Your Name",
+		"tooltip" => "This field is optional.".$extraNameTooltip
+	);
+}
 
 
 
-	if ($campaignInfo['allowmessage'] == 1) {
-		$arrComponents['message'] = array(
-			"type" => "textarea",
-			"sortorder" => $i++,
-			"attributes" => array("class" => "formInput textBox bigTextBox", "rows" => "5"),
-			"display_name" => "Message",
-			"tooltip" => "Max 140 characters."
-		);
-	}
+if ($campaignInfo['allowmessage'] == 1) {
+	$arrComponents['message'] = array(
+		"type" => "textarea",
+		"sortorder" => $i++,
+		"attributes" => array("class" => "formInput textBox bigTextBox", "rows" => "5"),
+		"display_name" => "Message",
+		"tooltip" => "Max 140 characters."
+	);
+}
 
 
-	$arrComponents['amount'] = array(
+$arrComponents['amount'] = array(
 		"type" => "text",
 		"sortorder" => $i++,
 		"attributes" => array("class" => "formInput textBox smallTextBox"),
@@ -60,18 +60,18 @@ if (LOGGED_IN) {
 	);
 
 
-	if ($campaignInfo['allowhiddenamount'] == 1) {
-		$arrComponents['hideamount'] = array(
-			"type" => "checkbox",
-			"sortorder" => $i++,
-			"attributes" => array("class" => "formInput"),
-			"display_name" => "Hide Amount",
-			"tooltip" => "If you check this box, your donation amount will be hidden on the donation profile page.",
-			"value" => 1
-		);
-	}
+if ($campaignInfo['allowhiddenamount'] == 1) {
+	$arrComponents['hideamount'] = array(
+		"type" => "checkbox",
+		"sortorder" => $i++,
+		"attributes" => array("class" => "formInput"),
+		"display_name" => "Hide Amount",
+		"tooltip" => "If you check this box, your donation amount will be hidden on the donation profile page.",
+		"value" => 1
+	);
+}
 
-	$arrComponents['submit'] = array(
+$arrComponents['submit'] = array(
 		"type" => "submit",
 		"value" => "Continue",
 		"attributes" => array("class" => "submitButton formSubmitButton"),
@@ -79,23 +79,23 @@ if (LOGGED_IN) {
 	);
 
 
-	if (isset($_GET['fail']) && $_GET['fail'] == "amount") {
-		$arrComponents['show_fail'] = array(
+if (isset($_GET['fail']) && $_GET['fail'] == "amount") {
+	$arrComponents['show_fail'] = array(
 
-			"type" => "custom",
-			"sortorder" => $i++,
-			"html" => "<p align='center' class='main failedFont'><b>The minimum donation amount is ".$campaignObj->formatAmount($campaignInfo['minimumamount'])."</b></p>"
-		);
-	}
+		"type" => "custom",
+		"sortorder" => $i++,
+		"html" => "<p align='center' class='main failedFont'><b>The minimum donation amount is ".$campaignObj->formatAmount($campaignInfo['minimumamount'])."</b></p>"
+	);
+}
 
 
-	$setupFormArgs = array(
+$setupFormArgs = array(
 		"name" => "donate_form-".$_GET['campaign_id'],
 		"components" => $arrComponents,
 		"description" => "Use the form below to make a donation!",
 		"attributes" => array("action" => MAIN_ROOT."plugins/donations/paypal-redirect.php?campaign_id=".$_GET['campaign_id'], "method" => "post")
 	);
 
-	$hooksObj->run("donate_form-".$_GET['campaign_id']);
+$hooksObj->run("donate_form-".$_GET['campaign_id']);
 
-	$donationForm->buildForm($setupFormArgs);
+$donationForm->buildForm($setupFormArgs);

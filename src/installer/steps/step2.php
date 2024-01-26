@@ -1,6 +1,6 @@
 <?php
 
-	$countErrors = 0;
+$countErrors = 0;
 if ($_POST['step1submit']) {
 	$mysqli = new btmysql($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass'], $_POST['dbname']);
 

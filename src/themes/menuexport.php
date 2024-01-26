@@ -1,21 +1,21 @@
 <?php
 
-	require_once("../_setup.php");
+require_once("../_setup.php");
 
-	require_once("../classes/member.php");
+require_once("../classes/member.php");
 
-	$member = new Member($mysqli);
-	$consoleObj = new ConsoleOption($mysqli);
+$member = new Member($mysqli);
+$consoleObj = new ConsoleOption($mysqli);
 
-	$websiteSettingsCID = $consoleObj->findConsoleIDByName("Website Settings");
-	$consoleObj->select($websiteSettingsCID);
+$websiteSettingsCID = $consoleObj->findConsoleIDByName("Website Settings");
+$consoleObj->select($websiteSettingsCID);
 
 if (!isset($_SESSION['btUsername']) || !isset($_SESSION['btPassword']) || !$member->select($_SESSION['btUsername']) || ($member->select($_SESSION['btUsername']) && !$member->authorizeLogin($_SESSION['btPassword'])) || ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword']) && !$member->hasAccess($consoleObj))) {
 	header("HTTP/1.0 404 Not Found");
 	exit();
 }
 
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_category ORDER BY section, sortnum");
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_category ORDER BY section, sortnum");
 while ($catInfo = $result->fetch_assoc()) {
 	foreach ($catInfo as $key => $value) {
 		$catInfo[$key] = $mysqli->real_escape_string($value);
@@ -25,8 +25,8 @@ while ($catInfo = $result->fetch_assoc()) {
 	$saveMenuSQL .= "\n";
 }
 
-	$saveMenuSQL .= "\n";
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_item ORDER BY menucategory_id, sortnum");
+$saveMenuSQL .= "\n";
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."menu_item ORDER BY menucategory_id, sortnum");
 while ($row = $result->fetch_assoc()) {
 	foreach ($row as $key => $value) {
 		$row[$key] = $mysqli->real_escape_string($value);
@@ -35,9 +35,9 @@ while ($row = $result->fetch_assoc()) {
 	$saveMenuSQL .= "INSERT INTO `".$dbprefix."menu_item` (`menuitem_id`, `menucategory_id`, `name`, `itemtype`, `itemtype_id`, `accesstype`, `hide`, `sortnum`) VALUES ('".$row['menuitem_id']."', '".$row['menucategory_id']."', '".$row['name']."', '".$row['itemtype']."', '".$row['itemtype_id']."', '".$row['accesstype']."', '".$row['hide']."', '".$row['sortnum']."');";
 	$saveMenuSQL .= "\n";
 }
-	$saveMenuSQL .= "\n";
+$saveMenuSQL .= "\n";
 
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_customblock");
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_customblock");
 while ($row = $result->fetch_assoc()) {
 	foreach ($row as $key => $value) {
 		$row[$key] = $mysqli->real_escape_string($value);
@@ -46,9 +46,9 @@ while ($row = $result->fetch_assoc()) {
 	$saveMenuSQL .= "INSERT INTO `".$dbprefix."menuitem_customblock` (`menucustomblock_id`, `menuitem_id`, `blocktype`, `code`) VALUES ('".$row['menucustomblock_id']."', '".$row['menuitem_id']."', '".$row['blocktype']."', '".$row['code']."');";
 	$saveMenuSQL .= "\n";
 }
-	$saveMenuSQL .= "\n";
+$saveMenuSQL .= "\n";
 
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_custompage");
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_custompage");
 while ($row = $result->fetch_assoc()) {
 	foreach ($row as $key => $value) {
 		$row[$key] = $mysqli->real_escape_string($value);
@@ -57,9 +57,9 @@ while ($row = $result->fetch_assoc()) {
 	$saveMenuSQL .= "INSERT INTO `".$dbprefix."menuitem_custompage` (`menucustompage_id`, `menuitem_id`, `custompage_id`, `prefix`, `linktarget`, `textalign`) VALUES ('".$row['menucustompage_id']."', '".$row['menuitem_id']."', '".$row['custompage_id']."', '".$row['prefix']."', '".$row['linktarget']."', '".$row['textalign']."');";
 	$saveMenuSQL .= "\n";
 }
-	$saveMenuSQL .= "\n";
+$saveMenuSQL .= "\n";
 
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_image");
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_image");
 while ($row = $result->fetch_assoc()) {
 	foreach ($row as $key => $value) {
 		$row[$key] = $mysqli->real_escape_string($value);
@@ -68,9 +68,9 @@ while ($row = $result->fetch_assoc()) {
 	$saveMenuSQL .= "INSERT INTO `".$dbprefix."menuitem_image` (`menuimage_id`, `menuitem_id`, `imageurl`, `width`, `height`, `link`, `linktarget`, `imagealign`) VALUES ('".$row['menuimage_id']."', '".$row['menuitem_id']."', '".$row['imageurl']."', '".$row['width']."', '".$row['height']."', '".$row['link']."', '".$row['linktarget']."', '".$row['imagealign']."');";
 	$saveMenuSQL .= "\n";
 }
-	$saveMenuSQL .= "\n";
+$saveMenuSQL .= "\n";
 
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_link");
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_link");
 while ($row = $result->fetch_assoc()) {
 	foreach ($row as $key => $value) {
 		$row[$key] = $mysqli->real_escape_string($value);
@@ -79,9 +79,9 @@ while ($row = $result->fetch_assoc()) {
 	$saveMenuSQL .= "INSERT INTO `".$dbprefix."menuitem_link` (`menulink_id`, `menuitem_id`, `link`, `linktarget`, `prefix`, `textalign`) VALUES ('".$row['menulink_id']."', '".$row['menuitem_id']."', '".$row['link']."', '".$row['linktarget']."', '".$row['prefix']."', '".$row['textalign']."');";
 	$saveMenuSQL .= "\n";
 }
-	$saveMenuSQL .= "\n";
+$saveMenuSQL .= "\n";
 
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_shoutbox");
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."menuitem_shoutbox");
 while ($row = $result->fetch_assoc()) {
 	foreach ($row as $key => $value) {
 		$row[$key] = $mysqli->real_escape_string($value);

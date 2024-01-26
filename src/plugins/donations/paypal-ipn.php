@@ -1,11 +1,11 @@
 <?php
 
-	require_once("../../_setup.php");
-	require_once("classes/donate-paypalclass.php");
-	require_once("classes/donation.php");
-	require_once("classes/campaign.php");
+require_once("../../_setup.php");
+require_once("classes/donate-paypalclass.php");
+require_once("classes/donation.php");
+require_once("classes/campaign.php");
 
-	$donationPlugin = new btPlugin($mysqli);
+$donationPlugin = new btPlugin($mysqli);
 if ($donationPlugin->selectByName("Donations")) {
 	$donationObj = new Donation($mysqli);
 

@@ -191,7 +191,7 @@ if ($submitSuccess) {
 		echo "$('html, body').animate({ scrollTop: 0 });";
 	}
 
-				echo "
+	echo "
 			});
 		</script>
 	";

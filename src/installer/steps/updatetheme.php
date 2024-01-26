@@ -1,15 +1,15 @@
 <?php
-	require_once("../../_config.php");
-	require_once("../../classes/btmysql.php");
-	require_once("../../classes/member.php");
+require_once("../../_config.php");
+require_once("../../classes/btmysql.php");
+require_once("../../classes/member.php");
 
-	$mysqli = new btmysql($dbhost, $dbuser, $dbpass, $dbname);
-	$mysqli->set_tablePrefix($dbprefix);
+$mysqli = new btmysql($dbhost, $dbuser, $dbpass, $dbname);
+$mysqli->set_tablePrefix($dbprefix);
 
-	$member = new Member($mysqli);
-	$websiteInfoObj = new Basic($mysqli, "websiteinfo", "websiteinfo_id");
+$member = new Member($mysqli);
+$websiteInfoObj = new Basic($mysqli, "websiteinfo", "websiteinfo_id");
 
-	$member->select($_POST['user']);
+$member->select($_POST['user']);
 if ($member->authorizeLogin($_POST['pass'], 1) && $member->get_info("rank_id") == "1") {
 	$memberInfo = $member->get_info_filtered();
 	$websiteInfoObj->select(1);

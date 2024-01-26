@@ -54,7 +54,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 					";
 
 
-				$arrTeams = $tournamentObj->getTeams(true, "ORDER BY seed");
+		$arrTeams = $tournamentObj->getTeams(true, "ORDER BY seed");
 		foreach ($arrTeams as $teamID) {
 			$dispName = $tournamentObj->getPlayerName($teamID);
 			$tournamentObj->objTeam->select($teamID);
@@ -74,7 +74,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 			$seedCount++;
 		}
 
-				echo "
+		echo "
 					
 				</table>
 		

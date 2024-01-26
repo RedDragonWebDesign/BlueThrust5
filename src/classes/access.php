@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  * BlueThrust Clan Scripts
  * Copyright 2014
@@ -13,11 +12,10 @@
  *
  */
 
-	require_once("btmysql.php");
-	require_once("rank.php");
-	require_once("rankcategory.php");
-	require_once("member.php");
-
+require_once("btmysql.php");
+require_once("rank.php");
+require_once("rankcategory.php");
+require_once("member.php");
 
 class Access {
 
@@ -143,7 +141,7 @@ class Access {
 							<select id='selectRankAccess' class='textBox'><option value='0'>Remove Access Rules</option>
 						";
 
-					$this->dispAccessOptions();
+			$this->dispAccessOptions();
 
 			echo "	
 								
@@ -215,7 +213,7 @@ class Access {
 								<select class='textBox' id='selectMemberAccessType'>
 									<option value='0'>Remove Access Rules</option>
 									";
-					$this->dispAccessOptions();
+			$this->dispAccessOptions();
 
 			echo "
 								</select> <input type='button' id='setMemberAccess' class='submitButton' value='Set'>
@@ -266,7 +264,7 @@ class Access {
 			}
 		}
 
-			echo "
+		echo "
 					</table>
 				";
 

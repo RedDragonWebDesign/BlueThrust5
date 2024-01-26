@@ -27,4 +27,4 @@ function sendQueuedEmail() {
 	}
 }
 
-	sendQueuedEmail();
+sendQueuedEmail();
