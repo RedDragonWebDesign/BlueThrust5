@@ -88,18 +88,18 @@ if (trim($_POST['keyword']) != "") {
 	// Filter By Username
 	$filterByUsername = "";
 	$memberIDList = array();
-	if (trim($_POST['fakesearchuser'] ?? '') != "") {
-		$_POST['fakesearchuser'] = str_replace("*", "%", $_POST['fakesearchuser']);
+if (trim($_POST['fakesearchuser'] ?? '') != "") {
+	$_POST['fakesearchuser'] = str_replace("*", "%", $_POST['fakesearchuser']);
 
-		$memberList = $member->get_entries(array("username" => $_POST['fakesearchuser']), "username", true, array("username" => "Like"));
-		$memberIDList = array();
+	$memberList = $member->get_entries(array("username" => $_POST['fakesearchuser']), "username", true, array("username" => "Like"));
+	$memberIDList = array();
 
 	foreach ($memberList as $searchMemberInfo) {
 		$memberIDList[] = $searchMemberInfo['member_id'];
 	}
 
-		$memberListSQL = "('".implode("','", $memberIDList)."')";
-		$filterResults[] = " ".$postTable.".member_id IN ".$memberListSQL;
+	$memberListSQL = "('".implode("','", $memberIDList)."')";
+	$filterResults[] = " ".$postTable.".member_id IN ".$memberListSQL;
 
 	if ($_POST['filterusername'] == 1) {
 		$topicList = array();
@@ -149,18 +149,18 @@ if ($_POST['filtertopics'] == 0) {
 	$filterBoards = $_POST['filterboards'] ?? []; // Use null coalescing operator to provide a default empty array
 
 	if (!in_array(0, $filterBoards)) {
-    	$arrFilterBoards = $filterBoards;
+		$arrFilterBoards = $filterBoards;
 
-    	if ($_POST['include_subforums'] == 1) {
-        	foreach ($filterBoards as $value) {
-            	$boardObj->select($value);
-            	$arrFilterBoards = array_merge($arrFilterBoards, $boardObj->getAllSubForums());
-        	}
+		if ($_POST['include_subforums'] == 1) {
+			foreach ($filterBoards as $value) {
+				$boardObj->select($value);
+				$arrFilterBoards = array_merge($arrFilterBoards, $boardObj->getAllSubForums());
+			}
 
-        		$arrFilterBoards = array_unique($arrFilterBoards);
-    	}
+				$arrFilterBoards = array_unique($arrFilterBoards);
+		}
 	}
-	
+
 	// Filter by Topic
 
 	if (isset($_GET['topic']) && $boardObj->objTopic->select($_GET['topic'])) {
