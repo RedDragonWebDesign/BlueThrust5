@@ -131,7 +131,7 @@ function parseBBCode($strText) {
 	$strText = preg_replace("/\[youtube\]https?:\/\/youtu\.be\/[a-zA-Z0-9_-]+\[youtube\]/i", "<iframe class='youtubeEmbed' src='http://www.youtube.com/embed/$3?wmode=opaque' frameborder='0' allowfullscreen></iframe>", $strText);
 
 	$strText = str_replace("[/twitch]", "[/twitch]\n", $strText);
-	$strText = preg_replace("/\/\[twitch\]https?:\/\/www\.twitch\.tv\/[a-zA-Z0-9_-]+\[twitch\]/i/i", "<object class='youtubeEmbed' type='application/x-shockwave-flash' id='live_embed_player_flash' data='http://www.twitch.tv/widgets/live_embed_player.swf?channel=$3' bgcolor='#000000'><param name='allowFullScreen' value='true' /><param name='wmode' value='opaque' /><param name='allowScriptAccess' value='always' /><param name='allowNetworking' value='all' /><param name='movie' value='http://www.twitch.tv/widgets/live_embed_player.swf' /><param name='flashvars' value='hostname=www.twitch.tv&channel=$3&auto_play=false&start_volume=25' /></object>", $strText);
+	$strText = preg_replace("/\[twitch\]https?:\/\/www\.twitch\.tv\/[a-zA-Z0-9_-]+\[twitch\]/i", "<object class='youtubeEmbed' type='application/x-shockwave-flash' id='live_embed_player_flash' data='http://www.twitch.tv/widgets/live_embed_player.swf?channel=$3' bgcolor='#000000'><param name='allowFullScreen' value='true' /><param name='wmode' value='opaque' /><param name='allowScriptAccess' value='always' /><param name='allowNetworking' value='all' /><param name='movie' value='http://www.twitch.tv/widgets/live_embed_player.swf' /><param name='flashvars' value='hostname=www.twitch.tv&channel=$3&auto_play=false&start_volume=25' /></object>", $strText);
 
 	$strText = autolink($strText);
 
