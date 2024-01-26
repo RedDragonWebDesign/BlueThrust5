@@ -29,12 +29,9 @@ if (
 }
 
 // Do they want HTML, or the actual image?
-// HTML
-if (isset($_GET['display'])) {
+if (isset($_GET['display'])) { // HTML
 	echo "<img src='".$MAIN_ROOT."images/captcha.php?appCompID=".$_GET['appCompID']."&new=".time()."' width='440' height='90'>";
-}
-// Actual image
-else {
+} else { // Actual image
 	header('Content-Type: image/png');
 
 	if ($_GET['appCompID'] == -1) {

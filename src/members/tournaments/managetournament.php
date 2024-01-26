@@ -112,7 +112,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 				}
 
 				break;
-			case "startmatches";
+			case "startmatches":
 				require_once("startmatches.php");
 				break;
 			case "managematches":
