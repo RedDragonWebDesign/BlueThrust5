@@ -4,8 +4,9 @@ var ImageDialog = {
 
 		tinyMCEPopup.requireLangPack();
 
-		if (url = tinyMCEPopup.getParam("external_image_list_url"))
+		if (url = tinyMCEPopup.getParam("external_image_list_url")) {
 			document.write('<script language="javascript" type="text/javascript" src="' + tinyMCEPopup.editor.documentBaseURI.toAbsolute(url) + '"></script>');
+		}
 	},
 
 	init : function() {
@@ -13,8 +14,9 @@ var ImageDialog = {
 
 		// Setup browse button
 		document.getElementById('srcbrowsercontainer').innerHTML = getBrowserHTML('srcbrowser','src','image','theme_advanced_image');
-		if (isVisible('srcbrowser'))
+		if (isVisible('srcbrowser')) {
 			document.getElementById('src').style.width = '180px';
+		}
 
 		e = ed.selection.getNode();
 
@@ -47,8 +49,9 @@ var ImageDialog = {
 			tinymce.each(l, function(o) {
 				lst.options[lst.options.length] = new Option(o[0], o[1]);
 			});
-		} else
+		} else {
 			dom.remove(dom.getParent(id, 'tr'));
+		}
 	},
 
 	update : function() {
@@ -73,8 +76,9 @@ var ImageDialog = {
 				border : nl.border.value,
 				align : getSelectValue(f, 'align')
 			});
-		} else
+		} else {
 			args.style = this.styleVal;
+		}
 
 		tinymce.extend(args, {
 			src : f.src.value.replace(/ /g, '%20'),
@@ -129,12 +133,14 @@ var ImageDialog = {
 			// Handle border
 			v = f.border.value;
 			if (v || v == '0') {
-				if (v == '0')
+				if (v == '0') {
 					st['border'] = '0';
-				else
+				} else {
 					st['border'] = v + 'px solid black';
-			} else
+				}
+			} else {
 				delete st['border'];
+			}
 
 			// Handle hspace
 			v = f.hspace.value;
@@ -170,27 +176,31 @@ var ImageDialog = {
 		if (ed.settings.inline_styles) {
 			switch (at) {
 				case 'align':
-					if (v = dom.getStyle(e, 'float'))
+					if (v = dom.getStyle(e, 'float')) {
 						return v;
+					}
 
-					if (v = dom.getStyle(e, 'vertical-align'))
+					if (v = dom.getStyle(e, 'vertical-align')) {
 						return v;
+					}
 
 					break;
 
 				case 'hspace':
 					v = dom.getStyle(e, 'margin-left')
 					v2 = dom.getStyle(e, 'margin-right');
-					if (v && v == v2)
+					if (v && v == v2) {
 						return parseInt(v.replace(/[^0-9]/g, ''));
+					}
 
 					break;
 
 				case 'vspace':
 					v = dom.getStyle(e, 'margin-top')
 					v2 = dom.getStyle(e, 'margin-bottom');
-					if (v && v == v2)
+					if (v && v == v2) {
 						return parseInt(v.replace(/[^0-9]/g, ''));
+					}
 
 					break;
 
@@ -206,19 +216,22 @@ var ImageDialog = {
 							return false;
 						}
 
-						if (sv)
+						if (sv) {
 							v = sv;
+						}
 					});
 
-					if (v)
+					if (v) {
 						return parseInt(v.replace(/[^0-9]/g, ''));
+					}
 
 					break;
 			}
 		}
 
-		if (v = dom.getAttrib(e, at))
+		if (v = dom.getAttrib(e, at)) {
 			return v;
+		}
 
 		return '';
 	},
@@ -226,17 +239,19 @@ var ImageDialog = {
 	resetImageData : function() {
 		var f = document.forms[0];
 
-		f.width.value = f.height.value = "";	
+		f.width.value = f.height.value = "";
 	},
 
 	updateImageData : function() {
 		var f = document.forms[0], t = ImageDialog;
 
-		if (f.width.value == "")
+		if (f.width.value == "") {
 			f.width.value = t.preloadImg.width;
+		}
 
-		if (f.height.value == "")
+		if (f.height.value == "") {
 			f.height.value = t.preloadImg.height;
+		}
 	},
 
 	getImageData : function() {

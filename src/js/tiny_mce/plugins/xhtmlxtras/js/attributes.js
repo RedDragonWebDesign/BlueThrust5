@@ -44,7 +44,7 @@ function init() {
 }
 
 function setFormValue(name, value) {
-	if(value && document.forms[0].elements[name]){
+	if (value && document.forms[0].elements[name]) {
 		document.forms[0].elements[name].value = value;
 	}
 }
@@ -67,8 +67,9 @@ function setAttrib(elm, attrib, value) {
 	if (typeof(value) == "undefined" || value == null) {
 		value = "";
 
-		if (valueElm)
+		if (valueElm) {
 			value = valueElm.value;
+		}
 	}
 
 	dom.setAttrib(elm, attrib.toLowerCase(), value);

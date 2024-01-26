@@ -50,11 +50,11 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		$countFails = $result->num_rows;
 		$adminKeyFails = $intMaxAttempts-$countFails;
 
-		$failbanObj->addNew(array("ipaddress", "pagename"), array($IP_ADDRESS, "edittheme"));
+		$failbanObj->addNew(["ipaddress", "pagename"], [$IP_ADDRESS, "edittheme"]);
 
 		if ($adminKeyFails <= 0) {
 			$ipbanObj->set_tableKey("ipban_id");
-			$ipbanObj->addNew(array("ipaddress"), array($IP_ADDRESS));
+			$ipbanObj->addNew(["ipaddress"], [$IP_ADDRESS]);
 
 
 			$banMessage = "You have been permanently banned!  If you are the true website admin, you will be able to unban yourself.  If not... GTFO!";

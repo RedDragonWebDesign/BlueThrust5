@@ -43,7 +43,7 @@ if ($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMemb
 	$eventInfo = $eventObj->get_info_filtered();
 
 	if ($eventInfo['startdate'] <= time() && $eventMemberInfo['status'] == 1) {
-		$eventObj->objEventMember->update(array("attendconfirm_member"), array("1"));
+		$eventObj->objEventMember->update(["attendconfirm_member"], ["1"]);
 	}
 
 	require_once("invitelist.php");

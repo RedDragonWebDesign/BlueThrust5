@@ -19,7 +19,7 @@ if (!defined("LOGGED_IN") || !LOGGED_IN) {
 $objManageList->intAddCID = $consoleObj->findConsoleIDByName("Create a Donation Campaign");
 $objManageList->strEditItemLink = MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&campaignID=";
 $objManageList->strDeleteLink = MAIN_ROOT."members/console.managelist.delete.php?cID=".$_GET['cID'];
-$objManageList->arrActionList = array("edit", "delete", "dispDonationLogIcon");
+$objManageList->arrActionList = ["edit", "delete", "dispDonationLogIcon"];
 $objManageList->strItemTitle = "Campaign:";
 $objManageList->orderBy = "title";
 $objManageList->strNameTableColumn = "title";

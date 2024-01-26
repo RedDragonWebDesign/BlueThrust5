@@ -71,13 +71,13 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$pluginObj->selectByName("Facebook Login");
 
 	if ( ! empty($_POST['submit']) ) {
-		$arrAPIKey = array(
+		$arrAPIKey = [
 			'appID' => $_POST['appid'],
 			'appSecret' => $_POST['appsecret']
-		);
+		];
 
 		$jsonAPIKey = json_encode($arrAPIKey);
-		if ($pluginObj->update(array("apikey"), array($jsonAPIKey))) {
+		if ($pluginObj->update(["apikey"], [$jsonAPIKey])) {
 			echo "
 				<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -103,7 +103,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	if ( empty($_POST['submit']) ) {
 		$dispNote = "";
 
-		$arrFacebookAPIKeys = array("App ID"=>$fbObj->getAppID(), "App Secret"=>$fbObj->getAppSecret());
+		$arrFacebookAPIKeys = ["App ID"=>$fbObj->getAppID(), "App Secret"=>$fbObj->getAppSecret()];
 
 		foreach ($arrFacebookAPIKeys as $key => $value) {
 			if ($value == "") {

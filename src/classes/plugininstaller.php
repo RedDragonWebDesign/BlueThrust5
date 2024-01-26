@@ -7,12 +7,12 @@ class PluginInstaller {
 	protected $objPlugin;
 	protected $sql = "";
 	protected $pluginID;
-	protected $errors = array();
-	public $arrPluginTables = array();
+	protected $errors = [];
+	public $arrPluginTables = [];
 	public $pluginDir = "";
 	public $pluginName;
-	public $pluginPages = array();
-	public $pluginConsoleOptions = array();
+	public $pluginPages = [];
+	public $pluginConsoleOptions = [];
 	public $pluginConsoleCategory = "";
 
 	public function __construct($sqlConnection) {
@@ -84,7 +84,7 @@ class PluginInstaller {
 			if ($result->num_rows == 0) {
 				$consoleCatObj = new ConsoleCategory($this->MySQL);
 				$newOrderNum = $consoleCatObj->getHighestOrderNum()+1;
-				$consoleCatObj->addNew(array("name", "ordernum"), array($this->pluginConsoleCategory, $newOrderNum));
+				$consoleCatObj->addNew(["name", "ordernum"], [$this->pluginConsoleCategory, $newOrderNum]);
 				$consoleCatID = $consoleCatObj->get_info("consolecategory_id");
 			} else {
 				$row = $result->fetch_assoc();
@@ -102,14 +102,14 @@ class PluginInstaller {
 		$newSortNum = $consoleObj->getHighestSortNum()+1;
 
 		foreach ($this->pluginConsoleOptions as $consoleOptionInfo) {
-			$consoleObj->addNew(array("consolecategory_id", "pagetitle", "filename", "sortnum"), array($consoleCatID, $consoleOptionInfo['pagetitle'], $consoleOptionInfo['filename'], $newSortNum++));
+			$consoleObj->addNew(["consolecategory_id", "pagetitle", "filename", "sortnum"], [$consoleCatID, $consoleOptionInfo['pagetitle'], $consoleOptionInfo['filename'], $newSortNum++]);
 		}
 	}
 
 	public function addPluginPages() {
 
 		foreach ($this->pluginPages as $pluginPageInfo) {
-			$this->objPlugin->pluginPage->addNew(array("plugin_id", "page", "pagepath"), array($this->pluginID, $pluginPageInfo['page'], $pluginPageInfo['pagepath']));
+			$this->objPlugin->pluginPage->addNew(["plugin_id", "page", "pagepath"], [$this->pluginID, $pluginPageInfo['page'], $pluginPageInfo['pagepath']]);
 		}
 	}
 
@@ -134,7 +134,7 @@ class PluginInstaller {
 
 	public function addPlugin() {
 
-		$this->objPlugin->addNew(array("name", "filepath", "dateinstalled"), array($this->pluginName, $this->pluginDir, time()));
+		$this->objPlugin->addNew(["name", "filepath", "dateinstalled"], [$this->pluginName, $this->pluginDir, time()]);
 
 		$this->pluginID = $this->objPlugin->get_info("plugin_id");
 		$this->objPlugin->pluginPage->setCategoryKeyValue($this->pluginID);

@@ -57,7 +57,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 					// Check operation
-					$possibleOps = array("add", "sub", "mul", "div");
+					$possibleOps = ["add", "sub", "mul", "div"];
 					if (!in_array($_POST['calcOperation'], $possibleOps)) {
 						$countErrors++;
 						$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid operation. - ".$_POST['calcOperation']."<br>";
@@ -116,7 +116,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				}
 
 
-				$_SESSION['btStatCache'][] = array(
+				$_SESSION['btStatCache'][] = [
 
 						'statName' => $_POST['statName'],
 						'statType' => $_POST['statType'],
@@ -127,7 +127,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 						'hideStat' => $_POST['hideStat'],
 						'textInput' => $intInputText
 
-				);
+				];
 
 				echo "
 					<script type='text/javascript'>

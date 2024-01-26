@@ -47,14 +47,15 @@
 			ed.onInit.add(function() {
 				var dom = ed.dom;
 
-				if (tinymce.isIE)
+				if (tinymce.isIE) {
 					ed.getDoc().execCommand('2D-Position', false, true);
+				}
 			});
 
 			// Remove serialized styles when selecting a layer since it might be changed by a drag operation
 			ed.onMouseUp.add(function(ed, e) {
 				var layer = findParentLayer(e.target);
-	
+
 				if (layer) {
 					ed.dom.setAttrib(layer, 'data-mce-style', '');
 				}
@@ -123,10 +124,11 @@
 
 			tinymce.each(dom.select('div,p', e), function(e) {
 				if (/^(absolute|relative|fixed)$/i.test(e.style.position)) {
-					if (s)
+					if (s) {
 						dom.addClass(e, 'mceItemVisualAid');
-					else
+					} else {
 						dom.removeClass(e, 'mceItemVisualAid');
+					}
 
 					dom.addClass(e, 'mceItemLayer');
 				}
@@ -138,16 +140,18 @@
 
 			nl = [];
 			tinymce.walk(ed.getBody(), function(n) {
-				if (n.nodeType == 1 && /^(absolute|relative|static)$/i.test(n.style.position))
-					nl.push(n); 
+				if (n.nodeType == 1 && /^(absolute|relative|static)$/i.test(n.style.position)) {
+					nl.push(n);
+				}
 			}, 'childNodes');
 
 			// Find z-indexes
 			for (i=0; i<nl.length; i++) {
 				z[i] = nl[i].style.zIndex ? parseInt(nl[i].style.zIndex) : 0;
 
-				if (ci < 0 && nl[i] == le)
+				if (ci < 0 && nl[i] == le) {
 					ci = i;
+				}
 			}
 
 			if (d < 0) {
@@ -165,8 +169,9 @@
 					nl[ci].style.zIndex = z[fi];
 					nl[fi].style.zIndex = z[ci];
 				} else {
-					if (z[ci] > 0)
+					if (z[ci] > 0) {
 						nl[ci].style.zIndex = z[ci] - 1;
+					}
 				}
 			} else {
 				// Move forward
@@ -182,8 +187,9 @@
 				if (fi > -1) {
 					nl[ci].style.zIndex = z[fi];
 					nl[fi].style.zIndex = z[ci];
-				} else
+				} else {
 					nl[ci].style.zIndex = z[ci] + 1;
+				}
 			}
 
 			ed.execCommand('mceRepaint');
@@ -210,15 +216,17 @@
 			}, ed.selection.getContent() || ed.getLang('layer.content'));
 
 			// Workaround for IE where it messes up the JS engine if you insert a layer on IE 6,7
-			if (tinymce.isIE)
+			if (tinymce.isIE) {
 				dom.setHTML(body, body.innerHTML);
+			}
 		},
 
 		_toggleAbsolute : function() {
 			var ed = this.editor, le = this._getParentLayer(ed.selection.getNode());
 
-			if (!le)
+			if (!le) {
 				le = ed.dom.getParent(ed.selection.getNode(), 'DIV,P,IMG');
+			}
 
 			if (le) {
 				if (le.style.position.toLowerCase() == "absolute") {
@@ -233,17 +241,21 @@
 					ed.dom.removeClass(le, 'mceItemVisualAid');
 					ed.dom.removeClass(le, 'mceItemLayer');
 				} else {
-					if (le.style.left == "")
+					if (le.style.left == "") {
 						le.style.left = 20 + 'px';
+					}
 
-					if (le.style.top == "")
+					if (le.style.top == "") {
 						le.style.top = 20 + 'px';
+					}
 
-					if (le.style.width == "")
+					if (le.style.width == "") {
 						le.style.width = le.width ? (le.width + 'px') : '100px';
+					}
 
-					if (le.style.height == "")
+					if (le.style.height == "") {
 						le.style.height = le.height ? (le.height + 'px') : '100px';
+					}
 
 					le.style.position = "absolute";
 

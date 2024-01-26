@@ -42,7 +42,7 @@ $pluginObj = new btPlugin($mysqli);
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$countErrors = 0;
-	$dispError = array();
+	$dispError = [];
 
 	// Check if installed
 
@@ -89,7 +89,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	}
 
 
-	$arrReturn = array();
+	$arrReturn = [];
 	if ($countErrors == 0) {
 		$arrReturn['result'] = "success";
 		$member->logAction("Uninstalled ".$PLUGIN_NAME." Plugin.");

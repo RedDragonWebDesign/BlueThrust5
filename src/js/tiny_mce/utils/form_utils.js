@@ -37,8 +37,9 @@ function setBrowserDisabled(id, state) {
 			lnk.removeAttribute("href");
 			tinyMCEPopup.dom.addClass(img, 'disabled');
 		} else {
-			if (lnk.getAttribute("realhref"))
+			if (lnk.getAttribute("realhref")) {
 				lnk.setAttribute("href", lnk.getAttribute("realhref"));
+			}
 
 			tinyMCEPopup.dom.removeClass(img, 'disabled');
 		}
@@ -50,8 +51,9 @@ function getBrowserHTML(id, target_form_element, type, prefix) {
 
 	cb = tinyMCEPopup.getParam(option, tinyMCEPopup.getParam("file_browser_callback"));
 
-	if (!cb)
+	if (!cb) {
 		return "";
+	}
 
 	html = "";
 	html += '<a id="' + id + '_link" href="javascript:openBrowser(\'' + id + '\',\'' + target_form_element + '\', \'' + type + '\',\'' + option + '\');" onmousedown="return false;" class="browse">';
@@ -63,16 +65,19 @@ function getBrowserHTML(id, target_form_element, type, prefix) {
 function openBrowser(img_id, target_form_element, type, option) {
 	var img = document.getElementById(img_id);
 
-	if (img.className != "mceButtonDisabled")
+	if (img.className != "mceButtonDisabled") {
 		tinyMCEPopup.openBrowser(target_form_element, type, option);
+	}
 }
 
 function selectByValue(form_obj, field_name, value, add_custom, ignore_case) {
-	if (!form_obj || !form_obj.elements[field_name])
+	if (!form_obj || !form_obj.elements[field_name]) {
 		return;
+	}
 
-	if (!value)
+	if (!value) {
 		value = "";
+	}
 
 	var sel = form_obj.elements[field_name];
 
@@ -83,8 +88,9 @@ function selectByValue(form_obj, field_name, value, add_custom, ignore_case) {
 		if (option.value == value || (ignore_case && option.value.toLowerCase() == value.toLowerCase())) {
 			option.selected = true;
 			found = true;
-		} else
+		} else {
 			option.selected = false;
+		}
 	}
 
 	if (!found && add_custom && value != '') {
@@ -100,8 +106,9 @@ function selectByValue(form_obj, field_name, value, add_custom, ignore_case) {
 function getSelectValue(form_obj, field_name) {
 	var elm = form_obj.elements[field_name];
 
-	if (elm == null || elm.options == null || elm.selectedIndex === -1)
+	if (elm == null || elm.options == null || elm.selectedIndex === -1) {
 		return "";
+	}
 
 	return elm.options[elm.selectedIndex].value;
 }
@@ -184,15 +191,18 @@ function trimSize(size) {
 function getCSSSize(size) {
 	size = trimSize(size);
 
-	if (size == "")
+	if (size == "") {
 		return "";
+	}
 
 	// Add px
-	if (/^[0-9]+$/.test(size))
+	if (/^[0-9]+$/.test(size)) {
 		size += 'px';
+	}
 	// Sanity check, IE doesn't like broken values
-	else if (!(/^[0-9\.]+(px|%|in|cm|mm|em|ex|pt|pc)$/i.test(size)))
+	else if (!(/^[0-9\.]+(px|%|in|cm|mm|em|ex|pt|pc)$/i.test(size))) {
 		return "";
+	}
 
 	return size;
 }
@@ -200,11 +210,13 @@ function getCSSSize(size) {
 function getStyle(elm, attrib, style) {
 	var val = tinyMCEPopup.dom.getAttrib(elm, attrib);
 
-	if (val != '')
+	if (val != '') {
 		return '' + val;
+	}
 
-	if (typeof(style) == 'undefined')
+	if (typeof(style) == 'undefined') {
 		style = attrib;
+	}
 
 	return tinyMCEPopup.dom.getStyle(elm, style);
 }

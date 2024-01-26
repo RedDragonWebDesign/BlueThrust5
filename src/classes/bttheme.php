@@ -16,8 +16,8 @@ class btTheme {
 	public function initHead() {
 		global $PAGE_NAME;
 
-		$this->arrHead = array();
-		$this->arrHeadOrder = array();
+		$this->arrHead = [];
+		$this->arrHeadOrder = [];
 
 		$this->setTitle($PAGE_NAME.$this->clanName);
 		$this->addHeadItem("ie-edge", "<meta http-equiv='X-UA-Compatible' content='IE=edge'>");
@@ -85,7 +85,7 @@ class btTheme {
 
 		if (isset($this->arrHead[$itemName])) {
 			if (isset($this->arrHeadOrder[$newPosition])) {
-				$newOrderArray = array();
+				$newOrderArray = [];
 				foreach ($this->arrHeadOrder as $key => $value) {
 					if ($key == $newPosition) {
 						$newOrderArray[] = $itemName;

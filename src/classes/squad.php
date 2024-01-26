@@ -33,7 +33,7 @@ class Squad extends Basic {
 		$this->strTableKey = "squad_id";
 		$this->objSquadMember = new Basic($sqlConnection, "squads_members", "squadmember_id");
 		$this->objSquadRank = new BasicSort($sqlConnection, "squadranks", "squadrank_id", "squad_id");
-		$this->arrSquadPrivileges = array("postnews", "managenews", "postshoutbox", "manageshoutbox", "addrank", "manageranks", "setrank", "editprofile", "sendinvites", "acceptapps", "removemember");
+		$this->arrSquadPrivileges = ["postnews", "managenews", "postshoutbox", "manageshoutbox", "addrank", "manageranks", "setrank", "editprofile", "sendinvites", "acceptapps", "removemember"];
 
 		$this->checkManageAllSquads();
 	}
@@ -70,7 +70,7 @@ class Squad extends Basic {
 
 	public function getMemberList() {
 
-		$returnVal = array();
+		$returnVal = [];
 
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squads_members WHERE squad_id = '".$this->intTableKeyValue."'");
@@ -87,7 +87,7 @@ class Squad extends Basic {
 	/** Same as getMemberList but sorted in rank order.  Highest Rank to Lowest */
 	public function getMemberListSorted() {
 
-		$returnVal = array();
+		$returnVal = [];
 
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squads_members WHERE squad_id = '".$this->intTableKeyValue."'");
@@ -108,7 +108,7 @@ class Squad extends Basic {
 
 	public function getOutstandingInvites() {
 
-		$returnVal = array();
+		$returnVal = [];
 
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squadinvites WHERE squad_id = '".$this->intTableKeyValue."' AND status = '0'");
@@ -123,7 +123,7 @@ class Squad extends Basic {
 
 	public function getOutstandingApplications() {
 
-		$returnVal = array();
+		$returnVal = [];
 
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squadapps WHERE squad_id = '".$this->intTableKeyValue."' AND status = '0'");
@@ -142,7 +142,7 @@ class Squad extends Basic {
 	 */
 	public function getRecruiterMembers() {
 
-		$returnArr = array();
+		$returnArr = [];
 
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squadranks WHERE squad_id = '".$this->intTableKeyValue."' AND acceptapps = '1'");
@@ -177,7 +177,7 @@ class Squad extends Basic {
 
 	public function getRankList() {
 
-		$returnVal = array();
+		$returnVal = [];
 
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squadranks WHERE squad_id = '".$this->intTableKeyValue."' ORDER BY sortnum");
@@ -233,7 +233,7 @@ class Squad extends Basic {
 		3 - Shoutbox
 	*/
 	public function getNewsPostList($newsType) {
-		$returnArr = array();
+		$returnArr = [];
 		if ($this->intTableKeyValue != "" && is_numeric($newsType) && ($newsType >= 1 && $newsType <= 3)) {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."squadnews WHERE squad_id = '".$this->intTableKeyValue."' AND newstype = '".$newsType."'");
 			while ($row = $result->fetch_assoc()) {

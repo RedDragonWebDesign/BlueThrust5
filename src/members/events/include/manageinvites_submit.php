@@ -5,8 +5,8 @@ if (!defined("MAIN_ROOT")) {
 }
 
 
-$arrColumns = array();
-$arrValues = array();
+$arrColumns = [];
+$arrValues = [];
 
 
 if ($eventObj->memberHasAccess($memberInfo['member_id'], "mangeinvites")) {
@@ -21,7 +21,7 @@ if ($eventObj->memberHasAccess($memberInfo['member_id'], "mangeinvites")) {
 
 
 if ($eventObj->memberHasAccess($memberInfo['member_id'], "attendenceconfirm")) {
-	$arrAcceptableValues = array(0,1,2,3);
+	$arrAcceptableValues = [0,1,2,3];
 	if ($eventInfo['startdate'] <= time() && in_array($_POST['updateConfirm'], $arrAcceptableValues)) {
 		$arrColumns[] = "attendconfirm_admin";
 		$arrValues[] = $_POST['updateConfirm'];

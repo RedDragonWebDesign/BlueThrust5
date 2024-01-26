@@ -82,7 +82,7 @@ class Medal extends Rank {
 
 	public function getFrozenMembersList() {
 
-		$returnArr = array();
+		$returnArr = [];
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."freezemedals_members WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."'");
 			while ($row = $result->fetch_assoc()) {

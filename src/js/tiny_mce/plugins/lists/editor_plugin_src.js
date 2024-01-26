@@ -99,7 +99,9 @@
 			return e2.style.listStyleType === 'none' || containsOnlyAList(e2);
 		} else if (isList(e1)) {
 			return (e1.tagName === e2.tagName && (allowDifferentListStyles || e1.style.listStyleType === e2.style.listStyleType)) || isListForIndent(e2);
-		} else return mergeParagraphs && e1.tagName === 'P' && e2.tagName === 'P';
+		} else {
+			return mergeParagraphs && e1.tagName === 'P' && e2.tagName === 'P';
+		}
 	}
 
 	function isListForIndent(e) {
@@ -242,8 +244,8 @@
 			}
 
 			/*
-			 	If we are at the end of a list item surrounded with an element, pressing enter should create a
-			 	new list item instead without splitting the element e.g. don't want to create new P or H1 tag
+				 If we are at the end of a list item surrounded with an element, pressing enter should create a
+				 new list item instead without splitting the element e.g. don't want to create new P or H1 tag
 			  */
 			function isEndOfListItem() {
 				var node = ed.selection.getNode();
@@ -275,44 +277,51 @@
 			function imageJoiningListItem(ed, e) {
 				var prevSibling;
 
-				if (!tinymce.isGecko)
+				if (!tinymce.isGecko) {
 					return;
+				}
 
 				var n = ed.selection.getStart();
-				if (e.keyCode != tinymce.VK.BACKSPACE || n.tagName !== 'IMG')
+				if (e.keyCode != tinymce.VK.BACKSPACE || n.tagName !== 'IMG') {
 					return;
+				}
 
 				function lastLI(node) {
 					var child = node.firstChild;
 					var li = null;
 					do {
-						if (!child)
+						if (!child) {
 							break;
+						}
 
-						if (child.tagName === 'LI')
+						if (child.tagName === 'LI') {
 							li = child;
+						}
 					} while (child = child.nextSibling);
 
 					return li;
 				}
 
 				function addChildren(parentNode, destination) {
-					while (parentNode.childNodes.length > 0)
+					while (parentNode.childNodes.length > 0) {
 						destination.appendChild(parentNode.childNodes[0]);
+					}
 				}
 
 				// Check if there is a previous sibling
 				prevSibling = n.parentNode.previousSibling;
-				if (!prevSibling)
+				if (!prevSibling) {
 					return;
+				}
 
 				var ul;
-				if (prevSibling.tagName === 'UL' || prevSibling.tagName === 'OL')
+				if (prevSibling.tagName === 'UL' || prevSibling.tagName === 'OL') {
 					ul = prevSibling;
-				else if (prevSibling.previousSibling && (prevSibling.previousSibling.tagName === 'UL' || prevSibling.previousSibling.tagName === 'OL'))
+				} else if (prevSibling.previousSibling && (prevSibling.previousSibling.tagName === 'UL' || prevSibling.previousSibling.tagName === 'OL')) {
 					ul = prevSibling.previousSibling;
-				else
+				} else {
 					return;
+				}
 
 				var li = lastLI(ul);
 
@@ -328,10 +337,11 @@
 
 				// copy the image an its text to the list item
 				var clone = n.parentNode.cloneNode(true);
-				if (clone.tagName === 'P' || clone.tagName === 'DIV')
+				if (clone.tagName === 'P' || clone.tagName === 'DIV') {
 					addChildren(clone, li);
-				else
+				} else {
 					li.appendChild(clone);
+				}
 
 				// remove the old copy of the image
 				n.parentNode.parentNode.removeChild(n.parentNode);
@@ -564,7 +574,9 @@
 				if (template) {
 					li = template.cloneNode(true);
 					start.parentNode.insertBefore(li, start);
-					while (li.firstChild) dom.remove(li.firstChild);
+					while (li.firstChild) {
+						dom.remove(li.firstChild);
+					}
 					li = dom.rename(li, 'li');
 				} else {
 					li = dom.create('li');
@@ -600,10 +612,12 @@
 				}
 
 				function nextLeaf(br) {
-					if (br.nextSibling)
+					if (br.nextSibling) {
 						return br.nextSibling;
-					if (!dom.isBlock(br.parentNode) && br.parentNode !== dom.getRoot())
+					}
+					if (!dom.isBlock(br.parentNode) && br.parentNode !== dom.getRoot()) {
 						return nextLeaf(br.parentNode);
+					}
 				}
 
 				// Split on BRs within the range and process those.

@@ -30,7 +30,7 @@ if (!defined("LOGGED_IN") || !LOGGED_IN) {
 $objManageList->intAddCID = $consoleObj->findConsoleIDByName("Add World Clock");
 $objManageList->strEditItemLink = MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&clockID=";
 $objManageList->strDeleteLink = MAIN_ROOT."members/console.managelist.delete.php?cID=".$_GET['cID'];
-$objManageList->arrActionList = array("moveup", "movedown", "edit", "delete");
+$objManageList->arrActionList = ["moveup", "movedown", "edit", "delete"];
 $objManageList->strItemTitle = "Clock:";
 
 

@@ -28,7 +28,7 @@ $member->select($_SESSION['btUsername']);
 
 $tournamentObj = new Tournament($mysqli);
 $tID = $_POST['tID'];
-$arrMembers = array();
+$arrMembers = [];
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID) && $member->hasAccess($consoleObj)) {
 	$memberInfo = $member->get_info();
@@ -54,11 +54,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 					$newPlayerID = $member->get_info("member_id");
 
 					if (!in_array($newPlayerID, $arrPlayers)) { // Prevent multiple entries of same person
-						$tournamentObj->objPlayer->addNew(array("member_id", "tournament_id"), array($newPlayerID, $tID));
+						$tournamentObj->objPlayer->addNew(["member_id", "tournament_id"], [$newPlayerID, $tID]);
 					}
 				} elseif ($tournamentInfo['access'] != 1) {
 					if (!in_array($newPlayer, $arrPlayers)) { // Prevent multiple entries of same person
-						$tournamentObj->objPlayer->addNew(array("displayname", "tournament_id"), array($newPlayer, $tID));
+						$tournamentObj->objPlayer->addNew(["displayname", "tournament_id"], [$newPlayer, $tID]);
 					}
 				}
 
@@ -67,7 +67,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 					$arrUnfilledTeams = $tournamentObj->getUnfilledTeams();
 					if (count($arrUnfilledTeams) > 0) {
 						$newTeam = $arrUnfilledTeams[0];
-						$tournamentObj->objPlayer->update(array("team_id"), array($newTeam));
+						$tournamentObj->objPlayer->update(["team_id"], [$newTeam]);
 					}
 				}
 			}

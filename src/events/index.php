@@ -28,7 +28,7 @@ $PAGE_NAME = "Events - ";
 require_once($prevFolder."themes/".$THEME."/_header.php");
 
 
-$memberInfo = array();
+$memberInfo = [];
 
 
 

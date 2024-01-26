@@ -40,8 +40,9 @@
 				each(dom.select('div', o.node), function(e) {
 					if (dom.hasClass(e, 'mceTmpl')) {
 						each(dom.select('*', e), function(e) {
-							if (dom.hasClass(e, ed.getParam('template_mdate_classes', 'mdate').replace(/\s+/g, '|')))
+							if (dom.hasClass(e, ed.getParam('template_mdate_classes', 'mdate').replace(/\s+/g, '|'))) {
 								e.innerHTML = t._getDateTime(new Date(), ed.getParam("template_mdate_format", ed.getLang("template.mdate_format")));
+							}
 						});
 
 						t._replaceVals(e);
@@ -66,8 +67,9 @@
 			h = v.content;
 
 			each(t.editor.getParam('template_replace_values'), function(v, k) {
-				if (typeof(v) != 'function')
+				if (typeof(v) != 'function') {
 					h = h.replace(new RegExp('\\{\\$' + k + '\\}', 'g'), v);
+				}
 			});
 
 			el = dom.create('div', null, h);
@@ -85,16 +87,19 @@
 
 			each(dom.select('*', el), function(n) {
 				// Replace cdate
-				if (hasClass(n, ed.getParam('template_cdate_classes', 'cdate').replace(/\s+/g, '|')))
+				if (hasClass(n, ed.getParam('template_cdate_classes', 'cdate').replace(/\s+/g, '|'))) {
 					n.innerHTML = t._getDateTime(new Date(), ed.getParam("template_cdate_format", ed.getLang("template.cdate_format")));
+				}
 
 				// Replace mdate
-				if (hasClass(n, ed.getParam('template_mdate_classes', 'mdate').replace(/\s+/g, '|')))
+				if (hasClass(n, ed.getParam('template_mdate_classes', 'mdate').replace(/\s+/g, '|'))) {
 					n.innerHTML = t._getDateTime(new Date(), ed.getParam("template_mdate_format", ed.getLang("template.mdate_format")));
+				}
 
 				// Replace selection
-				if (hasClass(n, ed.getParam('template_selected_content_classes', 'selcontent').replace(/\s+/g, '|')))
+				if (hasClass(n, ed.getParam('template_selected_content_classes', 'selcontent').replace(/\s+/g, '|'))) {
 					n.innerHTML = sel;
+				}
 			});
 
 			t._replaceVals(el);
@@ -109,29 +114,32 @@
 			each(dom.select('*', e), function(e) {
 				each(vl, function(v, k) {
 					if (dom.hasClass(e, k)) {
-						if (typeof(vl[k]) == 'function')
+						if (typeof(vl[k]) == 'function') {
 							vl[k](e);
+						}
 					}
 				});
 			});
 		},
 
 		_getDateTime : function(d, fmt) {
-				if (!fmt)
-					return "";
+			if (!fmt) {
+				return "";
+			}
 
-				function addZeros(value, len) {
-					var i;
+			function addZeros(value, len) {
+				var i;
 
-					value = "" + value;
+				value = "" + value;
 
-					if (value.length < len) {
-						for (i=0; i<(len-value.length); i++)
-							value = "0" + value;
+				if (value.length < len) {
+					for (i=0; i<(len-value.length); i++) {
+						value = "0" + value;
 					}
-
-					return value;
 				}
+
+				return value;
+			}
 
 				fmt = fmt.replace("%D", "%m/%d/%y");
 				fmt = fmt.replace("%r", "%I:%M:%S %p");

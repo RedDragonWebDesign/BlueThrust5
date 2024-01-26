@@ -27,7 +27,7 @@ if (isset($_GET['user']) && setupStreamPage()) {
 
 $pluginObj = new btPlugin($mysqli);
 
-$pluginObj->verifyPlugin("Twitch", array("twitchsocial_id"));
+$pluginObj->verifyPlugin("Twitch", ["twitchsocial_id"]);
 
 // Start Page
 $PAGE_NAME = "Twitch Streams - ";

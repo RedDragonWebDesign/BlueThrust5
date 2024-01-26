@@ -17,7 +17,7 @@ require_once("../../_setup.php");
 require_once("youtube.php");
 
 $ytObj = new Youtube($mysqli);
-$arrReturn = array();
+$arrReturn = [];
 if (isset($_POST['yID']) && is_numeric($_POST['yID']) && $ytObj->select($_POST['yID'])) {
 	$ytInfo = $ytObj->get_info_filtered();
 

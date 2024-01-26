@@ -12,7 +12,7 @@ if ($donationPlugin->selectByName("Donations")) {
 	$p = new paypal_class();
 
 
-	$arrColumns = array("donationcampaign_id", "member_id", "name", "message", "datesent", "amount", "paypalemail", "transaction_id", "response");
+	$arrColumns = ["donationcampaign_id", "member_id", "name", "message", "datesent", "amount", "paypalemail", "transaction_id", "response"];
 
 	$p->setMode($donationPlugin->getConfigInfo("mode"));
 	if ($p->validate_ipn() && $p->ipn_data['payment_status'] != "Failed" && $p->ipn_data['payment_status'] != "Denied") {
@@ -32,7 +32,7 @@ if ($donationPlugin->selectByName("Donations")) {
 			$member->awardMedal($medalID, "Donated to ".$campaignName." campaign");
 		}
 
-		$arrValues = array($customVars['campaign_id'], $customVars['member_id'], $customVars['name'], $customVars['message'], time(), $arrData['mc_gross'], $arrData['payer_email'], $arrData['txn_id'], $data);
+		$arrValues = [$customVars['campaign_id'], $customVars['member_id'], $customVars['name'], $customVars['message'], time(), $arrData['mc_gross'], $arrData['payer_email'], $arrData['txn_id'], $data];
 
 		$donationObj->addNew($arrColumns, $arrValues);
 	} else {

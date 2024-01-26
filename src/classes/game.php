@@ -40,7 +40,7 @@ class Game extends Rank {
 
 	function getMembersWhoPlayThisGame() {
 
-		$returnArr = array();
+		$returnArr = [];
 		if (isset($this->intTableKeyValue)) {
 			$membersGamesTable = $this->MySQL->get_tablePrefix()."gamesplayed_members";
 			$membersTable = $this->MySQL->get_tablePrefix()."members";
@@ -63,7 +63,7 @@ class Game extends Rank {
 	 */
 	function getGameList() {
 
-		$returnArr = array();
+		$returnArr = [];
 
 		$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." ORDER BY ordernum DESC");
 		while ($row = $result->fetch_assoc()) {

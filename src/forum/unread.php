@@ -28,7 +28,7 @@ $PAGE_NAME = "Recent Forum Posts - ";
 
 require_once(BASE_DIRECTORY."forum/templates/_header.php");
 
-$memberInfo = array("member_id" => 0);
+$memberInfo = ["member_id" => 0];
 $NUM_PER_PAGE = $websiteInfo['forum_postsperpage'];
 if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();

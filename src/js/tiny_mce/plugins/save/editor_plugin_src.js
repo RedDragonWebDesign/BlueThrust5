@@ -55,8 +55,9 @@
 
 			formObj = tinymce.DOM.get(ed.id).form || tinymce.DOM.getParent(ed.id, 'form');
 
-			if (ed.getParam("save_enablewhendirty") && !ed.isDirty())
+			if (ed.getParam("save_enablewhendirty") && !ed.isDirty()) {
 				return;
+			}
 
 			tinyMCE.triggerSave();
 
@@ -73,12 +74,14 @@
 			if (formObj) {
 				ed.isNotDirty = true;
 
-				if (formObj.onsubmit == null || formObj.onsubmit() != false)
+				if (formObj.onsubmit == null || formObj.onsubmit() != false) {
 					formObj.submit();
+				}
 
 				ed.nodeChanged();
-			} else
+			} else {
 				ed.windowManager.alert("Error: No form element found.");
+			}
 		},
 
 		_cancel : function() {

@@ -26,7 +26,7 @@ class PMFolder extends BasicSort {
 
 	public function select($intIDNum, $numericIDOnly = true) {
 		$returnVal = false;
-		$arrSpecialFolders = array("Inbox" => self::INBOX_ID, "Sent Messages" => self::SENTBOX_ID, "Trash" => self::TRASH_ID);
+		$arrSpecialFolders = ["Inbox" => self::INBOX_ID, "Sent Messages" => self::SENTBOX_ID, "Trash" => self::TRASH_ID];
 		if (in_array($intIDNum, $arrSpecialFolders)) {
 			$this->arrObjInfo['name'] = array_search($intIDNum, $arrSpecialFolders);
 			$this->intTableKeyValue = $intIDNum;
@@ -54,7 +54,7 @@ class PMFolder extends BasicSort {
 			$this->intMemberID = $memberID;
 		}
 
-		$returnArr = array();
+		$returnArr = [];
 		if (isset($this->intMemberID) && is_numeric($this->intMemberID)) {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."privatemessage_folders WHERE member_id = '".$this->intMemberID."' ORDER BY sortnum");
 			while ($row = $result->fetch_assoc()) {
@@ -67,8 +67,8 @@ class PMFolder extends BasicSort {
 
 	function getFolderContents() {
 
-		$arrPM = array();
-		$arrMultiPM = array();
+		$arrPM = [];
+		$arrMultiPM = [];
 
 		if ($this->intTableKeyValue !== "" && $this->intMemberID != 0) {
 			$pmTable = $this->MySQL->get_tablePrefix()."privatemessages";
@@ -95,7 +95,7 @@ class PMFolder extends BasicSort {
 			arsort($arrPM);
 		}
 
-		$returnArr = array($arrPM, $arrMultiPM);
+		$returnArr = [$arrPM, $arrMultiPM];
 
 		return $returnArr;
 	}

@@ -10,7 +10,7 @@ var SearchReplaceDialog = {
 
 		// Focus input field
 		f[m + '_panel_searchstring'].focus();
-		
+
 		mcTabs.onChange.add(function(tab_id, panel_id) {
 			t.switchMode(tab_id.substring(0, tab_id.indexOf('_')));
 		});
@@ -50,12 +50,13 @@ var SearchReplaceDialog = {
 			r = ed.getDoc().selection.createRange();
 		}
 
-		if (s == '')
+		if (s == '') {
 			return;
+		}
 
 		function fix() {
 			// Correct Firefox graphics glitches
-			// TODO: Verify if this is actually needed any more, maybe it was for very old FF versions? 
+			// TODO: Verify if this is actually needed any more, maybe it was for very old FF versions?
 			r = se.getRng().cloneRange();
 			ed.getDoc().execCommand('SelectAll', false, null);
 			se.setRng(r);
@@ -66,8 +67,9 @@ var SearchReplaceDialog = {
 		};
 
 		// IE flags
-		if (ca)
+		if (ca) {
 			fl = fl | 4;
+		}
 
 		switch (a) {
 			case 'all':
@@ -98,16 +100,18 @@ var SearchReplaceDialog = {
 					}
 				}
 
-				if (fo)
+				if (fo) {
 					tinyMCEPopup.alert(ed.getLang('searchreplace_dlg.allreplaced'));
-				else
+				} else {
 					tinyMCEPopup.alert(ed.getLang('searchreplace_dlg.notfound'));
+				}
 
 				return;
 
 			case 'current':
-				if (!ed.selection.isCollapsed())
+				if (!ed.selection.isCollapsed()) {
 					replace();
+				}
 
 				break;
 		}
@@ -116,8 +120,9 @@ var SearchReplaceDialog = {
 		r = se.getRng();
 
 		// Whats the point
-		if (!s)
+		if (!s) {
 			return;
+		}
 
 		if (tinymce.isIE) {
 			ed.focus();
@@ -126,15 +131,17 @@ var SearchReplaceDialog = {
 			if (r.findText(s, b ? -1 : 1, fl)) {
 				r.scrollIntoView();
 				r.select();
-			} else
+			} else {
 				tinyMCEPopup.alert(ed.getLang('searchreplace_dlg.notfound'));
+			}
 
 			tinyMCEPopup.storeSelection();
 		} else {
-			if (!w.find(s, ca, b, false, false, false, false))
+			if (!w.find(s, ca, b, false, false, false, false)) {
 				tinyMCEPopup.alert(ed.getLang('searchreplace_dlg.notfound'));
-			else
+			} else {
 				fix();
+			}
 		}
 	}
 };

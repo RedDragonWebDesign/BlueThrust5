@@ -127,9 +127,9 @@
 					rng.setEndBefore(caretContainer);
 
 					child = findFirstTextNode(caretContainer);
-					if (child && child.nodeValue.charAt(0) == invisibleChar) {
-						child = child.deleteData(0, 1);
-					}
+				if (child && child.nodeValue.charAt(0) == invisibleChar) {
+					child = child.deleteData(0, 1);
+				}
 
 					dom.remove(caretContainer, true);
 
@@ -455,7 +455,7 @@
 
 				args.content = content;
 			};
-			
+
 			editClass = " " + tinymce.trim(ed.getParam("noneditable_editable_class", "mceEditable")) + " ";
 			nonEditClass = " " + tinymce.trim(ed.getParam("noneditable_noneditable_class", "mceNonEditable")) + " ";
 

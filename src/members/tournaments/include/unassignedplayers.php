@@ -55,13 +55,13 @@ if (!defined("SHOW_UNASSIGNEDPLAYERS")) {
 			}
 		}
 	} elseif (isset($_POST['action']) && $_POST['action'] == "add" && in_array($_POST['teamID'], $arrTeams)) {
-		$arrUnableToAddPlayer = array();
+		$arrUnableToAddPlayer = [];
 		$arrAddPlayers = json_decode($_POST['playerList'], true);
 		foreach ($arrAddPlayers as $playerID) {
 			$arrUnfilledTeams = $tournamentObj->getUnfilledTeams();
 			$blnBasicChecks = $tournamentObj->objPlayer->select($playerID) && $tournamentObj->objPlayer->get_info("tournament_id") == $_POST['tournamentID'];
 			if ($blnBasicChecks && in_array($_POST['teamID'], $arrUnfilledTeams)) {
-				$tournamentObj->objPlayer->update(array("team_id"), array($_POST['teamID']));
+				$tournamentObj->objPlayer->update(["team_id"], [$_POST['teamID']]);
 			} elseif ($blnBasicChecks && !in_array($_POST['teamID'], $arrUnfilledTeams)) {
 				$arrUnableToAddPlayer[] = $playerID;
 			}
@@ -74,7 +74,7 @@ echo "
 	<table class='formTable' style='border-spacing: 0px'>
 			";
 
-$arrUnassignedPlayers = array();
+$arrUnassignedPlayers = [];
 $result = $mysqli->query("SELECT tournamentplayer_id FROM ".$dbprefix."tournamentplayers WHERE tournament_id = '".$tID."' AND team_id = '0'");
 while ($row = $result->fetch_assoc()) {
 	$tournamentObj->objPlayer->select($row['tournamentplayer_id']);

@@ -37,7 +37,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($_FILES['uploadlogo']['name'] != "") {
-		$uploadLogoObj = new BTUpload($_FILES['uploadlogo'], "squad_", "../images/squads/", array(".png", ".jpg", ".gif", ".bmp"));
+		$uploadLogoObj = new BTUpload($_FILES['uploadlogo'], "squad_", "../images/squads/", [".png", ".jpg", ".gif", ".bmp"]);
 
 		if (!$uploadLogoObj->uploadFile()) {
 			$countErrors++;
@@ -62,19 +62,19 @@ if ( ! empty($_POST['submit']) ) {
 		}
 
 		$time = time();
-		$arrColumns = array("member_id", "name", "description", "logourl", "recruitingstatus", "datecreated", "privateshoutbox", "website");
-		$arrValues = array($memberInfo['member_id'], $_POST['squadname'], $_POST['squaddesc'], $logoImageURL, $_POST['recruiting'], $time, $_POST['shoutbox'], $_POST['squadsite']);
+		$arrColumns = ["member_id", "name", "description", "logourl", "recruitingstatus", "datecreated", "privateshoutbox", "website"];
+		$arrValues = [$memberInfo['member_id'], $_POST['squadname'], $_POST['squaddesc'], $logoImageURL, $_POST['recruiting'], $time, $_POST['shoutbox'], $_POST['squadsite']];
 
 		if ($newSquadObj->addNew($arrColumns, $arrValues)) {
 			$newSquadInfo = $newSquadObj->get_info_filtered();
 
-			$arrColumns = array("squad_id", "name", "sortnum", "postnews", "managenews", "postshoutbox", "manageshoutbox", "addrank", "manageranks", "editprofile", "sendinvites", "acceptapps", "setrank", "removemember");
-			$arrValues = array($newSquadInfo['squad_id'], "Founder", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+			$arrColumns = ["squad_id", "name", "sortnum", "postnews", "managenews", "postshoutbox", "manageshoutbox", "addrank", "manageranks", "editprofile", "sendinvites", "acceptapps", "setrank", "removemember"];
+			$arrValues = [$newSquadInfo['squad_id'], "Founder", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 			$checkAddRank = $newSquadObj->objSquadRank->addNew($arrColumns, $arrValues);
 			$squadRankInfo = $newSquadObj->objSquadRank->get_info();
 
-			$checkAddMember = $newSquadObj->objSquadMember->addNew(array("squad_id", "member_id", "squadrank_id", "datejoined"), array($newSquadInfo['squad_id'], $memberInfo['member_id'], $squadRankInfo['squadrank_id'], $time));
+			$checkAddMember = $newSquadObj->objSquadMember->addNew(["squad_id", "member_id", "squadrank_id", "datejoined"], [$newSquadInfo['squad_id'], $memberInfo['member_id'], $squadRankInfo['squadrank_id'], $time]);
 
 			if ($checkAddRank && $checkAddMember) {
 				echo "

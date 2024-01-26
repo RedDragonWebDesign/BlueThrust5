@@ -75,7 +75,7 @@ if (isset($_GET['display'])) { // HTML
 	// foreach letter
 	foreach ($arrCaptcha as $value) {
 		// Font Locations
-		$arrFonts = array();
+		$arrFonts = [];
 		$arrFonts[0] = $BASE_DIRECTORY."images/captcha-fonts/AnonymousClippings.ttf";
 		$arrFonts[1] = $BASE_DIRECTORY."images/captcha-fonts/Pulse_virgin.ttf";
 		$arrFonts[2] = $BASE_DIRECTORY."images/captcha-fonts/Staubiges_Verg.ttf";
@@ -127,10 +127,10 @@ if (isset($_GET['display'])) { // HTML
 
 	// log the final captcha in the database
 	$captchaObj->addNew(
-		array("appcomponent_id", "ipaddress", "captchatext"),
-		array($appCompInfo['appcomponent_id'],
+		["appcomponent_id", "ipaddress", "captchatext"],
+		[$appCompInfo['appcomponent_id'],
 		$IP_ADDRESS,
-		strtolower($finalCaptchaText))
+		strtolower($finalCaptchaText)]
 	);
 
 	// output the image

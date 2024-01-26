@@ -129,7 +129,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 			if ($_FILES['catimagefile']['name'] != "") {
 				// Image File Selected.... Upload it
 
-				$uploadFile = new BTUpload($_FILES['catimagefile'], "rankcat_", "../images/ranks/", array(".jpg",".png",".gif",".bmp"));
+				$uploadFile = new BTUpload($_FILES['catimagefile'], "rankcat_", "../images/ranks/", [".jpg",".png",".gif",".bmp"]);
 
 				if (!$uploadFile->uploadFile()) {
 					$countErrors++;
@@ -154,8 +154,8 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 		// No errors... Add to DB
 
 
-		$arrColumns = array("name", "imageurl", "ordernum", "hidecat", "useimage", "description", "imagewidth", "imageheight", "color");
-		$arrValues = array($_POST['catname'], $strCatImageURL, $intNewCatOrderNum, $_POST['hidecat'], $_POST['useimage'], $_POST['catdesc'], $_POST['catimagewidth'], $_POST['catimageheight'], $_POST['rankcolor']);
+		$arrColumns = ["name", "imageurl", "ordernum", "hidecat", "useimage", "description", "imagewidth", "imageheight", "color"];
+		$arrValues = [$_POST['catname'], $strCatImageURL, $intNewCatOrderNum, $_POST['hidecat'], $_POST['useimage'], $_POST['catdesc'], $_POST['catimagewidth'], $_POST['catimageheight'], $_POST['rankcolor']];
 
 		$rankCatObj->select($_GET['rID']);
 

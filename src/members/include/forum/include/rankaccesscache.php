@@ -45,7 +45,7 @@ $rankObj = new Rank($mysqli);
 if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
 	// Set Access
 	if (isset($_POST['accessInfo'])) {
-		$arrAccessOptions = array(1,2);
+		$arrAccessOptions = [1,2];
 		$accessInfo = json_decode($_POST['accessInfo'], true);
 
 		foreach ($accessInfo as $checkBoxName => $accessType) {

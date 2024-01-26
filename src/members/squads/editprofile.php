@@ -51,7 +51,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($_FILES['uploadlogo']['name'] != "") {
-		$uploadLogoObj = new BTUpload($_FILES['uploadlogo'], "squad_", "../../images/squads/", array(".png", ".jpg", ".gif", ".bmp"));
+		$uploadLogoObj = new BTUpload($_FILES['uploadlogo'], "squad_", "../../images/squads/", [".png", ".jpg", ".gif", ".bmp"]);
 
 		if (!$uploadLogoObj->uploadFile()) {
 			$countErrors++;
@@ -74,8 +74,8 @@ if ( ! empty($_POST['submit']) ) {
 		}
 
 		$time = time();
-		$arrColumns = array("name", "description", "logourl", "recruitingstatus", "privateshoutbox", "website");
-		$arrValues = array($_POST['squadname'], $_POST['squaddesc'], $logoImageURL, $_POST['recruiting'], $_POST['shoutbox'], $_POST['squadsite']);
+		$arrColumns = ["name", "description", "logourl", "recruitingstatus", "privateshoutbox", "website"];
+		$arrValues = [$_POST['squadname'], $_POST['squaddesc'], $logoImageURL, $_POST['recruiting'], $_POST['shoutbox'], $_POST['squadsite']];
 
 		if ($squadObj->update($arrColumns, $arrValues)) {
 			$squadInfo = $squadObj->get_info_filtered();

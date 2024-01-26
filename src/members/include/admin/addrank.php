@@ -157,7 +157,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 	if ($countErrors == 0) {
 		// Check Rank Image File
 		if ($_FILES['rankimagefile']['name'] != "") {
-			$uploadFile = new BTUpload($_FILES['rankimagefile'], "rank_", "../images/ranks/", array(".jpg",".png",".gif",".bmp"));
+			$uploadFile = new BTUpload($_FILES['rankimagefile'], "rank_", "../images/ranks/", [".jpg",".png",".gif",".bmp"]);
 
 			if (!$uploadFile->uploadFile()) {
 				$countErrors++;
@@ -182,8 +182,8 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 	} else {
 		// EVERYTHING IS OK
 		$newRank = new Rank($mysqli);
-		$arrColumns = array("rankcategory_id", "name", "description", "imageurl", "ordernum", "autodays", "hiderank", "promotepower", "autodisable", "color", "imagewidth", "imageheight");
-		$arrValues = array($_POST['rankcat'], $_POST['rankname'], $_POST['rankdesc'], $rankImgURL, $intNewRankOrderNum, ((isset($_POST['autodays'])) ? $_POST['autodays'] : 0), ((isset($_POST['hiderank'])) ? $_POST['hiderank'] : 0), ((isset($_POST['promoterank'])) ? $_POST['promoterank'] : 0), ((isset($_POST['autodisable'])) ? $_POST['autodisable'] : 0), $_POST['rankcolor'], $_POST['rankimagewidth'], $_POST['rankimageheight']);
+		$arrColumns = ["rankcategory_id", "name", "description", "imageurl", "ordernum", "autodays", "hiderank", "promotepower", "autodisable", "color", "imagewidth", "imageheight"];
+		$arrValues = [$_POST['rankcat'], $_POST['rankname'], $_POST['rankdesc'], $rankImgURL, $intNewRankOrderNum, ((isset($_POST['autodays'])) ? $_POST['autodays'] : 0), ((isset($_POST['hiderank'])) ? $_POST['hiderank'] : 0), ((isset($_POST['promoterank'])) ? $_POST['promoterank'] : 0), ((isset($_POST['autodisable'])) ? $_POST['autodisable'] : 0), $_POST['rankcolor'], $_POST['rankimagewidth'], $_POST['rankimageheight']];
 
 		if ($newRank->addNew($arrColumns, $arrValues)) {
 			// Added Rank! Now give the rank its privileges
@@ -192,10 +192,10 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 
 			// If maximum rank is set to "(this rank)", set the promotepower to the new rank's rank_id
 			if ($_POST['promoterank'] == -1) {
-				$newRank->update(array("promotepower"), array($newRankInfo['rank_id']));
+				$newRank->update(["promotepower"], [$newRankInfo['rank_id']]);
 			}
 
-			$arrColumns = array("rank_id", "console_id");
+			$arrColumns = ["rank_id", "console_id"];
 
 			$privObj = new Basic($mysqli, "rank_privileges", "privilege_id");
 
@@ -205,7 +205,7 @@ if (isset($_POST['submit']) && $_POST['submit']) {
 				$strPostVarName = "consoleid_".$row['console_id'];
 
 				if (isset($_POST[$strPostVarName]) && $_POST[$strPostVarName] == 1) {
-					$arrValues = array($newRankInfo['rank_id'], $row['console_id']);
+					$arrValues = [$newRankInfo['rank_id'], $row['console_id']];
 					$privObj->addNew($arrColumns, $arrValues);
 				}
 			}
@@ -374,7 +374,7 @@ if (!isset($_POST['submit']) || !$_POST['submit']) {
 	$consoleCategories = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory ORDER BY ordernum DESC");
 	while ($arrConsoleCats = $consoleCategories->fetch_assoc()) {
 		$tempNum = $arrConsoleCats['consolecategory_id'];
-		$arrFormatOptions[$tempNum] = array();
+		$arrFormatOptions[$tempNum] = [];
 	}
 
 	$consoleOptions = $mysqli->query("SELECT * FROM ".$dbprefix."console ORDER BY sortnum");

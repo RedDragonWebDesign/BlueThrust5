@@ -50,8 +50,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					$_POST['saveComponentRequired'] = 1;
 				}
 
-				$arrColumns = array("name", "componenttype", "required", "tooltip");
-				$arrValues = array($_POST['saveComponentName'], $_POST['saveComponentType'], $_POST['saveComponentRequired'], $_POST['saveComponentTooltip']);
+				$arrColumns = ["name", "componenttype", "required", "tooltip"];
+				$arrValues = [$_POST['saveComponentName'], $_POST['saveComponentType'], $_POST['saveComponentRequired'], $_POST['saveComponentTooltip']];
 
 
 				if ($appComponentObj->update($arrColumns, $arrValues)) {
@@ -63,11 +63,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					if ($_POST['saveComponentType'] == "select" || $_POST['saveComponentType'] == "multiselect") {
 						$appComponentSelectOptionObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
 						foreach ($_SESSION['btAppComponent']['cOptions'] as $optionValue) {
-							$appComponentSelectOptionObj->addNew(array("appcomponent_id", "componentvalue"), array($appCompInfo['appcomponent_id'], $optionValue));
+							$appComponentSelectOptionObj->addNew(["appcomponent_id", "componentvalue"], [$appCompInfo['appcomponent_id'], $optionValue]);
 						}
 					} elseif ($_POST['saveComponentType'] == "profile") {
 						$appComponentSelectOptionObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
-						$appComponentSelectOptionObj->addNew(array("appcomponent_id", "componentvalue"), array($appCompInfo['appcomponent_id'], $_POST['profileOptionID']));
+						$appComponentSelectOptionObj->addNew(["appcomponent_id", "componentvalue"], [$appCompInfo['appcomponent_id'], $_POST['profileOptionID']]);
 					}
 
 
@@ -136,7 +136,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				$appSelectOptionObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
 				$arrSelectValues = $appComponentObj->getAssociateIDs();
 
-				$tempArr = array();
+				$tempArr = [];
 				foreach ($arrSelectValues as $selectValueID) {
 					$appSelectOptionObj->select($selectValueID);
 					$appSelectValue = $appSelectOptionObj->get_info_filtered("componentvalue");
@@ -148,7 +148,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 				$_SESSION['btAppComponent']['cOptions'] = $tempArr;
 			} elseif ($countErrors == 0) {
-				$_SESSION['btAppComponent']['cOptions'] = array();
+				$_SESSION['btAppComponent']['cOptions'] = [];
 			}
 		}
 	} else {

@@ -50,7 +50,7 @@ $cID = $_GET['cID'];
 
 // LOCK, STICKY, DELETE
 
-$arrActions = array("sticky", "lock", "delete");
+$arrActions = ["sticky", "lock", "delete"];
 
 if (
 	isset($_GET['tID']) &&
@@ -72,7 +72,7 @@ if (
 				$newStickyStatus = 1;
 			}
 
-			$boardObj->objTopic->update(array("stickystatus"), array($newStickyStatus));
+			$boardObj->objTopic->update(["stickystatus"], [$newStickyStatus]);
 			$redirectURL = $MAIN_ROOT."forum/viewtopic.php?tID=".$topicInfo['forumtopic_id'];
 			$member->logAction("Stickied forum topic: <a href='".$MAIN_ROOT."forum/viewtopic.php?tID=".$topicInfo['forumtopic_id']."'>".$topicName."</a>");
 			break;
@@ -82,7 +82,7 @@ if (
 				$newLockStatus = 1;
 			}
 
-			$boardObj->objTopic->update(array("lockstatus"), array($newLockStatus));
+			$boardObj->objTopic->update(["lockstatus"], [$newLockStatus]);
 			$redirectURL = $MAIN_ROOT."forum/viewtopic.php?tID=".$topicInfo['forumtopic_id'];
 			$member->logAction("Locked forum topic: <a href='".$MAIN_ROOT."forum/viewtopic.php?tID=".$topicInfo['forumtopic_id']."'>".$topicName."</a>");
 			break;
@@ -123,7 +123,7 @@ if (
 
 		$arrPosts = $boardObj->objTopic->getAssociateIDs("ORDER BY dateposted DESC");
 
-		$boardObj->objTopic->update(array("lastpost_id"), array($arrPosts[0]));
+		$boardObj->objTopic->update(["lastpost_id"], [$arrPosts[0]]);
 
 		$dialogMessage = "Successfully deleted forum post!";
 	} else {
@@ -175,7 +175,7 @@ if (
 		$_POST['wysiwygHTML'] = str_replace("<script", "&lt;script", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("</script>", "&lt;/script&gt;", $_POST['wysiwygHTML']);
 
-		$arrColumns = array("message", "lastedit_date", "lastedit_member_id");
+		$arrColumns = ["message", "lastedit_date", "lastedit_member_id"];
 
 
 		// Check Topic Title
@@ -192,7 +192,7 @@ if (
 		}
 
 		if ($countErrors == 0) {
-			$arrValues = array($_POST['wysiwygHTML'], time(), $memberInfo['member_id']);
+			$arrValues = [$_POST['wysiwygHTML'], time(), $memberInfo['member_id']];
 
 			if ($topicPostInfo['forumpost_id'] == $postInfo['forumpost_id']) {
 				$arrColumns[] = "title";

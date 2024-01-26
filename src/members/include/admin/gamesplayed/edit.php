@@ -107,7 +107,7 @@ if ( ! empty($_POST['submit']) ) {
 
 		$gameImageURL = "";
 		if ($_FILES['gameimagefile']['name'] != "") {
-			$btUploadObj = new BTUpload($_FILES['gameimagefile'], "game_", "../images/gamesplayed/", array(".jpg", ".png", ".bmp", ".gif"));
+			$btUploadObj = new BTUpload($_FILES['gameimagefile'], "game_", "../images/gamesplayed/", [".jpg", ".png", ".bmp", ".gif"]);
 
 			if (!$btUploadObj->uploadFile()) {
 				$countErrors++;
@@ -126,10 +126,10 @@ if ( ! empty($_POST['submit']) ) {
 		$gameObj->select($gameInfo['gamesplayed_id']);
 
 		// update column names
-		$updateColumns = array("name", "imagewidth", "imageheight", "ordernum");
+		$updateColumns = ["name", "imagewidth", "imageheight", "ordernum"];
 
 		// update column values
-		$updateValues = array($_POST['gamename'], $_POST['gameimagewidth'], $_POST['gameimageheight'], $intGameOrderNum);
+		$updateValues = [$_POST['gamename'], $_POST['gameimagewidth'], $_POST['gameimageheight'], $intGameOrderNum];
 
 		// Check if need to update image
 		if ($gameImageURL != "") {
@@ -146,11 +146,11 @@ if ( ! empty($_POST['submit']) ) {
 			// Updated Game Info ---> now update game stats
 			$gameInfo = $gameObj->get_info_filtered(); // Make sure we have the most up to date game info.
 
-			$updateGameStatCol = array("name", "stattype", "calcop", "decimalspots", "ordernum", "hidestat", "gamesplayed_id", "textinput"); //,
+			$updateGameStatCol = ["name", "stattype", "calcop", "decimalspots", "ordernum", "hidestat", "gamesplayed_id", "textinput"]; //,
 
 			// First update/add name and stat type
 			foreach ($_SESSION['btStatCache'] as $key => $statInfo) {
-				$updateGameStatsVal = array($statInfo['statName'], $statInfo['statType'], $statInfo['calcOperation'], $statInfo['rounding'], $key, $statInfo['hideStat'], $gameInfo['gamesplayed_id'], $statInfo['textInput']);
+				$updateGameStatsVal = [$statInfo['statName'], $statInfo['statType'], $statInfo['calcOperation'], $statInfo['rounding'], $key, $statInfo['hideStat'], $gameInfo['gamesplayed_id'], $statInfo['textInput']];
 
 
 				if ($statInfo['gamestatsID'] != "" and $gameStatsObj->select($statInfo['gamestatsID'])) {
@@ -172,7 +172,7 @@ if ( ! empty($_POST['submit']) ) {
 			}
 
 			// Now update other stat information
-			$updateGameStatCol = array("firststat_id", "secondstat_id");
+			$updateGameStatCol = ["firststat_id", "secondstat_id"];
 
 			/*
 			 * 	1. Make sure that all of the game stats were successfully inserted into the db
@@ -191,7 +191,7 @@ if ( ! empty($_POST['submit']) ) {
 						$intSecondStatOrder = $_SESSION['btStatCache'][$key]['secondStat'];
 						$intSecondStatID = $arrSavedStats[$intSecondStatOrder]['gamestats_id'];
 
-						$arrValues = array($intFirstStatID, $intSecondStatID);
+						$arrValues = [$intFirstStatID, $intSecondStatID];
 
 						$gameStatsObj->select($statInfo['gamestats_id']);
 						$gameStatsObj->update($updateGameStatCol, $arrValues);
@@ -323,7 +323,7 @@ if ( empty($_POST['submit']) ) {
 
 
 	// Set btStatCache
-	$_SESSION['btStatCache'] = array();
+	$_SESSION['btStatCache'] = [];
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."gamestats WHERE gamesplayed_id = '".$gameInfo['gamesplayed_id']."' ORDER BY ordernum");
 	while ($row = $result->fetch_assoc()) {
 		$row = filterArray($row);
@@ -339,7 +339,7 @@ if ( empty($_POST['submit']) ) {
 			$intSecondStatID = $gameStatsObj->get_info_filtered("ordernum");
 		}
 
-		$_SESSION['btStatCache'][] = array(
+		$_SESSION['btStatCache'][] = [
 					'statName' => $row['name'],
 					'statType' => $row['stattype'],
 					'calcOperation' => $row['calcop'],
@@ -350,7 +350,7 @@ if ( empty($_POST['submit']) ) {
 					'textInput' => $row['textinput'],
 					'gamestatsID' => $row['gamestats_id']
 
-				);
+				];
 	}
 
 

@@ -77,7 +77,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 	$pluginPageInfo = $pluginObj->getPluginPage("profile", $pluginInfo['plugin_id']);
 
-	$arrProfileModules = array("User Information", "Custom Profile Options", "Games Statistics", "Squads", "Medals");
+	$arrProfileModules = ["User Information", "Custom Profile Options", "Games Statistics", "Squads", "Medals"];
 
 	$countErrors = 0;
 	$dispError = "";
@@ -98,10 +98,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		}
 
 		if ($countErrors == 0) {
-			$arrAPIKey = array(
+			$arrAPIKey = [
 				'clientID' => $_POST['clientid'],
 				'clientSecret' => $_POST['clientsecret']
-			);
+			];
 
 			$jsonAPIKey = json_encode($arrAPIKey);
 
@@ -115,7 +115,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				$setSortNum = -1;
 			}
 
-			if ($pluginObj->update(array("apikey"), array($jsonAPIKey)) && $pluginObj->pluginPage->update(array("sortnum"), array($setSortNum))) {
+			if ($pluginObj->update(["apikey"], [$jsonAPIKey]) && $pluginObj->pluginPage->update(["sortnum"], [$setSortNum])) {
 				echo "
 				<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -155,7 +155,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 		$dispNote = "";
 
-		$arrYoutubeAPIKeys = array("Client ID"=>$ytObj->getClientID(), "Client Secret"=>$ytObj->getClientSecret());
+		$arrYoutubeAPIKeys = ["Client ID"=>$ytObj->getClientID(), "Client Secret"=>$ytObj->getClientSecret()];
 
 		foreach ($arrYoutubeAPIKeys as $key => $value) {
 			if ($value == "") {

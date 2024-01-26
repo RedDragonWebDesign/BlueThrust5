@@ -69,8 +69,8 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	if ($_POST['action'] == "postmessage" && trim($_POST['message']) != "" && $checkRequestID) {
 		$iaRequestMessageObj = new Basic($mysqli, "iarequest_messages", "iamessage_id");
 
-		$arrColumns = array("iarequest_id", "member_id", "messagedate", "message");
-		$arrValues = array($iaRequestObj->get_info("iarequest_id"), $memberInfo['member_id'], time(), $_POST['message']);
+		$arrColumns = ["iarequest_id", "member_id", "messagedate", "message"];
+		$arrValues = [$iaRequestObj->get_info("iarequest_id"), $memberInfo['member_id'], time(), $_POST['message']];
 
 		$iaRequestMessageObj->addNew($arrColumns, $arrValues);
 
@@ -84,15 +84,15 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	} elseif (($_POST['action'] == "approve" || $_POST['action'] == "deny")  && $checkRequestID) {
 		$requestStatus = ($_POST['action'] == "approve") ? 1 : 2;
 
-		$iaRequestObj->update(array("reviewer_id", "reviewdate", "requeststatus"), array($memberInfo['member_id'], time(), $requestStatus));
+		$iaRequestObj->update(["reviewer_id", "reviewdate", "requeststatus"], [$memberInfo['member_id'], time(), $requestStatus]);
 
 		if ($requestStatus == 1) {
 			$member->select($iaRequestObj->get_info("member_id"));
-			$member->update(array("onia", "inactivedate"), array(1, time()));
+			$member->update(["onia", "inactivedate"], [1, time()]);
 			$member->postNotification("Your inactive request was approved!");
 		} else {
 			$member->select($iaRequestObj->get_info("member_id"));
-			$member->update(array("onia", "inactivedate"), array(0, 0));
+			$member->update(["onia", "inactivedate"], [0, 0]);
 			$member->postNotification("Your inactive request was denied!");
 		}
 

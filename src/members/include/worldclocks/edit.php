@@ -45,7 +45,7 @@ $setupFormArgs['description'] = "Use the form below to edit the <b>".$clockInfo[
 $setupFormArgs['saveType'] = "update";
 $setupFormArgs['components'] = $arrComponents;
 $setupFormArgs['prefill'] = true;
-$setupFormArgs['skipPrefill'] = array("ordernum");
+$setupFormArgs['skipPrefill'] = ["ordernum"];
 $setupFormArgs['attributes']['action'] .= "&clockID=".$clockInfo['clock_id']."&action=edit";
 $setupFormArgs['saveMessage'] = "Successfully saved world clock!";
 $setupFormArgs['saveLink'] = MAIN_ROOT."members/console.php?cID=".$_GET['cID'];

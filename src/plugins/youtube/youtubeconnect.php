@@ -100,8 +100,8 @@ if (!$ytObj->hasYoutube($memberInfo['member_id'])) {
 			$channelStats = $ytObj->getChannelInfo("statistics");
 			// Add User
 
-			$arrColumns = array("member_id", "channel_id", "uploads_id", "thumbnail", "access_token", "refresh_token", "lastupdate", "subscribers", "title", "videocount", "viewcount", "loginhash");
-			$arrValues = array($memberInfo['member_id'], $channelInfo['items'][0]['id'], $channelInfo['items'][0]['contentDetails']['relatedPlaylists']['uploads'], $channelSnippet['items'][0]['snippet']['thumbnails']['medium']['url'], $response['access_token'], $response['refresh_token'], time(), $channelStats['items'][0]['statistics']['subscriberCount'], $channelSnippet['items'][0]['snippet']['title'], $channelStats['items'][0]['statistics']['videoCount'], $channelStats['items'][0]['statistics']['viewCount'], md5($channelInfo['items'][0]['id']));
+			$arrColumns = ["member_id", "channel_id", "uploads_id", "thumbnail", "access_token", "refresh_token", "lastupdate", "subscribers", "title", "videocount", "viewcount", "loginhash"];
+			$arrValues = [$memberInfo['member_id'], $channelInfo['items'][0]['id'], $channelInfo['items'][0]['contentDetails']['relatedPlaylists']['uploads'], $channelSnippet['items'][0]['snippet']['thumbnails']['medium']['url'], $response['access_token'], $response['refresh_token'], time(), $channelStats['items'][0]['statistics']['subscriberCount'], $channelSnippet['items'][0]['snippet']['title'], $channelStats['items'][0]['statistics']['videoCount'], $channelStats['items'][0]['statistics']['viewCount'], md5($channelInfo['items'][0]['id'])];
 
 			$ytObj->addNew($arrColumns, $arrValues);
 			$ytObj->updateVideos();
@@ -166,7 +166,7 @@ if (!$ytObj->hasYoutube($memberInfo['member_id'])) {
 
 	if ( ! empty($_POST['submit']) ) {
 		// Check Video Display
-		$arrVideoDisplayCheck = array(0,1,2,3,4,5);
+		$arrVideoDisplayCheck = [0,1,2,3,4,5];
 		if (!in_array($_POST['showvideos'], $arrVideoDisplayCheck) || !is_numeric($_POST['showvideos'])) {
 			$dispError = "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid video display amount.<br>";
 			$countErrors++;
@@ -177,7 +177,7 @@ if (!$ytObj->hasYoutube($memberInfo['member_id'])) {
 			$setShowInfoCard = ($_POST['showinfocard'] == 1) ? 1 : 0;
 			$setAllowLogin = ($_POST['allowlogin'] == 1) ? 1 : 0;
 
-			if ($ytObj->update(array("allowlogin", "showsubscribe", "showvideos"), array($_POST['allowlogin'], $_POST['showinfocard'], $_POST['showvideos']))) {
+			if ($ytObj->update(["allowlogin", "showsubscribe", "showvideos"], [$_POST['allowlogin'], $_POST['showinfocard'], $_POST['showvideos']])) {
 				$dispSuccess = true;
 			} else {
 				$countErrors++;
@@ -188,7 +188,7 @@ if (!$ytObj->hasYoutube($memberInfo['member_id'])) {
 
 	$ytInfo = $ytObj->get_info_filtered();
 
-	$checkVideos = array();
+	$checkVideos = [];
 	if ($ytInfo['showvideos'] == 0) {
 		$checkVideos[0] = " selected";
 	} elseif ($ytInfo['showvideos'] == 1) {

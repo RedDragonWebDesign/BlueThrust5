@@ -97,7 +97,7 @@ class EventMember extends Basic {
 				// Add new reminder
 				$emailReminderID = $member->setEmailReminder($sendReminder, "Event Starting!", $message);
 				$eventReminder = new Basic($this->MySQL, "event_reminder", "eventreminder_id");
-				$eventReminder->addNew(array("emailnotificationsqueue_id", "event_id"), array($emailReminderID, $this->arrObjInfo['event_id']));
+				$eventReminder->addNew(["emailnotificationsqueue_id", "event_id"], [$emailReminderID, $this->arrObjInfo['event_id']]);
 			}
 		}
 	}

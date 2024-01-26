@@ -31,13 +31,13 @@ $gameObj = new Game($mysqli);
 $arrGames = $gameObj->getGameList();
 $consoleCatSettingObj = new Basic($mysqli, "consolecategory", "consolecategory_id");
 
-$arrSocialMediaInfo = $member->objSocial->get_entries(array(), "ordernum DESC");
+$arrSocialMediaInfo = $member->objSocial->get_entries([], "ordernum DESC");
 
 
 // Setup Default Console Category Select Options
 
 $arrPrivileges = $memberRank->get_privileges();
-$arrConsoleCats = array();
+$arrConsoleCats = [];
 $consoleSettingObj = new ConsoleOption($mysqli);
 
 foreach ($arrPrivileges as $consoleOptionID) {
@@ -60,11 +60,11 @@ foreach ($arrConsoleCats as $value) {
 
 
 // Setup Notification Settings Options
-$notificationOptions = array("Show notification with sound", "Show notification without sound", "Don't show notifications");
+$notificationOptions = ["Show notification with sound", "Show notification without sound", "Don't show notifications"];
 
 
 // Setup Forum Settings Options
-$forumPostsPerPage = array(10=>10, 25=>25, 50=>50, 75=>75, 100=>100);
+$forumPostsPerPage = [10=>10, 25=>25, 50=>50, 75=>75, 100=>100];
 
 
 // Setup Birthday
@@ -111,13 +111,13 @@ function saveCustomValues() {
 
 	foreach ($arrSocialMediaInfo as $socialMediaInfo) {
 		$postVal = "socialmedia_".$socialMediaInfo['social_id'];
-		if ($member->objSocial->objSocialMember->selectByMulti(array("member_id" => $memberInfo['member_id'], "social_id" => $socialMediaInfo['social_id']))) {
-			$arrColumns = array("value");
-			$arrValues = array($_POST[$postVal]);
+		if ($member->objSocial->objSocialMember->selectByMulti(["member_id" => $memberInfo['member_id'], "social_id" => $socialMediaInfo['social_id']])) {
+			$arrColumns = ["value"];
+			$arrValues = [$_POST[$postVal]];
 			$member->objSocial->objSocialMember->update($arrColumns, $arrValues);
 		} else {
-			$arrColumns = array("social_id", "member_id", "value");
-			$arrValues = array($socialMediaInfo['social_id'], $memberInfo['member_id'], $_POST[$postVal]);
+			$arrColumns = ["social_id", "member_id", "value"];
+			$arrValues = [$socialMediaInfo['social_id'], $memberInfo['member_id'], $_POST[$postVal]];
 			$member->objSocial->objSocialMember->addNew($arrColumns, $arrValues);
 		}
 	}
@@ -129,204 +129,204 @@ function saveCustomValues() {
 	foreach ($arrGames as $gameID) {
 		$postVal = "game_".$gameID;
 		if ($_POST[$postVal] == 1) {
-			$gameMemberObj->addNew(array("member_id", "gamesplayed_id"), array($memberInfo['member_id'], $gameID));
+			$gameMemberObj->addNew(["member_id", "gamesplayed_id"], [$memberInfo['member_id'], $gameID]);
 		}
 	}
 
 	if (!$member->playsGame($_POST['maingame'])) {
-		$gameMemberObj->addNew(array("member_id", "gamesplayed_id"), array($memberInfo['member_id'], $_POST['maingame']));
+		$gameMemberObj->addNew(["member_id", "gamesplayed_id"], [$memberInfo['member_id'], $_POST['maingame']]);
 	}
 }
 
 
 $i = 1;
-$arrComponents = array(
-	"submit" => array(
+$arrComponents = [
+	"submit" => [
 		"type" => "submit",
 		"sortorder" => 99,
-		"attributes" => array("class" => "submitButton formSubmitButton"),
+		"attributes" => ["class" => "submitButton formSubmitButton"],
 		"value" => "Save"
-	),
-	"imageinfo" => array(
+	],
+	"imageinfo" => [
 		"type" => "section",
-		"options" => array("section_title" => "Image Information"),
+		"options" => ["section_title" => "Image Information"],
 		"sortorder" => $i++
-	),
-	"profilepic" => array(
+	],
+	"profilepic" => [
 		"display_name" => "Profile Picture",
 		"tooltip" => "Appears in your profile and squad profile",
 		"type" => "file",
 		"sortorder" => $i++,
-		"attributes" => array("class" => "textBox", "style" => "width: 100%"),
+		"attributes" => ["class" => "textBox", "style" => "width: 100%"],
 		"db_name" => "profilepic",
-		"options" => array("file_types" => array(".gif", ".png", ".jpg", ".bmp"), "default_dimensions" => "150x200 pixels", "file_prefix" => "profile_", "save_loc" => "../images/profile/", "ext_length" => 4, "append_db_value" => "images/profile/"),
+		"options" => ["file_types" => [".gif", ".png", ".jpg", ".bmp"], "default_dimensions" => "150x200 pixels", "file_prefix" => "profile_", "save_loc" => "../images/profile/", "ext_length" => 4, "append_db_value" => "images/profile/"],
 		"value" => $memberInfo['profilepic']
-	),
-	"avatar" => array(
+	],
+	"avatar" => [
 		"display_name" => "Avatar",
 		"tooltip" => "Appears in your news and forum posts",
 		"type" => "file",
 		"sortorder" => $i++,
-		"attributes" => array("class" => "textBox", "style" => "width: 100%"),
+		"attributes" => ["class" => "textBox", "style" => "width: 100%"],
 		"db_name" => "avatar",
-		"options" => array("file_types" => array(".gif", ".png", ".jpg", ".bmp"), "default_dimensions" => "50x50 pixels", "file_prefix" => "avatar_", "save_loc" => "../images/avatar/", "ext_length" => 4, "append_db_value" => "images/avatar/"),
+		"options" => ["file_types" => [".gif", ".png", ".jpg", ".bmp"], "default_dimensions" => "50x50 pixels", "file_prefix" => "avatar_", "save_loc" => "../images/avatar/", "ext_length" => 4, "append_db_value" => "images/avatar/"],
 		"value" => $memberInfo['avatar']
-	),
-	"consolesettings" => array(
+	],
+	"consolesettings" => [
 		"type" => "section",
-		"options" => array("section_title" => "Console Settings:"),
+		"options" => ["section_title" => "Console Settings:"],
 		"sortorder" => $i++,
-	),
-	"defaultconsole" => array(
+	],
+	"defaultconsole" => [
 		"type" => "select",
 		"display_name" => "Default Console",
 		"tooltip" => "Pick the console category that you want automatically selected when viewing the My Account page.",
 		"sortorder" => $i++,
 		"db_name" => "defaultconsole",
-		"attributes" => array("class" => "textBox formInput"),
+		"attributes" => ["class" => "textBox formInput"],
 		"value" => $memberInfo['defaultconsole'],
 		"options" => $defaultConsoleOptions,
-		"validate" => array("RESTRICT_TO_OPTIONS")
+		"validate" => ["RESTRICT_TO_OPTIONS"]
 
-	),
-	"notificationsettings" => array(
+	],
+	"notificationsettings" => [
 		"type" => "section",
-		"options" => array("section_title" => "Notification Settings:"),
+		"options" => ["section_title" => "Notification Settings:"],
 		"sortorder" => $i++,
-	),
-	"notifications" => array(
+	],
+	"notifications" => [
 		"type" => "select",
 		"display_name" => "Select",
 		"tooltip" => "Notifications will show when you are promoted or awarded a medal etc.  Choose how you want to see theme here.",
 		"sortorder" => $i++,
 		"db_name" => "notifications",
-		"attributes" => array("class" => "textBox formInput"),
+		"attributes" => ["class" => "textBox formInput"],
 		"value" => $memberInfo['notifications'],
 		"options" => $notificationOptions,
-		"validate" => array("RESTRICT_TO_OPTIONS")
+		"validate" => ["RESTRICT_TO_OPTIONS"]
 
-	),
-	"forumsettings" => array(
+	],
+	"forumsettings" => [
 		"type" => "section",
-		"options" => array("section_title" => "Forum Settings:"),
+		"options" => ["section_title" => "Forum Settings:"],
 		"sortorder" => $i++,
-	),
-	"topicsperpage" => array(
+	],
+	"topicsperpage" => [
 		"type" => "select",
 		"display_name" => "Topics Per Page",
 		"sortorder" => $i++,
 		"db_name" => "topicsperpage",
-		"attributes" => array("class" => "textBox formInput"),
+		"attributes" => ["class" => "textBox formInput"],
 		"value" => $memberInfo['topicsperpage'],
 		"options" => $forumPostsPerPage,
-		"validate" => array("RESTRICT_TO_OPTIONS")
-	),
-	"postsperpage" => array(
+		"validate" => ["RESTRICT_TO_OPTIONS"]
+	],
+	"postsperpage" => [
 		"type" => "select",
 		"display_name" => "Posts Per Page",
 		"sortorder" => $i++,
 		"db_name" => "postsperpage",
-		"attributes" => array("class" => "textBox formInput"),
+		"attributes" => ["class" => "textBox formInput"],
 		"value" => $memberInfo['postsperpage'],
 		"options" => $forumPostsPerPage,
-		"validate" => array("RESTRICT_TO_OPTIONS")
-	),
-	"wysiwygHTML" => array(
+		"validate" => ["RESTRICT_TO_OPTIONS"]
+	],
+	"wysiwygHTML" => [
 		"type" => "richtextbox",
 		"display_name" => "Signature",
-		"attributes" => array("id" => "richTextarea", "style" => "width: 90%", "rows" => "10"),
+		"attributes" => ["id" => "richTextarea", "style" => "width: 90%", "rows" => "10"],
 		"value" => $memberInfo['forumsignature'],
 		"sortorder" => $i++,
 		"db_name" => "forumsignature",
-		"validate" => array("filterSignature")
-	),
-	"contactsettings" => array(
+		"validate" => ["filterSignature"]
+	],
+	"contactsettings" => [
 		"type" => "section",
-		"options" => array("section_title" => "Contact/Social Media Information:"),
+		"options" => ["section_title" => "Contact/Social Media Information:"],
 		"sortorder" => $i++
-	),
-	"email" => array(
+	],
+	"email" => [
 		"type" => "text",
 		"display_name" => "E-mail",
-		"attributes" => array("class" => "textBox formInput"),
+		"attributes" => ["class" => "textBox formInput"],
 		"value" => $memberInfo['email'],
 		"sortorder" => $i++,
 		"db_name" => "email"
-	)
+	]
 
-);
+];
 
 
 // Social Media Info
 
-$arrSocialMediaComponents = array();
+$arrSocialMediaComponents = [];
 $memberSocialInfo = $member->objSocial->getMemberSocialInfo();
 foreach ($arrSocialMediaInfo as $socialMediaInfo) {
 	$dispSocialMediaValue = (isset($memberSocialInfo[$socialMediaInfo['social_id']])) ? $memberSocialInfo[$socialMediaInfo['social_id']] : "";
 
 	$tempComponentName = "socialmedia_".$socialMediaInfo['social_id'];
 
-	$arrSocialMediaComponents[$tempComponentName] = array(
+	$arrSocialMediaComponents[$tempComponentName] = [
 		"type" => "text",
 		"display_name" => $socialMediaInfo['name'],
 		"tooltip" => $socialMediaInfo['tooltip'],
-		"attributes" => array("class" => "textBox formInput"),
+		"attributes" => ["class" => "textBox formInput"],
 		"sortorder" => $i++,
 		"value" => $dispSocialMediaValue
-	);
+	];
 }
 
-$arrBirthdayComponents = array(
-	"birthdaysection" => array(
+$arrBirthdayComponents = [
+	"birthdaysection" => [
 		"type" => "section",
-		"options" => array("section_title" => "Birthday:"),
+		"options" => ["section_title" => "Birthday:"],
 		"sortorder" => $i++
-	),
-	"birthday" => array(
+	],
+	"birthday" => [
 		"type" => "datepicker",
 		"sortorder" => $i++,
 		"display_name" => "Select Date",
-		"attributes" => array("style" => "cursor: pointer", "id" => "jsBirthday", "class" => "textBox formInput"),
+		"attributes" => ["style" => "cursor: pointer", "id" => "jsBirthday", "class" => "textBox formInput"],
 		"db_name" => "birthday",
 		"value" => ($memberInfo['birthday']*1000),
-		"options" => array("changeMonth" => "true",
+		"options" => ["changeMonth" => "true",
 						   "changeYear" => "true",
 						   "dateFormat" => "M d, yy",
 						   "minDate" => "new Date(50, 1, 1)",
 						   "maxDate" => $maxBirthdayDate,
 						   "yearRange" => "1950:".$maxBirthdayYear,
 						   "defaultDate" => $defaultBirthdayDate,
-						   "altField" => "realBirthday"),
-		"validate" => array("NUMBER_ONLY")
-	)
+						   "altField" => "realBirthday"],
+		"validate" => ["NUMBER_ONLY"]
+	]
 
-);
+];
 
 
 if (count($arrGames) > 0) {
 	// Setup Games Played Section
 
-	$gamesPlayedOptions = array();
-	$mainGameOptions = array();
+	$gamesPlayedOptions = [];
+	$mainGameOptions = [];
 
-	$gamesPlayedSection = array(
-		"gamesplayedsection" => array(
+	$gamesPlayedSection = [
+		"gamesplayedsection" => [
 			"type" => "section",
-			"options" => array("section_title" => "Games Played:"),
+			"options" => ["section_title" => "Games Played:"],
 			"sortorder" => $i++
-	));
+		]];
 
-	$mainGamePlayed = array(
-		"maingame" => array(
+	$mainGamePlayed = [
+		"maingame" => [
 			"type" => "select",
 			"sortorder" => $i++,
 			"display_name" => "Main Game",
 			"value" => $memberInfo['maingame_id'],
 			"db_name" => "maingame_id",
-			"attributes" => array("class" => "textBox formInput")
+			"attributes" => ["class" => "textBox formInput"]
 
-		)
-	);
+		]
+	];
 
 
 	foreach ($arrGames as $gameID) {
@@ -334,13 +334,13 @@ if (count($arrGames) > 0) {
 
 		$mainGameOptions[$gameID] = $gameObj->get_info_filtered("name");
 
-		$gamesPlayedOptions["game_".$gameID] = array(
+		$gamesPlayedOptions["game_".$gameID] = [
 			"type" => "checkbox",
 			"sortorder" => $i++,
-			"attributes" => array("class" => "textBox formInput", "style" => "margin-left: 10px"),
+			"attributes" => ["class" => "textBox formInput", "style" => "margin-left: 10px"],
 			"value" => $member->playsGame($gameID),
-			"options" => array("1" => $gameObj->get_info_filtered("name"))
-		);
+			"options" => ["1" => $gameObj->get_info_filtered("name")]
+		];
 	}
 
 
@@ -355,18 +355,18 @@ if (count($arrGames) > 0) {
 // Set up Custom Profile Options
 
 $customCount = 1;
-$arrCustomOptions = array();
+$arrCustomOptions = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$profileCategoryObj->select($row['profilecategory_id']);
 	$arrProfileOptions = $profileCategoryObj->getAssociateIDs("ORDER BY sortnum");
 
 
-	$arrCustomOptions['customsection_'.$customCount] = array(
+	$arrCustomOptions['customsection_'.$customCount] = [
 		"type" => "section",
-			"options" => array("section_title" => $profileCategoryObj->get_info_filtered("name").":"),
+			"options" => ["section_title" => $profileCategoryObj->get_info_filtered("name").":"],
 			"sortorder" => $i++
-	);
+	];
 
 	$customCount++;
 	foreach ($arrProfileOptions as $profileOptionID) {
@@ -374,7 +374,7 @@ while ($row = $result->fetch_assoc()) {
 
 		$profileOptionValue = $member->getProfileValue($profileOptionID, true);
 
-		$arrSelectOptions = array();
+		$arrSelectOptions = [];
 		if ($profileOptionObj->isSelectOption()) {
 			$arrSelectOptions = $profileOptionObj->getSelectValues();
 			$inputType = "select";
@@ -383,14 +383,14 @@ while ($row = $result->fetch_assoc()) {
 		}
 
 
-		$arrCustomOptions["custom_".$profileOptionID] = array(
+		$arrCustomOptions["custom_".$profileOptionID] = [
 				"display_name" => $profileOptionObj->get_info_filtered("name"),
 				"type" => $inputType,
-				"attributes" => array("class" => "textBox formInput"),
+				"attributes" => ["class" => "textBox formInput"],
 				"sortorder" => $i++,
 				"options" => $arrSelectOptions,
 				"value" => $profileOptionValue,
-			);
+			];
 	}
 }
 
@@ -398,13 +398,13 @@ while ($row = $result->fetch_assoc()) {
 
 $arrComponents = array_merge($arrComponents, $arrCustomOptions);
 
-$setupFormArgs = array(
+$setupFormArgs = [
 	"name" => "console-".$cID,
 	"components" => $arrComponents,
 	"saveObject" => $member,
 	"saveType" => "update",
-	"afterSave" => array("saveCustomValues"),
+	"afterSave" => ["saveCustomValues"],
 	"saveMessage" => "Successfully Saved Profile Information!",
-	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
+	"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
 	"description" => "Use the form below to edit your profile."
-);
+];

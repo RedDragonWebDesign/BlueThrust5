@@ -22,9 +22,9 @@
 				var win, de = DOM.doc.documentElement;
 
 				if (ed.getParam('fullscreen_is_enabled')) {
-					if (ed.getParam('fullscreen_new_window'))
+					if (ed.getParam('fullscreen_new_window')) {
 						closeFullscreen(); // Call to close in new window
-					else {
+					} else {
 						DOM.win.setTimeout(function() {
 							tinymce.dom.Event.remove(DOM.win, 'resize', t.resizeFunc);
 							tinyMCE.get(ed.getParam('fullscreen_editor_id')).setContent(ed.getContent());
@@ -56,33 +56,39 @@
 					s.fullscreen_scrolly = vp.y;
 
 					// Fixes an Opera bug where the scrollbars doesn't reappear
-					if (tinymce.isOpera && s.fullscreen_overflow == 'visible')
+					if (tinymce.isOpera && s.fullscreen_overflow == 'visible') {
 						s.fullscreen_overflow = 'auto';
+					}
 
 					// Fixes an IE bug where horizontal scrollbars would appear
-					if (tinymce.isIE && s.fullscreen_overflow == 'scroll')
+					if (tinymce.isIE && s.fullscreen_overflow == 'scroll') {
 						s.fullscreen_overflow = 'auto';
+					}
 
 					// Fixes an IE bug where the scrollbars doesn't reappear
-					if (tinymce.isIE && (s.fullscreen_html_overflow == 'visible' || s.fullscreen_html_overflow == 'scroll'))
+					if (tinymce.isIE && (s.fullscreen_html_overflow == 'visible' || s.fullscreen_html_overflow == 'scroll')) {
 						s.fullscreen_html_overflow = 'auto';
+					}
 
-					if (s.fullscreen_overflow == '0px')
+					if (s.fullscreen_overflow == '0px') {
 						s.fullscreen_overflow = '';
+					}
 
 					DOM.setStyle(DOM.doc.body, 'overflow', 'hidden');
 					de.style.overflow = 'hidden'; //Fix for IE6/7
 					vp = DOM.getViewPort();
 					DOM.win.scrollTo(0, 0);
 
-					if (tinymce.isIE)
+					if (tinymce.isIE) {
 						vp.h -= 1;
+					}
 
 					// Use fixed position if it exists
-					if (tinymce.isIE6 || document.compatMode == 'BackCompat')
+					if (tinymce.isIE6 || document.compatMode == 'BackCompat') {
 						posCss = 'absolute;top:' + vp.y;
-					else
+					} else {
 						posCss = 'fixed;top:0';
+					}
 
 					n = DOM.add(DOM.doc.body, 'div', {
 						id : 'mce_fullscreen_container',
@@ -108,8 +114,9 @@
 						s[k] = v;
 					});
 
-					if (s.theme_advanced_toolbar_location === 'external')
+					if (s.theme_advanced_toolbar_location === 'external') {
 						s.theme_advanced_toolbar_location = 'top';
+					}
 
 					t.fullscreenEditor = new tinymce.Editor('mce_fullscreen', s);
 					t.fullscreenEditor.onInit.add(function() {

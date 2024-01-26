@@ -50,7 +50,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$_POST['wysiwygHTML'] = str_replace("&lt;?", "", $_POST['wysiwygHTML']);
 			$_POST['wysiwygHTML'] = str_replace("?&gt;", "", $_POST['wysiwygHTML']);
 
-			if ($customPageObj->update(array("pagename", "pageinfo"), array($_POST['pagename'], $_POST['wysiwygHTML']))) {
+			if ($customPageObj->update(["pagename", "pageinfo"], [$_POST['pagename'], $_POST['wysiwygHTML']])) {
 				$dispTime = date("l F j, Y g:i:s A");
 
 				$customPageInfo = $customPageObj->get_info();

@@ -78,7 +78,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 	$pluginPageInfo = $pluginObj->getPluginPage("profile", $pluginInfo['plugin_id']);
 
-	$arrProfileModules = array("User Information", "Custom Profile Options", "Games Statistics", "Squads", "Medals");
+	$arrProfileModules = ["User Information", "Custom Profile Options", "Games Statistics", "Squads", "Medals"];
 
 	$countErrors = 0;
 	$dispError = "";
@@ -98,12 +98,12 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		}
 
 		if ($countErrors == 0) {
-			$arrAPIKey = array(
+			$arrAPIKey = [
 				'consumerKey' => $_POST['consumerkey'],
 				'consumerSecret' => $_POST['consumersecret'],
 				'widgetID' => $_POST['widgetid']
 
-			);
+			];
 
 			$jsonAPIKey = json_encode($arrAPIKey);
 			$setSortNum = $_POST['displayorder'];
@@ -116,7 +116,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				$setSortNum = -1;
 			}
 
-			if ($pluginObj->update(array("apikey"), array($jsonAPIKey)) && $pluginObj->pluginPage->update(array("sortnum"), array($setSortNum))) {
+			if ($pluginObj->update(["apikey"], [$jsonAPIKey]) && $pluginObj->pluginPage->update(["sortnum"], [$setSortNum])) {
 				echo "
 				<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -155,7 +155,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 		$dispNote = "";
 
-		$arrTwitterAPIKeys = array("Consumer Key"=>$twitterObj->getConsumerKey(), "Consumer Secret"=>$twitterObj->getConsumerSecret(), "Widget ID"=>$twitterObj->widgetID);
+		$arrTwitterAPIKeys = ["Consumer Key"=>$twitterObj->getConsumerKey(), "Consumer Secret"=>$twitterObj->getConsumerSecret(), "Widget ID"=>$twitterObj->widgetID];
 
 		foreach ($arrTwitterAPIKeys as $key => $value) {
 			if ($value == "") {

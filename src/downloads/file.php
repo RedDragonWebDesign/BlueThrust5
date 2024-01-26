@@ -73,7 +73,7 @@ if ($downloadObj->select($_GET['dID'])) {
 
 	if ($blnShowDownload) {
 		$numOfHits = $downloadObj->get_info("downloadcount")+1;
-		$downloadObj->update(array("downloadcount"), array($numOfHits));
+		$downloadObj->update(["downloadcount"], [$numOfHits]);
 
 		header("Content-Description: File Transfer");
 		header("Content-Length: ".$downloadInfo['filesize'].";");

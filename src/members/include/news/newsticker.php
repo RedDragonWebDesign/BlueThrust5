@@ -26,33 +26,33 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 $cID = $_GET['cID'];
 $i=1;
-$arrComponents = array(
-	"newsticker" => array(
+$arrComponents = [
+	"newsticker" => [
 		"type" => "textbox",
 		"value" => $websiteInfo['newsticker'],
-		"attributes" => array("class" => "formInput textBox", "style" => "width: 35%"),
+		"attributes" => ["class" => "formInput textBox", "style" => "width: 35%"],
 		"sortorder" => $i++,
 		"display_name" => "News Ticker",
 		"tooltip" => "Leave blank to turn off this feature."
-	),
-	"displaysettings" => array(
+	],
+	"displaysettings" => [
 		"type" => "section",
-		"options" => array("section_title" => "Display Settings"),
+		"options" => ["section_title" => "Display Settings"],
 		"sortorder" => $i++
-	),
-	"color" => array(
+	],
+	"color" => [
 		"type" => "colorpick",
 		"value" => $websiteInfo['newstickercolor'],
 		"sortorder" => $i++,
 		"display_name" => "Color",
-		"attributes" => array("class" => "formInput textBox", "id" => "ntColor")
-	),
-	"fontsize" => array(
+		"attributes" => ["class" => "formInput textBox", "id" => "ntColor"]
+	],
+	"fontsize" => [
 		"type" => "select",
 		"display_name" => "Font Size",
-		"attributes" => array("class" => "formInput textBox"),
+		"attributes" => ["class" => "formInput textBox"],
 		"sortorder" => $i++,
-		"options" => array(
+		"options" => [
 						"" => "Default",
 						10 => "10px",
 						12 => "12px",
@@ -61,51 +61,51 @@ $arrComponents = array(
 						18 => "18px",
 						20 => "20px",
 						22 => "22px",
-						24 => "24px"),
+						24 => "24px"],
 		"value" => $websiteInfo['newstickersize'],
-		"validate" => array("RESTRICT_TO_OPTIONS")
-	),
-	"boldtext" => array(
+		"validate" => ["RESTRICT_TO_OPTIONS"]
+	],
+	"boldtext" => [
 		"type" => "checkbox",
 		"display_name" => "Bold Text",
-		"options" => array(1 => ""),
-		"attributes" => array("class" => "formInput textBox"),
+		"options" => [1 => ""],
+		"attributes" => ["class" => "formInput textBox"],
 		"sortorder" => $i++,
 		"value" => $websiteInfo['newstickerbold'],
-		"validate" => array("POSITIVE_NUMBER")
-	),
-	"italictext" => array(
+		"validate" => ["POSITIVE_NUMBER"]
+	],
+	"italictext" => [
 		"type" => "checkbox",
 		"display_name" => "Italic Text",
-		"options" => array(1 => ""),
-		"attributes" => array("class" => "formInput textBox"),
+		"options" => [1 => ""],
+		"attributes" => ["class" => "formInput textBox"],
 		"sortorder" => $i++,
 		"value" => $websiteInfo['newstickeritalic'],
-		"validate" => array("POSITIVE_NUMBER")
-	),
-	"submit" => array(
+		"validate" => ["POSITIVE_NUMBER"]
+	],
+	"submit" => [
 		"value" => "Save",
 		"sortorder" => $i++,
-		"attributes" => array("class" => "submitButton formSubmitButton"),
+		"attributes" => ["class" => "submitButton formSubmitButton"],
 		"type" => "submit"
-	)
-);
+	]
+];
 
-$setupFormArgs = array(
+$setupFormArgs = [
 	"name" => "console-".$cID,
 	"components" => $arrComponents,
 	"description" => "Use the form below to set what displays in the news ticker on the home page.",
 	"saveMessage" => "Successfully saved news ticker!",
-	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
-	"afterSave" => array("saveNewsTicker")
-);
+	"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
+	"afterSave" => ["saveNewsTicker"]
+];
 
 
 function saveNewsTicker() {
 	global $webInfoObj;
 
-	$arrColumns = array("newsticker", "newstickercolor", "newstickersize", "newstickerbold", "newstickeritalic");
-	$arrValues = array($_POST['newsticker'], $_POST['color'], $_POST['fontsize'], $_POST['boldtext'], $_POST['italictext']);
+	$arrColumns = ["newsticker", "newstickercolor", "newstickersize", "newstickerbold", "newstickeritalic"];
+	$arrValues = [$_POST['newsticker'], $_POST['color'], $_POST['fontsize'], $_POST['boldtext'], $_POST['italictext']];
 
 	$webInfoObj->multiUpdate($arrColumns, $arrValues);
 }

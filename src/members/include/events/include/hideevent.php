@@ -45,7 +45,7 @@ if ($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMemb
 
 
 	if ($eventInfo['startdate'] < time()) {
-		$eventObj->objEventMember->update(array("hide"), array("1"));
+		$eventObj->objEventMember->update(["hide"], ["1"]);
 	}
 
 	require_once("invitelist.php");

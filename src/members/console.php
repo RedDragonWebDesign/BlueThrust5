@@ -55,8 +55,8 @@ $EXTERNAL_JAVASCRIPT .= "
 ";
 
 
-$arrTinyMCEPages = array("Manage News", "Post News", "Add Custom Page", "Manage Custom Pages", "Add Custom Form Page", "Manage Custom Form Pages", "Post Topic", "Manage Forum Posts", "Add Menu Item", "Add Menu Category", "Manage Menu Categories", "Manage Menu Items", "Edit Profile");
-$arrAceEditorPages = array("Modify Current Theme", "Add Menu Category", "Add Menu Item", "Manage Menu Categories", "Manage Menu Items");
+$arrTinyMCEPages = ["Manage News", "Post News", "Add Custom Page", "Manage Custom Pages", "Add Custom Form Page", "Manage Custom Form Pages", "Post Topic", "Manage Forum Posts", "Add Menu Item", "Add Menu Category", "Manage Menu Categories", "Manage Menu Items", "Edit Profile"];
+$arrAceEditorPages = ["Modify Current Theme", "Add Menu Category", "Add Menu Item", "Manage Menu Categories", "Manage Menu Items"];
 
 
 if (in_array($consoleInfo['pagetitle'], $arrTinyMCEPages)) {
@@ -90,7 +90,7 @@ if ($checkMember) {
 
 		$memberInfo = $member->get_info();
 
-		$_SESSION['lastConsoleCategory'] = array("catID" => $consoleInfo['consolecategory_id'], "exptime" => time()+300);
+		$_SESSION['lastConsoleCategory'] = ["catID" => $consoleInfo['consolecategory_id'], "exptime" => time()+300];
 
 		// Check for IA
 

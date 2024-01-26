@@ -72,8 +72,8 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	if ($countErrors == 0) {
-		$arrColumns = array("submitdate", "ipaddress", "customform_id");
-		$arrValues = array(time(), $IP_ADDRESS, $customPageInfo['customform_id']);
+		$arrColumns = ["submitdate", "ipaddress", "customform_id"];
+		$arrValues = [time(), $IP_ADDRESS, $customPageInfo['customform_id']];
 
 		if ($customFormObj->objSubmission->addNew($arrColumns, $arrValues)) {
 			$submissionInfo = $customFormObj->objSubmission->get_info();
@@ -118,13 +118,13 @@ if ( ! empty($_POST['submit']) ) {
 
 
 				if ($countErrors == 0) {
-					$arrColumns = array("submission_id", "component_id", "formvalue");
+					$arrColumns = ["submission_id", "component_id", "formvalue"];
 					if ($componentInfo['componenttype'] == "multiselect") {
 						foreach ($arrSelectValues as $selectValueID) {
 							$multiSelectName = $formComponentName."_".$selectValueID;
 							$customFormObj->objSelectValue->select($selectValueID);
 							$selectValue = $customFormObj->objSelectValue->get_info_filtered("componentvalue");
-							if ($_POST[$multiSelectName] == 1 && !$customFormObj->objFormValue->addNew($arrColumns, array($submissionInfo['submission_id'], $componentID, $selectValue))) {
+							if ($_POST[$multiSelectName] == 1 && !$customFormObj->objFormValue->addNew($arrColumns, [$submissionInfo['submission_id'], $componentID, $selectValue])) {
 								$countErrors++;
 								$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 							}
@@ -132,11 +132,11 @@ if ( ! empty($_POST['submit']) ) {
 					} elseif ($componentInfo['componenttype'] == "select") {
 						$customFormObj->objSelectValue->select($_POST[$formComponentName]);
 						$selectValue = $customFormObj->objSelectValue->get_info_filtered("componentvalue");
-						if (!$customFormObj->objFormValue->addNew($arrColumns, array($submissionInfo['submission_id'], $componentID, $selectValue))) {
+						if (!$customFormObj->objFormValue->addNew($arrColumns, [$submissionInfo['submission_id'], $componentID, $selectValue])) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 						}
-					} elseif (($componentInfo['componenttype'] == "input" || $componentInfo['componenttype'] == "largeinput") && !$customFormObj->objFormValue->addNew($arrColumns, array($submissionInfo['submission_id'], $componentID, $_POST[$formComponentName]))) {
+					} elseif (($componentInfo['componenttype'] == "input" || $componentInfo['componenttype'] == "largeinput") && !$customFormObj->objFormValue->addNew($arrColumns, [$submissionInfo['submission_id'], $componentID, $_POST[$formComponentName]])) {
 						$countErrors++;
 						$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to save informtaion for ".$componentInfo['name'].".<br>";
 					}

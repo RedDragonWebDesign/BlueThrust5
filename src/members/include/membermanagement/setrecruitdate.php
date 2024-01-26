@@ -70,8 +70,8 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	if ($countErrors == 0) {
-		$arrColumn = array("datejoined");
-		$arrValue = array($recruitDate);
+		$arrColumn = ["datejoined"];
+		$arrValue = [$recruitDate];
 
 		if ($memberObj->update($arrColumn, $arrValue)) {
 			echo "

@@ -59,7 +59,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 						// Check operation
-						$possibleOps = array("add", "sub", "mul", "div");
+						$possibleOps = ["add", "sub", "mul", "div"];
 						if (!in_array($_POST['calcOperation'], $possibleOps)) {
 							$countErrors++;
 							$dispError .= "&nbsp;&nbsp;<b>&middot;</b> You selected an invalid operation. - ".$_POST['calcOperation']."<br>";
@@ -118,7 +118,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 					$savedGameStatsID = $_SESSION['btStatCache'][$_POST['sID']]['gamestatsID'];
 
-					$_SESSION['btStatCache'][$_POST['sID']] = array(
+					$_SESSION['btStatCache'][$_POST['sID']] = [
 
 							'statName' => $_POST['statName'],
 							'statType' => $_POST['statType'],
@@ -130,7 +130,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 							'textInput' => $intInputText,
 							'gamestatsID' => $savedGameStatsID
 
-						);
+						];
 
 					echo "
 						<script type='text/javascript'>
@@ -194,7 +194,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 					}
 				}
 
-				$calcOps = array("add" => "Plus", "sub" => "Minus", "mul" => "Multiplied By", "div" => "Divided By");
+				$calcOps = ["add" => "Plus", "sub" => "Minus", "mul" => "Multiplied By", "div" => "Divided By"];
 
 				foreach ($calcOps as $key => $value) {
 					if ($statInfo['calcOperation'] == $key) {

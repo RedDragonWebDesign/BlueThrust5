@@ -73,7 +73,7 @@ if ($squadInfo['recruitingstatus'] == 0) {
 $squadMemberList = $squadObj->getMemberList();
 
 $arrPublicNews = $squadObj->getNewsPostList(1);
-$arrPrivateNews = array();
+$arrPrivateNews = [];
 
 if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 	$member->select($_SESSION['btUsername']);
@@ -144,7 +144,7 @@ foreach ($squadRankList as $squadRankID) {
 }
 
 
-$arrSquadMembers = array();
+$arrSquadMembers = [];
 foreach ($squadMemberList as $realMemberID) {
 	$squadMemberID = $squadObj->getSquadMemberID($realMemberID);
 

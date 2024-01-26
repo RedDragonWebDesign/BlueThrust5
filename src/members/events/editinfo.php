@@ -50,13 +50,13 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	// Check Start Time
-	$arrHours = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+	$arrHours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 	if (!in_array($_POST['starthour'], $arrHours)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid start hour.<br>";
 		$countErrors++;
 	}
 
-	$arrMinutes = array();
+	$arrMinutes = [];
 	for ($i=0; $i<=59; $i++) {
 		$arrMinutes[] = $i;
 	}
@@ -99,7 +99,7 @@ if ( ! empty($_POST['submit']) ) {
 		$openInvites = 0;
 	}
 
-	$arrCheckVisibility = array(0, 1, 2);
+	$arrCheckVisibility = [0, 1, 2];
 	if (!in_array($_POST['visibility'], $arrCheckVisibility)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid visibility setting.<br>";
 		$countErrors++;
@@ -114,8 +114,8 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-		$arrColumns = array("title", "description", "location", "startdate", "publicprivate", "visibility", "messages", "invitepermission", "timezone");
-		$arrValues = array($_POST['eventtitle'], $_POST['eventdetails'], $_POST['eventlocation'], $setStartTime, $inviteType, $_POST['visibility'], $allowMessages, $openInvites, $_POST['timezone']);
+		$arrColumns = ["title", "description", "location", "startdate", "publicprivate", "visibility", "messages", "invitepermission", "timezone"];
+		$arrValues = [$_POST['eventtitle'], $_POST['eventdetails'], $_POST['eventlocation'], $setStartTime, $inviteType, $_POST['visibility'], $allowMessages, $openInvites, $_POST['timezone']];
 
 		if ($eventObj->update($arrColumns, $arrValues)) {
 			echo "

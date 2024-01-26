@@ -47,14 +47,16 @@
 			t.state = !t.state;
 			ed.controlManager.setActive('visualchars', t.state);
 
-			if (bookmark)
+			if (bookmark) {
 				bm = s.getBookmark();
+			}
 
 			if (t.state) {
 				nl = [];
 				tinymce.walk(b, function(n) {
-					if (n.nodeType == 3 && n.nodeValue && n.nodeValue.indexOf('\u00a0') != -1)
+					if (n.nodeType == 3 && n.nodeValue && n.nodeValue.indexOf('\u00a0') != -1) {
 						nl.push(n);
+					}
 				}, 'childNodes');
 
 				for (i = 0; i < nl.length; i++) {
@@ -62,16 +64,18 @@
 					nv = nv.replace(/(\u00a0)/g, '<span data-mce-bogus="1" class="mceItemHidden mceItemNbsp">$1</span>');
 
 					div = ed.dom.create('div', null, nv);
-					while (node = div.lastChild)
+					while (node = div.lastChild) {
 						ed.dom.insertAfter(node, nl[i]);
+					}
 
 					ed.dom.remove(nl[i]);
 				}
 			} else {
 				nl = ed.dom.select('span.mceItemNbsp', b);
 
-				for (i = nl.length - 1; i >= 0; i--)
+				for (i = nl.length - 1; i >= 0; i--) {
 					ed.dom.remove(nl[i], 1);
+				}
 			}
 
 			s.moveToBookmark(bm);

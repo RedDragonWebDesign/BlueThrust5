@@ -13,8 +13,9 @@
 		init : function(ed, url) {
 			var t = this, sp;
 
-			if (!tinymce.isIE)
+			if (!tinymce.isIE) {
 				return;
+			}
 
 			t.editor = ed;
 
@@ -26,11 +27,13 @@
 				} catch (e) {
 					if (e.number == -2146827859) {
 						ed.windowManager.confirm(ed.getLang("iespell.download"), function(s) {
-							if (s)
+							if (s) {
 								window.open('http://www.iespell.com/download.php', 'ieSpellDownload', '');
+							}
 						});
-					} else
+					} else {
 						ed.windowManager.alert("Error Loading ieSpell: Exception " + e.number);
+					}
 				}
 			});
 

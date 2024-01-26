@@ -43,7 +43,7 @@ while ($row = $result->fetch_assoc()) {
 
 	$downloadcatoptions .= "<option value='".$row['downloadcategory_id']."'".$dispSelected.">".$row['name']."</option>";
 	$downloadCatObj->select($row['downloadcategory_id']);
-	$arrExtensions = array();
+	$arrExtensions = [];
 	foreach ($downloadCatObj->getExtensions() as $downloadExtID) {
 		$downloadExtObj->select($downloadExtID);
 		$arrExtensions[] = $downloadExtObj->get_info_filtered("extension");
@@ -96,12 +96,12 @@ if ( ! empty($_POST['submit']) ) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must select a file to upload.<br>";
 	} elseif ($countErrors == 0 && $downloadObj->uploadFile($_FILES['uploadfile'], $prevFolder."downloads/files/", $_POST['section'])) {
 		$blnUploaded = true;
-		$arrDLColumns = array("downloadcategory_id", "member_id", "dateuploaded", "filename", "mimetype", "filesize", "splitfile1", "splitfile2", "name", "description");
+		$arrDLColumns = ["downloadcategory_id", "member_id", "dateuploaded", "filename", "mimetype", "filesize", "splitfile1", "splitfile2", "name", "description"];
 		$splitFiles = $downloadObj->getSplitNames();
 		$fileSize = $downloadObj->getFileSize();
 		$mimeType = $downloadObj->getMIMEType();
 
-		$arrDLValues = array($_POST['section'], $memberInfo['member_id'], time(), $_FILES['uploadfile']['name'], $mimeType, $fileSize, "downloads/files/".$splitFiles[0], "downloads/files/".$splitFiles[1], $_POST['title'], $_POST['description']);
+		$arrDLValues = [$_POST['section'], $memberInfo['member_id'], time(), $_FILES['uploadfile']['name'], $mimeType, $fileSize, "downloads/files/".$splitFiles[0], "downloads/files/".$splitFiles[1], $_POST['title'], $_POST['description']];
 
 		if ($downloadObj->addNew($arrDLColumns, $arrDLValues)) {
 			echo "

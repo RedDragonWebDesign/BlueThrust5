@@ -14,8 +14,9 @@
 	tinymce.create('tinymce.plugins.TabFocusPlugin', {
 		init : function(ed, url) {
 			function tabCancel(ed, e) {
-				if (e.keyCode === 9)
+				if (e.keyCode === 9) {
 					return Event.cancel(e);
+				}
 			}
 
 			function tabHandler(ed, e) {
@@ -47,13 +48,15 @@
 					});
 					if (d > 0) {
 						for (i = x + 1; i < el.length; i++) {
-							if (canSelect(el[i]))
+							if (canSelect(el[i])) {
 								return el[i];
+							}
 						}
 					} else {
 						for (i = x - 1; i >= 0; i--) {
-							if (canSelect(el[i]))
+							if (canSelect(el[i])) {
 								return el[i];
+							}
 						}
 					}
 
@@ -70,26 +73,30 @@
 
 					// Find element to focus
 					if (e.shiftKey) {
-						if (v[0] == ':prev')
+						if (v[0] == ':prev') {
 							el = find(-1);
-						else
+						} else {
 							el = DOM.get(v[0]);
+						}
 					} else {
-						if (v[1] == ':next')
+						if (v[1] == ':next') {
 							el = find(1);
-						else
+						} else {
 							el = DOM.get(v[1]);
+						}
 					}
 
 					if (el) {
-						if (el.id && (ed = tinymce.get(el.id || el.name)))
+						if (el.id && (ed = tinymce.get(el.id || el.name))) {
 							ed.focus();
-						else
+						} else {
 							window.setTimeout(function() {
-								if (!tinymce.isWebKit)
+								if (!tinymce.isWebKit) {
 									window.focus();
+								}
 								el.focus();
 							}, 10);
+						}
 
 						return Event.cancel(e);
 					}
@@ -101,8 +108,9 @@
 			if (tinymce.isGecko) {
 				ed.onKeyPress.add(tabHandler);
 				ed.onKeyDown.add(tabCancel);
-			} else
+			} else {
 				ed.onKeyDown.add(tabHandler);
+			}
 
 		},
 

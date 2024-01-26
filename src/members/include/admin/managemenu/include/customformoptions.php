@@ -4,22 +4,22 @@
 // Custom Form Page Options
 $customFormPageObj = new CustomForm($mysqli);
 $arrCustomFormPages = $customFormPageObj->get_entries();
-$customFormPageOptions = array();
+$customFormPageOptions = [];
 foreach ($arrCustomFormPages as $eachCustomFormPage) {
 	$customFormPageOptions[$eachCustomFormPage['customform_id']] = $eachCustomFormPage['name'];
 }
 
 if (count($customFormPageOptions) == 0) {
-	$customFormPageOptions = array("No Custom Form Pages");
+	$customFormPageOptions = ["No Custom Form Pages"];
 }
 
-$customFormOptionComponents = array(
-	"customform" => array(
+$customFormOptionComponents = [
+	"customform" => [
 		"type" => "select",
-		"attributes" => array("class" => "textBox formInput"),
+		"attributes" => ["class" => "textBox formInput"],
 		"options" => $customFormPageOptions,
 		"sortorder" => $i++,
 		"display_name" => "Custom Form"
-	)
+	]
 
-);
+];

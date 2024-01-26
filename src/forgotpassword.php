@@ -122,8 +122,8 @@ if ($stage == "start"  && $countErrors == 0) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Username Not Valid.<br>";
 	}
 	if ($countErrors == 0) {
-		$arrayCol = array('username', 'email', 'changekey', 'timeofrq');
-		$arrayVal = array($username, $email, $changekey, $time);
+		$arrayCol = ['username', 'email', 'changekey', 'timeofrq'];
+		$arrayVal = [$username, $email, $changekey, $time];
 		$forgotPassObj->addNew($arrayCol, $arrayVal);
 
 		$subject = 'Your Forgotten Password Request - ' . $CLAN_NAME;

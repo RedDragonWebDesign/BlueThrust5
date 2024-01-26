@@ -73,7 +73,7 @@ class DownloadCategory extends Rank {
 
 	public function getExtensions($returnIDs = true) {
 
-		$arrExtensions = array();
+		$arrExtensions = [];
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."download_extensions WHERE downloadcategory_id = '".$this->intTableKeyValue."' ORDER BY extension_id");
 			while ($row = $result->fetch_assoc()) {

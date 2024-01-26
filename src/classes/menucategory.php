@@ -30,7 +30,7 @@ class MenuCategory extends BasicSort {
 
 
 	public function getCategories($intSection, $intAccessType = 1, $intHide = 0) {
-		$returnArr = array();
+		$returnArr = [];
 
 		$accessTypeSQL = " OR accesstype = '".$intAccessType."'";
 		if ($intAccessType == 3) {

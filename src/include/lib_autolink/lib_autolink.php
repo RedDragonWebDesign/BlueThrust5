@@ -15,13 +15,13 @@
 	# functions to change the output.
 	#
 
-$GLOBALS['autolink_options'] = array(
+$GLOBALS['autolink_options'] = [
 
 		# Should http:// be visibly stripped from the front
 		# of URLs?
 		'strip_protocols' => false,
 
-	);
+	];
 
 	####################################################################
 
@@ -114,7 +114,7 @@ function autolink_do($text, $sub, $limit, $tagfill, $auto_title, $force_prefix =
 					$url = substr($url, 0, strlen($url)-1);
 					$cursor--;
 				}
-				foreach (array('()', '[]', '{}') as $pair) {
+				foreach (['()', '[]', '{}'] as $pair) {
 					$o = substr($pair, 0, 1);
 					$c = substr($pair, 1, 1);
 					if (preg_match("!^(\\$c|^)[^\\$o]+\\$c$!", $url)) {

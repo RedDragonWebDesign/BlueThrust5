@@ -37,8 +37,8 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	if ($countErrors == 0) {
-		$arrColumns = array("name", "description");
-		$arrValues = array($_POST['title'], $_POST['description']);
+		$arrColumns = ["name", "description"];
+		$arrValues = [$_POST['title'], $_POST['description']];
 		if ($downloadObj->update($arrColumns, $arrValues)) {
 			$downloadInfo = $downloadObj->get_info_filtered();
 			echo "

@@ -12,21 +12,20 @@
 
 function selectAllCheckboxes(divID, checkOrUncheck) {
 
-	if(checkOrUncheck != 1) {
+	if (checkOrUncheck != 1) {
 		checkOrUncheck = 0;
 	}
 
 	var strJQInfo = "#"+divID+" [type='checkbox']";
 	$(strJQInfo).each(function() {
 
-		if(checkOrUncheck == 1) {
+		if (checkOrUncheck == 1) {
 			$(this).attr("checked", true);
-		}
-		else {
+		} else {
 			$(this).attr("checked", false);
 		}
-	
-		
+
+
 	});
 
 

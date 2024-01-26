@@ -53,8 +53,8 @@ if ($pollObj->totalVotes() > 0 && ($member->hasAccess($consoleObj) || $pollInfo[
 }
 
 if ($blnShowResults) {
-	$arrResults = array("['Option', 'Votes']");
-	$arrOptions = array();
+	$arrResults = ["['Option', 'Votes']"];
+	$arrOptions = [];
 	$x = 0;
 	$countTotalVotes = 0;
 	foreach ($pollObj->getPollResults() as $pollOptionID => $votes) {
@@ -101,7 +101,7 @@ $PAGE_NAME = "Poll - ";
 $dispBreadCrumb = "";
 require_once($prevFolder."themes/".$THEME."/_header.php");
 
-$memberInfo = array();
+$memberInfo = [];
 
 $LOGGED_IN = false;
 if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {

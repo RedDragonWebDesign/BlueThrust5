@@ -36,8 +36,9 @@
 			t.numlist = ed.getParam("advlist_number_styles") || buildFormats("default,lower-alpha,lower-greek,lower-roman,upper-alpha,upper-roman");
 			t.bullist = ed.getParam("advlist_bullet_styles") || buildFormats("default,circle,disc,square");
 
-			if (tinymce.isIE && /MSIE [2-7]/.test(navigator.userAgent))
+			if (tinymce.isIE && /MSIE [2-7]/.test(navigator.userAgent)) {
 				t.isIE7 = true;
+			}
 		},
 
 		createControl: function(name, cm) {
@@ -45,8 +46,9 @@
 
 			if (name == 'numlist' || name == 'bullist') {
 				// Default to first item if it's a default item
-				if (t[name][0].title == 'advlist.def')
+				if (t[name][0].title == 'advlist.def') {
 					format = t[name][0];
+				}
 
 				function hasFormat(node, format) {
 					var state = true;
@@ -69,8 +71,9 @@
 					list = dom.getParent(sel.getNode(), 'ol,ul');
 
 					// Switch/add list type if needed
-					if (!list || list.nodeName == (name == 'bullist' ? 'OL' : 'UL') || hasFormat(list, format))
+					if (!list || list.nodeName == (name == 'bullist' ? 'OL' : 'UL') || hasFormat(list, format)) {
 						editor.execCommand(name == 'bullist' ? 'InsertUnorderedList' : 'InsertOrderedList');
+					}
 
 					// Append styles to new list element
 					if (format) {
@@ -122,16 +125,18 @@
 										}
 									});
 
-									if (state)
+									if (state) {
 										item.setSelected(1);
+									}
 								}
 							});
 
 							// Select the current format
-							if (!list)
+							if (!list) {
 								menu.items[format.id].setSelected(1);
+							}
 						}
-	
+
 						editor.focus();
 
 						// IE looses it's selection so store it away and restore it later
@@ -144,8 +149,9 @@
 
 					each(t[name], function(item) {
 						// IE<8 doesn't support lower-greek, skip it
-						if (t.isIE7 && item.styles.listStyleType == 'lower-greek')
+						if (t.isIE7 && item.styles.listStyleType == 'lower-greek') {
 							return;
+						}
 
 						item.id = editor.dom.uniqueId();
 

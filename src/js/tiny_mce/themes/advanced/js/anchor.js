@@ -26,8 +26,9 @@ var AnchorDialog = {
 
 		tinyMCEPopup.restoreSelection();
 
-		if (this.action != 'update')
+		if (this.action != 'update') {
 			ed.selection.collapse(1);
+		}
 
 		var aRule = ed.schema.getElementRule('a');
 		if (!aRule || aRule.attributes.name) {

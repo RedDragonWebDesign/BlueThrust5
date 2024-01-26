@@ -16,12 +16,12 @@ function moverCategory(intCategoryNum) {
 
 	var strCategoryName = "categoryName"+intCategoryNum;
 	document.getElementById(strCategoryName).className = "consoleCategory_clicked";
-	
+
 }
 
 function moutCategory(intCategoryNum) {
 
-	if(intSelectedConsole != intCategoryNum) {
+	if (intSelectedConsole != intCategoryNum) {
 		var strCategoryName = "categoryName"+intCategoryNum;
 		document.getElementById(strCategoryName).className = "consoleCategory";
 	}
@@ -30,28 +30,28 @@ function moutCategory(intCategoryNum) {
 
 
 function selectCategory(intCategoryNum) {
-	
+
 	var strOldCat = "#categoryOption"+intSelectedConsole;
 	var strNewCat = "#categoryOption"+intCategoryNum;
 	var intOldCat = intSelectedConsole;
-	
+
 	intSelectedConsole = intCategoryNum;
 	moverCategory(intCategoryNum);
 	moutCategory(intOldCat);
-	
+
 	$(document).ready(function() {
 		$(strOldCat).hide();
 		$(strNewCat).show();
-		
+
 		$('#myAccountPageCategories').removeClass("showConsoleCategories").addClass("hideConsoleCategories");
 		$('#myAccountPageOptions').removeClass("hideConsoleOptions").addClass("showConsoleOptions");
 	});
-	
+
 }
 
 function sendPostData(arrData, strPageName) {
 
-	
+
 	$(document).ready(function() {
 		$.post(strPageName, { postData: arrData }, function(data) {
 			alert(data);

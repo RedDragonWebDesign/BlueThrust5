@@ -1,12 +1,12 @@
 tinyMCEPopup.requireLangPack();
 
-var defaultFonts = "" + 
-	"Arial, Helvetica, sans-serif=Arial, Helvetica, sans-serif;" + 
-	"Times New Roman, Times, serif=Times New Roman, Times, serif;" + 
-	"Courier New, Courier, mono=Courier New, Courier, mono;" + 
-	"Times New Roman, Times, serif=Times New Roman, Times, serif;" + 
-	"Georgia, Times New Roman, Times, serif=Georgia, Times New Roman, Times, serif;" + 
-	"Verdana, Arial, Helvetica, sans-serif=Verdana, Arial, Helvetica, sans-serif;" + 
+var defaultFonts = "" +
+	"Arial, Helvetica, sans-serif=Arial, Helvetica, sans-serif;" +
+	"Times New Roman, Times, serif=Times New Roman, Times, serif;" +
+	"Courier New, Courier, mono=Courier New, Courier, mono;" +
+	"Times New Roman, Times, serif=Times New Roman, Times, serif;" +
+	"Georgia, Times New Roman, Times, serif=Georgia, Times New Roman, Times, serif;" +
+	"Verdana, Arial, Helvetica, sans-serif=Verdana, Arial, Helvetica, sans-serif;" +
 	"Geneva, Arial, Helvetica, sans-serif=Geneva, Arial, Helvetica, sans-serif";
 
 var defaultSizes = "9;10;12;14;16;18;24;xx-small;x-small;small;medium;large;x-large;xx-large;smaller;larger";
@@ -37,8 +37,7 @@ function aggregateStyles(allStyles) {
 				if (parsedStyles.hasOwnProperty(name)) {
 					if (mergedStyles[name] === undefined) {
 						mergedStyles[name] = parsedStyles[name];
-					}
-					else if (name === 'text-decoration') {
+					} else if (name === 'text-decoration') {
 						if (mergedStyles[name].indexOf(parsedStyles[name]) === -1) {
 							mergedStyles[name] = mergedStyles[name] +' '+ parsedStyles[name];
 						}
@@ -48,7 +47,7 @@ function aggregateStyles(allStyles) {
 		}
 	});
 
-  return mergedStyles;
+	return mergedStyles;
 }
 
 var applyActionIsInsert;
@@ -280,8 +279,9 @@ function getMeasurement(s) {
 }
 
 function getNum(s) {
-	if (new RegExp('^(?:[0-9.]+)(?:[a-z%]+)$', 'gi').test(s))
+	if (new RegExp('^(?:[0-9.]+)(?:[a-z%]+)$', 'gi').test(s)) {
 		return s.replace(/[^0-9.]/g, '');
+	}
 
 	return s;
 }
@@ -293,22 +293,25 @@ function inStr(s, n) {
 function getVal(s, i) {
 	var a = s.split(' ');
 
-	if (a.length > 1)
+	if (a.length > 1) {
 		return a[i];
+	}
 
 	return "";
 }
 
 function setValue(f, n, v) {
-	if (f.elements[n].type == "text")
+	if (f.elements[n].type == "text") {
 		f.elements[n].value = v;
-	else
+	} else {
 		selectByValue(f, n, v, true, true);
+	}
 }
 
 function setupBox(f, ce, fp, pr, sf, b) {
-	if (typeof(b) == "undefined")
+	if (typeof(b) == "undefined") {
 		b = ['Top', 'Right', 'Bottom', 'Left'];
+	}
 
 	if (isSame(ce, pr, sf, b)) {
 		f.elements[fp + "_same"].checked = true;
@@ -359,11 +362,13 @@ function setupBox(f, ce, fp, pr, sf, b) {
 function isSame(e, pr, sf, b) {
 	var a = [], i, x;
 
-	if (typeof(b) == "undefined")
+	if (typeof(b) == "undefined") {
 		b = ['Top', 'Right', 'Bottom', 'Left'];
+	}
 
-	if (typeof(sf) == "undefined" || sf == null)
+	if (typeof(sf) == "undefined" || sf == null) {
 		sf = "";
+	}
 
 	a[0] = e.style[pr + b[0] + sf];
 	a[1] = e.style[pr + b[1] + sf];
@@ -371,12 +376,14 @@ function isSame(e, pr, sf, b) {
 	a[3] = e.style[pr + b[3] + sf];
 
 	for (i=0; i<a.length; i++) {
-		if (a[i] == null)
+		if (a[i] == null) {
 			return false;
+		}
 
 		for (x=0; x<a.length; x++) {
-			if (a[x] != a[i])
+			if (a[x] != a[i]) {
 				return false;
+			}
 		}
 	}
 
@@ -387,12 +394,14 @@ function hasEqualValues(a) {
 	var i, x;
 
 	for (i=0; i<a.length; i++) {
-		if (a[i] == null)
+		if (a[i] == null) {
 			return false;
+		}
 
 		for (x=0; x<a.length; x++) {
-			if (a[x] != a[i])
+			if (a[x] != a[i]) {
 				return false;
+			}
 		}
 	}
 
@@ -427,8 +436,7 @@ function applyAction() {
 
 		if (tinyMCEPopup.getWindowArg('applyStyleToBlocks')) {
 			nodes = ed.selection.getSelectedBlocks();
-		}
-		else {
+		} else {
 			nodes = ed.selection.getNode();
 		}
 
@@ -463,8 +471,9 @@ function generateCSS() {
 	s += f.text_blink.checked ? " blink" : "";
 	s = s.length > 0 ? s.substring(1) : s;
 
-	if (f.text_none.checked)
+	if (f.text_none.checked) {
 		s = "none";
+	}
 
 	ce.style.textDecoration = s;
 
@@ -506,16 +515,18 @@ function generateCSS() {
 		ce.style.paddingRight = f.box_padding_right.value + (isNum(f.box_padding_right.value) ? f.box_padding_right_measurement.value : "");
 		ce.style.paddingBottom = f.box_padding_bottom.value + (isNum(f.box_padding_bottom.value) ? f.box_padding_bottom_measurement.value : "");
 		ce.style.paddingLeft = f.box_padding_left.value + (isNum(f.box_padding_left.value) ? f.box_padding_left_measurement.value : "");
-	} else
-		ce.style.padding = f.box_padding_top.value + (isNum(f.box_padding_top.value) ? f.box_padding_top_measurement.value : "");		
+	} else {
+		ce.style.padding = f.box_padding_top.value + (isNum(f.box_padding_top.value) ? f.box_padding_top_measurement.value : "");
+	}
 
 	if (!f.box_margin_same.checked) {
 		ce.style.marginTop = f.box_margin_top.value + (isNum(f.box_margin_top.value) ? f.box_margin_top_measurement.value : "");
 		ce.style.marginRight = f.box_margin_right.value + (isNum(f.box_margin_right.value) ? f.box_margin_right_measurement.value : "");
 		ce.style.marginBottom = f.box_margin_bottom.value + (isNum(f.box_margin_bottom.value) ? f.box_margin_bottom_measurement.value : "");
 		ce.style.marginLeft = f.box_margin_left.value + (isNum(f.box_margin_left.value) ? f.box_margin_left_measurement.value : "");
-	} else
-		ce.style.margin = f.box_margin_top.value + (isNum(f.box_margin_top.value) ? f.box_margin_top_measurement.value : "");		
+	} else {
+		ce.style.margin = f.box_margin_top.value + (isNum(f.box_margin_top.value) ? f.box_margin_top_measurement.value : "");
+	}
 
 	// Build border styles
 
@@ -524,24 +535,27 @@ function generateCSS() {
 		ce.style.borderRightStyle = f.border_style_right.value;
 		ce.style.borderBottomStyle = f.border_style_bottom.value;
 		ce.style.borderLeftStyle = f.border_style_left.value;
-	} else
+	} else {
 		ce.style.borderStyle = f.border_style_top.value;
+	}
 
 	if (!f.border_width_same.checked) {
 		ce.style.borderTopWidth = f.border_width_top.value + (isNum(f.border_width_top.value) ? f.border_width_top_measurement.value : "");
 		ce.style.borderRightWidth = f.border_width_right.value + (isNum(f.border_width_right.value) ? f.border_width_right_measurement.value : "");
 		ce.style.borderBottomWidth = f.border_width_bottom.value + (isNum(f.border_width_bottom.value) ? f.border_width_bottom_measurement.value : "");
 		ce.style.borderLeftWidth = f.border_width_left.value + (isNum(f.border_width_left.value) ? f.border_width_left_measurement.value : "");
-	} else
+	} else {
 		ce.style.borderWidth = f.border_width_top.value + (isNum(f.border_width_top.value) ? f.border_width_top_measurement.value : "");
+	}
 
 	if (!f.border_color_same.checked) {
 		ce.style.borderTopColor = f.border_color_top.value;
 		ce.style.borderRightColor = f.border_color_right.value;
 		ce.style.borderBottomColor = f.border_color_bottom.value;
 		ce.style.borderLeftColor = f.border_color_left.value;
-	} else
+	} else {
 		ce.style.borderColor = f.border_color_top.value;
+	}
 
 	// Build list styles
 
@@ -554,11 +568,13 @@ function generateCSS() {
 	ce.style.position = f.positioning_type.value;
 	ce.style.visibility = f.positioning_visibility.value;
 
-	if (ce.style.width == "")
+	if (ce.style.width == "") {
 		ce.style.width = f.positioning_width.value + (isNum(f.positioning_width.value) ? f.positioning_width_measurement.value : "");
+	}
 
-	if (ce.style.height == "")
+	if (ce.style.height == "") {
 		ce.style.height = f.positioning_height.value + (isNum(f.positioning_height.value) ? f.positioning_height_measurement.value : "");
+	}
 
 	ce.style.zIndex = f.positioning_zindex.value;
 	ce.style.overflow = f.positioning_overflow.value;
@@ -584,8 +600,9 @@ function generateCSS() {
 		s += (isNum(f.positioning_clip_left.value) ? f.positioning_clip_left.value + f.positioning_clip_left_measurement.value : "auto");
 		s += ")";
 
-		if (s != "rect(auto auto auto auto)")
+		if (s != "rect(auto auto auto auto)") {
 			ce.style.clip = s;
+		}
 	} else {
 		s = "rect(";
 		t = isNum(f.positioning_clip_top.value) ? f.positioning_clip_top.value + f.positioning_clip_top_measurement.value : "auto";
@@ -594,8 +611,9 @@ function generateCSS() {
 		s += t + " ";
 		s += t + ")";
 
-		if (s != "rect(auto auto auto auto)")
+		if (s != "rect(auto auto auto auto)") {
 			ce.style.clip = s;
+		}
 	}
 
 	ce.style.cssText = ce.style.cssText;
@@ -610,10 +628,11 @@ function showDisabledControls() {
 
 	for (i=0; i<f.length; i++) {
 		for (a=0; a<f[i].elements.length; a++) {
-			if (f[i].elements[a].disabled)
+			if (f[i].elements[a].disabled) {
 				tinyMCEPopup.editor.dom.addClass(f[i].elements[a], "disabled");
-			else
+			} else {
 				tinyMCEPopup.editor.dom.removeClass(f[i].elements[a], "disabled");
+			}
 		}
 	}
 }
@@ -624,8 +643,9 @@ function fillSelect(f, s, param, dval, sep, em) {
 	f = document.forms[f];
 	sep = typeof(sep) == "undefined" ? ";" : sep;
 
-	if (em)
+	if (em) {
 		addSelectValue(f, s, "", "");
+	}
 
 	ar = tinyMCEPopup.getParam(param, dval).split(sep);
 	for (i=0; i<ar.length; i++) {
@@ -641,13 +661,15 @@ function fillSelect(f, s, param, dval, sep, em) {
 		if (p.length > 1) {
 			addSelectValue(f, s, p[0], p[1]);
 
-			if (se)
+			if (se) {
 				selectByValue(f, s, p[1]);
+			}
 		} else {
 			addSelectValue(f, s, p[0], p[0]);
 
-			if (se)
+			if (se) {
 				selectByValue(f, s, p[0]);
+			}
 		}
 	}
 }
@@ -689,8 +711,9 @@ function synch(fr, to) {
 
 	f.elements[to].value = f.elements[fr].value;
 
-	if (f.elements[fr + "_measurement"])
+	if (f.elements[fr + "_measurement"]) {
 		selectByValue(f, to + "_measurement", f.elements[fr + "_measurement"].value);
+	}
 }
 
 function updateTextDecorations(){

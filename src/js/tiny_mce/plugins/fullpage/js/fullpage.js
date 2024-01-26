@@ -11,7 +11,7 @@
 (function() {
 	tinyMCEPopup.requireLangPack();
 
-	var defaultDocTypes = 
+	var defaultDocTypes =
 		'XHTML 1.0 Transitional=<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">,' +
 		'XHTML 1.0 Frameset=<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">,' +
 		'XHTML 1.0 Strict=<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">,' +
@@ -20,7 +20,7 @@
 		'HTML 4.01 Strict=<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">,' +
 		'HTML 4.01 Frameset=<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">';
 
-	var defaultEncodings = 
+	var defaultEncodings =
 		'Western european (iso-8859-1)=iso-8859-1,' +
 		'Central European (iso-8859-2)=iso-8859-2,' +
 		'Unicode (UTF-8)=utf-8,' +
@@ -40,23 +40,26 @@
 		if (elm) {
 			value = value || '';
 
-			if (elm.nodeName == "SELECT")
+			if (elm.nodeName == "SELECT") {
 				selectByValue(document.forms[0], id, value);
-			else if (elm.type == "checkbox")
+			} else if (elm.type == "checkbox") {
 				elm.checked = !!value;
-			else
+			} else {
 				elm.value = value;
+			}
 		}
 	};
 
 	function getVal(id) {
 		var elm = document.getElementById(id);
 
-		if (elm.nodeName == "SELECT")
+		if (elm.nodeName == "SELECT") {
 			return elm.options[elm.selectedIndex].value;
+		}
 
-		if (elm.type == "checkbox")
+		if (elm.type == "checkbox") {
 			return elm.checked;
+		}
 
 		return elm.value;
 	};
@@ -69,10 +72,11 @@
 			setVal('fontsize', styles['font-size']);
 			setVal('textcolor', styles['color']);
 
-			if (val = styles['background-image'])
+			if (val = styles['background-image']) {
 				setVal('bgimage', val.replace(new RegExp("url\\('?([^']*)'?\\)", 'gi'), "$1"));
-			else
+			} else {
 				setVal('bgimage', '');
+			}
 
 			setVal('bgcolor', styles['background-color']);
 
@@ -91,17 +95,21 @@
 				styles['margin-left'] = val[3] || val[0] || '';
 			}
 
-			if (val = styles['margin-top'])
+			if (val = styles['margin-top']) {
 				setVal('topmargin', val.replace(/px/, ''));
+			}
 
-			if (val = styles['margin-right'])
+			if (val = styles['margin-right']) {
 				setVal('rightmargin', val.replace(/px/, ''));
+			}
 
-			if (val = styles['margin-bottom'])
+			if (val = styles['margin-bottom']) {
 				setVal('bottommargin', val.replace(/px/, ''));
+			}
 
-			if (val = styles['margin-left'])
+			if (val = styles['margin-left']) {
 				setVal('leftmargin', val.replace(/px/, ''));
+			}
 
 			updateColor('bgcolor_pick', 'bgcolor');
 			updateColor('textcolor_pick', 'textcolor');
@@ -109,44 +117,49 @@
 
 		changedStyleProp : function() {
 			var val, dom = tinyMCEPopup.editor.dom, styles = dom.parseStyle(getVal('style'));
-	
+
 			styles['font-face'] = getVal('fontface');
 			styles['font-size'] = getVal('fontsize');
 			styles['color'] = getVal('textcolor');
 			styles['background-color'] = getVal('bgcolor');
 
-			if (val = getVal('bgimage'))
+			if (val = getVal('bgimage')) {
 				styles['background-image'] = "url('" + val + "')";
-			else
+			} else {
 				styles['background-image'] = '';
+			}
 
 			delete styles['margin'];
 
-			if (val = getVal('topmargin'))
+			if (val = getVal('topmargin')) {
 				styles['margin-top'] = val + "px";
-			else
+			} else {
 				styles['margin-top'] = '';
+			}
 
-			if (val = getVal('rightmargin'))
+			if (val = getVal('rightmargin')) {
 				styles['margin-right'] = val + "px";
-			else
+			} else {
 				styles['margin-right'] = '';
+			}
 
-			if (val = getVal('bottommargin'))
+			if (val = getVal('bottommargin')) {
 				styles['margin-bottom'] = val + "px";
-			else
+			} else {
 				styles['margin-bottom'] = '';
+			}
 
-			if (val = getVal('leftmargin'))
+			if (val = getVal('leftmargin')) {
 				styles['margin-left'] = val + "px";
-			else
+			} else {
 				styles['margin-left'] = '';
+			}
 
 			// Serialize, parse and reserialize this will compress redundant styles
 			setVal('style', dom.serializeStyle(dom.parseStyle(dom.serializeStyle(styles))));
 			this.changedStyle();
 		},
-		
+
 		update : function() {
 			var data = {};
 
@@ -158,7 +171,7 @@
 			tinyMCEPopup.close();
 		}
 	};
-	
+
 	function init() {
 		var form = document.forms[0], i, item, list, editor = tinyMCEPopup.editor;
 
@@ -167,8 +180,9 @@
 		for (i = 0; i < list.length; i++) {
 			item = list[i].split('=');
 
-			if (item.length > 1)
+			if (item.length > 1) {
 				addSelectValue(form, 'doctype', item[0], item[1]);
+			}
 		}
 
 		// Setup fonts select box
@@ -176,22 +190,25 @@
 		for (i = 0; i < list.length; i++) {
 			item = list[i].split('=');
 
-			if (item.length > 1)
+			if (item.length > 1) {
 				addSelectValue(form, 'fontface', item[0], item[1]);
+			}
 		}
 
 		// Setup fontsize select box
 		list = editor.getParam("fullpage_fontsizes", defaultFontSizes).split(',');
-		for (i = 0; i < list.length; i++)
+		for (i = 0; i < list.length; i++) {
 			addSelectValue(form, 'fontsize', list[i], list[i]);
+		}
 
 		// Setup encodings select box
 		list = editor.getParam("fullpage_encodings", defaultEncodings).split(',');
 		for (i = 0; i < list.length; i++) {
 			item = list[i].split('=');
 
-			if (item.length > 1)
+			if (item.length > 1) {
 				addSelectValue(form, 'docencoding', item[0], item[1]);
+			}
 		}
 
 		// Setup color pickers
@@ -204,14 +221,17 @@
 		document.getElementById('bgimage_pickcontainer').innerHTML = getBrowserHTML('bgimage_browser','bgimage','image','fullpage');
 
 		// Resize some elements
-		if (isVisible('stylesheetbrowser'))
+		if (isVisible('stylesheetbrowser')) {
 			document.getElementById('stylesheet').style.width = '220px';
+		}
 
-		if (isVisible('link_href_browser'))
+		if (isVisible('link_href_browser')) {
 			document.getElementById('element_link_href').style.width = '230px';
+		}
 
-		if (isVisible('bgimage_browser'))
+		if (isVisible('bgimage_browser')) {
 			document.getElementById('bgimage').style.width = '210px';
+		}
 
 		// Update form
 		tinymce.each(tinyMCEPopup.getWindowArg('data'), function(value, key) {

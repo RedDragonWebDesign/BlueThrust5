@@ -24,46 +24,46 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 $cID = $_GET['cID'];
 
-$arrComponents = array(
-	"currentpassword" => array(
+$arrComponents = [
+	"currentpassword" => [
 		"display_name" => "Current Password",
 		"type" => "password",
 		"sortorder" => 1,
-		"attributes" => array("class" => "textBox formInput"),
-		"validate" => array("NOT_BLANK", "changePasswordChecks")
-	),
-	"newpassword" => array(
+		"attributes" => ["class" => "textBox formInput"],
+		"validate" => ["NOT_BLANK", "changePasswordChecks"]
+	],
+	"newpassword" => [
 		"display_name" => "New Password",
 		"type" => "password",
 		"sortorder" => 2,
-		"attributes" => array("class" => "textBox formInput", "id" => "newpassword"),
-		"validate" => array("NOT_BLANK", array("name" => "EQUALS_VALUE", "value" => $_POST['newpassword1']), array("name" => "CHECK_LENGTH", "min_length" => 4))
-	),
-	"newpassword1" => array(
+		"attributes" => ["class" => "textBox formInput", "id" => "newpassword"],
+		"validate" => ["NOT_BLANK", ["name" => "EQUALS_VALUE", "value" => $_POST['newpassword1']], ["name" => "CHECK_LENGTH", "min_length" => 4]]
+	],
+	"newpassword1" => [
 		"display_name" => "Re-type New Password",
 		"type" => "custom",
 		"html" => "<input type='password' id='newpassword1' name='newpassword1' class='textBox formInput'><span id='checkPassword' class='formInput' style='padding-left: 5px'></span>",
 		"sortorder" => 3,
-		"attributes" => array("class" => "textBox formInput", "id" => "newpassword1"),
-		"validate" => array("NOT_BLANK")
-	),
-	"submit" => array(
+		"attributes" => ["class" => "textBox formInput", "id" => "newpassword1"],
+		"validate" => ["NOT_BLANK"]
+	],
+	"submit" => [
 		"type" => "submit",
 		"sortorder" => 4,
-		"attributes" => array("class" => "submitButton formSubmitButton"),
+		"attributes" => ["class" => "submitButton formSubmitButton"],
 		"value" => "Change Password"
-	)
+	]
 
-);
+];
 
-$setupFormArgs = array(
+$setupFormArgs = [
 	"name" => "console-".$cID,
 	"components" => $arrComponents,
-	"afterSave" => array("savePassword"),
+	"afterSave" => ["savePassword"],
 	"saveMessage" => "Successfully changed password!",
-	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
+	"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
 	"description" => "Use the form below to change your password."
-);
+];
 
 
 $formObj->prefillValues = false;

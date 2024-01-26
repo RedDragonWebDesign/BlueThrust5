@@ -30,7 +30,7 @@ if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 
 $ytObj = new Youtube($mysqli);
 
-$dispError = array();
+$dispError = [];
 $countErrors = 0;
 
 // Start Page
@@ -73,7 +73,7 @@ if (isset($_GET['code']) && $_GET['state'] == $_SESSION['btYoutubeNonce'] && !is
 			$newTimesLoggedIn = $memberInfo['timesloggedin']+1;
 			$newIP = $_SERVER['REMOTE_ADDR'];
 
-			$memberObj->update(array("lastlogin", "timesloggedin", "ipaddress", "loggedin"), array($newLastLogin, $newTimesLoggedIn, $newIP, 1));
+			$memberObj->update(["lastlogin", "timesloggedin", "ipaddress", "loggedin"], [$newLastLogin, $newTimesLoggedIn, $newIP, 1]);
 
 			$memberObj->autoPromote();
 

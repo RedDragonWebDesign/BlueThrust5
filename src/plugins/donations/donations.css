@@ -11,11 +11,11 @@
 }
 
 .donationsLeft .bigTextBox {
-	width: 45% !important;	
+	width: 45% !important;
 }
 
 .donationsLeft .smallTextBox {
-	width: 10% !important;	
+	width: 10% !important;
 }
 
 
@@ -27,7 +27,7 @@
 }
 
 .donationsRight .numberCounts {
-	font-size: 36px;	
+	font-size: 36px;
 }
 
 .donationMessagesSectionTitle {
@@ -35,18 +35,18 @@
 	font-weight: bold;
 	width: 96%;
 	margin-left: auto;
-	margin-right: auto;	
+	margin-right: auto;
 }
 
 .donationMessagesDiv {
 	width: 96%;
 	margin-left: auto;
-	margin-right: auto;	
+	margin-right: auto;
 }
 
 .donationMessage {
 	position: relative;
-	padding: 10px 5px;	
+	padding: 10px 5px;
 }
 
 .donationMessagePic {
@@ -58,7 +58,7 @@
 .donationMessagePic img {
 	width: 40px;
 	height: 53px;
-	border: solid black 1px;	
+	border: solid black 1px;
 }
 
 .donationMessageText {
@@ -112,7 +112,7 @@
 .donatorPic img {
 	width: 45px;
 	height: 60px;
-	border: solid black 1px;	
+	border: solid black 1px;
 }
 
 .donatorInfo {
@@ -142,21 +142,21 @@
 }
 
 .donateMenuItemContainer .donateDate {
-	font-size: 10px;	
+	font-size: 10px;
 }
 
 .donateMenuItemTitle {
 	font-weight: bold;
-	font-size: 12px;	
+	font-size: 12px;
 }
 
 .donateMenuItemDesc {
-	margin-bottom: 3px;	
+	margin-bottom: 3px;
 }
 
 .donateMenuItemStatsDiv {
 	position: relative;
-	margin-top: 5px;	
+	margin-top: 5px;
 }
 
 .donateMenuItemStat {

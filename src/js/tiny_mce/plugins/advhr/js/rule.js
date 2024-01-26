@@ -29,8 +29,9 @@ var AdvHRDialog = {
 			st += ' border-width: 1px; border-style: solid; border-color: #CCCCCC; color: #ffffff;';
 		}
 
-		if (ed.settings.inline_styles)
+		if (ed.settings.inline_styles) {
 			h += ' style="' + tinymce.trim(st) + '"';
+		}
 
 		h += ' />';
 

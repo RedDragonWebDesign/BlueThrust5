@@ -42,7 +42,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 	$dispError = "";
 
 	if ($_POST['addComponent']) {
-		$arrTypes = array("input", "largeinput", "select", "multiselect", "separator");
+		$arrTypes = ["input", "largeinput", "select", "multiselect", "separator"];
 
 		// Check Name
 
@@ -116,7 +116,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 
 	if (!$_POST['addComponent']) {
-		$arrSelectedType = array();
+		$arrSelectedType = [];
 		$checkRequired = "";
 		if ($dispError != "") {
 			echo "
@@ -147,7 +147,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 				$_POST['componentRequired'] = 0;
 			}
 		} else {
-			$_SESSION['btFormComponent'][$componentIndex]['cOptions'] = array();
+			$_SESSION['btFormComponent'][$componentIndex]['cOptions'] = [];
 		}
 
 

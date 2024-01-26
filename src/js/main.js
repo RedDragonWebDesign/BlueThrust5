@@ -21,50 +21,50 @@ function displayClock(intOffset, intHours, intMinutes, strDivID) {
 	var intSaveHours = intHours;
 	var dispHours = intHours;
 
-	if(intHours > 12) {
+	if (intHours > 12) {
 		dispHours = intHours-12;
 		strAMPM = "PM";
 	}
-	
-	if(intHours == 0) {
+
+	if (intHours == 0) {
 		dispHours = 12;
 	}
-	
+
 	dispMinutes = intMinutes;
-	if(intMinutes < 10) {
+	if (intMinutes < 10) {
 		dispMinutes = "0"+intMinutes;
 	}
-	
+
 	strJQDivID = "#"+strDivID;
-	
-      
+
+
 	var strFullTime = dispHours+":"+dispMinutes+" "+strAMPM;
 
-	if(!isNaN(intOffset) && intOffset != "") {
-        currentTimestamp = dateObj.getTime()+(dateObj.getTimezoneOffset()*60*1000);
+	if (!isNaN(intOffset) && intOffset != "") {
+		currentTimestamp = dateObj.getTime()+(dateObj.getTimezoneOffset()*60*1000);
 
-	    dateObj.setTime(currentTimestamp+(intOffset*1000));
-	
-        var fullDate = (dateObj.getMonth()+1)+"/"+dateObj.getDate();      
+		dateObj.setTime(currentTimestamp+(intOffset*1000));
 
-        strFullTime = fullDate+" "+strFullTime;
+		var fullDate = (dateObj.getMonth()+1)+"/"+dateObj.getDate();
+
+		strFullTime = fullDate+" "+strFullTime;
 	}
 
 
 	$(strJQDivID).html(strFullTime);
-	
-	
-	if(intSeconds == 59) {
+
+
+	if (intSeconds == 59) {
 		intMinutes = intMinutes+1;
-		if(intMinutes == 60) {
+		if (intMinutes == 60) {
 			intHours = intHours+1;
 			intMinutes = 0;
-			if(intHours > 24) {
+			if (intHours > 24) {
 				intHours = 1;
 			}
 		}
 	}
-	
+
 	setTimeout(function(){ displayClock(intOffset,intHours,intMinutes,strDivID) }, 1000);
 }
 
@@ -75,27 +75,27 @@ function displayClock(intHours, intMinutes, strDivID) {
 	var intSeconds = dateObj.getSeconds();
 	var strAMPM = "AM";
 	var intSaveHours = intHours;
-	
+
 	if(intHours > 12) {
 		intHours = intHours-12;
 		strAMPM = "PM";
 	}
-	
+
 	if(intHours == 0) {
 		intHours = 12;
 	}
-	
+
 	dispMinutes = intMinutes;
 	if(intMinutes < 10) {
 		dispMinutes = "0"+intMinutes;
 	}
-	
+
 	strJQDivID = "#"+strDivID;
-	
+
 	var strFullTime = intHours+":"+dispMinutes+" "+strAMPM;
 	$(strJQDivID).html(strFullTime);
-	
-	
+
+
 	if(intSeconds == 59) {
 		intMinutes = intMinutes+1;
 		if(intMinutes == 60) {
@@ -106,29 +106,29 @@ function displayClock(intHours, intMinutes, strDivID) {
 			}
 		}
 	}
-	
+
 	setTimeout(function(){ displayClock(intSaveHours,intMinutes,strDivID) }, 1000);
 }
 */
 
 function displayDate(intOffset, strDivID) {
-	
+
 	var dateObj = new Date();
 	var testTime = dateObj.getTime();
-	
+
 	dateObj.setTime(testTime+(intOffset*1000));
-	
+
 	var fullDate = (dateObj.getMonth()+1)+"/"+dateObj.getDate();
-	
+
 	setTimeout(function(){ displayClock(intOffset, strDivID) }, 1000);
-	
+
 }
 
 
 function popupDialog(strTitle, strLink, strDivId) {
-	
+
 	$(document).ready(function() {
-		
+
 		divId = "#"+strDivId;
 		$(divId).dialog({
 			title: strTitle,
@@ -143,55 +143,51 @@ function popupDialog(strTitle, strLink, strDivId) {
 				}
 			},
 			beforeClose: function() {
-				if(strLink != "") {
+				if (strLink != "") {
 					window.location = strLink;
 				}
 			}
-			
+
 		});
 		$('.ui-dialog :button').blur();
 	});
-	
+
 }
 
 function showToolTip(strMessage, intWidth) {
 	intShowToolTip = 1;
-	
-	if(intWidth != null) {
+
+	if (intWidth != null) {
 		$('#toolTip').css("width", intWidth+"px");
 	}
-	
+
 	$('#toolTipWidth').html(strMessage);
 
-	if($('#toolTipWidth').width() > 300) {
-		
+	if ($('#toolTipWidth').width() > 300) {
 		$('#toolTip').width(300);
-		
-	}
-	else {
-		
+	} else {
 		$('#toolTip').width($('#toolTipWidth').width());
 	}
-	
+
 	$('#toolTipWidth').html("");
 	$('#toolTip').html(strMessage);
 
-	
+
 }
 
 
 
 $(document).ready(function() {
-	$(document).mousemove(function(e) { 
-		if(intShowToolTip == 1) {
+	$(document).mousemove(function(e) {
+		if (intShowToolTip == 1) {
 			$('#toolTip').css("left", e.pageX+12);
 			$('#toolTip').css("top", e.pageY+12);
 			$('#toolTip').css("z-index", "9999999999");
 			$('#toolTip').show();
 		}
-	});	
+	});
 });
-	
+
 
 function hideToolTip() {
 	intShowToolTip = 0;
@@ -207,17 +203,17 @@ function loadPage(strPageUrl, strPostVars, strDivId) {
 		$.post(strPageUrl, { postVars: strPostVars }, function(data) {
 			alert(data);
 		});
-		
-		
-		
+
+
+
 	});
 }
 
 
 function postShoutbox(strUpdateDiv, strPostLink) {
-	
+
 	$(document).ready(function() {
-		
+
 		var strPostMessageBox = "#"+strUpdateDiv+"_message";
 		var strPostMessage = $(strPostMessageBox).val();
 		var jqUpdateDiv = "#"+strUpdateDiv;
@@ -228,30 +224,30 @@ function postShoutbox(strUpdateDiv, strPostLink) {
 			$(jqUpdateDiv).animate({
 				scrollTop:$(jqUpdateDiv)[0].scrollHeight
 			}, 1000);
-			
-			
+
+
 		});
-		
+
 	});
-	
+
 }
 
 function deleteShoutbox(intPostID, strPostLink, strUpdateDiv) {
-	
+
 	$(document).ready(function() {
-		
+
 		var jqUpdateDiv = "#"+strUpdateDiv;
 		var jqLoadingDiv = "#"+strUpdateDiv+"_loading_"+intPostID;
 		var jqManageDiv = "#"+strUpdateDiv+"_manage_"+intPostID;
 		$(jqManageDiv).hide();
 		$(jqLoadingDiv).show();
 		$.post(strPostLink, { postID: intPostID, updateDiv: strUpdateDiv }, function(data) {
-			
+
 			$(jqUpdateDiv).html(data);
-						
-			
+
+
 		});
-		
+
 	});
 
 }
@@ -259,11 +255,11 @@ function deleteShoutbox(intPostID, strPostLink, strUpdateDiv) {
 function embedPoll(MAINROOT, embedDivID, pollID) {
 
 	$(document).ready(function() {
-		
+
 		$.post(MAINROOT+'polls/embed.php', { pID: pollID }, function(data) {
 			$('#'+embedDivID).html(data);
 		});
-		
+
 	});
-	
+
 }

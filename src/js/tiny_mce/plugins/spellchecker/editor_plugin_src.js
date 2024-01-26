@@ -31,15 +31,17 @@
 
 			if (t.rpcUrl == '{backend}') {
 				// Sniff if the browser supports native spellchecking (Don't know of a better way)
-				if (tinymce.isIE)
+				if (tinymce.isIE) {
 					return;
+				}
 
 				t.hasSupport = true;
 
 				// Disable the context menu when spellchecking is active
 				ed.onContextMenu.addToTop(function(ed, e) {
-					if (t.active)
+					if (t.active) {
 						return false;
+					}
 				});
 			}
 
@@ -62,22 +64,26 @@
 						} else {
 							ed.setProgressState(0);
 
-							if (ed.getParam('spellchecker_report_no_misspellings', true))
+							if (ed.getParam('spellchecker_report_no_misspellings', true)) {
 								ed.windowManager.alert('spellchecker.no_mpell');
+							}
 						}
 					});
-				} else
+				} else {
 					t._done();
+				}
 			});
 
-			if (ed.settings.content_css !== false)
+			if (ed.settings.content_css !== false) {
 				ed.contentCSS.push(url + '/css/content.css');
+			}
 
 			ed.onClick.add(t._showMenu, t);
 			ed.onContextMenu.add(t._showMenu, t);
 			ed.onBeforeGetContent.add(function() {
-				if (t.active)
+				if (t.active) {
 					t._removeWords();
+				}
 			});
 
 			ed.onNodeChange.add(function(ed, cm) {
@@ -93,8 +99,9 @@
 			});
 
 			ed.onBeforeExecCommand.add(function(ed, cmd) {
-				if (cmd == 'mceFullScreen')
+				if (cmd == 'mceFullScreen') {
 					t._done();
+				}
 			});
 
 			// Find selected language
@@ -116,8 +123,9 @@
 				// Use basic button if we use the native spellchecker
 				if (t.rpcUrl == '{backend}') {
 					// Create simple toggle button if we have native support
-					if (t.hasSupport)
+					if (t.hasSupport) {
 						c = cm.createButton(n, {title : 'spellchecker.desc', cmd : 'mceSpellCheck', scope : t});
+					}
 
 					return c;
 				}
@@ -143,8 +151,9 @@
 						mi = m.add(o);
 						mi.setSelected(v == t.selectedLang);
 
-						if (v == t.selectedLang)
+						if (v == t.selectedLang) {
 							t.selectedItem = mi;
+						}
 					})
 				});
 
@@ -160,18 +169,21 @@
 			if (d.createTreeWalker) {
 				w = d.createTreeWalker(n, NodeFilter.SHOW_TEXT, null, false);
 
-				while ((n = w.nextNode()) != null)
+				while ((n = w.nextNode()) != null) {
 					f.call(this, n);
-			} else
+				}
+			} else {
 				tinymce.walk(n, f, 'childNodes');
+			}
 		},
 
 		_getSeparators : function() {
 			var re = '', i, str = this.editor.getParam('spellchecker_word_separator_chars', '\\s!"#$%&()*+,-./:;<=>?@[\]^_{|}§©«®±¶·¸»¼½¾¿×÷¤\u201d\u201c');
 
 			// Build word separator regexp
-			for (i=0; i<str.length; i++)
+			for (i=0; i<str.length; i++) {
 				re += '\\' + str.charAt(i);
+			}
 
 			return re;
 		},
@@ -181,8 +193,9 @@
 
 			// Get area text
 			this._walk(ed.getBody(), function(n) {
-				if (n.nodeType == 3)
+				if (n.nodeType == 3) {
 					tx += n.nodeValue + ' ';
+				}
 			});
 
 			// split the text up into individual words
@@ -212,8 +225,9 @@
 
 			each(dom.select('span').reverse(), function(n) {
 				if (n && (dom.hasClass(n, 'mceItemHiddenSpellWord') || dom.hasClass(n, 'mceItemHidden'))) {
-					if (!w || dom.decode(n.innerHTML) == w)
+					if (!w || dom.decode(n.innerHTML) == w) {
 						dom.remove(n, 1);
+					}
 				}
 			});
 
@@ -311,8 +325,9 @@
 						});
 
 						m.addSeparator();
-					} else
+					} else {
 						m.add({title : 'spellchecker.no_sug', 'class' : 'mceMenuItemTitle'}).setDisabled(1);
+					}
 
 					if (ed.getParam('show_ignore_words', true)) {
 						ignoreRpc = t.editor.getParam("spellchecker_enable_ignore_rpc", '');
@@ -382,8 +397,9 @@
 				m.showMenu(p1.x, p1.y + wordSpan.offsetHeight - vp.y);
 
 				return tinymce.dom.Event.cancel(e);
-			} else
+			} else {
 				m.hideMenu();
+			}
 		},
 
 		_checkDone : function() {
@@ -396,8 +412,9 @@
 				}
 			});
 
-			if (!o)
+			if (!o) {
 				t._done();
+			}
 		},
 
 		_done : function() {
@@ -407,11 +424,13 @@
 				t.active = 0;
 				t._removeWords();
 
-				if (t._menu)
+				if (t._menu) {
 					t._menu.hideMenu();
+				}
 
-				if (la)
+				if (la) {
 					t.editor.nodeChanged();
+				}
 			}
 		},
 

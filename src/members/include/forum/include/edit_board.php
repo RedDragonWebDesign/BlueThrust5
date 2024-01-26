@@ -86,8 +86,8 @@ if ( ! empty($_POST['submit']) ) {
 
 	if ($_POST['accesstype'] != 1) {
 		$_POST['accesstype'] = 0;
-		$arrRanks = array();
-		$arrMembers = array();
+		$arrRanks = [];
+		$arrMembers = [];
 	} else {
 		$result = $mysqli->query("SELECT rank_id FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 		while ($row = $result->fetch_assoc()) {
@@ -107,8 +107,8 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	if ($countErrors == 0) {
-		$arrColumns = array("forumcategory_id", "name", "description", "sortnum", "accesstype", "subforum_id");
-		$arrValues = array($_POST['forumcat'], $_POST['boardname'], $_POST['boarddesc'], $intNewOrderSpot, $_POST['accesstype'], $setSubForum);
+		$arrColumns = ["forumcategory_id", "name", "description", "sortnum", "accesstype", "subforum_id"];
+		$arrValues = [$_POST['forumcat'], $_POST['boardname'], $_POST['boarddesc'], $intNewOrderSpot, $_POST['accesstype'], $setSubForum];
 		$boardObj->select($boardInfo['forumboard_id']);
 		if ($boardObj->update($arrColumns, $arrValues) && $boardObj->secureBoard($arrRanks, $arrMembers)) {
 			$boardInfo = $boardObj->get_info_filtered();
@@ -144,7 +144,7 @@ if ( empty($_POST['submit']) ) {
 	$rankAccessRules = $boardObj->getRankAccessRules();
 
 	if ($dispError == "") {
-		$_SESSION['btRankAccessCache'] = array();
+		$_SESSION['btRankAccessCache'] = [];
 		foreach ($rankAccessRules as $rankID => $accessValue) {
 			$keyName = "rankaccess_".$rankID;
 

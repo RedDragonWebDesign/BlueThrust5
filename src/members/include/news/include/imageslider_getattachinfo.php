@@ -46,7 +46,7 @@ $eventObj = new Event($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
-	$arrTypes = array("news", "tournament", "event");
+	$arrTypes = ["news", "tournament", "event"];
 
 	$arrTypeObj['news']['obj'] = $newsObj;
 	$arrTypeObj['tournament']['obj'] = $tournamentObj;
@@ -87,7 +87,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 			$attachInfo = $attachObj->get_info_filtered();
 
-			$attachMessage = str_replace(array("\r", "\n"), "\\n", $attachInfo[$attachMessage]);
+			$attachMessage = str_replace(["\r", "\n"], "\\n", $attachInfo[$attachMessage]);
 			echo "
 			
 				<script type='text/javascript'>

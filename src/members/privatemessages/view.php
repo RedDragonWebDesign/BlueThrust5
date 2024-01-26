@@ -73,12 +73,12 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		if (($memberInfo['member_id'] == $pmInfo['receiver_id']) || ($memberInfo['member_id'] == $pmInfo['sender_id'] && $senderResult->num_rows == 0)) {
 			$member->select($pmInfo['receiver_id']);
 			$dispToMember = $member->getMemberLink();
-			$pmObj->update(array("status"), array(1));
+			$pmObj->update(["status"], [1]);
 		} elseif ($result->num_rows > 0) {
 			$row = $result->fetch_assoc();
 			$pmMemberID = $row['pmmember_id'];
 			$multiMemPMObj->select($pmMemberID);
-			$multiMemPMObj->update(array("seenstatus"), array(1));
+			$multiMemPMObj->update(["seenstatus"], [1]);
 			$blnMultiPM = true;
 			$dispToMember = $pmObj->getRecipients(true);
 		} elseif ($memberInfo['member_id'] == $pmInfo['sender_id'] && $senderResult->num_rows > 0) {

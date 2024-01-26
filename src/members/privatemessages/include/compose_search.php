@@ -41,7 +41,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	while ($row = $result->fetch_assoc()) {
 		$rankObj->select($row['rank_id']);
 		$displayName = $rankObj->get_info_filtered("name")." ".filterText($row['username']);
-		$arrComposeList[] = array("id" => "member_".$row['member_id'], "value" => $displayName);
+		$arrComposeList[] = ["id" => "member_".$row['member_id'], "value" => $displayName];
 	}
 
 	$arrQuery['rankcategory']['query'] = "SELECT * FROM ".$dbprefix."rankcategory WHERE name LIKE '".$searchTerm."%' AND rankcategory_id NOT IN ";
@@ -80,7 +80,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		//echo $arr['query'].$arr['orderby'];
 		$result = $mysqli->query($arr['query'].$arr['orderby']);
 		while ($row = $result->fetch_assoc()) {
-			$arrComposeList[] = array("id" => $sessionPrefix.$row[$arr['id']], "value" => filterText($row['name']).$arr['append']);
+			$arrComposeList[] = ["id" => $sessionPrefix.$row[$arr['id']], "value" => filterText($row['name']).$arr['append']];
 		}
 	}
 

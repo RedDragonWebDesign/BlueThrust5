@@ -28,8 +28,9 @@
 		init : function(ed, url) {
 			var t = this, oldSize = 0;
 
-			if (ed.getParam('fullscreen_is_enabled'))
+			if (ed.getParam('fullscreen_is_enabled')) {
 				return;
+			}
 
 			/**
 			 * This method gets executed each time the editor needs to resize.
@@ -41,8 +42,9 @@
 				myHeight = tinymce.isIE ? body.scrollHeight : (tinymce.isWebKit && body.clientHeight == 0 ? 0 : body.offsetHeight);
 
 				// Don't make it smaller than the minimum height
-				if (myHeight > t.autoresize_min_height)
+				if (myHeight > t.autoresize_min_height) {
 					resizeHeight = myHeight;
+				}
 
 				// If a maximum height has been defined don't exceed this height
 				if (t.autoresize_max_height && myHeight > t.autoresize_max_height) {
@@ -63,8 +65,9 @@
 
 					// WebKit doesn't decrease the size of the body element until the iframe gets resized
 					// So we need to continue to resize the iframe down until the size gets fixed
-					if (tinymce.isWebKit && deltaSize < 0)
+					if (tinymce.isWebKit && deltaSize < 0) {
 						resize();
+					}
 				}
 			};
 

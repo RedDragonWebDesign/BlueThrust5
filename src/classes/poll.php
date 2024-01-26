@@ -19,18 +19,18 @@ class Poll extends Basic {
 		$this->objPollOption = new BasicSort($sqlConnection, "poll_options", "polloption_id", "poll_id");
 		$this->objPollVote = new Basic($sqlConnection, "poll_votes", "pollvote_id");
 
-		$arrAccessTables = array(
-			"rank" => array("tableName" => "poll_rankaccess", "tableID" => "pollrankaccess_id"),
-			"member" => array("tableName" => "poll_memberaccess", "tableID" => "pollmemberaccess_id")
-		);
+		$arrAccessTables = [
+			"rank" => ["tableName" => "poll_rankaccess", "tableID" => "pollrankaccess_id"],
+			"member" => ["tableName" => "poll_memberaccess", "tableID" => "pollmemberaccess_id"]
+		];
 
-		$arrAccessTypes = array(
+		$arrAccessTypes = [
 
-			array("value" => 3, "css" => "failedFont", "displayValue" => "No Access"),
-			array("value" => 1, "css" => "allowText", "displayValue" => "View Only Access"),
-			array("value" => 2, "css" => "pendingFont", "displayValue" => "Full Access")
+			["value" => 3, "css" => "failedFont", "displayValue" => "No Access"],
+			["value" => 1, "css" => "allowText", "displayValue" => "View Only Access"],
+			["value" => 2, "css" => "pendingFont", "displayValue" => "Full Access"]
 
-		);
+		];
 
 		$this->objAccess = new Access($sqlConnection, $arrAccessTables, $arrAccessTypes);
 	}
@@ -43,8 +43,8 @@ class Poll extends Basic {
 		}
 
 		foreach ($_SESSION['btPollOptionCache'][$this->cacheID] as $sortNum => $pollOptionInfo) {
-			$arrColumns = array("poll_id", "optionvalue", "color", "sortnum");
-			$arrValues = array($this->intTableKeyValue, $pollOptionInfo['value'], $pollOptionInfo['color'], $sortNum);
+			$arrColumns = ["poll_id", "optionvalue", "color", "sortnum"];
+			$arrValues = [$this->intTableKeyValue, $pollOptionInfo['value'], $pollOptionInfo['color'], $sortNum];
 
 			if (isset($pollOptionInfo['polloption_id'])) {
 				$arrColumns[] = "polloption_id";
@@ -70,7 +70,7 @@ class Poll extends Basic {
 	 */
 	public function makeCacheRoom($strBeforeAfter, $intSpot) {
 
-		$tempArr = array();
+		$tempArr = [];
 
 		$x = 0;
 		$returnVal = count($_SESSION['btPollOptionCache'][$this->cacheID]);
@@ -106,7 +106,7 @@ class Poll extends Basic {
 	public function resortCacheOrder() {
 		ksort($_SESSION['btPollOptionCache'][$this->cacheID]);
 
-		$tempArr = array();
+		$tempArr = [];
 		foreach ($_SESSION['btPollOptionCache'][$this->cacheID] as $value) {
 			$tempArr[] = $value;
 		}
@@ -141,7 +141,7 @@ class Poll extends Basic {
 
 	public function getPollOptions() {
 
-		$returnArr = array();
+		$returnArr = [];
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT polloption_id FROM ".$this->MySQL->get_tablePrefix()."poll_options WHERE poll_id = '".$this->intTableKeyValue."' ORDER BY sortnum");
 			while ($row = $result->fetch_assoc()) {
@@ -154,7 +154,7 @@ class Poll extends Basic {
 
 	public function getPollResults() {
 
-		$arrResults = array();
+		$arrResults = [];
 
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."poll_votes WHERE poll_id = '".$this->intTableKeyValue."'");
@@ -172,11 +172,11 @@ class Poll extends Basic {
 
 	public function getVoterInfo() {
 
-		$arrReturn = array();
+		$arrReturn = [];
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."poll_votes WHERE poll_id = '".$this->intTableKeyValue."'");
 			while ($row = $result->fetch_assoc()) {
-				$arrReturn[$row['member_id']][$row['polloption_id']] = array("votes" => $row['votecount'], "lastvoted" => $row['datevoted']);
+				$arrReturn[$row['member_id']][$row['polloption_id']] = ["votes" => $row['votecount'], "lastvoted" => $row['datevoted']];
 			}
 		}
 
@@ -344,7 +344,7 @@ class Poll extends Basic {
 	public function vote($memberID, $pollOptionInfo) {
 
 		$pollError = "";
-		$returnArr = array("result"=>"fail");
+		$returnArr = ["result"=>"fail"];
 		if ($this->intTableKeyValue != "" && $pollOptionInfo['poll_id'] == $this->intTableKeyValue && in_array($pollOptionInfo['polloption_id'], $this->getPollOptions())) {
 			$columnName = ($memberID == "") ? "ipaddress" : "member_id";
 			$columnValue = ($memberID == "") ? $this->MySQL->real_escape_string($_SERVER['REMOTE_ADDR']) : $memberID;
@@ -364,9 +364,9 @@ class Poll extends Basic {
 				if ($maxVotesCheck && $pollEndCheck) {
 					if ($this->objPollVote->select($selectedPollVote)) {
 						$newVoteCount = $this->objPollVote->get_info("votecount")+1;
-						$this->objPollVote->update(array("datevoted", "votecount", "ipaddress"), array(time(), $newVoteCount, $_SERVER['REMOTE_ADDR']));
+						$this->objPollVote->update(["datevoted", "votecount", "ipaddress"], [time(), $newVoteCount, $_SERVER['REMOTE_ADDR']]);
 					} else {
-						$this->objPollVote->addNew(array("poll_id", "polloption_id", "member_id", "ipaddress", "datevoted", "votecount"), array($this->intTableKeyValue, $pollOptionInfo['polloption_id'], $memberID, $_SERVER['REMOTE_ADDR'], time(), 1));
+						$this->objPollVote->addNew(["poll_id", "polloption_id", "member_id", "ipaddress", "datevoted", "votecount"], [$this->intTableKeyValue, $pollOptionInfo['polloption_id'], $memberID, $_SERVER['REMOTE_ADDR'], time(), 1]);
 					}
 
 					$returnArr['result'] = "success";
@@ -377,7 +377,7 @@ class Poll extends Basic {
 				}
 			} else {
 				$returnArr['result'] = "success";
-				$this->objPollVote->addNew(array("poll_id", "polloption_id", "member_id", "ipaddress", "datevoted", "votecount"), array($this->intTableKeyValue, $pollOptionInfo['polloption_id'], $memberID, $_SERVER['REMOTE_ADDR'], time(), 1));
+				$this->objPollVote->addNew(["poll_id", "polloption_id", "member_id", "ipaddress", "datevoted", "votecount"], [$this->intTableKeyValue, $pollOptionInfo['polloption_id'], $memberID, $_SERVER['REMOTE_ADDR'], time(), 1]);
 			}
 		}
 

@@ -1,6 +1,6 @@
 <?php
 
-$arrCSSInfo = array(
+$arrCSSInfo = [
 	"font-color" => "black",
 	"default-font-size" => "11px",
 	"large-font-size" => "14px",
@@ -113,4 +113,4 @@ $arrCSSInfo = array(
 	"poll-profilepic-width" => "90px",
 	"poll-profilepic-height" => "120px",
 	"page-selector-current-page-bg" => "rgba(0,63,116,.35) !important"
-);
+];

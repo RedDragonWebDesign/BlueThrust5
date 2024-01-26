@@ -43,7 +43,7 @@ $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $checkAccess2)) {
 	echo "<option value=''>Select</option>";
 
-	$arrTypes = array("news", "tournament", "event");
+	$arrTypes = ["news", "tournament", "event"];
 	if (in_array($_POST['attachtype'], $arrTypes)) {
 		switch ($_POST['attachtype']) {
 			case "news":

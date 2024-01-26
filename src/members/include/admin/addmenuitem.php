@@ -36,7 +36,7 @@ $menuItemObj = new MenuItem($mysqli);
 $dispError = "";
 $countErrors = 0;
 
-$itemTypeOptions = array(
+$itemTypeOptions = [
 	"link" => "Link",
 	"image" => "Image",
 	"custompage" => "Custom Page",
@@ -50,13 +50,13 @@ $itemTypeOptions = array(
 	"login" => "Default Login",
 	"customcode" => "Custom Block - Code Editor",
 	"customformat" => "Custom Block - WYSIWYG Editor"
-);
+];
 
-$textAlignOptions = array("left" => "Left", "center" => "Center", "right" => "Right");
+$textAlignOptions = ["left" => "Left", "center" => "Center", "right" => "Right"];
 
 
-$menuCatOptions = array();
-$arrMenuCats = $menuCatObj->get_entries(array(), "sortnum");
+$menuCatOptions = [];
+$arrMenuCats = $menuCatObj->get_entries([], "sortnum");
 foreach ($arrMenuCats as $menuCatInfo) {
 	$menuCatOptions[$menuCatInfo['menucategory_id']] = $menuCatInfo['name'];
 }
@@ -79,9 +79,9 @@ if (count($arrMenuCats) == 0) {
 }
 
 $selectMenuCat = isset($_GET['mcID']) ? $_GET['mcID'] : "";
-$displayOrderOptions = array();
+$displayOrderOptions = [];
 if (isset($_POST['menucategory'])) {
-	$arrMenuItems = $menuItemObj->get_entries(array("menucategory_id" => $_POST['menucategory']), "sortnum");
+	$arrMenuItems = $menuItemObj->get_entries(["menucategory_id" => $_POST['menucategory']], "sortnum");
 	foreach ($arrMenuItems as $eachMenuItem) {
 		$displayOrderOptions[$eachMenuItem['menuitem_id']] = $eachMenuItem['name'];
 	}
@@ -129,31 +129,31 @@ require_once("managemenu/include/customcodeformatoptions.php");
 
 
 // Global Link Options - Target Window, Text Align and Prefix
-$globalLinkOptionsNeeded = array("link", "custompage", "customform", "downloads");
+$globalLinkOptionsNeeded = ["link", "custompage", "customform", "downloads"];
 foreach ($globalLinkOptionsNeeded as $optionName) {
-	$globalLinkOptions[$optionName] = array(
-		"targetwindow_".$optionName => array(
+	$globalLinkOptions[$optionName] = [
+		"targetwindow_".$optionName => [
 			"type" => "select",
 			"display_name" => "Target Window",
 			"sortorder" => $i++,
-			"attributes" => array("class" => "textBox formInput"),
-			"options" => array("" => "Same Window", "_blank" => "New Window")
-		),
-		"textalign_".$optionName => array(
+			"attributes" => ["class" => "textBox formInput"],
+			"options" => ["" => "Same Window", "_blank" => "New Window"]
+		],
+		"textalign_".$optionName => [
 			"type" => "select",
 			"display_name" => "Text-align",
-			"attributes" => array("class" => "textBox formInput"),
+			"attributes" => ["class" => "textBox formInput"],
 			"options" => $textAlignOptions,
 			"sortorder" => $i++
-		),
-		"prefix_".$optionName => array(
+		],
+		"prefix_".$optionName => [
 			"type" => "text",
 			"display_name" => "Prefix",
 			"tooltip" => "Text to display before the link, i.e. a bullet point or dash.",
 			"sortorder" => $i++,
-			"attributes" => array("class" => "textBox formInput")
-		)
-	);
+			"attributes" => ["class" => "textBox formInput"]
+		]
+	];
 }
 
 
@@ -163,176 +163,176 @@ $customFormOptionComponents = array_merge($customFormOptionComponents, $globalLi
 $downloadOptionComponents = array_merge($downloadOptionComponents, $globalLinkOptions['downloads']);
 
 $i = 1;
-$arrComponents = array(
+$arrComponents = [
 
-	"generalinfo" => array(
+	"generalinfo" => [
 		"type" => "section",
-		"options" => array("section_title" => "General Information:"),
+		"options" => ["section_title" => "General Information:"],
 		"sortorder" => $i++
-	),
-	"itemname" => array(
+	],
+	"itemname" => [
 		"type" => "text",
-		"attributes" => array("class" => "textBox formInput"),
-		"validate" => array("NOT_BLANK"),
+		"attributes" => ["class" => "textBox formInput"],
+		"validate" => ["NOT_BLANK"],
 		"db_name" => "name",
 		"sortorder" => $i++,
 		"display_name" => "Item Name"
-	),
-	"menucategory" => array(
+	],
+	"menucategory" => [
 		"type" => "select",
 		"display_name" => "Menu Category",
 		"sortorder" => $i++,
-		"validate" => array("RESTRICT_TO_OPTIONS"),
+		"validate" => ["RESTRICT_TO_OPTIONS"],
 		"db_name" => "menucategory_id",
-		"attributes" => array("class" => "textBox formInput", "id" => "menuCats"),
+		"attributes" => ["class" => "textBox formInput", "id" => "menuCats"],
 		"options" => $menuCatOptions,
 		"value" => $selectMenuCat
-	),
-	"displayorder" => array(
+	],
+	"displayorder" => [
 		"type" => "beforeafter",
 		"display_name" => "Display Order",
-		"attributes" => array("class" => "textBox formInput"),
+		"attributes" => ["class" => "textBox formInput"],
 		"sortorder" => $i++,
-		"validate" => array("RESTRICT_TO_OPTIONS", array("name" => "VALIDATE_ORDER", "set_category" => ($_POST['menucategory'] ?? ''), "orderObject" => $menuItemObj)),
+		"validate" => ["RESTRICT_TO_OPTIONS", ["name" => "VALIDATE_ORDER", "set_category" => ($_POST['menucategory'] ?? ''), "orderObject" => $menuItemObj]],
 		"db_name" => "sortnum",
 		"options" => $displayOrderOptions
-	),
-	"itemtype" => array(
+	],
+	"itemtype" => [
 		"type" => "select",
 		"display_name" => "Item Type",
-		"validate" => array("RESTRICT_TO_OPTIONS"),
+		"validate" => ["RESTRICT_TO_OPTIONS"],
 		"db_name" => "itemtype",
 		"sortorder" => $i++,
-		"attributes" => array("class" => "textBox formInput", "id" => "itemType"),
+		"attributes" => ["class" => "textBox formInput", "id" => "itemType"],
 		"options" => $itemTypeOptions
-	),
-	"accesstype" => array(
+	],
+	"accesstype" => [
 		"type" => "select",
 		"display_name" => "Show when",
 		"sortorder" => $i++,
-		"validate" => array("RESTRICT_TO_OPTIONS"),
+		"validate" => ["RESTRICT_TO_OPTIONS"],
 		"db_name" => "accesstype",
-		"options" => array("Always", "Logged In", "Logged Out"),
-		"attributes" => array("class" => "textBox formInput")
-	),
-	"hide" => array(
+		"options" => ["Always", "Logged In", "Logged Out"],
+		"attributes" => ["class" => "textBox formInput"]
+	],
+	"hide" => [
 		"type" => "checkbox",
 		"display_name" => "Hide",
-		"attributes" => array("class" => "textBox formInput"),
+		"attributes" => ["class" => "textBox formInput"],
 		"value" => 1,
 		"sortorder" => $i++,
 		"db_name" => "hide"
-	),
-	"linkinformation" => array(
+	],
+	"linkinformation" => [
 		"type" => "section",
-		"options" => array("section_title" => "Link Information:"),
+		"options" => ["section_title" => "Link Information:"],
 		"sortorder" => $i++,
-		"attributes" => array("id" => "linkOptions"),
+		"attributes" => ["id" => "linkOptions"],
 		"components" => $linkOptionComponents,
-		"validate" => array("validateMenuItem_Links")
-	),
-	"imageinformation" => array(
+		"validate" => ["validateMenuItem_Links"]
+	],
+	"imageinformation" => [
 		"type" => "section",
-		"options" => array("section_title" => "Image Information:"),
+		"options" => ["section_title" => "Image Information:"],
 		"sortorder" => $i++,
-		"attributes" => array("id" => "imageOptions", "style" => "display: none"),
+		"attributes" => ["id" => "imageOptions", "style" => "display: none"],
 		"components" => $imageOptionComponents,
-		"validate" => array("validateMenuItem_Images")
-	),
-	"custompageoptions" => array(
+		"validate" => ["validateMenuItem_Images"]
+	],
+	"custompageoptions" => [
 		"type" => "section",
-		"options" => array("section_title" => "Custom Page Options:"),
+		"options" => ["section_title" => "Custom Page Options:"],
 		"sortorder" => $i++,
-		"attributes" => array("id" => "customPageOptions", "style" => "display: none"),
+		"attributes" => ["id" => "customPageOptions", "style" => "display: none"],
 		"components" => $customPageOptionComponents,
-		"validate" => array(
-			array(
+		"validate" => [
+			[
 				"name" =>
-				array(
+				[
 					"function" => "validateMenuItem_CustomPageTypes",
-					"args" => array("custompage", &$customPageOptionComponents)
-				)
-			)
-		)
-	),
-	"customformoptions" => array(
+					"args" => ["custompage", &$customPageOptionComponents]
+				]
+			]
+		]
+	],
+	"customformoptions" => [
 		"type" => "section",
-		"options" => array("section_title" => "Custom Form Options:"),
+		"options" => ["section_title" => "Custom Form Options:"],
 		"sortorder" => $i++,
-		"attributes" => array("id" => "customFormOptions", "style" => "display: none"),
+		"attributes" => ["id" => "customFormOptions", "style" => "display: none"],
 		"components" => $customFormOptionComponents,
-		"validate" => array(
-			array(
+		"validate" => [
+			[
 				"name" =>
-				array(
+				[
 					"function" => "validateMenuItem_CustomPageTypes",
-					"args" => array("customform", &$customFormOptionComponents)
-				)
-			)
-		)
-	),
-	"downloadoptions" => array(
+					"args" => ["customform", &$customFormOptionComponents]
+				]
+			]
+		]
+	],
+	"downloadoptions" => [
 		"type" => "section",
-		"options" => array("section_title" => "Download Page Options:"),
+		"options" => ["section_title" => "Download Page Options:"],
 		"sortorder" => $i++,
-		"attributes" => array("id" => "downloadLinkOptions", "style" => "display: none"),
+		"attributes" => ["id" => "downloadLinkOptions", "style" => "display: none"],
 		"components" => $downloadOptionComponents,
-		"validate" => array(
-			array(
+		"validate" => [
+			[
 				"name" =>
-				array(
+				[
 					"function" => "validateMenuItem_CustomPageTypes",
-					"args" => array("downloads", &$downloadOptionComponents)
-				)
-			)
-		)
-	),
-	"shoutboxoptions" => array(
+					"args" => ["downloads", &$downloadOptionComponents]
+				]
+			]
+		]
+	],
+	"shoutboxoptions" => [
 		"type" => "section",
-		"options" => array("section_title" => "Shoutbox Information:", "section_description" => "<b><u>NOTE:</u></b> Leave all fields blank to keep the theme's default settings."),
+		"options" => ["section_title" => "Shoutbox Information:", "section_description" => "<b><u>NOTE:</u></b> Leave all fields blank to keep the theme's default settings."],
 		"sortorder" => $i++,
-		"attributes" => array("id" => "shoutBoxOptions", "style" => "display: none"),
+		"attributes" => ["id" => "shoutBoxOptions", "style" => "display: none"],
 		"components" => $shoutboxOptionComponents
-	),
-	"polloptions" => array(
+	],
+	"polloptions" => [
 		"type" => "section",
-		"options" => array("section_title" => "Poll Options:"),
+		"options" => ["section_title" => "Poll Options:"],
 		"sortorder" => $i++,
-		"attributes" => array("id" => "pollOptions", "style" => "display: none"),
+		"attributes" => ["id" => "pollOptions", "style" => "display: none"],
 		"components" => $pollOptionComponents
-	),
-	"customcodeoptions" => array(
+	],
+	"customcodeoptions" => [
 		"type" => "section",
-		"options" => array("section_title" => "Menu Item Code:"),
+		"options" => ["section_title" => "Menu Item Code:"],
 		"sortorder" => $i++,
-		"attributes" => array("id" => "customCodeOptions", "style" => "display: none"),
+		"attributes" => ["id" => "customCodeOptions", "style" => "display: none"],
 		"components" => $customCodeOptionComponents
-	),
-	"customformatoptions" => array(
+	],
+	"customformatoptions" => [
 		"type" => "section",
-		"options" => array("section_title" => "Menu Item Information:"),
+		"options" => ["section_title" => "Menu Item Information:"],
 		"sortorder" => $i++,
-		"attributes" => array("id" => "customFormatOptions", "style" => "display: none"),
+		"attributes" => ["id" => "customFormatOptions", "style" => "display: none"],
 		"components" => $customWYSIWYGOptionComponents
-	),
-	"fakeSubmit" => array(
+	],
+	"fakeSubmit" => [
 		"type" => "button",
-		"attributes" => array("class" => "submitButton formSubmitButton", "id" => "btnFakeSubmit"),
+		"attributes" => ["class" => "submitButton formSubmitButton", "id" => "btnFakeSubmit"],
 		"value" => "Add Menu Item",
 		"sortorder" => $i++
-	),
-	"submit" => array(
+	],
+	"submit" => [
 		"type" => "submit",
 		"value" => "submit",
-		"attributes" => array("style" => "display: none", "id" => "btnSubmit"),
+		"attributes" => ["style" => "display: none", "id" => "btnSubmit"],
 		"sortorder" => $i++
-	)
+	]
 
-);
+];
 
 
 
-$arrAfterJS = array();
+$arrAfterJS = [];
 $arrAfterJS['menuCats'] = "
 
 	$('#menuCats').change(function() {
@@ -346,7 +346,7 @@ $arrAfterJS['menuCats'] = "
 
 ";
 
-$arrItemTypeChangesJS = array(
+$arrItemTypeChangesJS = [
 	"linkOptions" => "link",
 	"imageOptions" => "image",
 	"shoutBoxOptions" => "shoutbox",
@@ -356,7 +356,7 @@ $arrItemTypeChangesJS = array(
 	"customFormatOptions" => "customformat",
 	"downloadLinkOptions" => "downloads",
 	"pollOptions" => "poll"
-);
+];
 
 $arrAfterJS['itemType'] = prepareItemTypeChangeJS($arrItemTypeChangesJS);
 
@@ -403,87 +403,87 @@ $afterJS .= "
 
 
 
-$setupFormArgs = array(
+$setupFormArgs = [
 	"name" => "console-".$cID,
 	"components" => $arrComponents,
 	"description" => "Use the form below to add a menu item.",
 	"saveObject" => $menuItemObj,
 	"saveMessage" => "Successfully Added New Menu Item: <b>".filterText($_POST['itemname'] ?? '')."</b>!",
 	"saveType" => "add",
-	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post", "enctype" => "multipart/form-data"),
+	"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post", "enctype" => "multipart/form-data"],
 	"embedJS" => $afterJS,
-	"afterSave" => array(
-		array(
+	"afterSave" => [
+		[
 			"function" => "saveMenuItem",
-			"args" => array(
+			"args" => [
 				&$linkOptionComponents,
 				&$menuItemObj->objLink,
-				array(	"linkurl_link" => "link",
+				[	"linkurl_link" => "link",
 						"targetwindow_link" => "linktarget",
 						"textalign_link" => "textalign",
-						"prefix_link" => "prefix"),
+						"prefix_link" => "prefix"],
 				"menulink_id",
-				"link")
-		),
-		array(
+				"link"]
+		],
+		[
 			"function" => "saveMenuItem",
-			"args" => array(
+			"args" => [
 				&$imageOptionComponents,
 				&$menuItemObj->objImage,
-				array(	"imagefile_image" => "imageurl",
+				[	"imagefile_image" => "imageurl",
 						"width_image" => "width",
 						"height_image" => "height",
 						"linkurl_image" => "link",
 						"targetwindow_image" => "linktarget",
-						"textalign_image" => "imagealign"),
+						"textalign_image" => "imagealign"],
 				"menuimage_id",
-				"image")
-		),
-		array(
+				"image"]
+		],
+		[
 			"function" => "saveMenuItem",
-			"args" => array(
+			"args" => [
 				&$customPageOptionComponents,
 				&$menuItemObj->objCustomPage,
-				array(	"custompage" => "custompage_id",
+				[	"custompage" => "custompage_id",
 						"targetwindow_custompage" => "linktarget",
 						"textalign_custompage" => "textalign",
-						"prefix_custompage" => "prefix"),
+						"prefix_custompage" => "prefix"],
 				"menucustompage_id",
 				"custompage"
-			)
+			]
 
-		),
-		array(
+		],
+		[
 			"function" => "saveMenuItem",
-			"args" => array(
+			"args" => [
 				&$customFormOptionComponents,
 				&$menuItemObj->objCustomPage,
-				array(	"customform" => "custompage_id",
+				[	"customform" => "custompage_id",
 						"targetwindow_customform" => "linktarget",
 						"textalign_customform" => "textalign",
-						"prefix_customform" => "prefix"),
+						"prefix_customform" => "prefix"],
 				"menucustompage_id",
 				"customform"
-			)
+			]
 
-		),
-		array(
+		],
+		[
 			"function" => "saveMenuItem",
-			"args" => array(
+			"args" => [
 				&$downloadOptionComponents,
 				&$menuItemObj->objCustomPage,
-				array(	"downloadpage" => "custompage_id",
+				[	"downloadpage" => "custompage_id",
 						"targetwindow_downloads" => "linktarget",
 						"textalign_downloads" => "textalign",
-						"prefix_downloads" => "prefix"),
+						"prefix_downloads" => "prefix"],
 				"menucustompage_id",
 				"downloads"
-			)
+			]
 
-		),
-		array(
+		],
+		[
 			"function" => "saveMenuItem",
-			"args" => array(
+			"args" => [
 				&$shoutboxOptionComponents,
 				&$menuItemObj->objShoutbox,
 				[
@@ -497,30 +497,30 @@ $setupFormArgs = array(
 					"percentwidth" => ($_POST['widthunit_shoutbox'] ?? ''),
 					"percentheight" => ($_POST['heightunit_shoutbox'] ?? '')
 				],
-			)
-		),
-		array(
+			]
+		],
+		[
 			"function" => "saveMenuItem",
-			"args" => array(
+			"args" => [
 				&$customCodeOptionComponents,
 				&$menuItemObj->objCustomBlock,
-				array("customcode" => "code"),
+				["customcode" => "code"],
 				"menucustomblock_id",
 				"customcode",
-				array("blocktype" => "code")
-			)
-		),
-		array(
+				["blocktype" => "code"]
+			]
+		],
+		[
 			"function" => "saveMenuItem",
-			"args" => array(
+			"args" => [
 				&$customWYSIWYGOptionComponents,
 				&$menuItemObj->objCustomBlock,
-				array("wysiwygEditor" => "code"),
+				["wysiwygEditor" => "code"],
 				"menucustomblock_id",
 				"customformat",
-				array("blocktype" => "format")
-			)
-		),
+				["blocktype" => "format"]
+			]
+		],
 		"savePoll"
-	)
-);
+	]
+];

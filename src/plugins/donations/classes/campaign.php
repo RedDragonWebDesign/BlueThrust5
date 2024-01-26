@@ -26,7 +26,7 @@ class DonationCampaign extends Basic {
 		$this->strTableKey = "donationcampaign_id";
 
 		$this->donationObj = new Donation($sqlConnection);
-		$this->arrPeriodDateCodes = array("days" => self::DAY, "weeks" => self::WEEK, "months" => self::MONTH, "years" => self::YEAR);
+		$this->arrPeriodDateCodes = ["days" => self::DAY, "weeks" => self::WEEK, "months" => self::MONTH, "years" => self::YEAR];
 	}
 
 
@@ -46,7 +46,7 @@ class DonationCampaign extends Basic {
 
 	public function getCurrentPeriodRange($returnTimestamps = false) {
 
-		$returnVal = array();
+		$returnVal = [];
 		if ($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] != 0) {
 			$recurAmount = $this->arrObjInfo['recurringamount'];
 			$currentPeriod = $this->arrObjInfo['currentperiod'];
@@ -78,11 +78,11 @@ class DonationCampaign extends Basic {
 					break;
 			}
 
-			$returnVal = (!$returnTimestamps) ? array("current" => $currentPeriod, "next" => $nextPeriod) : array("current" => $currentPeriodDate, "next" => $nextPeriodDate);
+			$returnVal = (!$returnTimestamps) ? ["current" => $currentPeriod, "next" => $nextPeriod] : ["current" => $currentPeriodDate, "next" => $nextPeriodDate];
 		} elseif ($this->intTableKeyValue != "" && $this->arrObjInfo['currentperiod'] == 0) {
 			// Default Prior 30 days range
 			$x30Days = 60*60*24*30;
-			$returnVal = (!$returnTimestamps) ? array() : array("current" => 0, "next" => time());
+			$returnVal = (!$returnTimestamps) ? [] : ["current" => 0, "next" => time()];
 		}
 
 		return $returnVal;
@@ -101,7 +101,7 @@ class DonationCampaign extends Basic {
 				$this->blnUpdateCurrentPeriod = true;
 				$this->updateCurrentPeriod();
 			} elseif ($this->blnUpdateCurrentPeriod) {
-				$this->update(array("currentperiod"), array($this->arrObjInfo['currentperiod']));
+				$this->update(["currentperiod"], [$this->arrObjInfo['currentperiod']]);
 				$this->blnUpdateCurrentPeriod = false;
 			}
 		}
@@ -129,7 +129,7 @@ class DonationCampaign extends Basic {
 
 	public function populateDonationInfo($total = false, $currentPeriod = 0, $nextPeriod = 0) {
 
-		$donationInfo = array();
+		$donationInfo = [];
 		if ($this->intTableKeyValue != "") {
 			$arrPeriod = $this->getCurrentPeriodRange(true);
 			$sqlCurrentPeriod = ($currentPeriod == 0) ? $arrPeriod['current'] : $currentPeriod;
@@ -162,7 +162,7 @@ class DonationCampaign extends Basic {
 
 	public function getDonators($allTime = false) {
 
-		$returnVal = array();
+		$returnVal = [];
 		if ($this->intTableKeyValue != "") {
 			$addSQL = "";
 			if (!$allTime) {
@@ -182,7 +182,7 @@ class DonationCampaign extends Basic {
 
 	public function condenseDonators($arrDonators) {
 
-		$returnVal = array();
+		$returnVal = [];
 
 		foreach ($arrDonators as $arr) {
 			if ($arr['member_id'] != 0) {
@@ -208,7 +208,7 @@ class DonationCampaign extends Basic {
 
 		$arrDonators = $this->getDonators($allTime);
 		$this->condenseDonators($arrDonators);
-		$arrList = array();
+		$arrList = [];
 		$i = 0;
 		foreach ($arrDonators as $arr) {
 			if (!in_array($arr['member_id'], $arrList)) {
@@ -318,7 +318,7 @@ class DonationCampaign extends Basic {
 
 	public function getCurrencySymbol() {
 
-		$returnVal = array();
+		$returnVal = [];
 		if ($this->intTableKeyValue != "") {
 			require_once(BASE_DIRECTORY."plugins/donations/include/currency_codes.php");
 
@@ -384,7 +384,7 @@ class DonationCampaign extends Basic {
 
 	public function __get($name) {
 
-		$arrConstants = array("DAY", "WEEK", "MONTH", "YEAR");
+		$arrConstants = ["DAY", "WEEK", "MONTH", "YEAR"];
 		if (in_array($name, $arrConstants)) {
 			return constant("self::$name");
 		}

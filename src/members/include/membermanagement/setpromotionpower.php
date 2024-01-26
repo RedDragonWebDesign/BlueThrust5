@@ -86,7 +86,7 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	if ($countErrors == 0) {
-		if ($member->update(array("promotepower"), array($_POST['maximumrank']))) {
+		if ($member->update(["promotepower"], [$_POST['maximumrank']])) {
 			$dispMemberName = $member->getMemberLink();
 			$dispRankName = "Default";
 			if ($_POST['maximumrank'] == -1) {

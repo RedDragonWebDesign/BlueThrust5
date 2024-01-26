@@ -24,24 +24,19 @@ $consoleInfo = $consoleObj->get_info_filtered();
 $_SERVER['PHP_SELF'] = "console.php";
 $_GET['action'] = "move";
 require_once(BASE_DIRECTORY."members/include/".$consoleInfo['filename']);
-if(!isset($objManageList)) {
-	exit();	
+if (!isset($objManageList)) {
+	exit();
 }
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
-
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $objManageList->select($_POST['itemID'])) {
-		
+	if ($member->hasAccess($consoleObj) && $objManageList->select($_POST['itemID'])) {
 		define("LOGGED_IN", true);
-		
+
 		$objManageList->move($_POST['moveDir']);
-		
+
 		require_once($objManageList->strMainListLink);
 		require_once("console.managelist.list.php");
-		
 	}
-	
-	
 }

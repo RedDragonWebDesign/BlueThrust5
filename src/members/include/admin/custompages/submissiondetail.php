@@ -42,7 +42,7 @@ $arrSubmissions = $customFormPageObj->getSubmissions();
 foreach ($arrSubmissions as $submissionID) {
 	$customFormPageObj->objSubmission->select($submissionID);
 	if ($customFormPageObj->objSubmission->get_info("seenstatus") == 0) {
-		$customFormPageObj->objSubmission->update(array("seenstatus"), array("1"));
+		$customFormPageObj->objSubmission->update(["seenstatus"], ["1"]);
 	}
 
 	$arrSubmissionDetail = $customFormPageObj->getSubmissionDetail($submissionID);

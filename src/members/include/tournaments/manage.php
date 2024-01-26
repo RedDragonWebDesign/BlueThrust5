@@ -66,8 +66,8 @@ if (count($arrTournaments) > 0) {
 			";
 
 
-			$arrTournamentOptionsPageID = array("ManageMatches", "ManageTeams", "EditTournamentInfo");
-			$arrTournamentOptionsDispName = array("Manage Matches", "Manage Teams/Players", "Edit Tournament Info");
+			$arrTournamentOptionsPageID = ["ManageMatches", "ManageTeams", "EditTournamentInfo"];
+			$arrTournamentOptionsDispName = ["Manage Matches", "Manage Teams/Players", "Edit Tournament Info"];
 
 			if ($tournamentInfo['seedtype'] != 3) {
 				$dispTournamentOptions .= "<li><a href='".$MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=ManageMatches'>Manage Matches</a></li>";

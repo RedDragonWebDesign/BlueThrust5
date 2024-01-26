@@ -27,7 +27,7 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 $cID = $_GET['cID'];
 
 
-if ($member->update(array("onia"), array(0))) {
+if ($member->update(["onia"], [0])) {
 	echo "
 		<div style='display: none' id='successBox'>
 			<p align='center'>

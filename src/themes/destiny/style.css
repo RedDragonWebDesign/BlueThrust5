@@ -15,7 +15,7 @@ body {
 
 a {
 	color: #003f74;
-	text-decoration: none;	
+	text-decoration: none;
 }
 
 a:hover {
@@ -82,7 +82,7 @@ a:hover {
 	height: 55px;
 	right: -52px;
 	bottom: 0px;
-	background: url('images/layout/destinybg-indent.png') 0px 0px;	
+	background: url('images/layout/destinybg-indent.png') 0px 0px;
 }
 
 .destinyBGBottomRight {
@@ -101,7 +101,7 @@ a:hover {
 	height: 55px;
 	left: -52px;
 	bottom: 0px;
-	background: url('images/layout/destinybg-indent.png') -52px 0px;	
+	background: url('images/layout/destinybg-indent.png') -52px 0px;
 }
 
 #topBarBGImg {
@@ -139,7 +139,7 @@ a:hover {
 	left: 0px;
 	background-image: url('images/layout/destinylogo.png');
 	width: 67px;
-	height: 64px;	
+	height: 64px;
 }
 
 .topBar {
@@ -203,7 +203,7 @@ a:hover {
 	padding-top: 8px;
 	display: inline-block;
 	width: 50px;
-	height: 67px;	
+	height: 67px;
 }
 
 .loggedInAvatar img {
@@ -221,7 +221,7 @@ a:hover {
 }
 
 .loggedInInfo a {
-	color: #a8d7ff;	
+	color: #a8d7ff;
 }
 
 .headerDiv {
@@ -247,7 +247,7 @@ a:hover {
 	top: 81px;
 	left: 75px;
 	width: 344px;
-	height: 50px;	
+	height: 50px;
 }
 
 .bodyDiv {

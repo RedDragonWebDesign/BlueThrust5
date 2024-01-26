@@ -63,7 +63,7 @@ if ($eventChatID === false && $memberInfo['member_id'] != $eventInfo['member_id'
 
 	exit();
 } elseif ($eventChatID === false && $memberInfo['member_id'] == $eventInfo['member_id']) {
-	$eventChatObj->addNew(array("event_id", "datestarted"), array($eventInfo['event_id'], time()));
+	$eventChatObj->addNew(["event_id", "datestarted"], [$eventInfo['event_id'], time()]);
 
 	$eventObj->notifyEventInvites("A chatroom has been started for the event, <a href='".$MAIN_ROOT."members/events/manage.php?eID=".$eventInfo['event_id']."&pID=Chat'>".$eventInfo['title']."</a>!");
 } elseif ($eventChatObj->select($eventChatID)) {

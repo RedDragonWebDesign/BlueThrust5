@@ -45,8 +45,8 @@ if ( ! empty($_POST['submit']) ) {
 	if ($countErrors == 0) {
 		$squadInfo = $squadObj->get_info_filtered();
 		$squadAppObj = new Basic($mysqli, "squadapps", "squadapp_id");
-		$arrColumns = array("member_id", "squad_id", "message", "applydate", "status");
-		$arrValues = array($memberInfo['member_id'], $_POST['squad'], $_POST['message'], time(), 0);
+		$arrColumns = ["member_id", "squad_id", "message", "applydate", "status"];
+		$arrValues = [$memberInfo['member_id'], $_POST['squad'], $_POST['message'], time(), 0];
 
 		if ($squadAppObj->addNew($arrColumns, $arrValues)) {
 			$arrRecruiterMembers = $squadObj->getRecruiterMembers();
