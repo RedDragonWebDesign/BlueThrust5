@@ -47,9 +47,9 @@ $result = $mysqli->query($query);
 
 
 $statusSelectBox = new SelectBox();
-$statusSelectBox->setAttributes(["class" => "textBox"]);
+$statusSelectBox->setAttributes(array("class" => "textBox"));
 $statusSelectBox->setComponentName("status");
-$statusSelectBox->setOptions(["Unconfirmed", "Attended", "Excused Absence", "Unexcused Absence"]);
+$statusSelectBox->setOptions(array("Unconfirmed", "Attended", "Excused Absence", "Unexcused Absence"));
 ?>
 
 
@@ -66,8 +66,8 @@ $statusSelectBox->setOptions(["Unconfirmed", "Attended", "Excused Absence", "Une
 	<?php
 
 	if ( ! empty($_POST['submit']) ) {
-		$arrColumns = ["attendconfirm_admin"];
-		$arrValues = [$_POST['status']];
+		$arrColumns = array("attendconfirm_admin");
+		$arrValues = array($_POST['status']);
 		foreach ($_POST as $value) {
 			if (is_numeric($value) && $eventObj->objEventMember->select($value)) {
 				$checkEventID = $eventObj->objEventMember->get_info("event_id");

@@ -56,7 +56,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 		}
 
 		if ($countErrors == 0 && !isset($_POST['whichValue'])) {
-			$_SESSION['btFormComponentTempSelectValues'] = [];
+			$_SESSION['btFormComponentTempSelectValues'] = array();
 			$tempArr = $_SESSION['btFormComponent'][$componentIndex]['cOptions'];
 			$tempArr[] = $_POST['optionValue'];
 

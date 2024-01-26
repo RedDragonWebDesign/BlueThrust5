@@ -6,7 +6,7 @@ require_once("classes/campaign.php");
 
 $donationPlugin = new btPlugin($mysqli);
 $campaignObj = new DonationCampaign($mysqli);
-$customVars = [];
+$customVars = array();
 
 if ($donationPlugin->selectByName("Donations") && $donationPlugin->getConfigInfo("email") != "" && $campaignObj->select($_GET['campaign_id'])) {
 	$notifyURL = FULL_SITE_URL."plugins/donations/paypal-ipn.php";
@@ -34,8 +34,8 @@ if ($donationPlugin->selectByName("Donations") && $donationPlugin->getConfigInfo
 
 	$customVars['campaign_id'] = $_GET['campaign_id'];
 	$addToLink = "";
-	$customVals = ["name", "message", "hideamount"];
-	$filterFormInputs = ["submit", "checkCSRF"];
+	$customVals = array("name", "message", "hideamount");
+	$filterFormInputs = array("submit", "checkCSRF");
 	if (($campaignInfo['minimumamount'] > 0 && $_POST['amount'] >= $campaignInfo['minimumamount']) || $campaignInfo['minimumamount'] <= 0) {
 		foreach ($_POST as $key => $value) {
 			if (in_array($key, $customVals)) {

@@ -41,7 +41,7 @@ if ($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMemb
 	$eventObj->select($eventMemberInfo['event_id']);
 	$eventInfo = $eventObj->get_info_filtered();
 
-	$arrColumns = [];
+	$arrColumns = array();
 	$dispAction = "";
 
 	if ($_SESSION['btCountMindChanges'][$_POST['emID']] == "") {
@@ -52,12 +52,12 @@ if ($eventObj->objEventMember->select($_POST['emID']) && $eventObj->objEventMemb
 
 
 	if ($_POST['rsvpNum'] == 1 && time() < $eventInfo['startdate']) {
-		$arrColumns = ["status"];
-		$arrValues = ["1"];
+		$arrColumns = array("status");
+		$arrValues = array("1");
 		$dispAction = "going";
 	} elseif ($_POST['rsvpNum'] == 2 && time() < $eventInfo['startdate']) {
-		$arrColumns = ["status"];
-		$arrValues = ["2"];
+		$arrColumns = array("status");
+		$arrValues = array("2");
 		$dispAction = "not going";
 	}
 

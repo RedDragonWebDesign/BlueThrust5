@@ -106,11 +106,11 @@ if (isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {
 	$postInfo = $boardObj->objPost->get_info_filtered();
 
 	$dispTopicName = "<tr><td colspan='2' class='largeFont'><b>".$postInfo['title']."</b><input type='hidden' id='postSubject' value='".$postInfo['title']."'><br><br></td></tr>";
-	$arrTopicName = [
+	$arrTopicName = array(
 		"type" => "custom",
 		"sortorder" => 1,
 		"html" => "<span class='largeFont'><b>".$postInfo['title']."</b></span><input type='hidden' id='postSubject' value='".$postInfo['title']."'>"
-	];
+	);
 
 
 	$addToForm = "&tID=".$_GET['tID'];
@@ -138,14 +138,14 @@ if (isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {
 	";
 
 
-	$arrTopicName = [
+	$arrTopicName = array(
 		"type" => "text",
 		"sortorder" => 1,
-		"attributes" => ["class" => "formInput textBox"],
+		"attributes" => array("class" => "formInput textBox"),
 		"display_name" => "Topic",
 		"db_name" => "title",
-		"validate" => ["NOT_BLANK"]
-	];
+		"validate" => array("NOT_BLANK")
+	);
 
 	$postActionWord = "topic";
 }
@@ -201,24 +201,24 @@ if (isset($_GET['quote']) && $boardObj->objPost->select($_GET['quote'])) {
 }
 
 $i=2;
-$arrComponents = [
+$arrComponents = array(
 	"topicname" => $arrTopicName,
-	"message" => [
+	"message" => array(
 		"type" => "richtextbox",
 		"sortorder" => $i++,
 		"display_name" => "Message",
-		"attributes" => ["id" => "richTextarea", "style" => "width: 90%", "rows" => "10"],
+		"attributes" => array("id" => "richTextarea", "style" => "width: 90%", "rows" => "10"),
 		"value" => $dispQuote,
 		"db_name" => "message",
-		"validate" => ["NOT_BLANK"]
-	]
+		"validate" => array("NOT_BLANK")
+	)
 
-];
+);
 
 
 if ($blnCheckForumAttachments) {
-	$arrAttachmentComponents = [
-		"attachments" => [
+	$arrAttachmentComponents = array(
+		"attachments" => array(
 			"type" => "custom",
 			"sortorder" => $i++,
 			"display_name" => "Attachments",
@@ -228,9 +228,9 @@ if ($blnCheckForumAttachments) {
 						<a href='javascript:void(0)' id='addMoreAttachments'>Add More Attachments</a></div>
 						<input type='hidden' id='numOfAttachments' value='1' name='numofattachments'>"
 
-		]
+		)
 
-	];
+	);
 
 
 
@@ -238,20 +238,20 @@ if ($blnCheckForumAttachments) {
 }
 
 
-$arrPostButtons = [
-	"submit" => [
+$arrPostButtons = array(
+	"submit" => array(
 		"type" => "submit",
 		"sortorder" => $i++,
 		"value" => "Post",
-		"attributes" => ["class" => "formSubmitButton submitButton"]
-	],
-	"preview" => [
+		"attributes" => array("class" => "formSubmitButton submitButton")
+	),
+	"preview" => array(
 		"type" => "button",
 		"sortorder" => $i++,
-		"attributes" => ["class" => "formSubmitButton submitButton", "id" => "btnPreview"],
+		"attributes" => array("class" => "formSubmitButton submitButton", "id" => "btnPreview"),
 		"value" => "Preview"
-	],
-	"preview_section" => [
+	),
+	"preview_section" => array(
 		"type" => "custom",
 		"sortorder" => $i++,
 		"html" => "<div id='loadingSpiral' class='loadingSpiral'>
@@ -260,22 +260,22 @@ $arrPostButtons = [
 						</p>
 					</div>
 					<div id='previewPost'></div>"
-	]
-];
+	)
+);
 
 $arrComponents = array_merge($arrComponents, $arrPostButtons);
 
-$setupFormArgs = [
+$setupFormArgs = array(
 	"name" => "console-".$cID,
 	"components" => $arrComponents,
 	"description" => "",
 	"saveObject" => $boardObj->objPost,
 	"saveMessage" => "Successfully posted new ".$postActionWord."!",
 	"saveType" => "add",
-	"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID."&bID=".$_GET['bID'].$addToForm, "method" => "post", "enctype" => "multipart/form-data"],
-	"afterSave" => ["saveAdditionalPostData"],
-	"saveAdditional" => ["member_id" => $memberInfo['member_id'], "dateposted" => time()]
-];
+	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID."&bID=".$_GET['bID'].$addToForm, "method" => "post", "enctype" => "multipart/form-data"),
+	"afterSave" => array("saveAdditionalPostData"),
+	"saveAdditional" => array("member_id" => $memberInfo['member_id'], "dateposted" => time())
+);
 
 
 
@@ -332,15 +332,15 @@ function saveAdditionalPostData() {
 	if (!$blnPostReply) {
 		// New Topic
 		$postInfo = $boardObj->objPost->get_info();
-		$arrColumns = ["forumboard_id", "forumpost_id", "lastpost_id"];
-		$arrValues = [$_GET['bID'], $postInfo['forumpost_id'], $postInfo['forumpost_id']];
+		$arrColumns = array("forumboard_id", "forumpost_id", "lastpost_id");
+		$arrValues = array($_GET['bID'], $postInfo['forumpost_id'], $postInfo['forumpost_id']);
 		$boardObj->objTopic->addNew($arrColumns, $arrValues);
 
-		$boardObj->objPost->update(["forumtopic_id"], [$boardObj->objTopic->get_info("forumtopic_id")]);
+		$boardObj->objPost->update(array("forumtopic_id"), array($boardObj->objTopic->get_info("forumtopic_id")));
 	} else {
-		$boardObj->objPost->update(["forumtopic_id"], [$topicInfo['forumtopic_id']]);
+		$boardObj->objPost->update(array("forumtopic_id"), array($topicInfo['forumtopic_id']));
 		$newReplies = $topicInfo['replies']+1;
-		$boardObj->objTopic->update(["replies", "lastpost_id"], [$newReplies, $boardObj->objPost->get_info("forumpost_id")]);
+		$boardObj->objTopic->update(array("replies", "lastpost_id"), array($newReplies, $boardObj->objPost->get_info("forumpost_id")));
 	}
 
 	$boardObj->objPost->sendNotifications();
@@ -351,7 +351,7 @@ function saveAdditionalPostData() {
 	if (is_array($arrDownloadID)) {
 		$forumAttachmentObj = new Basic($mysqli, "forum_attachments", "forumattachment_id");
 		foreach ($arrDownloadID as $downloadID) {
-			$forumAttachmentObj->addNew(["download_id", "forumpost_id"], [$downloadID, $boardObj->objPost->get_info("forumpost_id")]);
+			$forumAttachmentObj->addNew(array("download_id", "forumpost_id"), array($downloadID, $boardObj->objPost->get_info("forumpost_id")));
 		}
 	}
 }
@@ -366,8 +366,8 @@ function checkForAttachments() {
 		$downloadCatObj->selectBySpecialKey("forumattachments");
 		$forumAttachmentCatID = $downloadCatObj->get_info("downloadcategory_id");
 
-		$arrDownloadID = [];
-		$arrDLColumns = ["downloadcategory_id", "member_id", "dateuploaded", "filename", "mimetype", "filesize", "splitfile1", "splitfile2"];
+		$arrDownloadID = array();
+		$arrDLColumns = array("downloadcategory_id", "member_id", "dateuploaded", "filename", "mimetype", "filesize", "splitfile1", "splitfile2");
 		for ( $i = 1; $i <= ($_POST['numofattachments'] ?? 0); $i++ ) {
 			$tempPostName = "forumattachment_".$i;
 
@@ -378,7 +378,7 @@ function checkForAttachments() {
 
 				$splitFile2Name = ($websiteInfo['split_downloads']) ? "downloads/files/forumattachment/".$splitFiles[1] : "";
 
-				$arrDLValues = [$forumAttachmentCatID, $memberInfo['member_id'], time(), $_FILES[$tempPostName]['name'], $mimeType, $fileSize, "downloads/files/forumattachment/".$splitFiles[0], $splitFile2Name];
+				$arrDLValues = array($forumAttachmentCatID, $memberInfo['member_id'], time(), $_FILES[$tempPostName]['name'], $mimeType, $fileSize, "downloads/files/forumattachment/".$splitFiles[0], $splitFile2Name);
 
 				if ($attachmentObj->addNew($arrDLColumns, $arrDLValues)) {
 					$arrDownloadID[] = $attachmentObj->get_info("download_id");

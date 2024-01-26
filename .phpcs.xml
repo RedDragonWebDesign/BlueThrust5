@@ -139,6 +139,4 @@
         </property>
     </properties>
     </rule>
-
-	<rule ref="Generic.Arrays.DisallowLongArraySyntax" />
 </ruleset>

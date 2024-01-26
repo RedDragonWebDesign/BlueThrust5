@@ -42,7 +42,7 @@ if ($checkMember) {
 		}
 
 
-		$arrFullySortedConsole = [];
+		$arrFullySortedConsole = array();
 		$consoleObj = new ConsoleOption($mysqli);
 		foreach ($rankPrivileges as $consoleoption) {
 			$consoleObj->select($consoleoption);

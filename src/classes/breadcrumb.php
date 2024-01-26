@@ -4,7 +4,7 @@ class BreadCrumb {
 
 
 	protected $title;
-	protected $arrBreadcrumb = [];
+	protected $arrBreadcrumb = array();
 	protected $separator = ">";
 
 
@@ -22,17 +22,17 @@ class BreadCrumb {
 
 
 	function clearBreadcrumb() {
-		$this->arrBreadcrumb = [];
+		$this->arrBreadcrumb = array();
 	}
 
 
 	function addCrumb($crumbName, $crumbLink = "") {
-		$this->arrBreadcrumb[] = ["link" => $crumbLink, "value" => $crumbName];
+		$this->arrBreadcrumb[] = array("link" => $crumbLink, "value" => $crumbName);
 	}
 
 	function getBreadcrumb() {
 
-		$breadcrumbs = [];
+		$breadcrumbs = array();
 		foreach ($this->arrBreadcrumb as $breadcrumbInfo) {
 			if ($breadcrumbInfo['link'] != "") {
 				$breadcrumbs[] = "<a href='".$breadcrumbInfo['link']."'>".$breadcrumbInfo['value']."</a>";

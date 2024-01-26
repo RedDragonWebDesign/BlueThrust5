@@ -18,47 +18,47 @@ if ($donationInfo['name'] == "" && $dispMemberName == "") {
 $dispMessage = ($donationInfo['message'] == "") ? "None" : nl2br(parseBBCode($donationInfo['message']));
 
 $i=0;
-$arrComponents = [
-		"campaign" => [
+$arrComponents = array(
+		"campaign" => array(
 			"type" => "custom",
 			"html" => "<div class='formInput main'><a href='".$campaignObj->getLink()."'>".$campaignInfo['title']."</a></div>",
 			"sortorder" => $i++,
 			"display_name" => "Campaign"
-		],
-		"datesent" => [
+		),
+		"datesent" => array(
 			"type" => "custom",
 			"html" => "<div class='formInput main'>".getPreciseTime($donationInfo['datesent'])."</div>",
 			"sortorder" => $i++,
 			"display_name" => "Date Sent"
-		],
-		"paypalid" => [
+		),
+		"paypalid" => array(
 			"type" => "custom",
 			"html" => "<div class='formInput main'>".$donationInfo['transaction_id']."</div>",
 			"sortorder" => $i++,
 			"display_name" => "PayPal Transaction ID"
-		],
-		"amount" => [
+		),
+		"amount" => array(
 			"type" => "custom",
 			"html" => "<div class='formInput main'>".$campaignObj->formatAmount($donationInfo['amount'])."</div>",
 			"sortorder" => $i++,
 			"display_name" => "Amount"
-		],
-		"donationfrom" => [
+		),
+		"donationfrom" => array(
 			"type" => "custom",
 			"html" => "<div class='formInput main'>".$dispName."</div>",
 			"sortorder" => $i++,
 			"display_name" => "Donated From"
-		],
-		"message" => [
+		),
+		"message" => array(
 			"type" => "custom",
 			"html" => "<div class='formInput main'>".$dispMessage."</div><br>",
 			"sortorder" => $i++,
 			"display_name" => "Message"
-		]
-	];
+		)
+	);
 
 
-$setupFormArgs = [
+$setupFormArgs = array(
 		"name" => "console-".$cID."-donationdetails-".$donationInfo['donation_id'],
 		"components" => $arrComponents
-	];
+	);

@@ -51,107 +51,107 @@ $maxDate = "new Date(".$maxYear.",12,31)";
 
 $i=0;
 
-$arrComponents = [
-		"mainsection" => [
+$arrComponents = array(
+		"mainsection" => array(
 			"type" => "section",
-			"options" => ["section_title" => "General Information"],
+			"options" => array("section_title" => "General Information"),
 			"sortorder" => $i++
-		],
-		"title" => [
+		),
+		"title" => array(
 			"type" => "text",
-			"attributes" => ["class" => "textBox bigTextBox formInput"],
+			"attributes" => array("class" => "textBox bigTextBox formInput"),
 			"sortorder" => $i++,
 			"display_name" => "Title",
 			"db_name" => "title",
-			"validate" => ["NOT_BLANK"]
-		],
-		"description" => [
+			"validate" => array("NOT_BLANK")
+		),
+		"description" => array(
 			"type" => "textarea",
 			"display_name" => "Description",
-			"attributes" => ["class" => "textBox formInput bigTextBox", "rows" => 5],
+			"attributes" => array("class" => "textBox formInput bigTextBox", "rows" => 5),
 			"sortorder" => $i++,
 			"db_name" => "description"
-		],
-		"rununtil" => [
+		),
+		"rununtil" => array(
 			"type" => "select",
 			"display_name" => "Run Until",
-			"options" => ["forever" => "Forever", "choose" => "Choose Date"],
-			"attributes" => ["class" => "textBox formInput", "id" => "runUntil"],
+			"options" => array("forever" => "Forever", "choose" => "Choose Date"),
+			"attributes" => array("class" => "textBox formInput", "id" => "runUntil"),
 			"sortorder" => $i++
-		],
-		"enddate" => [
+		),
+		"enddate" => array(
 			"type" => "datepicker",
 			"sortorder" => $i++,
-			"attributes" => ["style" => "cursor: pointer; display: none", "id" => "jsEndDate", "class" => "textBox formInput"],
+			"attributes" => array("style" => "cursor: pointer; display: none", "id" => "jsEndDate", "class" => "textBox formInput"),
 			"db_name" => "dateend",
 			"before_html" => "<label class='formLabel' style='display: inline-block'></label>
 			",
-			"options" => ["changeMonth" => "true",
+			"options" => array("changeMonth" => "true",
 							   "changeYear" => "true",
 							   "dateFormat" => "M d, yy",
 							   "minDate" => "new Date(50, 1, 1)",
 							   "maxDate" => $maxDate,
 							   "yearRange" => "1950:".$maxYear,
-							   "altField" => "realEndDate"],
-			"validate" => ["NUMBER_ONLY"],
+							   "altField" => "realEndDate"),
+			"validate" => array("NUMBER_ONLY"),
 			"value" => 0
-		],
-		"allowname" => [
+		),
+		"allowname" => array(
 			"type" => "checkbox",
 			"display_name" => "Allow Names",
 			"tooltip" => "Check this box to allow donators to leave their name.",
 			"sortorder" => $i++,
 			"value" => 1,
-			"options" => [1 => ""],
-			"attributes" => ["class" => "formInput"],
+			"options" => array(1 => ""),
+			"attributes" => array("class" => "formInput"),
 			"db_name" => "allowname"
-		],
-		"allowmessage" => [
+		),
+		"allowmessage" => array(
 			"type" => "checkbox",
 			"display_name" => "Allow Messages",
 			"tooltip" => "Check this box to allow donators to leave a message.",
 			"sortorder" => $i++,
 			"value" => 1,
-			"options" => [1 => ""],
-			"attributes" => ["class" => "formInput"],
+			"options" => array(1 => ""),
+			"attributes" => array("class" => "formInput"),
 			"db_name" => "allowmessage"
-		],
-		"allowhiddenamount" => [
+		),
+		"allowhiddenamount" => array(
 			"type" => "checkbox",
 			"display_name" => "Allow Hidden Amounts",
 			"tooltip" => "Check this box to allow donators to hide the amount they donated on the donation profile page.  You will still be able to view the amount in the donation logs.",
 			"sortorder" => $i++,
 			"value" => 0,
-			"options" => [1 => ""],
-			"attributes" => ["class" => "formInput"],
+			"options" => array(1 => ""),
+			"attributes" => array("class" => "formInput"),
 			"db_name" => "allowhiddenamount"
-		],
-		"goalamount" => [
+		),
+		"goalamount" => array(
 			"type" => "text",
-			"attributes" => ["class" => "formInput textBox smallTextBox"],
+			"attributes" => array("class" => "formInput textBox smallTextBox"),
 			"sortorder" => $i++,
 			"display_name" => "Donation Goal",
 			"db_name" => "goalamount"
-		],
-		"minimumamount" => [
+		),
+		"minimumamount" => array(
 			"type" => "text",
-			"attributes" => ["class" => "formInput textBox smallTextBox"],
+			"attributes" => array("class" => "formInput textBox smallTextBox"),
 			"sortorder" => $i++,
 			"display_name" => "Minimum Donation",
 			"value" => "1.00",
 			"db_name" => "minimumamount"
-		],
-		"currency" => [
+		),
+		"currency" => array(
 			"type" => "select",
-			"attributes" => ["class" => "formInput textBox"],
+			"attributes" => array("class" => "formInput textBox"),
 			"sortorder" => $i++,
 			"display_name" => "Currency",
 			"db_name" => "currency",
 			"options" => $arrPaypalCurrencyCodes,
 			"value" => $donationPlugin->getConfigInfo("currency")
-		]
+		)
 
-	];
+	);
 
 	// Check for award medal console access
 
@@ -167,15 +167,15 @@ if ($member->hasAccess($consoleObj)) {
 	}
 
 
-	$arrComponents['awardmedal'] = [
+	$arrComponents['awardmedal'] = array(
 		"type" => "select",
 		"display_name" => "Award Medal",
 		"sortorder" => $i++,
 		"tooltip" => "Auto-award a medal to a member who donates.",
-		"attributes" => ["class" => "formInput textBox"],
+		"attributes" => array("class" => "formInput textBox"),
 		"db_name" => "awardmedal",
 		"options" => $medalOptions
-	];
+	);
 }
 
 $consoleObj->select($cID);
@@ -184,57 +184,57 @@ if (!is_array($arrSelectRecur)) {
 	$arrSelectRecur['months'] = "selected";
 }
 
-$arrRecurUnits = ["days"=>"Days", "weeks"=>"Weeks", "months"=>"Months", "years"=>"Years"];
+$arrRecurUnits = array("days"=>"Days", "weeks"=>"Weeks", "months"=>"Months", "years"=>"Years");
 foreach ($arrRecurUnits as $key => $value) {
 	$recurOptions .= "<option value='".$key."'".$arrSelectRecur[$key].">".$value."</option>";
 }
 
 $disabledRecurring = ($checkRecurringBox == 1) ? "" : " disabled='disabled'";
 
-$arrRecurringComponents = [
-		"recurringsection" => [
+$arrRecurringComponents = array(
+		"recurringsection" => array(
 			"type" => "section",
-			"options" => ["section_title" => "Recurring Options", "section_description" => "Use this section to setup a campaign that restarts after a certain period of time."],
+			"options" => array("section_title" => "Recurring Options", "section_description" => "Use this section to setup a campaign that restarts after a certain period of time."),
 			"sortorder" => $i++
-		],
-		"recurring" => [
+		),
+		"recurring" => array(
 			"type" => "checkbox",
 			"display_name" => "Recurring Campaign",
-			"options" => [1 => ""],
+			"options" => array(1 => ""),
 			"sortorder" => $i++,
-			"attributes" => ["class" => "formInput", "id" => "chkRecurring"],
+			"attributes" => array("class" => "formInput", "id" => "chkRecurring"),
 			"value" => $checkRecurringBox,
 			"db_name" => "currentperiod"
-		],
-		"repeatperiod" => [
+		),
+		"repeatperiod" => array(
 			"type" => "custom",
 			"display_name" => "Repeat Every",
 			"sortorder" => $i++,
 			"html" => "<input type='text' id='repeatPeriodAmount' class='textBox smallTextBox formInput' name='recurringamount' value='1'".$disabledRecurring."> <select name='recurringunit' class='textBox formInput' id='repeatPeriodUnit'".$disabledRecurring.">".$recurOptions."</select>",
-			"validate" => ["validateCreateCampaignForm"]
-		]
-	];
+			"validate" => array("validateCreateCampaignForm")
+		)
+	);
 
 
-$arrComponents['submit'] = [
+$arrComponents['submit'] = array(
 		"type" => "submit",
 		"value" => "Create Campaign",
-		"attributes" => ["class" => "submitButton formSubmitButton"],
+		"attributes" => array("class" => "submitButton formSubmitButton"),
 		"sortorder" => $i++
-	];
+	);
 
 $arrComponents = array_merge($arrComponents, $arrRecurringComponents);
-$setupFormArgs = [
+$setupFormArgs = array(
 		"name" => "console-".$cID,
 		"components" => $arrComponents,
 		"saveObject" => $campaignObj,
 		"saveType" => "add",
 		"saveMessage" => "Successfully created new donation campaign!",
-		"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
+		"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
 		"description" => "Use the form below to create a new donation campaign.",
 		"embedJS" => $campaignJS,
-		"saveAdditional" => ["member_id" => $memberInfo['member_id'], "datestarted" => time(), "recurringamount" => $_POST['recurringamount'], "recurringunit" => $_POST['recurringunit']]
-	];
+		"saveAdditional" => array("member_id" => $memberInfo['member_id'], "datestarted" => time(), "recurringamount" => $_POST['recurringamount'], "recurringunit" => $_POST['recurringunit'])
+	);
 
 
 function validateCreateCampaignForm() {

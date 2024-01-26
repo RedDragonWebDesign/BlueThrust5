@@ -26,80 +26,80 @@ $configInfo = $pluginObj->getConfigInfo();
 
 
 $i=0;
-$arrComponents = [
-	"email" => [
+$arrComponents = array(
+	"email" => array(
 		"type" => "text",
-		"attributes" => ["class" => "textBox formInput"],
+		"attributes" => array("class" => "textBox formInput"),
 		"display_name" => "Paypal E-mail",
 		"sortorder" => $i++,
 		"value" => $configInfo['email'],
-		"validate" => ["NOT_BLANK"]
-	],
-	"mode" => [
+		"validate" => array("NOT_BLANK")
+	),
+	"mode" => array(
 		"type" => "select",
-		"attributes" => ["class" => "textBox formInput"],
+		"attributes" => array("class" => "textBox formInput"),
 		"display_name" => "Mode",
-		"options" => ["" => "Sandbox", "live" => "Live"],
+		"options" => array("" => "Sandbox", "live" => "Live"),
 		"sortorder" => $i++,
 		"value" => $configInfo['mode'],
-		"validate" => ["RESTRICT_TO_OPTIONS"],
+		"validate" => array("RESTRICT_TO_OPTIONS"),
 		"tooltip" => "You can use sandbox mode to test donations without real money.  You will have to set up test accounts with Paypal in order to use Sandbox mode"
-	],
-	"defaultcurrency" => [
+	),
+	"defaultcurrency" => array(
 		"type" => "select",
-		"attributes" => ["class" => "textBox formInput"],
+		"attributes" => array("class" => "textBox formInput"),
 		"display_name" => "Default Currency",
 		"options" => $arrPaypalCurrencyCodes,
 		"sortorder" => $i++,
-		"validate" => ["RESTRICT_TO_OPTIONS"],
+		"validate" => array("RESTRICT_TO_OPTIONS"),
 		"value" => $configInfo['currency']
-	],
-	"goalprogresscolor" => [
+	),
+	"goalprogresscolor" => array(
 		"type" => "colorpick",
 		"value" => $configInfo['goalprogresscolor'],
 		"sortorder" => $i++,
-		"attributes" => ["class" => "formInput textBox", "id" => "goalColor"],
+		"attributes" => array("class" => "formInput textBox", "id" => "goalColor"),
 		"display_name" => "Progressbar Front Color"
-	],
-	"goalprogressbackcolor" => [
+	),
+	"goalprogressbackcolor" => array(
 		"type" => "colorpick",
 		"value" => $configInfo['goalprogressbackcolor'],
 		"sortorder" => $i++,
-		"attributes" => ["class" => "formInput textBox", "id" => "goalBackColor"],
+		"attributes" => array("class" => "formInput textBox", "id" => "goalBackColor"),
 		"display_name" => "Progressbar Back Color"
-	],
-	"thankyou" => [
+	),
+	"thankyou" => array(
 		"type" => "richtextbox",
-		"attributes" => ["class" => "textBox formInput", "id" => "thankYouMessage", "style" => "width: 100%", "rows" => 15],
+		"attributes" => array("class" => "textBox formInput", "id" => "thankYouMessage", "style" => "width: 100%", "rows" => 15),
 		"display_name" => "Thank You Page Message",
 		"sortorder" => $i++,
 		"value" => $configInfo['thankyou'],
 		"allowHTML" => true
-	],
-	"submit" => [
+	),
+	"submit" => array(
 		"type" => "submit",
 		"value" => "Save",
 		"sortorder" => $i++,
-		"attributes" => ["class" => "submitButton formSubmitButton"]
-	]
+		"attributes" => array("class" => "submitButton formSubmitButton")
+	)
 
-];
+);
 
 
-$setupFormArgs = [
+$setupFormArgs = array(
 	"name" => "pluginsettings-".$_GET['plugin'],
 	"components" => $arrComponents,
 	"description" => "Use the form below to configure the donation plugin.",
-	"attributes" => ["action" => $MAIN_ROOT."plugins/settings.php?plugin=".$_GET['plugin'], "method" => "post"],
-	"afterSave" => ["saveDonationSettings"],
+	"attributes" => array("action" => $MAIN_ROOT."plugins/settings.php?plugin=".$_GET['plugin'], "method" => "post"),
+	"afterSave" => array("saveDonationSettings"),
 	"saveMessage" => "Donation Settings Saved!",
 	"saveLink" => $MAIN_ROOT."members/console.php?cID=".$cID
-];
+);
 
 function saveDonationSettings() {
 	global $pluginObj;
 
-	$arrFilter = ["<?", "?>", "<script>", "</script>"];
+	$arrFilter = array("<?", "?>", "<script>", "</script>");
 	foreach ($arrFilter as $filterOut) {
 		$_POST['thankyou'] = str_replace($filterOut, "", $_POST['thankyou']);
 	}

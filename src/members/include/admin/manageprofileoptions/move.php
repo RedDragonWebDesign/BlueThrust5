@@ -61,7 +61,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 			if (is_numeric($newSpot)) {
 				$profileOptionObj->select($_POST['oID']);
-				$profileOptionObj->update(["sortnum"], [$newSpot]);
+				$profileOptionObj->update(array("sortnum"), array($newSpot));
 			}
 
 			$profileOptionObj->resortOrder();

@@ -37,12 +37,12 @@ class Clock extends BasicOrder {
 				$dateOffset = "''";
 			}
 
-			$returnVal = [
+			$returnVal = array(
 				"offset" => $dateOffset,
 				"time" => $dateTime,
 				"hour" => $dateHour,
 				"minutes" => $dateMinutes
-			];
+			);
 		}
 
 		return $returnVal;
@@ -50,7 +50,7 @@ class Clock extends BasicOrder {
 
 	public function displayClocks($return = false) {
 
-		$clockArray = [];
+		$clockArray = array();
 		$clocksJS = "";
 		$result = $this->MySQL->query("SELECT clock_id FROM ".$this->strTableName." ORDER BY ordernum DESC");
 		while ($row = $result->fetch_assoc()) {
@@ -87,7 +87,7 @@ class Clock extends BasicOrder {
 
 	public function getTimezones() {
 
-		$arrTimezoneOptions = [];
+		$arrTimezoneOptions = array();
 		$arrTimezones = DateTimeZone::listIdentifiers();
 		foreach ($arrTimezones as $timeZone) {
 			$tz = new DateTimeZone($timeZone);

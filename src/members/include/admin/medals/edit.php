@@ -51,8 +51,8 @@ $('#breadCrumb').html(\"".$breadcrumbObj->getBreadcrumb()."\");
 
 
 $medalValidateObj = new Medal($mysqli);
-$arrMedals = $medalObj->get_entries([], "ordernum DESC");
-$medalOptions = [];
+$arrMedals = $medalObj->get_entries(array(), "ordernum DESC");
+$medalOptions = array();
 foreach ($arrMedals as $eachMedalInfo) {
 	$medalName = filterText($eachMedalInfo['name']);
 	$medalOptions[$eachMedalInfo['medal_id']] = $medalName;
@@ -68,111 +68,111 @@ $medalOrder = $medalValidateObj->findBeforeAfter();
 
 $medalInfo['imageurl'] = substr($medalInfo['imageurl'], strlen($MAIN_ROOT));
 $i = 1;
-$arrComponents = [
-		"generalinfo" => [
+$arrComponents = array(
+		"generalinfo" => array(
 			"type" => "section",
-			"options" => ["section_title" => "General Information:"],
+			"options" => array("section_title" => "General Information:"),
 			"sortorder" => $i++,
-		],
-		"medalname" => [
+		),
+		"medalname" => array(
 			"type" => "text",
-			"attributes" => ["class" => "textBox formInput"],
+			"attributes" => array("class" => "textBox formInput"),
 			"sortorder" => $i++,
 			"db_name" => "name",
 			"display_name" => "Medal Name",
-			"validate" => ["NOT_BLANK"],
+			"validate" => array("NOT_BLANK"),
 			"value" => $medalInfo['name']
-		],
-		"medalimage" => [
+		),
+		"medalimage" => array(
 			"type" => "file",
-			"attributes" => ["class" => "textBox", "style" => "width: 100%"],
+			"attributes" => array("class" => "textBox", "style" => "width: 100%"),
 			"db_name" => "imageurl",
 			"sortorder" => $i++,
-			"options" => ["file_types" => [".gif", ".png", ".jpg", ".bmp"], "file_prefix" => "medal_", "save_loc" => "../images/medals/", "ext_length" => 4, "append_db_value" => "images/medals/"],
+			"options" => array("file_types" => array(".gif", ".png", ".jpg", ".bmp"), "file_prefix" => "medal_", "save_loc" => "../images/medals/", "ext_length" => 4, "append_db_value" => "images/medals/"),
 			"display_name" => "Medal Image",
 			"value" => $medalInfo['imageurl']
-		],
-		"medalimagewidth" => [
+		),
+		"medalimagewidth" => array(
 			"type" => "text",
-			"attributes" => ["class" => "textBox formInput", "style" => "width: 5%"],
+			"attributes" => array("class" => "textBox formInput", "style" => "width: 5%"),
 			"html" => "<div class='formInput' style='vertical-align: bottom; padding-left: 5px; padding-bottom: 2px'><i>px</i></div>",
 			"tooltip" => "Set the Image Width to the width that you would like the Medal Image to be displayed on your website.",
 			"db_name" => "imagewidth",
-			"validate" => ["POSITIVE_NUMBER"],
+			"validate" => array("POSITIVE_NUMBER"),
 			"display_name" => "Image Width",
 			"sortorder" => $i++,
 			"value" => $medalInfo['imagewidth']
-		],
-		"medalimageheight" => [
+		),
+		"medalimageheight" => array(
 			"type" => "text",
-			"attributes" => ["class" => "textBox formInput", "style" => "width: 5%"],
+			"attributes" => array("class" => "textBox formInput", "style" => "width: 5%"),
 			"html" => "<div class='formInput' style='vertical-align: bottom; padding-left: 5px; padding-bottom: 2px'><i>px</i></div>",
 			"tooltip" => "Set the Image Height to the height that you would like the Medal Image to be displayed on your website.",
 			"db_name" => "imageheight",
-			"validate" => ["POSITIVE_NUMBER"],
+			"validate" => array("POSITIVE_NUMBER"),
 			"display_name" => "Image Height",
 			"sortorder" => $i++,
 			"value" => $medalInfo['imageheight']
-		],
-		"medaldesc" => [
+		),
+		"medaldesc" => array(
 			"type" => "textarea",
-			"attributes" => ["class" => "textBox formInput", "rows" => 5, "cols" => 40],
+			"attributes" => array("class" => "textBox formInput", "rows" => 5, "cols" => 40),
 			"db_name" => "description",
 			"sortorder" => $i++,
 			"display_name" => "Description",
 			"value" => $medalInfo['description']
-		],
-		"displayorder" => [
+		),
+		"displayorder" => array(
 			"type" => "beforeafter",
-			"attributes" => ["class" => "textBox"],
+			"attributes" => array("class" => "textBox"),
 			"display_name" => "Display Order",
 			"options" => $medalOptions,
 			"db_name" => "ordernum",
 			"sortorder" => $i++,
-			"validate" => [["name" => "VALIDATE_ORDER", "orderObject" => $medalValidateObj, "select_back" => $medalInfo['medal_id']]],
+			"validate" => array(array("name" => "VALIDATE_ORDER", "orderObject" => $medalValidateObj, "select_back" => $medalInfo['medal_id'])),
 			"value" => $medalInfo['medal_id'],
 			"before_after_value" => $medalOrder[0],
 			"after_selected" => $medalOrder[1]
 
-		],
-		"autoawardinfo" => [
+		),
+		"autoawardinfo" => array(
 			"type" => "section",
-			"options" => ["section_title" => "Auto-Award Information:", "section_description" => "Set these options if you want a member to be automatically awarded for being in the clan a certain number of days or recruiting a certain amount of members. Leave blank or 0 to disable this option."],
+			"options" => array("section_title" => "Auto-Award Information:", "section_description" => "Set these options if you want a member to be automatically awarded for being in the clan a certain number of days or recruiting a certain amount of members. Leave blank or 0 to disable this option."),
 			"sortorder" => $i++
-		],
-		"autodays" => [
+		),
+		"autodays" => array(
 			"type" => "text",
-			"attributes" => ["class" => "textBox formInput", "style" => "width: 5%"],
+			"attributes" => array("class" => "textBox formInput", "style" => "width: 5%"),
 			"display_name" => "Auto-Days",
 			"sortorder" => $i++,
 			"db_name" => "autodays",
 			"value" => $medalInfo['autodays']
-		],
-		"autorecruits" => [
+		),
+		"autorecruits" => array(
 			"type" => "text",
-			"attributes" => ["class" => "textBox formInput", "style" => "width: 5%"],
+			"attributes" => array("class" => "textBox formInput", "style" => "width: 5%"),
 			"display_name" => "Auto-Recruits",
 			"sortorder" => $i++,
 			"db_name" => "autorecruits",
 			"value" => $medalInfo['autorecruits']
-		],
-		"submit" => [
+		),
+		"submit" => array(
 			"type" => "submit",
-			"attributes" => ["class" => "submitButton formSubmitButton"],
+			"attributes" => array("class" => "submitButton formSubmitButton"),
 			"value" => "Edit Medal",
 			"sortorder" => $i++
-		]
-	];
+		)
+	);
 
 
 
-$setupFormArgs = [
+$setupFormArgs = array(
 	"name" => "console-".$cID,
 	"components" => $arrComponents,
 	"description" => "Fill out the form below to edit the selected medal.<br><br><b><u>NOTE:</u></b> When setting the Medal Image, if both the File and URL are filled out, the File will be used.",
 	"saveObject" => $medalObj,
 	"saveMessage" => "Successfully Saved Medal: <b>".filterText($_POST['medalname'])."</b>!",
 	"saveType" => "update",
-	"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID."&mID=".$medalInfo['medal_id']."&action=edit", "method" => "post"],
+	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID."&mID=".$medalInfo['medal_id']."&action=edit", "method" => "post"),
 	"beforeAfter" => true
-	];
+	);

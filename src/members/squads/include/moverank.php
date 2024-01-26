@@ -45,16 +45,16 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 			$newSortNumRankID = $row['squadrank_id'];
 
-			$arrColumns = ["sortnum"];
-			$arrValues = [$newSortNum];
+			$arrColumns = array("sortnum");
+			$arrValues = array($newSortNum);
 
 			$squadObj->objSquadRank->update($arrColumns, $arrValues);
 
 			if ($squadObj->objSquadRank->select($newSortNumRankID)) {
-				$squadObj->objSquadRank->update($arrColumns, [$squadRankInfo['sortnum']]);
+				$squadObj->objSquadRank->update($arrColumns, array($squadRankInfo['sortnum']));
 			} else {
 				$squadObj->objSquadRank->select($squadRankInfo['squadrank_id']);
-				$squadObj->objSquadRank->update($arrColumns, [$squadRankInfo['sortnum']]);
+				$squadObj->objSquadRank->update($arrColumns, array($squadRankInfo['sortnum']));
 			}
 		}
 

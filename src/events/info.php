@@ -69,7 +69,7 @@ $PAGE_NAME = $eventInfo['title']." - ";
 $dispBreadCrumb = "";
 require_once($prevFolder."themes/".$THEME."/_header.php");
 
-$memberInfo = [];
+$memberInfo = array();
 if (constant("LOGGED_IN") && $member->select($_SESSION['btUsername'])) {
 	$memberInfo = $member->get_info_filtered();
 
@@ -114,8 +114,8 @@ echo "
 				</tr>
 				";
 
-$arrSortInviteList = [];
-$arrInviteListNoPosition = [];
+$arrSortInviteList = array();
+$arrInviteListNoPosition = array();
 foreach ($arrInviteList as $value) {
 	$eventMemberID = $eventObj->getEventMemberID($value, true);
 	$eventMemInfo = $eventObj->objEventMember->get_info();

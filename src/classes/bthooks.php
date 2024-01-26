@@ -13,12 +13,12 @@
  */
 class btHooks {
 
-	protected $data = [];
+	protected $data = array();
 
 
 	function addHook($hookName, $function, $args = "") {
 
-		$this->data[$hookName][] = ["function" => $function, "args" => $args];
+		$this->data[$hookName][] = array("function" => $function, "args" => $args);
 	}
 
 	function removeHook($hookName, $function) {

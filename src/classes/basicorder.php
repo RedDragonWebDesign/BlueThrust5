@@ -88,7 +88,7 @@ class BasicOrder extends Basic {
 		$intRankID = $this->intTableKeyValue;
 		if ($intRankID != null) {
 			$intNewRankOrderNum = 0;
-			$arrRanks = [];
+			$arrRanks = array();
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." ORDER BY ordernum");
 			$x = 1;
 			while ($row = $result->fetch_assoc()) {
@@ -205,7 +205,7 @@ class BasicOrder extends Basic {
 
 		$counter = 1; // ordernum counter
 		$x = 0; // array counter
-		$arrUpdateID = [];
+		$arrUpdateID = array();
 		$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." ORDER BY ordernum");
 		if ($result) {
 			while ($row = $result->fetch_assoc()) {
@@ -263,7 +263,7 @@ class BasicOrder extends Basic {
 
 				if (is_numeric($newSpot)) {
 					$this->select($intOriginalRank);
-					$this->update(["ordernum"], [$newSpot]);
+					$this->update(array("ordernum"), array($newSpot));
 					$returnVal = true;
 				}
 
@@ -308,7 +308,7 @@ class BasicOrder extends Basic {
 				$intNextOrderID = $this->arrObjInfo[$this->strTableKey];
 			}
 
-			$returnArr = [$intNextOrderID, $strBeforeAfter];
+			$returnArr = array($intNextOrderID, $strBeforeAfter);
 		}
 		return $returnArr;
 	}
@@ -333,7 +333,7 @@ class BasicOrder extends Basic {
 	 */
 	function getAssociateIDs($sqlOrderBY = "", $bypassFilter = false) {
 
-		$arrReturn = [];
+		$arrReturn = array();
 		if (!$bypassFilter) {
 			$sqlOrderBY = $this->MySQL->real_escape_string($sqlOrderBY);
 		}

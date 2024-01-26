@@ -81,7 +81,7 @@ if ($_POST['checkBackup']) {
 
 		$insertStmt = "INSERT INTO ".$tableName." (";
 
-		$arrColumnNames = [];
+		$arrColumnNames = array();
 		$result = $mysqli->query("DESCRIBE ".$tableName);
 		while ($row = $result->fetch_assoc()) {
 			$arrColumnNames[] = $row['Field'];
@@ -92,11 +92,11 @@ if ($_POST['checkBackup']) {
 
 		$insertStmt .= $sqlInsertColumnNames.") VALUES ('";
 
-		$arrInsertStmts = [];
+		$arrInsertStmts = array();
 
 		$result = $mysqli->query("SELECT * FROM ".$tableName);
 		while ($row = $result->fetch_assoc()) {
-			$arrColumnValues = [];
+			$arrColumnValues = array();
 			foreach ($arrColumnNames as $columnName) {
 				$arrColumnValues[] = $mysqli->real_escape_string($row[$columnName]);
 			}

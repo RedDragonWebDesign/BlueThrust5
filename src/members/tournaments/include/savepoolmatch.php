@@ -55,7 +55,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 
 
 		// Check Winner
-		$arrMatchWinners = [0,1,2];
+		$arrMatchWinners = array(0,1,2);
 		if (!in_array($_POST['matchWinner'], $arrMatchWinners)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid match winner.";
@@ -86,12 +86,12 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 
 
 if ($countErrors == 0) {
-	$arrUpdateColumns = ["team1score", "team2score", "winner"];
+	$arrUpdateColumns = array("team1score", "team2score", "winner");
 
 	if ($poolTeamInfo['team1_id'] == $teamInfo['tournamentteam_id']) {
-		$arrUpdateValues = [$_POST['teamScore'], $_POST['opponentScore'], $_POST['matchWinner']];
+		$arrUpdateValues = array($_POST['teamScore'], $_POST['opponentScore'], $_POST['matchWinner']);
 	} else {
-		$arrUpdateValues = [$_POST['opponentScore'], $_POST['teamScore'], $_POST['matchWinner']];
+		$arrUpdateValues = array($_POST['opponentScore'], $_POST['teamScore'], $_POST['matchWinner']);
 	}
 
 	$checkSave = $tournamentObj->objTournamentPool->objTournamentPoolMatch->update($arrUpdateColumns, $arrUpdateValues);

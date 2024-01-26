@@ -87,7 +87,7 @@ class Basic {
 
 		$returnVal = false;
 		if (is_array($arrWhats)) {
-			$arrSQL = [];
+			$arrSQL = array();
 			foreach ($arrWhats as $columnName => $value) {
 				$arrSQL[] = $columnName." = ?";
 			}
@@ -122,11 +122,11 @@ class Basic {
 	 *
 	 */
 
-	public function get_entries($filterArgs = [], $orderBy = "", $blnNotFiltered = true, $filterComparators = []) {
+	public function get_entries($filterArgs = array(), $orderBy = "", $blnNotFiltered = true, $filterComparators = array()) {
 
 		$returnVal = false;
-		$returnArr = [];
-		$arrSelect = [];
+		$returnArr = array();
+		$arrSelect = array();
 		$selectBackID = "";
 
 		if ($this->intTableKeyValue != "") {
@@ -135,7 +135,7 @@ class Basic {
 
 		$setSQL = "";
 		if (count($filterArgs) > 0) {
-			$arrSQL = [];
+			$arrSQL = array();
 			foreach ($filterArgs as $columnName => $value) {
 				$setComparator = isset($filterComparators[$columnName]) ? $filterComparators[$columnName] : "=";
 
@@ -337,7 +337,7 @@ class Basic {
 			return $this->arrObjInfo;
 		}
 
-		$arrFilteredInfo = [];
+		$arrFilteredInfo = array();
 		foreach ($this->arrObjInfo as $key => $value) {
 			$temp = str_replace("<", "&lt;", $value);
 			$value = str_replace(">", "&gt;", $temp);

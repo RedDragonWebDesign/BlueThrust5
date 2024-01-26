@@ -44,7 +44,7 @@ $postInfo = $boardObj->objPost->get_info_filtered();
 
 $boardIDs = $boardObj->getAllBoards();
 $catName = "";
-$nonSelectableItems = [];
+$nonSelectableItems = array();
 foreach ($boardIDs as $id) {
 	$boardObj->select($id);
 	$forumCatID = $boardObj->get_info("forumcategory_id");
@@ -64,59 +64,59 @@ foreach ($boardIDs as $id) {
 
 
 $i = 0;
-$arrComponents = [
-	"selecteditem" => [
+$arrComponents = array(
+	"selecteditem" => array(
 		"type" => "custom",
 		"display_name" => "Selected Topic",
 		"sortorder" => $i++,
 		"html" => "<div class='formInput'><b>".$postInfo['title']."</b></div>"
-	],
-	"moveto" => [
+	),
+	"moveto" => array(
 		"type" => "select",
-		"attributes" => ["class" => "formInput textBox"],
+		"attributes" => array("class" => "formInput textBox"),
 		"display_name" => "Move To",
-		"validate" => ["RESTRICT_TO_OPTIONS"],
+		"validate" => array("RESTRICT_TO_OPTIONS"),
 		"options" => $forumBoardOptions,
 		"sortorder" => $i++,
 		"db_name" => "forumboard_id",
 		"non_selectable_items" => $nonSelectableItems
-	],
-	"postredirect" => [
+	),
+	"postredirect" => array(
 		"type" => "checkbox",
-		"attributes" => ["id" => "postRedirect", "class" => "formInput", "checked" => "checked"],
+		"attributes" => array("id" => "postRedirect", "class" => "formInput", "checked" => "checked"),
 		"value" => 1,
 		"display_name" => "Post a Redirect",
 		"sortorder" => $i++
-	],
-	"postredirect_top" => [
+	),
+	"postredirect_top" => array(
 		"type" => "custom",
 		"sortorder" => $i++,
 		"html" => "<div id='postRedirectSection'>"
-	],
-	"postredirect_desc" => [
+	),
+	"postredirect_desc" => array(
 		"type" => "textarea",
 		"sortorder" => $i++,
-		"attributes" => ["class" => "formInput textBox", "rows" => "5", "cols" => "40"],
+		"attributes" => array("class" => "formInput textBox", "rows" => "5", "cols" => "40"),
 		"display_name" => "Redirect Description",
 		"tooltip" => "Let users know why the topic is being moved.",
 		"value" => "This topic has been moved to [BOARD].\n\n[TOPIC_LINK]"
-	],
-	"postredirect_bottom" => [
+	),
+	"postredirect_bottom" => array(
 		"type" => "custom",
 		"sortorder" => $i++,
 		"html" => "</div>"
-	],
-	"submit" => [
+	),
+	"submit" => array(
 		"type" => "submit",
 		"value" => "Move Topic",
 		"sortorder" => $i++,
-		"attributes" => ["class" => "submitButton formSubmitButton"]
+		"attributes" => array("class" => "submitButton formSubmitButton")
 
-	]
-];
+	)
+);
 
 
-$setupFormArgs = [
+$setupFormArgs = array(
 	"name" => "console-".$cID,
 	"components" => $arrComponents,
 	"description" => "Use the form below to move the selected topic.",
@@ -124,9 +124,9 @@ $setupFormArgs = [
 	"saveMessage" => "Successfully Moved Topic!",
 	"saveType" => "update",
 	"saveLink" => $MAIN_ROOT."forum/viewtopic.php?tID=".$topicInfo['forumtopic_id'],
-	"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID."&topicID=".$topicInfo['forumtopic_id'], "method" => "post"],
-	"afterSave" => ["post_topic_redirect"]
-];
+	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID."&topicID=".$topicInfo['forumtopic_id'], "method" => "post"),
+	"afterSave" => array("post_topic_redirect")
+);
 
 
 function post_topic_redirect() {
@@ -135,8 +135,8 @@ function post_topic_redirect() {
 	if ($_POST['postredirect'] == 1) {
 		$boardObj->select($_POST['moveto']);
 
-		$arrColumns = ["forumboard_id", "lockstatus"];
-		$arrValues = [$topicInfo['forumboard_id'], 1];
+		$arrColumns = array("forumboard_id", "lockstatus");
+		$arrValues = array($topicInfo['forumboard_id'], 1);
 		$boardObj->objTopic->addNew($arrColumns, $arrValues);
 
 		$message = str_replace("[BOARD]", "<a href='".$MAIN_ROOT."forum/viewboard.php?bID=".$_POST['moveto']."'>".$boardObj->get_info_filtered("name")."</a>", $_POST['postredirect_desc']);
@@ -144,10 +144,10 @@ function post_topic_redirect() {
 
 		$message .= "\n\n\n<p class='tinyFont'><i>Moved by ".$member->getMemberLink()." on ".getPreciseTime(time(), "", true)."</i></p>";
 
-		$arrColumns = ["member_id", "dateposted", "title", "message", "forumtopic_id"];
-		$arrValues = [$postInfo['member_id'], time(), "MOVED - ".$postInfo['title'], $message, $boardObj->objTopic->get_info("forumtopic_id")];
+		$arrColumns = array("member_id", "dateposted", "title", "message", "forumtopic_id");
+		$arrValues = array($postInfo['member_id'], time(), "MOVED - ".$postInfo['title'], $message, $boardObj->objTopic->get_info("forumtopic_id"));
 		$boardObj->objPost->addNew($arrColumns, $arrValues);
-		$boardObj->objTopic->update(["forumpost_id", "lastpost_id"], [$boardObj->objPost->get_info("forumpost_id"), $boardObj->objPost->get_info("forumpost_id")]);
+		$boardObj->objTopic->update(array("forumpost_id", "lastpost_id"), array($boardObj->objPost->get_info("forumpost_id"), $boardObj->objPost->get_info("forumpost_id")));
 	}
 
 	$member->logAction("Moved forum topic, <a href='".$MAIN_ROOT."forum/viewtopic.php?tID=".$topicInfo['forumtopic_id']."'>".$postInfo['title']."</a>, to <a href='".$MAIN_ROOT."forum/viewboard.php?bID=".$_POST['moveto']."'>".$boardObj->get_info_filtered("name")."</a>");

@@ -40,8 +40,8 @@ if ( ! empty($_POST['submit']) ) {
 		}
 	}
 
-	$updateColumns = ["memberregistration", "memberapproval"];
-	$updateValues = [$setRegistration, $setMemberApproval];
+	$updateColumns = array("memberregistration", "memberapproval");
+	$updateValues = array($setRegistration, $setMemberApproval);
 
 
 

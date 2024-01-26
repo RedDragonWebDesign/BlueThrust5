@@ -28,34 +28,34 @@ $cID = $_GET['cID'];
 
 
 
-$arrComponents = [
-	"newusername" => [
+$arrComponents = array(
+	"newusername" => array(
 		"display_name" => "New Username",
 		"type" => "text",
 		"sortorder" => 1,
-		"attributes" => ["class" => "textBox formInput"],
-		"validate" => ["NOT_BLANK", ["name" => "IS_NOT_SELECTABLE", "selectObj" => $member, "select_back" => "member_id"]],
+		"attributes" => array("class" => "textBox formInput"),
+		"validate" => array("NOT_BLANK", array("name" => "IS_NOT_SELECTABLE", "selectObj" => $member, "select_back" => "member_id")),
 		"db_name" => "username"
-	],
-	"submit" => [
+	),
+	"submit" => array(
 		"type" => "submit",
 		"sortorder" => 2,
-		"attributes" => ["class" => "submitButton formSubmitButton"],
+		"attributes" => array("class" => "submitButton formSubmitButton"),
 		"value" => "Change Username"
-	]
+	)
 
-];
+);
 
-$setupFormArgs = [
+$setupFormArgs = array(
 	"name" => "console-".$cID,
 	"components" => $arrComponents,
 	"saveObject" => $member,
 	"saveType" => "update",
-	"afterSave" => ["setMemberSessions"],
+	"afterSave" => array("setMemberSessions"),
 	"saveMessage" => "Successfully changed username!",
-	"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
+	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
 	"description" => "Use the form below to change your username."
-];
+);
 
 
 // Validation Functions

@@ -39,7 +39,7 @@ class MenuItem extends BasicSort {
 	}
 
 	public function getItems($intCategory, $intAccessType = 1, $intHide = 0) {
-		$returnArr = [];
+		$returnArr = array();
 
 		$accessTypeSQL = " OR accesstype = '".$intAccessType."'";
 		if ($intAccessType == 3) {

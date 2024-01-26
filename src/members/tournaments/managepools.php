@@ -122,7 +122,7 @@ if ($blnShowPoolList) {
 
 
 	$arrPools = $tournamentObj->getPoolList();
-	$arrPoolTeams = [];
+	$arrPoolTeams = array();
 	$startingPoolLetter = "A";
 
 	foreach ($arrPools as $poolID) {

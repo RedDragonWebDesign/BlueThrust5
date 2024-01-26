@@ -45,7 +45,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 
 	if ($_POST['editComponent']) {
-		$arrTypes = ["input", "largeinput", "select", "multiselect", "separator"];
+		$arrTypes = array("input", "largeinput", "select", "multiselect", "separator");
 
 		// Check Name
 
@@ -130,7 +130,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 			$arrComponentInfo = filterArray($_SESSION['btFormComponent'][$componentIndex]);
 		}
 
-		$arrSelectedType = [];
+		$arrSelectedType = array();
 		$checkRequired = "";
 		switch ($arrComponentInfo['type']) {
 			case "largeinput":

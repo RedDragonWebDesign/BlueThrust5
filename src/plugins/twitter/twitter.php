@@ -119,13 +119,13 @@ class Twitter extends Basic {
 				if ($twitterInfo !== false) {
 					$embedTweet = $this->getEmbeddedTweet($twitterInfo['status']['id_str']);
 
-					$arrColumns = ["lastupdate", "username", "name", "description", "followers", "following", "tweets", "profilepic", "lasttweet_id", "lasttweet_html"];
-					$arrValues = [time(), $twitterInfo['screen_name'], $twitterInfo['name'], $twitterInfo['description'], $twitterInfo['followers_count'], $twitterInfo['friends_count'], $twitterInfo['statuses_count'], $twitterInfo['profile_image_url_https'], $twitterInfo['status']['id_str'], $embedTweet['html']];
+					$arrColumns = array("lastupdate", "username", "name", "description", "followers", "following", "tweets", "profilepic", "lasttweet_id", "lasttweet_html");
+					$arrValues = array(time(), $twitterInfo['screen_name'], $twitterInfo['name'], $twitterInfo['description'], $twitterInfo['followers_count'], $twitterInfo['friends_count'], $twitterInfo['statuses_count'], $twitterInfo['profile_image_url_https'], $twitterInfo['status']['id_str'], $embedTweet['html']);
 
 					$this->update($arrColumns, $arrValues);
 				} else {
 					$this->delete();
-					$this->arrObjInfo = [];
+					$this->arrObjInfo = array();
 				}
 			}
 		}
@@ -170,7 +170,7 @@ class Twitter extends Basic {
 	public function generateSignature($httpMethod, $reqURL) {
 
 		ksort($this->arrParameters);
-		$arrEncodedString = [];
+		$arrEncodedString = array();
 
 		foreach ($this->arrParameters as $key => $value) {
 			$encodedString = "";
@@ -207,7 +207,7 @@ class Twitter extends Basic {
 			$arrHeaderParams[] = rawurlencode($key)."=\"".rawurlencode($value)."\"";
 		}
 
-		$arrHeader = [];
+		$arrHeader = array();
 		$arrHeader[] = "Authorization: OAuth ".implode(", ", $arrHeaderParams);
 
 		return $arrHeader;
@@ -260,7 +260,7 @@ class Twitter extends Basic {
 
 		$this->lastAuthHeader = $arrHeader;
 
-		$arrPost = [];
+		$arrPost = array();
 		$arrPost['oauth_verifier'] = $oauthVerifier;
 		$response = $this->httpRequest($this->accessTokenURL, "POST", $arrHeader, $arrPost);
 
@@ -324,7 +324,7 @@ class Twitter extends Basic {
 
 	public function getEmbeddedTweet($tweetID) {
 
-		$returnArr = [];
+		$returnArr = array();
 		if (is_numeric($tweetID)) {
 			$this->resetParamArray();
 
@@ -352,7 +352,7 @@ class Twitter extends Basic {
 		return $returnArr;
 	}
 
-	public function httpRequest($url, $method, $headers = [], $postfields = []) {
+	public function httpRequest($url, $method, $headers = array(), $postfields = array()) {
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -380,7 +380,7 @@ class Twitter extends Basic {
 
 	public function resetParamArray() {
 
-		$this->arrParameters = [];
+		$this->arrParameters = array();
 
 		$this->arrParameters['oauth_consumer_key'] = $this->consumerKey;
 		$this->arrParameters['oauth_signature_method'] = "HMAC-SHA1";

@@ -77,8 +77,8 @@ if ( ! empty($_POST['submit']) ) {
 
 
 
-		$arrColumnNames = ["profilecategory_id", "name", "optiontype", "sortnum"];
-		$arrColumnValues = [$_POST['optioncategory'], $_POST['optionname'], $_POST['optiontype'], $intNewSortNum];
+		$arrColumnNames = array("profilecategory_id", "name", "optiontype", "sortnum");
+		$arrColumnValues = array($_POST['optioncategory'], $_POST['optionname'], $_POST['optiontype'], $intNewSortNum);
 
 
 		if ($profileOptionObj->addNew($arrColumnNames, $arrColumnValues)) {
@@ -116,7 +116,7 @@ if ( ! empty($_POST['submit']) ) {
 }
 
 if ( empty($_POST['submit']) ) {
-	$_SESSION['btProfileCache'] = [];
+	$_SESSION['btProfileCache'] = array();
 	$catoptions = "";
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."profilecategory ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {

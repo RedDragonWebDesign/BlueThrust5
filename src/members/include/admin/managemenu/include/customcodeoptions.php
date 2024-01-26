@@ -2,12 +2,12 @@
 
 // Custom Code Editor
 
-$customCodeOptionComponents = [
-	"customcode" => [
+$customCodeOptionComponents = array(
+	"customcode" => array(
 		"type" => "codeeditor",
 		"sortorder" => $i++,
-		"attributes" => ["id" => "menuCodeEditor"]
+		"attributes" => array("id" => "menuCodeEditor")
 
-	]
+	)
 
-];
+);

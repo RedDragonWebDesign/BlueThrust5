@@ -10,7 +10,7 @@ class btThemeMenu {
 	public $memberObj;
 	public $menuItemObj;
 	protected $menuItemInfo;
-	public $data = [];
+	public $data = array();
 	protected $blnLoggedIn;
 	public $menuCatObj;
 	protected $intMenuSection;
@@ -18,7 +18,7 @@ class btThemeMenu {
 	protected $intAccessType;
 	public $defaultShoutboxWidth = 140;
 	public $defaultShoutboxHeight = 400;
-	public $arrShoutBoxIDs = [];
+	public $arrShoutBoxIDs = array();
 
 	public function __construct($dir, $sqlConnection) {
 
@@ -45,7 +45,7 @@ class btThemeMenu {
 	public function getForumActivity($amountToShow = 5) {
 
 		$forumObj = new ForumBoard($this->MySQL);
-		$arrReturn = [];
+		$arrReturn = array();
 
 		$memberInfo = $this->memberObj->get_info();
 
@@ -518,7 +518,7 @@ class btThemeMenu {
 
 	public function replaceKeywords($value) {
 
-		$arrFilter = [
+		$arrFilter = array(
 
 			"[MAIN_ROOT]" => MAIN_ROOT,
 			"[MEMBER_ID]" => $this->memberObj->get_info("member_id"),
@@ -526,7 +526,7 @@ class btThemeMenu {
 			"[MEMBERRANK]" => $this->data['memberRank'] ?? '',
 			"[PMLINK]" => $this->data['pmLink'] ?? ''
 
-		];
+		);
 
 		foreach ($arrFilter as $find => $replace) {
 			$value = str_replace($find, $replace ?? '', $value);

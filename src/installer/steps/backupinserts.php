@@ -14,7 +14,7 @@ foreach ($arrTableMatches as $tableName) {
 
 	$tableNameNoPrefix = ($_POST['tableprefix'] != "") ? substr($tableName, strlen($_POST['tableprefix'])) : $tableName;
 
-	$arrColumnNames = [];
+	$arrColumnNames = array();
 	$result = $mysqli->query("DESCRIBE ".$tableName);
 	while ($row = $result->fetch_assoc()) {
 		if ($row['Field'] != "privilege_id") {
@@ -37,11 +37,11 @@ foreach ($arrTableMatches as $tableName) {
 
 	$insertStmt .= $sqlInsertColumnNames.") VALUES ('";
 
-	$arrInsertStmts = [];
+	$arrInsertStmts = array();
 
 	$result = $mysqli->query("SELECT * FROM ".$tableName);
 	while ($row = $result->fetch_assoc()) {
-		$arrColumnValues = [];
+		$arrColumnValues = array();
 		$blnDoNotAdd = false;
 		foreach ($arrColumnNames as $columnName) {
 			$arrColumnValues[] = $mysqli->real_escape_string($row[$columnName]);

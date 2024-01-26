@@ -67,8 +67,8 @@ if ( ! empty($_POST['submit']) ) {
 		}
 
 
-		$arrColumns = ["onia"];
-		$arrValues = ($_POST['ia'] == 1) ? [1] : [0];
+		$arrColumns = array("onia");
+		$arrValues = ($_POST['ia'] == 1) ? array(1) : array(0);
 
 		if ($_POST['ia'] = "1") {
 			$ia_NAME = "On Leave";

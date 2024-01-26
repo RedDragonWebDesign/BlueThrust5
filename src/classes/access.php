@@ -34,7 +34,7 @@ class Access {
 	public $rankAccessDiv;
 	public $memberAccessDiv;
 
-	public function __construct($sqlConnection, $accessTableArray = [], $accessTypesArray = []) {
+	public function __construct($sqlConnection, $accessTableArray = array(), $accessTypesArray = array()) {
 
 		$this->MySQL = $sqlConnection;
 		$this->arrAccessTables = $accessTableArray;
@@ -52,7 +52,7 @@ class Access {
 
 	public function saveAccess() {
 
-		$arrBasicObj = [];
+		$arrBasicObj = array();
 
 		foreach ($this->arrAccessTables as $key => $accessTableInfo) {
 			$accessTableInfo['tableName'] = filterText($accessTableInfo['tableName']);
@@ -62,8 +62,8 @@ class Access {
 
 		foreach ($_SESSION['btMemberAccess'][$this->cacheID] as $memberID => $accessTypeValue) {
 			if (is_numeric($memberID) && is_numeric($accessTypeValue)) {
-				$arrColumns = [$this->arrAccessFor['keyName'], "member_id", "accesstype"];
-				$arrValues = [$this->arrAccessFor['keyValue'], $memberID, $accessTypeValue];
+				$arrColumns = array($this->arrAccessFor['keyName'], "member_id", "accesstype");
+				$arrValues = array($this->arrAccessFor['keyValue'], $memberID, $accessTypeValue);
 				$this->objMemberAccess->addNew($arrColumns, $arrValues);
 			}
 		}
@@ -72,8 +72,8 @@ class Access {
 			$rankID = str_replace("rankaccess_", "", $checkBoxName);
 
 			if ($this->objRank->select($rankID) && is_numeric($accessTypeValue)) {
-				$arrColumns = [$this->arrAccessFor['keyName'], "rank_id", "accesstype"];
-				$arrValues = [$this->arrAccessFor['keyValue'], $rankID, $accessTypeValue];
+				$arrColumns = array($this->arrAccessFor['keyName'], "rank_id", "accesstype");
+				$arrValues = array($this->arrAccessFor['keyValue'], $rankID, $accessTypeValue);
 				$this->objRankAccess->addNew($arrColumns, $arrValues);
 			}
 		}
@@ -336,7 +336,7 @@ class Access {
 
 		$memberInfo = $memberObj->get_info();
 
-		$returnArr = ["member" => "", "rank" => ""];
+		$returnArr = array("member" => "", "rank" => "");
 
 		$result = $this->MySQL->query("SELECT * FROM ".$this->arrAccessTables['member']['tableName']." WHERE ".filterText($this->arrAccessFor['keyName'])." = '".filterText($this->arrAccessFor['keyValue'])."' AND member_id = '".$memberInfo['member_id']."'");
 		if ($result->num_rows > 0) {

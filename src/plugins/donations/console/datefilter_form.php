@@ -37,71 +37,71 @@ $defaultEndDate = $dateObj->format("M j, Y");
 
 
 $i=0;
-$arrComponents = [
-		"sectionLeft" => [
+$arrComponents = array(
+		"sectionLeft" => array(
 			"type" => "section",
-			"attributes" => ["style" => "float: left"],
+			"attributes" => array("style" => "float: left"),
 			"sortorder" => $i++,
-			"components" => [
-				"totaldonated" => [
+			"components" => array(
+				"totaldonated" => array(
 					"type" => "custom",
 					"display_name" => "Total Donated",
 					"sortorder" => $i++,
 					"html" => "<div class='formInput'>".$campaignObj->formatAmount($totalDonated)."</div>"
-				],
-				"totaldonations" => [
+				),
+				"totaldonations" => array(
 					"type" => "custom",
 					"display_name" => "Total Donations",
 					"sortorder" => $i++,
 					"html" => "<div class='formInput'>".$totalDonations."</div>"
-				]
-			]
+				)
+			)
 
-		],
-		"sectionRight" => [
+		),
+		"sectionRight" => array(
 			"type" => "section",
-			"attributes" => ["style" => "float: right; margin-bottom: 10px"],
+			"attributes" => array("style" => "float: right; margin-bottom: 10px"),
 			"sortorder" => $i++,
-			"components" => [
-				"startdate" => [
+			"components" => array(
+				"startdate" => array(
 					"type" => "datepicker",
 					"display_name" => "Start Date",
-					"attributes" => ["style" => "cursor: pointer", "id" => "jsStartDate", "class" => "textBox formInput"],
+					"attributes" => array("style" => "cursor: pointer", "id" => "jsStartDate", "class" => "textBox formInput"),
 					"sortorder" => $i++,
-					"options" => ["changeMonth" => "true",
+					"options" => array("changeMonth" => "true",
 							   "changeYear" => "true",
 							   "dateFormat" => "M d, yy",
 							   "minDate" => "new Date(50, 1, 1)",
 							   "maxDate" => $maxDate,
 							   "yearRange" => "1950:".$maxYear,
 							   "altField" => "realStartDate",
-							   "defaultDate" => $defaultStartDate],
+							   "defaultDate" => $defaultStartDate),
 					"value" => $setStartValue*1000
-				],
-				"enddate" => [
+				),
+				"enddate" => array(
 					"type" => "datepicker",
 					"display_name" => "End Date",
-					"attributes" => ["style" => "cursor: pointer", "id" => "jsEndDate", "class" => "textBox formInput"],
+					"attributes" => array("style" => "cursor: pointer", "id" => "jsEndDate", "class" => "textBox formInput"),
 					"sortorder" => $i++,
-					"options" => ["changeMonth" => "true",
+					"options" => array("changeMonth" => "true",
 							   "changeYear" => "true",
 							   "dateFormat" => "M d, yy",
 							   "minDate" => "new Date(50, 1, 1)",
 							   "maxDate" => $maxDate,
 							   "yearRange" => "1950:".$maxYear,
 							   "altField" => "realEndDate",
-							   "defaultDate" => $defaultEndDate],
+							   "defaultDate" => $defaultEndDate),
 					"value" => $setEndValue*1000
-				],
-				"filter" => [
+				),
+				"filter" => array(
 					"type" => "custom",
 					"html" => "<div style='float: right'><br><input type='button' class='submitButton' id='filterButton' value='Show'></div>",
 					"sortorder" => $i++
-				]
-			]
+				)
+			)
 
-		]
-	];
+		)
+	);
 
 $filterButtonJS = "
 		$(document).ready(function() {
@@ -116,14 +116,14 @@ $filterButtonJS = "
 
 
 
-$setupDonationFormArgs = [
+$setupDonationFormArgs = array(
 		"name" => "console-".$cID."-donationlog",
 		"components" => $arrComponents,
 		"description" => "Use the form below to filter the dates of donations.",
-		"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
-		"wrapper" => ["<div class='formDiv' style='overflow: auto'>", "</div>"],
+		"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
+		"wrapper" => array("<div class='formDiv' style='overflow: auto'>", "</div>"),
 		"embedJS" => $filterButtonJS
-	];
+	);
 
 $donationLogForm->buildForm($setupDonationFormArgs);
 

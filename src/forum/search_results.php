@@ -65,19 +65,19 @@ $postTable = $dbprefix."forum_post";
 $topicTable = $dbprefix."forum_topic";
 $membersTable = $dbprefix."members";
 $ranksTable = $dbprefix."ranks";
-$filterResults = [];
+$filterResults = array();
 
 
 $hooksObj->run("search_results_init");
 
 
 // Filter By Keyword
-$filterKeyword = [];
+$filterKeyword = array();
 if (trim($_POST['keyword']) != "") {
 	$_POST['keyword'] = str_replace("%", "\%", $_POST['keyword']);
 
 	if (($_POST['filterkeyword'] ?? 0) == 0) {
-		$filterKeyword = ["message" => $_POST['keyword'], "title" => $_POST['keyword']];
+		$filterKeyword = array("message" => $_POST['keyword'], "title" => $_POST['keyword']);
 
 		$filterResults[] = " (".$postTable.".message LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%' OR ".$postTable.".title LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%') ";
 	} else {
@@ -87,12 +87,12 @@ if (trim($_POST['keyword']) != "") {
 
 // Filter By Username
 $filterByUsername = "";
-$memberIDList = [];
+$memberIDList = array();
 if (trim($_POST['fakesearchuser'] ?? '') != "") {
 	$_POST['fakesearchuser'] = str_replace("*", "%", $_POST['fakesearchuser']);
 
-	$memberList = $member->get_entries(["username" => $_POST['fakesearchuser']], "username", true, ["username" => "Like"]);
-	$memberIDList = [];
+	$memberList = $member->get_entries(array("username" => $_POST['fakesearchuser']), "username", true, array("username" => "Like"));
+	$memberIDList = array();
 
 	foreach ($memberList as $searchMemberInfo) {
 		$memberIDList[] = $searchMemberInfo['member_id'];
@@ -102,7 +102,7 @@ if (trim($_POST['fakesearchuser'] ?? '') != "") {
 	$filterResults[] = " ".$postTable.".member_id IN ".$memberListSQL;
 
 	if ($_POST['filterusername'] == 1) {
-		$topicList = [];
+		$topicList = array();
 		$result = $mysqli->query("SELECT DISTINCT ".$topicTable.".forumpost_id FROM ".$topicTable.", ".$postTable." WHERE ".$topicTable.".forumpost_id = ".$postTable.".forumpost_id AND ".$postTable.".member_id IN ".$memberListSQL);
 		while ($row = $result->fetch_assoc()) {
 			$topicList[] = $row['forumpost_id'];
@@ -142,7 +142,7 @@ if ($arrFilterDates[$_POST['filterposts']] != "" || $arrFilterDates[$_POST['filt
 	}
 
 	// Filter Board
-	$arrFilterBoards = [];
+	$arrFilterBoards = array();
 	$filterBoards = $_POST['filterboards'] ?? []; // Use null coalescing operator to provide a default empty array
 
 	if (!in_array(0, $filterBoards)) {
@@ -189,9 +189,9 @@ if ($arrOrderBy[$_POST['sortresults']] != "" && $_POST['sortresults_ascdesc'] ==
 
 
 $filterResultsSQL = implode(" AND ", $filterResults);
-$arrCustomSort = [1, 4, 5];
+$arrCustomSort = array(1, 4, 5);
 $blnResort = false;
-$arrSearchResults = [];
+$arrSearchResults = array();
 
 $hooksObj->run("search_results_query");
 

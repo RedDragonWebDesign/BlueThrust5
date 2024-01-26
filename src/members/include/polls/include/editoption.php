@@ -45,9 +45,9 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $blnConsoleCheck) {
 	$pollObj->cacheID = $_POST['cacheID'];
 
 	if ( ! empty($_POST['submit']) ) {
-		$arrOptionInfo = [];
-		$arrErrors = [];
-		$arrReturn = [];
+		$arrOptionInfo = array();
+		$arrErrors = array();
+		$arrReturn = array();
 
 
 		// Check Value

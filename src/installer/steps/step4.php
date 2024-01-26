@@ -2,7 +2,7 @@
 // Check if tables have already been installed.
 
 $result = $mysqli->query("SHOW TABLES");
-$arrTestTables = [];
+$arrTestTables = array();
 
 while ($row = $result->fetch_array()) {
 	$arrTestTables[] = $row[0];

@@ -57,7 +57,7 @@ function saveGameStats() {
 
 					$postVal = "stat_".$gameStatsID;
 
-					$memberGameStatObj->addNew(["gamestats_id", "member_id", $statType, "dateupdated"], [$gameStatsID, $memberInfo['member_id'], $_POST[$postVal], time()]);
+					$memberGameStatObj->addNew(array("gamestats_id", "member_id", $statType, "dateupdated"), array($gameStatsID, $memberInfo['member_id'], $_POST[$postVal], time()));
 				}
 			}
 		}
@@ -67,37 +67,37 @@ function saveGameStats() {
 
 // Setup Form
 $i = 1;
-$arrComponents = [];
+$arrComponents = array();
 
 foreach ($arrGames as $gameID) {
 	$gameObj->select($gameID);
 	$arrGameStats = $gameObj->getAssociateIDs("ORDER BY ordernum");
 
 	if ($member->playsGame($gameID) && count($arrGameStats) > 0) {
-		$arrComponents['customsection_'.$gameID] = [
+		$arrComponents['customsection_'.$gameID] = array(
 			"type" => "section",
-			"options" => ["section_title" => $gameObj->get_info_filtered("name")],
+			"options" => array("section_title" => $gameObj->get_info_filtered("name")),
 			"sortorder" => $i++
-		];
+		);
 
 		foreach ($arrGameStats as $gameStatsID) {
 			$gameStatsObj->select($gameStatsID);
 			$gameStatsInfo = $gameStatsObj->get_info_filtered();
 			if ($gameStatsInfo['stattype'] == "input") {
-				$textBoxWidth = ["style" => "width: 5%"];
+				$textBoxWidth = array("style" => "width: 5%");
 				$blnText = false;
 				if ($gameStatsInfo['textinput'] == 1) {
-					$textBoxWidth = [];
+					$textBoxWidth = array();
 					$blnText = true;
 				}
 				$gameStatValue = $member->getGameStatValue($gameStatsID, $blnText);
 
-				$arrComponents['stat_'.$gameStatsID] = [
+				$arrComponents['stat_'.$gameStatsID] = array(
 					"display_name" => $gameStatsInfo['name'],
-					"attributes" => array_merge(["class" => "formInput textBox"], $textBoxWidth),
+					"attributes" => array_merge(array("class" => "formInput textBox"), $textBoxWidth),
 					"value" => $gameStatValue,
 					"sortorder" => $i++
-				];
+				);
 			}
 		}
 	}
@@ -114,27 +114,27 @@ if ($i == 1) {
 		</div>
 	";
 
-	$arrComponents['nogamesmessage'] = [
+	$arrComponents['nogamesmessage'] = array(
 		"type" => "custom",
 		"html" => $customHTML,
 		"sortorder" => $i++
-	];
+	);
 
 	$additionalNote = "<br><br><b><u>NOTE:</u></b> If you have selected which games you play in your profile, there might not be any stats associated with them.";
 } else {
-	$arrComponents['submit'] = [
+	$arrComponents['submit'] = array(
 		"type" => "submit",
-		"attributes" => ["class" => "submitButton formSubmitButton"],
+		"attributes" => array("class" => "submitButton formSubmitButton"),
 		"value" => "Save Stats",
 		"sortorder" => $i++
-	];
+	);
 }
 
-$setupFormArgs = [
+$setupFormArgs = array(
 	"name" => "console-".$cID,
 	"components" => $arrComponents,
-	"afterSave" => ["saveGameStats"],
+	"afterSave" => array("saveGameStats"),
 	"saveMessage" => "Successfully saved game stats!",
-	"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
+	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
 	"description" => "Use the form below to edit your game stats.".$additionalNote
-];
+);

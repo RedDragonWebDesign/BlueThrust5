@@ -37,7 +37,7 @@ class PageSelector {
 
 	public function getPageNumbersShown() {
 
-		$arrReturn = [];
+		$arrReturn = array();
 
 		$midAmount = floor(($this->amountToShow/2));
 

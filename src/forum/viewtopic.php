@@ -86,7 +86,7 @@ if ((constant('LOGGED_IN') == true && $downloadCatObj->get_info("accesstype") ==
 	$blnShowAttachments = true;
 }
 
-$memberInfo = [];
+$memberInfo = array();
 
 
 $LOGGED_IN = false;
@@ -113,9 +113,9 @@ if (!$boardObj->memberHasAccess($memberInfo)) {
 	exit();
 }
 
-$arrUpdateViewsColumn = ["views"];
+$arrUpdateViewsColumn = array("views");
 $newViewCount = $topicInfo['views']+1;
-$arrUpdateViewsValue = [$newViewCount];
+$arrUpdateViewsValue = array($newViewCount);
 $boardObj->objTopic->update($arrUpdateViewsColumn, $arrUpdateViewsValue);
 
 $totalPostsSQL = $mysqli->query("SELECT forumpost_id FROM ".$dbprefix."forum_post WHERE forumtopic_id = '".$topicInfo['forumtopic_id']."' ORDER BY dateposted");
@@ -152,13 +152,13 @@ $breadcrumbObj->addCrumb("Forum", $MAIN_ROOT."forum");
 if ($boardInfo['subforum_id'] != 0) {
 	$subForumObj = new ForumBoard($mysqli);
 	$subForumID = $boardInfo['subforum_id'];
-	$submForumBC = [];
+	$submForumBC = array();
 	while ($subForumID != 0) {
 		$subForumObj->select($subForumID);
 		$subForumInfo = $subForumObj->get_info_filtered();
 		$subForumID = $subForumInfo['subforum_id'];
 		//$dispBreadCrumbChain = "<a href='".$MAIN_ROOT."forum/viewboard.php?bID=".$subForumInfo['forumboard_id']."'>".$subForumInfo['name']."</a> > ".$dispBreadCrumbChain;
-		$subForumBC[] = ["link" => $MAIN_ROOT."forum/viewboard.php?bID=".$subForumInfo['forumboard_id'], "value" => $subForumInfo['name']];
+		$subForumBC[] = array("link" => $MAIN_ROOT."forum/viewboard.php?bID=".$subForumInfo['forumboard_id'], "value" => $subForumInfo['name']);
 	}
 
 	krsort($subForumBC);
@@ -249,28 +249,28 @@ if (LOGGED_IN && $topicInfo['lockstatus'] == 0) {
 	$postReplyLink = $forumConsoleObj->getLink();
 
 	$i = 1;
-	$arrComponents = [
-		"message" => [
+	$arrComponents = array(
+		"message" => array(
 			"type" => "richtextbox",
 			"sortorder" => $i++,
 			"display_name" => "Message",
-			"attributes" => ["id" => "richTextarea", "style" => "width: 90%", "rows" => "10"],
-			"validate" => ["NOT_BLANK"]
-		],
-		"submit" => [
+			"attributes" => array("id" => "richTextarea", "style" => "width: 90%", "rows" => "10"),
+			"validate" => array("NOT_BLANK")
+		),
+		"submit" => array(
 			"type" => "submit",
 			"sortorder" => $i++,
-			"attributes" => ["class" => "submitButton formSubmitButton"],
+			"attributes" => array("class" => "submitButton formSubmitButton"),
 			"value" => "Post"
-		]
-	];
+		)
+	);
 
-	$arrSetupReplyForm = [
+	$arrSetupReplyForm = array(
 		"name" => "forum-quick-reply",
 		"components" => $arrComponents,
-		"wrapper" => [],
-		"attributes" => ["method" => "post", "action" => $postReplyLink."&bID=".$boardInfo['forumboard_id']."&tID=".$topicInfo['forumtopic_id']]
-	];
+		"wrapper" => array(),
+		"attributes" => array("method" => "post", "action" => $postReplyLink."&bID=".$boardInfo['forumboard_id']."&tID=".$topicInfo['forumtopic_id'])
+	);
 
 	$quickReplyForm->buildForm($arrSetupReplyForm);
 	echo "

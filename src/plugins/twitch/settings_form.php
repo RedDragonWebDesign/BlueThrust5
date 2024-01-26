@@ -48,80 +48,80 @@ $configInfo['streamchat_height'] = ($configInfo['streamchat_height'] == "") ? 30
 
 $i=0;
 
-$arrComponents = [
-	"pagelink" => [
+$arrComponents = array(
+	"pagelink" => array(
 		"type" => "custom",
 		"sortorder" => $i++,
 		"display_name" => "Twitch Page Link",
 		"html" => "<div class='formInput main'><a href='".$MAIN_ROOT."plugins/twitch' target='_blank'>".FULL_SITE_URL."plugins/twitch</a></div>",
 		"tooltip" => "Add this link as a menu item if you would like to show who streams in your clan."
-	],
-	"twitchsocial_id" => [
+	),
+	"twitchsocial_id" => array(
 		"type" => "select",
 		"sortorder" => $i++,
 		"display_name" => "Social Media",
-		"attributes" => ["class" => "formInput textBox", "id" => "twitchsocial_id"],
+		"attributes" => array("class" => "formInput textBox", "id" => "twitchsocial_id"),
 		"options" => $arrSocialOptions,
-		"validate" => ["RESTRICT_TO_OPTIONS"],
+		"validate" => array("RESTRICT_TO_OPTIONS"),
 		"value" => $selectedSocialID,
 		"tooltip" => "This is a list of your social media icons that have been added to the site.  Please select the one that is associated with Twitch to configure correctly.",
 		"html" => $addTwitchInfo
-	],
-	"stream_width" => [
+	),
+	"stream_width" => array(
 		"type" => "text",
 		"sortorder" => $i++,
 		"display_name" => "Stream Width",
-		"attributes" => ["class" => "formInput textBox smallTextBox"],
-		"validate" => ["POSITIVE_NUMBER"],
+		"attributes" => array("class" => "formInput textBox smallTextBox"),
+		"validate" => array("POSITIVE_NUMBER"),
 		"html" => "<div class='formInput formInputSideText'>px</div>",
 		"value" => $configInfo['stream_width']
-	],
-	"stream_height" => [
+	),
+	"stream_height" => array(
 		"type" => "text",
 		"sortorder" => $i++,
 		"display_name" => "Stream Height",
-		"attributes" => ["class" => "formInput textBox smallTextBox"],
-		"validate" => ["POSITIVE_NUMBER"],
+		"attributes" => array("class" => "formInput textBox smallTextBox"),
+		"validate" => array("POSITIVE_NUMBER"),
 		"html" => "<div class='formInput formInputSideText'>px</div>",
 		"value" => $configInfo['stream_height']
-	],
-	"streamchat_height" => [
+	),
+	"streamchat_height" => array(
 		"type" => "text",
 		"sortorder" => $i++,
 		"display_name" => "Stream Chat Height",
-		"attributes" => ["class" => "formInput textBox smallTextBox"],
-		"validate" => ["POSITIVE_NUMBER"],
+		"attributes" => array("class" => "formInput textBox smallTextBox"),
+		"validate" => array("POSITIVE_NUMBER"),
 		"html" => "<div class='formInput formInputSideText'>px</div>",
 		"value" => $configInfo['streamchat_height']
-	],
-	"autoplay" => [
+	),
+	"autoplay" => array(
 		"type" => "select",
 		"sortorder" => $i++,
 		"display_name" => "Auto-Play Stream",
-		"options" => ["1" => "Yes", "0" => "No"],
-		"attributes" => ["class" => "formInput textBox"],
+		"options" => array("1" => "Yes", "0" => "No"),
+		"attributes" => array("class" => "formInput textBox"),
 		"value" => $configInfo['autoplay']
-	],
-	"autohidechat" => [
+	),
+	"autohidechat" => array(
 		"type" => "select",
 		"sortorder" => $i++,
 		"display_name" => "Auto-Hide Chat",
-		"options" => ["1" => "Yes", "0" => "No"],
-		"attributes" => ["class" => "formInput textBox"],
+		"options" => array("1" => "Yes", "0" => "No"),
+		"attributes" => array("class" => "formInput textBox"),
 		"value" => $configInfo['autoshowchat']
-	],
-	"submit" => [
+	),
+	"submit" => array(
 		"type" => "submit",
 		"sortorder" => $i++,
-		"attributes" => ["class" => "formSubmitButton submitButton"],
+		"attributes" => array("class" => "formSubmitButton submitButton"),
 		"value" => "Save"
-	],
-	"custom" => [
+	),
+	"custom" => array(
 		"type" => "custom",
 		"sortorder" => $i++,
 		"html" => "<div id='addTwitchJSDump'></div>"
-	]
-];
+	)
+);
 
 $additionalTwitchInfo = "";
 $embedJS = "";
@@ -150,16 +150,16 @@ if ($addTwitchInfo != "") {
 
 
 
-$setupFormArgs = [
+$setupFormArgs = array(
 	"name" => "pluginsettings-".$_GET['plugin'],
 	"components" => $arrComponents,
 	"description" => "Fill out the form below to configure the Twitch plugin.  This plugin uses the Twitch username entered on user's profiles.  Any member who enters their Twitch name in their profile will appear on the <a href='".$MAIN_ROOT."plugins/twitch' target='_blank'>Twitch Page</a>.".$additionalTwitchInfo,
-	"attributes" => ["action" => $MAIN_ROOT."plugins/settings.php?plugin=".$_GET['plugin'], "method" => "post"],
-	"afterSave" => ["saveTwitchSettings"],
+	"attributes" => array("action" => $MAIN_ROOT."plugins/settings.php?plugin=".$_GET['plugin'], "method" => "post"),
+	"afterSave" => array("saveTwitchSettings"),
 	"saveMessage" => "Twitch Settings Saved!",
 	"saveLink" => $MAIN_ROOT."members/console.php?cID=".$cID,
 	"embedJS" => $embedJS
-];
+);
 
 function saveTwitchSettings() {
 	global $pluginObj;

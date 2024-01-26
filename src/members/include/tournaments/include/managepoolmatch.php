@@ -65,11 +65,11 @@ if ($checkApprove == 1) {
 
 
 if ($_POST['submit'] && !$_POST['approve']) {
-	$arrColumns = [];
-	$arrValues = [];
+	$arrColumns = array();
+	$arrValues = array();
 
 	// Check Winner
-	$arrWinners = [0,1,2];
+	$arrWinners = array(0,1,2);
 	if (!in_array($_POST['matchwinner'], $arrWinners)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid match winner.<br>";
 		$countErrors++;
@@ -86,7 +86,7 @@ if ($_POST['submit'] && !$_POST['approve']) {
 	// Upload Replay
 
 	if ($_FILES['uploadfile']['name'] != "") {
-		$uploadReplayObj = new BTUpload($_FILES['uploadfile'], "replay_", "../../downloads/replays/", [".zip"]);
+		$uploadReplayObj = new BTUpload($_FILES['uploadfile'], "replay_", "../../downloads/replays/", array(".zip"));
 
 		if (!$uploadReplayObj->uploadFile()) {
 			$countErrors++;
@@ -132,7 +132,7 @@ if ($_POST['submit'] && !$_POST['approve']) {
 	// Upload Replay
 
 	if ($_FILES['uploadfile']['name'] != "") {
-		$uploadReplayObj = new BTUpload($_FILES['uploadfile'], "replay_", "../downloads/replays/", [".zip"]);
+		$uploadReplayObj = new BTUpload($_FILES['uploadfile'], "replay_", "../downloads/replays/", array(".zip"));
 
 		if (!$uploadReplayObj->uploadFile()) {
 			$countErrors++;

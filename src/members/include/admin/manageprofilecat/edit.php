@@ -71,8 +71,8 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-		$arrUpdateColumn = ["name"];
-		$arrUpdateValues = [$_POST['catname']];
+		$arrUpdateColumn = array("name");
+		$arrUpdateValues = array($_POST['catname']);
 
 		$resortOrder = false;
 		if ($intNewOrderSpot != $profileCatInfo['ordernum']) {

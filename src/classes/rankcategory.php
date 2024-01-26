@@ -39,7 +39,7 @@ class RankCategory extends Rank {
 	 */
 	function getRanks() {
 
-		$arrRanks = [];
+		$arrRanks = array();
 
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."ranks WHERE ".$this->strTableKey." = '".$this->intTableKeyValue."' ORDER BY ordernum DESC");

@@ -42,11 +42,11 @@ $arrComponents['rununtil']['value'] = ($campaignInfo['dateend'] == 0) ? "forever
 $arrComponents['enddate']['value'] = $campaignInfo['dateend']*1000;
 $arrComponents['enddate']['options']['defaultDate'] = $defaultEndDate;
 
-$arrComponents['viewpage'] = [
+$arrComponents['viewpage'] = array(
 	"type" => "custom",
 	"html" => "<p align='center' class='main'><a href='".$campaignObj->getLink()."' target='_blank'>View Donation Page</a></p>",
 	"sortorder" => $i++
-];
+);
 
 
 $setupFormArgs['saveType'] = "update";
@@ -57,7 +57,7 @@ $setupFormArgs['saveLink'] = $MAIN_ROOT."members/console.php?cID=".$_GET['cID'];
 
 if ( empty($_POST['submit']) ) {
 	$setupFormArgs['prefill'] = true;
-	$setupFormArgs['skipPrefill'] = ["dateend", "currentperiod"];
+	$setupFormArgs['skipPrefill'] = array("dateend", "currentperiod");
 }
 
 unset($setupFormArgs['saveAdditional']['datestarted']);
