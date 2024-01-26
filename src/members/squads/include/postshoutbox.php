@@ -45,8 +45,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		$squadInfo = $squadObj->get_info();
 
 		$squadNewsObj = new Basic($mysqli, "squadnews", "squadnews_id");
-		$arrColumns = array("member_id", "squad_id", "dateposted", "newspost", "newstype");
-		$arrValues = array($memberInfo['member_id'], $squadInfo['squad_id'], time(), $_POST['message'], 3);
+		$arrColumns = ["member_id", "squad_id", "dateposted", "newspost", "newstype"];
+		$arrValues = [$memberInfo['member_id'], $squadInfo['squad_id'], time(), $_POST['message'], 3];
 
 		$squadNewsObj->addNew($arrColumns, $arrValues);
 

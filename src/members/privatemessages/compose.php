@@ -82,8 +82,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	require_once(BASE_DIRECTORY."members/privatemessages/include/compose_setup.php");
 
 	$i = 1;
-	$arrComponents = array(
-		"tomember" => array(
+	$arrComponents = [
+		"tomember" => [
 			"type" => "custom",
 			"display_name" => "To",
 			"html" => "<div class='pmComposeTextBox'>
@@ -94,35 +94,35 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 								</div>",
 			"sortorder" => $i++,
 
-		),
-		"subject" => array(
+		],
+		"subject" => [
 			"type" => "text",
 			"display_name" => "Subject",
-			"attributes" => array("class" => "formInput textBox bigTextBox"),
+			"attributes" => ["class" => "formInput textBox bigTextBox"],
 			"sortorder" => $i++,
 			"value" => $_POST['subject']
-		),
-		"message" => array(
+		],
+		"message" => [
 			"type" => "textarea",
 			"display_name" => "Message",
 			"sortorder" => $i++,
-			"attributes" => array("class" => "formInput textBox", "rows" => "8", "cols" => "50"),
-			"validate" => array("NOT_BLANK")
-		),
-		"submit" => array(
+			"attributes" => ["class" => "formInput textBox", "rows" => "8", "cols" => "50"],
+			"validate" => ["NOT_BLANK"]
+		],
+		"submit" => [
 			"type" => "submit",
 			"value" => "Send Message",
-			"attributes" => array("class" => "submitButton formSubmitButton"),
+			"attributes" => ["class" => "submitButton formSubmitButton"],
 			"sortorder" => $i++
-		),
-		"pmsessionid" => array(
+		],
+		"pmsessionid" => [
 			"type" => "hidden",
 			"value" => $pmSessionID,
 			"hidden" => true,
 			"sortorder" => $i++
-		)
+		]
 
-	);
+	];
 
 
 	if (isset($_GET['threadID']) && is_numeric($_GET['threadID'])) {
@@ -132,12 +132,12 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	}
 
 
-	$arrComponents['replypmid'] = array(
+	$arrComponents['replypmid'] = [
 		"type" => "hidden",
 		"value" => $replyPMID,
 		"hidden" => true,
 		"sortorder" => $i++
-	);
+	];
 
 
 	// Send as Email
@@ -147,25 +147,25 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		$formObj->addComponentSortSpace(2, $arrComponents);
 		$arrComponents = $formObj->components;
 
-		$arrComponents['emailpm'] = array(
+		$arrComponents['emailpm'] = [
 			"type" => "checkbox",
 			"value" => 1,
 			"sortorder" => 2,
 			"display_name" => "Send as E-mail",
 			"tooltip" => "Checking this box will force an e-mail to be sent to the member(s) as well.",
-			"attributes" => array("class" => "formInput")
-		);
+			"attributes" => ["class" => "formInput"]
+		];
 	}
 	$consoleObj->select($cID);
 
-	$setupFormArgs = array(
+	$setupFormArgs = [
 		"name" => "console-".$cID."-compose",
 		"components" => $arrComponents,
 		"saveMessage" => "Successfully Sent Private Message!",
-		"attributes" => array("action" => MAIN_ROOT."members/privatemessages/compose.php", "method" => "post"),
+		"attributes" => ["action" => MAIN_ROOT."members/privatemessages/compose.php", "method" => "post"],
 		"description" => "Use the form below to send a private message.<br><br><b><u>Extra Information:</u></b><br>You may send private messages in batches to squads, tournaments, or ranks by typing in their associated name.  Typing in a squad name, tournament title or rank name will send to that group.<br><br>",
 		"embedJS" => $composePageJS
-	);
+	];
 
 
 

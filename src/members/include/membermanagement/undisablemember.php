@@ -50,7 +50,7 @@ $rankObj = new Rank($mysqli);
 $rankObj->select($rankInfo['promotepower']);
 $maxRankInfo = $rankObj->get_info_filtered();
 
-$arrRanks = array();
+$arrRanks = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$arrRanks[] = $row['rank_id'];
@@ -70,7 +70,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-		if ($member->update(array("disabled", "lastlogin"), array(0, time()))) {
+		if ($member->update(["disabled", "lastlogin"], [0, time()])) {
 			$logMessage = "Undisabled ".$member->getMemberLink().".";
 			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
 

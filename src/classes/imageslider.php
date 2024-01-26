@@ -62,7 +62,7 @@ class ImageSlider extends BasicOrder {
 
 	function getImageIDs() {
 
-		$this->arrImageIDs = array();
+		$this->arrImageIDs = [];
 		$filterSQL = ($this->blnLoggedIn) ? " OR membersonly = '1' " : " OR membersonly = '2' ";
 
 		$result = $this->MySQL->query("SELECT imageslider_id FROM ".$this->strTableName." WHERE membersonly = '0'".$filterSQL."ORDER BY ordernum DESC");
@@ -182,7 +182,7 @@ class ImageSlider extends BasicOrder {
 				$arrImageHeightUnit[] = $this->strDisplayHeightUnit;
 				$arrDisplayStyle[] = $this->arrObjInfo['fillstretch'];
 				$arrImageTitle[] = filterText($this->arrObjInfo['messagetitle']);
-				$arrImageDescription[] = filterText(str_replace(array("\r", "\n"), "\\n", $this->arrObjInfo['message']));
+				$arrImageDescription[] = filterText(str_replace(["\r", "\n"], "\\n", $this->arrObjInfo['message']));
 			}
 
 			$dispImages = "'".implode("','", $arrImages)."'";

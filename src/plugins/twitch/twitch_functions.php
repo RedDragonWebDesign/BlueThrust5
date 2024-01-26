@@ -8,7 +8,7 @@ function setupStreamPage() {
 	$returnVal = false;
 	if ($memberObj->select($_GET['user'])) {
 		$streamTitle = $memberObj->get_info_filtered("username")."'s Stream";
-		$hooksObj->addHook("breadcrumb", "setStreamPageBreadcrumb", array($streamTitle));
+		$hooksObj->addHook("breadcrumb", "setStreamPageBreadcrumb", [$streamTitle]);
 		$returnVal = true;
 	}
 

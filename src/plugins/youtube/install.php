@@ -24,10 +24,10 @@ require_once("../../classes/consolecategory.php");
 $PLUGIN_TABLE_NAME = $dbprefix."youtube";
 $PLUGIN_NAME = "Youtube Connect";
 
-$arrAPIKeys = array(
+$arrAPIKeys = [
 	'clientID' => "",
 	'clientSecret' => ""
-);
+];
 
 
 // Start Page
@@ -48,7 +48,7 @@ $pluginObj = new btPlugin($mysqli);
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$countErrors = 0;
-	$dispError = array();
+	$dispError = [];
 
 	// Check if already installed
 
@@ -116,13 +116,13 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			} while ($mysqli->next_result());
 
 			$jsonAPIKey = json_encode($arrAPIKeys);
-			$pluginObj->addNew(array("name", "filepath", "dateinstalled", "apikey"), array($PLUGIN_NAME, $_POST['pluginDir'], time(),$jsonAPIKey));
+			$pluginObj->addNew(["name", "filepath", "dateinstalled", "apikey"], [$PLUGIN_NAME, $_POST['pluginDir'], time(),$jsonAPIKey]);
 
 			$pluginID = $pluginObj->get_info("plugin_id");
 			$pluginObj->pluginPage->setCategoryKeyValue($pluginID);
 			$pluginPageSortNum = $pluginObj->pluginPage->getHighestSortNum()+1;
 
-			$pluginObj->pluginPage->addNew(array("plugin_id", "page", "pagepath", "sortnum"), array($pluginID, "profile", "plugins/youtube/_profile.php", $pluginPageSortNum));
+			$pluginObj->pluginPage->addNew(["plugin_id", "page", "pagepath", "sortnum"], [$pluginID, "profile", "plugins/youtube/_profile.php", $pluginPageSortNum]);
 
 			// Check if need to add new console category
 
@@ -130,7 +130,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			if ($result->num_rows == 0) {
 				$consoleCatObj = new ConsoleCategory($mysqli);
 				$newOrderNum = $consoleCatObj->getHighestOrderNum()+1;
-				$consoleCatObj->addNew(array("name", "ordernum"), array("Social Media Connect", $newOrderNum));
+				$consoleCatObj->addNew(["name", "ordernum"], ["Social Media Connect", $newOrderNum]);
 				$consoleCatID = $consoleCatObj->get_info("consolecategory_id");
 			} else {
 				$row = $result->fetch_assoc();
@@ -139,7 +139,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 			$consoleObj->setCategoryKeyValue($consoleCatID);
 			$newSortNum = $consoleObj->getHighestSortNum()+1;
-			$consoleObj->addNew(array("consolecategory_id", "pagetitle", "filename", "sortnum"), array($consoleCatID, $PLUGIN_NAME, "../plugins/youtube/youtubeconnect.php", $newSortNum));
+			$consoleObj->addNew(["consolecategory_id", "pagetitle", "filename", "sortnum"], [$consoleCatID, $PLUGIN_NAME, "../plugins/youtube/youtubeconnect.php", $newSortNum]);
 		} else {
 			$countErrors++;
 			$dispError[] = "Unable to create plugin database table.";
@@ -147,7 +147,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	}
 
 
-	$arrReturn = array();
+	$arrReturn = [];
 	if ($countErrors == 0) {
 		$arrReturn['result'] = "success";
 		$member->logAction("Installed ".$PLUGIN_NAME." Plugin.");

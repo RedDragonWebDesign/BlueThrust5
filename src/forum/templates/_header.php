@@ -25,7 +25,7 @@ $postMemberObj = new Member($mysqli);
 
 require_once(BASE_DIRECTORY."themes/".$THEME."/_header.php");
 
-$memberInfo = array();
+$memberInfo = [];
 
 $LOGGED_IN = false;
 if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {

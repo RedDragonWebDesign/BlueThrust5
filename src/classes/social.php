@@ -19,7 +19,7 @@ class Social extends BasicOrder {
 
 	public function getMemberSocialInfo($fullValue = false) {
 
-		$arrReturn = array();
+		$arrReturn = [];
 		if ($this->memberID != "" && is_numeric($this->memberID)) {
 			$result = $this->MySQL->query("SELECT ".$this->strAssociateTableName.".* FROM ".$this->strAssociateTableName.", ".$this->strTableName." WHERE ".$this->strTableName.".social_id = ".$this->strAssociateTableName.".social_id AND ".$this->strAssociateTableName.".member_id = '".$this->memberID."' AND ".$this->strAssociateTableName.".value != '' ORDER BY ".$this->strTableName.".ordernum DESC");
 			while ($row = $result->fetch_assoc()) {
@@ -35,7 +35,7 @@ class Social extends BasicOrder {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "" && $this->memberID != "" && is_numeric($this->memberID)) {
-			$this->objSocialMember->selectByMulti(array("social_id" => $this->intTableKeyValue, "member_id" => $this->memberID));
+			$this->objSocialMember->selectByMulti(["social_id" => $this->intTableKeyValue, "member_id" => $this->memberID]);
 
 			$returnVal = $this->arrObjInfo['url'].$this->objSocialMember->get_info_filtered("value");
 		}

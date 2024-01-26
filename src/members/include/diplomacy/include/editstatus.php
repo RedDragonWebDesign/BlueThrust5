@@ -43,7 +43,7 @@ if ( ! empty($_POST['submit']) ) {
 	if ($countErrors == 0) {
 		// If no errors, check for image upload and try to upload the image
 		if ($_FILES['statusimagefile']['name'] != "") {
-			$uploadImg = new BTUpload($_FILES['statusimagefile'], "status_", "../images/diplomacy/", array(".jpg", ".png", ".gif", ".bmp"));
+			$uploadImg = new BTUpload($_FILES['statusimagefile'], "status_", "../images/diplomacy/", [".jpg", ".png", ".gif", ".bmp"]);
 			if (!$uploadImg->uploadFile()) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to upload status image. Please make sure the file size is not too big and it has an acceptable file extension.<br>";
@@ -51,7 +51,7 @@ if ( ! empty($_POST['submit']) ) {
 				$statusImageURL = "images/diplomacy/".$uploadImg->getUploadedFileName();
 			}
 		} elseif ($_POST['statusimageurl'] != "" && $_POST['statusimageurl'] != $diplomacyStatusInfo['imageurl']) {
-			$uploadImg = new BTUpload($_POST['statusimageurl'], "status_", "../images/diplomacy/", array(".jpg", ".png", ".gif", ".bmp"), 4, true);
+			$uploadImg = new BTUpload($_POST['statusimageurl'], "status_", "../images/diplomacy/", [".jpg", ".png", ".gif", ".bmp"], 4, true);
 			if (!$uploadImg->uploadFile()) {
 				$countErrors++;
 				$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Unable to download status image from remote url. You may need to first download the image and upload normally.<br>";
@@ -65,8 +65,8 @@ if ( ! empty($_POST['submit']) ) {
 
 		// If there are still no errors after uploading the image, add to db
 		if ($countErrors == 0) {
-			$arrColumns = array("name", "imageurl", "imagewidth", "imageheight", "ordernum");
-			$arrValues = array($_POST['statusname'], $statusImageURL, $_POST['imagewidth'], $_POST['imageheight'], $intNewOrderNum);
+			$arrColumns = ["name", "imageurl", "imagewidth", "imageheight", "ordernum"];
+			$arrValues = [$_POST['statusname'], $statusImageURL, $_POST['imagewidth'], $_POST['imageheight'], $intNewOrderNum];
 
 			$diplomacyStatusObj->select($diplomacyStatusInfo['diplomacystatus_id']);
 

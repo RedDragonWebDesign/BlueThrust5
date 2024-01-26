@@ -18,7 +18,7 @@ class EmailNotificationSetting extends Basic {
 	public function update($arrTableColumns, $arrColumnValues) {
 
 		if ($this->intTableKeyValue == "" && $this->memberID != 0) {
-			$this->addNew(array("member_id"), array($this->memberID));
+			$this->addNew(["member_id"], [$this->memberID]);
 		}
 
 		return parent::update($arrTableColumns, $arrColumnValues);
@@ -29,8 +29,8 @@ class EmailNotificationSetting extends Basic {
 	public function setMemberID($member_id) {
 		$this->memberID = $member_id;
 
-		if (!$this->selectByMulti(array("member_id" => $member_id))) {
-			$this->addNew(array("member_id"), array($this->memberID));
+		if (!$this->selectByMulti(["member_id" => $member_id])) {
+			$this->addNew(["member_id"], [$this->memberID]);
 		}
 	}
 

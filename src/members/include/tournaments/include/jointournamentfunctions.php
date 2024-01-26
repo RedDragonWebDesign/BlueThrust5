@@ -43,7 +43,7 @@ function updatePlayerTeam($tournamentObj) {
 		if (count($arrUnfilledTeams) > 0) {
 			$newTeam = $arrUnfilledTeams[0];
 
-			$tournamentObj->objPlayer->update(array("team_id"), array($newTeam));
+			$tournamentObj->objPlayer->update(["team_id"], [$newTeam]);
 		}
 	}
 }

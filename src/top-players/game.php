@@ -77,7 +77,7 @@ if (count($arrGameStats) > 0) {
 	$gameStatInfo = $gameStatObj->get_info_filtered();
 
 	$arrMemberList = $gameObj->getMembersWhoPlayThisGame();
-	$arrTopPlayers = array();
+	$arrTopPlayers = [];
 	foreach ($arrMemberList as $memberID) {
 		$member->select($memberID);
 

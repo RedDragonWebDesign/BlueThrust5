@@ -40,7 +40,7 @@ if ( ! empty($_POST['submit']) ) {
 		$_POST['wysiwygHTML'] = str_replace("&lt;?", "", $_POST['wysiwygHTML']);
 		$_POST['wysiwygHTML'] = str_replace("?&gt;", "", $_POST['wysiwygHTML']);
 
-		if ($customPageObj->addNew(array("pagename", "pageinfo"), array($_POST['pagename'], $_POST['wysiwygHTML']))) {
+		if ($customPageObj->addNew(["pagename", "pageinfo"], [$_POST['pagename'], $_POST['wysiwygHTML']])) {
 			$intManageCustomPagesID = $consoleObj->findConsoleIDByName("Manage Custom Pages");
 			$customPageInfo = $customPageObj->get_info();
 			echo "

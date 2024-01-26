@@ -81,11 +81,11 @@ if ( ! empty($_POST['submit']) ) {
 		$countFails = $result->num_rows;
 		$adminKeyFails = $intMaxAttempts-$countFails;
 
-		$failbanObj->addNew(array("ipaddress", "pagename"), array($IP_ADDRESS, "addconsoleoption"));
+		$failbanObj->addNew(["ipaddress", "pagename"], [$IP_ADDRESS, "addconsoleoption"]);
 
 		if ($adminKeyFails <= 0) {
 			$ipbanObj->set_tableKey("ipban_id");
-			$ipbanObj->addNew(array("ipaddress"), array($IP_ADDRESS));
+			$ipbanObj->addNew(["ipaddress"], [$IP_ADDRESS]);
 
 
 			$banMessage = "You have been permanently banned!  If you are the true website admin, you will be able to unban yourself.  If not... GTFO!";
@@ -131,7 +131,7 @@ if ( ! empty($_POST['submit']) ) {
 
 		$newFileName = strtolower(str_replace(" ", "", $_POST['pagetitle']))."_";
 
-		$btUpload = new BTUpload($_FILES['consolefile'], $newFileName, "include/customconsole/", array(".php"));
+		$btUpload = new BTUpload($_FILES['consolefile'], $newFileName, "include/customconsole/", [".php"]);
 
 		if ($btUpload->uploadFile()) {
 			$consoleFileURL = "customconsole/".$btUpload->getUploadedFileName();
@@ -149,8 +149,8 @@ if ( ! empty($_POST['submit']) ) {
 	if ($countErrors == 0) {
 		// Still no errors after Uploading ---> Add to DB
 
-		$arrColumns = array("consolecategory_id", "pagetitle", "filename", "sortnum", "hide");
-		$arrValues = array($_POST['consolecat'], $_POST['pagetitle'], $consoleFileURL, $intNewSortNum, $_POST['hideoption']);
+		$arrColumns = ["consolecategory_id", "pagetitle", "filename", "sortnum", "hide"];
+		$arrValues = [$_POST['consolecat'], $_POST['pagetitle'], $consoleFileURL, $intNewSortNum, $_POST['hideoption']];
 
 
 		if ($consoleObj->addNew($arrColumns, $arrValues)) {
@@ -158,20 +158,20 @@ if ( ! empty($_POST['submit']) ) {
 			$consolePrivObj = new Basic($mysqli, "rank_privileges", "privilege_id");
 
 			$newConsoleInfo = $consoleObj->get_info_filtered();
-			$arrColumns = array("rank_id", "console_id");
+			$arrColumns = ["rank_id", "console_id"];
 			$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE rank_id != '1'");
 			while ($row = $result->fetch_assoc()) {
 				$checkBoxName = "rankaccess_".$row['rank_id'];
 
 				if ($_POST[$checkBoxName] == 1) {
-					$arrValues = array($row['rank_id'], $newConsoleInfo['console_id']);
+					$arrValues = [$row['rank_id'], $newConsoleInfo['console_id']];
 					$consolePrivObj->addNew($arrColumns, $arrValues);
 				}
 			}
 
 
 			$memberConsoleObj = new Basic($mysqli, "console_members", "privilege_id");
-			$arrColumns = array("member_id", "console_id", "allowdeny");
+			$arrColumns = ["member_id", "console_id", "allowdeny"];
 			foreach ($_SESSION['btAccessRules'] as $memAccessInfo) {
 				if ($memAccessInfo['accessRule'] == "allow") {
 					$intAllowDeny = 1;
@@ -180,12 +180,12 @@ if ( ! empty($_POST['submit']) ) {
 				}
 
 				if ($member->select($memAccessInfo['mID'])) {
-					$memberConsoleObj->addNew($arrColumns, array($memAccessInfo['mID'], $newConsoleInfo['console_id'], $intAllowDeny));
+					$memberConsoleObj->addNew($arrColumns, [$memAccessInfo['mID'], $newConsoleInfo['console_id'], $intAllowDeny]);
 				}
 			}
 
 
-			$consolePrivObj->addNew(array("rank_id", "console_id"), array("1", $newConsoleInfo['console_id']));
+			$consolePrivObj->addNew(["rank_id", "console_id"], ["1", $newConsoleInfo['console_id']]);
 
 			echo "
 			<div style='display: none' id='successBox'>
@@ -206,7 +206,7 @@ if ( ! empty($_POST['submit']) ) {
 }
 
 if ( empty($_POST['submit']) ) {
-	$_SESSION['btAccessRules'] = array();
+	$_SESSION['btAccessRules'] = [];
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory WHERE adminoption != '1' ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
 		$consoleCatOptions .= "<option value='".$row['consolecategory_id']."'>".filterText($row['name'])."</option>";

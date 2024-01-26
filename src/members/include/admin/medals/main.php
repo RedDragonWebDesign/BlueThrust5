@@ -20,7 +20,7 @@ if (!defined("LOGGED_IN") || !LOGGED_IN) {
 $objManageList->intAddCID = $consoleObj->findConsoleIDByName("Add New Medal");
 $objManageList->strEditItemLink = MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&mID=";
 $objManageList->strDeleteLink = MAIN_ROOT."members/include/admin/medals/delete.php";
-$objManageList->arrActionList = array("moveup", "movedown", "edit", "delete");
+$objManageList->arrActionList = ["moveup", "movedown", "edit", "delete"];
 $objManageList->strItemTitle = "Medal Name:";
 
 $setupManageListArgs = $objManageList->getListArray();

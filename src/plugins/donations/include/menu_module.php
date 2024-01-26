@@ -16,7 +16,7 @@ function donationManageMenuItem() {
 		$arrComponents['itemtype']['html'] = "<div class='formInput'><b>Donation Campaign</b></div>";
 
 		// Donation Section Options
-		$donationOptions = array();
+		$donationOptions = [];
 		$result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."donations_campaign WHERE dateend > '".time()."' OR dateend = '0' ORDER BY title");
 		while ($row = $result->fetch_assoc()) {
 			$donationOptions[$row['donationcampaign_id']] = filterText($row['title']);
@@ -26,24 +26,24 @@ function donationManageMenuItem() {
 			$donationOptions['none'] = "No Campaigns Running";
 		}
 
-		$donationSectionOptions = array(
-			"donation_campaign" => array(
+		$donationSectionOptions = [
+			"donation_campaign" => [
 				"type" => "select",
 				"display_name" => "Select Campaign",
-				"attributes" => array("class" => "formInput textBox"),
+				"attributes" => ["class" => "formInput textBox"],
 				"options" => $donationOptions,
 				"value" => $campaignID
-			)
-		);
+			]
+		];
 
 		// Add new section for donations
-		$arrComponents['donationoptions'] = array(
+		$arrComponents['donationoptions'] = [
 			"type" => "section",
-			"options" => array("section_title" => "Donation Campaign Options:"),
+			"options" => ["section_title" => "Donation Campaign Options:"],
 			"sortorder" => $sortOrder,
-			"attributes" => array("id" => "donationCampaign"),
+			"attributes" => ["id" => "donationCampaign"],
 			"components" => $donationSectionOptions
-		);
+		];
 
 		$formObj->components = $arrComponents;
 		$formObj->afterSave[] = "saveDonationMenuItem";
@@ -66,7 +66,7 @@ function donationAddMenuItem() {
 	$arrComponents['itemtype']['options']['donation'] = "Donation Campaign";
 
 	// Donation Section Options
-	$donationOptions = array();
+	$donationOptions = [];
 	$result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."donations_campaign WHERE dateend > '".time()."' OR dateend = '0' ORDER BY title");
 	while ($row = $result->fetch_assoc()) {
 		$donationOptions[$row['donationcampaign_id']] = filterText($row['title']);
@@ -76,23 +76,23 @@ function donationAddMenuItem() {
 		$donationOptions['none'] = "No Campaigns Running";
 	}
 
-	$donationSectionOptions = array(
-		"donation_campaign" => array(
+	$donationSectionOptions = [
+		"donation_campaign" => [
 			"type" => "select",
 			"display_name" => "Select Campaign",
-			"attributes" => array("class" => "formInput textBox"),
+			"attributes" => ["class" => "formInput textBox"],
 			"options" => $donationOptions
-		)
-	);
+		]
+	];
 
 	// Add new section for donations
-	$arrComponents['donationoptions'] = array(
+	$arrComponents['donationoptions'] = [
 		"type" => "section",
-		"options" => array("section_title" => "Donation Campaign Options:"),
+		"options" => ["section_title" => "Donation Campaign Options:"],
 		"sortorder" => $sortOrder,
-		"attributes" => array("id" => "donationCampaign", "style" => "display: none"),
+		"attributes" => ["id" => "donationCampaign", "style" => "display: none"],
 		"components" => $donationSectionOptions
-	);
+	];
 
 	// Modify JS for new donation section
 
@@ -128,7 +128,7 @@ function saveDonationMenuItem() {
 
 	global $menuItemObj;
 
-	$menuItemObj->update(array("itemtype_id"), array($_POST['donation_campaign']));
+	$menuItemObj->update(["itemtype_id"], [$_POST['donation_campaign']]);
 }
 
 function displayDonationMenuModule() {

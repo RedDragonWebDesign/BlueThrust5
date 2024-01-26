@@ -20,8 +20,8 @@ class Form {
 	public $objSave;
 	public $attributes;
 	public $saveType;	// Add or Update
-	public $wrapper = array("<div class='formDiv'>", "</div>");
-	public $errors = array();
+	public $wrapper = ["<div class='formDiv'>", "</div>"];
+	public $errors = [];
 	public $saveMessage;
 	public $saveMessageTitle;
 	public $afterSave;
@@ -32,8 +32,8 @@ class Form {
 	public $embedJS;
 	public $attachmentForm;
 	public $attachmentObj;
-	private $arrDeleteFiles = array();
-	public $arrSkipPrefill = array();
+	private $arrDeleteFiles = [];
+	public $arrSkipPrefill = [];
 
 
 	private $richtextboxJSFile;
@@ -59,7 +59,7 @@ class Form {
 	 * $components = $arr;
 	 *
 	 */
-	public function __construct($args = array()) {
+	public function __construct($args = []) {
 
 		$this->buildForm($args);
 		$this->richtextboxJSFile = "<script type='text/javascript' src='".MAIN_ROOT."js/tiny_mce/jquery.tinymce.js'></script>";
@@ -115,7 +115,7 @@ class Form {
 
 		$hooksObj->run($this->formName);
 
-		uasort($this->components, array("Form", "sortForm"));
+		uasort($this->components, ["Form", "sortForm"]);
 
 		$countRichTextbox = 0;
 
@@ -131,7 +131,7 @@ class Form {
 
 			// Output Component Name
 			if (($componentInfo['display_name'] ?? '') != "") {
-				$addValignComponents = array("file", "textarea", "beforeafter", "checkbox");
+				$addValignComponents = ["file", "textarea", "beforeafter", "checkbox"];
 				$addVAlign = in_array($componentInfo['type'], $addValignComponents) ? " formVAlignTop" : "";
 				$dispToolTip = (($componentInfo['tooltip'] ?? '') != "") ? " <a href='javascript:void(0)' onmouseover=\"showToolTip('".addslashes($componentInfo['tooltip'])."')\" onmouseout='hideToolTip()'>(?)</a>" : "";
 				$displayForm .= "
@@ -430,7 +430,7 @@ class Form {
 
 	public function prefillPostedValues() {
 
-		$filterTypes = array("file", "beforeafter", "button");
+		$filterTypes = ["file", "beforeafter", "button"];
 
 		foreach ($this->components as $componentName => $componentInfo) {
 			if (!in_array($componentInfo['type'], $filterTypes)) {
@@ -482,7 +482,7 @@ class Form {
 			}
 
 			foreach (($componentInfo['validate'] ?? []) as $validateMethod) {
-				$arrValidate = array();
+				$arrValidate = [];
 				if (is_array($validateMethod)) {
 					$arrValidate = $validateMethod;
 					$validateMethod = $arrValidate['name'];
@@ -526,8 +526,8 @@ class Form {
 						break;
 					case "RESTRICT_TO_OPTIONS":
 						if ( isset($componentInfo['options']) && is_array($componentInfo['options'])) {
-							$arrPostNames = array();
-							$arrPossibleValues = array();
+							$arrPostNames = [];
+							$arrPossibleValues = [];
 							$postCounter = 1;
 							foreach ($componentInfo['options'] as $optionValue => $displayValue) {
 								$arrPossibleValues[] = $optionValue;
@@ -723,10 +723,10 @@ class Form {
 
 		$this->blnSaveResult = false;
 
-		$arrResortOrder = array();
+		$arrResortOrder = [];
 		if ($this->validate()) {
-			$arrColumns = array();
-			$arrValues = array();
+			$arrColumns = [];
+			$arrValues = [];
 			foreach ($this->components as $componentName => $componentInfo) {
 				if (isset($componentInfo['db_name']) && $componentInfo['db_name'] != "") {
 					$arrColumns[] = $componentInfo['db_name'];
@@ -800,13 +800,13 @@ class Form {
 		return $returnVal;
 	}
 
-	public function addComponentSortSpace($spaceAmount = 2, $components = array()) {
+	public function addComponentSortSpace($spaceAmount = 2, $components = []) {
 
 		if (count($components) > 0) {
 			$this->components = $components;
 		}
 
-		uasort($this->components, array("Form", "sortForm"));
+		uasort($this->components, ["Form", "sortForm"]);
 
 		$nextSpot = 1;
 

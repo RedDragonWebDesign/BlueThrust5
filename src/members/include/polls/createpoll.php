@@ -43,7 +43,7 @@ if (isset($_POST['accessCacheID'])) {
 $_SESSION['btAccessCacheTables'][$accessObj->cacheID] = json_encode($accessObj->arrAccessTables);
 $_SESSION['btAccessCacheTypes'][$accessObj->cacheID] = json_encode($accessObj->arrAccessTypes);
 
-$arrPostSelected = array();
+$arrPostSelected = [];
 
 if ( ! empty($_POST['submit']) ) {
 	// Check Question
@@ -53,7 +53,7 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	// Check Access Types
-	$arrCheckAccessTypes = array("members", "memberslimited", "public");
+	$arrCheckAccessTypes = ["members", "memberslimited", "public"];
 	if (!in_array($_POST['accesstype'], $arrCheckAccessTypes)) {
 		$countErrors++;
 		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid access type.<br>";
@@ -61,7 +61,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	// Check Result Visibility
-	$arrCheckVisTypes = array("open", "votedonly", "pollend", "never");
+	$arrCheckVisTypes = ["open", "votedonly", "pollend", "never"];
 	if (!in_array($_POST['resultvisibility'], $arrCheckVisTypes)) {
 		$countErrors++;
 		$dispError .= "&nbsp&nbsp;&nbsp;<b>&middot;</b> You selected an invalid result visibility type.<br>";
@@ -105,8 +105,8 @@ if ( ! empty($_POST['submit']) ) {
 		$_POST['multivote'] = ($_POST['multivote'] != 1) ? 0 : 1;
 		$_POST['displayvoters'] = ($_POST['displayvoters'] != 1) ? 0 : 1;
 
-		$arrColumns = array("member_id", "question", "accesstype", "multivote", "displayvoters", "resultvisibility", "maxvotes", "pollend", "dateposted");
-		$arrValues = array($memberInfo['member_id'], $_POST['pollquestion'], $_POST['accesstype'], $_POST['multivote'], $_POST['displayvoters'], $_POST['resultvisibility'], $_POST['maxvotes'], $setEndDate, time());
+		$arrColumns = ["member_id", "question", "accesstype", "multivote", "displayvoters", "resultvisibility", "maxvotes", "pollend", "dateposted"];
+		$arrValues = [$memberInfo['member_id'], $_POST['pollquestion'], $_POST['accesstype'], $_POST['multivote'], $_POST['displayvoters'], $_POST['resultvisibility'], $_POST['maxvotes'], $setEndDate, time()];
 
 		if ($pollObj->addNew($arrColumns, $arrValues)) {
 			$pollObj->cacheID = $_POST['pollCacheID'];
@@ -114,7 +114,7 @@ if ( ! empty($_POST['submit']) ) {
 
 			if ($_POST['accesstype'] == "memberslimited") {
 				$accessObj->cacheID = $_POST['accessCacheID'];
-				$accessObj->arrAccessFor = array("keyName" => "poll_id", "keyValue" => $pollObj->get_info("poll_id"));
+				$accessObj->arrAccessFor = ["keyName" => "poll_id", "keyValue" => $pollObj->get_info("poll_id")];
 				$accessObj->saveAccess();
 			}
 
@@ -178,7 +178,7 @@ if ( empty($_POST['submit']) ) {
 		$pollOptionCacheID = $_POST['pollCacheID'];
 	} else {
 		$pollOptionCacheID = md5(time().uniqid());
-		$_SESSION['btPollOptionCache'][$pollOptionCacheID] = array();
+		$_SESSION['btPollOptionCache'][$pollOptionCacheID] = [];
 	}
 
 

@@ -28,7 +28,7 @@ $member->select($_SESSION['btUsername']);
 
 $tournamentObj = new Tournament($mysqli);
 $tID = $_POST['tID'];
-$arrMembers = array();
+$arrMembers = [];
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID) && $member->hasAccess($consoleObj)) {
 	$memberInfo = $member->get_info();

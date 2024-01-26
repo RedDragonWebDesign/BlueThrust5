@@ -2,7 +2,7 @@
 
 require_once(BASE_DIRECTORY."include/emailqueue.php");
 
-$arrLoginInfo = array();
+$arrLoginInfo = [];
 
 $taggerObj = new Basic($mysqli, "membersonlypage", "pageurl");
 $siteDomain = $_SERVER['SERVER_NAME'];
@@ -40,7 +40,7 @@ if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 			$memberID = $memberInfo['member_id'];
 
 			if ($memberInfo['loggedin'] == 0) {
-				$memberObj->update(array("loggedin"), array(1));
+				$memberObj->update(["loggedin"], [1]);
 			}
 
 
@@ -53,8 +53,8 @@ if (isset($_SESSION['btUsername']) && isset($_SESSION['btPassword'])) {
 
 
 			$lastSeenLink = "<a href='".$dispHTTP.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']."'>".$actualPageName."</a>";
-			$arrUpdateColLastSeen = array("lastseen", "lastseenlink");
-			$arrUpdateValLastSeen = array(time(), $lastSeenLink);
+			$arrUpdateColLastSeen = ["lastseen", "lastseenlink"];
+			$arrUpdateValLastSeen = [time(), $lastSeenLink];
 
 			if ((time()-$memberInfo['lastlogin']) > 3600) {
 				$arrUpdateColLastSeen[] = "lastlogin";
@@ -174,8 +174,8 @@ if ($result->num_rows > 0) {
 	$updateHits = $hitCountObj->get_info("totalhits")+1;
 
 
-	$updateColumns = array("totalhits", "pagename");
-	$updateValues = array($updateHits, $PAGE_NAME);
+	$updateColumns = ["totalhits", "pagename"];
+	$updateValues = [$updateHits, $PAGE_NAME];
 
 	if (time() > ($hitCountObj->get_info("dateposted")+1800)) {
 		$updateColumns[] = "dateposted";
@@ -184,7 +184,7 @@ if ($result->num_rows > 0) {
 
 	$hitCountObj->update($updateColumns, $updateValues);
 } else {
-	$hitCountObj->addNew(array("ipaddress", "dateposted", "pagename", "totalhits"), array($IP_ADDRESS, time(), $PAGE_NAME, 1));
+	$hitCountObj->addNew(["ipaddress", "dateposted", "pagename", "totalhits"], [$IP_ADDRESS, time(), $PAGE_NAME, 1]);
 }
 
 

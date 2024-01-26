@@ -70,8 +70,8 @@ if ($_POST['submit']) {
 
 	if ($countErrors == 0) {
 		$time = time();
-		$arrColumns = array("squad_id", "member_id", "newstype", "dateposted", "postsubject", "newspost");
-		$arrValues = array($squadInfo['squad_id'], $memberInfo['member_id'], $_POST['newstype'], $time, $_POST['subject'], $_POST['message']);
+		$arrColumns = ["squad_id", "member_id", "newstype", "dateposted", "postsubject", "newspost"];
+		$arrValues = [$squadInfo['squad_id'], $memberInfo['member_id'], $_POST['newstype'], $time, $_POST['subject'], $_POST['message']];
 
 		$newsPost = new Basic($mysqli, "squadnews", "squadnews_id");
 		if ($newsPost->addNew($arrColumns, $arrValues)) {

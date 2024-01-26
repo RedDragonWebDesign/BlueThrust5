@@ -24,8 +24,8 @@ class Event extends Basic {
 	public $objEventPosition;
 	public $objEventMessage;
 	public $objEventMessageComment;
-	public $arrPositionOptions = array("modchat", "invitemembers", "manageinvites", "postmessages", "managemessages", "attendenceconfirm", "editinfo", "eventpositions");
-	public $arrInviteStatus = array(0 => "Invited", 1 => "Attending", 2 => "Maybe", 3 => "Not Attending");
+	public $arrPositionOptions = ["modchat", "invitemembers", "manageinvites", "postmessages", "managemessages", "attendenceconfirm", "editinfo", "eventpositions"];
+	public $arrInviteStatus = [0 => "Invited", 1 => "Attending", 2 => "Maybe", 3 => "Not Attending"];
 	protected $blnManageAllEvents;
 
 	public function __construct($sqlConnection) {
@@ -71,8 +71,8 @@ class Event extends Basic {
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
 			if (!in_array($memberID, $this->getInvitedMembers(true)) && $memberID != $this->arrObjInfo['member_id']) {
-				$arrColumns = array("event_id", "member_id", "invitedbymember_id");
-				$arrValues = array($this->intTableKeyValue, $memberID, $invitedByMID);
+				$arrColumns = ["event_id", "member_id", "invitedbymember_id"];
+				$arrValues = [$this->intTableKeyValue, $memberID, $invitedByMID];
 
 				if ($this->objEventMember->addNew($arrColumns, $arrValues)) {
 					$returnVal = true;
@@ -89,7 +89,7 @@ class Event extends Basic {
 
 	public function getInvitedMembers($returnMemberIDs = false) {
 
-		$returnArr = array();
+		$returnArr = [];
 
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."events_members WHERE event_id = '".$this->intTableKeyValue."'");
@@ -129,7 +129,7 @@ class Event extends Basic {
 	}
 
 	public function getPositions($sqlOrderBy = "") {
-		$returnArr = array();
+		$returnArr = [];
 
 		if ($this->intTableKeyValue != "") {
 			if ($sqlOrderBy == "") {

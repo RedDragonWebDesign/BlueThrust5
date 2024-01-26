@@ -18,12 +18,12 @@ $newWebsiteInfoSQL = "CREATE TABLE IF NOT EXISTS `".$_POST['tableprefix']."websi
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;";
 
 $mysqli->query($newWebsiteInfoSQL);
-$skipColumns = array("websiteinfo_id", "name", "value");
+$skipColumns = ["websiteinfo_id", "name", "value"];
 
 foreach ($websiteInfo as $key => $value) {
 	if (!in_array($key, $skipColumns)) {
-		$websiteInfoObj->addNew(array("name", "value"), array($key, $value));
+		$websiteInfoObj->addNew(["name", "value"], [$key, $value]);
 	}
 }
 
-$websiteInfoObj->addNew(array("name", "value"), array("news_postsperpage", 10));
+$websiteInfoObj->addNew(["name", "value"], ["news_postsperpage", 10]);

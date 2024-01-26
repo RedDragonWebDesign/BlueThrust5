@@ -60,8 +60,8 @@ if ($blnCheckForFacebook) {
 			exit();
 		}
 
-		$arrColumns = array("name", "lastupdate");
-		$arrValues = array($fbInfo['name'], time());
+		$arrColumns = ["name", "lastupdate"];
+		$arrValues = [$fbInfo['name'], time()];
 
 		$fbObj->select($fbID);
 		$fbObj->update($arrColumns, $arrValues);
@@ -169,8 +169,8 @@ if ($blnCheckForFacebook) {
 		$fbInfo = $fbObj->getFBInfo();
 
 		// Save in DB
-		$arrColumns = array("facebook_id", "member_id", "name", "access_token", "lastupdate");
-		$arrValues = array($fbInfo['id'], $memberInfo['member_id'], $fbInfo['name'], $arrAccessToken['access_token'], time());
+		$arrColumns = ["facebook_id", "member_id", "name", "access_token", "lastupdate"];
+		$arrValues = [$fbInfo['id'], $memberInfo['member_id'], $fbInfo['name'], $arrAccessToken['access_token'], time()];
 
 		$fbObj->addNew($arrColumns, $arrValues);
 

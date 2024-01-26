@@ -21,11 +21,11 @@ require_once("../../_setup.php");
 $PLUGIN_TABLE_NAME = $dbprefix."donations";
 $PLUGIN_NAME = "Donations";
 
-$arrPluginTables = array(
+$arrPluginTables = [
 	$dbprefix."donations",
 	$dbprefix."donations_campaign",
 	$dbprefix."donations_errorlog"
-);
+];
 
 // Start Page
 
@@ -45,7 +45,7 @@ $pluginObj = new btPlugin($mysqli);
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$countErrors = 0;
-	$dispError = array();
+	$dispError = [];
 
 	// Check if already installed
 
@@ -78,12 +78,12 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				}
 			} while ($mysqli->next_result());
 
-			$pluginObj->addNew(array("name", "filepath", "dateinstalled"), array($PLUGIN_NAME, $_POST['pluginDir'], time()));
+			$pluginObj->addNew(["name", "filepath", "dateinstalled"], [$PLUGIN_NAME, $_POST['pluginDir'], time()]);
 
 			$pluginID = $pluginObj->get_info("plugin_id");
 			$pluginObj->pluginPage->setCategoryKeyValue($pluginID);
 
-			$pluginObj->pluginPage->addNew(array("plugin_id", "page", "pagepath"), array($pluginID, "mods", "plugins/donations/include/menu_module.php"));
+			$pluginObj->pluginPage->addNew(["plugin_id", "page", "pagepath"], [$pluginID, "mods", "plugins/donations/include/menu_module.php"]);
 
 			// Check if need to add new console category
 
@@ -91,7 +91,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			if ($result->num_rows == 0) {
 				$consoleCatObj = new ConsoleCategory($mysqli);
 				$newOrderNum = $consoleCatObj->getHighestOrderNum()+1;
-				$consoleCatObj->addNew(array("name", "ordernum"), array("Donations", $newOrderNum));
+				$consoleCatObj->addNew(["name", "ordernum"], ["Donations", $newOrderNum]);
 				$consoleCatID = $consoleCatObj->get_info("consolecategory_id");
 			} else {
 				$row = $result->fetch_assoc();
@@ -101,8 +101,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$consoleObj->setCategoryKeyValue($consoleCatID);
 			$newSortNum = $consoleObj->getHighestSortNum()+1;
 
-			$consoleObj->addNew(array("consolecategory_id", "pagetitle", "filename", "sortnum"), array($consoleCatID, "Create a Donation Campaign", "../plugins/donations/console/createcampaign.php", $newSortNum++));
-			$consoleObj->addNew(array("consolecategory_id", "pagetitle", "filename", "sortnum"), array($consoleCatID, "Manage Donation Campaigns", "../plugins/donations/console/managecampaign.php", $newSortNum++));
+			$consoleObj->addNew(["consolecategory_id", "pagetitle", "filename", "sortnum"], [$consoleCatID, "Create a Donation Campaign", "../plugins/donations/console/createcampaign.php", $newSortNum++]);
+			$consoleObj->addNew(["consolecategory_id", "pagetitle", "filename", "sortnum"], [$consoleCatID, "Manage Donation Campaigns", "../plugins/donations/console/managecampaign.php", $newSortNum++]);
 		} else {
 			$countErrors++;
 			$dispError[] = "Unable to create plugin database table.";
@@ -110,7 +110,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	}
 
 
-	$arrReturn = array();
+	$arrReturn = [];
 	if ($countErrors == 0) {
 		$arrReturn['result'] = "success";
 		$member->logAction("Installed ".$PLUGIN_NAME." Plugin.");

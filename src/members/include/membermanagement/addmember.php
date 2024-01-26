@@ -41,7 +41,7 @@ $rankObj = new Rank($mysqli);
 $rankObj->select($rankInfo['promotepower']);
 $maxRankInfo = $rankObj->get_info_filtered();
 
-$arrRanks = array();
+$arrRanks = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$arrRanks[] = $row['rank_id'];
@@ -65,54 +65,54 @@ if ($member->hasAccess($consoleObj)) {
 $consoleObj->select($cID);
 
 $i=0;
-$arrComponents = array(
+$arrComponents = [
 
-	"newmember" => array(
+	"newmember" => [
 		"type" => "text",
 		"sortorder" => $i++,
-		"attributes" => array("class" => "textBox formInput"),
+		"attributes" => ["class" => "textBox formInput"],
 		"display_name" => "New Member",
 		"value" => $websiteInfo['clantag'],
-		"validate" => array("NOT_BLANK"),
+		"validate" => ["NOT_BLANK"],
 		"db_name" => "username"
-	),
-	"password" => array(
+	],
+	"password" => [
 		"type" => "password",
 		"sortorder" => $i++,
-		"attributes" => array("class" => "textBox formInput", "id" => "newpassword"),
+		"attributes" => ["class" => "textBox formInput", "id" => "newpassword"],
 		"display_name" => "Password",
 		"html" => "<br><label class='formLabel' style='display: inline-block'></label><div class='formInput tinyFont' style='margin-top: 0px; padding-left: 5px'>(Minimum 4 characters)</div>",
-		"validate" => array(
-			array("name" => "CHECK_LENGTH", "min_length" => 4)
-		)
-	),
-	"password2" => array(
+		"validate" => [
+			["name" => "CHECK_LENGTH", "min_length" => 4]
+		]
+	],
+	"password2" => [
 		"type" => "password",
 		"sortorder" => $i++,
-		"attributes" => array("class" => "textBox formInput", "id" => "newpassword2"),
+		"attributes" => ["class" => "textBox formInput", "id" => "newpassword2"],
 		"display_name" => "Re-type Password",
 		"html" => "<div class='formInputSideText successFont formInput' id='checkPassword'></div>"
-	),
-	"submit" => array(
+	],
+	"submit" => [
 		"type" => "submit",
 		"sortorder" => 999999,
-		"attributes" => array("class" => "submitButton formSubmitButton"),
+		"attributes" => ["class" => "submitButton formSubmitButton"],
 		"value" => "Add New Member"
-	)
+	]
 
-);
+];
 
 
 if ($dispSetRank) {
-	$arrComponents['set_rank'] = array(
+	$arrComponents['set_rank'] = [
 		"type" => "select",
 		"display_name" => "Starting Rank",
 		"options" => $rankOptions,
-		"attributes" => array("class" => "textBox formInput"),
+		"attributes" => ["class" => "textBox formInput"],
 		"sortorder" => $i++,
-		"validate" => array("RESTRICT_TO_OPTIONS"),
+		"validate" => ["RESTRICT_TO_OPTIONS"],
 		"db_name" => "rank_id"
-	);
+	];
 }
 
 
@@ -145,24 +145,24 @@ $(document).ready(function() {
 ";
 
 $newMemberObj = new Member($mysqli);
-$setupFormArgs = array(
+$setupFormArgs = [
 	"name" => "console-".$cID,
 	"components" => $arrComponents,
 	"saveMessage" => "Successfully added new member: <b>".filterText($_POST['newmember'])."</b>!",
-	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
+	"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
 	"description" => "Fill out the form below to add a new member.",
 	"embedJS" => $checkPasswordJS,
 	"saveType" => "add",
 	"saveObject" => $newMemberObj,
-	"saveAdditional" => array(
+	"saveAdditional" => [
 		"datejoined" => time(),
 		"recruiter" => $memberInfo['member_id'],
 		"lastlogin" => time(),
 		"postsperpage" => $websiteInfo['forum_postsperpage'],
 		"topicsperpage" => $websiteInfo['forum_topicsperpage']
-	),
-	"afterSave" => array("addMemberSavePassword")
-);
+	],
+	"afterSave" => ["addMemberSavePassword"]
+];
 
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."members ORDER BY datejoined DESC LIMIT 1");

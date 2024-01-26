@@ -71,7 +71,7 @@ if ( ! empty($_POST['submit']) ) {
 
 		$postResults = ($_POST['postresults'] == "yes") ? "yes" : "";
 
-		if ($customFormPageObj->update(array("name", "pageinfo", "submitmessage", "submitlink", "specialform"), array($_POST['pagename'], $_POST['wysiwygHTML'], $_POST['submitMessageHTML'], $_POST['submitlink'], $postResults)) && $customFormPageObj->addComponents($_SESSION['btFormComponent'])) {
+		if ($customFormPageObj->update(["name", "pageinfo", "submitmessage", "submitlink", "specialform"], [$_POST['pagename'], $_POST['wysiwygHTML'], $_POST['submitMessageHTML'], $_POST['submitlink'], $postResults]) && $customFormPageObj->addComponents($_SESSION['btFormComponent'])) {
 			foreach ($_SESSION['btDeleteFormComponent'] as $deleteKey) {
 				if ($customFormPageObj->objComponent->select($deleteKey)) {
 					$checkFormID = $customFormPageObj->get_info("customform_id");
@@ -126,7 +126,7 @@ if ( empty($_POST['submit']) ) {
 		</div>
 		";
 	} else {
-		$_SESSION['btFormComponent'] = array();
+		$_SESSION['btFormComponent'] = [];
 		$x = 0; // Form Component Counter
 		$arrFormComponents = $customFormPageObj->getComponents();
 		foreach ($arrFormComponents as $formComponentID) {
@@ -155,7 +155,7 @@ if ( empty($_POST['submit']) ) {
 
 
 		$_SESSION['btFormComponentCount'] = $x;
-		$_SESSION['btDeleteFormComponent'] = array();
+		$_SESSION['btDeleteFormComponent'] = [];
 	}
 
 

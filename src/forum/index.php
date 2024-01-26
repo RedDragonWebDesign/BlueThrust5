@@ -37,7 +37,7 @@ if ($websiteInfo['privateforum'] == 1 && !constant("LOGGED_IN")) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
 }
 
-$memberInfo = array();
+$memberInfo = [];
 
 
 
@@ -59,7 +59,7 @@ echo "
 ";
 
 // Latest Post
-$arrLatestPostInfo = array("time" => 0, "id" => 0);
+$arrLatestPostInfo = ["time" => 0, "id" => 0];
 
 $result = $mysqli->query("SELECT forumcategory_id FROM ".$dbprefix."forum_category ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
@@ -111,7 +111,7 @@ while ($row = $result->fetch_assoc()) {
 			$dispTopicCount = $boardObj->countTopics();
 			$dispPostCount = $boardObj->countPosts();
 
-			$arrDispSubForums = array();
+			$arrDispSubForums = [];
 			$arrSubForums = $boardObj->getSubForums();
 
 			foreach ($arrSubForums as $value) {

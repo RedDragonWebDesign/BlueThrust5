@@ -7,7 +7,7 @@ if (!defined("MAIN_ROOT")) {
 function memberAppSetRank() {
 	global $mysqli, $member, $memberInfo, $dbprefix, $i, $memberAppInfo;
 
-	$setRankOptions = array();
+	$setRankOptions = [];
 
 	$memberRank = new Rank($mysqli);
 	$memberRank->select($memberInfo['rank_id']);
@@ -44,21 +44,21 @@ function memberAppSetRank() {
 			$maxRankInfo['ordernum'] += 1;
 		}
 
-		$arrRanks = array();
+		$arrRanks = [];
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum");
 		while ($row = $result->fetch_assoc()) {
 			$rankOptions[$row['ordernum']] = $row['name'];
 		}
 
-		$setRankOptions = array(
-			"setrank" => array(
+		$setRankOptions = [
+			"setrank" => [
 				"type" => "select",
 				"display_name" => "Set Rank",
-				"attributes" => array("class" => "formInput textBox", "id" => "newRankID_".$memberAppInfo['memberapp_id']),
+				"attributes" => ["class" => "formInput textBox", "id" => "newRankID_".$memberAppInfo['memberapp_id']],
 				"options" => $rankOptions,
 				"sortorder" => $i++
-			)
-		);
+			]
+		];
 	}
 
 	return $setRankOptions;

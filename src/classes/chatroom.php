@@ -48,7 +48,7 @@ class ChatRoom extends Basic {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
-			$returnVal = $this->objChatMessage->addNew(array($this->strTableKey, "member_id", "message", "dateposted"), array($this->intTableKeyValue, $intMemberID, $strMessage, time()));
+			$returnVal = $this->objChatMessage->addNew([$this->strTableKey, "member_id", "message", "dateposted"], [$this->intTableKeyValue, $intMemberID, $strMessage, time()]);
 		}
 
 		return $returnVal;
@@ -61,7 +61,7 @@ class ChatRoom extends Basic {
 			$addSQL = " AND inactive = '0'";
 		}
 
-		$returnArr = array();
+		$returnArr = [];
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."eventchat_roomlist WHERE eventchat_id = '".$this->intTableKeyValue."'".$addSQL);
 			while ($row = $result->fetch_assoc()) {
@@ -80,12 +80,12 @@ class ChatRoom extends Basic {
 			$arrRoomList = $this->getRoomList();
 
 			if (!in_array($intMemberID, $arrRoomList)) {
-				$returnVal = $this->objChatRoomList->addNew(array("member_id", "eventchat_id"), array($intMemberID, $this->intTableKeyValue));
+				$returnVal = $this->objChatRoomList->addNew(["member_id", "eventchat_id"], [$intMemberID, $this->intTableKeyValue]);
 			} elseif (in_array($intMemberID, $arrRoomList)) {
 				$intChatListID = array_search($intMemberID, $arrRoomList);
 				$this->objChatRoomList->select($intChatListID);
 				if ($this->objChatRoomList->get_info("inactive") == 1) {
-					$returnVal = $this->objChatRoomList->update(array("inactive"), array(0));
+					$returnVal = $this->objChatRoomList->update(["inactive"], [0]);
 				}
 			}
 		}
@@ -102,7 +102,7 @@ class ChatRoom extends Basic {
 			if (in_array($intMemberID, $arrRoomList)) {
 				$intChatListID = array_search($intMemberID, $arrRoomList);
 				$this->objChatRoomList->select($intChatListID);
-				$returnVal = $this->objChatRoomList->update(array("inactive"), array(1));
+				$returnVal = $this->objChatRoomList->update(["inactive"], [1]);
 			} else {
 				$returnVal = true;
 			}

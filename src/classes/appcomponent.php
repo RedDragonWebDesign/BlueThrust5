@@ -38,44 +38,44 @@ class AppComponent extends BasicOrder {
 
 	public function getDefaultInputCode() {
 		$i=$this->defaultCounter;
-		$arrComponents = array(
-			"generalinfo" => array(
+		$arrComponents = [
+			"generalinfo" => [
 				"type" => "section",
-				"options" => array("section_title" => "General Information"),
+				"options" => ["section_title" => "General Information"],
 				"sortorder" => $i++
-			),
-			"username" => array(
+			],
+			"username" => [
 				"type" => "text",
-				"attributes" => array("class" => "formInput textBox"),
+				"attributes" => ["class" => "formInput textBox"],
 				"sortorder" => $i++,
 				"display_name" => "Username",
-				"validate" => array("NOT_BLANK", "appCheckUsername")
-			),
-			"password" => array(
+				"validate" => ["NOT_BLANK", "appCheckUsername"]
+			],
+			"password" => [
 				"type" => "password",
-				"attributes" => array("class" => "formInput textBox"),
+				"attributes" => ["class" => "formInput textBox"],
 				"sortorder" => $i++,
 				"display_name" => "Password",
-				"validate" => array(
+				"validate" => [
 					"NOT_BLANK",
-					array("name" => "GREATER_THAN", "value" => 5),
-					array("name" => "EQUALS_VALUE", "value" => $_POST['password2'] ?? '', "customMessage" => "Your passwords did not match.")
-				)
-			),
-			"password2" => array(
+					["name" => "GREATER_THAN", "value" => 5],
+					["name" => "EQUALS_VALUE", "value" => $_POST['password2'] ?? '', "customMessage" => "Your passwords did not match."]
+				]
+			],
+			"password2" => [
 				"type" => "password",
-				"attributes" => array("class" => "formInput textBox"),
+				"attributes" => ["class" => "formInput textBox"],
 				"sortorder" => $i++,
 				"display_name" => "Re-type Password"
-			),
-			"email" => array(
+			],
+			"email" => [
 				"type" => "text",
-				"attributes" => array("class" => "formInput textBox"),
+				"attributes" => ["class" => "formInput textBox"],
 				"sortorder" => $i++,
 				"display_name" => "E-mail",
-				"validate" => array("NOT_BLANK", "appCheckEmail", "appCheckIP", "appCheckCaptchas")
-			)
-		);
+				"validate" => ["NOT_BLANK", "appCheckEmail", "appCheckIP", "appCheckCaptchas"]
+			]
+		];
 
 		$this->defaultCounter = $i;
 
@@ -88,20 +88,20 @@ class AppComponent extends BasicOrder {
 		$maxYear = date("Y")-8;
 		$maxDate = "new Date(".$maxYear.",12,31)";
 
-		$arrComponent = array(
+		$arrComponent = [
 			"display_name" => $this->get_info_filtered("name"),
 			"type" => "datepicker",
-			"attributes" => array("style" => "cursor: pointer", "id" => "jsBirthday_".$this->intTableKeyValue, "class" => "textBox formInput"),
-			"options" => array("changeMonth" => "true",
+			"attributes" => ["style" => "cursor: pointer", "id" => "jsBirthday_".$this->intTableKeyValue, "class" => "textBox formInput"],
+			"options" => ["changeMonth" => "true",
 							   "changeYear" => "true",
 							   "dateFormate" => "M d, yy",
 							   "minDate" => "new Date(50, 1, 1)",
 							   "maxDate" => $maxDate,
 							   "yearRange" => "1950:".$maxYear,
-							   "altField" => "realBirthday_".$this->intTableKeyValue),
-			"validate" => array("NUMBER_ONLY"),
+							   "altField" => "realBirthday_".$this->intTableKeyValue],
+			"validate" => ["NUMBER_ONLY"],
 			"value" => mktime(0, 0, 0, 12, 31, $maxYear)*1000
-		);
+		];
 
 		return $arrComponent;
 	}
@@ -110,7 +110,7 @@ class AppComponent extends BasicOrder {
 
 		$gameObj = new Game($this->MySQL);
 		$arrGames = $gameObj->getGameList();
-		$arrSelectOptions = array();
+		$arrSelectOptions = [];
 		foreach ($arrGames as $gameID) {
 			$gameObj->select($gameID);
 			$arrSelectOptions[$gameID] = $gameObj->get_info_filtered("name");
@@ -122,7 +122,7 @@ class AppComponent extends BasicOrder {
 
 	public function getSelectOptionArray() {
 
-		$arrSelectOptions = array();
+		$arrSelectOptions = [];
 		if ($this->arrObjInfo['componenttype'] != "profile") {
 			$arrSelectOptionIDs = $this->getAssociateIDs("ORDER BY componentvalue");
 			foreach ($arrSelectOptionIDs as $selectOptionID) {
@@ -135,7 +135,7 @@ class AppComponent extends BasicOrder {
 		return $arrSelectOptions;
 	}
 
-	public function getMultiSelectInputCode($customSelectOptions = array()) {
+	public function getMultiSelectInputCode($customSelectOptions = []) {
 
 		if (count($customSelectOptions) > 0) {
 			$arrSelectOptions = $customSelectOptions;
@@ -143,31 +143,31 @@ class AppComponent extends BasicOrder {
 			$arrSelectOptions = $this->getSelectOptionArray();
 		}
 
-		$arrComponent = array(
+		$arrComponent = [
 			"type" => "checkbox",
 			"display_name" => $this->get_info_filtered("name"),
-			"attributes" => array("class" => "formInput textBox"),
+			"attributes" => ["class" => "formInput textBox"],
 			"options" => $arrSelectOptions,
-			"validate" => array("RESTRICT_TO_OPTIONS")
-		);
+			"validate" => ["RESTRICT_TO_OPTIONS"]
+		];
 
 		return $arrComponent;
 	}
 
-	public function getSelectInputCode($customSelectOptions = array()) {
+	public function getSelectInputCode($customSelectOptions = []) {
 		if (count($customSelectOptions) > 0) {
 			$arrSelectOptions = $customSelectOptions;
 		} else {
 			$arrSelectOptions = $this->getSelectOptionArray();
 		}
 
-		$arrComponent = array(
+		$arrComponent = [
 			"type" => "select",
 			"display_name" => $this->get_info_filtered("name"),
-			"attributes" => array("class" => "formInput textBox"),
+			"attributes" => ["class" => "formInput textBox"],
 			"options" => $arrSelectOptions,
-			"validate" => array("RESTRICT_TO_OPTIONS")
-		);
+			"validate" => ["RESTRICT_TO_OPTIONS"]
+		];
 
 		return $arrComponent;
 	}
@@ -176,7 +176,7 @@ class AppComponent extends BasicOrder {
 	public function getMainGameInputCode() {
 		$gameObj = new Game($this->MySQL);
 		$arrGames = $gameObj->getGameList();
-		$arrSelectOptions = array();
+		$arrSelectOptions = [];
 		foreach ($arrGames as $gameID) {
 			$gameObj->select($gameID);
 			$arrSelectOptions[$gameID] = $gameObj->get_info_filtered("name");
@@ -186,27 +186,27 @@ class AppComponent extends BasicOrder {
 	}
 
 	public function getRecruiterInputCode() {
-		$arrMemberList = array();
+		$arrMemberList = [];
 		$dbprefix = $this->MySQL->get_tablePrefix();
 		$result = $this->MySQL->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '0' AND rank_id != '1' ORDER BY username");
 		while ($row = $result->fetch_assoc()) {
-			$arrMemberList[] = array("id" => $row['member_id'], "value" => filterText($row['username']));
+			$arrMemberList[] = ["id" => $row['member_id'], "value" => filterText($row['username'])];
 		}
 
 		$memberList = json_encode($arrMemberList);
 
-		$arrComponent = array(
+		$arrComponent = [
 			"type" => "autocomplete",
-			"attributes" => array("class" => "formInput textBox"),
-			"options" => array("real_id" => "realAppComp_".$this->intTableKeyValue, "fake_id" => "fakeAppComp_".$this->intTableKeyValue, "list" => $memberList)
-		);
+			"attributes" => ["class" => "formInput textBox"],
+			"options" => ["real_id" => "realAppComp_".$this->intTableKeyValue, "fake_id" => "fakeAppComp_".$this->intTableKeyValue, "list" => $memberList]
+		];
 
 		return $arrComponent;
 	}
 
 	public function getProfileOptionInputCode() {
 
-		$arrComponent = array();
+		$arrComponent = [];
 		if ($this->profileOptionObj->get_info("optiontype") == "select") {
 			$arrSelectOptions = $this->profileOptionObj->getSelectValues();
 
@@ -218,7 +218,7 @@ class AppComponent extends BasicOrder {
 
 	public function getComponentInputCode() {
 		global $hooksObj;
-		$returnArr = array();
+		$returnArr = [];
 
 		$formInputName = "appcomponent_".$this->intTableKeyValue;
 		if ($this->arrObjInfo['componenttype'] == "profile") {
@@ -250,7 +250,7 @@ class AppComponent extends BasicOrder {
 					$returnArr = $this->getSelectInputCode();
 					break;
 				case "largeinput":
-					$returnArr = array("type" => "textarea");
+					$returnArr = ["type" => "textarea"];
 					break;
 				case "captcha":
 				case "captchaextra":
@@ -294,7 +294,7 @@ class AppComponent extends BasicOrder {
 	public function saveAppValue($memberAppID) {
 
 		$this->intMemberAppID = $memberAppID;
-		$arrSingleInputs = array("input", "largeinput", "select");
+		$arrSingleInputs = ["input", "largeinput", "select"];
 
 		if (in_array($this->arrObjInfo['componenttype'], $arrSingleInputs)) {
 			$this->saveSingleValue();
@@ -365,16 +365,16 @@ class AppComponent extends BasicOrder {
 		//$postName = ($setPostName == "") ? "appcomponent_".$this->intTableKeyValue : $setPostName;
 		$postName = "appcomponent_".$this->intTableKeyValue;
 
-		$arrColumns = array("appcomponent_id", "memberapp_id", "appvalue");
-		$arrValues = array($this->intTableKeyValue, $this->intMemberAppID, $_POST[$postName]);
+		$arrColumns = ["appcomponent_id", "memberapp_id", "appvalue"];
+		$arrValues = [$this->intTableKeyValue, $this->intMemberAppID, $_POST[$postName]];
 
 		return $this->objAppValue->addNew($arrColumns, $arrValues);
 	}
 
 
-	private function saveMultiValues($arrCustomValues = array()) {
+	private function saveMultiValues($arrCustomValues = []) {
 
-		$arrColumns = array("appcomponent_id", "memberapp_id", "appvalue");
+		$arrColumns = ["appcomponent_id", "memberapp_id", "appvalue"];
 		$arrSelectValues = (count($arrCustomValues) > 0) ? $arrCustomValues : $this->getAssociateIDs("ORDER BY componentvalue");
 		$componentCounter = 1;
 		$returnVal = true;
@@ -383,7 +383,7 @@ class AppComponent extends BasicOrder {
 			$componentCounter++;
 
 			if (isset($_POST[$postName])) {
-				$arrValues = array($this->intTableKeyValue, $this->intMemberAppID, $_POST[$postName]);
+				$arrValues = [$this->intTableKeyValue, $this->intMemberAppID, $_POST[$postName]];
 
 				if (!$this->objAppValue->addNew($arrColumns, $arrValues)) {
 					$returnVal = false;

@@ -47,18 +47,18 @@ while ($row = $result->fetch_assoc()) {
 }
 
 if ($result->num_rows > 0) {
-	$arrComponents = array(
-		"tournament" => array(
+	$arrComponents = [
+		"tournament" => [
 			"display_name" => "Tournament",
 			"type" => "select",
 			"options" => $tournamentOptions,
-			"attributes" => array("class" => "textBox formInput", "id" => "tournamentID"),
+			"attributes" => ["class" => "textBox formInput", "id" => "tournamentID"],
 			"sortorder" => 1,
-			"validate" => array("RESTRICT_TO_OPTIONS", "joinTournamentChecks"),
+			"validate" => ["RESTRICT_TO_OPTIONS", "joinTournamentChecks"],
 			"value" => (isset($_GET['tID'])) ? $_GET['tID'] : "",
 			"db_name" => "tournament_id"
-		),
-		"loading" => array(
+		],
+		"loading" => [
 			"type" => "custom",
 			"html" => "<div id='loadingSpiral' class='loadingSpiral'>
 								<p align='center' class='main'>
@@ -67,41 +67,41 @@ if ($result->num_rows > 0) {
 							</div>",
 			"sortorder" => 2,
 			"hidden" => true
-		),
-		"fakeSubmit" => array(
+		],
+		"fakeSubmit" => [
 			"type" => "button",
 			"value" => "Join Tournament",
-			"attributes" => array("class" => "submitButton formSubmitButton", "id" => "btnFakeSubmit"),
+			"attributes" => ["class" => "submitButton formSubmitButton", "id" => "btnFakeSubmit"],
 			"sortorder" => 3
-		),
-		"submit" => array(
+		],
+		"submit" => [
 			"type" => "submit",
 			"value" => "submit",
-			"attributes" => array("style" => "display: none", "id" => "btnSubmit"),
+			"attributes" => ["style" => "display: none", "id" => "btnSubmit"],
 			"sortorder" => 4,
 			"hidden" => true
-		),
-		"tournamentpassword" => array(
+		],
+		"tournamentpassword" => [
 			"type" => "hidden",
-			"attributes" => array("id" => "tournamentPassword"),
+			"attributes" => ["id" => "tournamentPassword"],
 			"sortorder" => 99,
 			"hidden" => true
-		)
+		]
 
 
-	);
+	];
 
 
-	$setupFormArgs = array(
+	$setupFormArgs = [
 		"name" => "console-".$cID,
 		"components" => $arrComponents,
 		"saveMessage" => "Successfully joined tournament!",
-		"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
+		"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
 		"description" => "Use the form below to join a tournament.",
 		"saveObject" => $tournamentObj->objPlayer,
 		"saveType" => "add",
-		"saveAdditional" => array("member_id" => $memberInfo['member_id'])
-	);
+		"saveAdditional" => ["member_id" => $memberInfo['member_id']]
+	];
 
 	echo "
 			

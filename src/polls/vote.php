@@ -27,11 +27,11 @@ $consoleObj = new ConsoleOption($mysqli);
 $pollObj = new Poll($mysqli);
 $member = new Member($mysqli);
 
-$arrReturn = array("result" => "fail");
+$arrReturn = ["result" => "fail"];
 $pollOptionSelector = "poll_".$_POST['pollID'];
 if ($pollObj->select($_POST['pollID'])) {
 	$pollInfo = $pollObj->get_info_filtered();
-	$pollObj->objAccess->arrAccessFor = array("keyName" => "poll_id", "keyValue" => $pollInfo['poll_id']);
+	$pollObj->objAccess->arrAccessFor = ["keyName" => "poll_id", "keyValue" => $pollInfo['poll_id']];
 
 	$blnVote = false;
 	$member->select($_SESSION['btUsername']);

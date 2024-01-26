@@ -6,7 +6,7 @@ if (!defined("MAIN_ROOT")) {
 
 
 	// Types of application components
-$typeOptions = array(
+$typeOptions = [
 		"input" => "Input",
 		"largeinput" => "Large-Input",
 		"select" => "Select",
@@ -14,40 +14,40 @@ $typeOptions = array(
 		"captcha" => "Captcha",
 		"captchaextra" => "Captcha - Extra Distortion",
 		"profile" => "Profile Option"
-	);
+	];
 
 
 	// Selectable Component Options (when select or multi-select is selected)
 $acCounter = 0;
-$additionalComponents = array(
+$additionalComponents = [
 
-		"optionvalue" => array(
+		"optionvalue" => [
 			"type" => "text",
-			"attributes" => array("class" => "formInput textBox", "id" => "optionValue", "style" => "width: 30%"),
+			"attributes" => ["class" => "formInput textBox", "id" => "optionValue", "style" => "width: 30%"],
 			"display_name" => "Option Value",
 			"html" => "<div class='formInput formInputSideText' style='padding-top: 0px'><input type='button' class='submitButton' value='Add' id='addOptionValueBtn'></div>",
 			"sortorder" => $acCounter++
-		),
-		"optionlist" => array(
+		],
+		"optionlist" => [
 			"type" => "custom",
 			"html" => "<div id='optionValueList' class='main formInput' style='height: 75px; overflow: auto'></div>",
 			"sortorder" => $acCounter++,
 			"display_name" => "Option List"
-		)
+		]
 
-	);
+	];
 
 	// Profile Option Components
 
 $currentCat = "mainprofile";
-$profileSelectOptions = array(
+$profileSelectOptions = [
 		"mainprofile" => "Default Profile Options",
 		"birthday" => "Birthday",
 		"gamesplayed" => "Games Played",
 		"maingame" => "Main Game",
 		"recruiter" => "Recruiter"
-	);
-$profileCatOptions = array("mainprofile");
+	];
+$profileCatOptions = ["mainprofile"];
 
 $profileCatTable = $dbprefix."profilecategory";
 $profileOptionTable = $dbprefix."profileoptions";
@@ -64,74 +64,74 @@ while ($row = $result->fetch_assoc()) {
 	$profileSelectOptions[$row['profileoption_id']] = filterText($row['name']);
 }
 
-$profileComponents = array(
-		"profileoption" => array(
+$profileComponents = [
+		"profileoption" => [
 			"type" => "select",
 			"options" => $profileSelectOptions,
 			"sortorder" => 1,
 			"display_name" => "Select Option",
-			"attributes" => array("class" => "formInput textBox", "id" => "profileOptionID"),
+			"attributes" => ["class" => "formInput textBox", "id" => "profileOptionID"],
 			"non_selectable_items" => $profileCatOptions
-		)
-	);
+		]
+	];
 
 $dispRequiredValue = (isset($appCompInfo)) ? $appCompInfo['required'] : "0";
 
 $i = 0;
 $addAppForm = new Form();
-$arrComponents = array(
+$arrComponents = [
 
-		"name" => array(
+		"name" => [
 			"display_name" => "Name",
 			"type" => "text",
-			"attributes" => array("class" => "textBox formInput", "id" => "componentName"),
+			"attributes" => ["class" => "textBox formInput", "id" => "componentName"],
 			"sortorder" => $i++
-		),
-		"type" => array(
+		],
+		"type" => [
 			"type" => "select",
 			"options" => $typeOptions,
-			"attributes" => array("class" => "textBox formInput", "id" => "componentType"),
+			"attributes" => ["class" => "textBox formInput", "id" => "componentType"],
 			"sortorder" => $i++,
 			"display_name" => "Type"
-		),
-		"required" => array(
+		],
+		"required" => [
 			"type" => "checkbox",
-			"options" => array(1 => ""),
-			"attributes" => array("class" => "formInput", "id" => "componentRequiredCB"),
+			"options" => [1 => ""],
+			"attributes" => ["class" => "formInput", "id" => "componentRequiredCB"],
 			"sortorder" => $i++,
 			"display_name" => "Required",
 			"html" => "<input type='hidden' id='componentRequired' value='".$dispRequiredValue."'><div id='captchaMessage' class='formInput formInputSideText tinyFont' style='padding-top: 0px; display: none'><i>Captcha's are automatically required.</i></div>"
-		),
-		"tooltip" => array(
+		],
+		"tooltip" => [
 			"type" => "textarea",
-			"attributes" => array("class" => "textBox formInput", "id" => "componentTooltip"),
+			"attributes" => ["class" => "textBox formInput", "id" => "componentTooltip"],
 			"sortorder" => $i++,
 			"display_name" => "Tooltip"
-		),
-		"morecomponents" => array(
+		],
+		"morecomponents" => [
 			"type" => "section",
-			"attributes" => array("id" => "moreComponentOptions", "style" => "display: none"),
+			"attributes" => ["id" => "moreComponentOptions", "style" => "display: none"],
 			"components" => $additionalComponents,
-			"options" => array("section_title" => "Selectable Options"),
+			"options" => ["section_title" => "Selectable Options"],
 			"sortorder" => $i++
-		),
-		"profilecomponents" => array(
+		],
+		"profilecomponents" => [
 			"type" => "section",
-			"attributes" => array("id" => "profileComponentOptions"),
+			"attributes" => ["id" => "profileComponentOptions"],
 			"components" => $profileComponents,
 			"sortorder" => $i++,
-			"options" => array("section_title" => "Profile Options")
-		)
+			"options" => ["section_title" => "Profile Options"]
+		]
 
-	);
+	];
 
 
-$setupAppForm = array(
+$setupAppForm = [
 		"name" => "member-app-setup",
 		"components" => $arrComponents,
 		"wrapper" => ""
 
-	);
+	];
 
 
 $addAppForm->buildForm($setupAppForm);

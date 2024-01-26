@@ -28,7 +28,7 @@ $cID = $_GET['cID'];
 $dispError = "";
 $countErrors = 0;
 
-$arrDiplomacyStatus = array();
+$arrDiplomacyStatus = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."diplomacy_status ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$arrDiplomacyStatus[$row['diplomacystatus_id']] = filterText($row['name']);
@@ -55,7 +55,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check Clan Size
 
-	$allowedSizes = array("large", "medium", "small");
+	$allowedSizes = ["large", "medium", "small"];
 	if (!in_array($_POST['clansize'], $allowedSizes)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid clan size.<br>";
 		$countErrors++;
@@ -66,8 +66,8 @@ if ( ! empty($_POST['submit']) ) {
 		$diplomacyObj = new Basic($mysqli, "diplomacy", "diplomacy_id");
 
 
-		$arrColumns = array("member_id", "dateadded", "clanname", "diplomacystatus_id", "website", "clansize", "clantag", "skill", "gamesplayed", "extrainfo", "leaders");
-		$arrValues = array($memberInfo['member_id'], time(), $_POST['clanname'], $_POST['status'], $_POST['website'], $_POST['clansize'], $_POST['tag'], $_POST['skill'], $_POST['gamesplayed'], $_POST['extrainfo'], $_POST['leaders']);
+		$arrColumns = ["member_id", "dateadded", "clanname", "diplomacystatus_id", "website", "clansize", "clantag", "skill", "gamesplayed", "extrainfo", "leaders"];
+		$arrValues = [$memberInfo['member_id'], time(), $_POST['clanname'], $_POST['status'], $_POST['website'], $_POST['clansize'], $_POST['tag'], $_POST['skill'], $_POST['gamesplayed'], $_POST['extrainfo'], $_POST['leaders']];
 
 		if ($diplomacyObj->addNew($arrColumns, $arrValues)) {
 			echo "

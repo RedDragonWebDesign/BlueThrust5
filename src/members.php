@@ -50,14 +50,14 @@ if ($websiteInfo['maxdsl'] != 0) {
 
 	$result = $mysqli->query("SELECT member_id FROM ".$dbprefix."members WHERE disableddate = '".$time."'");
 	while ($row = $result->fetch_assoc()) {
-		$arrLogColumns = array("member_id", "logdate", "message");
-		$arrLogValues = array($row['member_id'], $time, "Disabled due to inactivity.");
+		$arrLogColumns = ["member_id", "logdate", "message"];
+		$arrLogValues = [$row['member_id'], $time, "Disabled due to inactivity."];
 		$logObj->addNew($arrLogColumns, $arrLogValues);
 	}
 }
 
 // Disable members who fail to be promoted for auto-disable ranks
-$arrRanks = array();
+$arrRanks = [];
 $result = $mysqli->query("SELECT rank_id FROM ".$dbprefix."ranks WHERE autodisable != '0'");
 while ($row = $result->fetch_assoc()) {
 	$arrRanks[] = $row['rank_id'];
@@ -72,7 +72,7 @@ while ($row = $result->fetch_assoc()) {
 	$rankObj->select($row['rank_id']);
 	$memRankListInfo = $rankObj->get_info();
 	if ((floor(time()/86400)-floor($memberListInfo['datejoined']/86400)) >= $memRankListInfo['autodisable']) {
-		$member->update(array("disabled", "disableddate"), array(1, $time));
+		$member->update(["disabled", "disableddate"], [1, $time]);
 		$member->logAction("Disabled for failure to be promoted before ".$memRankListInfo['autodisable']." days.");
 	}
 }
@@ -97,9 +97,9 @@ $maxDSLIntervals = floor($websiteInfo['maxdsl']/3);
 $arrCountDSL[1] = 0;
 $arrCountDSL[2] = 0;
 $arrCountDSL[3] = 0;
-$arrMemberCountCat = array();
-$arrGameCount = array();
-$arrGamesPlayed = array();
+$arrMemberCountCat = [];
+$arrGameCount = [];
+$arrGamesPlayed = [];
 $result = $mysqli->query("SELECT rankcategory_id FROM ".$dbprefix."rankcategory WHERE hidecat = '0' ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$rankCatObj->select($row['rankcategory_id']);
@@ -206,7 +206,7 @@ while ($row = $result->fetch_assoc()) {
 			$dispStatus = "<img src='".$MAIN_ROOT."themes/".$THEME."/images/offlinedot.png'>";
 
 			if ($memberListInfo['loggedin'] == 1) {
-				$member->update(array("loggedin"), array(0));
+				$member->update(["loggedin"], [0]);
 			}
 		}
 

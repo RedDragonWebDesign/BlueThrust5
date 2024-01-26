@@ -19,7 +19,7 @@ if (!defined("MAIN_ROOT")) {
 $arrTimezoneOptions = $clockObj->getTimezones();
 
 $clockOrderObj = new Clock($mysqli);
-$arrClocks = array();
+$arrClocks = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."clocks ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$arrClocks[$row['clock_id']] = filterText($row['name']);
@@ -30,55 +30,55 @@ if (count($arrClocks) == 0) {
 }
 
 $i=0;
-$arrComponents = array(
+$arrComponents = [
 
-		"name" => array(
+		"name" => [
 			"type" => "text",
 			"sortorder" => $i++,
-			"attributes" => array("class" => "formInput textBox"),
+			"attributes" => ["class" => "formInput textBox"],
 			"display_name" => "Name",
 			"db_name" => "name"
-		),
-		"color" => array(
+		],
+		"color" => [
 			"type" => "colorpick",
 			"sortorder" => $i++,
-			"attributes" => array("class" => "formInput textBox", "id" => "clockColor"),
+			"attributes" => ["class" => "formInput textBox", "id" => "clockColor"],
 			"display_name" => "Display Color",
 			"db_name" => "color"
-		),
-		"timezone" => array(
+		],
+		"timezone" => [
 			"type" => "select",
 			"sortorder" => $i++,
-			"attributes" => array("class" => "formInput textBox"),
+			"attributes" => ["class" => "formInput textBox"],
 			"display_name" => "Timezone",
 			"db_name" => "timezone",
 			"options" => $arrTimezoneOptions
-		),
-		"displayorder" => array(
+		],
+		"displayorder" => [
 			"type" => "beforeafter",
 			"sortorder" => $i++,
-			"attributes" => array("class" => "textBox"),
+			"attributes" => ["class" => "textBox"],
 			"db_name" => "ordernum",
 			"options" => $arrClocks,
 			"display_name" => "Display Order",
-			"validate" => array(array("name" => "VALIDATE_ORDER", "orderObject" => $clockOrderObj))
-		),
-		"submit" => array(
+			"validate" => [["name" => "VALIDATE_ORDER", "orderObject" => $clockOrderObj]]
+		],
+		"submit" => [
 			"type" => "submit",
 			"sortorder" => $i++,
-			"attributes" => array("class" => "formSubmitButton submitButton"),
+			"attributes" => ["class" => "formSubmitButton submitButton"],
 			"value" => "Add Clock"
-		)
+		]
 
-	);
+	];
 
-$setupFormArgs = array(
+$setupFormArgs = [
 		"name" => "console-".$cID,
 		"components" => $arrComponents,
 		"saveObject" => $clockObj,
 		"saveType" => "add",
 		"saveMessage" => "Successfully added new clock!",
-		"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
+		"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
 		"description" => "Use the form below to add a new clock to your website.",
 		"beforeAfter" => true
-	);
+	];

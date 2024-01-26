@@ -47,8 +47,8 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	if ($countErrors == 0) {
-		$arrColumns = array("member_id", "name", "sortnum");
-		$arrValues = array($memberInfo['member_id'], $_POST['foldername'], $intNewOrderSpot);
+		$arrColumns = ["member_id", "name", "sortnum"];
+		$arrValues = [$memberInfo['member_id'], $_POST['foldername'], $intNewOrderSpot];
 
 		if ($pmFolderObj->addNew($arrColumns, $arrValues)) {
 			$folderInfo = $pmFolderObj->get_info_filtered();

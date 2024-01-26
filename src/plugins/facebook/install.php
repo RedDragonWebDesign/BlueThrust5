@@ -22,10 +22,10 @@ require_once("../../classes/consolecategory.php");
 $PLUGIN_TABLE_NAME = $dbprefix."facebook";
 $PLUGIN_NAME = "Facebook Login";
 
-$arrAPIKeys = array(
+$arrAPIKeys = [
 	'appID' => "",
 	'appSecret' => ""
-);
+];
 
 
 // Start Page
@@ -47,7 +47,7 @@ $LOGIN_FAIL = true;
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$countErrors = 0;
-	$dispError = array();
+	$dispError = [];
 
 	// Check if already installed
 
@@ -86,7 +86,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 		if ($mysqli->query($sql)) {
 			$jsonAPIKey = json_encode($arrAPIKeys);
-			$pluginObj->addNew(array("name", "filepath", "dateinstalled", "apikey"), array($PLUGIN_NAME, $_POST['pluginDir'], time(), $jsonAPIKey));
+			$pluginObj->addNew(["name", "filepath", "dateinstalled", "apikey"], [$PLUGIN_NAME, $_POST['pluginDir'], time(), $jsonAPIKey]);
 
 			// Check if need to add new console category
 
@@ -94,7 +94,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			if ($result->num_rows == 0) {
 				$consoleCatObj = new ConsoleCategory($mysqli);
 				$newOrderNum = $consoleCatObj->getHighestOrderNum()+1;
-				$consoleCatObj->addNew(array("name", "ordernum"), array("Social Media Connect", $newOrderNum));
+				$consoleCatObj->addNew(["name", "ordernum"], ["Social Media Connect", $newOrderNum]);
 				$consoleCatID = $consoleCatObj->get_info("consolecategory_id");
 			} else {
 				$row = $result->fetch_assoc();
@@ -103,14 +103,14 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 			$consoleObj->setCategoryKeyValue($consoleCatID);
 			$newSortNum = $consoleObj->getHighestSortNum()+1;
-			$consoleObj->addNew(array("consolecategory_id", "pagetitle", "filename", "sortnum"), array($consoleCatID, $PLUGIN_NAME, "../plugins/facebook/facebookconnect.php", $newSortNum));
+			$consoleObj->addNew(["consolecategory_id", "pagetitle", "filename", "sortnum"], [$consoleCatID, $PLUGIN_NAME, "../plugins/facebook/facebookconnect.php", $newSortNum]);
 		} else {
 			$countErrors++;
 			$dispError[] = "Unable to create plugin database table.";
 		}
 	}
 
-	$arrReturn = array();
+	$arrReturn = [];
 	if ($countErrors == 0) {
 		$arrReturn['result'] = "success";
 	} else {

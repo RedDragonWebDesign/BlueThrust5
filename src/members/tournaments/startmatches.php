@@ -58,7 +58,7 @@ if ($tournamentInfo['playersperteam'] == 1) {
 
 if ( ! empty($_POST['submit']) ) {
 	$mysqli->query("DELETE FROM ".$dbprefix."tournamentmatches WHERE tournament_id = '".$tournamentInfo['tournament_id']."'");
-	$tournamentObj->update(array("seedtype"), array(1));
+	$tournamentObj->update(["seedtype"], [1]);
 
 	$tournamentObj->resetMatches();
 
@@ -77,7 +77,7 @@ if ( ! empty($_POST['submit']) ) {
 	";
 } elseif ( empty($_POST['submit']) ) {
 	$arrPools = $tournamentObj->getPoolList();
-	$arrPoolTeams = array();
+	$arrPoolTeams = [];
 	$arrTeams = $tournamentObj->getTeams(true);
 
 
@@ -88,7 +88,7 @@ if ( ! empty($_POST['submit']) ) {
 		$totalPoolCount++;
 		$poolInfo = $tournamentObj->objTournamentPool->get_info();
 		if ($poolInfo['finished'] == 0) {
-			$tournamentObj->objTournamentPool->update(array("finished"), array(1));
+			$tournamentObj->objTournamentPool->update(["finished"], [1]);
 		} else {
 			$totalPoolsFinished++;
 		}
@@ -116,7 +116,7 @@ if ( ! empty($_POST['submit']) ) {
 		$seedCount = 1;
 		foreach ($arrWinCount as $teamID => $wins) {
 			$tournamentObj->objTeam->select($teamID);
-			$tournamentObj->objTeam->update(array("seed"), array($seedCount));
+			$tournamentObj->objTeam->update(["seed"], [$seedCount]);
 
 			$seedCount++;
 		}

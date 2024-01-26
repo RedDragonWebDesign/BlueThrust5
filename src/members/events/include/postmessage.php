@@ -40,7 +40,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_POST
 	$memberInfo = $member->get_info_filtered();
 
 	if (trim($_POST['postMessage']) != "" && $member->hasAccess($consoleObj) && ($eventObj->memberHasAccess($memberInfo['member_id'], "postmessages") || $memberInfo['rank_id'] == 1)) {
-		$eventObj->objEventMessage->addNew(array("event_id", "member_id", "dateposted", "message"), array($eventID, $memberInfo['member_id'], time(), $_POST['postMessage']));
+		$eventObj->objEventMessage->addNew(["event_id", "member_id", "dateposted", "message"], [$eventID, $memberInfo['member_id'], time(), $_POST['postMessage']]);
 	}
 
 	if (in_array($memberInfo['member_id'], $eventObj->getInvitedMembers(true)) || $memberInfo['member_id'] == $eventInfo['member_id'] || $memberInfo['rank_id'] == 1) {

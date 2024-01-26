@@ -41,7 +41,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMessa
 	$memberInfo = $member->get_info_filtered();
 
 	if (trim($_POST['commentMessage']) != "" && $member->hasAccess($consoleObj) && ($eventObj->memberHasAccess($memberInfo['member_id'], "postmessages") || $memberInfo['rank_id'] == 1)) {
-		$eventObj->objEventMessageComment->addNew(array("eventmessage_id", "member_id", "dateposted", "comment"), array($_POST['messageID'], $memberInfo['member_id'], time(), $_POST['commentMessage']));
+		$eventObj->objEventMessageComment->addNew(["eventmessage_id", "member_id", "dateposted", "comment"], [$_POST['messageID'], $memberInfo['member_id'], time(), $_POST['commentMessage']]);
 	}
 
 

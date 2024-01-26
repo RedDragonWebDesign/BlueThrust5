@@ -79,7 +79,7 @@ if (!isset($_GET['oauth_token']) || !isset($_GET['oauth_verifier']) || $_GET['oa
 				$newTimesLoggedIn = $memberInfo['timesloggedin']+1;
 				$newIP = $_SERVER['REMOTE_ADDR'];
 
-				$memberObj->update(array("lastlogin", "timesloggedin", "ipaddress", "loggedin"), array($newLastLogin, $newTimesLoggedIn, $newIP, 1));
+				$memberObj->update(["lastlogin", "timesloggedin", "ipaddress", "loggedin"], [$newLastLogin, $newTimesLoggedIn, $newIP, 1]);
 
 				$memberObj->autoPromote();
 

@@ -18,7 +18,7 @@ $member->select($_SESSION['btUsername']);
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$socialObj = new Social($mysqli);
-	if (!$_POST['confirm'] && $socialObj->selectByMulti(array("name" => "Twitch"))) {
+	if (!$_POST['confirm'] && $socialObj->selectByMulti(["name" => "Twitch"])) {
 		echo "
 				<div id='addTwitchInfo'></div>
 				<div id='confirmAddTwitch' style='display: none'>
@@ -59,7 +59,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			";
 	} else {
 		$saveName = "Twitch";
-		if ($socialObj->selectByMulti(array("name" => "Twitch"))) {
+		if ($socialObj->selectByMulti(["name" => "Twitch"])) {
 			$result = $mysqli->query("SELECT social_id FROM ".$dbprefix."social WHERE name LIKE '%Twitch%'");
 
 			$totalTwitch = $result->num_rows;
@@ -67,8 +67,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$saveName = "Twitch - ".($totalTwitch+1);
 		}
 
-		$arrColumns = array("name", "icon", "iconwidth", "iconheight", "url", "tooltip", "ordernum");
-		$arrValues = array($saveName, "plugins/twitch/images/twitch.png", "24", "24", "http://twitch.tv/", "Enter your Twitch username", $socialObj->getHighestOrderNum()+1);
+		$arrColumns = ["name", "icon", "iconwidth", "iconheight", "url", "tooltip", "ordernum"];
+		$arrValues = [$saveName, "plugins/twitch/images/twitch.png", "24", "24", "http://twitch.tv/", "Enter your Twitch username", $socialObj->getHighestOrderNum()+1];
 		$socialObj->addNew($arrColumns, $arrValues);
 
 		$socialOptions = "";

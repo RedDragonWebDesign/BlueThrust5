@@ -96,14 +96,14 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 <?php
 
 	// Get auto-complete list
-$arrMembers = array();
+$arrMembers = [];
 
 $result = $mysqli->query("SELECT ".$dbprefix."members.member_id, ".$dbprefix."members.username FROM ".$dbprefix."members, ".$dbprefix."ranks WHERE ".$dbprefix."members.rank_id = ".$dbprefix.".ranks.rank_id AND ".$dbprefix."members.disabled = '0' ORDER BY ".$dbprefix."ranks.ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$member->select($row['member_id']);
 
 	if ($member->hasAccess($tournamentConsoleCheck)) {
-		$arrMembers[] = array("id" => $row['member_id'], "value" => filterText($row['username']));
+		$arrMembers[] = ["id" => $row['member_id'], "value" => filterText($row['username'])];
 	}
 }
 $member->select($memberInfo['member_id']);

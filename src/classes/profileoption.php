@@ -35,7 +35,7 @@ class ProfileOption extends BasicSort {
 		$returnVal = false;
 
 		if ($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue) && $this->arrObjInfo['optiontype'] == "select") {
-			$returnArr = array();
+			$returnArr = [];
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."profileoptions_select WHERE profileoption_id = '".$this->intTableKeyValue."' ORDER BY sortnum");
 			while ($row = $result->fetch_assoc()) {
@@ -54,8 +54,8 @@ class ProfileOption extends BasicSort {
 		$returnVal = false;
 
 		if ($this->intTableKeyValue != "" && trim($strValue) != "") {
-			$arrColumns = array("profileoption_id", "selectvalue", "sortnum");
-			$arrValues = array($this->intTableKeyValue, $strValue, $intSortNum);
+			$arrColumns = ["profileoption_id", "selectvalue", "sortnum"];
+			$arrValues = [$this->intTableKeyValue, $strValue, $intSortNum];
 
 			if ($this->objProfileOptionSelect->addNew($arrColumns, $arrValues)) {
 				$returnVal = true;

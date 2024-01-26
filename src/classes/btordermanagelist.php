@@ -49,11 +49,11 @@ class btOrderManageList {
 
 	public function getListArray($customInfo = "") {
 
-		$arrItems = array();
-		$arrInfo = ($customInfo == "") ? $this->objManage->get_entries(array(), $this->orderBy) : $customInfo;
+		$arrItems = [];
+		$arrInfo = ($customInfo == "") ? $this->objManage->get_entries([], $this->orderBy) : $customInfo;
 		$x = 0;
 		foreach ($arrInfo as $info) {
-			$actionsInfo = array();
+			$actionsInfo = [];
 			if ($x != 0) {
 				$actionsInfo[] = "moveup";
 			}
@@ -67,28 +67,28 @@ class btOrderManageList {
 
 			$x++;
 
-			$arrItems[] = array(
+			$arrItems[] = [
 				"display_name" => $info[$this->strNameTableColumn],
 				"item_id" => $info[$this->objManage->get_tableKey()],
 				"type" => "listitem",
 				"edit_link" => $this->strEditItemLink.$info[$this->objManage->get_tableKey()]."&action=edit",
 				"actions" => $actionsInfo
-			);
+			];
 		}
 
-		$arrAddNewLink = array();
+		$arrAddNewLink = [];
 		if ($this->objConsole->select($this->intAddCID)) {
-			$arrAddNewLink = array("url" => MAIN_ROOT."members/console.php?cID=".$this->intAddCID, "name" => $this->objConsole->get_info_filtered("pagetitle"));
+			$arrAddNewLink = ["url" => MAIN_ROOT."members/console.php?cID=".$this->intAddCID, "name" => $this->objConsole->get_info_filtered("pagetitle")];
 		}
 
-		$setupManageListArgs = array(
+		$setupManageListArgs = [
 			"item_title" => $this->strItemTitle,
 			"add_new_link" => $arrAddNewLink,
 			"actions" => $this->arrActionList,
 			"delete_link" => $this->strDeleteLink,
 			"items" => $arrItems,
 			"confirm_delete" => $this->blnConfirmDelete
-		);
+		];
 
 		return $setupManageListArgs;
 	}

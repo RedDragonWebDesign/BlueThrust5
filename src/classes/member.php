@@ -98,7 +98,7 @@ class Member extends Basic {
 		if ($this->intTableKeyValue != "" ) {
 			$passwordInfo = encryptPassword($new_password);
 
-			if ($this->update(array("password", "password2"), array($passwordInfo['password'], $passwordInfo['salt']))) {
+			if ($this->update(["password", "password2"], [$passwordInfo['password'], $passwordInfo['salt']])) {
 				$returnVal = true;
 			}
 		}
@@ -138,7 +138,7 @@ class Member extends Basic {
 	 */
 	function gamesPlayed() {
 
-		$returnArr = array();
+		$returnArr = [];
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT gamesplayed_id FROM ".$this->MySQL->get_tablePrefix()."gamesplayed_members WHERE member_id = '".$this->intTableKeyValue."'");
 
@@ -158,7 +158,7 @@ class Member extends Basic {
 	 * groups squads where the member is the founder.
 	 */
 	function getSquadList($founderOnly = false) {
-		$returnArr = array();
+		$returnArr = [];
 
 		if ($this->intTableKeyValue != "") {
 			if ($founderOnly) {
@@ -188,7 +188,7 @@ class Member extends Basic {
 	*
 	*/
 	function getTournamentList($creatorOnly = false) {
-		$returnArr = array();
+		$returnArr = [];
 
 		if ($this->intTableKeyValue != "") {
 			if ($creatorOnly) {
@@ -303,7 +303,7 @@ class Member extends Basic {
 				$this->objProfileOption->objProfileOptionValue->delete();
 			}
 
-			if ($this->objProfileOption->objProfileOptionValue->addNew(array("profileoption_id", "member_id", "inputvalue"), array($profileOptionID, $this->intTableKeyValue, $profileOptionValue))) {
+			if ($this->objProfileOption->objProfileOptionValue->addNew(["profileoption_id", "member_id", "inputvalue"], [$profileOptionID, $this->intTableKeyValue, $profileOptionValue])) {
 				$returnVal = true;
 			}
 		}
@@ -337,7 +337,7 @@ class Member extends Basic {
 	}
 
 
-	function getMemberLink($args = array("color" => true)) {
+	function getMemberLink($args = ["color" => true]) {
 		global $MAIN_ROOT;
 		$returnVal = "";
 		if ($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
@@ -373,8 +373,8 @@ class Member extends Basic {
 		if ($this->intTableKeyValue != "") {
 			$objNotification = new Basic($this->MySQL, "notifications", "notification_id");
 			$time = time();
-			$arrColumns = array("member_id", "datesent", "message", "icontype");
-			$arrValues = array($this->intTableKeyValue, $time, $strMessage, $strIconType);
+			$arrColumns = ["member_id", "datesent", "message", "icontype"];
+			$arrValues = [$this->intTableKeyValue, $time, $strMessage, $strIconType];
 
 			if ($objNotification->addNew($arrColumns, $arrValues)) {
 				$returnVal = true;
@@ -384,7 +384,7 @@ class Member extends Basic {
 		return $returnVal;
 	}
 
-	function sendPM($to, $subject, $message, $replypmID = 0, $arrGroups = array(), $email = false) {
+	function sendPM($to, $subject, $message, $replypmID = 0, $arrGroups = [], $email = false) {
 
 		$returnVal = false;
 
@@ -396,18 +396,18 @@ class Member extends Basic {
 
 				$multiMemPMObj = new Basic($this->MySQL, "privatemessage_members", "pmmember_id");
 
-				$arrColumns = array("sender_id", "datesent", "subject", "message", "originalpm_id");
-				$arrValues = array($this->intTableKeyValue, time(), $subject, $message, $replypmID);
+				$arrColumns = ["sender_id", "datesent", "subject", "message", "originalpm_id"];
+				$arrValues = [$this->intTableKeyValue, time(), $subject, $message, $replypmID];
 
 				if ($pmObj->addNew($arrColumns, $arrValues)) {
 					$pmInfo = $pmObj->get_info();
-					$arrBCC = array();
-					$arrColumns = array("pm_id", "member_id", "grouptype", "group_id");
+					$arrBCC = [];
+					$arrColumns = ["pm_id", "member_id", "grouptype", "group_id"];
 					foreach ($to as $memberID) {
 						$groupType = (is_array($arrGroups[$memberID])) ? $arrGroups[$memberID][0] : "";
 						$groupID = (is_array($arrGroups[$memberID])) ? $arrGroups[$memberID][1] : "";
 
-						$arrValues = array($pmInfo['pm_id'], $memberID, $groupType, $groupID);
+						$arrValues = [$pmInfo['pm_id'], $memberID, $groupType, $groupID];
 
 						$multiMemPMObj->addNew($arrColumns, $arrValues);
 						$toMemberObj->select($memberID);
@@ -420,14 +420,14 @@ class Member extends Basic {
 
 					if (count(arrBCC) > 0) {
 						$objMail = new btMail();
-						$objMail->sendMail("", $subject, $message, array("from" => $this->arrObjInfo['email'], "bcc" => $arrBCC));
+						$objMail->sendMail("", $subject, $message, ["from" => $this->arrObjInfo['email'], "bcc" => $arrBCC]);
 					}
 
 					$returnVal = true;
 				}
 			} else {
-				$arrColumns = array("sender_id", "receiver_id", "datesent", "subject", "message", "originalpm_id");
-				$arrValues = array($this->intTableKeyValue, $to, time(), $subject, $message, $replypmID);
+				$arrColumns = ["sender_id", "receiver_id", "datesent", "subject", "message", "originalpm_id"];
+				$arrValues = [$this->intTableKeyValue, $to, time(), $subject, $message, $replypmID];
 
 				if ($pmObj->addNew($arrColumns, $arrValues)) {
 					$toMemberObj->select($to);
@@ -474,7 +474,7 @@ class Member extends Basic {
 
 			$newProfileViews = $profileViews+1;
 
-			$this->update(array("profileviews"), array($newProfileViews));
+			$this->update(["profileviews"], [$newProfileViews]);
 
 			$this->arrObjInfo['profileviews'] = $newProfileViews;
 
@@ -491,7 +491,7 @@ class Member extends Basic {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE recruiter = '".$this->intTableKeyValue."' AND disabled = '0'");
 
 			if ($returnList) {
-				$returnArr = array();
+				$returnArr = [];
 
 				while ($row = $result->fetch_assoc()) {
 					$returnArr[] = $row['member_id'];
@@ -516,7 +516,7 @@ class Member extends Basic {
 	 */
 	function getMedalList($blnIDKeys = false, $orderNumID = 0) {
 
-		$returnArr = array();
+		$returnArr = [];
 		if ($this->intTableKeyValue != "") {
 			switch ($orderNumID) {
 				case 1:
@@ -576,14 +576,14 @@ class Member extends Basic {
 				$daysInClan = (time() - $this->arrObjInfo['datejoined'])/86400;
 
 				if ($medalObj->get_info("autodays") != 0 && ($daysInClan >= $medalObj->get_info("autodays") && !in_array($this->intTableKeyValue, $arrMembers)) && time() > $frozenDate) {
-					$awardMedalObj->addNew(array("medal_id", "member_id", "dateawarded"), array($medalID, $this->intTableKeyValue, time()));
+					$awardMedalObj->addNew(["medal_id", "member_id", "dateawarded"], [$medalID, $this->intTableKeyValue, time()]);
 
 					$this->postNotification("You have been awarded the ".$medalObj->get_info_filtered("name")." for being the clan for ".$medalObj->get_info("autodays")." days.");
 					$this->logAction("Auto awarded medal for being in the clan for ".$medalObj->get_info("autodays")." days.");
 				}
 
 				if ($medalObj->get_info("autorecruits") != 0 && ($this->countRecruits() >= $medalObj->get_info("autorecruits") && !in_array($this->intTableKeyValue, $arrMembers)) && time() > $frozenDate) {
-					$awardMedalObj->addNew(array("medal_id", "member_id", "dateawarded"), array($medalID, $this->intTableKeyValue, time()));
+					$awardMedalObj->addNew(["medal_id", "member_id", "dateawarded"], [$medalID, $this->intTableKeyValue, time()]);
 
 					$this->postNotification("You have been awarded the ".$medalObj->get_info_filtered("name")." for recruiting ".$medalObj->get_info("autorecruits")." members.");
 					$this->logAction("Auto awarded medal for recruiting ".$medalObj->get_info("autorecruits")." members.");
@@ -615,7 +615,7 @@ class Member extends Basic {
 				$rankObj->select($rankID);
 
 				if ($rankObj->get_info("ordernum") > $memberRankInfo['ordernum'] && $memberRankInfo['rank_id'] != 1 && $daysInClan >= $rankObj->get_info("autodays") && time() > $this->arrObjInfo['freezerank']) {
-					if ($this->update(array("rank_id", "lastpromotion"), array($rankID, time()))) {
+					if ($this->update(["rank_id", "lastpromotion"], [$rankID, time()])) {
 						$this->logAction("Auto promoted for being in the clan for ".$rankObj->get_info("autodays")." days.");
 						$memberRankInfo['ordernum'] = $rankObj->get_info("ordernum");
 					}
@@ -632,8 +632,8 @@ class Member extends Basic {
 			$medalList = $this->getMedalList();
 			if ($medal->select($medalID) && !in_array($medalID, $medalList)) {
 				$medalMemberObj = new Basic($this->MySQL, "medals_members", "medalmember_id");
-				$arrColumns = array("member_id", "medal_id", "dateawarded", "reason");
-				$arrValues = array($this->intTableKeyValue, $medalID, time(), $reason);
+				$arrColumns = ["member_id", "medal_id", "dateawarded", "reason"];
+				$arrValues = [$this->intTableKeyValue, $medalID, time(), $reason];
 				if ($medalMemberObj->addNew($arrColumns, $arrValues)) {
 					$this->postNotification("You were awarded the medal: <b>".$medal->get_info_filtered("name")."</b>");
 				}
@@ -657,8 +657,8 @@ class Member extends Basic {
 		if ($this->intTableKeyValue != "") {
 			$logObj = new Basic($this->MySQL, "logs", "log_id");
 
-			$arrColumns = array("member_id", "logdate", "message", "ipaddress");
-			$arrValues = array($this->intTableKeyValue, time(), $message, $_SERVER['REMOTE_ADDR']);
+			$arrColumns = ["member_id", "logdate", "message", "ipaddress"];
+			$arrValues = [$this->intTableKeyValue, time(), $message, $_SERVER['REMOTE_ADDR']];
 
 			if ($logObj->addNew($arrColumns, $arrValues)) {
 				$returnVal = true;
@@ -691,8 +691,8 @@ class Member extends Basic {
 
 	function get_privileges() {
 
-		$returnArr= array();
-		$filterArray = array();
+		$returnArr= [];
+		$filterArray = [];
 
 		$rankObj = new Rank($this->MySQL);
 
@@ -775,7 +775,7 @@ class Member extends Basic {
 
 
 
-	protected function getMemberPicture($setWidth, $setHeight, $db_name, $defaultpic, $cssClass = array()) {
+	protected function getMemberPicture($setWidth, $setHeight, $db_name, $defaultpic, $cssClass = []) {
 		global $MAIN_ROOT, $THEME;
 
 		$checkURL = parse_url($this->arrObjInfo[$db_name]);
@@ -787,7 +787,7 @@ class Member extends Basic {
 			$avatarURL = $MAIN_ROOT.$this->arrObjInfo[$db_name];
 		}
 
-		$arrStyle = array();
+		$arrStyle = [];
 		if ($setWidth != "") {
 			$arrStyle['width'] = $setWidth;
 		}
@@ -818,7 +818,7 @@ class Member extends Basic {
 	}
 
 	public function getAvatar($setWidth = "", $setHeight = "") {
-		return $this->getMemberPicture($setWidth, $setHeight, "avatar", "defaultavatar.png", array("avatarImg"));
+		return $this->getMemberPicture($setWidth, $setHeight, "avatar", "defaultavatar.png", ["avatarImg"]);
 	}
 
 
@@ -830,7 +830,7 @@ class Member extends Basic {
 
 		$emailNotificationSetting = new Basic($this->MySQL, "emailnotifications_settings", "emailnotificationsetting_id");
 
-		$emailNotificationSetting->selectByMulti(array("member_id" => $this->intTableKeyValue));
+		$emailNotificationSetting->selectByMulti(["member_id" => $this->intTableKeyValue]);
 
 		return $emailNotificationSetting->get_info($notificationName);
 	}
@@ -860,10 +860,10 @@ class Member extends Basic {
 		$emailReminder = new Basic($this->MySQL, "emailnotifications_queue", "emailnotificationsqueue_id");
 
 		if ($updateID == 0) {
-			$emailReminder->addNew(array("member_id", "senddate", "subject", "message"), array($this->intTableKeyValue, $sendDate, $subject, $message));
+			$emailReminder->addNew(["member_id", "senddate", "subject", "message"], [$this->intTableKeyValue, $sendDate, $subject, $message]);
 		} else {
 			$emailReminder->select($updateID);
-			$emailReminder->update(array("member_id", "senddate", "subject", "message"), array($this->intTableKeyValue, $sendDate, $subject, $message));
+			$emailReminder->update(["member_id", "senddate", "subject", "message"], [$this->intTableKeyValue, $sendDate, $subject, $message]);
 		}
 
 		return $emailReminder->get_info("emailnotificationsqueue_id");
@@ -873,7 +873,7 @@ class Member extends Basic {
 
 		if ($this->arrObjInfo['email'] != "") {
 			$objMail = new btMail();
-			$objMail->sendMail($this->arrObjInfo['email'], $subject, $message, array("from" => $from));
+			$objMail->sendMail($this->arrObjInfo['email'], $subject, $message, ["from" => $from]);
 		}
 	}
 

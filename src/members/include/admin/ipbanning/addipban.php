@@ -34,7 +34,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 }
 
 $countErrors = 0;
-$arrErrors = array();
+$arrErrors = [];
 	// Check IP
 
 if (trim($_POST['ipaddress']) == "") {
@@ -79,8 +79,8 @@ if (!is_numeric($_POST['expTime']) || (is_numeric($_POST['expTime']) && $_POST['
 if ($countErrors == 0) {
 	$setExpTime = ($_POST['expTime'] == 0) ? $setExpTime = 0 : ($_POST['expTime']*60)+time();
 
-	if ($ipbanObj->addNew(array("ipaddress", "exptime", "dateadded"), array($_POST['ipaddress'], $setExpTime, time()))) {
-		$arrReturn = array("result"=>"success", "settime"=>$setExpTime);
+	if ($ipbanObj->addNew(["ipaddress", "exptime", "dateadded"], [$_POST['ipaddress'], $setExpTime, time()])) {
+		$arrReturn = ["result"=>"success", "settime"=>$setExpTime];
 	} else {
 		$countErrors++;
 		$arrErrors[] = "Unable to save information to database! Please contact the website administrator.";
@@ -89,7 +89,7 @@ if ($countErrors == 0) {
 
 
 if ($countErrors > 0) {
-	$arrReturn = array("result"=>"fail", "errors"=>$arrErrors);
+	$arrReturn = ["result"=>"fail", "errors"=>$arrErrors];
 }
 
 echo json_encode($arrReturn);

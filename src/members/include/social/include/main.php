@@ -19,7 +19,7 @@ if (!defined("LOGGED_IN") || !LOGGED_IN) {
 $objManageList->intAddCID = $consoleObj->findConsoleIDByName("Add Social Media Icon");
 $objManageList->strEditItemLink = MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&sID=";
 $objManageList->strDeleteLink = MAIN_ROOT."members/console.managelist.delete.php?cID=".$_GET['cID'];
-$objManageList->arrActionList = array("moveup", "movedown", "edit", "delete");
+$objManageList->arrActionList = ["moveup", "movedown", "edit", "delete"];
 $objManageList->strItemTitle = "Name:";
 
 $setupManageListArgs = $objManageList->getListArray();

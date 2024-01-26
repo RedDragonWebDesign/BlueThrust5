@@ -37,8 +37,8 @@ if ( ! empty($_POST['submit']) ) {
 
 	$pmFolderObj->select($folderInfo['pmfolder_id']);
 	if ($countErrors == 0) {
-		$arrColumns = array("name", "sortnum");
-		$arrValues = array($_POST['foldername'], $intNewOrderSpot);
+		$arrColumns = ["name", "sortnum"];
+		$arrValues = [$_POST['foldername'], $intNewOrderSpot];
 
 		if ($pmFolderObj->update($arrColumns, $arrValues)) {
 			$folderInfo = $pmFolderObj->get_info_filtered();

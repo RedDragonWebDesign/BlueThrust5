@@ -54,7 +54,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		$taggerObj = new Basic($mysqli, "membersonlypage", "pageurl");
 
 		if (!$taggerObj->select($_POST['tagURL'], false)) {
-			$taggerObj->addNew(array("pagename", "pageurl", "dateadded"), array($_POST['pageName'], $_POST['tagURL'], time()));
+			$taggerObj->addNew(["pagename", "pageurl", "dateadded"], [$_POST['pageName'], $_POST['tagURL'], time()]);
 
 			echo "
 			
@@ -91,8 +91,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 		}
 	} elseif ($_POST['setSectionStatus'] == 1 && ($_POST['pageID'] == "profile" || $_POST['pageID'] == "forum") && ($_POST['pageStatusValue'] == 1 || $_POST['pageStatusValue'] == 0)) {
 		$settingName = "private".$_POST['pageID'];
-		$arrColumn = array("value");
-		$arrValue = array($_POST['pageStatusValue']);
+		$arrColumn = ["value"];
+		$arrValue = [$_POST['pageStatusValue']];
 		$webInfoObj->select($webInfoObj->get_key($settingName));
 		if ($webInfoObj->update($arrColumn, $arrValue)) {
 			echo "<span class='successFont'><i>section privacy updated!</i></span>";

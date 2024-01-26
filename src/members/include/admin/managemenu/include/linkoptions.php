@@ -2,11 +2,11 @@
 
 
 // Link Options
-$linkOptionComponents = array(
-	"linkurl_link" => array(
+$linkOptionComponents = [
+	"linkurl_link" => [
 		"type" => "text",
 		"display_name" => "Link URL",
 		"sortorder" => $i++,
-		"attributes" => array("class" => "textBox formInput", "style" => "width: 30%")
-	)
-);
+		"attributes" => ["class" => "textBox formInput", "style" => "width: 30%"]
+	]
+];

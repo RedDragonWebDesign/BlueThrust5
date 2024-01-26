@@ -26,8 +26,8 @@ class MemberApp extends Basic {
 		if ($this->objSignUpForm->validate()) {
 			$newPassword = encryptPassword($_POST['password']);
 
-			$arrColumns = array("username", "password", "password2", "email", "applydate", "ipaddress");
-			$arrValues = array($_POST['username'], $newPassword['password'], $newPassword['salt'], $_POST['email'], time(), $IP_ADDRESS);
+			$arrColumns = ["username", "password", "password2", "email", "applydate", "ipaddress"];
+			$arrValues = [$_POST['username'], $newPassword['password'], $newPassword['salt'], $_POST['email'], time(), $IP_ADDRESS];
 
 			if ($this->addNew($arrColumns, $arrValues)) {
 				$result = $this->MySQL->query("SELECT appcomponent_id FROM ".$this->MySQL->get_tablePrefix()."app_components ORDER BY ordernum DESC");
@@ -59,25 +59,25 @@ class MemberApp extends Basic {
 			$addSQL = "componenttype = 'profile'";
 		}
 
-		$returnArr = array();
+		$returnArr = [];
 		$componentIDs = $this->MySQL->query("SELECT appcomponent_id,componenttype FROM ".$this->MySQL->get_tablePrefix()."app_components WHERE ".$addSQL." ORDER BY ordernum DESC");
 		while ($row = $componentIDs->fetch_assoc()) {
 			$appValues = $this->MySQL->query("SELECT appvalue FROM ".$this->MySQL->get_tablePrefix()."app_values WHERE appcomponent_id = '".$row['appcomponent_id']."' AND memberapp_id = '".$this->intTableKeyValue."'");
 
 			$this->objAppComponent->select($row['appcomponent_id']);
 
-			$arrAppValues = array();
-			$arrAppDisplayValues = array();
+			$arrAppValues = [];
+			$arrAppDisplayValues = [];
 			while ($row2 = $appValues->fetch_assoc()) {
 				$arrAppValues[] = $row2['appvalue'];
 				$arrAppDisplayValues[] = $this->objAppComponent->getDisplayValue($row2['appvalue']);
 			}
 
-			$returnArr[$row['appcomponent_id']] = array(
+			$returnArr[$row['appcomponent_id']] = [
 				"type" => $row['componenttype'],
 				"values" => $arrAppValues,
 				"display_values" => $arrAppDisplayValues
-			);
+			];
 		}
 
 		return $returnArr;
@@ -98,13 +98,13 @@ class MemberApp extends Basic {
 
 		$appInfo = $this->get_info();
 
-		$arrColumns = array("username", "password", "password2", "rank_id", "email", "datejoined", "lastlogin", "lastseen");
-		$arrValues = array($appInfo['username'], $appInfo['password'], $appInfo['password2'], $newMemRank, $appInfo['email'], time(), time(), time());
+		$arrColumns = ["username", "password", "password2", "rank_id", "email", "datejoined", "lastlogin", "lastseen"];
+		$arrValues = [$appInfo['username'], $appInfo['password'], $appInfo['password2'], $newMemRank, $appInfo['email'], time(), time(), time()];
 
 		if ($this->objMember->addNew($arrColumns, $arrValues)) {
 			$this->setMemberProfile();
 
-			$returnVal = $this->update(array("memberadded"), array(1));
+			$returnVal = $this->update(["memberadded"], [1]);
 
 			$this->notifyNewMember();
 		}
@@ -127,12 +127,12 @@ class MemberApp extends Basic {
 					case "maingame":
 					case "recruiter":
 						$columnName = ($componentValue == "maingame") ? "maingame_id" : $componentValue;
-						$this->objMember->update(array($columnName), array($profileItem['values'][0]));
+						$this->objMember->update([$columnName], [$profileItem['values'][0]]);
 						break;
 					case "gamesplayed":
 						$gameMemberObj = new Basic($this->MySQL, "gamesplayed_members", "gamemember_id");
 						foreach ($profileItem['values'] as $gameID) {
-							$gameMemberObj->addNew(array("member_id", "gamesplayed_id"), array($this->objMember->get_info("member_id"), $gameID));
+							$gameMemberObj->addNew(["member_id", "gamesplayed_id"], [$this->objMember->get_info("member_id"), $gameID]);
 						}
 
 						break;
@@ -158,17 +158,17 @@ class MemberApp extends Basic {
 		$viewMemberAppCID = $consoleObj->findConsoleIDByName("View Member Applications");
 		$consoleObj->select($viewMemberAppCID);
 
-		$arrBCC = array();
+		$arrBCC = [];
 
 		$result = $this->MySQL->query("SELECT member_id FROM ".$this->MySQL->get_tablePrefix()."members WHERE disabled = '0'");
 		while ($row = $result->fetch_assoc()) {
 			$memberObj->select($row['member_id']);
 			if ($memberObj->hasAccess($consoleObj)) {
 				if ($memberObj->get_info("email") != "") {
-					$arrBCC[] = array(
+					$arrBCC[] = [
 						"email" => $memberObj->get_info("email"),
 						"name" => $memberObj->get_info("username")
-					);
+					];
 				}
 
 				$memberObj->postNotification("A new member has signed up!  Go to the <a href='".MAIN_ROOT."members/console.php?cID=".$viewMemberAppCID."'>View Member Applications</a> page to review the application.");
@@ -178,7 +178,7 @@ class MemberApp extends Basic {
 		$subject = $webInfo['clanname'].": New Member Application";
 		$message = "A new member, ".$this->arrObjInfo['username'].", has signed up at your website: <a href='".FULL_SITE_URL."'>".$webInfo['clanname']."</a>!";
 
-		$webInfoObj->objBTMail->sendMail("", $subject, $message, array("bcc" => $arrBCC));
+		$webInfoObj->objBTMail->sendMail("", $subject, $message, ["bcc" => $arrBCC]);
 	}
 
 	public function notifyNewMember($accepted = true) {
@@ -207,7 +207,7 @@ class MemberApp extends Basic {
 	public function setRecruiter($memberID) {
 		$returnVal = false;
 		if (is_numeric($memberID)) {
-			$returnVal = $this->objMember->update(array("recruiter"), array($memberID));
+			$returnVal = $this->objMember->update(["recruiter"], [$memberID]);
 		}
 
 		return $returnVal;

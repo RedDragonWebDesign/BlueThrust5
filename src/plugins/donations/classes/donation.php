@@ -19,7 +19,7 @@ class Donation extends Basic {
 
 	public function logError($response) {
 
-		$this->objError->addNew(array("datesent", "response"), array(time(), $response));
+		$this->objError->addNew(["datesent", "response"], [time(), $response]);
 	}
 
 

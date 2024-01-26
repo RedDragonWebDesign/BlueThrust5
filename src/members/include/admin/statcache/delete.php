@@ -60,7 +60,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 				unset($_SESSION['btStatCache'][$_POST['sID']]);
 
 				$x = 0;
-				$tempArray = array();
+				$tempArray = [];
 				foreach ($_SESSION['btStatCache'] as $statInfo) {
 					$tempArray[$x] = $statInfo;
 					$x++;

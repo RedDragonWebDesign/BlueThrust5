@@ -32,7 +32,7 @@ $dispSquadNames = "";
 $arrSquads = $member->getSquadList();
 
 if ($squadObj->getManageAllStatus()) {
-	$arrSquads = array();
+	$arrSquads = [];
 	$result = $mysqli->query("SELECT squad_id FROM ".$dbprefix."squads ORDER BY name");
 	while ($row = $result->fetch_assoc()) {
 		$arrSquads[] = $row['squad_id'];
@@ -74,9 +74,9 @@ if (count($arrSquads) > 0) {
 					";
 
 
-					$arrSquadOptions = array("postnews", "managenews", "manageshoutbox", "addrank", "manageranks", "setrank", "editprofile", "sendinvites", "acceptapps",  "removemember");
-					$arrSquadOptionsPageID = array("PostNews", "ManageNews", "ManageShoutbox", "AddRank", "ManageRanks", "SetRank", "EditProfile", "SendInvites", "ViewApps",  "RemoveMember");
-					$arrSquadOptionsDispName = array("Post News", "Manage News", "Manage Shoutbox Posts", "Add Rank", "Manage Ranks", "Set Member Rank", "Edit Squad Profile", "Send Squad Invite", "View Applications", "Remove Member");
+					$arrSquadOptions = ["postnews", "managenews", "manageshoutbox", "addrank", "manageranks", "setrank", "editprofile", "sendinvites", "acceptapps",  "removemember"];
+					$arrSquadOptionsPageID = ["PostNews", "ManageNews", "ManageShoutbox", "AddRank", "ManageRanks", "SetRank", "EditProfile", "SendInvites", "ViewApps",  "RemoveMember"];
+					$arrSquadOptionsDispName = ["Post News", "Manage News", "Manage Shoutbox Posts", "Add Rank", "Manage Ranks", "Set Member Rank", "Edit Squad Profile", "Send Squad Invite", "View Applications", "Remove Member"];
 					foreach ($arrSquadOptions as $key => $squadOption) {
 						if ($squadRankInfo[$squadOption] == 1 || $squadObj->getManageAllStatus()) {
 							$dispSquadOptions .= "<b>&middot;</b> <a href='".$MAIN_ROOT."members/squads/managesquad.php?sID=".$squadInfo['squad_id']."&pID=".$arrSquadOptionsPageID[$key]."'>".$arrSquadOptionsDispName[$key]."</a><br>";

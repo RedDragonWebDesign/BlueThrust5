@@ -54,8 +54,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	}
 
 	if ($countErrors == 0) {
-		$arrColumns = array("hpimagetype", "hpimagewidth", "hpimageheight", "hpimagewidthunit", "hpimageheightunit");
-		$arrValues = array($displayType, $_POST['containerWidth'], $_POST['containerHeight'], $widthUnit, $heightUnit);
+		$arrColumns = ["hpimagetype", "hpimagewidth", "hpimageheight", "hpimagewidthunit", "hpimageheightunit"];
+		$arrValues = [$displayType, $_POST['containerWidth'], $_POST['containerHeight'], $widthUnit, $heightUnit];
 		if ($webInfoObj->multiUpdate($arrColumns, $arrValues)) {
 			echo "
 				

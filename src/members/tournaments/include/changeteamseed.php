@@ -28,7 +28,7 @@ $member->select($_SESSION['btUsername']);
 
 $tournamentObj = new Tournament($mysqli);
 $tID = $_POST['tID'];
-$arrMembers = array();
+$arrMembers = [];
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID) && $member->hasAccess($consoleObj)) {
 	$memberInfo = $member->get_info();
@@ -91,29 +91,29 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 			$teamMatchID = $tournamentObj->getMatches(1, $teamInfo['tournamentteam_id']);
 			$swappingTeamMatchID = $tournamentObj->getMatches(1, $swappingTeamInfo['tournamentteam_id']);
 
-			$blnCheck1 = $tournamentObj->objTeam->update(array("seed"), array($teamInfo['seed']));
+			$blnCheck1 = $tournamentObj->objTeam->update(["seed"], [$teamInfo['seed']]);
 			$tournamentObj->objTeam->select($teamInfo['tournamentteam_id']);
-			$blnCheck2 = $tournamentObj->objTeam->update(array("seed"), array($swappingTeamInfo['seed']));
+			$blnCheck2 = $tournamentObj->objTeam->update(["seed"], [$swappingTeamInfo['seed']]);
 
 			$tournamentObj->objMatch->select($teamMatchID[0]);
 			$teamMatchInfo = $tournamentObj->objMatch->get_info();
 			if ($teamMatchInfo['team1_id'] == $teamInfo['tournamentteam_id']) {
-				$arrUpdateColumn = array("team1_id");
+				$arrUpdateColumn = ["team1_id"];
 			} else {
-				$arrUpdateColumn = array("team2_id");
+				$arrUpdateColumn = ["team2_id"];
 			}
 
-			$blnCheck3 = $tournamentObj->objMatch->update($arrUpdateColumn, array($swappingTeamInfo['tournamentteam_id']));
+			$blnCheck3 = $tournamentObj->objMatch->update($arrUpdateColumn, [$swappingTeamInfo['tournamentteam_id']]);
 
 			$tournamentObj->objMatch->select($swappingTeamMatchID[0]);
 			$swappingTeamMatchInfo = $tournamentObj->objMatch->get_info();
 			if ($swappingTeamMatchInfo['team1_id'] == $swappingTeamInfo['tournamentteam_id']) {
-				$arrUpdateColumn = array("team1_id");
+				$arrUpdateColumn = ["team1_id"];
 			} else {
-				$arrUpdateColumn = array("team2_id");
+				$arrUpdateColumn = ["team2_id"];
 			}
 
-			$blnCheck4 = $tournamentObj->objMatch->update($arrUpdateColumn, array($teamInfo['tournamentteam_id']));
+			$blnCheck4 = $tournamentObj->objMatch->update($arrUpdateColumn, [$teamInfo['tournamentteam_id']]);
 
 
 

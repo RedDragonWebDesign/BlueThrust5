@@ -54,8 +54,8 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-		$arrColumns = array("name", "ordernum");
-		$arrValues = array($_POST['catname'], $intNewOrderSpot);
+		$arrColumns = ["name", "ordernum"];
+		$arrValues = [$_POST['catname'], $intNewOrderSpot];
 
 		if ($profileCatObj->addNew($arrColumns, $arrValues)) {
 			$profileCatInfo = $profileCatObj->get_info_filtered();

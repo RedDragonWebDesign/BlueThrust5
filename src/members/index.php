@@ -73,7 +73,7 @@ if ($checkMember) {
 
 		$result->free();
 
-		$arrFullySortedConsole = array();
+		$arrFullySortedConsole = [];
 		$consoleObj = new ConsoleOption($mysqli);
 		foreach ($rankPrivileges as $consoleoption) {
 			$consoleObj->select($consoleoption);

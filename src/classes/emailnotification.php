@@ -33,7 +33,7 @@ class EmailNotification extends Basic {
 		if ($this->intTableKeyValue != "") {
 			$this->memberObj->email($this->arrObjInfo['subject'], $this->arrObjInfo['message']);
 
-			$this->update(array("sent"), array(1));
+			$this->update(["sent"], [1]);
 		}
 	}
 

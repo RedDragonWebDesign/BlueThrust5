@@ -179,11 +179,11 @@ if ($_GET['rID'] == "") {
 
 		if ($countErrors == 0) {
 			if ($intFounderRankID == $squadRankInfo['squadrank_id']) {
-				$arrColumns = array("name");
-				$arrValues = array($_POST['rankname']);
+				$arrColumns = ["name"];
+				$arrValues = [$_POST['rankname']];
 			} else {
-				$arrColumns = array("name", "sortnum", "postnews", "managenews", "postshoutbox", "manageshoutbox", "addrank", "manageranks", "editprofile", "sendinvites", "acceptapps", "setrank", "removemember");
-				$arrValues = array($_POST['rankname'], $intNewOrderNum, $_POST['postnews'], $_POST['managenews'], $_POST['postshoutbox'], $_POST['manageshoutbox'], $_POST['addrank'], $_POST['manageranks'], $_POST['editprofile'], $_POST['sendinvites'], $_POST['acceptapps'], $_POST['setrank'], $_POST['removemember']);
+				$arrColumns = ["name", "sortnum", "postnews", "managenews", "postshoutbox", "manageshoutbox", "addrank", "manageranks", "editprofile", "sendinvites", "acceptapps", "setrank", "removemember"];
+				$arrValues = [$_POST['rankname'], $intNewOrderNum, $_POST['postnews'], $_POST['managenews'], $_POST['postshoutbox'], $_POST['manageshoutbox'], $_POST['addrank'], $_POST['manageranks'], $_POST['editprofile'], $_POST['sendinvites'], $_POST['acceptapps'], $_POST['setrank'], $_POST['removemember']];
 			}
 			$squadObj->objSquadRank->select($squadRankInfo['squadrank_id']);
 			if ($squadObj->objSquadRank->update($arrColumns, $arrValues)) {
@@ -263,8 +263,8 @@ if ($_GET['rID'] == "") {
 		}
 
 		$arrSquadOptions = $squadObj->arrSquadPrivileges;
-		$arrSquadOptionsDispName = array("Post News", "Manage News", "Post in Shoutbox", "Manage Shoutbox Posts", "Add Rank", "Manage Ranks", "Set Member Rank", "Edit Squad Profile", "Send Squad Invites", "View Applications", "Remove Member");
-		$arrSquadOptionDescriptions = array("", "", "", "", "", "", "", "Edit Squad Information, squad name, recruiting status, etc.", "Send invitations for new members to join.", "Review and Accept/Decline new member applications.", "");
+		$arrSquadOptionsDispName = ["Post News", "Manage News", "Post in Shoutbox", "Manage Shoutbox Posts", "Add Rank", "Manage Ranks", "Set Member Rank", "Edit Squad Profile", "Send Squad Invites", "View Applications", "Remove Member"];
+		$arrSquadOptionDescriptions = ["", "", "", "", "", "", "", "Edit Squad Information, squad name, recruiting status, etc.", "Send invitations for new members to join.", "Review and Accept/Decline new member applications.", ""];
 
 		foreach ($arrSquadOptions as $key => $squadOption) {
 			$showTip = "";

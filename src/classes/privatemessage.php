@@ -34,14 +34,14 @@ class PrivateMessage extends BasicOrder {
 
 	public function getRecipients($blnNameOnly = false) {
 		global $MAIN_ROOT;
-		$arrGroups = array();
+		$arrGroups = [];
 
 		if ($this->intTableKeyValue != "" && $this->arrObjInfo['receiver_id'] == 0) {
-			$arrGroups['list'] = array();
-			$arrGroups['rank'] = array();
-			$arrGroups['squad'] = array();
-			$arrGroups['tournament'] = array();
-			$arrGroups['rankcategory'] = array();
+			$arrGroups['list'] = [];
+			$arrGroups['rank'] = [];
+			$arrGroups['squad'] = [];
+			$arrGroups['tournament'] = [];
+			$arrGroups['rankcategory'] = [];
 
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."privatemessage_members WHERE pm_id = '".$this->intTableKeyValue."'");
 			while ($row = $result->fetch_assoc()) {

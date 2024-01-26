@@ -65,7 +65,7 @@ if ($websiteInfo['privateforum'] == 1 && !constant("LOGGED_IN")) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
 }
 
-$memberInfo = array();
+$memberInfo = [];
 
 
 $LOGGED_IN = false;
@@ -191,7 +191,7 @@ foreach ($arrSubForums as $boardID) {
 		$dispTopicCount = $subForumObj->countTopics();
 		$dispPostCount = $subForumObj->countPosts();
 
-		$arrDispMoreSubForums = array();
+		$arrDispMoreSubForums = [];
 		$arrMoreSubForums = $subForumObj->getSubForums();
 
 		foreach ($arrMoreSubForums as $value) {
@@ -227,13 +227,13 @@ $breadcrumbObj->addCrumb("Forum", $MAIN_ROOT."forum");
 $dispBreadCrumbChain = "";
 if ($boardInfo['subforum_id'] != 0) {
 	$subForumID = $boardInfo['subforum_id'];
-	$submForumBC = array();
+	$submForumBC = [];
 	while ($subForumID != 0) {
 		$subForumObj->select($subForumID);
 		$subForumInfo = $subForumObj->get_info_filtered();
 		$subForumID = $subForumInfo['subforum_id'];
 		//$dispBreadCrumbChain = "<a href='".$MAIN_ROOT."forum/viewboard.php?bID=".$subForumInfo['forumboard_id']."'>".$subForumInfo['name']."</a> > ".$dispBreadCrumbChain;
-		$subForumBC[] = array("link" => $MAIN_ROOT."forum/viewboard.php?bID=".$subForumInfo['forumboard_id'], "value" => $subForumInfo['name']);
+		$subForumBC[] = ["link" => $MAIN_ROOT."forum/viewboard.php?bID=".$subForumInfo['forumboard_id'], "value" => $subForumInfo['name']];
 	}
 
 	krsort($subForumBC);

@@ -18,7 +18,7 @@ require_once("../_setup.php");
 $memberObj = new Member($mysqli);
 
 if ($memberObj->select($_SESSION['btUsername']) && $memberObj->authorizeLogin($_SESSION['btPassword'])) {
-	$memberObj->update(array("loggedin"), array(0));
+	$memberObj->update(["loggedin"], [0]);
 }
 
 if (isset($_COOKIE['btUsername']) || isset($_COOKIE['btPassword'])) {

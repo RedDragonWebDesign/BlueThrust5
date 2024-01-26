@@ -56,7 +56,7 @@ if ($rankInfo['rank_id'] == 1) {
 	$maxRankInfo['ordernum'] -= 1;
 }
 
-$arrRanks = array();
+$arrRanks = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$arrRanks[] = $row['rank_id'];
@@ -76,7 +76,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-		if ($member->update(array("disabled", "disableddate"), array(1, time()))) {
+		if ($member->update(["disabled", "disableddate"], [1, time()])) {
 			$logMessage = "Disabled ".$member->getMemberLink().".";
 			$logMessage .= $_POST['reason'] ? "<br><br><b>Reason:</b><br>".filterText($_POST['reason']) : "";
 

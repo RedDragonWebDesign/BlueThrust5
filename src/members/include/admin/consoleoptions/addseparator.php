@@ -48,10 +48,10 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 		}
 
 
-		$consoleObj->addNew(array("consolecategory_id", "pagetitle", "sep", "sortnum"), array($_POST['cID'], "-separator-", "1", $intSpot));
+		$consoleObj->addNew(["consolecategory_id", "pagetitle", "sep", "sortnum"], [$_POST['cID'], "-separator-", "1", $intSpot]);
 		$newSepID = $consoleObj->get_info("console_id");
 		$rankPrivObj = new Basic($mysqli, "rank_privileges", "privilege_id");
-		$rankPrivObj->addNew(array("console_id", "rank_id"), array($newSepID, 1));
+		$rankPrivObj->addNew(["console_id", "rank_id"], [$newSepID, 1]);
 
 
 		require_once("main.php");

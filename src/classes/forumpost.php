@@ -57,7 +57,7 @@ class ForumPost extends Basic {
 
 	public function getPostAttachments() {
 
-		$returnArr = array();
+		$returnArr = [];
 
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT download_id FROM ".$this->MySQL->get_tablePrefix()."forum_attachments WHERE forumpost_id = '".$this->intTableKeyValue."'");
@@ -80,7 +80,7 @@ class ForumPost extends Basic {
 	}
 
 	public function getTopicInfo($filtered = false) {
-		$returnArr = array();
+		$returnArr = [];
 		if ($this->intTableKeyValue != "") {
 			$temp = $this->intTableKeyValue;
 			$tempManage = $this->blnManageable;
@@ -169,7 +169,7 @@ class ForumPost extends Basic {
 	/** Gets all member_id's of posters in a topic */
 	private function getTopicPosters() {
 
-		$arrReturn = array();
+		$arrReturn = [];
 		$query = "SELECT DISTINCT member_id FROM ".$this->strTableName." WHERE forumtopic_id = '".$this->arrObjInfo['forumtopic_id']."'";
 		$result = $this->MySQL->query($query);
 
@@ -183,7 +183,7 @@ class ForumPost extends Basic {
 		if ($this->intTableKeyValue != "") {
 			$mailObj = new btMail();
 			$member = new Member($this->MySQL);
-			$arrBCC = array();
+			$arrBCC = [];
 
 			// Check if need to send notification to topic starter
 			$topicInfo = $this->getTopicInfo();
@@ -206,7 +206,7 @@ class ForumPost extends Basic {
 			}
 
 			if (count($arrBCC) > 0) {
-				$mailObj->sendMail("", $subject, $message, array("bcc" => $arrBCC));
+				$mailObj->sendMail("", $subject, $message, ["bcc" => $arrBCC]);
 			}
 		}
 	}

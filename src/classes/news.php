@@ -48,7 +48,7 @@ class News extends Basic {
 
 	public function getComments($orderBY = "") {
 
-		$returnArr = array();
+		$returnArr = [];
 
 		if ($orderBY == "") {
 			$orderBY = " ORDER BY dateposted DESC";
@@ -85,7 +85,7 @@ class News extends Basic {
 		$returnVal = false;
 
 		if (is_numeric($intMemberID) && $this->intTableKeyValue != "" && trim($strMessage) != "") {
-			if ($this->objComment->addNew(array($this->strTableKey, "member_id", "message", "dateposted"), array($this->intTableKeyValue, $intMemberID, $strMessage, time()))) {
+			if ($this->objComment->addNew([$this->strTableKey, "member_id", "message", "dateposted"], [$this->intTableKeyValue, $intMemberID, $strMessage, time()])) {
 				$returnVal = true;
 			}
 		}
@@ -245,7 +245,7 @@ class News extends Basic {
 			$sqlLimit = " LIMIT ".($_GET['page']-1)*$websiteInfo['news_postsperpage'].", ".$websiteInfo['news_postsperpage'];
 		}
 
-		$returnArr = array();
+		$returnArr = [];
 		$result = $this->MySQL->query("SELECT news_id FROM ".$this->strTableName." WHERE ".$newsPostSQL." ORDER BY dateposted DESC ".$sqlLimit);
 		while ($row = $result->fetch_assoc()) {
 			$returnArr[] = $row;

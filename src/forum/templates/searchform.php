@@ -7,7 +7,7 @@ if (!defined("SHOW_FORUMSEARCH")) {
 $setFilterTopic = empty($filterTopic) ? "" : "data-topic='".$filterTopic."'";
 $setFilterBoard = empty($filterBoard) ? "" : "data-board='".$filterBoard."'";
 
-$arrSearchFilterURL = array();
+$arrSearchFilterURL = [];
 if ($setFilterTopic != "") {
 	$arrSearchFilterURL[] = "topic=".$filterTopic;
 }

@@ -30,7 +30,7 @@ class Rank extends BasicOrder {
 
 	function get_privileges() {
 
-		$arrPrivileges = array();
+		$arrPrivileges = [];
 
 		if ($this->intTableKeyValue == 1) {
 			$result = $this->MySQL->query("SELECT console_id FROM ".$this->MySQL->get_tablePrefix()."console ORDER BY sortnum");

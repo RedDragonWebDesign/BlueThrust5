@@ -68,7 +68,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-		if ($consoleCatObj->addNew(array("name", "ordernum"), array($_POST['catname'], $intNewOrderSpot))) {
+		if ($consoleCatObj->addNew(["name", "ordernum"], [$_POST['catname'], $intNewOrderSpot])) {
 			echo "
 			<div style='display: none' id='successBox'>
 				<p align='center'>

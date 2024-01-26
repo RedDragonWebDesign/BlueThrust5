@@ -41,9 +41,9 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	if ( ! empty($_POST['submit']) ) {
 		// Check Image
 		if ($_FILES['menuimagefile']['name'] != "") {
-			$btUploadObj = new BTUpload($_FILES['uploadimage'], "hpimage_", "../images/homepage/", array(".jpg", ".png", ".bmp", ".gif"));
+			$btUploadObj = new BTUpload($_FILES['uploadimage'], "hpimage_", "../images/homepage/", [".jpg", ".png", ".bmp", ".gif"]);
 		} else {
-			$btUploadObj = new BTUpload($_POST['imageurl'], "hpimage_", "../images/homepage/", array(".jpg", ".png", ".bmp", ".gif"), 4, true);
+			$btUploadObj = new BTUpload($_POST['imageurl'], "hpimage_", "../images/homepage/", [".jpg", ".png", ".bmp", ".gif"], 4, true);
 		}
 	}
 

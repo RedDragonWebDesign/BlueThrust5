@@ -20,7 +20,7 @@ class Download extends Basic {
 	protected $strMIMEType;
 	protected $arrSplitFileNames;
 	protected $intFileSize;
-	protected $filterExtensions = array("php", "js");
+	protected $filterExtensions = ["php", "js"];
 
 
 	function __construct($sqlConnection) {
@@ -31,7 +31,7 @@ class Download extends Basic {
 
 		$this->objDownloadCategory = new DownloadCategory($sqlConnection);
 
-		$this->arrSplitFileNames = array();
+		$this->arrSplitFileNames = [];
 	}
 
 	function setCategory($intCatID) {
@@ -71,7 +71,7 @@ class Download extends Basic {
 			$finfo = finfo_open(FILEINFO_MIME_TYPE);
 			$this->strMIMEType = finfo_file($finfo, $fullFileName);
 
-			$this->arrSplitFileNames = array();
+			$this->arrSplitFileNames = [];
 			$handle = fopen($fullFileName, 'rb');
 			if ($handle) {
 				$file_size = filesize($fullFileName);

@@ -101,14 +101,14 @@ class btMySQL extends MySQLi {
 		$strParamTypes = $this->getParamTypes($arrValues);
 
 		// Create an array whose first value (spot 0) is the $strParamTypes, and all additional values are the $arrValues. For example, ['ss', 'paramValue1', 'paramValue2']
-		$tmpParams = array_merge(array($strParamTypes), array_values($arrValues));
+		$tmpParams = array_merge([$strParamTypes], array_values($arrValues));
 		// TODO: can we delete these 6 lines below? $tmpParams above might provide the format we need without the foreach loop. maybe unit test before deleting.
-		$arrParams = array();
+		$arrParams = [];
 		foreach ($tmpParams as $key => $value) {
 			$arrParams[$key] = &$tmpParams[$key];
 		}
 
-		if (!call_user_func_array(array($objMySQLiStmt, "bind_param"), $arrParams)) {
+		if (!call_user_func_array([$objMySQLiStmt, "bind_param"], $arrParams)) {
 			// TODO: can probably get rid of $returnVal and just return the appropriate values
 			$returnVal = false;
 			echo $objMySQLiStmt->error;
@@ -123,7 +123,7 @@ class btMySQL extends MySQLi {
 	}
 
 	public function optimizeTables() {
-		$tables = array();
+		$tables = [];
 		$result = $this->query("SHOW TABLE STATUS WHERE Data_free > 0");
 		while ($row = $result->fetch_assoc()) {
 			$tables[] = "`".$row['Name']."`";

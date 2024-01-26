@@ -7,9 +7,9 @@ if (!isset($pluginInstaller)) {
 $pluginInstaller->setPluginDirectory("twitch");
 
 $pluginInstaller->pluginName = "Twitch";
-$pluginInstaller->pluginPages = array(
-		array(
+$pluginInstaller->pluginPages = [
+		[
 			"page" => "mods",
 			"pagepath" => "plugins/twitch/twitch_functions.php"
-		)
-	);
+		]
+	];

@@ -82,10 +82,10 @@ if (count($_POST) > 0) {
 require_once($prevFolder."include/breadcrumb.php");
 
 
-$arrMemberList = array();
+$arrMemberList = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '0' AND rank_id != '1' ORDER BY username");
 while ($row = $result->fetch_assoc()) {
-	$arrMemberList[] = array("id" => $row['member_id'], "value" => filterText($row['username']));
+	$arrMemberList[] = ["id" => $row['member_id'], "value" => filterText($row['username'])];
 }
 
 $memberList = json_encode($arrMemberList);
@@ -137,116 +137,116 @@ function check_filter_boards() {
 $filterBoardSize = floor(count($filterBoardOptions)*.85);
 
 $i=1;
-$formComponents = array(
-	"searchbykeyword" => array(
-		"options" => array("section_title" => "Search by Keyword"),
+$formComponents = [
+	"searchbykeyword" => [
+		"options" => ["section_title" => "Search by Keyword"],
 		"sortorder" => $i++,
 		"type" => "section",
-		"validate" => array("search_checks")
-	),
-	"keyword" => array(
+		"validate" => ["search_checks"]
+	],
+	"keyword" => [
 		"type" => "text",
-		"attributes" => array("class" => "formInput textBox"),
+		"attributes" => ["class" => "formInput textBox"],
 		"display_name" => "Keyword",
 		"sortorder" => $i++
-	),
-	"filterkeyword" => array(
+	],
+	"filterkeyword" => [
 		"type" => "select",
-		"options" => array("Search Entire Posts", "Search Titles Only"),
+		"options" => ["Search Entire Posts", "Search Titles Only"],
 		"display_name" => "Filter Keyword",
 		"sortorder" => $i++,
-		"attributes" => array("class" => "formInput textBox"),
-		"validate" => array("RESTRICT_TO_OPTIONS")
-	),
-	"searchbyuser" => array(
-		"options" => array("section_title" => "Search by Username"),
+		"attributes" => ["class" => "formInput textBox"],
+		"validate" => ["RESTRICT_TO_OPTIONS"]
+	],
+	"searchbyuser" => [
+		"options" => ["section_title" => "Search by Username"],
 		"sortorder" => $i++,
 		"type" => "section"
-	),
-	"searchuser" => array(
+	],
+	"searchuser" => [
 		"type" => "autocomplete",
-		"attributes" => array("class" => "formInput textBox"),
+		"attributes" => ["class" => "formInput textBox"],
 		"display_name" => "Username",
 		"sortorder" => $i++,
-		"options" => array("real_id" => "searchUser", "fake_id" => "fakeSearchUser", "list" => $memberList)
-	),
-	"filterusername" => array(
+		"options" => ["real_id" => "searchUser", "fake_id" => "fakeSearchUser", "list" => $memberList]
+	],
+	"filterusername" => [
 		"type" => "select",
-		"options" => array("Find Posts by User", "Find Topics Started by User"),
+		"options" => ["Find Posts by User", "Find Topics Started by User"],
 		"display_name" => "Filter Username",
 		"sortorder" => $i++,
-		"attributes" => array("class" => "formInput textBox"),
-		"validate" => array("RESTRICT_TO_OPTIONS")
-	),
-	"searchoptions" => array(
-		"options" => array("section_title" => "Search Options"),
+		"attributes" => ["class" => "formInput textBox"],
+		"validate" => ["RESTRICT_TO_OPTIONS"]
+	],
+	"searchoptions" => [
+		"options" => ["section_title" => "Search Options"],
 		"sortorder" => $i++,
 		"type" => "section"
-	),
-	"filtertopics" => array(
+	],
+	"filtertopics" => [
 		"type" => "select",
-		"options" => array("At Least", "At Most"),
+		"options" => ["At Least", "At Most"],
 		"display_name" => "Find Topics with",
 		"sortorder" => $i++,
-		"attributes" => array("class" => "formInput textBox"),
+		"attributes" => ["class" => "formInput textBox"],
 		"html" => "<div class='formInput main' style='padding-left: 10px'><input type='text' style='width: 15%' value='0' name='filtertopics_replies' class='textBox'> Replies</div>",
-		"validate" => array("RESTRICT_TO_OPTIONS")
-	),
-	"filterposts" => array(
+		"validate" => ["RESTRICT_TO_OPTIONS"]
+	],
+	"filterposts" => [
 		"type" => "select",
-		"options" => array("Any Date", "Your Last Login", "Yesterday", "A week ago", "2 weeks ago", "1 month ago", "3 months ago" , "6 months ago", "A year ago"),
+		"options" => ["Any Date", "Your Last Login", "Yesterday", "A week ago", "2 weeks ago", "1 month ago", "3 months ago" , "6 months ago", "A year ago"],
 		"display_name" => "Find Posts from",
 		"sortorder" => $i++,
-		"attributes" => array("class" => "formInput textBox"),
+		"attributes" => ["class" => "formInput textBox"],
 		"html" => "<div class='formInput main' style='padding-left: 10px'><select name='filterposts_newold' class='textBox'><option value='0'>and Newer</option><option value='1'>and Older</option></select></div>",
-		"validate" => array("RESTRICT_TO_OPTIONS")
-	),
-	"sortresults" => array(
+		"validate" => ["RESTRICT_TO_OPTIONS"]
+	],
+	"sortresults" => [
 		"type" => "select",
-		"options" => array("Last post date", "Topic Title", "Number of Replies", "Number of Views", "Topic Start Date", "Forum", "Username", "Member Rank"),
+		"options" => ["Last post date", "Topic Title", "Number of Replies", "Number of Views", "Topic Start Date", "Forum", "Username", "Member Rank"],
 		"display_name" => "Sort Results by",
-		"attributes" => array("class" => "formInput textBox"),
+		"attributes" => ["class" => "formInput textBox"],
 		"sortorder" => $i++,
 		"html" => "<div class='formInput main' style='padding-left: 10px'><select name='sortresults_ascdesc' class='textBox'><option value='0'>in Descending Order</option><option value='1'>in Ascending Order</option></select></div>",
-		"validate" => array("RESTRICT_TO_OPTIONS")
-	),
-	"filterboardsection" => array(
+		"validate" => ["RESTRICT_TO_OPTIONS"]
+	],
+	"filterboardsection" => [
 		"type" => "section",
-		"options" => array("section_title" => "Filter Boards"),
+		"options" => ["section_title" => "Filter Boards"],
 		"sortorder" => $i++
-	),
-	"filterboards[]" => array(
+	],
+	"filterboards[]" => [
 		"type" => "select",
 		"display_name" => "Select Boards",
-		"attributes" => array("multiple" => "multiple", "class" => "formInput textBox", "size" => $filterBoardSize, "style" => "width: 40%"),
+		"attributes" => ["multiple" => "multiple", "class" => "formInput textBox", "size" => $filterBoardSize, "style" => "width: 40%"],
 		"options" => $filterBoardOptions,
 		"sortorder" => $i++,
-		"validate" => array("check_filter_boards")
-	),
-	"include_subforums" => array(
+		"validate" => ["check_filter_boards"]
+	],
+	"include_subforums" => [
 		"type" => "checkbox",
 		"value" => 1,
 		"display_name" => "Include Sub-Forums",
-		"attributes" => array("class" => "formInput", "checked" => "checked"),
+		"attributes" => ["class" => "formInput", "checked" => "checked"],
 		"sortorder" => $i++
 
-	),
-	"submit" => array(
+	],
+	"submit" => [
 		"type" => "submit",
-		"attributes" => array("class" => "submitButton formSubmitButton"),
+		"attributes" => ["class" => "submitButton formSubmitButton"],
 		"sortorder" => $i++,
 		"value" => "Search"
-	)
-);
+	]
+];
 
 
-$setupFormArgs = array(
+$setupFormArgs = [
 	"name" => "search_form",
 	"components" => $formComponents,
 	"description" => "Use the form below to search the forum.",
-	"attributes" => array("method" => "post", "action" => $MAIN_ROOT."forum/search.php")
+	"attributes" => ["method" => "post", "action" => $MAIN_ROOT."forum/search.php"]
 
-);
+];
 
 $formObj = new Form($setupFormArgs);
 

@@ -61,7 +61,7 @@ class btPlugin extends Basic {
 
 	public function getPlugins($return = "") {
 
-		$arrReturn = array();
+		$arrReturn = [];
 		if ($return != "") {
 			$return = $this->MySQL->real_escape_string($return);
 		} else {
@@ -77,7 +77,7 @@ class btPlugin extends Basic {
 	}
 
 	public function getAPIKeys() {
-		$returnArr = array();
+		$returnArr = [];
 		if ($this->intTableKeyValue != "") {
 			$returnArr = json_decode($this->arrObjInfo['apikey'], true);
 		}
@@ -92,7 +92,7 @@ class btPlugin extends Basic {
 			$sqlFilter = " AND plugin_id = '".$limitToPlugin."'";
 		}
 
-		$arrReturn = array();
+		$arrReturn = [];
 
 		$page = $this->MySQL->real_escape_string($page);
 
@@ -108,7 +108,7 @@ class btPlugin extends Basic {
 
 	protected function populateConfig() {
 
-		$this->configInfo = array();
+		$this->configInfo = [];
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."plugin_config WHERE plugin_id = '".$this->intTableKeyValue."'");
 			while ($row = $result->fetch_assoc()) {
@@ -122,7 +122,7 @@ class btPlugin extends Basic {
 	public function addConfigValue($name, $value) {
 
 		if ($this->intTableKeyValue != "" && !isset($this->configInfo[$name])) {
-			$this->objPluginConfig->addNew(array("plugin_id", "name", "value"), array($this->intTableKeyValue, $name, $value));
+			$this->objPluginConfig->addNew(["plugin_id", "name", "value"], [$this->intTableKeyValue, $name, $value]);
 		} else {
 			$this->updateConfigValue($name, $value);
 		}
@@ -133,7 +133,7 @@ class btPlugin extends Basic {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "" && $this->objPluginConfig->select($this->configInfoIDs[$name])) {
-			$returnVal = $this->objPluginConfig->update(array("value"), array($value));
+			$returnVal = $this->objPluginConfig->update(["value"], [$value]);
 		}
 
 		return $returnVal;
@@ -162,7 +162,7 @@ class btPlugin extends Basic {
 	}
 
 
-	public function verifyPlugin($pluginName, $arrRequiredConfig = array()) {
+	public function verifyPlugin($pluginName, $arrRequiredConfig = []) {
 
 		if (!$this->selectByName($pluginName)) {
 			echo "<script type='text/javascript'>window.location = '".MAIN_ROOT."';</script>";
@@ -193,7 +193,7 @@ class btPlugin extends Basic {
 		if ($this->intTableKeyValue != "") {
 			$blnDeletePlugin = parent::delete();
 
-			$queries = array();
+			$queries = [];
 			$queries['plugin_pages'] = "DELETE FROM ".$this->MySQL->get_tablePrefix()."plugin_pages WHERE plugin_id = '".$this->intTableKeyValue."'";
 			$queries['plugin_config'] = "DELETE FROM ".$this->MySQL->get_tablePrefix()."plugin_config WHERE plugin_id = '".$this->intTableKeyValue."'";
 

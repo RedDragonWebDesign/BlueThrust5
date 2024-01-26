@@ -39,13 +39,13 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->select($_SESS
 		$arrInvitedMembers = $eventObj->getInvitedMembers(true);
 		$arrInvitedMembers = array_merge($arrInvitedMembers, $_SESSION['btInviteList']);
 
-		$arrACMemberList = array();
+		$arrACMemberList = [];
 
 		$sqlInvitedMembers = "('".implode("','", $arrInvitedMembers)."')";
 		$memberoptions = "<option value=''>Select</option>";
 		$result = $mysqli->query("SELECT m.username,m.member_id,r.ordernum,r.name FROM ".$dbprefix."members m, ".$dbprefix."ranks r WHERE m.rank_id = r.rank_id AND m.member_id NOT IN ".$sqlInvitedMembers." AND m.disabled = '0' AND m.rank_id != '1' AND m.member_id != '".$eventMID."' AND m.username LIKE '".$checkTerm."%' ORDER BY r.ordernum DESC");
 		while ($row = $result->fetch_assoc()) {
-			$arrACMemberList[] = array("id" => $row['member_id'], "value" => filterText($row['username']));
+			$arrACMemberList[] = ["id" => $row['member_id'], "value" => filterText($row['username'])];
 		}
 
 		echo json_encode($arrACMemberList);

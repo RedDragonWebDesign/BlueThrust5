@@ -59,18 +59,18 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			$multiMemPMInfo = $multiMemPMObj->get_info();
 
 			if ($multiMemPMInfo['member_id'] == $memberInfo['member_id'] && $multiMemPMInfo['pmfolder_id'] == -2) {
-				$multiMemPMObj->update(array("deletestatus"), array(1));
+				$multiMemPMObj->update(["deletestatus"], [1]);
 			} elseif ($multiMemPMInfo['member_id'] == $memberInfo['member_id']) {
-				$multiMemPMObj->update(array("pmfolder_id"), array(-2));
+				$multiMemPMObj->update(["pmfolder_id"], [-2]);
 			}
 		} elseif ($pmInfo['receiver_id'] == $memberInfo['member_id'] && $pmInfo['receiverfolder_id'] == -2) {
-			$pmObj->update(array("deletereceiver"), array(1));
+			$pmObj->update(["deletereceiver"], [1]);
 		} elseif ($pmInfo['receiver_id'] == $memberInfo['member_id']) {
-			$pmObj->update(array("receiverfolder_id"), array(-2));
+			$pmObj->update(["receiverfolder_id"], [-2]);
 		} elseif ($pmInfo['sender_id'] == $memberInfo['member_id'] && $pmInfo['senderfolder_id'] == -2) {
-			$pmObj->update(array("deletesender"), array(1));
+			$pmObj->update(["deletesender"], [1]);
 		} elseif ($pmInfo['sender_id'] == $memberInfo['member_id']) {
-			$pmObj->update(array("senderfolder_id"), array(-2));
+			$pmObj->update(["senderfolder_id"], [-2]);
 		}
 	}
 }

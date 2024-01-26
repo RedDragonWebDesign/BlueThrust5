@@ -40,7 +40,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objTeam-
 
 
 	if (($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1")  || $tournamentObj->isManager($memberInfo['member_id']) && trim($_POST['newName']) != "") {
-		if ($tournamentObj->objTeam->update(array("name"), array($_POST['newName']))) {
+		if ($tournamentObj->objTeam->update(["name"], [$_POST['newName']])) {
 			$dispMessage = "<p class='successFont'><b>Team Name Saved!</b></p>";
 
 			$teamCounter = 1;

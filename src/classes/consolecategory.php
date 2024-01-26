@@ -64,7 +64,7 @@ class ConsoleCategory extends BasicOrder {
 		$intRankID = $this->intTableKeyValue;
 		if ($intRankID != null) {
 			$intNewRankOrderNum = 0;
-			$arrRanks = array();
+			$arrRanks = [];
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." ORDER BY ordernum");
 			$x = 1;
 			while ($row = $result->fetch_assoc()) {
@@ -127,7 +127,7 @@ class ConsoleCategory extends BasicOrder {
 	function resortOrder() {
 		$counter = 1; // ordernum counter
 		$x = 0; // array counter
-		$arrUpdateID = array();
+		$arrUpdateID = [];
 		$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." ORDER BY ordernum");
 		while ($row = $result->fetch_assoc()) {
 			$arrUpdateID[] = $row[$this->strTableKey];
