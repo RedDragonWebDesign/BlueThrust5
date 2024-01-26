@@ -17,5 +17,5 @@ jobs:
     - name: composer install
       run: composer install --prefer-dist --no-progress
     
-    - name: composer exec phpcs
-      run: composer exec phpcs
+    - name: composer exec phpcs .
+      run: composer exec phpcs .
