@@ -13,7 +13,8 @@
  */
 
 class Form {
-
+	public $description;
+	public $prefillValues;
 	public $formName;
 	public $components;
 	public $saveAdditional;
@@ -145,7 +146,7 @@ class Form {
 					$afterJS .= $this->autocompleteJS($componentInfo['options']['list'], $componentInfo['options']['real_id'], $componentInfo['options']['fake_id']);
 					$fakeComponentName = "fake".$componentName;
 					$fakeComponentValue = $_POST[$fakeComponentName] ?? '';
-					$displayForm .= "<input type='text' name='".$fakeComponentName."' value='".filterText($fakeComponentValue)."' ".$dispAttributes." id='".$componentInfo['options']['fake_id']."'>";
+					$displayForm .= "<input type='text' name='".$fakeComponentName."' value='".filterText($fakeComponentValue)."' ".$dispAttributes." id='".$componentInfo['options']['fake_id']."'><input type='hidden' name='".$componentName."' value='".($componentInfo['value'] ?? '')."' id='".$componentInfo['options']['real_id']."'>";
 					break;
 				case "textarea":
 					$displayForm .= "<textarea name='".$componentName."' ".$dispAttributes.">".$componentInfo['value']."</textarea>";
