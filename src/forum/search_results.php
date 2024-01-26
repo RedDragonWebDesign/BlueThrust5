@@ -12,7 +12,7 @@
  *
  */
 
- $pageOptions = '';
+$pageOptions = '';
 
 if (!defined("SHOW_SEARCHRESULTS")) {
 	exit();

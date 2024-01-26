@@ -12,7 +12,7 @@
  *
  */
 
- // Config File
+// Config File
 $prevFolder = "";
 
 require_once($prevFolder."_setup.php");
