@@ -122,10 +122,9 @@ function check_filter_boards() {
 	global $boardObj, $formObj;
 
 	$countErrors = 0;
-		foreach ($_POST['filterboards'] ?? [] as $value) {
-			if (!$boardObj->select($value) && $value != 0) {
-				$countErrors++;
-			}
+	foreach ($_POST['filterboards'] ?? [] as $value) {
+		if (!$boardObj->select($value) && $value != 0) {
+			$countErrors++;
 		}
 	}
 

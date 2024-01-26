@@ -77,7 +77,7 @@ if (trim($_POST['keyword']) != "") {
 	$_POST['keyword'] = str_replace("%", "\%", $_POST['keyword']);
 
 	if (($_POST['filterkeyword'] ?? 0) == 0) {
-		$filterKeyword = array("message" => $_POST['keyword'], "title" => $_POST['keyword']);
+		$filterKeyword = ["message" => $_POST['keyword'], "title" => $_POST['keyword']];
 
 		$filterResults[] = " (".$postTable.".message LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%' OR ".$postTable.".title LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%') ";
 	} else {
@@ -87,7 +87,7 @@ if (trim($_POST['keyword']) != "") {
 
 // Filter By Username
 $filterByUsername = "";
-$memberIDList = array();
+$memberIDList = [];
 if (trim($_POST['fakesearchuser'] ?? '') != "") {
 	$_POST['fakesearchuser'] = str_replace("*", "%", $_POST['fakesearchuser']);
 
@@ -142,17 +142,17 @@ if ($arrFilterDates[$_POST['filterposts']] != "" || $arrFilterDates[$_POST['filt
 	}
 
 	// Filter Board
-	$arrFilterBoards = array();
+	$arrFilterBoards = [];
 	$filterBoards = $_POST['filterboards'] ?? [];
 
 	if (!in_array(0, $filterBoards)) {
 		$arrFilterBoards = $filterBoards;
 
-	if ($_POST['include_subforums'] == 1) {
-		foreach ($filterBoards as $value) {
-			$boardObj->select($value);
-			$arrFilterBoards = array_merge($arrFilterBoards, $boardObj->getAllSubForums());
-		}
+		if ($_POST['include_subforums'] == 1) {
+			foreach ($filterBoards as $value) {
+				$boardObj->select($value);
+				$arrFilterBoards = array_merge($arrFilterBoards, $boardObj->getAllSubForums());
+			}
 
 			$arrFilterBoards = array_unique($arrFilterBoards);
 		}
