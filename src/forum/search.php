@@ -53,7 +53,7 @@ $breadcrumbObj->addCrumb("Forum", $MAIN_ROOT."forum");
 $breadcrumbObj->addCrumb("Search Forum");
 
 if (count($_GET) > 0) {
-	$_POST['fakesearchuser'] = $_GET['searchuser'];
+	$_POST['fakesearchuser'] = $_GET['searchuser'] ?? '';
 	$_POST['checkCSRF'] = $_SESSION['csrfKey'];
 	$_POST['submit'] = true;
 	$_POST['filtertopics_replies'] = 0;
@@ -63,9 +63,9 @@ if (count($_GET) > 0) {
 	$_POST['sortresults'] = 0;
 	$_POST['sortresults_ascdesc'] = 0;
 
-	if (count($_GET['filterboards']) == 0) {
+	if (count($_GET['filterboards'] ?? []) == 0) {
 		$_POST['filterboards'][] = 0;
-	}
+	}	
 
 	foreach ($_GET as $key => $value) {
 		$_POST[$key] = $_GET[$key];
@@ -122,9 +122,11 @@ function check_filter_boards() {
 	global $boardObj, $formObj;
 
 	$countErrors = 0;
-	foreach ($_POST['filterboards'] as $value) {
-		if (!$boardObj->select($value) && $value != 0) {
-			$countErrors++;
+	if (isset($_POST['filterboards']) && is_array($_POST['filterboards'])) {
+		foreach ($_POST['filterboards'] as $value) {
+			if (!$boardObj->select($value) && $value != 0) {
+				$countErrors++;
+			}
 		}
 	}
 

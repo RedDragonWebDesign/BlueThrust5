@@ -76,7 +76,7 @@ if (!defined("SHOW_SEARCHRESULTS")) {
 if (trim($_POST['keyword']) != "") {
 	$_POST['keyword'] = str_replace("%", "\%", $_POST['keyword']);
 
-	if ($_POST['filterkeyword'] == 0) {
+	if (($_POST['filterkeyword'] ?? 0) == 0) {
 		$filterKeyword = array("message" => $_POST['keyword'], "title" => $_POST['keyword']);
 
 		$filterResults[] = " (".$postTable.".message LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%' OR ".$postTable.".title LIKE '%".$mysqli->real_escape_string($_POST['keyword'])."%') ";
@@ -88,7 +88,7 @@ if (trim($_POST['keyword']) != "") {
 	// Filter By Username
 	$filterByUsername = "";
 	$memberIDList = array();
-if (trim($_POST['fakesearchuser']) != "") {
+	if (trim($_POST['fakesearchuser'] ?? '') != "") {
 		$_POST['fakesearchuser'] = str_replace("*", "%", $_POST['fakesearchuser']);
 
 		$memberList = $member->get_entries(array("username" => $_POST['fakesearchuser']), "username", true, array("username" => "Like"));
@@ -146,19 +146,21 @@ if ($_POST['filtertopics'] == 0) {
 
 	// Filter Board
 	$arrFilterBoards = array();
-	if (!in_array(0, $_POST['filterboards'])) {
-		$arrFilterBoards = $_POST['filterboards'];
+	$filterBoards = $_POST['filterboards'] ?? []; // Use null coalescing operator to provide a default empty array
 
-		if ($_POST['include_subforums'] == 1) {
-			foreach ($_POST['filterboards'] as $value) {
-				$boardObj->select($value);
-				$arrFilterBoards = array_merge($arrFilterBoards, $boardObj->getAllSubForums());
-			}
+	if (!in_array(0, $filterBoards)) {
+    	$arrFilterBoards = $filterBoards;
 
-			$arrFilterBoards = array_unique($arrFilterBoards);
-		}
+    	if ($_POST['include_subforums'] == 1) {
+        	foreach ($filterBoards as $value) {
+            	$boardObj->select($value);
+            	$arrFilterBoards = array_merge($arrFilterBoards, $boardObj->getAllSubForums());
+        	}
+
+        		$arrFilterBoards = array_unique($arrFilterBoards);
+    	}
 	}
-
+	
 	// Filter by Topic
 
 	if (isset($_GET['topic']) && $boardObj->objTopic->select($_GET['topic'])) {
