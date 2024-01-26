@@ -1,5 +1,5 @@
 <?php
-	
+
 /*
  * Bluethrust Clan Scripts v4
  * Copyright 2014
@@ -15,5 +15,3 @@
 	// YOU SHOULD NOT BE VIEWING THIS!
 
 	header("HTTP/1.0 404 Not Found");
-	
-?>

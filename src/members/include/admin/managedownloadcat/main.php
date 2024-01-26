@@ -12,13 +12,12 @@
  *
  */
 
-if(!isset($member)) {
+if (!isset($member)) {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -35,13 +34,13 @@ $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROO
 </script>
 ";
 
-include_once ($prevFolder."classes/downloadcategory.php");
+include_once($prevFolder."classes/downloadcategory.php");
 //include_once($prevFolder."classes/downloadcategory.php");
 
 $cID = $_GET['cID'];
 
-if($cID == "") {
-    $cID = $consoleObj->findConsoleIDByName("Manage Download Categories");    
+if ($cID == "") {
+	$cID = $consoleObj->findConsoleIDByName("Manage Download Categories");
 }
 
 $intAddNewDownloadCatID = $consoleObj->findConsoleIDByName("Add Download Category");
@@ -52,38 +51,34 @@ $x = 1;
 $dispCats = ""; // Initialize $dispCats as an empty string
 
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."downloadcategory ORDER BY ordernum DESC");
-while($row = $result->fetch_assoc()) {
-	if($counter == 1) {
+while ($row = $result->fetch_assoc()) {
+	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
 		$counter = 0;
-	}
-	else {
+	} else {
 		$addCSS = "";
 		$counter = 1;
 	}
 
-	if($x == 1) {
+	if ($x == 1) {
 		$dispUpArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
-	}
-	else {
+	} else {
 		$dispUpArrow = "<a href='javascript:void(0)' onclick=\"moveDownloadCat('up', '".$row['downloadcategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/uparrow.png' class='manageListActionButton' title='Move Up'></a>";
 	}
 
-	if($x == $intHighestOrder) {
+	if ($x == $intHighestOrder) {
 		$dispDownArrow = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
-	}
-	else {
+	} else {
 		$dispDownArrow = "<a href='javascript:void(0)' onclick=\"moveDownloadCat('down', '".$row['downloadcategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/downarrow.png' class='manageListActionButton' title='Move Down'></a>";
 	}
 
-	if($row['specialkey'] != "") {
+	if ($row['specialkey'] != "") {
 		$dispDeleteButton = "<img src='".$MAIN_ROOT."images/transparent.png' width='24' height'24'>";
-	}
-	else {
+	} else {
 		$dispDeleteButton = "<a href='javascript:void(0)' onclick=\"deleteDownloadCat('".$row['downloadcategory_id']."')\"><img src='".$MAIN_ROOT."themes/".$THEME."/images/buttons/delete.png' class='manageListActionButton' title='Delete Category'></a>";
 	}
-	
-	
+
+
 	$dispCats .= "
 	<tr>
 		<td class='dottedLine".$addCSS."' width=\"76%\">&nbsp;&nbsp;<span class='main'><b><a href='console.php?cID=".$cID."&catID=".$row['downloadcategory_id']."&action=edit'>".$row['name']."</a></b></td>
@@ -97,8 +92,8 @@ while($row = $result->fetch_assoc()) {
 	$x++;
 }
 
-if($x == 1) {
-    $dispCats = "<tr><td colspan='5'><br><p align='center' class='main'><i>No categories added yet!</i></p></td></tr>";
+if ($x == 1) {
+	$dispCats = "<tr><td colspan='5'><br><p align='center' class='main'><i>No categories added yet!</i></p></td></tr>";
 }
 
 echo "
@@ -124,5 +119,3 @@ echo "
 
 
 ";
-
-?>

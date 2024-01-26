@@ -156,7 +156,7 @@ if ( empty($_POST['submit']) ) {
 		";
 	}
 
-	
+
 	echo "
 				Use the form below to upload a file to the downloads section.<br>
 				<table class='formTable'>

@@ -199,7 +199,7 @@ class Basic {
 
 		if (is_array($arrValues)) {
 			foreach ($arrValues as $key => $value) {
-				$value = $value ?? ''; 
+				$value = $value ?? '';
 				$temp = str_replace("&gt;", ">", $value);
 				$value = str_replace("&lt;", "<", $temp);
 				$temp = str_replace('&quot;', '"', $value);

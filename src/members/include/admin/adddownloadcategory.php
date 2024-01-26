@@ -75,7 +75,7 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
-$countErrors = 0;
+	$countErrors = 0;
 
 	if ($countErrors == 0) {
 		$accessKey = ($_POST['accesskey'] ?? 0) != 1 ? 0 : 1;

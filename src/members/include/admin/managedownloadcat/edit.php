@@ -12,13 +12,12 @@
  *
  */
 
-if(!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
+if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
-}
-else {
+} else {
 	$memberInfo = $member->get_info_filtered();
 	$consoleObj->select($_GET['cID']);
-	if(!$member->hasAccess($consoleObj)) {
+	if (!$member->hasAccess($consoleObj)) {
 		exit();
 	}
 }
@@ -29,8 +28,8 @@ $cID = $_GET['cID'];
 $downloadCatObj = new DownloadCategory($mysqli);
 $downloadExtensionObj = new Basic($mysqli, "download_extensions", "extension_id");
 
-if(!$downloadCatObj->select($_GET['catID'])) {
-	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");	
+if (!$downloadCatObj->select($_GET['catID'])) {
+	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");
 }
 
 
@@ -48,96 +47,81 @@ $(document).ready(function() {
 $countErrors = 0;
 $dispError = "";
 
-if(isset($_POST['submit'])) {  // Corrected this line
-	
+if (isset($_POST['submit'])) {  // Corrected this line
 	$resortOrder = false;
 	// Check Category Name
-	
-	if(trim($_POST['catname']) == "") {
+
+	if (trim($_POST['catname']) == "") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter a Category Name.<br>";
 	}
-	
+
 	// Check Extensions
 	$arrExtensions = explode(",", trim($_POST['catexts']));
-	
-	if(count($arrExtensions) <= 0) {
+
+	if (count($arrExtensions) <= 0) {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You must enter at least one download extension.<br>";
 	}
-  
+
 	// Check Cat Order
-	
-	
+
+
 	$intNewOrderSpot = "";
-	if(!$downloadCatObj->select($_POST['catorder']) AND $_POST['catorder'] != "first") {
+	if (!$downloadCatObj->select($_POST['catorder']) and $_POST['catorder'] != "first") {
 		$countErrors++;
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (category)<br>";
-	}
-	elseif($_POST['catorder'] == "first") {
+	} elseif ($_POST['catorder'] == "first") {
 		// "(no other categories)" selected, check to see if there are actually no other categories
-	
+
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."downloadcategory");
 		$num_rows = $result->num_rows;
-	
-		if($num_rows > 1) {
+
+		if ($num_rows > 1) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (category)<br>";
-		}
-		else {
+		} else {
 			$intNewOrderSpot = 1;
 		}
-	
-	}
-	else {
-	
-		if($_POST['beforeafter'] != "before" AND $_POST['beforeafter'] != "after") {
+	} else {
+		if ($_POST['beforeafter'] != "before" and $_POST['beforeafter'] != "after") {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid category order. (before/after)<br>";
-		}
-		else {
-			
+		} else {
 			$catOrderOrderNum = $downloadCatObj->get_info("ordernum");
-			
+
 			$addTo = -1;
-			if($_POST['beforeafter'] == "before") {
-				$addTo = 1;	
+			if ($_POST['beforeafter'] == "before") {
+				$addTo = 1;
 			}
-			
+
 			$checkOrderNum = $catOrderOrderNum+$addTo;
-			if($checkOrderNum != $downloadCatInfo['ordernum']) {
+			if ($checkOrderNum != $downloadCatInfo['ordernum']) {
 				$intNewOrderSpot = $downloadCatObj->makeRoom($_POST['beforeafter']);
 			}
-			
 		}
-	
-	
 	}
-	
 
-	if($countErrors == 0) {
-	
-		
+
+	if ($countErrors == 0) {
 		$updateColumns = array("name", "accesstype");
 		$updateValues = array($_POST['catname'], $_POST['accesstype']);
-		
-		if($intNewOrderSpot != "") {
+
+		if ($intNewOrderSpot != "") {
 			$resortOrder = true;
-			
+
 			$updateColumns[] = "ordernum";
 			$updateValues[] = $intNewOrderSpot;
-			
 		}
-		
+
 		$downloadCatObj->select($downloadCatInfo['downloadcategory_id']);
-		if($downloadCatObj->update($updateColumns, $updateValues)) {
-	
+		if ($downloadCatObj->update($updateColumns, $updateValues)) {
 			$result = $mysqli->query("DELETE FROM ".$mysqli->get_tablePrefix()."download_extensions WHERE downloadcategory_id = '".$downloadCatInfo['downloadcategory_id']."'");
-			
-			foreach($arrExtensions as $strExtension) {
+
+			foreach ($arrExtensions as $strExtension) {
 				$downloadExtensionObj->addNew(array("downloadcategory_id", "extension"), array($downloadCatInfo['downloadcategory_id'], trim($strExtension)));
 			}
-	
+
 			echo "
 			<div style='display: none' id='successBox'>
 				<p align='center'>
@@ -149,72 +133,66 @@ if(isset($_POST['submit'])) {  // Corrected this line
 				popupDialog('Edit Download Category', '".$MAIN_ROOT."members/console.php?cID=".$cID."', 'successBox');
 			</script>
 			";
-			
-			if($resortOrder) {
-				$downloadCatObj->resortOrder();	
+
+			if ($resortOrder) {
+				$downloadCatObj->resortOrder();
 			}
-			
 		}
-	
-	}
-	else {
+	} else {
 		$_POST = filterArray($_POST);
 		$_POST['submit'] = false;
 	}
-	
 }
 
-if(!isset($_POST['submit'])) {
+if (!isset($_POST['submit'])) {
+	$countCategories = 0;
+	$catOrderOptions = "";  // Initialize $catOrderOptions here
 
-    $countCategories = 0;
-    $catOrderOptions = "";  // Initialize $catOrderOptions here
+	$intHighestOrderNum = $downloadCatObj->getHighestOrderNum();
+	$afterSelected = "";
 
-    $intHighestOrderNum = $downloadCatObj->getHighestOrderNum();
-    $afterSelected = "";
-    
-    if($downloadCatInfo['ordernum'] == 1) {
-        $selectCat = $downloadCatInfo['ordernum'] + 1;
-        $afterSelected = "selected";
-    } else {
-        $selectCat = $downloadCatInfo['ordernum'] - 1;    
-    }
-    
-    $result = $mysqli->query("SELECT * FROM ".$dbprefix."downloadcategory WHERE downloadcategory_id != '".$downloadCatInfo['downloadcategory_id']."' ORDER BY ordernum DESC");
-    while($row = $result->fetch_assoc()) {
-        
-        $strSelected = "";
-        if($selectCat == $row['ordernum']) {
-            $strSelected = "selected";
-        }
-        
-        $catOrderOptions .= "<option value='".$row['downloadcategory_id']."' ".$strSelected.">".filterText($row['name'])."</option>";
-        $countCategories++;
-    }
-    
-    if($countCategories == 0) {
-        $catOrderOptions = "<option value='first'>(no other categories)</option>";    
-    }
-  
+	if ($downloadCatInfo['ordernum'] == 1) {
+		$selectCat = $downloadCatInfo['ordernum'] + 1;
+		$afterSelected = "selected";
+	} else {
+		$selectCat = $downloadCatInfo['ordernum'] - 1;
+	}
+
+	$result = $mysqli->query("SELECT * FROM ".$dbprefix."downloadcategory WHERE downloadcategory_id != '".$downloadCatInfo['downloadcategory_id']."' ORDER BY ordernum DESC");
+	while ($row = $result->fetch_assoc()) {
+		$strSelected = "";
+		if ($selectCat == $row['ordernum']) {
+			$strSelected = "selected";
+		}
+
+		$catOrderOptions .= "<option value='".$row['downloadcategory_id']."' ".$strSelected.">".filterText($row['name'])."</option>";
+		$countCategories++;
+	}
+
+	if ($countCategories == 0) {
+		$catOrderOptions = "<option value='first'>(no other categories)</option>";
+	}
+
 	$arrDownloadExts = $downloadCatObj->getExtensions();
 
 	$arrDispDLExts = array();
-	
-	foreach($arrDownloadExts as $extID) {
+
+	foreach ($arrDownloadExts as $extID) {
 		$downloadExtensionObj->select($extID);
 		$arrDispDLExts[] = $downloadExtensionObj->get_info_filtered("extension");
 	}
-	
+
 	$dispDownloadExts = implode(", ", $arrDispDLExts);
-	
-	
+
+
 	echo "
 	
 		<form action='console.php?cID=".$cID."&catID=".$_GET['catID']."&action=edit' method='post' enctype='multipart/form-data'>
 			<div class='formDiv'>
 		";
-	
-	
-	if($dispError != "") {
+
+
+	if ($dispError != "") {
 		echo "
 		<div class='errorDiv'>
 		<strong>Unable to edit download category because the following errors occurred:</strong><br><br>
@@ -222,7 +200,7 @@ if(!isset($_POST['submit'])) {
 		</div>
 		";
 	}
-	
+
 	$selectAccessType = ($downloadCatInfo['accesstype'] == 1) ? " selected" : "";
 	echo "
 				Use the form below to edit the selected download category.<br><br>
@@ -258,7 +236,4 @@ if(!isset($_POST['submit'])) {
 		</form>
 	
 	";
-	
 }
-
-?>

@@ -28,26 +28,15 @@ $downloadCatObj = new DownloadCategory($mysqli);
 $cID = $consoleObj->findConsoleIDByName("Manage Download Categories");
 $consoleObj->select($cID);
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
-	if($member->hasAccess($consoleObj) && $downloadCatObj->select($_POST['catID'])) {
-		
+	if ($member->hasAccess($consoleObj) && $downloadCatObj->select($_POST['catID'])) {
 		define('MEMBERRANK_ID', $memberInfo['rank_id']);
-		
+
 		$downloadCatObj->move($_POST['cDir']);
-		
+
 		$_GET['cID'] = $cID;
 		include("main.php");
-		
-		
-		
 	}
-	
-	
 }
-
-
-?>
