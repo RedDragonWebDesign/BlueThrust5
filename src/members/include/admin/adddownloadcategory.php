@@ -79,11 +79,11 @@ if ( ! empty($_POST['submit']) ) {
 	if ($countErrors == 0) {
 		$accessKey = ($_POST['accesskey'] != 1) ? 0 : 1;
 
-		if ($downloadCatObj->addNew(array("name", "ordernum", "accesstype"), array($_POST['catname'], $intNewOrderSpot, $accessKey))) {
+		if ($downloadCatObj->addNew(["name", "ordernum", "accesstype"], [$_POST['catname'], $intNewOrderSpot, $accessKey])) {
 			$downloadCatInfo = $downloadCatObj->get_info_filtered();
 
 			foreach ($arrExtensions as $strExtension) {
-				$downloadExtObj->addNew(array("downloadcategory_id", "extension"), array($downloadCatInfo['downloadcategory_id'], trim($strExtension)));
+				$downloadExtObj->addNew(["downloadcategory_id", "extension"], [$downloadCatInfo['downloadcategory_id'], trim($strExtension)]);
 			}
 
 

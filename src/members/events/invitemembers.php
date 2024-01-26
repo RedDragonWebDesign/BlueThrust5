@@ -90,7 +90,7 @@ if ( empty($_POST['submit']) ) {
 	$_SESSION['btEventID'] = $eventInfo['event_id'];
 
 	if ($countErrors == 0) {
-		$_SESSION['btInviteList'] = array();
+		$_SESSION['btInviteList'] = [];
 	} else {
 		$_SESSION['btInviteList'] = filterArray($_SESSION['btInviteList']);
 	}

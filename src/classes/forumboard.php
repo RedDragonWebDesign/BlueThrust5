@@ -63,13 +63,13 @@ class ForumBoard extends BasicSort {
 
 			if (count($arrSubForums) > 0) {
 				$subForumObj = new ForumBoard($this->MySQL);
-				$arrColumns = array("sortnum", "subforum_id");
+				$arrColumns = ["sortnum", "subforum_id"];
 				foreach ($arrSubForums as $subForumID) {
 					$subForumObj->select($subForumID);
 					$subForumInfo = $subForumObj->get_info();
 
 					$newSortNum = $subForumInfo['sortnum']+($this->arrObjInfo['sortnum']-1);
-					$arrValues = array($newSortNum, $this->arrObjInfo['subforum_id']);
+					$arrValues = [$newSortNum, $this->arrObjInfo['subforum_id']];
 
 					$subForumObj->update($arrColumns, $arrValues);
 				}
@@ -98,9 +98,9 @@ class ForumBoard extends BasicSort {
 		$countErrors = 0;
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."forum_rankaccess WHERE board_id = '".$this->intTableKeyValue."'");
-			$arrColumns = array("rank_id", "board_id", "accesstype");
+			$arrColumns = ["rank_id", "board_id", "accesstype"];
 			foreach ($arrRanks as $rankID => $accessValue) {
-				$arrValues = array($rankID, $this->intTableKeyValue, $accessValue);
+				$arrValues = [$rankID, $this->intTableKeyValue, $accessValue];
 				if (!$this->objRankAccess->addNew($arrColumns, $arrValues)) {
 					$countErrors++;
 					break;
@@ -110,9 +110,9 @@ class ForumBoard extends BasicSort {
 			if ($countErrors == 0) {
 				$result = $this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."forum_memberaccess WHERE board_id = '".$this->intTableKeyValue."'");
 
-				$arrColumns = array("member_id", "board_id", "accessrule");
+				$arrColumns = ["member_id", "board_id", "accessrule"];
 				foreach ($arrMembers as $memberID => $accessRule) {
-					$arrValues = array($memberID, $this->intTableKeyValue, $accessRule);
+					$arrValues = [$memberID, $this->intTableKeyValue, $accessRule];
 					if (!$this->objMemberAccess->addNew($arrColumns, $arrValues)) {
 						$countErrors++;
 						break;
@@ -133,7 +133,7 @@ class ForumBoard extends BasicSort {
 
 	public function getMemberAccessRules() {
 
-		$returnArr = array();
+		$returnArr = [];
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."forum_memberaccess WHERE board_id = '".$this->intTableKeyValue."'");
 			while ($row = $result->fetch_assoc()) {
@@ -147,7 +147,7 @@ class ForumBoard extends BasicSort {
 
 	public function getRankAccessRules() {
 
-		$returnArr = array();
+		$returnArr = [];
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT * FROM ".$this->MySQL->get_tablePrefix()."forum_rankaccess WHERE board_id = '".$this->intTableKeyValue."'");
 			while ($row = $result->fetch_assoc()) {
@@ -228,7 +228,7 @@ class ForumBoard extends BasicSort {
 	 */
 	public function getForumTopics($sqlORDERBY = "", $sqlLIMIT = "") {
 
-		$returnArr = array();
+		$returnArr = [];
 
 		if ($sqlORDERBY == "") {
 			$sqlORDERBY = " fp.dateposted DESC";
@@ -259,7 +259,7 @@ class ForumBoard extends BasicSort {
 				$checkTime = time()-(60*60*24*$websiteInfo['forum_newindicator']);
 			}
 
-			$arrNewTopics = array();
+			$arrNewTopics = [];
 			$result = $this->MySQL->query("SELECT ft.forumtopic_id FROM ".$this->MySQL->get_tablePrefix()."forum_topic ft, ".$this->MySQL->get_tablePrefix()."forum_post fp WHERE forumboard_id = '".$this->intTableKeyValue."' AND fp.forumpost_id = ft.lastpost_id AND fp.dateposted > '".$checkTime."'");
 			while ($row = $result->fetch_assoc()) {
 				$arrNewTopics[] = $row['forumtopic_id'];
@@ -306,7 +306,7 @@ class ForumBoard extends BasicSort {
 
 		$returnVal = false;
 		if ($this->intTableKeyValue != "" && is_numeric($memberID) && !$this->memberIsMod($memberID)) {
-			$returnVal = $this->objMod->addNew(array("member_id", "forumboard_id", "dateadded"), array($memberID, $this->intTableKeyValue, time()));
+			$returnVal = $this->objMod->addNew(["member_id", "forumboard_id", "dateadded"], [$memberID, $this->intTableKeyValue, time()]);
 		}
 
 		return $returnVal;
@@ -327,7 +327,7 @@ class ForumBoard extends BasicSort {
 
 	public function getAllBoards() {
 
-		$arrReturn = array();
+		$arrReturn = [];
 		$dbprefix = $this->MySQL->get_tablePrefix();
 		$result = $this->MySQL->query("SELECT ".$dbprefix."forum_board.forumboard_id FROM ".$dbprefix."forum_board, ".$dbprefix."forum_category WHERE ".$dbprefix."forum_board.forumcategory_id = ".$dbprefix."forum_category.forumcategory_id AND ".$dbprefix."forum_board.subforum_id = '0' ORDER BY ".$dbprefix."forum_category.ordernum DESC, ".$dbprefix."forum_board.sortnum");
 		while ($row = $result->fetch_assoc()) {
@@ -345,7 +345,7 @@ class ForumBoard extends BasicSort {
 
 	public function getSubForums() {
 
-		$arrReturn = array();
+		$arrReturn = [];
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT forumboard_id FROM ".$this->strTableName." WHERE subforum_id = '".$this->intTableKeyValue."' ORDER BY sortnum");
 			while ($row = $result->fetch_assoc()) {
@@ -385,9 +385,9 @@ class ForumBoard extends BasicSort {
 	/**
 	 * Returns all sub-forum IDs not just ones directly under the selected forum
 	 */
-	public function getAllSubForums($arrIDs = array()) {
+	public function getAllSubForums($arrIDs = []) {
 
-		$arrReturn = array();
+		$arrReturn = [];
 		if ($this->intTableKeyValue != "") {
 			$temp = $this->intTableKeyValue;
 			$subForums = $this->getSubForums();
@@ -433,7 +433,7 @@ class ForumBoard extends BasicSort {
 			$consoleInfo = $this->arrObjInfo;
 			$startSaving = false;
 			$x = 1;
-			$arrConsoleOptions = array();
+			$arrConsoleOptions = [];
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strCategoryKey." = '".$consoleInfo[$this->strCategoryKey]."' AND subforum_id = '".$this->arrObjInfo['subforum_id']."' ORDER BY sortnum");
 			while ($row = $result->fetch_assoc()) {
 				if ($strBeforeAfter == "before" and $row[$this->strTableKey] == $consoleInfo[$this->strTableKey]) {
@@ -455,15 +455,15 @@ class ForumBoard extends BasicSort {
 				}
 			}
 
-			$updateArray = array();
+			$updateArray = [];
 
-			$updateRowName = array("sortnum");
+			$updateRowName = ["sortnum"];
 			if (is_numeric($newSortNum)) {
 				$intOriginalCID = $this->intTableKeyValue;
 				foreach ($arrConsoleOptions as $key => $value) {
 					if ($key != $value[1]) {
 						$this->select($value[0]);
-						$this->update(array("sortnum"), array($key));
+						$this->update(["sortnum"], [$key]);
 					}
 				}
 
@@ -478,7 +478,7 @@ class ForumBoard extends BasicSort {
 		$counter = 1; // ordernum counter
 		$consoleInfo = $this->arrObjInfo;
 		$x = 0; // array counter
-		$arrUpdateID = array();
+		$arrUpdateID = [];
 		$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName." WHERE ".$this->strCategoryKey." = '".$consoleInfo[$this->strCategoryKey]."' AND subforum_id = '".$this->arrObjInfo['subforum_id']."' ORDER BY sortnum");
 		while ($row = $result->fetch_assoc()) {
 			$arrUpdateID[] = $row[$this->strTableKey];

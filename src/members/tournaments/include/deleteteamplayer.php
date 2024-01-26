@@ -42,7 +42,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->objPlaye
 
 
 	if ($memberInfo['member_id'] == $tmemberID || $memberInfo['rank_id'] == "1" || $tournamentObj->isManager($memberInfo['member_id'])) {
-		$tournamentObj->objPlayer->update(array("team_id"), array(0));
+		$tournamentObj->objPlayer->update(["team_id"], [0]);
 
 		$_POST['teamID'] = $tournamentObj->objTeam->get_info("tournamentteam_id");
 		$_POST['getWhat'] = "playerlist";

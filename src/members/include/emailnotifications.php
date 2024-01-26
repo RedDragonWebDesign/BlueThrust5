@@ -32,7 +32,7 @@ $emailNotificationInfo = $emailNotification->get_info_filtered();
 
 $cID = $_GET['cID'];
 
-$timeBefore = array(0 => "Never");
+$timeBefore = [0 => "Never"];
 for ($i=1; $i<=60; $i++) {
 	$timeBefore[$i] = $i;
 }
@@ -40,8 +40,8 @@ for ($i=1; $i<=60; $i++) {
 
 //<select class='formInput textBox' name='tournament_unitbefore'><option value='minutes'>Minutes</option><option value='hour'>Hours</option><option value='day'>Days</option></select>
 
-$timeUnits = array("minutes" => "Minutes", "hour" => "Hours", "days" => "Days");
-$timeAttributes = array("class" => "formInput textBox");
+$timeUnits = ["minutes" => "Minutes", "hour" => "Hours", "days" => "Days"];
+$timeAttributes = ["class" => "formInput textBox"];
 
 $timeUnitSelectbox = new SelectBox();
 $timeUnitSelectbox->setOptions($timeUnits);
@@ -57,100 +57,100 @@ $timeUnitSelectbox->setComponentValue($emailNotificationInfo['event_unit']);
 $eventUnitSelectBox = $timeUnitSelectbox->getHTML();
 
 $i = 0;
-$arrComponents = array(
-	"privatemessages" => array(
+$arrComponents = [
+	"privatemessages" => [
 		"type" => "section",
-		"options" => array("section_title" => "Private Messages:"),
+		"options" => ["section_title" => "Private Messages:"],
 		"sortorder" => $i++
-	),
-	"pm" => array(
+	],
+	"pm" => [
 		"type" => "select",
 		"display_name" => "Receive a PM",
-		"options" => array(1 => "Yes", "0" => "No"),
+		"options" => [1 => "Yes", "0" => "No"],
 		"sortorder" => $i++,
-		"attributes" => array("class" => "formInput textBox"),
+		"attributes" => ["class" => "formInput textBox"],
 		"value" => $emailNotificationInfo['privatemessage'],
 		"db_name" => "privatemessage"
-	),
-	"forceemail" => array(
+	],
+	"forceemail" => [
 		"type" => "select",
 		"display_name" => "Block E-mailed PMs",
-		"options" => array(1 => "Yes", "0" => "No"),
+		"options" => [1 => "Yes", "0" => "No"],
 		"sortorder" => $i++,
-		"attributes" => array("class" => "formInput textBox"),
+		"attributes" => ["class" => "formInput textBox"],
 		"value" => $emailNotificationInfo['email_privatemessage'],
 		"tooltip" => "There is an option to force an e-mail to be sent when sending a private message.  Mark this as yes to not receive e-mailed PMs.",
 		"db_name" => "email_privatemessage"
-	),
-	"tournaments" => array(
+	],
+	"tournaments" => [
 		"type" => "section",
-		"options" => array("section_title" => "Tournament Reminder:"),
+		"options" => ["section_title" => "Tournament Reminder:"],
 		"sortorder" => $i++
-	),
-	"tournament_time" => array(
+	],
+	"tournament_time" => [
 		"type" => "select",
 		"display_name" => "E-mail me",
 		"options" => $timeBefore,
 		"sortorder" => $i++,
-		"attributes" => array("class" => "formInput textBox"),
+		"attributes" => ["class" => "formInput textBox"],
 		"html" => "<div class='formInput formInputSideComponent'>".$tournamentUnitSelectBox."</div><div class='formInput formInputSideComponent'>before</div>",
 		"value" => $emailNotificationInfo['tournament_time'],
 		"db_name" => "tournament_time"
-	),
-	"events" => array(
+	],
+	"events" => [
 		"type" => "section",
-		"options" => array("section_title" => "Event Reminder:"),
+		"options" => ["section_title" => "Event Reminder:"],
 		"sortorder" => $i++
-	),
-	"event_time" => array(
+	],
+	"event_time" => [
 		"type" => "select",
 		"display_name" => "E-mail me",
 		"options" => $timeBefore,
 		"sortorder" => $i++,
-		"attributes" => array("class" => "formInput textBox"),
+		"attributes" => ["class" => "formInput textBox"],
 		"html" => "<div class='formInput formInputSideComponent'>".$eventUnitSelectBox."</div><div class='formInput formInputSideComponent'>before</div>",
 		"value" => $emailNotificationInfo['event_time'],
 		"db_name" => "event_time"
-	),
-	"forum" => array(
+	],
+	"forum" => [
 		"type" => "section",
-		"options" => array("section_title" => "Forum Notifications:", "section_description" => "E-mail me when there is a new post in:"),
+		"options" => ["section_title" => "Forum Notifications:", "section_description" => "E-mail me when there is a new post in:"],
 		"sortorder" => $i++
-	),
-	"forumtopics" => array(
+	],
+	"forumtopics" => [
 		"type" => "select",
 		"display_name" => "Topics I Started",
-		"options" => array(1 => "Yes", "0" => "No"),
+		"options" => [1 => "Yes", "0" => "No"],
 		"sortorder" => $i++,
-		"attributes" => array("class" => "formInput textBox"),
+		"attributes" => ["class" => "formInput textBox"],
 		"value" => $emailNotificationInfo['forum_topic'],
 		"db_name" => "forum_topic"
-	),
-	"forumposts" => array(
+	],
+	"forumposts" => [
 		"type" => "select",
 		"display_name" => "Topics I Posted In",
-		"options" => array(1 => "Yes", "0" => "No"),
+		"options" => [1 => "Yes", "0" => "No"],
 		"sortorder" => $i++,
-		"attributes" => array("class" => "formInput textBox"),
+		"attributes" => ["class" => "formInput textBox"],
 		"value" => $emailNotificationInfo['forum_post'],
 		"db_name" => "forum_post"
-	),
-	"submit" => array(
+	],
+	"submit" => [
 		"type" => "submit",
 		"value" => "Save",
 		"sortorder" => $i++,
-		"attributes" => array("class" => "submitButton formSubmitButton")
-	)
-);
+		"attributes" => ["class" => "submitButton formSubmitButton"]
+	]
+];
 
 
-$setupFormArgs = array(
+$setupFormArgs = [
 	"name" => "console-".$cID,
 	"components" => $arrComponents,
 	"saveObject" => $emailNotification,
 	"saveType" => "update",
 	"saveMessage" => "Successfully saved e-mail notification settings!",
-	"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
+	"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
 	"description" => "Use the form below to set your e-mail notification settings.",
-	"saveAdditional" => array("tournament_unit" => $_POST['tournament_unitbefore'], "event_unit" => "event_unitbefore")
-);
+	"saveAdditional" => ["tournament_unit" => $_POST['tournament_unitbefore'], "event_unit" => "event_unitbefore"]
+];

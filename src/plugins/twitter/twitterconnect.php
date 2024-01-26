@@ -41,8 +41,8 @@ if (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oaut
 
 	if ($twitterObj->httpCode == 200) {
 		parse_str($response, $oauthArray);
-		$arrColumns = array("member_id", "oauth_token", "oauth_tokensecret", "loginhash");
-		$arrValues = array($memberInfo['member_id'], $oauthArray['oauth_token'], $oauthArray['oauth_token_secret'], md5($oauthArray['oauth_token']));
+		$arrColumns = ["member_id", "oauth_token", "oauth_tokensecret", "loginhash"];
+		$arrValues = [$memberInfo['member_id'], $oauthArray['oauth_token'], $oauthArray['oauth_token_secret'], md5($oauthArray['oauth_token'])];
 
 
 		if (!$twitterObj->authorizeLogin($oauthArray['oauth_token'], $oauthArray['oauth_token_secret'])) {
@@ -125,8 +125,8 @@ if (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier']) && $_GET['oaut
 		$setInfoCard = ($_POST['showinfo'] == 1) ? 1 : 0;
 		$setAllowLogin = ($_POST['allowlogin'] == 1) ? 1 : 0;
 
-		$arrColumns = array("showfeed", "embedtweet", "infocard", "allowlogin");
-		$arrValues = array($setShowFeed, $setEmbedTweet, $setInfoCard, $setAllowLogin);
+		$arrColumns = ["showfeed", "embedtweet", "infocard", "allowlogin"];
+		$arrValues = [$setShowFeed, $setEmbedTweet, $setInfoCard, $setAllowLogin];
 
 		$twitterObj->update($arrColumns, $arrValues);
 

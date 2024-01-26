@@ -109,7 +109,7 @@ if ( ! empty($_POST['submit']) ) {
 		// No Errors! Check game image, if it needs to be uploaded, try uploading.
 
 		if ($_FILES['gameimagefile']['name'] != "") {
-			$btUploadObj = new BTUpload($_FILES['gameimagefile'], "game_", "../images/gamesplayed/", array(".jpg", ".png", ".bmp", ".gif"));
+			$btUploadObj = new BTUpload($_FILES['gameimagefile'], "game_", "../images/gamesplayed/", [".jpg", ".png", ".bmp", ".gif"]);
 
 			if (!$btUploadObj->uploadFile()) {
 				$countErrors++;
@@ -132,8 +132,8 @@ if ( ! empty($_POST['submit']) ) {
 
 		$newGame = new Basic($mysqli, "gamesplayed", "gamesplayed_id");
 
-		$arrColumns = array("name", "imageurl", "imagewidth", "imageheight", "ordernum");
-		$arrValues = array($_POST['gamename'], $gameImageURL, $_POST['gameimagewidth'], $_POST['gameimageheight'], $intGameOrderNum);
+		$arrColumns = ["name", "imageurl", "imagewidth", "imageheight", "ordernum"];
+		$arrValues = [$_POST['gamename'], $gameImageURL, $_POST['gameimagewidth'], $_POST['gameimageheight'], $intGameOrderNum];
 
 
 		if ($newGame->addNew($arrColumns, $arrValues)) {
@@ -142,13 +142,13 @@ if ( ! empty($_POST['submit']) ) {
 			// Try adding stats
 			$showErrorMessage = "";
 			$newStat = new Basic($mysqli, "gamestats", "gamestats_id");
-			$arrColumns = array("name", "stattype", "ordernum", "decimalspots", "gamesplayed_id", "hidestat", "textinput");
-			$arrSavedStats = array();
+			$arrColumns = ["name", "stattype", "ordernum", "decimalspots", "gamesplayed_id", "hidestat", "textinput"];
+			$arrSavedStats = [];
 
 			// First insert all stats so we can get their actual database ids
 			// After we add them, save the info array to a separate array
 			foreach ($_SESSION['btStatCache'] as $key => $statInfo) {
-				$arrValues = array($statInfo['statName'], $statInfo['statType'], $key, $statInfo['rounding'], $newGameInfo['gamesplayed_id'], $statInfo['hideStat'], $statInfo['textInput']);
+				$arrValues = [$statInfo['statName'], $statInfo['statType'], $key, $statInfo['rounding'], $newGameInfo['gamesplayed_id'], $statInfo['hideStat'], $statInfo['textInput']];
 
 				if (!$newStat->addNew($arrColumns, $arrValues)) {
 					$countErrors++;
@@ -166,7 +166,7 @@ if ( ! empty($_POST['submit']) ) {
 			 */
 
 			if ($countErrors == 0) {
-				$arrColumns = array("firststat_id", "secondstat_id", "calcop");
+				$arrColumns = ["firststat_id", "secondstat_id", "calcop"];
 				foreach ($arrSavedStats as $key => $statInfo) {
 					if ($statInfo['stattype'] == "calculate") {
 						$intFirstStatOrder = $_SESSION['btStatCache'][$key]['firstStat'];
@@ -177,7 +177,7 @@ if ( ! empty($_POST['submit']) ) {
 
 						$calcOp = $_SESSION['btStatCache'][$key]['calcOperation'];
 
-						$arrValues = array($intFirstStatID, $intSecondStatID, $calcOp);
+						$arrValues = [$intFirstStatID, $intSecondStatID, $calcOp];
 
 						$newStat->select($statInfo['gamestats_id']);
 						$newStat->update($arrColumns, $arrValues);
@@ -212,7 +212,7 @@ if ( ! empty($_POST['submit']) ) {
 
 
 if ( empty($_POST['submit']) ) {
-	$_SESSION['btStatCache'] = array();
+	$_SESSION['btStatCache'] = [];
 	echo "
 	<form action='console.php?cID=$cID' method='post' enctype='multipart/form-data'>
 		<div class='formDiv'>

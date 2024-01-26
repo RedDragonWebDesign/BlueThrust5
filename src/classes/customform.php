@@ -40,7 +40,7 @@ class CustomForm extends Basic {
 
 	function getComponents() {
 
-		$returnArr = array();
+		$returnArr = [];
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT component_id FROM ".$this->MySQL->get_tablePrefix()."customform_components WHERE customform_id = '".$this->intTableKeyValue."' ORDER BY sortnum");
 			while ($row = $result->fetch_assoc()) {
@@ -55,7 +55,7 @@ class CustomForm extends Basic {
 
 	function getSelectValues($intComponentID) {
 
-		$returnArr = array();
+		$returnArr = [];
 		if ($this->intTableKeyValue != "" && is_numeric($intComponentID)) {
 			$result = $this->MySQL->query("SELECT selectvalue_id FROM ".$this->MySQL->get_tablePrefix()."customform_selectvalues WHERE component_id = '".$intComponentID."' ORDER BY componentvalue");
 			while ($row = $result->fetch_assoc()) {
@@ -84,8 +84,8 @@ class CustomForm extends Basic {
 			$intSortNum = 1;
 			foreach ($arrComponents as $value) {
 				if (trim($value['name']) != "" && (isset($value['component_id']) && $this->objComponent->select($value['component_id']))) {
-					$arrColumns = array("name", "componenttype", "required", "tooltip", "sortnum");
-					$arrValues = array($value['name'], $value['type'], $value['required'], $value['tooltip'], $intSortNum);
+					$arrColumns = ["name", "componenttype", "required", "tooltip", "sortnum"];
+					$arrValues = [$value['name'], $value['type'], $value['required'], $value['tooltip'], $intSortNum];
 
 					$this->MySQL->query("DELETE FROM ".$this->MySQL->get_tablePrefix()."customform_selectvalues WHERE component_id = '".$value['component_id']."'");
 
@@ -94,7 +94,7 @@ class CustomForm extends Basic {
 					} elseif ($value['type'] == "select" || $value['type'] == "multiselect") {
 						$newComponentID = $this->objComponent->get_info("component_id");
 						foreach ($value['cOptions'] as $selectValue) {
-							if (trim($selectValue) != "" && !$this->objSelectValue->addNew(array("component_id", "componentvalue"), array($newComponentID, $selectValue))) {
+							if (trim($selectValue) != "" && !$this->objSelectValue->addNew(["component_id", "componentvalue"], [$newComponentID, $selectValue])) {
 								$countErrors++;
 							}
 						}
@@ -102,15 +102,15 @@ class CustomForm extends Basic {
 
 					$intSortNum++;
 				} elseif (trim($value['name']) != "") {
-					$arrColumns = array("customform_id", "name", "componenttype", "required", "tooltip", "sortnum");
-					$arrValues = array($this->intTableKeyValue, $value['name'], $value['type'], $value['required'], $value['tooltip'], $intSortNum);
+					$arrColumns = ["customform_id", "name", "componenttype", "required", "tooltip", "sortnum"];
+					$arrValues = [$this->intTableKeyValue, $value['name'], $value['type'], $value['required'], $value['tooltip'], $intSortNum];
 
 					if (!$this->objComponent->addNew($arrColumns, $arrValues)) {
 						$countErrors++;
 					} elseif ($value['type'] == "select" || $value['type'] == "multiselect") {
 						$newComponentID = $this->objComponent->get_info("component_id");
 						foreach ($value['cOptions'] as $selectValue) {
-							if (trim($selectValue) != "" && !$this->objSelectValue->addNew(array("component_id", "componentvalue"), array($newComponentID, $selectValue))) {
+							if (trim($selectValue) != "" && !$this->objSelectValue->addNew(["component_id", "componentvalue"], [$newComponentID, $selectValue])) {
 								$countErrors++;
 							}
 						}
@@ -148,7 +148,7 @@ class CustomForm extends Basic {
 
 	function getSubmissions() {
 
-		$returnArr = array();
+		$returnArr = [];
 
 		if ($this->intTableKeyValue != "") {
 			$result = $this->MySQL->query("SELECT submission_id FROM ".$this->MySQL->get_tablePrefix()."customform_submission WHERE customform_id = '".$this->intTableKeyValue."' ORDER BY submitdate DESC");
@@ -163,7 +163,7 @@ class CustomForm extends Basic {
 
 	function getSubmissionDetail($intSubmissionID) {
 
-		$returnArr = array();
+		$returnArr = [];
 		$blnCheck1 = $this->objSubmission->select($intSubmissionID);
 		$submissionInfo = $this->objSubmission->get_info();
 		$blnCheck2 = $submissionInfo['customform_id'] == $this->intTableKeyValue;

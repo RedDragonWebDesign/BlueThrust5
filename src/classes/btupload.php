@@ -26,11 +26,11 @@ class BTUpload {
 	protected $intUploadSizeLimit;
 	protected $strOutsideFileURL;
 	protected $blnOutsideLink;
-	public $arrErrors = array();
+	public $arrErrors = [];
 
 	const ONE_MEGABYTE = 1048576;
 
-	function __construct($uploadfile, $prefix, $fileloc = "", $allowableExt = array(), $extlength = 4, $outsideLink = false) {
+	function __construct($uploadfile, $prefix, $fileloc = "", $allowableExt = [], $extlength = 4, $outsideLink = false) {
 
 		if (!$outsideLink) {
 			$this->arrFile = $uploadfile;

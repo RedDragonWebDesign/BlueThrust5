@@ -56,7 +56,7 @@ if ( ! empty($_POST['submit']) ) {
 		$maxRankInfo['ordernum'] += 1;
 	}
 
-	$arrRanks = array();
+	$arrRanks = [];
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
 		$arrRanks[] = $row['rank_id'];
@@ -88,7 +88,7 @@ if ( ! empty($_POST['submit']) ) {
 		$member->select($_POST['member']);
 		$oldUsername = $member->get_info_filtered("username");
 
-		if ($member->update(array("username"), array($_POST['newusername']))) {
+		if ($member->update(["username"], [$_POST['newusername']])) {
 			$newUserInfo = $member->get_info_filtered();
 			echo "
 			
@@ -128,7 +128,7 @@ if ( empty($_POST['submit']) ) {
 		$maxRankInfo['ordernum'] += 1;
 	}
 
-	$arrRanks = array();
+	$arrRanks = [];
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
 		$arrRanks[] = $row['rank_id'];

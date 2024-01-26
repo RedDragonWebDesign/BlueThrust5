@@ -28,7 +28,7 @@ $member->select($_SESSION['btUsername']);
 
 $tournamentObj = new Tournament($mysqli);
 $tID = $_GET['tID'];
-$arrMembers = array();
+$arrMembers = [];
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($tID) && $member->hasAccess($consoleObj) && strlen($_GET['term']) >= 3) {
 	$memberInfo = $member->get_info();
@@ -41,7 +41,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $tournamentObj->select($
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE username LIKE '".$_GET['term']."%' ORDER BY username");
 		while ($row = $result->fetch_assoc()) {
-			$arrMembers[] = array("id" => $row['member_id'], "value" => $row['username']);
+			$arrMembers[] = ["id" => $row['member_id'], "value" => $row['username']];
 		}
 
 		echo json_encode($arrMembers);

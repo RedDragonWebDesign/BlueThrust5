@@ -41,7 +41,7 @@ echo "
 	</script>
 ";
 
-$arrCheckType = array("image", "customcode", "customformat");
+$arrCheckType = ["image", "customcode", "customformat"];
 if ( ! empty($_POST['submit']) ) {
 	// Check Name
 	if (trim($_POST['categoryname']) == "") {
@@ -92,10 +92,10 @@ if ( ! empty($_POST['submit']) ) {
 	if ($countErrors == 0) {
 		if ($_POST['headertype'] == "image" && $_FILES['headerimagefile']['name'] != "") {
 			$newImage = true;
-			$btUploadObj = new BTUpload($_FILES['headerimagefile'], "menuheader_", "../images/menu/", array(".jpg", ".png", ".bmp", ".gif"));
+			$btUploadObj = new BTUpload($_FILES['headerimagefile'], "menuheader_", "../images/menu/", [".jpg", ".png", ".bmp", ".gif"]);
 		} elseif ($_POST['headertype'] == "image" && $_POST['headerimageurl'] != "") {
 			$newImage = true;
-			$btUploadObj = new BTUpload($_POST['headerimageurl'], "menuheader_", "../images/menu/", array(".jpg", ".png", ".bmp", ".gif"), 4, true);
+			$btUploadObj = new BTUpload($_POST['headerimageurl'], "menuheader_", "../images/menu/", [".jpg", ".png", ".bmp", ".gif"], 4, true);
 		}
 
 		if ($newImage && $_POST['headertype'] == "image" && $btUploadObj->uploadFile()) {
@@ -114,8 +114,8 @@ if ( ! empty($_POST['submit']) ) {
 			$headerImageURL = $menuCatInfo['headercode'];
 		}
 
-		$arrColumns = array("section", "name", "sortnum", "headertype", "headercode", "accesstype", "hide");
-		$arrValues = array($_POST['section'], $_POST['categoryname'], $intNewOrderNum, $_POST['headertype'], $headerImageURL, $_POST['accesstype'], $_POST['hidecategory']);
+		$arrColumns = ["section", "name", "sortnum", "headertype", "headercode", "accesstype", "hide"];
+		$arrValues = [$_POST['section'], $_POST['categoryname'], $intNewOrderNum, $_POST['headertype'], $headerImageURL, $_POST['accesstype'], $_POST['hidecategory']];
 
 		$menuCatObj->select($menuCatInfo['menucategory_id']);
 		if ($menuCatObj->update($arrColumns, $arrValues)) {

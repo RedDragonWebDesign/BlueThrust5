@@ -28,7 +28,7 @@ class TournamentPlayer extends Basic {
 			$arrUnfilledTeams = $this->tournamentObj->getUnfilledTeams();
 			if (count($arrUnfilledTeams) > 0) {
 				$newTeam = $arrUnfilledTeams[0];
-				$this->update(array("team_id"), array($newTeam));
+				$this->update(["team_id"], [$newTeam]);
 			}
 		}
 
@@ -95,7 +95,7 @@ class TournamentPlayer extends Basic {
 				// Add new reminder
 				$emailReminderID = $member->setEmailReminder($sendReminder, "Tournament Starting!", $message);
 				$tournamentReminder = new Basic($this->MySQL, "tournament_reminder", "tournamentreminder_id");
-				$tournamentReminder->addNew(array("emailnotificationsqueue_id", "tournament_id"), array($emailReminderID, $this->arrObjInfo['tournament_id']));
+				$tournamentReminder->addNew(["emailnotificationsqueue_id", "tournament_id"], [$emailReminderID, $this->arrObjInfo['tournament_id']]);
 			}
 		}
 	}

@@ -61,15 +61,15 @@ $arrComponents['tournamentpw']['tooltip'] = "If you don't want to change the cur
 
 if ($tournamentInfo['password'] != "") {
 	$lastComponentOrder = $arrComponents['submit']['sortorder'];
-	$arrComponents['removepw'] = array(
+	$arrComponents['removepw'] = [
 		"type" => "checkbox",
 		"display_name" => "Remove Password",
 		"tooltip" => "This tournament currently has a password in order for members to join.  Mark the check box to remove the password.",
 		"sortorder" => $lastComponentOrder,
 		"value" => 1,
-		"attributes" => array("class" => "formInput textBox"),
-		"validate" => array("removeTournamentPassword")
-	);
+		"attributes" => ["class" => "formInput textBox"],
+		"validate" => ["removeTournamentPassword"]
+	];
 	$arrComponents['submit']['sortorder'] = $lastComponentOrder+1;
 }
 
@@ -85,7 +85,7 @@ $setupFormArgs['description'] = "Use the form below to edit tournament info.";
 $setupFormArgs['saveMessage'] = "Successfully edited tournament info!";
 $setupFormArgs['attributes']['action'] = MAIN_ROOT."members/tournaments/managetournament.php?tID=".$tournamentInfo['tournament_id']."&pID=EditTournamentInfo";
 $setupFormArgs['components'] = $arrComponents;
-$setupFormArgs['skipPrefill'] = array("startdate", "requirereplay", "tournamentpw");
+$setupFormArgs['skipPrefill'] = ["startdate", "requirereplay", "tournamentpw"];
 $setupFormArgs['name'] .= "-editinfo";
 $setupFormArgs['saveLink'] = MAIN_ROOT."members/console.php?cID=".$cID."&select=".$tournamentInfo['tournament_id'];
 

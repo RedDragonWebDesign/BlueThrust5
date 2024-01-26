@@ -24,17 +24,17 @@ class Twitch {
 
 		$this->socialObj->select($this->twitchSocialID);
 
-		$this->arrGameImageSizes = array(
-			"small" => array("width" => "52", "height" => "72"),
-			"medium" => array("width" => "136", "height" => "190"),
-			"large" => array("width" => "272", "height" => "380")
-		);
+		$this->arrGameImageSizes = [
+			"small" => ["width" => "52", "height" => "72"],
+			"medium" => ["width" => "136", "height" => "190"],
+			"large" => ["width" => "272", "height" => "380"]
+		];
 
-		$this->arrPreviewImageSizes = array(
-			"small" => array("width" => "80", "height" => "50"),
-			"medium" => array("width" => "320", "height" => "200"),
-			"large" => array("width" => "640", "height" => "400")
-		);
+		$this->arrPreviewImageSizes = [
+			"small" => ["width" => "80", "height" => "50"],
+			"medium" => ["width" => "320", "height" => "200"],
+			"large" => ["width" => "640", "height" => "400"]
+		];
 	}
 
 	public function getGameImageURL($game, $size = "small") {
@@ -48,7 +48,7 @@ class Twitch {
 
 	public function getStreamInfo($memberID) {
 
-		$returnVal = array();
+		$returnVal = [];
 		$arrMembers = $this->getMembers();
 		if (in_array($memberID, $arrMembers)) {
 			$twitchName = $this->getTwitchName($memberID);
@@ -70,7 +70,7 @@ class Twitch {
 	public function getMembers() {
 
 		$arrSocialMembers = $this->socialObj->getAssociateIDs("ORDER BY value");
-		$arrMembers = array();
+		$arrMembers = [];
 
 		foreach ($arrSocialMembers as $socialMemberID) {
 			$this->socialObj->objSocialMember->select($socialMemberID);
@@ -161,7 +161,7 @@ class Twitch {
 	}
 
 
-	public function httpRequest($url, $method = "GET", $headers = array(), $postfields = array()) {
+	public function httpRequest($url, $method = "GET", $headers = [], $postfields = []) {
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);

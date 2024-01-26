@@ -36,9 +36,9 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 if ($ipbanObj->select($_POST['ipaddress'])) {
 	$ipbanObj->delete();
-	$arrReturn = array("result" => "success");
+	$arrReturn = ["result" => "success"];
 } else {
-	$arrReturn = array("result" => "fail");
+	$arrReturn = ["result" => "fail"];
 }
 
 echo json_encode($arrReturn);

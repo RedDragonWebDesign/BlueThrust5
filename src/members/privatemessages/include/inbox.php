@@ -37,8 +37,8 @@ $multiMemPMObj = $pmObj->multiMemPMObj;
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$memberInfo = $member->get_info_filtered();
-	$arrPM = array();
-	$arrPMMID = array();
+	$arrPM = [];
+	$arrPMMID = [];
 
 
 	$pmFolderObj = new PMFolder($mysqli);
@@ -50,7 +50,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$isFolderSet = isset($_POST['folder']);
 	$selectedFolder = $pmFolderObj->select($_POST['folder']);
 	$condition1 = (!$selectedFolder || ($selectedFolder && !$pmFolderObj->isMemberFolder()));
-	$arrStandardFolders = array(0, -1, -2);
+	$arrStandardFolders = [0, -1, -2];
 
 	// Folder Checks
 	if (!$isFolderSet) {

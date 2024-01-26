@@ -30,7 +30,7 @@ class btBBCode {
 
 	protected $arrBBCodes;
 
-	public function __construct($bbCodeArray = array()) {
+	public function __construct($bbCodeArray = []) {
 		// Quick way to add bb codes
 		$this->arrBBCodes = $bbCodeArray;
 	}
@@ -64,9 +64,9 @@ class btBBCode {
 
 // Default BB Codes
 
-$arrBold = array("bbOpenTag" => "[b]", "bbCloseTag" => "[/b]", "htmlOpenTag" => "<span style='font-weight: bold'>", "htmlCloseTag" => "</span>");
-$arrItalic = array("bbOpenTag" => "[i]", "bbCloseTag" => "[/i]", "htmlOpenTag" => "<span style='font-style: italic'>", "htmlCloseTag" => "</span>");
-$arrUnderline = array("bbOpenTag" => "[u]", "bbCloseTag" => "[/u]", "htmlOpenTag" => "<span style='text-decoration: underline'>", "htmlCloseTag" => "</span>");
+$arrBold = ["bbOpenTag" => "[b]", "bbCloseTag" => "[/b]", "htmlOpenTag" => "<span style='font-weight: bold'>", "htmlCloseTag" => "</span>"];
+$arrItalic = ["bbOpenTag" => "[i]", "bbCloseTag" => "[/i]", "htmlOpenTag" => "<span style='font-style: italic'>", "htmlCloseTag" => "</span>"];
+$arrUnderline = ["bbOpenTag" => "[u]", "bbCloseTag" => "[/u]", "htmlOpenTag" => "<span style='text-decoration: underline'>", "htmlCloseTag" => "</span>"];
 
 
-$arrLink = array("bbOpenTag" => "[url]", "bbCloseTag" => "[/url]", "htmlOpenTag" => "<a href='", "htmlCloseTag" => "</span>");
+$arrLink = ["bbOpenTag" => "[url]", "bbCloseTag" => "[/url]", "htmlOpenTag" => "<a href='", "htmlCloseTag" => "</span>"];

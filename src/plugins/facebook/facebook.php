@@ -67,7 +67,7 @@ class Facebook extends Basic {
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
 			$addToURL = "";
-			$arrPicSizes = array("square", "small", "normal", "large");
+			$arrPicSizes = ["square", "small", "normal", "large"];
 			if ($picSize != "" && in_array($picSize, $arrPicSizes)) {
 				$addToURL = "?type=".$picSize;
 			}
@@ -112,7 +112,7 @@ class Facebook extends Basic {
 	public function	getAccessToken($loginCode, $checkNonce, $callbackURL) {
 
 		$accessTokenURL = $this->facebookAccessTokenURL."?client_id=".$this->appID."&redirect_uri=".urlencode($callbackURL)."&client_secret=".$this->appSecret."&code=".$loginCode;
-		$params = array();
+		$params = [];
 
 		if ($this->tokenNonce == $checkNonce) {
 			$response = file_get_contents($accessTokenURL);
@@ -149,7 +149,7 @@ class Facebook extends Basic {
 
 	public function generateAppToken() {
 
-		$params = array();
+		$params = [];
 		$accessTokenURL = $this->facebookAccessTokenURL."?client_id=".$this->appID."&client_secret=".$this->appSecret."&grant_type=client_credentials";
 
 		$response = file_get_contents($accessTokenURL);
@@ -179,7 +179,7 @@ class Facebook extends Basic {
 		if (isset($this->accessToken)) {
 			$postURL = "https://graph.facebook.com/".$this->arrFacebookInfo['id']."/feed";
 
-			$response = $this->httpRequest($postURL, "POST", array(), "access_token=".$this->accessToken."&caption=".urlencode($message)."&link=".urlencode($linkurl)."&name=".urlencode($linkname));
+			$response = $this->httpRequest($postURL, "POST", [], "access_token=".$this->accessToken."&caption=".urlencode($message)."&link=".urlencode($linkurl)."&name=".urlencode($linkname));
 
 			$returnVal = $response;
 		}
@@ -188,7 +188,7 @@ class Facebook extends Basic {
 	}
 
 
-	public function httpRequest($url, $method, $headers = array(), $postfields = array()) {
+	public function httpRequest($url, $method, $headers = [], $postfields = []) {
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -225,7 +225,7 @@ class Facebook extends Basic {
 
 			$deleteURL = "https://graph.facebook.com/".$this->arrFacebookInfo['id']."/permissions?access_token=".$this->accessToken;
 
-			$revokeAccess = $this->httpRequest($deleteURL, "DELETE", array(), "access_token=".$this->accessToken);
+			$revokeAccess = $this->httpRequest($deleteURL, "DELETE", [], "access_token=".$this->accessToken);
 
 			if ($blnDelete && $revokeAccess == "true") {
 				$returnVal = true;

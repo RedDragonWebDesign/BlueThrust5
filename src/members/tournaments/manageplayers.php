@@ -86,9 +86,9 @@ $dispSeedChangeDiv = "";
 if ($tournamentInfo['playersperteam'] == 1) {
 	$dispSeedChangeDiv = "<div id='changeSeedDiv' class='main' style='display: none'></div><div id='successBox' class='main' style='display: none'></div>";
 	$i = 1;
-	$arrSortPlayers = array();
-	$arrDispPlayers = array();
-	$arrEmptySpots = array();
+	$arrSortPlayers = [];
+	$arrDispPlayers = [];
+	$arrEmptySpots = [];
 	foreach ($arrTeams as $teamID) {
 		$teamPlayer = $tournamentObj->getTeamPlayers($teamID, true);
 		$tournamentObj->objTeam->select($teamID);

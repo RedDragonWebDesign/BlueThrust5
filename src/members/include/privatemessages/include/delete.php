@@ -26,7 +26,7 @@ $consoleObj->select($cID);
 
 if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
-	$arrSpecialFolders = array(0, -1, -2);
+	$arrSpecialFolders = [0, -1, -2];
 	$pmFolderObj->intMemberID = $memberInfo['member_id'];
 	if ($member->hasAccess($consoleObj) && $pmFolderObj->select($_POST['folder']) && $pmFolderObj->isMemberFolder() && !in_array($_POST['folder'], $arrSpecialFolders)) {
 		$folderInfo = $pmFolderObj->get_info_filtered();

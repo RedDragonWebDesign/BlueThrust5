@@ -36,7 +36,7 @@ class TournamentPool extends Basic {
 
 	public function getTeamsInPool() {
 
-		$returnArr = array();
+		$returnArr = [];
 		if ($this->intTableKeyValue != "" && is_numeric($this->intTableKeyValue)) {
 			$result = $this->MySQL->query("SELECT team1_id,team2_id FROM ".$this->MySQL->get_tablePrefix()."tournamentpools_teams WHERE pool_id = '".$this->intTableKeyValue."'");
 			while ($row = $result->fetch_assoc()) {

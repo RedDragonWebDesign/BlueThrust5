@@ -37,7 +37,7 @@ $newsObj = new News($mysqli);
 // Check Login
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
-	$newsObj->addNew(array("member_id", "newstype", "newspost", "dateposted", "postsubject"), array($member->get_info("member_id"), 3, $_POST['message'], time(), "Shoutbox Post"));
+	$newsObj->addNew(["member_id", "newstype", "newspost", "dateposted", "postsubject"], [$member->get_info("member_id"), 3, $_POST['message'], time(), "Shoutbox Post"]);
 
 	$manageNewsCID = $consoleObj->findConsoleIDByName("Manage News");
 

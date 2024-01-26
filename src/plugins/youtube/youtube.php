@@ -97,7 +97,7 @@ class Youtube extends Basic {
 		$postData .= "&redirect_uri=".urlencode($callbackURL);
 		$postData .= "&grant_type=authorization_code";
 
-		$response = $this->httpRequest($this->tokenURL, "POST", array("Content-Type: application/x-www-form-urlencoded"), $postData);
+		$response = $this->httpRequest($this->tokenURL, "POST", ["Content-Type: application/x-www-form-urlencoded"], $postData);
 
 		$response = json_decode($response, true);
 
@@ -115,14 +115,14 @@ class Youtube extends Basic {
 		$postData .= "&refresh_token=".$this->refreshToken;
 		$postData .= "&grant_type=refresh_token";
 
-		$response = $this->httpRequest($this->tokenURL, "POST", array("Content-Type: application/x-www-form-urlencoded"), $postData);
+		$response = $this->httpRequest($this->tokenURL, "POST", ["Content-Type: application/x-www-form-urlencoded"], $postData);
 		$response = json_decode($response, true);
 
 		if (isset($response['access_token'])) {
 			$this->accessToken = $response['access_token'];
 
 			if ($this->intTableKeyValue != "") {
-				$this->update(array("access_token"), array($response['access_token']));
+				$this->update(["access_token"], [$response['access_token']]);
 			}
 		}
 	}
@@ -130,7 +130,7 @@ class Youtube extends Basic {
 	public function getChannelInfo($infoType = "contentDetails", $countUsage = 0) {
 
 		$arrResponse = false;
-		$arrTypes = array("contentDetails", "snippet", "statistics");
+		$arrTypes = ["contentDetails", "snippet", "statistics"];
 		if (isset($this->accessToken) && in_array($infoType, $arrTypes) && isset($this->refreshToken) && $countUsage < 2) {
 			$response = file_get_contents("https://www.googleapis.com/youtube/v3/channels?part=".$infoType."&mine=true&access_token=".$this->accessToken);
 
@@ -171,8 +171,8 @@ class Youtube extends Basic {
 			$channelSnippet = $this->getChannelInfo("snippet");
 			$channelStats = $this->getChannelInfo("statistics");
 
-			$arrColumns = array("channel_id", "uploads_id", "thumbnail", "subscribers", "title", "lastupdate", "videocount", "viewcount", "loginhash");
-			$arrValues = array($channelInfo['items'][0]['id'], $channelInfo['items'][0]['contentDetails']['relatedPlaylists']['uploads'], $channelSnippet['items'][0]['snippet']['thumbnails']['medium']['url'], $channelStats['items'][0]['statistics']['subscriberCount'], $channelSnippet['items'][0]['snippet']['title'], time(), $channelStats['items'][0]['statistics']['videoCount'], $channelStats['items'][0]['statistics']['viewCount'], md5($channelInfo['items'][0]['id']));
+			$arrColumns = ["channel_id", "uploads_id", "thumbnail", "subscribers", "title", "lastupdate", "videocount", "viewcount", "loginhash"];
+			$arrValues = [$channelInfo['items'][0]['id'], $channelInfo['items'][0]['contentDetails']['relatedPlaylists']['uploads'], $channelSnippet['items'][0]['snippet']['thumbnails']['medium']['url'], $channelStats['items'][0]['statistics']['subscriberCount'], $channelSnippet['items'][0]['snippet']['title'], time(), $channelStats['items'][0]['statistics']['videoCount'], $channelStats['items'][0]['statistics']['viewCount'], md5($channelInfo['items'][0]['id'])];
 
 			$this->update($arrColumns, $arrValues);
 
@@ -189,9 +189,9 @@ class Youtube extends Basic {
 			$this->MySQL->query("OPTIMIZE TABLE `".$this->MySQL->get_tablePrefix()."youtube_videos`");
 
 			$videoCount = 0;
-			$arrColumns = array("youtube_id", "member_id", "video_id", "thumbnail", "title", "dateuploaded");
+			$arrColumns = ["youtube_id", "member_id", "video_id", "thumbnail", "title", "dateuploaded"];
 			foreach ($arrVideoInfo['items'] as $videoInfo) {
-				$arrValues = array($this->intTableKeyValue, $this->arrObjInfo['member_id'], $videoInfo['snippet']['resourceId']['videoId'], $videoInfo['snippet']['thumbnails']['medium']['url'], $videoInfo['snippet']['title'], $videoInfo['snippet']['publishedAt']);
+				$arrValues = [$this->intTableKeyValue, $this->arrObjInfo['member_id'], $videoInfo['snippet']['resourceId']['videoId'], $videoInfo['snippet']['thumbnails']['medium']['url'], $videoInfo['snippet']['title'], $videoInfo['snippet']['publishedAt']];
 
 				$this->objYTVideo->addNew($arrColumns, $arrValues);
 
@@ -266,7 +266,7 @@ class Youtube extends Basic {
 		return $subHTML;
 	}
 
-	public function httpRequest($url, $method, $headers = array(), $postfields = array()) {
+	public function httpRequest($url, $method, $headers = [], $postfields = []) {
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);

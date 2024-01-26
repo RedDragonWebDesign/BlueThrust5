@@ -94,7 +94,7 @@ if ( ! empty($_POST['submit']) ) {
 	// Check Replay Upload
 
 	if ($_FILES['uploadreplay']['name'] != "") {
-		$uploadReplayObj = new BTUpload($_FILES['uploadreplay'], "replay_", "../../downloads/replays/", array(".zip"));
+		$uploadReplayObj = new BTUpload($_FILES['uploadreplay'], "replay_", "../../downloads/replays/", [".zip"]);
 
 		if (!$uploadReplayObj->uploadFile()) {
 			$countErrors++;
@@ -117,12 +117,12 @@ if ( ! empty($_POST['submit']) ) {
 			$playerTwoMatchInfo = $tournamentObj->objMatch->get_info();
 
 			if ($_POST['playertwo'] == $playerTwoMatchInfo['team1_id']) {
-				$arrColumns = array("team1_id");
+				$arrColumns = ["team1_id"];
 			} else {
-				$arrColumns = array("team2_id");
+				$arrColumns = ["team2_id"];
 			}
 
-			$tournamentObj->objMatch->update($arrColumns, array($matchInfo['team2_id']));
+			$tournamentObj->objMatch->update($arrColumns, [$matchInfo['team2_id']]);
 		}
 
 
@@ -134,8 +134,8 @@ if ( ! empty($_POST['submit']) ) {
 
 
 
-		$arrColumns = array("team2_id", "team1score", "team2score", "outcome", "adminreplayurl");
-		$arrValues = array($_POST['playertwo'], $_POST['team1score'], $_POST['team2score'], $_POST['outcome'], $matchReplayURL);
+		$arrColumns = ["team2_id", "team1score", "team2score", "outcome", "adminreplayurl"];
+		$arrValues = [$_POST['playertwo'], $_POST['team1score'], $_POST['team2score'], $_POST['outcome'], $matchReplayURL];
 		$tournamentObj->objMatch->select($matchInfo['tournamentmatch_id']);
 
 		if ($tournamentObj->objMatch->update($arrColumns, $arrValues)) {
@@ -145,7 +145,7 @@ if ( ! empty($_POST['submit']) ) {
 				$tournamentObj->objMatch->select($matchInfo['nextmatch_id']);
 
 
-				$tournamentObj->objMatch->update(array($nextMatchSpot), array($matchWinner));
+				$tournamentObj->objMatch->update([$nextMatchSpot], [$matchWinner]);
 			}
 
 

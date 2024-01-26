@@ -52,7 +52,7 @@ if ( ! empty($_POST['submit']) ) {
 
 		$postResults = ($_POST['postresults'] == "yes") ? "yes" : "";
 
-		if ($customFormPageObj->addNew(array("name", "pageinfo", "submitmessage", "submitlink", "specialform"), array($_POST['pagename'], $_POST['wysiwygHTML'], $_POST['submitMessageHTML'], $_POST['submitlink'], $postResults)) && $customFormPageObj->addComponents($_SESSION['btFormComponent'])) {
+		if ($customFormPageObj->addNew(["name", "pageinfo", "submitmessage", "submitlink", "specialform"], [$_POST['pagename'], $_POST['wysiwygHTML'], $_POST['submitMessageHTML'], $_POST['submitlink'], $postResults]) && $customFormPageObj->addComponents($_SESSION['btFormComponent'])) {
 			$intManageCustomPagesID = $consoleObj->findConsoleIDByName("Manage Custom Form Pages");
 			$customPageInfo = $customFormPageObj->get_info_filtered();
 			echo "
@@ -98,7 +98,7 @@ if ( empty($_POST['submit']) ) {
 		";
 	} else {
 		$_SESSION['btFormComponentCount'] = 0;
-		$_SESSION['btFormComponent'] = array();
+		$_SESSION['btFormComponent'] = [];
 	}
 
 	echo "

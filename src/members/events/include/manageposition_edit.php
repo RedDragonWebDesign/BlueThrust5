@@ -68,8 +68,8 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-		$arrColumns = array("name", "sortnum", "modchat", "invitemembers", "manageinvites", "postmessages", "managemessages", "attendenceconfirm", "editinfo", "eventpositions", "description");
-		$arrValues = array($_POST['positionname'], $intNewOrderNum, $_POST['modchat'], $_POST['invitemembers'], $_POST['manageinvites'], $_POST['postmessages'], $_POST['managemessages'], $_POST['attendenceconfirm'], $_POST['editinfo'], $_POST['eventpositions'], $_POST['description']);
+		$arrColumns = ["name", "sortnum", "modchat", "invitemembers", "manageinvites", "postmessages", "managemessages", "attendenceconfirm", "editinfo", "eventpositions", "description"];
+		$arrValues = [$_POST['positionname'], $intNewOrderNum, $_POST['modchat'], $_POST['invitemembers'], $_POST['manageinvites'], $_POST['postmessages'], $_POST['managemessages'], $_POST['attendenceconfirm'], $_POST['editinfo'], $_POST['eventpositions'], $_POST['description']];
 		$eventObj->objEventPosition->select($eventPositionInfo['position_id']);
 
 		if ($eventObj->objEventPosition->update($arrColumns, $arrValues)) {

@@ -66,8 +66,8 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 	if ($countErrors == 0) {
-		$arrColumns = array("squadrank_id");
-		$arrValues = array($_POST['squadrank']);
+		$arrColumns = ["squadrank_id"];
+		$arrValues = [$_POST['squadrank']];
 
 		// Squad Member Info
 		$squadMemberInfo = $squadObj->objSquadMember->get_info_filtered();

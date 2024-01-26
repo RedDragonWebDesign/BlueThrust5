@@ -60,10 +60,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			if ($tempPMInfo['sender_id']  == $memberInfo['member_id'] && $pmMID == "") {
 				// Sender
 				echo "hi";
-				$pmObj->update(array("senderfolder_id"), array($_POST['newFolder']));
+				$pmObj->update(["senderfolder_id"], [$_POST['newFolder']]);
 			} elseif ($tempPMInfo['receiver_id'] == $memberInfo['member_id']) {
 				// Receiver
-				$pmObj->update(array("receiverfolder_id"), array($_POST['newFolder']));
+				$pmObj->update(["receiverfolder_id"], [$_POST['newFolder']]);
 			} elseif (in_array($memberInfo['member_id'], $arrRecipients)) {
 				// Receiver - Multi Member PM
 
@@ -71,7 +71,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 				$pmObj->multiMemPMObj->select($tempKey);
 
-				$pmObj->multiMemPMObj->update(array("pmfolder_id"), array($_POST['newFolder']));
+				$pmObj->multiMemPMObj->update(["pmfolder_id"], [$_POST['newFolder']]);
 			}
 		}
 	}

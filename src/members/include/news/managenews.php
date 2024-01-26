@@ -72,7 +72,7 @@ if (isset($_GET['newsID']) && $newsObj->select($_GET['newsID'])) {
 
 	$setupFormArgs['components'] = $arrComponents;
 	$setupFormArgs['saveType'] = "update";
-	$setupFormArgs['saveAdditional'] = array("lasteditmember_id" => $memberInfo['member_id'], "lasteditdate" => time());
+	$setupFormArgs['saveAdditional'] = ["lasteditmember_id" => $memberInfo['member_id'], "lasteditdate" => time()];
 	$setupFormArgs['saveMessage'] = "Successfully edited news post!";
 	$setupFormArgs['description'] = "Use the form below to edit the selected news post.";
 	$setupFormArgs['attributes']['action'] .= "&newsID=".$newsInfo['news_id'];

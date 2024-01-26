@@ -22,7 +22,7 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	}
 }
 
-$arrShowPerPage = array(25, 50, 100);
+$arrShowPerPage = [25, 50, 100];
 
 if (!isset($_GET['page']) || !is_numeric($_GET['page']) || $_GET['page'] < 1) {
 	$_GET['page'] = 1;

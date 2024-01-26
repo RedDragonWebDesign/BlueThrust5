@@ -41,7 +41,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 			$_SESSION['btProfileCache'][$deleteKey] = "";
 
 			$x = 0;
-			$newProfileArr = array();
+			$newProfileArr = [];
 			foreach ($_SESSION['btProfileCache'] as $profileOption) {
 				if ($profileOption != "") {
 					$newProfileArr[] = $profileOption;

@@ -50,10 +50,10 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 
-			$arrSaveInfo = array(
+			$arrSaveInfo = [
 					'mID' => $_POST['mID'],
 					'accessRule' => $_POST['accessrule']
-					);
+					];
 
 			if (is_numeric($intAlreadyAdded)) {
 				$_SESSION['btAccessRules'][$intAlreadyAdded] = $arrSaveInfo;

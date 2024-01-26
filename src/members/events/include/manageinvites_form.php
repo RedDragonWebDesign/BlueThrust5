@@ -40,7 +40,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMembe
 		$inviteMemberInfo = $objInviteMember->get_info_filtered();
 
 		$dispAttendenceStatus = $eventObj->arrInviteStatus[$eventMemberInfo['status']];
-		$positionOptions = array("None");
+		$positionOptions = ["None"];
 		foreach ($eventObj->getPositions() as $value) {
 			$eventObj->objEventPosition->select($value);
 			$dispPositionName = $eventObj->objEventPosition->get_info_filtered("name");
@@ -48,11 +48,11 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMembe
 			$positionOptions[$value] = $dispPositionName;
 		}
 
-		$dispConfirmAttendence = array(
+		$dispConfirmAttendence = [
 			"type" => "hidden",
 			"hidden" => true,
-			"attributes" => array("id" => "confirmAttendence")
-		);
+			"attributes" => ["id" => "confirmAttendence"]
+		];
 
 
 
@@ -70,55 +70,55 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $eventObj->objEventMembe
 				$dispDisableForm = "disabled";
 			}
 
-			$dispConfirmAttendence = array(
+			$dispConfirmAttendence = [
 				"type" => "select",
 				"display_name" => "Confirm Attendance",
-				"attributes" => array("class" => "formInput textBox", "id" => "confirmAttendence", "disable" => $dispDisableForm),
+				"attributes" => ["class" => "formInput textBox", "id" => "confirmAttendence", "disable" => $dispDisableForm],
 				"tooltip" => $dispDisabledInfo,
-				"options" => array("Not Confirmed", "Confirmed", "Excused", "Unexcused"),
+				"options" => ["Not Confirmed", "Confirmed", "Excused", "Unexcused"],
 				"value" => $eventMemberInfo['attendconfirm_admin']
-			);
+			];
 		}
 
 		$i = 1;
-		$arrComponents = array(
-			"attendancestatus" => array(
+		$arrComponents = [
+			"attendancestatus" => [
 				"display_name" => "Attendance Status",
 				"type" => "custom",
 				"html" => "<div class='formInput'>".$dispAttendenceStatus."</div>",
 				"sortorder" => $i++
-			)
-		);
+			]
+		];
 
 		if ($eventObj->memberHasAccess($memberInfo['member_id'], "manageinvites")) {
-			$arrComponents['selectposition'] = array(
+			$arrComponents['selectposition'] = [
 				"display_name" => "Set Position",
 				"type" => "select",
 				"sortorder" => $i++,
 				"options" => $positionOptions,
-				"attributes" => array("class" => "formInput textBox", "id" => "selectPositionID"),
+				"attributes" => ["class" => "formInput textBox", "id" => "selectPositionID"],
 				"value" => $eventMemberInfo['position_id']
-			);
+			];
 		}
 
 
 		$arrComponents['confirmattendance'] = $dispConfirmAttendence;
 		$arrComponents['confirmattendance']['sortorder'] = $i++;
 
-		$arrComponents['submit'] = array(
+		$arrComponents['submit'] = [
 			"type" => "button",
 			"sortorder" => $i++,
-			"attributes" => array("class" => "formSubmitButton submitButton", "onclick" => "btnSaveClicked()"),
+			"attributes" => ["class" => "formSubmitButton submitButton", "onclick" => "btnSaveClicked()"],
 			"value" => "Save"
 
-		);
+		];
 
 
-		$setupFormArgs = array(
+		$setupFormArgs = [
 			"name" => "console-".$cID."-manageinvites",
 			"components" => $arrComponents,
-			"wrapper" => array("<div>", "</div>")
-		);
+			"wrapper" => ["<div>", "</div>"]
+		];
 
 		$formObj->buildForm($setupFormArgs);
 

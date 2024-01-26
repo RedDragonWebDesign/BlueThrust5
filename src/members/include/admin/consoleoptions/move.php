@@ -58,7 +58,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 			if (is_numeric($newSpot)) {
 				$consoleObj->select($_POST['cID']);
-				$consoleObj->update(array("sortnum"), array($newSpot));
+				$consoleObj->update(["sortnum"], [$newSpot]);
 			}
 
 			$consoleObj->resortOrder();

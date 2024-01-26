@@ -44,7 +44,7 @@ if ($cID == "") {
 	$cID = $cOptObj->findConsoleIDByName("Manage Console Options");
 }
 
-$arrConsoleCatIDs = array();
+$arrConsoleCatIDs = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$arrConsoleCatIDs[] = $row['consolecategory_id'];

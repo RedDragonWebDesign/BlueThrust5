@@ -54,20 +54,20 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				$_POST['newComponentRequired'] = 1;
 			}
 
-			$arrColumns = array("name", "componenttype", "ordernum", "required", "tooltip");
-			$arrValues = array($_POST['newComponentName'], $_POST['newComponentType'], $componentOrderNum, $_POST['newComponentRequired'], $_POST['newComponentTooltip']);
+			$arrColumns = ["name", "componenttype", "ordernum", "required", "tooltip"];
+			$arrValues = [$_POST['newComponentName'], $_POST['newComponentType'], $componentOrderNum, $_POST['newComponentRequired'], $_POST['newComponentTooltip']];
 
 			if ($appComponentObj->addNew($arrColumns, $arrValues)) {
 				if ($_POST['newComponentType'] == "select" || $_POST['newComponentType'] == "multiselect") {
 					$appComponentSelectOptionObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
 					$newComponentID = $appComponentObj->get_info("appcomponent_id");
 					foreach ($_SESSION['btAppComponent']['cOptions'] as $optionValue) {
-						$appComponentSelectOptionObj->addNew(array("appcomponent_id", "componentvalue"), array($newComponentID, $optionValue));
+						$appComponentSelectOptionObj->addNew(["appcomponent_id", "componentvalue"], [$newComponentID, $optionValue]);
 					}
 				} elseif ($_POST['newComponentType'] == "profile") {
 					$appComponentSelectOptionObj = new Basic($mysqli, "app_selectvalues", "appselectvalue_id");
 					$newComponentID = $appComponentObj->get_info("appcomponent_id");
-					$appComponentSelectOptionObj->addNew(array("appcomponent_id", "componentvalue"), array($newComponentID, $_POST['profileOptionID']));
+					$appComponentSelectOptionObj->addNew(["appcomponent_id", "componentvalue"], [$newComponentID, $_POST['profileOptionID']]);
 				}
 
 				$member->logAction("Added a new member application component.");
@@ -135,7 +135,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	}
 
 	if (!$_POST['saveComponent']) {
-		$_SESSION['btAppComponent']['cOptions'] = array();
+		$_SESSION['btAppComponent']['cOptions'] = [];
 	}
 
 

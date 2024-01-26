@@ -30,7 +30,7 @@ if (trim($_SERVER['HTTPS']) == "" || $_SERVER['HTTPS'] == "off") {
 
 $fbObj = new Facebook($mysqli);
 
-$dispError = array();
+$dispError = [];
 $countErrors = 0;
 
 // Start Page
@@ -64,8 +64,8 @@ if (isset($_GET['code'])) {
 		$fbInfo = $fbObj->getFBInfo();
 
 		// Save in DB
-		$arrColumns = array("name", "lastupdate");
-		$arrValues = array($fbInfo['name'], time());
+		$arrColumns = ["name", "lastupdate"];
+		$arrValues = [$fbInfo['name'], time()];
 
 		if ($fbObj->authorizeLogin($fbInfo['id'])) {
 			$fbInfo = $fbObj->get_info();
@@ -82,7 +82,7 @@ if (isset($_GET['code'])) {
 			$newTimesLoggedIn = $memberInfo['timesloggedin']+1;
 			$newIP = $_SERVER['REMOTE_ADDR'];
 
-			$memberObj->update(array("lastlogin", "timesloggedin", "ipaddress", "loggedin"), array($newLastLogin, $newTimesLoggedIn, $newIP, 1));
+			$memberObj->update(["lastlogin", "timesloggedin", "ipaddress", "loggedin"], [$newLastLogin, $newTimesLoggedIn, $newIP, 1]);
 
 			$memberObj->autoPromote();
 

@@ -187,8 +187,8 @@ if ($_GET['nID'] == "") {
 
 		if ($countErrors == 0) {
 			$time = time();
-			$arrColumns = array("newspost", "lasteditmember_id", "lasteditdate");
-			$arrValues = array($_POST['message'], $memberInfo['member_id'], $time);
+			$arrColumns = ["newspost", "lasteditmember_id", "lasteditdate"];
+			$arrValues = [$_POST['message'], $memberInfo['member_id'], $time];
 
 			if ($squadNewsObj->update($arrColumns, $arrValues)) {
 				echo "

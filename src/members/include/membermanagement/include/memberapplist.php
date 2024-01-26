@@ -40,10 +40,10 @@ $memberAppForm = $memberAppObj->objSignUpForm;
 
 require_once(BASE_DIRECTORY."members/include/membermanagement/include/memberapp_setrank.php");
 
-$setupMemberAppForm = array(
+$setupMemberAppForm = [
 	"name" => "display-member-app",
-	"wrapper" => array("<div class='dottedBox' style='margin-top: 20px; width: 90%; margin-left: auto; margin-right: auto;'>", "</div>")
-);
+	"wrapper" => ["<div class='dottedBox' style='margin-top: 20px; width: 90%; margin-left: auto; margin-right: auto;'>", "</div>"]
+];
 
 $result = $mysqli->query("SELECT memberapp_id FROM ".$dbprefix."memberapps ORDER BY applydate DESC");
 while ($row = $result->fetch_assoc()) {
@@ -54,38 +54,38 @@ while ($row = $result->fetch_assoc()) {
 
 	// Default Info
 	$i = 0;
-	$arrDefaultInfo = array(
-		"dateapplied" => array(
+	$arrDefaultInfo = [
+		"dateapplied" => [
 			"type" => "custom",
 			"sortorder" => $i++,
 			"display_name" => "Date Applied",
 			"html" => "<div class='main formInput'>".$dispApplyDate."</div>"
-		),
-		"username" => array(
+		],
+		"username" => [
 			"type" => "custom",
 			"sortorder" => $i++,
 			"display_name" => "Username",
 			"html" => "<div class='main formInput'>".$memberAppInfo['username']."</div>"
-		),
-		"ipaddress" => array(
+		],
+		"ipaddress" => [
 			"type" => "custom",
 			"sortorder" => $i++,
 			"display_name" => "IP Address",
 			"html" => "<div class='main formInput'>".$memberAppInfo['ipaddress']."</div>"
-		),
-		"email" => array(
+		],
+		"email" => [
 			"type" => "custom",
 			"sortorder" => $i++,
 			"display_name" => "E-mail",
 			"html" => "<div class='main formInput'><a href='mailto:".$memberAppInfo['email']."'>".$memberAppInfo['email']."</a></div>"
-		)
-	);
+		]
+	];
 
 	// Custom Info
 
 	$customAppInfo = $memberAppObj->getAppValues();
 
-	$arrCompInfo = array();
+	$arrCompInfo = [];
 	foreach ($customAppInfo as $componentID => $customInfo) {
 		$appComponentObj->select($componentID);
 		$appCompName = $appComponentObj->get_info_filtered("name");
@@ -104,13 +104,13 @@ while ($row = $result->fetch_assoc()) {
 			$dispCompValue = "Not Set";
 		}
 
-		$arrCompInfo[$compName] = array(
+		$arrCompInfo[$compName] = [
 			"type" => "custom",
 			"sortorder" => $i++,
 			"display_name" => $appCompName,
 			"html" => "<div class='main formInput'>".$dispCompValue."</div>"
 
-		);
+		];
 	}
 
 	$setRankOptions = memberAppSetRank();
@@ -127,12 +127,12 @@ while ($row = $result->fetch_assoc()) {
 	}
 
 
-	$arrCompInfo['app_options'] = array(
+	$arrCompInfo['app_options'] = [
 		"type" => "custom",
 		"sortorder" => $i++,
 		"html" => "<br><p align='center'>".$memberAppOptions."</p>"
 
-	);
+	];
 
 	$arrComponents = array_merge($arrDefaultInfo, $arrCompInfo, $setRankOptions);
 

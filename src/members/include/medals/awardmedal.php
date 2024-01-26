@@ -56,7 +56,7 @@ if ($rankInfo['rank_id'] == 1) {
 	$maxRankInfo['ordernum'] += 1;
 }
 
-$arrRanks = array();
+$arrRanks = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$arrRanks[] = $row['rank_id'];
@@ -133,58 +133,58 @@ echo "
 	";
 
 $i = 1;
-$arrComponents = array(
-		"member" => array(
+$arrComponents = [
+		"member" => [
 			"type" => "select",
 			"options" => $memberOptions,
-			"attributes" => array("class" => "textBox formInput"),
+			"attributes" => ["class" => "textBox formInput"],
 			"db_name" => "member_id",
 			"sortorder" => $i++,
 			"display_name" => "Member",
-			"validate" => array("RESTRICT_TO_OPTIONS", array("name" => "IS_SELECTABLE", "selectObj" => $member, "select_back" => "member_id"), array("name" => "NOT_EQUALS_VALUE", "value" => $memberInfo['member_id']))
-		),
-		"medal" => array(
+			"validate" => ["RESTRICT_TO_OPTIONS", ["name" => "IS_SELECTABLE", "selectObj" => $member, "select_back" => "member_id"], ["name" => "NOT_EQUALS_VALUE", "value" => $memberInfo['member_id']]]
+		],
+		"medal" => [
 			"type" => "select",
 			"options" => $medalOptions,
-			"attributes" => array("class" => "textBox formInput", "id" => "medalselect"),
+			"attributes" => ["class" => "textBox formInput", "id" => "medalselect"],
 			"db_name" => "medal_id",
 			"sortorder" => $i++,
 			"display_name" => "Medal",
-			"validate" => array("RESTRICT_TO_OPTIONS"),
+			"validate" => ["RESTRICT_TO_OPTIONS"],
 			"html" => "<div class='main formInput' style='display: none; padding-left: 10px' id='reshowDiv'><a href='javascript:void(0)' id='setShowTrue'>Show Medal Info</a></div>"
-		),
-		"reason" => array(
+		],
+		"reason" => [
 			"type" => "textarea",
-			"attributes" => array("class" => "textBox formInput", "rows" => 3, "style" => "width: 35%"),
+			"attributes" => ["class" => "textBox formInput", "rows" => 3, "style" => "width: 35%"],
 			"db_name" => "reason",
 			"sortorder" => $i++,
 			"display_name" => "Reason"
-		),
-		"submit" => array(
+		],
+		"submit" => [
 			"type" => "submit",
-			"attributes" => array("class" => "submitButton formSubmitButton"),
+			"attributes" => ["class" => "submitButton formSubmitButton"],
 			"value" => "Award Medal",
 			"sortorder" => $i++
-		)
+		]
 
-	);
+	];
 
 if ( ! empty($_POST['submit']) ) {
 	$member->select($_POST['member']);
 	$medalObj->select($_POST['medal']);
 }
 
-$setupFormArgs = array(
+$setupFormArgs = [
 		"name" => "console-".$cID,
 		"components" => $arrComponents,
-		"attributes" => array("id" => "formDiv", "action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
-		"afterSave" => array("awardMedalSave"),
+		"attributes" => ["id" => "formDiv", "action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
+		"afterSave" => ["awardMedalSave"],
 		"saveMessage" => "Successfully awarded ".$member->getMemberLink()." the medal <b>".$medalObj->get_info_filtered("name")."</b>!",
 		"saveObject" => $awardMedalObj,
 		"saveType" => "add",
-		"saveAdditional" => array("dateawarded" => time()),
+		"saveAdditional" => ["dateawarded" => time()],
 		"description" => "Use the form below to award a medal."
-	);
+	];
 
 	// After Save
 

@@ -153,7 +153,7 @@ if ((time()-$memberInfo['lastseen']) < 600) {
 
 	if ($memberInfo['loggedin'] == 1) {
 		$member->select($memberInfo['member_id']);
-		$member->update(array("loggedin"), array(0));
+		$member->update(["loggedin"], [0]);
 	}
 }
 

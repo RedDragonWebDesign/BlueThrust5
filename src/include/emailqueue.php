@@ -23,7 +23,7 @@ function sendQueuedEmail() {
 			}
 		}
 
-		$webInfoObj->multiUpdate(array("emailqueue_lastsent"), array($time));
+		$webInfoObj->multiUpdate(["emailqueue_lastsent"], [$time]);
 	}
 }
 

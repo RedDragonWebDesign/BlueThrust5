@@ -55,7 +55,7 @@ if ($themeOptions == "") {
 }
 
 
-$arrMedalDisplayOrder = array(0 => "Date Awarded", 1 => "Display Order", 2 => "Alphabetical Order");
+$arrMedalDisplayOrder = [0 => "Date Awarded", 1 => "Display Order", 2 => "Alphabetical Order"];
 foreach ($arrMedalDisplayOrder as $key => $value) {
 	$dispSelected = "";
 	if ($websiteInfo['medalorder'] == $key) {
@@ -106,8 +106,8 @@ if ($websiteInfo['hpnews'] == 0) {
 }
 
 $websiteLogoInfo = $webInfoObj->get_info_filtered("logourl");
-$selectNewsPostsPerPage = array();
-foreach (array(10,25,50,100) as $value) {
+$selectNewsPostsPerPage = [];
+foreach ([10,25,50,100] as $value) {
 	if ($value == $websiteInfo['news_postsperpage']) {
 		$selectNewsPostsPerPage[$value] = " selected";
 	}

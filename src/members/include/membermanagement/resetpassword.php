@@ -50,7 +50,7 @@ $rankObj = new Rank($mysqli);
 $rankObj->select($rankInfo['promotepower']);
 $maxRankInfo = $rankObj->get_info_filtered();
 
-$arrRanks = array();
+$arrRanks = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$arrRanks[] = $row['rank_id'];

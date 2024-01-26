@@ -45,7 +45,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 		$arrThemes = scandir("../../../themes");
-		$arrCheckTheme = array();
+		$arrCheckTheme = [];
 		foreach ($arrThemes as $strTheme) {
 			$themeURL = "../../../themes/".$strTheme;
 
@@ -83,7 +83,7 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 		// Check Medal Order
 
-		$arrCheckMedalOrder = array(0, 1, 2);
+		$arrCheckMedalOrder = [0, 1, 2];
 		if (!in_array($_POST['medalOrder'], $arrCheckMedalOrder)) {
 			$countErrors++;
 			$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an invalid medal display order.<br>";
@@ -119,8 +119,8 @@ if ($member->authorizeLogin($_SESSION['btPassword'])) {
 
 
 		if ($countErrors == 0) {
-			$updateSettings = array("clanname", "clantag", "logourl", "theme", "maxdiplomacy", "failedlogins", "maxdsl", "lowdsl", "meddsl", "highdsl", "medalorder", "debugmode", "hideinactive", "hpnews", "news_postsperpage", "emailqueue_delay");
-			$updateSettingVals = array($_POST['clanName'], $_POST['clanTag'], $_POST['logoURL'], $_POST['themeName'], $_POST['maxDiplomacy'], $_POST['failedLogins'], $_POST['maxDSL'], $_POST['lowDSL'], $_POST['medDSL'], $_POST['highDSL'], $_POST['medalOrder'], $_POST['debugMode'], $_POST['hideInactive'], $numOfNewsPosts, $_POST['newsPostsPerPage'], $_POST['emailqueue_delay']);
+			$updateSettings = ["clanname", "clantag", "logourl", "theme", "maxdiplomacy", "failedlogins", "maxdsl", "lowdsl", "meddsl", "highdsl", "medalorder", "debugmode", "hideinactive", "hpnews", "news_postsperpage", "emailqueue_delay"];
+			$updateSettingVals = [$_POST['clanName'], $_POST['clanTag'], $_POST['logoURL'], $_POST['themeName'], $_POST['maxDiplomacy'], $_POST['failedLogins'], $_POST['maxDSL'], $_POST['lowDSL'], $_POST['medDSL'], $_POST['highDSL'], $_POST['medalOrder'], $_POST['debugMode'], $_POST['hideInactive'], $numOfNewsPosts, $_POST['newsPostsPerPage'], $_POST['emailqueue_delay']];
 
 
 			if (!$webInfoObj->multiUpdate($updateSettings, $updateSettingVals)) {

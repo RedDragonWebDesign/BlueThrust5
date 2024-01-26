@@ -55,7 +55,7 @@ if ( ! empty($_POST['submit']) ) {
 		$maxRankInfo['ordernum'] += 1;
 	}
 
-	$arrRanks = array();
+	$arrRanks = [];
 	$result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
 	while ($row = $result->fetch_assoc()) {
 		$arrRanks[] = $row['rank_id'];
@@ -104,8 +104,8 @@ if ( ! empty($_POST['submit']) ) {
 	if ($countErrors == 0) {
 		$freezeTime = (86400*$_POST['freezetime'])+time();
 
-		$arrColumns = array("rank_id", "freezerank");
-		$arrValues = array($_POST['newrank'], $freezeTime);
+		$arrColumns = ["rank_id", "freezerank"];
+		$arrValues = [$_POST['newrank'], $freezeTime];
 
 		$member->select($_POST['member']);
 
@@ -169,7 +169,7 @@ if ($rankInfo['rank_id'] == 1) {
 }
 
 
-$arrRanks = array();
+$arrRanks = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum <= '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$rankoptions .= "<option value='".$row['rank_id']."'>".filterText($row['name'])."</option>";

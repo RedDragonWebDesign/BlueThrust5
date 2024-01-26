@@ -16,7 +16,7 @@
 
 // General functions to filter out all <, >, ", and ' symbols
 function filterArray($arrValues) {
-	$newArray = array();
+	$newArray = [];
 	foreach ($arrValues as $key => $value) {
 		$temp = str_replace("<", "&lt;", $value);
 		$value = str_replace(">", "&gt;", $temp);
@@ -90,19 +90,19 @@ function parseBBCode($strText) {
 
 	// Basic Codes
 
-	$arrBBCodes['Bold'] = array("bbOpenTag" => "[b]", "bbCloseTag" => "[/b]", "htmlOpenTag" => "<span style='font-weight: bold'>", "htmlCloseTag" => "</span>");
-	$arrBBCodes['Italic'] = array("bbOpenTag" => "[i]", "bbCloseTag" => "[/i]", "htmlOpenTag" => "<span style='font-style: italic'>", "htmlCloseTag" => "</span>");
-	$arrBBCodes['Underline'] = array("bbOpenTag" => "[u]", "bbCloseTag" => "[/u]", "htmlOpenTag" => "<span style='text-decoration: underline'>", "htmlCloseTag" => "</span>");
-	$arrBBCodes['Image'] = array("bbOpenTag" => "[img]", "bbCloseTag" => "[/img]", "htmlOpenTag" => "<img src='", "htmlCloseTag" => "'>");
-	$arrBBCodes['CenterAlign'] = array("bbOpenTag" => "[center]", "bbCloseTag" => "[/center]", "htmlOpenTag" => "<p align='center'>", "htmlCloseTag" => "</p>");
-	$arrBBCodes['LeftAlign'] = array("bbOpenTag" => "[left]", "bbCloseTag" => "[/left]", "htmlOpenTag" => "<p align='left'>", "htmlCloseTag" => "</p>");
-	$arrBBCodes['RightAlign'] = array("bbOpenTag" => "[right]", "bbCloseTag" => "[/right]", "htmlOpenTag" => "<p align='right'>", "htmlCloseTag" => "</p>");
-	$arrBBCodes['Quote'] = array("bbOpenTag" => "[quote]", "bbCloseTag" => "[/quote]", "htmlOpenTag" => "<div class='forumQuote'>", "htmlCloseTag" => "</div>");
-	$arrBBCodes['Code'] = array("bbOpenTag" => "[code]", "bbCloseTag" => "[/code]", "htmlOpenTag" => "<div class='forumCode'>", "htmlCloseTag" => "</div>");
+	$arrBBCodes['Bold'] = ["bbOpenTag" => "[b]", "bbCloseTag" => "[/b]", "htmlOpenTag" => "<span style='font-weight: bold'>", "htmlCloseTag" => "</span>"];
+	$arrBBCodes['Italic'] = ["bbOpenTag" => "[i]", "bbCloseTag" => "[/i]", "htmlOpenTag" => "<span style='font-style: italic'>", "htmlCloseTag" => "</span>"];
+	$arrBBCodes['Underline'] = ["bbOpenTag" => "[u]", "bbCloseTag" => "[/u]", "htmlOpenTag" => "<span style='text-decoration: underline'>", "htmlCloseTag" => "</span>"];
+	$arrBBCodes['Image'] = ["bbOpenTag" => "[img]", "bbCloseTag" => "[/img]", "htmlOpenTag" => "<img src='", "htmlCloseTag" => "'>"];
+	$arrBBCodes['CenterAlign'] = ["bbOpenTag" => "[center]", "bbCloseTag" => "[/center]", "htmlOpenTag" => "<p align='center'>", "htmlCloseTag" => "</p>"];
+	$arrBBCodes['LeftAlign'] = ["bbOpenTag" => "[left]", "bbCloseTag" => "[/left]", "htmlOpenTag" => "<p align='left'>", "htmlCloseTag" => "</p>"];
+	$arrBBCodes['RightAlign'] = ["bbOpenTag" => "[right]", "bbCloseTag" => "[/right]", "htmlOpenTag" => "<p align='right'>", "htmlCloseTag" => "</p>"];
+	$arrBBCodes['Quote'] = ["bbOpenTag" => "[quote]", "bbCloseTag" => "[/quote]", "htmlOpenTag" => "<div class='forumQuote'>", "htmlCloseTag" => "</div>"];
+	$arrBBCodes['Code'] = ["bbOpenTag" => "[code]", "bbCloseTag" => "[/code]", "htmlOpenTag" => "<div class='forumCode'>", "htmlCloseTag" => "</div>"];
 
 	$randPollDiv = "poll_".md5(time().uniqid());
 
-	$arrBBCodes['Poll'] = array("bbOpenTag" => "[poll]", "bbCloseTag" => "[/poll]", "htmlOpenTag" => "<div id='".$randPollDiv."'></div><script type='text/javascript'>embedPoll('".$MAIN_ROOT."', '".$randPollDiv."', '", "htmlCloseTag" => "');</script>");
+	$arrBBCodes['Poll'] = ["bbOpenTag" => "[poll]", "bbCloseTag" => "[/poll]", "htmlOpenTag" => "<div id='".$randPollDiv."'></div><script type='text/javascript'>embedPoll('".$MAIN_ROOT."', '".$randPollDiv."', '", "htmlCloseTag" => "');</script>"];
 
 	foreach ($arrBBCodes as $bbCode) {
 		$strText = str_ireplace($bbCode['bbOpenTag'], $bbCode['htmlOpenTag'], $strText);
@@ -111,8 +111,8 @@ function parseBBCode($strText) {
 
 	// Emoticons
 
-	$arrEmoticonCodes = array(":)", ":(", ":D", ";)", ":p");
-	$arrEmoticonImg = array("smile.png", "sad.png", "grin.png", "wink.png", "cheeky.png");
+	$arrEmoticonCodes = [":)", ":(", ":D", ";)", ":p"];
+	$arrEmoticonImg = ["smile.png", "sad.png", "grin.png", "wink.png", "cheeky.png"];
 
 	foreach ($arrEmoticonCodes as $key => $value) {
 		$imgURL = "<img src='".$MAIN_ROOT."images/emoticons/".$arrEmoticonImg[$key]."' width='15' height='15'>";
@@ -166,7 +166,7 @@ function getHTTP() {
 }
 
 function addArraySpace($arr, $space, $atSpot) {
-	$newArr = array();
+	$newArr = [];
 	$i=0;
 	foreach ($arr as $key => $value) {
 		if ($atSpot == $key) {
@@ -207,13 +207,13 @@ function encryptPassword($password) {
 	$strSalt = "$2a$".$randomNum."$".$randomString;
 	$encryptPassword = crypt($password, $strSalt);
 
-	$returnArr = array("password" => $encryptPassword, "salt" => $strSalt);
+	$returnArr = ["password" => $encryptPassword, "salt" => $strSalt];
 
 	return $returnArr;
 }
 
 function getSelected($arrValues, $selectedValue) {
-	$returnArr = array();
+	$returnArr = [];
 	foreach ($arrValues as $value) {
 		$returnArr[$value] = ($value == $selectedValue) ? " selected" : "";
 	}

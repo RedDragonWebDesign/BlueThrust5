@@ -97,13 +97,13 @@ if ($_POST['step2submit']) {
 			// Check if tables have already been installed.
 
 			$result = $mysqli->query("SHOW TABLES");
-			$arrTestTables = array();
+			$arrTestTables = [];
 
 			while ($row = $result->fetch_array()) {
 				$arrTestTables[] = $row[0];
 			}
 
-			$arrTableMatches = array();
+			$arrTableMatches = [];
 			$countTableMatches = 0;
 			foreach ($arrTableNames as $tableName) {
 				$tempTableName = $_POST['tableprefix'].$tableName;
@@ -196,8 +196,8 @@ if ($_POST['step2submit']) {
 					$consoleOptionObj = new ConsoleOption($mysqli);
 
 					// Checking Console Categories First
-					$arrConsoleCategoryIDs = array();
-					$arrCheckConsoleCategories = array();
+					$arrConsoleCategoryIDs = [];
+					$arrCheckConsoleCategories = [];
 					$result = $mysqli->query("SELECT * FROM ".$_POST['tableprefix']."consolecategory ORDER BY ordernum DESC");
 					while ($row = $result->fetch_assoc()) {
 						$arrCheckConsoleCategories[] = $row['name'];
@@ -215,7 +215,7 @@ if ($_POST['step2submit']) {
 							$consoleCatObj->selectByOrder(1);
 							$newOrderNum = $consoleCatObj->makeRoom("after");
 
-							$consoleCatObj->addNew(array("name", "ordernum"), array($consoleCategory, $newOrderNum));
+							$consoleCatObj->addNew(["name", "ordernum"], [$consoleCategory, $newOrderNum]);
 							$tempCatID = array_search($consoleCategory, $arrConsoleCategories);
 							$arrConsoleCategoryIDs[$tempCatID] = $consoleCatObj->get_info("consolecategory_id");
 							$consoleCatObj->resortOrder();
@@ -228,7 +228,7 @@ if ($_POST['step2submit']) {
 
 
 					// Checking Console Options
-					$arrColumns = array("consolecategory_id", "pagetitle", "filename", "sortnum", "defaultconsole", "hide", "sep");
+					$arrColumns = ["consolecategory_id", "pagetitle", "filename", "sortnum", "defaultconsole", "hide", "sep"];
 					foreach ($arrConsoleOptionNames as $key => $consoleOptionName) {
 						$checkConsole = $consoleOptionObj->findConsoleIDByName($consoleOptionName);
 
@@ -242,34 +242,34 @@ if ($_POST['step2submit']) {
 							$newOrderNum = $highestSortNum+1;
 
 							if ($arrConsoleOptionInfo[$key]['addsep'] == "1") {
-								$arrValues = array($tempCatID, "-separator-", "", ($newOrderNum), "1", "", "1");
+								$arrValues = [$tempCatID, "-separator-", "", ($newOrderNum), "1", "", "1"];
 								$consoleOptionObj->addNew($arrColumns, $arrValues);
 
 								$newOrderNum++;
 							}
 
-							$arrValues = array($tempCatID, $consoleOptionName, $arrConsoleOptionInfo[$key]['filename'], $newOrderNum, "1", $arrConsoleOptionInfo[$key]['hide'], "");
+							$arrValues = [$tempCatID, $consoleOptionName, $arrConsoleOptionInfo[$key]['filename'], $newOrderNum, "1", $arrConsoleOptionInfo[$key]['hide'], ""];
 
 							$consoleOptionObj->addNew($arrColumns, $arrValues);
 
 							$consoleOptionObj->resortOrder();
 						} elseif ($consoleOptionName == "Private Messages" && $checkConsole !== false && $pmCatID != "") {
 							$consoleOptionObj->select($checkConsole);
-							$consoleOptionObj->update(array("consolecategory_id", "sortnum"), array($pmCatID, 0));
+							$consoleOptionObj->update(["consolecategory_id", "sortnum"], [$pmCatID, 0]);
 							$consoleOptionObj->resortOrder();
 						}
 					}
 
 
 					// Check for valid theme
-					$arrValidThemes = array();
+					$arrValidThemes = [];
 					$themeOptions .= "";
 					$websiteInfoObj = new WebsiteInfo($mysqli);
 					$websiteInfoObj->select(1);
 					$themeName = $websiteInfoObj->get_info("theme");
 
 					// Add New Websiteinfo
-					$websiteInfoObj->multiUpdate(array("default_timezone", "date_format", "display_date"), array("America/New_York", "l, F j, Y", "1"));
+					$websiteInfoObj->multiUpdate(["default_timezone", "date_format", "display_date"], ["America/New_York", "l, F j, Y", "1"]);
 
 
 					$verifyTheme = file_exists("../themes/".$themeName."/themeinfo.xml");

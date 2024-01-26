@@ -9,11 +9,11 @@ if ( empty($_POST['submit']) ) {
 	$pmSessionID = uniqid();
 
 	$composeListJS = "";
-	$_SESSION['btComposeList'][$pmSessionID]['member'] = array();
-	$_SESSION['btComposeList'][$pmSessionID]['rankcategory'] = array();
-	$_SESSION['btComposeList'][$pmSessionID]['rank'] = array();
-	$_SESSION['btComposeList'][$pmSessionID]['squad'] = array();
-	$_SESSION['btComposeList'][$pmSessionID]['tournament'] = array();
+	$_SESSION['btComposeList'][$pmSessionID]['member'] = [];
+	$_SESSION['btComposeList'][$pmSessionID]['rankcategory'] = [];
+	$_SESSION['btComposeList'][$pmSessionID]['rank'] = [];
+	$_SESSION['btComposeList'][$pmSessionID]['squad'] = [];
+	$_SESSION['btComposeList'][$pmSessionID]['tournament'] = [];
 	$_SESSION['btComposeList'][$pmSessionID]['exptime'] = time()+3600;
 
 	if (isset($_GET['threadID']) && $pmObj->select($_GET['threadID']) && isset($_GET['replyID']) && $pmObj->select($_GET['replyID'])) {
@@ -40,11 +40,11 @@ if ( empty($_POST['submit']) ) {
 				$pmObj->set_assocTableKey("pmmember_id");
 				$arrPMMID = $pmObj->getAssociateIDs();
 
-				$arrGroups['list'] = array();
-				$arrGroups['rank'] = array();
-				$arrGroups['squad'] = array();
-				$arrGroups['tournament'] = array();
-				$arrGroups['rankcategory'] = array();
+				$arrGroups['list'] = [];
+				$arrGroups['rank'] = [];
+				$arrGroups['squad'] = [];
+				$arrGroups['tournament'] = [];
+				$arrGroups['rankcategory'] = [];
 
 				foreach ($arrPMMID as $pmmID) {
 					$multiMemPMObj->select($pmmID);

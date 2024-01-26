@@ -53,10 +53,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			if ($_POST['action'] == "accept") {
 				$squadRankKey = count($squadRankList)-1;
 				$newMemberSquadRank = $squadRankList[$squadRankKey];
-				$squadAppObj->update(array("dateaction", "status", "squadmember_id"), array(time(), "1", $memberInfo['member_id']));
+				$squadAppObj->update(["dateaction", "status", "squadmember_id"], [time(), "1", $memberInfo['member_id']]);
 
-				$arrColumns = array("squad_id", "member_id", "squadrank_id", "datejoined");
-				$arrValues = array($squadAppInfo['squad_id'], $squadAppInfo['member_id'], $newMemberSquadRank, time());
+				$arrColumns = ["squad_id", "member_id", "squadrank_id", "datejoined"];
+				$arrValues = [$squadAppInfo['squad_id'], $squadAppInfo['member_id'], $newMemberSquadRank, time()];
 
 				$squadObj->objSquadMember->addNew($arrColumns, $arrValues);
 				$intViewSquadsCID = $consoleObj->findConsoleIDByName("View Your Squads");
@@ -73,7 +73,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 					</script>
 				";
 			} else {
-				$squadAppObj->update(array("dateaction", "status", "squadmember_id"), array(time(), "2", $memberInfo['member_id']));
+				$squadAppObj->update(["dateaction", "status", "squadmember_id"], [time(), "2", $memberInfo['member_id']]);
 
 				$member->select($squadAppInfo['member_id']);
 				$member->postNotification("Your application to join <b><a href='".$MAIN_ROOT."squads/profile.php?sID=".$squadInfo['squad_id']."'>".$squadInfo['name']."</a></b> has been declined.  You may now re-apply if you want to.");

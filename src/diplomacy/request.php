@@ -76,7 +76,7 @@ require_once($prevFolder."include/breadcrumb.php");
 	if ( isset($_POST['submit']) && $_POST['submit'] && $_POST['submit'] != "block") {
 		// Check Required Fields not Blank
 
-		$arrRequiredFields = array("Your Name"=>"requestername", "Your E-mail"=>"requesteremail", "Clan Name"=>"clanname", "Diplomacy Status"=>"diplomacystatus", "Games Played"=>"gamesplayed", "Clan Leaders"=>"clanleaders");
+		$arrRequiredFields = ["Your Name"=>"requestername", "Your E-mail"=>"requesteremail", "Clan Name"=>"clanname", "Diplomacy Status"=>"diplomacystatus", "Games Played"=>"gamesplayed", "Clan Leaders"=>"clanleaders"];
 
 		foreach ($_POST as $key => $value) {
 			if (in_array($key, $arrRequiredFields) && trim($value) == "") {
@@ -154,8 +154,8 @@ Thanks,\n
 			if ($sendMail) {
 				$diplomacyRequestObj = new Basic($mysqli, "diplomacy_request", "diplomacyrequest_id");
 
-				$arrColumns = array("ipaddress", "dateadded", "diplomacystatus_id", "email", "name", "clanname", "clantag", "clansize", "gamesplayed", "website", "leaders", "message", "confirmemail");
-				$arrValues = array($IP_ADDRESS, time(), $_POST['diplomacystatus'], $_POST['requesteremail'], $_POST['requestername'], $_POST['clanname'], $_POST['clantag'], $_POST['clansize'], $_POST['gamesplayed'], $_POST['website'], $_POST['clanleaders'], $_POST['message'], $emailCode);
+				$arrColumns = ["ipaddress", "dateadded", "diplomacystatus_id", "email", "name", "clanname", "clantag", "clansize", "gamesplayed", "website", "leaders", "message", "confirmemail"];
+				$arrValues = [$IP_ADDRESS, time(), $_POST['diplomacystatus'], $_POST['requesteremail'], $_POST['requestername'], $_POST['clanname'], $_POST['clantag'], $_POST['clansize'], $_POST['gamesplayed'], $_POST['website'], $_POST['clanleaders'], $_POST['message'], $emailCode];
 
 				if ($emailCode == 1) {
 					$dispConfirmMessage = "A request has been sent to the diplomacy managers.  Please wait while a decision is made.";

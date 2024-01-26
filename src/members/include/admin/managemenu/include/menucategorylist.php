@@ -81,7 +81,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && ($checkAccess1 || $check
 
 		echo $orderoptions;
 	} elseif (isset($_POST['manage'])) {
-		$arrDispSectionNames = array();
+		$arrDispSectionNames = [];
 		for ($x=0; $x<$menuXML->info->section->count(); $x++) {
 			$arrDispSectionNames[$x] = $menuXML->info->section[$x];
 		}

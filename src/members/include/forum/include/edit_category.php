@@ -57,8 +57,8 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-		$arrColumns = array("name", "ordernum");
-		$arrValues = array($_POST['catname'], $intNewOrderSpot);
+		$arrColumns = ["name", "ordernum"];
+		$arrValues = [$_POST['catname'], $intNewOrderSpot];
 		$categoryObj->select($categoryInfo['forumcategory_id']);
 		if ($categoryObj->update($arrColumns, $arrValues)) {
 			$forumCatInfo = $categoryObj->get_info_filtered();

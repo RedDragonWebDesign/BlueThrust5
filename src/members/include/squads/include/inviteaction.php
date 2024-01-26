@@ -61,10 +61,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 			}
 
 
-			$squadInviteObj->update(array("dateaction", "status"), array(time(), "1"));
+			$squadInviteObj->update(["dateaction", "status"], [time(), "1"]);
 
-			$arrColumns = array("squad_id", "member_id", "squadrank_id", "datejoined");
-			$arrValues = array($squadInviteInfo['squad_id'], $memberInfo['member_id'], $squadInviteInfo['startingrank_id'], time());
+			$arrColumns = ["squad_id", "member_id", "squadrank_id", "datejoined"];
+			$arrValues = [$squadInviteInfo['squad_id'], $memberInfo['member_id'], $squadInviteInfo['startingrank_id'], time()];
 
 			$squadObj->objSquadMember->addNew($arrColumns, $arrValues);
 			$intViewSquadsCID = $consoleObj->findConsoleIDByName("View Your Squads");
@@ -84,7 +84,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 				</script>
 			";
 		} else {
-			$squadInviteObj->update(array("dateaction", "status"), array(time(), "2"));
+			$squadInviteObj->update(["dateaction", "status"], [time(), "2"]);
 
 			$member->select($squadInviteInfo['sender_id']);
 			$member->postNotification("<b>".$memberLink."</b> has declined the invitation to join <b><a href='".$MAIN_ROOT."squads/profile.php?sID=".$squadInfo['squad_id']."'>".$squadInfo['name']."</a></b>");

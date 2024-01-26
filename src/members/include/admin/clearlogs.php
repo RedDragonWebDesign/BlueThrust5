@@ -34,7 +34,7 @@ $countErrors = 0;
 
 
 if ( ! empty($_POST['submit']) ) {
-	$checkArr = array(1,2,3,4,5,6);
+	$checkArr = [1,2,3,4,5,6];
 
 	if (!in_array($_POST['clearlogs'], $checkArr)) {
 		$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> You selected an delete option.<br>";

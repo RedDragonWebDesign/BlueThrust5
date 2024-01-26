@@ -13,7 +13,7 @@ class SelectBox extends FormComponent {
 		$this->nonSelectableItems = $items;
 	}
 
-	public function getHTML($componentName = "", $componentValue = "", $attributes = array()) {
+	public function getHTML($componentName = "", $componentValue = "", $attributes = []) {
 		$displayForm = '';
 
 		if ($componentName != "") {

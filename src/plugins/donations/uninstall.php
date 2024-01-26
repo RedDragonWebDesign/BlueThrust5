@@ -21,11 +21,11 @@ require_once("../../_setup.php");
 $PLUGIN_TABLE_NAME = $dbprefix."donations";
 $PLUGIN_NAME = "Donations";
 
-$arrPluginTables = array(
+$arrPluginTables = [
 	$dbprefix."donations",
 	$dbprefix."donations_campaign",
 	$dbprefix."donations_errorlog"
-);
+];
 
 // Start Page
 
@@ -45,7 +45,7 @@ $pluginObj = new btPlugin($mysqli);
 $LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$countErrors = 0;
-	$dispError = array();
+	$dispError = [];
 
 	// Check if installed
 
@@ -77,10 +77,10 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 
 		// Remove Console Option
 
-		$arrDeleteConsoleOptions = array(
+		$arrDeleteConsoleOptions = [
 			"Create a Donation Campaign",
 			"Manage Donation Campaigns"
-		);
+		];
 
 		$countDrops = 0;
 		foreach ($arrDeleteConsoleOptions as $consoleOptionName) {
@@ -108,7 +108,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	}
 
 
-	$arrReturn = array();
+	$arrReturn = [];
 	if ($countErrors == 0) {
 		$arrReturn['result'] = "success";
 		$member->logAction("Uninstalled ".$PLUGIN_NAME." Plugin.");

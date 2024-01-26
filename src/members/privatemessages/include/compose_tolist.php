@@ -29,7 +29,7 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	$memberInfo = $member->get_info_filtered();
 	$pmSessionID = $_POST['pmSessionID'];
 
-	$arrSearch = array("member", "squad", "rank", "tournament", "rankcategory");
+	$arrSearch = ["member", "squad", "rank", "tournament", "rankcategory"];
 
 	foreach ($arrSearch as $search) {
 		$stripWord = $search."_";

@@ -111,8 +111,8 @@ if (count($squadRankList) < 2) {
 
 
 		if ($countErrors == 0) {
-			$arrColumns = array("squad_id", "sender_id", "receiver_id", "datesent", "message", "startingrank_id");
-			$arrValues = array($squadInfo['squad_id'], $memberInfo['member_id'], $intNewMemberID, time(), $_POST['message'], $_POST['startingrank']);
+			$arrColumns = ["squad_id", "sender_id", "receiver_id", "datesent", "message", "startingrank_id"];
+			$arrValues = [$squadInfo['squad_id'], $memberInfo['member_id'], $intNewMemberID, time(), $_POST['message'], $_POST['startingrank']];
 
 			$squadInviteObj = new Basic($mysqli, "squadinvites", "squadinvite_id");
 
@@ -151,11 +151,11 @@ if (count($squadRankList) < 2) {
 	if ( empty($_POST['submit']) ) {
 		$sqlMemberList = "('".implode("','", $squadMemberList)."')";
 
-		$arrMembers = array();
+		$arrMembers = [];
 
 		$result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE member_id NOT IN ".$sqlMemberList." AND disabled = '0' ORDER BY username");
 		while ($row = $result->fetch_assoc()) {
-			$arrMembers[] = array("id" => $row['member_id'], "value" => filterText($row['username']));
+			$arrMembers[] = ["id" => $row['member_id'], "value" => filterText($row['username'])];
 		}
 
 

@@ -14,14 +14,14 @@ function validateMenuItem_Links() {
 
 	global $linkOptionComponents, $formObj, $cID;
 
-	$linkOptionComponents['linkurl_link']['validate'] = array("NOT_BLANK");
-	$linkOptionComponents['textalign_link']['validate'] = array("RESTRICT_TO_OPTIONS");
-	$linkOptionComponents['targetwindow_link']['validate'] = array("RESTRICT_TO_OPTIONS");
+	$linkOptionComponents['linkurl_link']['validate'] = ["NOT_BLANK"];
+	$linkOptionComponents['textalign_link']['validate'] = ["RESTRICT_TO_OPTIONS"];
+	$linkOptionComponents['targetwindow_link']['validate'] = ["RESTRICT_TO_OPTIONS"];
 
-	$setupFormArgs = array(
+	$setupFormArgs = [
 		"name" => "console-".$cID."-link",
 		"components" => $linkOptionComponents
-	);
+	];
 
 	$localFormObj = new Form($setupFormArgs);
 
@@ -38,16 +38,16 @@ function validateMenuItem_Images() {
 
 	global $imageOptionComponents, $formObj, $cID;
 
-	$imageOptionComponents['imagefile_image']['validate'] = array("NOT_BLANK");
-	$imageOptionComponents['width_image']['validate'] = array("POSITIVE_NUMBER");
-	$imageOptionComponents['height_image']['validate'] = array("POSITIVE_NUMBER");
-	$imageOptionComponents['textalign_image']['validate'] = array("RESTRICT_TO_OPTIONS");
-	$imageOptionComponents['targetwindow_image']['validate'] = array("RESTRICT_TO_OPTIONS");
+	$imageOptionComponents['imagefile_image']['validate'] = ["NOT_BLANK"];
+	$imageOptionComponents['width_image']['validate'] = ["POSITIVE_NUMBER"];
+	$imageOptionComponents['height_image']['validate'] = ["POSITIVE_NUMBER"];
+	$imageOptionComponents['textalign_image']['validate'] = ["RESTRICT_TO_OPTIONS"];
+	$imageOptionComponents['targetwindow_image']['validate'] = ["RESTRICT_TO_OPTIONS"];
 
-	$setupFormArgs = array(
+	$setupFormArgs = [
 		"name" => "console-".$cID."-image",
 		"components" => $imageOptionComponents
-	);
+	];
 
 	$localFormObj = new Form($setupFormArgs);
 
@@ -67,14 +67,14 @@ function validateMenuItem_CustomPageTypes($pageName, &$formComponents) {
 	$textAlign = "textalign_".$pageName;
 	$targetWindow = "targetwindow_".$pageName;
 
-	$formComponents[$pageName]['validate'] = array("RESTRICT_TO_OPTIONS");
-	$formComponents[$textAlign]['validate'] = array("RESTRICT_TO_OPTIONS");
-	$formComponents[$targetWindow]['validate'] = array("RESTRICT_TO_OPTIONS");
+	$formComponents[$pageName]['validate'] = ["RESTRICT_TO_OPTIONS"];
+	$formComponents[$textAlign]['validate'] = ["RESTRICT_TO_OPTIONS"];
+	$formComponents[$targetWindow]['validate'] = ["RESTRICT_TO_OPTIONS"];
 
-	$setupFormArgs = array(
+	$setupFormArgs = [
 		"name" => "console-".$cID."-".$pageName,
 		"components" => $formComponents
-	);
+	];
 
 	$localFormObj = new Form($setupFormArgs);
 
@@ -91,12 +91,12 @@ function validateMenuItem_Poll() {
 
 	global $pollOptionComponents, $formObj, $cID;
 
-	$pollOptionComponents['poll']['validate'] = array("RESTRICT_TO_OPTIONS");
+	$pollOptionComponents['poll']['validate'] = ["RESTRICT_TO_OPTIONS"];
 
-	$setupFormArgs = array(
+	$setupFormArgs = [
 		"name" => "console-".$cID."-poll",
 		"components" => $pollOptionComponents
-	);
+	];
 
 	$localFormObj = new Form($setupFormArgs);
 
@@ -119,7 +119,7 @@ function validateMenuItem_Poll() {
  */
 
 
-function saveMenuItem(&$menuComponents, &$saveObj, $arrDBNames, $dbID, $itemType, $saveAdditionalArgs = array(), $saveType = "add") {
+function saveMenuItem(&$menuComponents, &$saveObj, $arrDBNames, $dbID, $itemType, $saveAdditionalArgs = [], $saveType = "add") {
 
 	if ($_POST['itemtype'] != $itemType) {
 		return false;
@@ -131,18 +131,18 @@ function saveMenuItem(&$menuComponents, &$saveObj, $arrDBNames, $dbID, $itemType
 		$menuComponents[$componentName]['db_name'] = $dbName;
 	}
 
-	$saveAdditional = array("menuitem_id" => $menuItemObj->get_info("menuitem_id"));
-	$setupFormArgs = array(
+	$saveAdditional = ["menuitem_id" => $menuItemObj->get_info("menuitem_id")];
+	$setupFormArgs = [
 		"name" => "console-".$cID."-".$itemType,
 		"components" => $menuComponents,
 		"saveObject" => $saveObj,
 		"saveType" => $saveType,
 		"saveAdditional" => array_merge($saveAdditional, $saveAdditionalArgs)
-	);
+	];
 
 	$localFormObj = new Form($setupFormArgs);
 	$localFormObj->save();
-	$menuItemObj->update(array("itemtype_id"), array($saveObj->get_info($dbID)));
+	$menuItemObj->update(["itemtype_id"], [$saveObj->get_info($dbID)]);
 }
 
 
@@ -154,7 +154,7 @@ function savePoll() {
 
 	global $menuItemObj;
 
-	$menuItemObj->update(array("itemtype_id"), array($_POST['poll']));
+	$menuItemObj->update(["itemtype_id"], [$_POST['poll']]);
 }
 
 

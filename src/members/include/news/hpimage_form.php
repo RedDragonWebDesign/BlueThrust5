@@ -5,7 +5,7 @@ if (!defined("HPIMAGE_FORM")) {
 }
 
 $imageOrderObj = new ImageSlider($mysqli);
-$imageOptions = array();
+$imageOptions = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."imageslider ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$imageOptions[$row['imageslider_id']] = $row['name'];
@@ -16,129 +16,129 @@ if (count($imageOptions) == 0) {
 }
 
 $i=1;
-$arrComponents = array(
-		"imageinfo" => array(
+$arrComponents = [
+		"imageinfo" => [
 			"type" => "section",
-			"option" => array("section_title" => "Image Information"),
+			"option" => ["section_title" => "Image Information"],
 			"sortorder" => $i++
-		),
-		"imagename" => array(
+		],
+		"imagename" => [
 			"type" => "text",
 			"tooltip" => "This will only be used to identify the image when managing home page images.",
-			"attributes" => array("class" => "formInput textBox"),
+			"attributes" => ["class" => "formInput textBox"],
 			"sortorder" => $i++,
 			"display_name" => "Name",
 			"db_name" => "name"
-		),
-		"imageupload" => array(
+		],
+		"imageupload" => [
 			"type" => "file",
 			"display_name" => "Image",
-			"options" => array("file_types" => array(".gif", ".png", ".jpg", ".bmp"), "file_prefix" => "hpimage_", "save_loc" => BASE_DIRECTORY."images/homepage/", "ext_length" => 4, "append_db_value" => "images/homepage/"),
+			"options" => ["file_types" => [".gif", ".png", ".jpg", ".bmp"], "file_prefix" => "hpimage_", "save_loc" => BASE_DIRECTORY."images/homepage/", "ext_length" => 4, "append_db_value" => "images/homepage/"],
 			"sortorder" => $i++,
-			"attributes" => array("class" => "textBox", "style" => "width: 100%"),
+			"attributes" => ["class" => "textBox", "style" => "width: 100%"],
 			"db_name" => "imageurl"
-		),
-		"displayorder" => array(
+		],
+		"displayorder" => [
 			"type" => "beforeafter",
 			"sortorder" => $i++,
-			"attributes" => array("class" => "textBox"),
+			"attributes" => ["class" => "textBox"],
 			"display_name" => "Display Order",
 			"options" => $imageOptions,
-			"validate" => array(array("name" => "VALIDATE_ORDER", "orderObject" => $imageOrderObj)),
+			"validate" => [["name" => "VALIDATE_ORDER", "orderObject" => $imageOrderObj]],
 			"db_name" => "ordernum"
-		),
-		"displaystyle" => array(
+		],
+		"displaystyle" => [
 			"type" => "select",
 			"sortorder" => $i++,
 			"display_name" => "Display Style",
-			"attributes" => array("class" => "textBox formInput"),
-			"options" => array("fill" => "Fill", "stretch" => "Stretch"),
+			"attributes" => ["class" => "textBox formInput"],
+			"options" => ["fill" => "Fill", "stretch" => "Stretch"],
 			"db_name" => "fillstretch",
-			"validate" => array("RESTRICT_TO_OPTIONS")
-		),
-		"messageinfosection" => array(
+			"validate" => ["RESTRICT_TO_OPTIONS"]
+		],
+		"messageinfosection" => [
 			"type" => "section",
-			"options" => array("section_title" => "Message Information", "section_description" => "Leave this section blank to just display the image."),
+			"options" => ["section_title" => "Message Information", "section_description" => "Leave this section blank to just display the image."],
 			"sortorder" => $i++
-		),
-		"autofill" => array(
+		],
+		"autofill" => [
 			"type" => "select",
 			"sortorder" => $i++,
 			"display_name" => "Auto-fill",
-			"attributes" => array("class" => "formInput textBox", "id" => "autofill"),
-			"options" => array(
+			"attributes" => ["class" => "formInput textBox", "id" => "autofill"],
+			"options" => [
 						"select" => "Select",
 						"news" => "News Post",
 						"tournament" => "Tournament",
 						"event" => "Event",
 						"custom" => "Custom"
-					)
-		),
-		"autofillid" => array(
+					]
+		],
+		"autofillid" => [
 			"type" => "custom",
 			"sortorder" => $i++,
 			"html" => "
 				<label class='formLabel' style='display: inline-block'></label>
 				<select id='autofillID' class='textBox formInput' disabled='disabled'><option value''>Select</option></select>
 				"
-		),
-		"messagetitle" => array(
+		],
+		"messagetitle" => [
 			"type" => "text",
 			"sortorder" => $i++,
 			"display_name" => "Title",
-			"attributes" => array("class" => "textBox formInput bigTextBox", "id" => "imageTitle"),
+			"attributes" => ["class" => "textBox formInput bigTextBox", "id" => "imageTitle"],
 			"db_name" => "messagetitle"
-		),
-		"messagetext" => array(
+		],
+		"messagetext" => [
 			"type" => "textarea",
 			"sortorder" => $i++,
-			"attributes" => array("class" => "textBox formInput bigTextBox", "rows" => 4, "id" => "imageMessage"),
+			"attributes" => ["class" => "textBox formInput bigTextBox", "rows" => 4, "id" => "imageMessage"],
 			"db_name" => "message",
 			"display_name" => "Message"
 
-		),
-		"messagelink" => array(
+		],
+		"messagelink" => [
 			"type" => "text",
 			"sortorder" => $i++,
 			"display_name" => "Link",
-			"attributes" => array("class" => "textBox formInput bigTextBox", "id" => "linkURL"),
+			"attributes" => ["class" => "textBox formInput bigTextBox", "id" => "linkURL"],
 			"db_name" => "link"
-		),
-		"linktarget" => array(
+		],
+		"linktarget" => [
 			"type" => "select",
 			"sortorder" => $i++,
 			"display_name" => "Link Target",
-			"attributes" => array("class" => "textBox formInput"),
+			"attributes" => ["class" => "textBox formInput"],
 			"db_name" => "linktarget",
-			"options" => array("" => "Same Window", "_blank" => "New Window")
-		),
-		"showwhen" => array(
+			"options" => ["" => "Same Window", "_blank" => "New Window"]
+		],
+		"showwhen" => [
 			"type" => "select",
 			"sortorder" => $i++,
-			"attributes" => array("class" => "textBox formInput"),
+			"attributes" => ["class" => "textBox formInput"],
 			"db_name" => "membersonly",
-			"options" => array("Always", "Logged In", "Logged Out"),
+			"options" => ["Always", "Logged In", "Logged Out"],
 			"display_name" => "Show When"
-		),
-		"submit" => array(
+		],
+		"submit" => [
 			"type" => "submit",
 			"sortorder" => $i++,
 			"value" => "Add Image",
-			"attributes" => array("class" => "submitButton formSubmitButton")
-		)
+			"attributes" => ["class" => "submitButton formSubmitButton"]
+		]
 
-	);
+	];
 
-$setupFormArgs = array(
+$setupFormArgs = [
 			"name" => "console-".$cID,
 			"components" => $arrComponents,
 			"description" => "Use the form below to add an image to the home page image slider.",
 			"saveObject" => $imageSliderObj,
 			"saveMessage" => "Successfully Added New Home Page Image: <b>".filterText($_POST['name'])."</b>!",
 			"saveType" => "add",
-			"attributes" => array("action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
+			"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
 			"beforeAfter" => true
-	);
+	];
 
 
 

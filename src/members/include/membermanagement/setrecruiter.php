@@ -53,8 +53,8 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-		$arrColumns = array("recruiter");
-		$arrValues = array($_POST['newrecruiter']);
+		$arrColumns = ["recruiter"];
+		$arrValues = [$_POST['newrecruiter']];
 
 		$memberObj->select($_POST['member']);
 		if ($memberObj->update($arrColumns, $arrValues)) {

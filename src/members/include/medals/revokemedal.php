@@ -55,7 +55,7 @@ if ($rankInfo['rank_id'] == 1) {
 	$maxRankInfo['ordernum'] += 1;
 }
 
-$arrRanks = array();
+$arrRanks = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."ranks WHERE ordernum < '".$maxRankInfo['ordernum']."' AND rank_id != '1' ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$arrRanks[] = $row['rank_id'];
@@ -75,7 +75,7 @@ while ($row = $result->fetch_assoc()) {
 if ( ! empty($_POST['submit']) ) {
 	$member->select($_POST['member']);
 	$arrMedals = $member->getMedalList();
-	$medaloptions = array();
+	$medaloptions = [];
 	foreach ($arrMedals as $medalID) {
 		$medalObj->select($medalID);
 		$medalInfo = $medalObj->get_info_filtered();
@@ -88,57 +88,57 @@ if ( ! empty($_POST['submit']) ) {
 
 
 $i = 1;
-$arrComponents = array(
-		"member" => array(
+$arrComponents = [
+		"member" => [
 			"type" => "select",
 			"options" => $memberOptions,
-			"attributes" => array("class" => "textBox formInput", "id" => "memberselect"),
+			"attributes" => ["class" => "textBox formInput", "id" => "memberselect"],
 			"sortorder" => $i++,
 			"display_name" => "Member",
-			"validate" => array("RESTRICT_TO_OPTIONS", array("name" => "IS_SELECTABLE", "selectObj" => $member, "select_back" => "member_id"), array("name" => "NOT_EQUALS_VALUE", "value" => $memberInfo['member_id']))
-		),
-		"medal" => array(
+			"validate" => ["RESTRICT_TO_OPTIONS", ["name" => "IS_SELECTABLE", "selectObj" => $member, "select_back" => "member_id"], ["name" => "NOT_EQUALS_VALUE", "value" => $memberInfo['member_id']]]
+		],
+		"medal" => [
 			"type" => "select",
 			"options" => $medalOptions,
-			"attributes" => array("class" => "textBox formInput", "id" => "medalselect"),
+			"attributes" => ["class" => "textBox formInput", "id" => "medalselect"],
 			"sortorder" => $i++,
 			"display_name" => "Medal",
-			"validate" => array("RESTRICT_TO_OPTIONS"),
+			"validate" => ["RESTRICT_TO_OPTIONS"],
 			"html" => "<div class='main formInput' style='display: none; padding-left: 10px' id='reshowDiv'><a href='javascript:void(0)' id='setShowTrue'>Show Medal Info</a></div>"
-		),
-		"reason" => array(
+		],
+		"reason" => [
 			"type" => "textarea",
-			"attributes" => array("class" => "textBox formInput", "rows" => 3, "style" => "width: 35%"),
+			"attributes" => ["class" => "textBox formInput", "rows" => 3, "style" => "width: 35%"],
 			"sortorder" => $i++,
 			"display_name" => "Reason"
-		),
-		"freezetime" => array(
+		],
+		"freezetime" => [
 			"display_name" => "Freeze Medal",
 			"type" => "select",
 			"tooltip" => "When revoking a medal that is auto-awarded based on number of days in the clan or number of recruits, the medal will be automatically re-awarded after being revoked.  Set this option to prevent the medal from being auto-awarded.",
 			"sortorder" => $i++,
-			"attributes" => array("class" => "textBox formInput"),
-			"validate" => array("RESTRICT_TO_OPTIONS", "NUMBER_ONLY"),
-			"options" => array(0 => "Don't Freeze", 1 => "1 day", 3=> "3 days", 7 => "7 days", 10 => "10 days", 14 => "14 days", 21 => "21 days", 30 => "30 days", 45 => "45 days", 60 => "60 days", 75 => "75 days", 90 => "90 days", 36500 => "Forever")
+			"attributes" => ["class" => "textBox formInput"],
+			"validate" => ["RESTRICT_TO_OPTIONS", "NUMBER_ONLY"],
+			"options" => [0 => "Don't Freeze", 1 => "1 day", 3=> "3 days", 7 => "7 days", 10 => "10 days", 14 => "14 days", 21 => "21 days", 30 => "30 days", 45 => "45 days", 60 => "60 days", 75 => "75 days", 90 => "90 days", 36500 => "Forever"]
 
-		),
-		"submit" => array(
+		],
+		"submit" => [
 			"type" => "submit",
-			"attributes" => array("class" => "submitButton formSubmitButton"),
+			"attributes" => ["class" => "submitButton formSubmitButton"],
 			"value" => "Revoke Medal",
 			"sortorder" => $i++
-		)
+		]
 
-	);
+	];
 
-$setupFormArgs = array(
+$setupFormArgs = [
 		"name" => "console-".$cID,
 		"components" => $arrComponents,
-		"attributes" => array("id" => "formDiv", "action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"),
-		"afterSave" => array("revokeMedalSave"),
+		"attributes" => ["id" => "formDiv", "action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
+		"afterSave" => ["revokeMedalSave"],
 		"saveMessage" => "Successfully revoked the <b>".$medalObj->get_info_filtered("name")."</b> medal from ".$member->getMemberLink()."!",
 		"description" => "Use the form below to revoke a medal.<br><br><b><u>NOTE:</u></b> If you revoke a medal that is awarded automatically after a certain number of days in the clan, it will be re-awarded to the member."
-	);
+	];
 
 
 echo "		
@@ -237,7 +237,7 @@ function revokeMedalSave() {
 		$frozenMessage = "";
 		if ($medalObj->get_info("autodays") != 0 || $medalObj->get_info("autorecruits") != 0) {
 			$freezeTime = (86400*$_POST['freezetime'])+time();
-			$medalObj->objFrozenMedal->addNew(array("medal_id", "member_id", "freezetime"), array($_POST['medal'], $_POST['member'], $freezeTime));
+			$medalObj->objFrozenMedal->addNew(["medal_id", "member_id", "freezetime"], [$_POST['medal'], $_POST['member'], $freezeTime]);
 			$dispDays = ($_POST['freezetime'] == 1) ? "day" : "days";
 			$frozenMessage = "  The medal will not be awarded again for ".$_POST['freezetime']." ".$dispDays.".";
 		}

@@ -9,7 +9,7 @@ if ( ! empty($_POST['submit']) ) {
 
 	// Check To
 
-	$arrReceivers = array();
+	$arrReceivers = [];
 
 	// Check Members
 
@@ -33,7 +33,7 @@ if ( ! empty($_POST['submit']) ) {
 				$result = $mysqli->query("SELECT member_id FROM ".$dbprefix."members WHERE rank_id IN ".$rankSQL." AND member_id NOT IN ".$filterMembers." AND disabled = '0'");
 				while ($row = $result->fetch_assoc()) {
 					$arrReceivers[] = $row['member_id'];
-					$arrGroup[$row['member_id']] = array("rankcategory", $rankCatID);
+					$arrGroup[$row['member_id']] = ["rankcategory", $rankCatID];
 				}
 			}
 		}
@@ -49,7 +49,7 @@ if ( ! empty($_POST['submit']) ) {
 				$result = $mysqli->query("SELECT member_id FROM ".$dbprefix."members WHERE rank_id = '".$rankID."' AND member_id NOT IN ".$filterMembers);
 				while ($row = $result->fetch_assoc()) {
 					$arrReceivers[] = $row['member_id'];
-					$arrGroup[$row['member_id']] = array("rank", $rankID);
+					$arrGroup[$row['member_id']] = ["rank", $rankID];
 				}
 			}
 		}
@@ -66,7 +66,7 @@ if ( ! empty($_POST['submit']) ) {
 				$result = $mysqli->query("SELECT member_id FROM ".$dbprefix."squads_members WHERE squad_id = '".$squadID."' AND member_id NOT IN ".$filterMembers);
 				while ($row = $result->fetch_assoc()) {
 					$arrReceivers[] = $row['member_id'];
-					$arrGroup[$row['member_id']] = array("squad", $squadID);
+					$arrGroup[$row['member_id']] = ["squad", $squadID];
 				}
 			}
 		}
@@ -81,7 +81,7 @@ if ( ! empty($_POST['submit']) ) {
 				$result = $mysqli->query("SELECT member_id FROM ".$dbprefix."tournamentplayers WHERE tournament_id = '".$tournamentID."' AND member_id != '' AND member_id NOT IN ".$filterMembers);
 				while ($row = $result->fetch_assoc()) {
 					$arrReceivers[] = $row['member_id'];
-					$arrGroup[$row['member_id']] = array("tournament", $tournamentID);
+					$arrGroup[$row['member_id']] = ["tournament", $tournamentID];
 				}
 			}
 		}

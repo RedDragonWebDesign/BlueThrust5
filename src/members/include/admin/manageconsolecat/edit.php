@@ -95,8 +95,8 @@ if ( ! empty($_POST['submit']) ) {
 
 
 	if ($countErrors == 0) {
-		$updateColumns = array("name");
-		$updateValues = array($_POST['catname']);
+		$updateColumns = ["name"];
+		$updateValues = [$_POST['catname']];
 
 		if ($intNewOrderSpot != "") {
 			$resortOrder = true;

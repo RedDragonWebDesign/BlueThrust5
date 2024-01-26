@@ -119,7 +119,7 @@ class DestinyMenu extends btThemeMenu {
 		$rank = new Rank($this->MySQL);
 		$rank->select($this->memberObj->get_info("rank_id"));
 
-		$memberLink = $this->memberObj->getMemberLink(array("wrapper" => false));
+		$memberLink = $this->memberObj->getMemberLink(["wrapper" => false]);
 		$dispMemberLink = "".$rank->get_info_filtered("name")." <a href='".$memberLink."'>".$this->memberObj->get_info_filtered("username")."</a>";
 
 		echo "

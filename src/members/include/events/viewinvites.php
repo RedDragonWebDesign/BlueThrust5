@@ -15,7 +15,7 @@
 
 require_once("../classes/event.php");
 $_SESSION['btEventID'] = "";
-$_SESSION['btCountMindChanges'] = array();
+$_SESSION['btCountMindChanges'] = [];
 if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 	exit();
 } else {

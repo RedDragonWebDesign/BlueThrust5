@@ -36,7 +36,7 @@ if (count($arrMedals) > 0) {
 
 		$dispMedalMessage = "<b>".$medalInfo['name']."</b><br><br>".$dispDateAwarded.$dispReason;
 
-		$tempArr = array("width" => $medalInfo['imagewidth'], "height" => $medalInfo['imageheight'], "url" => $medalInfo['imageurl'], "message" => $dispMedalMessage);
+		$tempArr = ["width" => $medalInfo['imagewidth'], "height" => $medalInfo['imageheight'], "url" => $medalInfo['imageurl'], "message" => $dispMedalMessage];
 		$arrDispMedals[] = $tempArr;
 	}
 

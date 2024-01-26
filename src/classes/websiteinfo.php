@@ -15,7 +15,7 @@ class WebsiteInfo extends Basic {
 		$this->strTableName = $this->MySQL->get_tablePrefix()."websiteinfo";
 		$this->strTableKey = "websiteinfo_id";
 
-		$this->arrKeys = array();
+		$this->arrKeys = [];
 		$this->blnRefreshInfo = true;
 		$this->objBTMail = new btMail();
 	}
@@ -26,7 +26,7 @@ class WebsiteInfo extends Basic {
 		$returnVal = parent::select($intIDNum, $numericIDOnly);
 
 		if ($this->blnRefreshInfo) {
-			$this->arrObjInfo = array();
+			$this->arrObjInfo = [];
 			$result = $this->MySQL->query("SELECT * FROM ".$this->strTableName);
 			while ($row = $result->fetch_assoc()) {
 				$this->arrObjInfo[$row['name']] = $row['value'];
@@ -46,11 +46,11 @@ class WebsiteInfo extends Basic {
 		$countErrors = 0;
 		foreach ($arrSettings as $key => $settingName) {
 			if ($this->select($this->arrKeys[$settingName])) {
-				if (!$this->update(array("value"), array($arrValues[$key]))) {
+				if (!$this->update(["value"], [$arrValues[$key]])) {
 					$countErrors++;
 				}
 			} else {
-				if (!$this->addNew(array("name", "value"), array($settingName, $arrValues[$key]))) {
+				if (!$this->addNew(["name", "value"], [$settingName, $arrValues[$key]])) {
 					$countErrors++;
 				}
 			}

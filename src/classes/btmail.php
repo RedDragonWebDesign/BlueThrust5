@@ -6,7 +6,7 @@ class btMail {
 	private $objPHPMailer;
 
 	/** General e-mail function using PHPMailer */
-	public function sendMail($to, $subject, $message, $additional = array()) {
+	public function sendMail($to, $subject, $message, $additional = []) {
 
 		$mail = new PHPMailer();
 		$this->objPHPMailer = $mail;
@@ -20,7 +20,7 @@ class btMail {
 			$mail->setFrom($from);
 		}
 
-		$this->addEmail(array("to" => $to));
+		$this->addEmail(["to" => $to]);
 
 		$mail->Subject = $subject;
 
@@ -67,13 +67,13 @@ class btMail {
 		if (isset($args[$type]) && is_array($args[$type])) {
 			foreach ($args[$type] as $info) {
 				if (is_array($info)) {
-					call_user_func_array(array($mail, $func), array($info['email'], $info['name']));
+					call_user_func_array([$mail, $func], [$info['email'], $info['name']]);
 				} else {
-					call_user_func_array(array($mail, $func), array($info));
+					call_user_func_array([$mail, $func], [$info]);
 				}
 			}
 		} elseif (isset($args[$type])) {
-			call_user_func_array(array($mail, $func), array($args[$type]));
+			call_user_func_array([$mail, $func], [$args[$type]]);
 		}
 	}
 
