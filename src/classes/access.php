@@ -141,7 +141,7 @@ class Access {
 							<select id='selectRankAccess' class='textBox'><option value='0'>Remove Access Rules</option>
 						";
 
-					$this->dispAccessOptions();
+			$this->dispAccessOptions();
 
 			echo "	
 								
@@ -213,7 +213,7 @@ class Access {
 								<select class='textBox' id='selectMemberAccessType'>
 									<option value='0'>Remove Access Rules</option>
 									";
-					$this->dispAccessOptions();
+			$this->dispAccessOptions();
 
 			echo "
 								</select> <input type='button' id='setMemberAccess' class='submitButton' value='Set'>
@@ -264,7 +264,7 @@ class Access {
 			}
 		}
 
-			echo "
+		echo "
 					</table>
 				";
 

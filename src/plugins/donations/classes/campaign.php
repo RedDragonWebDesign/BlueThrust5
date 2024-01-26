@@ -1,6 +1,6 @@
 <?php
 
-	require_once(BASE_DIRECTORY."plugins/donations/classes/donation.php");
+require_once(BASE_DIRECTORY."plugins/donations/classes/donation.php");
 
 class DonationCampaign extends Basic {
 

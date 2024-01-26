@@ -5,7 +5,7 @@
 	 * https://developer.paypal.com/docs/classic/api/currency_codes/
 	 */
 
-	$arrPaypalCurrencyCodes = array(
+$arrPaypalCurrencyCodes = array(
 
 		"AUD" => "Australian Dollar",
 		"BRL" => "Brazilian Real",
@@ -35,7 +35,7 @@
 
 	);
 
-	$arrPaypalCurrencyInfo = array(
+$arrPaypalCurrencyInfo = array(
 		"AUD" => array("symbol" => "A$", "position" => "left"),
 		"BRL" => array("symbol" => "R$", "position" => "left"),
 		"CAD" => array("symbol" => "C$", "position" => "left"),

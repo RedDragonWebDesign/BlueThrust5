@@ -16,11 +16,11 @@ if (!defined("MAIN_ROOT")) {
 	exit();
 }
 
-	$arrTimezoneOptions = $clockObj->getTimezones();
+$arrTimezoneOptions = $clockObj->getTimezones();
 
-	$clockOrderObj = new Clock($mysqli);
-	$arrClocks = array();
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."clocks ORDER BY ordernum DESC");
+$clockOrderObj = new Clock($mysqli);
+$arrClocks = array();
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."clocks ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$arrClocks[$row['clock_id']] = filterText($row['name']);
 }
@@ -29,8 +29,8 @@ if (count($arrClocks) == 0) {
 	$arrClocks['first'] = "(first clock)";
 }
 
-	$i=0;
-	$arrComponents = array(
+$i=0;
+$arrComponents = array(
 
 		"name" => array(
 			"type" => "text",
@@ -72,7 +72,7 @@ if (count($arrClocks) == 0) {
 
 	);
 
-	$setupFormArgs = array(
+$setupFormArgs = array(
 		"name" => "console-".$cID,
 		"components" => $arrComponents,
 		"saveObject" => $clockObj,

@@ -82,7 +82,7 @@ echo "
 	";
 
 
-	$dispSeedChangeDiv = "";
+$dispSeedChangeDiv = "";
 if ($tournamentInfo['playersperteam'] == 1) {
 	$dispSeedChangeDiv = "<div id='changeSeedDiv' class='main' style='display: none'></div><div id='successBox' class='main' style='display: none'></div>";
 	$i = 1;
@@ -132,7 +132,7 @@ if ($tournamentInfo['playersperteam'] == 1) {
 }
 
 
-	echo "
+echo "
 	</div>
 	</div>
 

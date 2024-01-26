@@ -5,9 +5,9 @@ if (!defined("MAIN_ROOT")) {
 }
 
 
-	$arrTimezoneOptions = $clockObj->getTimezones();
-	$i=0;
-	$arrComponents = array(
+$arrTimezoneOptions = $clockObj->getTimezones();
+$i=0;
+$arrComponents = array(
 		"default_timezone" => array(
 			"type" => "select",
 			"display_name" => "Default Timezone",
@@ -45,7 +45,7 @@ if (!defined("MAIN_ROOT")) {
 	);
 
 
-	$setupFormArgs = array(
+$setupFormArgs = array(
 		"name" => "console-".$cID,
 		"components" => $arrComponents,
 		"saveMessage" => "Successfully saved world clock settings!",
@@ -54,10 +54,10 @@ if (!defined("MAIN_ROOT")) {
 		"afterSave" => array("saveWorldClockSettings")
 	);
 
-	function saveWorldClockSettings() {
-		global $webInfoObj;
+function saveWorldClockSettings() {
+	global $webInfoObj;
 
-		$arrSettings = array("default_timezone", "date_format", "display_date");
-		$arrValues = array($_POST['default_timezone'], $_POST['date_format'], $_POST['display_date']);
-		$webInfoObj->multiUpdate($arrSettings, $arrValues);
-	}
+	$arrSettings = array("default_timezone", "date_format", "display_date");
+	$arrValues = array($_POST['default_timezone'], $_POST['date_format'], $_POST['display_date']);
+	$webInfoObj->multiUpdate($arrSettings, $arrValues);
+}

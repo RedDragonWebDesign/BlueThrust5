@@ -84,8 +84,8 @@ $statusSelectBox->setOptions(array("Unconfirmed", "Attended", "Excused Absence",
 		$formObj->showSuccessDialog();
 	}
 
-		$counter = 0;
-		$eventMemberObj = new Member($mysqli);
+	$counter = 0;
+	$eventMemberObj = new Member($mysqli);
 	while ($row = $result->fetch_assoc()) {
 		if ($counter == 1) {
 			$addCSS = " alternateBGColor";

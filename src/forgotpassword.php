@@ -268,7 +268,7 @@ Time of Request: $timeofrqcon Server Time<br>
 	$dispError .= "&nbsp;&nbsp;&nbsp;<b>&middot;</b> Not a proper setup definition.<br>";
 }
 if ($dispError != "") {
-		echo "
+	echo "
 		<div class='errorDiv'>
 		<strong>Unable to recover password because the following errors occurred:</strong><br><br>
 		$dispError

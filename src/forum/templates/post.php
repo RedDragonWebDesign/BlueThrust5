@@ -136,10 +136,10 @@ if (count($arrAttachments) > 0 && $blnShowAttachments) {
 					";
 
 	foreach ($arrAttachments as $downloadID) {
-			$attachmentObj->select($downloadID);
-			$attachmentInfo = $attachmentObj->get_info_filtered();
-			$addS = ($attachmentInfo['downloadcount'] != 1) ? "s" : "";
-			$dispFileSize = $attachmentInfo['filesize']/1024;
+		$attachmentObj->select($downloadID);
+		$attachmentInfo = $attachmentObj->get_info_filtered();
+		$addS = ($attachmentInfo['downloadcount'] != 1) ? "s" : "";
+		$dispFileSize = $attachmentInfo['filesize']/1024;
 
 		if ($dispFileSize < 1) {
 			$dispFileSize = $attachmentInfo['filesize']."B";
@@ -149,10 +149,10 @@ if (count($arrAttachments) > 0 && $blnShowAttachments) {
 			$dispFileSize = round(($dispFileSize/1024), 2)."MB";
 		}
 
-			echo "<a href='".$MAIN_ROOT."downloads/file.php?dID=".$downloadID."'>".$attachmentInfo['filename']."</a> - downloaded ".$attachmentInfo['downloadcount']." time".$addS." - ".$dispFileSize."<br>";
+		echo "<a href='".$MAIN_ROOT."downloads/file.php?dID=".$downloadID."'>".$attachmentInfo['filename']."</a> - downloaded ".$attachmentInfo['downloadcount']." time".$addS." - ".$dispFileSize."<br>";
 	}
 
-		echo "
+	echo "
 					</div>
 		";
 }
@@ -164,7 +164,7 @@ if ($postMemberInfo['forumsignature'] != "" && $websiteInfo['forum_hidesignature
 	";
 }
 
-	echo "<div class='forumManageLinks'>";
+echo "<div class='forumManageLinks'>";
 if ($this->blnManageable || ($postMemberInfo['member_id'] ?? '') == $memberInfo['member_id']) {
 	echo "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intManagePostsCID."&pID=".$postInfo['forumpost_id']."'>EDIT POST</a> &laquo;&nbsp&nbsp;&nbsp;";
 	echo "&raquo; <a href='javascript:void(0)' onclick=\"deletePost('".$postInfo['forumpost_id']."')\">DELETE POST</a> &laquo;&nbsp&nbsp;&nbsp;";

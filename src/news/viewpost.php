@@ -157,6 +157,6 @@ echo "
 		";
 $arrComments = $newsObj->getComments();
 require_once("comments.php");
-	echo "</div>";
+echo "</div>";
 
 require_once($prevFolder."themes/".$THEME."/_footer.php");

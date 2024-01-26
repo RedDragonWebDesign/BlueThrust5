@@ -12,16 +12,16 @@
 	*
 	*/
 
-	$dbhost = "localhost";
-	$dbuser = "";
-	$dbpass = "";
-	$dbname = "";
+$dbhost = "localhost";
+$dbuser = "";
+$dbpass = "";
+$dbname = "";
 
-	$dbprefix = "";
+$dbprefix = "";
 
-	$MAIN_ROOT = "";
-	$BASE_DIRECTORY = ""; // The direct path in the file system leading to your website i.e. "c:/windows/apache/mywebsite" or "/var/www/mywebsite"
+$MAIN_ROOT = "";
+$BASE_DIRECTORY = ""; // The direct path in the file system leading to your website i.e. "c:/windows/apache/mywebsite" or "/var/www/mywebsite"
 
-	$ADMIN_KEY = ""; // KEY FOR EXTRA SECURITY WHEN ADDING CONSOLE OPTION
+$ADMIN_KEY = ""; // KEY FOR EXTRA SECURITY WHEN ADDING CONSOLE OPTION
 
-	define("ADMIN_KEY", $ADMIN_KEY);
+define("ADMIN_KEY", $ADMIN_KEY);

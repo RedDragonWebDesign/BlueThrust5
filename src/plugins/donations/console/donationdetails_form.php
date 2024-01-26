@@ -4,10 +4,10 @@ if (!defined("MAIN_ROOT")) {
 	exit();
 }
 
-	$donationMember = new Member($mysqli);
-	$dispMemberName = $donationMember->select($donationInfo['member_id']) ? $donationMember->getMemberLink() : "";
+$donationMember = new Member($mysqli);
+$dispMemberName = $donationMember->select($donationInfo['member_id']) ? $donationMember->getMemberLink() : "";
 
-	$dispName = $donationInfo['name'];
+$dispName = $donationInfo['name'];
 if ($donationInfo['name'] == "" && $dispMemberName == "") {
 	$dispName = "Anonymous";
 } elseif ($donationInfo['name'] != "" && $dispMemberName != "") {
@@ -15,10 +15,10 @@ if ($donationInfo['name'] == "" && $dispMemberName == "") {
 }
 
 
-	$dispMessage = ($donationInfo['message'] == "") ? "None" : nl2br(parseBBCode($donationInfo['message']));
+$dispMessage = ($donationInfo['message'] == "") ? "None" : nl2br(parseBBCode($donationInfo['message']));
 
-	$i=0;
-	$arrComponents = array(
+$i=0;
+$arrComponents = array(
 		"campaign" => array(
 			"type" => "custom",
 			"html" => "<div class='formInput main'><a href='".$campaignObj->getLink()."'>".$campaignInfo['title']."</a></div>",
@@ -58,7 +58,7 @@ if ($donationInfo['name'] == "" && $dispMemberName == "") {
 	);
 
 
-	$setupFormArgs = array(
+$setupFormArgs = array(
 		"name" => "console-".$cID."-donationdetails-".$donationInfo['donation_id'],
 		"components" => $arrComponents
 	);

@@ -3,19 +3,19 @@
 if (!defined("MAIN_ROOT")) {
 	exit();
 }
-	require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
+require_once(BASE_DIRECTORY."plugins/donations/classes/campaign.php");
 
-	$campaignInfo = $campaignObj->get_info_filtered();
+$campaignInfo = $campaignObj->get_info_filtered();
 
-	$breadcrumbObj->popCrumb();
-	$breadcrumbObj->addCrumb($consoleTitle, MAIN_ROOT."members/console.php?cID=".$cID);
-	$breadcrumbObj->addCrumb("Donation Log: ".$campaignInfo['title']);
-	$breadcrumbObj->setTitle("Donation Log: ".$campaignInfo['title']);
+$breadcrumbObj->popCrumb();
+$breadcrumbObj->addCrumb($consoleTitle, MAIN_ROOT."members/console.php?cID=".$cID);
+$breadcrumbObj->addCrumb("Donation Log: ".$campaignInfo['title']);
+$breadcrumbObj->setTitle("Donation Log: ".$campaignInfo['title']);
 
-	$breadcrumbObj->updateBreadcrumb();
+$breadcrumbObj->updateBreadcrumb();
 
 
-	$addToPageSelectorLink = "";
+$addToPageSelectorLink = "";
 if (!isset($_GET['start']) || !isset($_GET['end'])) {
 	$period = $campaignObj->getCurrentPeriodRange(true);
 	$_GET['start'] = $period['current'];
@@ -28,28 +28,28 @@ if (!isset($_GET['start']) || !isset($_GET['end'])) {
 	$addToPageSelectorLink = "&start=".$_GET['start']."&end=".$_GET['end'];
 }
 
-	$donationsPerPage = 25;
+$donationsPerPage = 25;
 
-	$campaignObj->populateDonationInfo(false, $_GET['start'], $_GET['end']);
-	$totalDonated = $campaignObj->getTotalDonationAmount();
+$campaignObj->populateDonationInfo(false, $_GET['start'], $_GET['end']);
+$totalDonated = $campaignObj->getTotalDonationAmount();
 
-	$donationInfo = $campaignObj->getDonationInfo();
-	$totalDonations = count($donationInfo);
+$donationInfo = $campaignObj->getDonationInfo();
+$totalDonations = count($donationInfo);
 
-	require_once(BASE_DIRECTORY."plugins/donations/console/datefilter_form.php");
+require_once(BASE_DIRECTORY."plugins/donations/console/datefilter_form.php");
 
-	$numOfPages = ceil($totalDonations/$donationsPerPage);
+$numOfPages = ceil($totalDonations/$donationsPerPage);
 
-	$pageSelector = new PageSelector();
-	$pageSelector->setPages($numOfPages);
+$pageSelector = new PageSelector();
+$pageSelector->setPages($numOfPages);
 
-	$_GET['pageNum'] = $pageSelector->validatePageNumber($_GET['pageNum']);
+$_GET['pageNum'] = $pageSelector->validatePageNumber($_GET['pageNum']);
 
-	$pageSelector->setCurrentPage($_GET['pageNum']);
-	$pageSelector->setLink(MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&campaignID=".$_GET['campaignID']."&p=log".$addToPageSelectorLink."&pageNum=");
+$pageSelector->setCurrentPage($_GET['pageNum']);
+$pageSelector->setLink(MAIN_ROOT."members/console.php?cID=".$_GET['cID']."&campaignID=".$_GET['campaignID']."&p=log".$addToPageSelectorLink."&pageNum=");
 
 
-	$pageSelector->show();
+$pageSelector->show();
 
 ?>
 
@@ -64,10 +64,10 @@ if (!isset($_GET['start']) || !isset($_GET['end'])) {
 
 <?php
 
-	$donateMember = new Member($mysqli);
+$donateMember = new Member($mysqli);
 
-	$counter = 0;
-	$i = ($_GET['pageNum']-1)*$donationsPerPage;
+$counter = 0;
+$i = ($_GET['pageNum']-1)*$donationsPerPage;
 while ($counter < $donationsPerPage && $i < $totalDonations) {
 	$info = $donationInfo[$i];
 
@@ -93,7 +93,7 @@ while ($counter < $donationsPerPage && $i < $totalDonations) {
 	$i++;
 }
 
-	echo "</table>";
+echo "</table>";
 
 if ($totalDonations == 0) {
 	echo "

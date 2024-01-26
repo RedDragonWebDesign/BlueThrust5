@@ -16,9 +16,9 @@ if (!defined("SHOW_PROFILE_MAIN")) {
 	exit();
 }
 
-	require_once($prevFolder."plugins/youtube/youtube.php");
-	require_once($prevFolder."plugins/youtube/ytbuttoncss.php");
-	$ytObj = new Youtube($mysqli);
+require_once($prevFolder."plugins/youtube/youtube.php");
+require_once($prevFolder."plugins/youtube/ytbuttoncss.php");
+$ytObj = new Youtube($mysqli);
 
 
 if ($ytObj->hasYoutube($memberInfo['member_id'])) {

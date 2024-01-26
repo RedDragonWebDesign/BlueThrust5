@@ -3,13 +3,13 @@
 if (!defined("MAIN_ROOT")) {
 	exit();
 }
-	global $donationPlugin, $campaignInfo, $campaignObj;
+global $donationPlugin, $campaignInfo, $campaignObj;
 
 
-	$member = new Member($mysqli);
-	$donationForm = new Form();
+$member = new Member($mysqli);
+$donationForm = new Form();
 
-	require_once("include/donate_form.php");
+require_once("include/donate_form.php");
 
 if ($donationPlugin->getConfigInfo("mode") != "live") {
 	echo "
@@ -18,12 +18,12 @@ if ($donationPlugin->getConfigInfo("mode") != "live") {
 }
 
 
-	$donationsInfo = $campaignObj->getDonationInfo();
-	$totalDonations = count($donationsInfo);
+$donationsInfo = $campaignObj->getDonationInfo();
+$totalDonations = count($donationsInfo);
 
-	$donationsFormatted = $campaignObj->formatAmount($campaignObj->getTotalDonationAmount());
+$donationsFormatted = $campaignObj->formatAmount($campaignObj->getTotalDonationAmount());
 
-	$dispGoal = "";
+$dispGoal = "";
 if ($campaignInfo['goalamount'] > 0) {
 	$dispGoal = " of ".$campaignObj->formatAmount($campaignInfo['goalamount'], 2)." goal";
 
@@ -32,8 +32,8 @@ if ($campaignInfo['goalamount'] > 0) {
 	$goalCompletePercent = ($goalCompletePercent > 100) ? "100%" : $goalCompletePercent."%";
 }
 
-	$daysLeft = "";
-	$dispEndDate = "";
+$daysLeft = "";
+$dispEndDate = "";
 if (($campaignInfo['dateend'] != 0) || ($campaignInfo['dateend'] == 0 && $campaignInfo['currentperiod'] != 0)) {
 	$currentEndDate = $campaignObj->getCurrentEndDate();
 	$daysLeft = $campaignObj->getDaysLeft();
@@ -98,7 +98,7 @@ if (($campaignInfo['dateend'] != 0) || ($campaignInfo['dateend'] == 0 && $campai
 			";
 	}
 
-		$medalObj = new Medal($mysqli);
+	$medalObj = new Medal($mysqli);
 	if ($campaignInfo['awardmedal'] != 0 && $medalObj->select($campaignInfo['awardmedal'])) {
 		$medalInfo = $medalObj->get_info_filtered();
 
@@ -122,7 +122,7 @@ if (($campaignInfo['dateend'] != 0) || ($campaignInfo['dateend'] == 0 && $campai
 	<div class='dottedLine largeFont' style='margin-top: 15px'><b>Donators:</b></div>
 	<?php
 
-		$campaignObj->showDonatorList();
+	$campaignObj->showDonatorList();
 
 	?>
 </div>

@@ -1,8 +1,8 @@
 <?php
-	require_once("classes/btmysql.php");
-	require_once("tablelist.php");
-	$countErrors = 0;
-	$dispError = "";
+require_once("classes/btmysql.php");
+require_once("tablelist.php");
+$countErrors = 0;
+$dispError = "";
 
 ?>
 

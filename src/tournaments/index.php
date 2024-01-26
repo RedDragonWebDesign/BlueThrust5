@@ -60,10 +60,10 @@ require_once($prevFolder."include/breadcrumb.php");
 	</tr>
 	
 	<?php
-		$memberObj = new Member($mysqli);
+	$memberObj = new Member($mysqli);
 
-		$counter = 0;
-		$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournaments ORDER BY startdate DESC");
+	$counter = 0;
+	$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournaments ORDER BY startdate DESC");
 
 	while ($row = $result->fetch_assoc()) {
 		$tournamentObj->select($row['tournament_id']);

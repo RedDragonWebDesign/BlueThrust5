@@ -114,8 +114,8 @@ echo "
 				</tr>
 				";
 
-	$arrSortInviteList = array();
-	$arrInviteListNoPosition = array();
+$arrSortInviteList = array();
+$arrInviteListNoPosition = array();
 foreach ($arrInviteList as $value) {
 	$eventMemberID = $eventObj->getEventMemberID($value, true);
 	$eventMemInfo = $eventObj->objEventMember->get_info();
@@ -128,10 +128,10 @@ foreach ($arrInviteList as $value) {
 }
 
 
-	$sqlInviteList[0] = "('".implode("','", $arrSortInviteList)."')";
-	$query[0] = "SELECT m.rank_id, ep.sortnum, r.ordernum, m.member_id FROM ".$dbprefix."members m, ".$dbprefix."eventpositions ep, ".$dbprefix."events_members em, ".$dbprefix."ranks r WHERE r.rank_id = m.rank_id AND m.member_id = em.member_id AND em.event_id = '".$eventInfo['event_id']."' AND em.position_id = ep.position_id AND em.member_id IN ".$sqlInviteList[0]." ORDER BY ep.sortnum ASC, r.ordernum DESC";
+$sqlInviteList[0] = "('".implode("','", $arrSortInviteList)."')";
+$query[0] = "SELECT m.rank_id, ep.sortnum, r.ordernum, m.member_id FROM ".$dbprefix."members m, ".$dbprefix."eventpositions ep, ".$dbprefix."events_members em, ".$dbprefix."ranks r WHERE r.rank_id = m.rank_id AND m.member_id = em.member_id AND em.event_id = '".$eventInfo['event_id']."' AND em.position_id = ep.position_id AND em.member_id IN ".$sqlInviteList[0]." ORDER BY ep.sortnum ASC, r.ordernum DESC";
 
-	$sqlInviteList[1] = "('".implode("','", $arrInviteListNoPosition)."')";
+$sqlInviteList[1] = "('".implode("','", $arrInviteListNoPosition)."')";
 if ($eventInfo['startdate'] > time()) {
 	$query[1] = "SELECT m.rank_id, r.ordernum, m.member_id FROM ".$dbprefix."members m, ".$dbprefix."events_members em, ".$dbprefix."ranks r WHERE r.rank_id = m.rank_id AND m.member_id = em.member_id AND em.event_id = '".$eventInfo['event_id']."' AND em.member_id IN ".$sqlInviteList[1]." ORDER BY em.status DESC, r.ordernum DESC";
 } else {
@@ -139,8 +139,8 @@ if ($eventInfo['startdate'] > time()) {
 }
 
 
-	$counter = 1;
-	$currentAttendStatus = "";
+$counter = 1;
+$currentAttendStatus = "";
 for ($x=0; $x<=1; $x++) {
 	$result = $mysqli->query($query[$x]);
 	while ($row = $result->fetch_assoc()) {
@@ -237,9 +237,9 @@ for ($x=0; $x<=1; $x++) {
 }
 
 
-	$dispEventPositions = "";
-	$arrEventPositions = $eventObj->getPositions();
-	$x = 1;
+$dispEventPositions = "";
+$arrEventPositions = $eventObj->getPositions();
+$x = 1;
 foreach ($arrEventPositions as $value) {
 	$eventObj->objEventPosition->select($value);
 
@@ -252,12 +252,12 @@ if ($dispEventPositions == "") {
 	$dispEventPositions = "<i>None</i>";
 }
 
-	$dateTimeObj = new DateTime();
-	$dateTimeObj->setTimezone(new DateTimeZone("UTC"));
-	$dateTimeObj->setTimestamp($eventInfo['startdate']);
-	$includeTimezone = "";
-	$dispTimezone = "";
-	$dispStartDate = $dateTimeObj->format("M j, Y g:i A");
+$dateTimeObj = new DateTime();
+$dateTimeObj->setTimezone(new DateTimeZone("UTC"));
+$dateTimeObj->setTimestamp($eventInfo['startdate']);
+$includeTimezone = "";
+$dispTimezone = "";
+$dispStartDate = $dateTimeObj->format("M j, Y g:i A");
 
 if ($eventInfo['timezone'] != "") {
 	$timeZoneObj = new DateTimeZone($eventInfo['timezone']);
@@ -268,8 +268,8 @@ if ($eventInfo['timezone'] != "") {
 
 	$dispTimezone = $dateTimeObj->format(" T")."<br>".str_replace("_", " ", $eventInfo['timezone'])." (UTC".$dispSign.$dispOffset.")";
 }
-	$dateTimeObj->setTimezone("UTC");
-	$dispStartDate .= $dispTimezone;
+$dateTimeObj->setTimezone("UTC");
+$dispStartDate .= $dispTimezone;
 
 echo "
 			</table>
@@ -318,7 +318,7 @@ echo "
 				
 				";
 
-			$dispPostMessageJS = "";
+$dispPostMessageJS = "";
 if ($eventObj->memberHasAccess($memberInfo['member_id'], "postmessages")) {
 	echo "
 				
@@ -377,7 +377,7 @@ if ($eventObj->memberHasAccess($memberInfo['member_id'], "postmessages")) {
 }
 
 
-			$dispManageMessagesJS = "";
+$dispManageMessagesJS = "";
 if ($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) {
 	$dispManageMessagesJS = "
 				
@@ -410,7 +410,7 @@ if ($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) {
 
 
 
-			echo "
+echo "
 				<div id='loadingSpiral' class='loadingSpiral'>
 					<p align='center'>
 						<img src='".$MAIN_ROOT."themes/".$THEME."/images/loading-spiral.gif'><br>Loading
@@ -422,7 +422,7 @@ if ($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) {
 						
 					";
 
-				$result = $mysqli->query("SELECT * FROM ".$dbprefix."eventmessages WHERE event_id = '".$eventInfo['event_id']."' ORDER BY dateposted DESC");
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."eventmessages WHERE event_id = '".$eventInfo['event_id']."' ORDER BY dateposted DESC");
 while ($row = $result->fetch_assoc()) {
 	$eventPgMemberObj->select($row['member_id']);
 	$memInfo = $eventPgMemberObj->get_info_filtered();
@@ -451,8 +451,8 @@ while ($row = $result->fetch_assoc()) {
 							
 							";
 
-			$eventObj->objEventMessage->select($row['eventmessage_id']);
-			$arrMessageComments = $eventObj->objEventMessage->getComments(" ORDER BY dateposted ASC");
+	$eventObj->objEventMessage->select($row['eventmessage_id']);
+	$arrMessageComments = $eventObj->objEventMessage->getComments(" ORDER BY dateposted ASC");
 
 	foreach ($arrMessageComments as $commentID) {
 		if ($eventObj->objEventMessageComment->select($commentID)) {
@@ -462,17 +462,17 @@ while ($row = $result->fetch_assoc()) {
 			$memInfo = $eventPgMemberObj->get_info_filtered();
 
 			if ($memInfo['profilepic'] == "") {
-						$dispProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
+				$dispProfilePic = $MAIN_ROOT."themes/".$THEME."/images/defaultprofile.png";
 			} else {
-								$dispProfilePic = $MAIN_ROOT.$memInfo['profilepic'];
+				$dispProfilePic = $MAIN_ROOT.$memInfo['profilepic'];
 			}
 
-							$dispDeleteMessage = "";
+			$dispDeleteMessage = "";
 			if ($eventObj->memberHasAccess($memberInfo['member_id'], "managemessages")) {
 				$dispDeleteMessage = " - <a href='javascript:void(0)' onclick=\"deleteMessage('".$commentID."', 'c')\">Delete</a>";
 			}
 
-							echo "
+			echo "
 									
 									<li class='dottedLine'>
 										<div class='profilePic'><img src='".$dispProfilePic."'></div>
@@ -487,7 +487,7 @@ while ($row = $result->fetch_assoc()) {
 		}
 	}
 
-			echo "
+	echo "
 							
 							</ul>
 						</li>
@@ -511,7 +511,7 @@ while ($row = $result->fetch_assoc()) {
 }
 
 
-					echo "
+echo "
 					</ul>
 				</div>
 			

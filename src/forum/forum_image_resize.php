@@ -5,19 +5,19 @@ if (!defined("RESIZE_FORUM_IMAGES")) {
 }
 
 	// Image and Signuature Size Settings
-	$setMaxImageWidthUnit = ($websiteInfo['forum_imagewidthunit'] == "%") ? "%" : "px";
-	$setMaxImageWidth = ($websiteInfo['forum_imagewidth'] > 0) ? "max-width: ".$websiteInfo['forum_imagewidth'].$setMaxImageWidthUnit : "";
+$setMaxImageWidthUnit = ($websiteInfo['forum_imagewidthunit'] == "%") ? "%" : "px";
+$setMaxImageWidth = ($websiteInfo['forum_imagewidth'] > 0) ? "max-width: ".$websiteInfo['forum_imagewidth'].$setMaxImageWidthUnit : "";
 
-	$setMaxImageHeightUnit = ($websiteInfo['forum_imageheightunit'] == "%") ? "%" : "px";
-	$setMaxImageHeight = ($websiteInfo['forum_imageheight'] > 0) ? "max-height: ".$websiteInfo['forum_imageheight'].$setMaxImageHeightUnit : "";
+$setMaxImageHeightUnit = ($websiteInfo['forum_imageheightunit'] == "%") ? "%" : "px";
+$setMaxImageHeight = ($websiteInfo['forum_imageheight'] > 0) ? "max-height: ".$websiteInfo['forum_imageheight'].$setMaxImageHeightUnit : "";
 
-	$setMaxSigWidthUnit = ($websiteInfo['forum_sigwidthunit'] == "%") ? "%" : "px";
-	$setMaxSigWidth = ($websiteInfo['forum_sigwidth'] > 0) ? "max-width: ".$websiteInfo['forum_sigwidth'].$setMaxSigWidthUnit : "";
+$setMaxSigWidthUnit = ($websiteInfo['forum_sigwidthunit'] == "%") ? "%" : "px";
+$setMaxSigWidth = ($websiteInfo['forum_sigwidth'] > 0) ? "max-width: ".$websiteInfo['forum_sigwidth'].$setMaxSigWidthUnit : "";
 
-	$setMaxSigHeightUnit = ($websiteInfo['forum_sigheightunit'] == "%") ? "%" : "px";
-	$setMaxSigHeight = ($websiteInfo['forum_sigheight'] > 0) ? "max-height: ".$websiteInfo['forum_sigheight'].$setMaxSigHeightUnit : "";
+$setMaxSigHeightUnit = ($websiteInfo['forum_sigheightunit'] == "%") ? "%" : "px";
+$setMaxSigHeight = ($websiteInfo['forum_sigheight'] > 0) ? "max-height: ".$websiteInfo['forum_sigheight'].$setMaxSigHeightUnit : "";
 
-	$editForumCSS = "";
+$editForumCSS = "";
 
 if ($setMaxImageWidth != "" || $setMaxImageHeight != "") {
 	$editForumCSS .= "
@@ -51,7 +51,7 @@ if ($editForumCSS != "") {
 		";
 }
 
-	$EXTERNAL_JAVASCRIPT .= "
+$EXTERNAL_JAVASCRIPT .= "
 	<style>
 		.forumCode {
 			max-width: 600px;

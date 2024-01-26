@@ -1,21 +1,21 @@
 <?php
 
-	$prevFolder = "../../../";
-	require_once($prevFolder."_setup.php");
+$prevFolder = "../../../";
+require_once($prevFolder."_setup.php");
 
 	// Start Page
-	$consoleObj = new ConsoleOption($mysqli);
+$consoleObj = new ConsoleOption($mysqli);
 
-	$cID = $consoleObj->findConsoleIDByName("Add Social Media Icon");
-	$consoleObj->select($cID);
-	$consoleInfo = $consoleObj->get_info_filtered();
+$cID = $consoleObj->findConsoleIDByName("Add Social Media Icon");
+$consoleObj->select($cID);
+$consoleInfo = $consoleObj->get_info_filtered();
 
-	$member = new Member($mysqli);
-	$member->select($_SESSION['btUsername']);
+$member = new Member($mysqli);
+$member->select($_SESSION['btUsername']);
 
 
 	// Check Login
-	$LOGIN_FAIL = true;
+$LOGIN_FAIL = true;
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
 	$socialObj = new Social($mysqli);
 	if (!$_POST['confirm'] && $socialObj->selectByMulti(array("name" => "Twitch"))) {

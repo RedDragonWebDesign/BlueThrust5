@@ -7,10 +7,10 @@ if (!defined("SHOW_PROFILE_MAIN")) {
 
 	// GAMES PLAYED
 
-			$gameObj = new Game($mysqli);
-			$gameStatObj = new Basic($mysqli, "gamestats", "gamestats_id");
-			$dispGamesPlayed = "";
-			$arrGames = $gameObj->getGameList();
+$gameObj = new Game($mysqli);
+$gameStatObj = new Basic($mysqli, "gamestats", "gamestats_id");
+$dispGamesPlayed = "";
+$arrGames = $gameObj->getGameList();
 foreach ($arrGames as $gameID) {
 	if ($member->playsGame($gameID)) {
 		$gameObj->select($gameID);

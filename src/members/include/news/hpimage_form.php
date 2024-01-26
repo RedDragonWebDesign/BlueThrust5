@@ -4,9 +4,9 @@ if (!defined("HPIMAGE_FORM")) {
 	exit();
 }
 
-	$imageOrderObj = new ImageSlider($mysqli);
-	$imageOptions = array();
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."imageslider ORDER BY ordernum DESC");
+$imageOrderObj = new ImageSlider($mysqli);
+$imageOptions = array();
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."imageslider ORDER BY ordernum DESC");
 while ($row = $result->fetch_assoc()) {
 	$imageOptions[$row['imageslider_id']] = $row['name'];
 }
@@ -15,8 +15,8 @@ if (count($imageOptions) == 0) {
 	$imageOptions['first'] = "(first image)";
 }
 
-	$i=1;
-	$arrComponents = array(
+$i=1;
+$arrComponents = array(
 		"imageinfo" => array(
 			"type" => "section",
 			"option" => array("section_title" => "Image Information"),
@@ -129,7 +129,7 @@ if (count($imageOptions) == 0) {
 
 	);
 
-	$setupFormArgs = array(
+$setupFormArgs = array(
 			"name" => "console-".$cID,
 			"components" => $arrComponents,
 			"description" => "Use the form below to add an image to the home page image slider.",
@@ -142,7 +142,7 @@ if (count($imageOptions) == 0) {
 
 
 
-	echo "
+echo "
 		<div id='autoFillInfo' style='display: none'></div>
 		<script type='text/javascript'>
 		

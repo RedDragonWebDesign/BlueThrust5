@@ -47,7 +47,7 @@ echo "
 		<div id='memberApplications'>
 		";
 
-		require_once("include/memberapplist.php");
+require_once("include/memberapplist.php");
 
 echo "
 		</div>

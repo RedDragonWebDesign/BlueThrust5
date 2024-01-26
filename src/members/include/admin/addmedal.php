@@ -29,8 +29,8 @@ $cID = $_GET['cID'];
 $medalObj = new Medal($mysqli);
 
 
-	$getMedals = $mysqli->query("SELECT * FROM ".$dbprefix."medals ORDER BY ordernum DESC");
-	$medalOptions = array();
+$getMedals = $mysqli->query("SELECT * FROM ".$dbprefix."medals ORDER BY ordernum DESC");
+$medalOptions = array();
 while ($arrMedals = $getMedals->fetch_assoc()) {
 	$medalName = filterText($arrMedals['name']);
 	$medalOptions[$arrMedals['medal_id']] = $medalName;
@@ -41,8 +41,8 @@ if (count($medalOptions) == 0) {
 	$medalOptions['first'] = "(first medal)";
 }
 
-	$i = 1;
-	$arrComponents = array(
+$i = 1;
+$arrComponents = array(
 		"generalinfo" => array(
 			"type" => "section",
 			"options" => array("section_title" => "General Information:"),
@@ -129,7 +129,7 @@ if (count($medalOptions) == 0) {
 		)
 	);
 
-	$setupFormArgs = array(
+$setupFormArgs = array(
 		"name" => "console-".$cID,
 		"components" => $arrComponents,
 		"description" => "Fill out the form below to add a new medal.<br><br><b><u>NOTE:</u></b> When adding a Medal Image, if both the File and URL are filled out, the File will be used.",

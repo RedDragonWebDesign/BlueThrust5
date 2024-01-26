@@ -153,7 +153,7 @@ if (isset($_GET['tID']) && $boardObj->objTopic->select($_GET['tID'])) {
 
 // Check Full Access
 
-	$topicOrReply = (isset($_GET['tID'])) ? "Reply" : "Topic";
+$topicOrReply = (isset($_GET['tID'])) ? "Reply" : "Topic";
 
 if (!$boardObj->memberHasAccess($memberInfo, true)) {
 	echo "

@@ -5,13 +5,13 @@ if (!defined("MAIN_ROOT")) {
 }
 
 
-	$signUpForm = $memberAppObj->objSignUpForm;
-	$appComponentObj->defaultCounter = 0;
-	$arrComponents = $appComponentObj->getDefaultInputCode();
+$signUpForm = $memberAppObj->objSignUpForm;
+$appComponentObj->defaultCounter = 0;
+$arrComponents = $appComponentObj->getDefaultInputCode();
 
-	$i = $appComponentObj->defaultCounter;
+$i = $appComponentObj->defaultCounter;
 
-	$result = $mysqli->query("SELECT * FROM ".$dbprefix."app_components ORDER BY ordernum DESC");
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."app_components ORDER BY ordernum DESC");
 if ($result->num_rows > 0) {
 	$arrComponents['applicationquestions'] = array(
 		"type" => "section",
@@ -37,7 +37,7 @@ if ($result->num_rows > 0) {
 	}
 }
 
-	$arrComponents['submit'] = array(
+$arrComponents['submit'] = array(
 		"type" => "submit",
 		"sortorder" => $i++,
 		"attributes" => array("class" => "submitButton formSubmitButton"),
@@ -45,8 +45,8 @@ if ($result->num_rows > 0) {
 	);
 
 
-	$extraDesc = ($websiteInfo['memberapproval'] == 1) ? " After signing up, you must be approved by a member before becoming a full member on the website." : "";
-	$setupSignupForm = array(
+$extraDesc = ($websiteInfo['memberapproval'] == 1) ? " After signing up, you must be approved by a member before becoming a full member on the website." : "";
+$setupSignupForm = array(
 		"name" => "signup-form",
 		"components" => $arrComponents,
 		"description" => "Use the form below to sign up to join ".$websiteInfo['clanname'].".".$extraDesc,
@@ -58,4 +58,4 @@ if ($result->num_rows > 0) {
 
 
 
-	$signUpForm->buildForm($setupSignupForm);
+$signUpForm->buildForm($setupSignupForm);

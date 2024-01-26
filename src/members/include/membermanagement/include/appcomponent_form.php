@@ -6,7 +6,7 @@ if (!defined("MAIN_ROOT")) {
 
 
 	// Types of application components
-	$typeOptions = array(
+$typeOptions = array(
 		"input" => "Input",
 		"largeinput" => "Large-Input",
 		"select" => "Select",
@@ -18,8 +18,8 @@ if (!defined("MAIN_ROOT")) {
 
 
 	// Selectable Component Options (when select or multi-select is selected)
-	$acCounter = 0;
-	$additionalComponents = array(
+$acCounter = 0;
+$additionalComponents = array(
 
 		"optionvalue" => array(
 			"type" => "text",
@@ -39,32 +39,32 @@ if (!defined("MAIN_ROOT")) {
 
 	// Profile Option Components
 
-	$currentCat = "mainprofile";
-	$profileSelectOptions = array(
+$currentCat = "mainprofile";
+$profileSelectOptions = array(
 		"mainprofile" => "Default Profile Options",
 		"birthday" => "Birthday",
 		"gamesplayed" => "Games Played",
 		"maingame" => "Main Game",
 		"recruiter" => "Recruiter"
 	);
-	$profileCatOptions = array("mainprofile");
+$profileCatOptions = array("mainprofile");
 
-	$profileCatTable = $dbprefix."profilecategory";
-	$profileOptionTable = $dbprefix."profileoptions";
-	$query = "SELECT ".$profileCatTable.".name AS catName, ".$profileCatTable.".profilecategory_id, ".$profileOptionTable.".name, ".$profileOptionTable.".profileoption_id FROM ".$profileOptionTable.", ".$profileCatTable." WHERE ".$profileOptionTable.".profilecategory_id = ".$profileCatTable.".profilecategory_id ORDER BY ".$profileCatTable.".ordernum DESC, ".$profileOptionTable.".sortnum";
-	$result = $mysqli->query($query);
-	while ($row = $result->fetch_assoc()) {
-		$checkCat = "profilecat_".$row['profilecategory_id'];
-		if ($currentCat != $checkCat) {
-			$profileSelectOptions[$checkCat] = filterText($row['catName']);
-			$profileCatOptions[] = $checkCat;
-		}
-
-
-		$profileSelectOptions[$row['profileoption_id']] = filterText($row['name']);
+$profileCatTable = $dbprefix."profilecategory";
+$profileOptionTable = $dbprefix."profileoptions";
+$query = "SELECT ".$profileCatTable.".name AS catName, ".$profileCatTable.".profilecategory_id, ".$profileOptionTable.".name, ".$profileOptionTable.".profileoption_id FROM ".$profileOptionTable.", ".$profileCatTable." WHERE ".$profileOptionTable.".profilecategory_id = ".$profileCatTable.".profilecategory_id ORDER BY ".$profileCatTable.".ordernum DESC, ".$profileOptionTable.".sortnum";
+$result = $mysqli->query($query);
+while ($row = $result->fetch_assoc()) {
+	$checkCat = "profilecat_".$row['profilecategory_id'];
+	if ($currentCat != $checkCat) {
+		$profileSelectOptions[$checkCat] = filterText($row['catName']);
+		$profileCatOptions[] = $checkCat;
 	}
 
-	$profileComponents = array(
+
+	$profileSelectOptions[$row['profileoption_id']] = filterText($row['name']);
+}
+
+$profileComponents = array(
 		"profileoption" => array(
 			"type" => "select",
 			"options" => $profileSelectOptions,
@@ -75,11 +75,11 @@ if (!defined("MAIN_ROOT")) {
 		)
 	);
 
-	$dispRequiredValue = (isset($appCompInfo)) ? $appCompInfo['required'] : "0";
+$dispRequiredValue = (isset($appCompInfo)) ? $appCompInfo['required'] : "0";
 
-	$i = 0;
-	$addAppForm = new Form();
-	$arrComponents = array(
+$i = 0;
+$addAppForm = new Form();
+$arrComponents = array(
 
 		"name" => array(
 			"display_name" => "Name",
@@ -126,7 +126,7 @@ if (!defined("MAIN_ROOT")) {
 	);
 
 
-	$setupAppForm = array(
+$setupAppForm = array(
 		"name" => "member-app-setup",
 		"components" => $arrComponents,
 		"wrapper" => ""
@@ -134,9 +134,9 @@ if (!defined("MAIN_ROOT")) {
 	);
 
 
-	$addAppForm->buildForm($setupAppForm);
+$addAppForm->buildForm($setupAppForm);
 
-	echo "
+echo "
 	
 		<script type='text/javascript'>
 			

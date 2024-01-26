@@ -153,8 +153,8 @@ if ( empty($_POST['submit']) ) {
 				$('#recruitdate').datepicker({
 				
 				";
-					$dispMonth = date("n")-1;
-					echo "
+	$dispMonth = date("n")-1;
+	echo "
 					changeMonth: true,
 					yearRange: '".(date("Y")-20).":".date("Y")."',
 					changeYear: true,

@@ -13,18 +13,18 @@
  */
 
 
-	require_once("../../../../_setup.php");
-	require_once("../../../../classes/member.php");
-	require_once("../../../../classes/rank.php");
+require_once("../../../../_setup.php");
+require_once("../../../../classes/member.php");
+require_once("../../../../classes/rank.php");
 
-	$consoleObj = new ConsoleOption($mysqli);
+$consoleObj = new ConsoleOption($mysqli);
 
-	$cID = $consoleObj->findConsoleIDByName("IP Banning");
-	$consoleObj->select($cID);
+$cID = $consoleObj->findConsoleIDByName("IP Banning");
+$consoleObj->select($cID);
 
 
-	$member = new Member($mysqli);
-	$member->select($_SESSION['btUsername']);
+$member = new Member($mysqli);
+$member->select($_SESSION['btUsername']);
 
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($consoleObj)) {
@@ -33,8 +33,8 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && $member->hasAccess($cons
 	exit();
 }
 
-	$countErrors = 0;
-	$arrErrors = array();
+$countErrors = 0;
+$arrErrors = array();
 	// Check IP
 
 if (trim($_POST['ipaddress']) == "") {
@@ -92,4 +92,4 @@ if ($countErrors > 0) {
 	$arrReturn = array("result"=>"fail", "errors"=>$arrErrors);
 }
 
-	echo json_encode($arrReturn);
+echo json_encode($arrReturn);

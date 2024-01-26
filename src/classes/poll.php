@@ -260,7 +260,7 @@ class Poll extends Basic {
 												$('#pollResultsLink_".$pollInfo['poll_id']."').show();
 											";
 			}
-				echo "							
+			echo "							
 											
 										}
 										else {

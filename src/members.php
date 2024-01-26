@@ -271,9 +271,9 @@ $totalMembers = array_sum($arrMemberCountCat);
 			<td colspan='3' class='main dottedLine' align='center'><b>- Game Statistics -</b></td>
 		</tr>
 		<?php
-			$arrGames = $gameObj->getGameList();
+		$arrGames = $gameObj->getGameList();
 
-			$arrTotalGamesPlayed = array_count_values($arrGamesPlayed);
+		$arrTotalGamesPlayed = array_count_values($arrGamesPlayed);
 		foreach ($arrGames as $value) {
 			$gameObj->select($value);
 			$gameInfo = $gameObj->get_info_filtered();
@@ -343,7 +343,7 @@ if ($websiteInfo['maxdsl'] != 0) {
 				
 				";
 	}
-			echo "
+	echo "
 				<tr>
 					<td colspan='3' align='center' class='main'><br><br>
 						If a member gets to <b><span style='color: ".$websiteInfo['highdsl']."'>".$websiteInfo['maxdsl']."</span></b> DSL, they will be disabled from the clan website.
