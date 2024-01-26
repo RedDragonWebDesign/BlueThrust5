@@ -34,18 +34,18 @@ echo "
 				".$addToURL."
 			</form>
 		</div>
-
+	
 		<script type='text/javascript'>
 			
 			$(document).ready(function() {
 			
 				$('#btnSearchForum').click(function() {
 				
-				window.location = '".$MAIN_ROOT."forum/search.php?keyword='+$('#searchTerm').val()+'".$addToURL."';
-
-			});
+					window.location = '".$MAIN_ROOT."forum/search.php?keyword='+$('#searchTerm').val()+'".$addToURL."';
+				
+				});
 			
-		});
-
-	</script>
+			});
+		
+		</script>
 	";

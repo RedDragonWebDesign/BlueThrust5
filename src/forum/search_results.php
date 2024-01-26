@@ -154,7 +154,7 @@ if ($arrFilterDates[$_POST['filterposts']] != "" || $arrFilterDates[$_POST['filt
 				$arrFilterBoards = array_merge($arrFilterBoards, $boardObj->getAllSubForums());
 			}
 
-				$arrFilterBoards = array_unique($arrFilterBoards);
+			$arrFilterBoards = array_unique($arrFilterBoards);
 		}
 
 		$arrFilterBoards = array_unique($arrFilterBoards);
