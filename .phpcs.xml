@@ -15,6 +15,7 @@
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
 
     <!-- All files must end in \n. For Linux devs -->
+    <rule ref="Generic.Files.EndFileNewline"/>
     <rule ref="Generic.Files.LineEndings">
         <properties>
             <property name="eolChar" value="\n"/>
