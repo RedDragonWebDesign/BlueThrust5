@@ -21,13 +21,9 @@ require_once($prevFolder."classes/member.php");
 require_once($prevFolder."classes/rank.php");
 require_once($prevFolder."classes/tournament.php");
 
-
-
 $ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
 $tournamentObj = new Tournament($mysqli);
 $member = new Member($mysqli);
-
-
 
 if ($ipbanObj->select($IP_ADDRESS, false)) {
 	$ipbanInfo = $ipbanObj->get_info();
@@ -75,21 +71,20 @@ if ($tournamentInfo['seedtype'] == 3) {
 		
 			<?php
 
+			$roundNum = 1;
+			$intLeft = 20;
+			$intTop = 20;
+			$intTopOriginal = $intTop;
+			$intTeamSeparation = 18;
+			$intSlotWidth = 200;
+			$intSlotHeight = 20;
+			$intMatchDistance = ($intSlotHeight*2)+$intTeamSeparation;
 
-				$roundNum = 1;
-				$intLeft = 20;
-				$intTop = 20;
-				$intTopOriginal = $intTop;
-				$intTeamSeparation = 18;
-				$intSlotWidth = 200;
-				$intSlotHeight = 20;
-				$intMatchDistance = ($intSlotHeight*2)+$intTeamSeparation;
+			$intWidthMakeUp = 6;	// Adjustment for CSS padding
+			$intHeightMakeUp = 6;	// Adjustment for CSS padding
+			$intMatchCount = 0;
 
-				$intWidthMakeUp = 6;	// Adjustment for CSS padding
-				$intHeightMakeUp = 6;	// Adjustment for CSS padding
-				$intMatchCount = 0;
-
-				$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentmatch WHERE tournament_id = '".$tournamentInfo['tournament_id']."' ORDER BY round");
+			$result = $mysqli->query("SELECT * FROM ".$dbprefix."tournamentmatch WHERE tournament_id = '".$tournamentInfo['tournament_id']."' ORDER BY round");
 			while ($row = $result->fetch_assoc()) {
 				if ($roundNum != $row['round']) {
 					if ($roundNum == 1) {
@@ -243,10 +238,9 @@ if ($tournamentInfo['seedtype'] == 3) {
 				*/
 			}
 
-
-				$intLeft += $intSlotWidth+($intTeamSeparation*8);
-				$intTop = $intTopOriginal+($intSlotHeight*2)+$intTeamSeparation+($intSlotHeight/2)+($intTeamSeparation/2);
-				$intBracketConnectorLeft = $intLeft-(($intTeamSeparation*8)/2)-30;
+			$intLeft += $intSlotWidth+($intTeamSeparation*8);
+			$intTop = $intTopOriginal+($intSlotHeight*2)+$intTeamSeparation+($intSlotHeight/2)+($intTeamSeparation/2);
+			$intBracketConnectorLeft = $intLeft-(($intTeamSeparation*8)/2)-30;
 
 			switch ($roundNum) {
 				case 3:
@@ -263,12 +257,11 @@ if ($tournamentInfo['seedtype'] == 3) {
 					break;
 			}
 
-				$tournamentWinner = $tournamentObj->getTournamentWinner();
-				$dispWinner = "Empty Spot";
-				$dispSeed = "";
+			$tournamentWinner = $tournamentObj->getTournamentWinner();
+			$dispWinner = "Empty Spot";
+			$dispSeed = "";
 			if ($tournamentWinner !== false) {
 				$tournamentObj->objTeam->select($tournamentWinner);
-
 
 				$dispSeed = "#".$tournamentObj->objTeam->get_info("seed");
 
@@ -306,15 +299,12 @@ if ($tournamentInfo['seedtype'] == 3) {
 
 					$dispWinner = "<span style='cursor: pointer' onmouseover=\"showToolTip('".addslashes($dispPlayerList)."')\" onmouseout='hideToolTip()'>".$teamInfo['name']."</span>";
 
-
-
-
 					//$dispWinner = $tournamentObj->objTeam->get_info_filtered("name");
 				}
 			}
 
-				echo "
-				
+			echo "
+
 					<div class='bracket main' style='width: ".$intSlotWidth."px; height: ".$intSlotHeight."px; line-height: ".$intSlotHeight."px;  left: ".$intLeft."px; top: ".$intTop."px'>".$dispWinner."</div>
 					<div style='position: absolute; width: 40px; height: ".$intSlotHeight."px; left: ".($intLeft+$intSlotWidth+$intWidthMakeUp)."px; top: ".$intTop."px'></div>
 					
@@ -322,14 +312,10 @@ if ($tournamentInfo['seedtype'] == 3) {
 					
 					<div class='bracketConnector' style='left: ".$intBracketConnectorLeft."px; top: ".($intBracketConnectorTop-($intTeamSeparation/2))."px; width: 30px; height: ".$intSlotHeight."px'></div>
 					<div class='bracketConnectorDash' style='left: ".($intBracketConnectorLeft+30)."px; top: ".($intBracketConnectorTop-($intTeamSeparation/2)+($intSlotHeight/2))."px'></div>
-				
-				
-				";
 
+			";
 
 			?>
-		
 		</div>
-	
 	</body>
 </html>

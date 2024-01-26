@@ -1,7 +1,6 @@
 <?php
 
-
-	$btThemeObj->addHeadItem("twitch-css", "<link rel='stylesheet' type='text/css' href='".MAIN_ROOT."plugins/twitch/twitch.css.php'>");
+$btThemeObj->addHeadItem("twitch-css", "<link rel='stylesheet' type='text/css' href='".MAIN_ROOT."plugins/twitch/twitch.css.php'>");
 
 function setupStreamPage() {
 	global $mysqli, $hooksObj;
@@ -15,7 +14,6 @@ function setupStreamPage() {
 
 	return $returnVal;
 }
-
 
 function setStreamPageBreadcrumb($breadcrumbTitle) {
 	global $breadcrumbObj;

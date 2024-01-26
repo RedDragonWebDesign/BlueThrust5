@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  * BlueThrust Clan Scripts
  * Copyright 2014
@@ -12,7 +11,6 @@
  * License: http://www.bluethrust.com/license.php
  *
  */
-
 
 // Config File
 $prevFolder = "../";
@@ -53,8 +51,6 @@ $blnShowResults = false;
 if ($pollObj->totalVotes() > 0 && ($member->hasAccess($consoleObj) || $pollInfo['member_id'] == $memberInfo['member_id'] || $pollInfo['resultvisibility'] == "open" || ($pollInfo['resultvisibility'] == "votedonly" && $blnMemberVoted) || ($pollInfo['resultvisibility'] == "pollend" && $pollInfo['pollend'] < time()))) {
 	$blnShowResults = true;
 }
-
-
 
 if ($blnShowResults) {
 	$arrResults = array("['Option', 'Votes']");
@@ -105,11 +101,7 @@ $PAGE_NAME = "Poll - ";
 $dispBreadCrumb = "";
 require_once($prevFolder."themes/".$THEME."/_header.php");
 
-
 $memberInfo = array();
-
-
-
 
 $LOGGED_IN = false;
 if ($member->select($_SESSION['btUsername']) && $member->authorizeLogin($_SESSION['btPassword'])) {

@@ -1,34 +1,33 @@
 <?php
 
 
-	/*
-	 * BlueThrust Clan Scripts
-	 * Copyright 2014
-	 *
-	 * Author: Bluethrust Web Development
-	 * E-mail: support@bluethrust.com
-	 * Website: http://www.bluethrust.com
-	 *
-	 * License: http://www.bluethrust.com/license.php
-	 *
-	 */
+/*
+ * BlueThrust Clan Scripts
+ * Copyright 2014
+ *
+ * Author: Bluethrust Web Development
+ * E-mail: support@bluethrust.com
+ * Website: http://www.bluethrust.com
+ *
+ * License: http://www.bluethrust.com/license.php
+ *
+ */
 
-	require_once("../../../_setup.php");
-	require_once("../../../classes/member.php");
-	require_once("../../../classes/rank.php");
-	require_once("../../../classes/access.php");
+require_once("../../../_setup.php");
+require_once("../../../classes/member.php");
+require_once("../../../classes/rank.php");
+require_once("../../../classes/access.php");
 
-	$member = new Member($mysqli);
-	$member->select($_SESSION['btUsername']);
+$member = new Member($mysqli);
+$member->select($_SESSION['btUsername']);
 
-	$rankObj = new Rank($mysqli);
+$rankObj = new Rank($mysqli);
 
-	$accessObj = new Access($mysqli);
+$accessObj = new Access($mysqli);
 
 if ($member->authorizeLogin($_SESSION['btPassword']) && isset($_POST['cacheID']) && isset($_POST['accessType']) && isset($_POST['accessInfo'])) {
 	$accessObj->cacheID = $_POST['cacheID'];
 	$accessInfo = json_decode($_POST['accessInfo'], true);
-
 
 	if ($_POST['accessType'] == "rank") {
 		$objSelector = $rankObj;
@@ -38,8 +37,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && isset($_POST['cacheID'])
 		$objSelector = $member;
 		$sessionName = "btMemberAccess";
 	}
-
-
 
 	foreach ($accessInfo as $checkBoxName => $accessTypeValue) {
 		$selectorID = ($_POST['accessType'] == "rank") ? str_replace($sessionPrefix, "", $checkBoxName) : $checkBoxName;
@@ -51,7 +48,6 @@ if ($member->authorizeLogin($_SESSION['btPassword']) && isset($_POST['cacheID'])
 			$_SESSION[$sessionName][$_POST['cacheID']][$checkBoxName] = $accessTypeValue;
 		}
 	}
-
 
 	define("SHOW_ACCESSCACHE", true);
 	require_once("viewcache.php");
