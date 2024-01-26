@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  * BlueThrust Clan Scripts
  * Copyright 2014
@@ -13,11 +12,10 @@
  *
  */
 
-	require_once("btmysql.php");
-	require_once("rank.php");
-	require_once("rankcategory.php");
-	require_once("member.php");
-
+require_once("btmysql.php");
+require_once("rank.php");
+require_once("rankcategory.php");
+require_once("member.php");
 
 class Access {
 

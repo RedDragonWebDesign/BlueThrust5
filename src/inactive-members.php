@@ -99,7 +99,7 @@ while ($row = $result->fetch_assoc()) {
 if ($result->num_rows > 0) {
 	echo "
 		<p align='center'>
-			<b>Total Inactive Members:</b>	<?php echo $result->num_rows; ?>
+			<b>Total Inactive Members:</b>	$result->num_rows
 		</p>
 	";
 } else {
