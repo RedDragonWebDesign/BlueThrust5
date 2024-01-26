@@ -75,9 +75,10 @@ if ( ! empty($_POST['submit']) ) {
 	}
 
 
+$countErrors = 0;
 
 	if ($countErrors == 0) {
-		$accessKey = ($_POST['accesskey'] != 1) ? 0 : 1;
+		$accessKey = ($_POST['accesskey'] ?? 0) != 1 ? 0 : 1;
 
 		if ($downloadCatObj->addNew(["name", "ordernum", "accesstype"], [$_POST['catname'], $intNewOrderSpot, $accessKey])) {
 			$downloadCatInfo = $downloadCatObj->get_info_filtered();
@@ -105,6 +106,8 @@ if ( ! empty($_POST['submit']) ) {
 	}
 }
 
+$dispError = '';
+$catOrderOptions = '';
 
 if ( empty($_POST['submit']) ) {
 	$countCategories = 0;
@@ -142,7 +145,7 @@ if ( empty($_POST['submit']) ) {
 				<table class='formTable'>
 					<tr>
 						<td class='formLabel'>Category Name:</td>
-						<td class='main'><input type='text' name='catname' class='textBox' value='".$_POST['catname']."' style='width: 250px'></td>
+						<td class='main'><input type='text' name='catname' class='textBox' value='".($_POST['catname'] ?? '')."' style='width: 250px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Category Order:</td>
@@ -153,7 +156,7 @@ if ( empty($_POST['submit']) ) {
 					</tr>
 					<tr>
 						<td class='formLabel'>Extensions: <a href='javascript:void(0)' onmouseover=\"showToolTip('Enter the acceptable extensions for downloads in this category.  Separate multiple extensions with a comma (,).')\" onmouseout='hideToolTip()'>(?)</a></td>
-						<td class='main'><input type='text' name='catexts' class='textBox' value='".$_POST['catexts']."' style='width: 250px'></td>
+						<td class='main'><input type='text' name='catexts' class='textBox' value='".($_POST['catexts'] ?? '')."' style='width: 250px'></td>
 					</tr>
 					<tr>
 						<td class='formLabel'>Access Type:</td>

@@ -92,6 +92,7 @@ class Basic {
 			if ($stmt) {
 				$this->MySQL->bindParams($stmt, $arrWhats);
 				$stmt->execute();
+				$result = null;
 				$stmt->bind_result($result);
 				$stmt->fetch();
 				$returnID = $result;
@@ -150,6 +151,7 @@ class Basic {
 			}
 
 			$stmt->execute();
+			$result = null;
 			$stmt->bind_result($result);
 
 			while ($stmt->fetch()) {
@@ -197,6 +199,7 @@ class Basic {
 
 		if (is_array($arrValues)) {
 			foreach ($arrValues as $key => $value) {
+				$value = $value ?? ''; 
 				$temp = str_replace("&gt;", ">", $value);
 				$value = str_replace("&lt;", "<", $temp);
 				$temp = str_replace('&quot;', '"', $value);
