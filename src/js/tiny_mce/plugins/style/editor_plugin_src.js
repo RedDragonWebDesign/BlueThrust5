@@ -20,8 +20,7 @@
 
 				if (blocks.length === 1) {
 					styles.push(ed.selection.getNode().style.cssText);
-				}
-				else {
+				} else {
 					tinymce.each(blocks, function(block) {
 						styles.push(ed.dom.getAttrib(block, 'style'));
 					});

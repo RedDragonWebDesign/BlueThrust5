@@ -18,11 +18,13 @@
 			});
 
 			ed.onPostProcess.add(function(ed, o) {
-				if (o.set)
+				if (o.set) {
 					o.content = t['_' + dialect + '_bbcode2html'](o.content);
+				}
 
-				if (o.get)
+				if (o.get) {
 					o.content = t['_' + dialect + '_html2bbcode'](o.content);
+				}
 			});
 		},
 
@@ -85,7 +87,7 @@
 			rep(/&gt;/gi,">");
 			rep(/&amp;/gi,"&");
 
-			return s; 
+			return s;
 		},
 
 		// BBCode -> HTML from PunBB dialect
@@ -111,7 +113,7 @@
 			rep(/\[code\](.*?)\[\/code\]/gi,"<span class=\"codeStyle\">$1</span>&nbsp;");
 			rep(/\[quote.*?\](.*?)\[\/quote\]/gi,"<span class=\"quoteStyle\">$1</span>&nbsp;");
 
-			return s; 
+			return s;
 		}
 	});
 

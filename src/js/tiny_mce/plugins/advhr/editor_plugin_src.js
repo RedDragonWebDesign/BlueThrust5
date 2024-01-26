@@ -36,8 +36,9 @@
 			ed.onClick.add(function(ed, e) {
 				e = e.target;
 
-				if (e.nodeName === 'HR')
+				if (e.nodeName === 'HR') {
 					ed.selection.select(e);
+				}
 			});
 		},
 

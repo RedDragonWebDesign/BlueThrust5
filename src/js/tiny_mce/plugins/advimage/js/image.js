@@ -4,8 +4,9 @@ var ImageDialog = {
 
 		tinyMCEPopup.requireLangPack();
 
-		if (url = tinyMCEPopup.getParam("external_image_list_url"))
+		if (url = tinyMCEPopup.getParam("external_image_list_url")) {
 			document.write('<script language="javascript" type="text/javascript" src="' + tinyMCEPopup.editor.documentBaseURI.toAbsolute(url) + '"></script>');
+		}
 	},
 
 	init : function(ed) {
@@ -37,52 +38,63 @@ var ImageDialog = {
 			nl.longdesc.value = dom.getAttrib(n, 'longdesc');
 			nl.insert.value = ed.getLang('update');
 
-			if (/^\s*this.src\s*=\s*\'([^\']+)\';?\s*$/.test(dom.getAttrib(n, 'onmouseover')))
+			if (/^\s*this.src\s*=\s*\'([^\']+)\';?\s*$/.test(dom.getAttrib(n, 'onmouseover'))) {
 				nl.onmouseoversrc.value = dom.getAttrib(n, 'onmouseover').replace(/^\s*this.src\s*=\s*\'([^\']+)\';?\s*$/, '$1');
+			}
 
-			if (/^\s*this.src\s*=\s*\'([^\']+)\';?\s*$/.test(dom.getAttrib(n, 'onmouseout')))
+			if (/^\s*this.src\s*=\s*\'([^\']+)\';?\s*$/.test(dom.getAttrib(n, 'onmouseout'))) {
 				nl.onmouseoutsrc.value = dom.getAttrib(n, 'onmouseout').replace(/^\s*this.src\s*=\s*\'([^\']+)\';?\s*$/, '$1');
+			}
 
 			if (ed.settings.inline_styles) {
 				// Move attribs to styles
-				if (dom.getAttrib(n, 'align'))
+				if (dom.getAttrib(n, 'align')) {
 					this.updateStyle('align');
+				}
 
-				if (dom.getAttrib(n, 'hspace'))
+				if (dom.getAttrib(n, 'hspace')) {
 					this.updateStyle('hspace');
+				}
 
-				if (dom.getAttrib(n, 'border'))
+				if (dom.getAttrib(n, 'border')) {
 					this.updateStyle('border');
+				}
 
-				if (dom.getAttrib(n, 'vspace'))
+				if (dom.getAttrib(n, 'vspace')) {
 					this.updateStyle('vspace');
+				}
 			}
 		}
 
 		// Setup browse button
 		document.getElementById('srcbrowsercontainer').innerHTML = getBrowserHTML('srcbrowser','src','image','theme_advanced_image');
-		if (isVisible('srcbrowser'))
+		if (isVisible('srcbrowser')) {
 			document.getElementById('src').style.width = '260px';
+		}
 
 		// Setup browse button
 		document.getElementById('onmouseoversrccontainer').innerHTML = getBrowserHTML('overbrowser','onmouseoversrc','image','theme_advanced_image');
-		if (isVisible('overbrowser'))
+		if (isVisible('overbrowser')) {
 			document.getElementById('onmouseoversrc').style.width = '260px';
+		}
 
 		// Setup browse button
 		document.getElementById('onmouseoutsrccontainer').innerHTML = getBrowserHTML('outbrowser','onmouseoutsrc','image','theme_advanced_image');
-		if (isVisible('outbrowser'))
+		if (isVisible('outbrowser')) {
 			document.getElementById('onmouseoutsrc').style.width = '260px';
+		}
 
 		// If option enabled default contrain proportions to checked
-		if (ed.getParam("advimage_constrain_proportions", true))
+		if (ed.getParam("advimage_constrain_proportions", true)) {
 			f.constrain.checked = true;
+		}
 
 		// Check swap image if valid data
-		if (nl.onmouseoversrc.value || nl.onmouseoutsrc.value)
+		if (nl.onmouseoversrc.value || nl.onmouseoutsrc.value) {
 			this.setSwapImage(true);
-		else
+		} else {
 			this.setSwapImage(false);
+		}
 
 		this.changeAppearance();
 		this.showPreviewImage(nl.src.value, 1);
@@ -104,8 +116,9 @@ var ImageDialog = {
 		if (tinyMCEPopup.getParam("accessibility_warnings", 1)) {
 			if (!f.alt.value) {
 				tinyMCEPopup.confirm(tinyMCEPopup.getLang('advimage_dlg.missing_alt'), function(s) {
-					if (s)
+					if (s) {
 						t.insertAndClose();
+					}
 				});
 
 				return;
@@ -121,8 +134,9 @@ var ImageDialog = {
 		tinyMCEPopup.restoreSelection();
 
 		// Fixes crash in Safari
-		if (tinymce.isWebKit)
+		if (tinymce.isWebKit) {
 			ed.getWin().focus();
+		}
 
 		if (!ed.settings.inline_styles) {
 			args = {
@@ -159,11 +173,13 @@ var ImageDialog = {
 		args.onmouseover = args.onmouseout = '';
 
 		if (f.onmousemovecheck.checked) {
-			if (nl.onmouseoversrc.value)
+			if (nl.onmouseoversrc.value) {
 				args.onmouseover = "this.src='" + nl.onmouseoversrc.value + "';";
+			}
 
-			if (nl.onmouseoutsrc.value)
+			if (nl.onmouseoutsrc.value) {
 				args.onmouseout = "this.src='" + nl.onmouseoutsrc.value + "';";
+			}
 		}
 
 		el = ed.selection.getNode();
@@ -192,11 +208,13 @@ var ImageDialog = {
 		if (ed.settings.inline_styles) {
 			switch (at) {
 				case 'align':
-					if (v = dom.getStyle(e, 'float'))
+					if (v = dom.getStyle(e, 'float')) {
 						return v;
+					}
 
-					if (v = dom.getStyle(e, 'vertical-align'))
+					if (v = dom.getStyle(e, 'vertical-align')) {
 						return v;
+					}
 
 					break;
 
@@ -204,16 +222,18 @@ var ImageDialog = {
 					v = dom.getStyle(e, 'margin-left')
 					v2 = dom.getStyle(e, 'margin-right');
 
-					if (v && v == v2)
+					if (v && v == v2) {
 						return parseInt(v.replace(/[^0-9]/g, ''));
+					}
 
 					break;
 
 				case 'vspace':
 					v = dom.getStyle(e, 'margin-top')
 					v2 = dom.getStyle(e, 'margin-bottom');
-					if (v && v == v2)
+					if (v && v == v2) {
 						return parseInt(v.replace(/[^0-9]/g, ''));
+					}
 
 					break;
 
@@ -229,19 +249,22 @@ var ImageDialog = {
 							return false;
 						}
 
-						if (sv)
+						if (sv) {
 							v = sv;
+						}
 					});
 
-					if (v)
+					if (v) {
 						return parseInt(v.replace(/[^0-9]/g, ''));
+					}
 
 					break;
 			}
 		}
 
-		if (v = dom.getAttrib(e, at))
+		if (v = dom.getAttrib(e, at)) {
 			return v;
+		}
 
 		return '';
 	},
@@ -253,11 +276,13 @@ var ImageDialog = {
 		setBrowserDisabled('overbrowser', !st);
 		setBrowserDisabled('outbrowser', !st);
 
-		if (f.over_list)
+		if (f.over_list) {
 			f.over_list.disabled = !st;
+		}
 
-		if (f.out_list)
+		if (f.out_list) {
 			f.out_list.disabled = !st;
+		}
 
 		f.onmouseoversrc.disabled = !st;
 		f.onmouseoutsrc.disabled  = !st;
@@ -274,8 +299,9 @@ var ImageDialog = {
 
 				cl.push({'title' : p[0], 'class' : p[1]});
 			});
-		} else
+		} else {
 			cl = tinyMCEPopup.editor.dom.getClasses();
+		}
 
 		if (cl.length > 0) {
 			lst.options.length = 0;
@@ -284,8 +310,9 @@ var ImageDialog = {
 			tinymce.each(cl, function(o) {
 				lst.options[lst.options.length] = new Option(o.title || o['class'], o['class']);
 			});
-		} else
+		} else {
 			dom.remove(dom.getParent(id, 'tr'));
+		}
 	},
 
 	fillFileList : function(id, l) {
@@ -300,8 +327,9 @@ var ImageDialog = {
 			tinymce.each(l, function(o) {
 				lst.options[lst.options.length] = new Option(o[0], o[1]);
 			});
-		} else
+		} else {
 			dom.remove(dom.getParent(id, 'tr'));
+		}
 	},
 
 	resetImageData : function() {
@@ -343,8 +371,9 @@ var ImageDialog = {
 			return;
 		}
 
-		if (f.width.value == "" || f.height.value == "")
+		if (f.width.value == "" || f.height.value == "") {
 			return;
+		}
 
 		tp = (parseInt(f.width.value) / parseInt(t.preloadImg.width)) * t.preloadImg.height;
 		f.height.value = tp.toFixed(0);
@@ -357,8 +386,9 @@ var ImageDialog = {
 			return;
 		}
 
-		if (f.width.value == "" || f.height.value == "")
+		if (f.width.value == "" || f.height.value == "") {
 			return;
+		}
 
 		tp = (parseInt(f.height.value) / parseInt(t.preloadImg.height)) * t.preloadImg.width;
 		f.width.value = tp.toFixed(0);
@@ -375,10 +405,11 @@ var ImageDialog = {
 
 				v = getSelectValue(f, 'align');
 				if (v) {
-					if (v == 'left' || v == 'right')
+					if (v == 'left' || v == 'right') {
 						dom.setStyle(img, 'float', v);
-					else
+					} else {
 						img.style.verticalAlign = v;
+					}
 				}
 			}
 
@@ -392,19 +423,21 @@ var ImageDialog = {
 
 				v = f.border.value;
 				if (v || v == '0') {
-					if (v == '0')
+					if (v == '0') {
 						img.style.border = isIE ? '0' : '0 none none';
-					else {
+					} else {
 						var isOldIE = tinymce.isIE && (!document.documentMode || document.documentMode < 9);
 
-						if (b.length == 3 && b[isOldIE ? 2 : 1])
+						if (b.length == 3 && b[isOldIE ? 2 : 1]) {
 							bStyle = b[isOldIE ? 2 : 1];
-						else if (!bStyle || bStyle == 'none')
+						} else if (!bStyle || bStyle == 'none') {
 							bStyle = 'solid';
-						if (b.length == 3 && b[isIE ? 0 : 2])
+						}
+						if (b.length == 3 && b[isIE ? 0 : 2]) {
 							bColor = b[isOldIE ? 0 : 2];
-						else if (!bColor || bColor == 'none')
+						} else if (!bColor || bColor == 'none') {
 							bColor = 'black';
+						}
 						img.style.border = v + 'px ' + bStyle + ' ' + bColor;
 					}
 				}
@@ -448,15 +481,17 @@ var ImageDialog = {
 			return;
 		}
 
-		if (!st && tinyMCEPopup.getParam("advimage_update_dimensions_onchange", true))
+		if (!st && tinyMCEPopup.getParam("advimage_update_dimensions_onchange", true)) {
 			this.resetImageData();
+		}
 
 		u = tinyMCEPopup.editor.documentBaseURI.toAbsolute(u);
 
-		if (!st)
+		if (!st) {
 			tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u + '" border="0" onload="ImageDialog.updateImageData(this);" onerror="ImageDialog.resetImageData();" />');
-		else
+		} else {
 			tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u + '" border="0" onload="ImageDialog.updateImageData(this, 1);" />');
+		}
 	}
 };
 

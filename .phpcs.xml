@@ -7,9 +7,7 @@
     <exclude-pattern>/gitignore/</exclude-pattern>
     <exclude-pattern>/screenshots/</exclude-pattern>
     <exclude-pattern>/vendor/</exclude-pattern>
-
-    <!-- only check *.php files -->
-    <exclude-pattern>*\.(?!php$)</exclude-pattern>
+    <exclude-pattern>/node_modules/</exclude-pattern>
 
     <!-- Empty lines should contain no whitespace -->
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>

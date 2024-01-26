@@ -34,7 +34,7 @@
 				[/[\x93\x94\u201c\u201d]/g, '"'],
 				[/[\x60\x91\x92\u2018\u2019]/g, "'"]
 			]
-		};
+	};
 
 	function getParam(ed, name) {
 		return ed.getParam(name, defs[name]);
@@ -67,8 +67,9 @@
 
 			ed.onKeyDown.addToTop(function(ed, e) {
 				// Block ctrl+v from adding an undo level since the default logic in tinymce.Editor will add that
-				if (((tinymce.isMac ? e.metaKey : e.ctrlKey) && e.keyCode == 86) || (e.shiftKey && e.keyCode == 45))
+				if (((tinymce.isMac ? e.metaKey : e.ctrlKey) && e.keyCode == 86) || (e.shiftKey && e.keyCode == 45)) {
 					return false; // Stop other listeners
+				}
 			});
 
 			// Initialize plain text flag
@@ -91,8 +92,9 @@
 					rng = ed.selection.getRng(true);
 					if (rng.startContainer == rng.endContainer && rng.startContainer.nodeType == 3) {
 						// Is only one block node and it doesn't contain word stuff
-						if (o.node.childNodes.length === 1 && /^(p|h[1-6]|pre)$/i.test(o.node.firstChild.nodeName) && o.content.indexOf('__MCE_ITEM__') === -1)
+						if (o.node.childNodes.length === 1 && /^(p|h[1-6]|pre)$/i.test(o.node.firstChild.nodeName) && o.content.indexOf('__MCE_ITEM__') === -1) {
 							dom.remove(o.node.firstChild, true);
+						}
 					}
 				}
 
@@ -161,17 +163,19 @@
 					}
 				}
 
-				if (dom.get('_mcePaste'))
+				if (dom.get('_mcePaste')) {
 					return;
+				}
 
 				// Create container to paste into
 				n = dom.add(body, 'div', {id : '_mcePaste', 'class' : 'mcePaste', 'data-mce-bogus' : '1'}, '\uFEFF\uFEFF');
 
 				// If contentEditable mode we need to find out the position of the closest element
-				if (body != ed.getDoc().body)
+				if (body != ed.getDoc().body) {
 					posY = dom.getPos(ed.selection.getStart(), body).y;
-				else
+				} else {
 					posY = body.scrollTop + dom.getViewPort(ed.getWin()).y;
+				}
 
 				// Styles needs to be applied after the element is added to the document since WebKit will otherwise remove all styles
 				// If also needs to be in view on IE or the paste would fail
@@ -264,8 +268,9 @@
 								});
 
 								// WebKit will make a copy of the DIV for each line of plain text pasted and insert them into the DIV
-								if (n.parentNode.className != 'mcePaste')
+								if (n.parentNode.className != 'mcePaste') {
 									h += n.innerHTML;
+								}
 							});
 						} else {
 							// Found WebKit weirdness so force the content into paragraphs this seems to happen when you paste plain text from Nodepad etc
@@ -279,8 +284,9 @@
 						});
 
 						// Restore the old selection
-						if (or)
+						if (or) {
 							sel.setRng(or);
+						}
 
 						process({content : h});
 
@@ -291,13 +297,14 @@
 				}
 			}
 
-			// Check if we should use the new auto process method			
+			// Check if we should use the new auto process method
 			if (getParam(ed, "paste_auto_cleanup_on_paste")) {
 				// Is it's Opera or older FF use key handler
 				if (tinymce.isOpera || /Firefox\/2/.test(navigator.userAgent)) {
 					ed.onKeyDown.addToTop(function(ed, e) {
-						if (((tinymce.isMac ? e.metaKey : e.ctrlKey) && e.keyCode == 86) || (e.shiftKey && e.keyCode == 45))
+						if (((tinymce.isMac ? e.metaKey : e.ctrlKey) && e.keyCode == 86) || (e.shiftKey && e.keyCode == 45)) {
 							grabContent(e);
+						}
 					});
 				} else {
 					// Grab contents on paste event on Gecko and WebKit
@@ -348,13 +355,14 @@
 			function process(items) {
 				each(items, function(v) {
 					// Remove or replace
-					if (v.constructor == RegExp)
+					if (v.constructor == RegExp) {
 						h = h.replace(v, '');
-					else
+					} else {
 						h = h.replace(v[0], v[1]);
+					}
 				});
 			}
-			
+
 			if (ed.settings.paste_enable_default_filters == false) {
 				return;
 			}
@@ -554,10 +562,12 @@
 
 			if (stripClass !== "none") {
 				function removeClasses(match, g1) {
-						if (stripClass === "all")
-							return '';
+					if (stripClass === "all") {
+						return '';
+					}
 
-						var cls = grep(explode(g1.replace(/^(["'])(.*)\1$/, "$2"), " "),
+						var cls = grep(
+							explode(g1.replace(/^(["'])(.*)\1$/, "$2"), " "),
 							function(v) {
 								return (/^(?!mso)/i.test(v));
 							}
@@ -589,12 +599,13 @@
 			if (ed.settings.paste_enable_default_filters == false) {
 				return;
 			}
-			
+
 			if (o.wordContent) {
 				// Remove named anchors or TOC links
 				each(dom.select('a', o.node), function(a) {
-					if (!a.href || a.href.indexOf('#_Toc') != -1)
+					if (!a.href || a.href.indexOf('#_Toc') != -1) {
 						dom.remove(a, 1);
+					}
 				});
 
 				if (getParam(ed, "paste_convert_middot_lists")) {
@@ -628,11 +639,13 @@
 						// Remove all of the existing styles
 						dom.setAttrib(el, 'style', '');
 
-						if (styleProps && npc > 0)
+						if (styleProps && npc > 0) {
 							dom.setStyles(el, newStyle); // Add back the stored subset of styles
-						else // Remove empty span tags that do not have class attributes
-							if (el.nodeName == 'SPAN' && !el.className)
+						} else { // Remove empty span tags that do not have class attributes
+							if (el.nodeName == 'SPAN' && !el.className) {
 								dom.remove(el, true);
+							}
+						}
 					});
 				}
 			}
@@ -665,25 +678,29 @@
 				var sib, val = '', type, html, idx, parents;
 
 				// Get text node value at beginning of paragraph
-				for (sib = p.firstChild; sib && sib.nodeType == 3; sib = sib.nextSibling)
+				for (sib = p.firstChild; sib && sib.nodeType == 3; sib = sib.nextSibling) {
 					val += sib.nodeValue;
+				}
 
 				val = p.innerHTML.replace(/<\/?\w+[^>]*>/gi, '').replace(/&nbsp;/g, '\u00a0');
 
 				// Detect unordered lists look for bullets
-				if (/^(__MCE_ITEM__)+[\u2022\u00b7\u00a7\u00d8o\u25CF]\s*\u00a0*/.test(val))
+				if (/^(__MCE_ITEM__)+[\u2022\u00b7\u00a7\u00d8o\u25CF]\s*\u00a0*/.test(val)) {
 					type = 'ul';
+				}
 
 				// Detect ordered lists 1., a. or ixv.
-				if (/^__MCE_ITEM__\s*\w+\.\s*\u00a0+/.test(val))
+				if (/^__MCE_ITEM__\s*\w+\.\s*\u00a0+/.test(val)) {
 					type = 'ol';
+				}
 
 				// Check if node value matches the list pattern: o&nbsp;&nbsp;
 				if (type) {
 					margin = parseFloat(p.style.marginLeft || 0);
 
-					if (margin > lastMargin)
+					if (margin > lastMargin) {
 						levels.push(margin);
+					}
 
 					if (!listElm || type != lastType) {
 						listElm = dom.create(type);
@@ -705,19 +722,21 @@
 						var html = span.innerHTML.replace(/<\/?\w+[^>]*>/gi, '');
 
 						// Remove span with the middot or the number
-						if (type == 'ul' && /^__MCE_ITEM__[\u2022\u00b7\u00a7\u00d8o\u25CF]/.test(html))
+						if (type == 'ul' && /^__MCE_ITEM__[\u2022\u00b7\u00a7\u00d8o\u25CF]/.test(html)) {
 							dom.remove(span);
-						else if (/^__MCE_ITEM__[\s\S]*\w+\.(&nbsp;|\u00a0)*\s*/.test(html))
+						} else if (/^__MCE_ITEM__[\s\S]*\w+\.(&nbsp;|\u00a0)*\s*/.test(html)) {
 							dom.remove(span);
+						}
 					});
 
 					html = p.innerHTML;
 
 					// Remove middot/list items
-					if (type == 'ul')
+					if (type == 'ul') {
 						html = p.innerHTML.replace(/__MCE_ITEM__/g, '').replace(/^[\u2022\u00b7\u00a7\u00d8o\u25CF]\s*(&nbsp;|\u00a0)+\s*/, '');
-					else
+					} else {
 						html = p.innerHTML.replace(/__MCE_ITEM__/g, '').replace(/^\s*\w+\.(&nbsp;|\u00a0)+\s*/, '');
+					}
 
 					// Create li and add paragraph data into the new li
 					li = listElm.appendChild(dom.create('li', 0, html));
@@ -725,14 +744,16 @@
 
 					lastMargin = margin;
 					lastType = type;
-				} else
+				} else {
 					listElm = lastMargin = 0; // End list element
+				}
 			});
 
 			// Remove any left over makers
 			html = o.node.innerHTML;
-			if (html.indexOf('__MCE_ITEM__') != -1)
+			if (html.indexOf('__MCE_ITEM__') != -1) {
 				o.node.innerHTML = html.replace(/__MCE_ITEM__/g, '');
+			}
 		},
 
 		/**
@@ -742,8 +763,9 @@
 			var ed = this.editor, r = ed.selection.getRng();
 
 			// First delete the contents seems to work better on WebKit when the selection spans multiple list items or multiple table cells.
-			if (!ed.selection.isCollapsed() && r.startContainer != r.endContainer)
+			if (!ed.selection.isCollapsed() && r.startContainer != r.endContainer) {
 				ed.getDoc().execCommand('Delete', false, null);
+			}
 
 			ed.execCommand('mceInsertContent', false, h, {skip_undo : skip_undo});
 		},
@@ -765,10 +787,11 @@
 
 			function process(items) {
 				each(items, function(v) {
-					if (v.constructor == RegExp)
+					if (v.constructor == RegExp) {
 						content = content.replace(v, "");
-					else
+					} else {
 						content = content.replace(v[0], v[1]);
+					}
 				});
 			};
 

@@ -1,36 +1,33 @@
 <?php
 
-	if(!defined("LOGGED_IN") || !LOGGED_IN) { die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."'</script>"); }
-	
-	
-		
-	$hooksObj->run("console_forms");
-	$formObj->buildForm($setupFormArgs);
-	
-	
-	if ( ! empty($_POST['submit']) ) {
-		
-		if($formObj->save()) {
-			
-			$formObj->saveMessageTitle = $consoleInfo['pagetitle'];
-			
-			$formObj->showSuccessDialog();
-			
-		}
-		
+if (!defined("LOGGED_IN") || !LOGGED_IN) {
+	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."'</script>");
+}
 
-		if(count($formObj->errors) > 0) {
-			$_POST = filterArray($_POST);
-			if($formObj->prefillValues) {
-				$formObj->prefillPostedValues();
-			}
-			$_POST['submit'] = false;		
+
+
+$hooksObj->run("console_forms");
+$formObj->buildForm($setupFormArgs);
+
+
+if ( ! empty($_POST['submit']) ) {
+	if ($formObj->save()) {
+		$formObj->saveMessageTitle = $consoleInfo['pagetitle'];
+
+		$formObj->showSuccessDialog();
+	}
+
+
+	if (count($formObj->errors) > 0) {
+		$_POST = filterArray($_POST);
+		if ($formObj->prefillValues) {
+			$formObj->prefillPostedValues();
 		}
-		
-		
+		$_POST['submit'] = false;
 	}
-	
-	
-	if ( empty($_POST['submit']) ) {
-		$formObj->show();	
-	}
+}
+
+
+if ( empty($_POST['submit']) ) {
+	$formObj->show();
+}

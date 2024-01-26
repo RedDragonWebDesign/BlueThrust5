@@ -25,45 +25,35 @@ $consoleInfo = $consoleObj->get_info_filtered();
 $_SERVER['PHP_SELF'] = "console.php";
 $_GET['action'] = "delete";
 
-if(substr($consoleInfo['filename'], 0, strlen("../")) != "../") {
+if (substr($consoleInfo['filename'], 0, strlen("../")) != "../") {
 	$requireFile = BASE_DIRECTORY."members/include/".$consoleInfo['filename'];
-}
-else {
-	$requireFile = $consoleInfo['filename'];	
+} else {
+	$requireFile = $consoleInfo['filename'];
 }
 
 require_once($requireFile);
-if(!isset($objManageList)) {
-	exit();	
+if (!isset($objManageList)) {
+	exit();
 }
 
 
-if($member->authorizeLogin($_SESSION['btPassword'])) {
-
-
+if ($member->authorizeLogin($_SESSION['btPassword'])) {
 	$memberInfo = $member->get_info_filtered();
 
 	define("LOGGED_IN", true);
-	
-	if($member->hasAccess($consoleObj)) {
 
-		if(!$objManageList->blnConfirmDelete || (isset($_POST['confirm']) && $objManageList->blnConfirmDelete)) {
-			
+	if ($member->hasAccess($consoleObj)) {
+		if (!$objManageList->blnConfirmDelete || (isset($_POST['confirm']) && $objManageList->blnConfirmDelete)) {
 			$objManageList->delete();
-			
+
 			require_once($objManageList->strMainListLink);
 			require_once(BASE_DIRECTORY."members/console.managelist.list.php");
-			
-		}
-		else {
+		} else {
 			echo "
 				<p class='main' align='center'>
 					Are you sure you want to delete <b>".$objManageList->strDeleteName."</b>?
 				</p>
 			";
 		}
-		
 	}
-	
-	
 }

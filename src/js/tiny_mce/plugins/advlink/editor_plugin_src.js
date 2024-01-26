@@ -18,8 +18,9 @@
 				var se = ed.selection;
 
 				// No selection and not in link
-				if (se.isCollapsed() && !ed.dom.getParent(se.getNode(), 'A'))
+				if (se.isCollapsed() && !ed.dom.getParent(se.getNode(), 'A')) {
 					return;
+				}
 
 				ed.windowManager.open({
 					file : url + '/link.htm',

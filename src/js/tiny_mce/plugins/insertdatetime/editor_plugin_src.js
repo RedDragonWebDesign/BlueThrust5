@@ -50,8 +50,9 @@
 				value = "" + value;
 
 				if (value.length < len) {
-					for (var i=0; i<(len-value.length); i++)
+					for (var i=0; i<(len-value.length); i++) {
 						value = "0" + value;
+					}
 				}
 
 				return value;

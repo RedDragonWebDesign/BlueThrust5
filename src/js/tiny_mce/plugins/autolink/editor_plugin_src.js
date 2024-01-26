@@ -10,39 +10,43 @@
 
 (function() {
 	tinymce.create('tinymce.plugins.AutolinkPlugin', {
-	/**
-	* Initializes the plugin, this will be executed after the plugin has been created.
-	* This call is done before the editor instance has finished it's initialization so use the onInit event
-	* of the editor instance to intercept that event.
-	*
-	* @param {tinymce.Editor} ed Editor instance that the plugin is initialized in.
-	* @param {string} url Absolute URL to where the plugin is located.
-	*/
+		/**
+		* Initializes the plugin, this will be executed after the plugin has been created.
+		* This call is done before the editor instance has finished it's initialization so use the onInit event
+		* of the editor instance to intercept that event.
+		*
+		* @param {tinymce.Editor} ed Editor instance that the plugin is initialized in.
+		* @param {string} url Absolute URL to where the plugin is located.
+		*/
 
-	init : function(ed, url) {
-		var t = this;
+		init : function(ed, url) {
+			var t = this;
 
-		// Add a key down handler
-		ed.onKeyDown.addToTop(function(ed, e) {
-			if (e.keyCode == 13)
-				return t.handleEnter(ed);
-		});
-
-		// Internet Explorer has built-in automatic linking for most cases
-		if (tinyMCE.isIE)
-			return;
-
-		ed.onKeyPress.add(function(ed, e) {
-			if (e.which == 41)
-				return t.handleEclipse(ed);
-		});
-
-		// Add a key up handler
-		ed.onKeyUp.add(function(ed, e) {
-			if (e.keyCode == 32)
-				return t.handleSpacebar(ed);
+			// Add a key down handler
+			ed.onKeyDown.addToTop(function(ed, e) {
+				if (e.keyCode == 13) {
+					return t.handleEnter(ed);
+				}
 			});
-	       },
+
+			// Internet Explorer has built-in automatic linking for most cases
+			if (tinyMCE.isIE) {
+				return;
+			}
+
+			ed.onKeyPress.add(function(ed, e) {
+				if (e.which == 41) {
+					return t.handleEclipse(ed);
+				}
+			});
+
+			// Add a key up handler
+			ed.onKeyUp.add(function(ed, e) {
+				if (e.keyCode == 32) {
+					return t.handleSpacebar(ed);
+				}
+			});
+		},
 
 		handleEclipse : function(ed) {
 			this.parseCurrentLine(ed, -1, '(', true);
@@ -50,7 +54,7 @@
 
 		handleSpacebar : function(ed) {
 			 this.parseCurrentLine(ed, 0, '', true);
-		 },
+		},
 
 		handleEnter : function(ed) {
 			this.parseCurrentLine(ed, -1, '', false);
@@ -63,12 +67,13 @@
 			// hence, at minimum, five characters from the beginning of the line.
 			r = ed.selection.getRng(true).cloneRange();
 			if (r.startOffset < 5) {
-				// During testing, the caret is placed inbetween two text nodes. 
+				// During testing, the caret is placed inbetween two text nodes.
 				// The previous text node contains the URL.
 				prev = r.endContainer.previousSibling;
 				if (prev == null) {
-					if (r.endContainer.firstChild == null || r.endContainer.firstChild.nextSibling == null)
+					if (r.endContainer.firstChild == null || r.endContainer.firstChild.nextSibling == null) {
 						return;
+					}
 
 					prev = r.endContainer.firstChild.nextSibling;
 				}
@@ -76,8 +81,9 @@
 				r.setStart(prev, len);
 				r.setEnd(prev, len);
 
-				if (r.endOffset < 5)
+				if (r.endOffset < 5) {
 					return;
+				}
 
 				end = r.endOffset;
 				endContainer = prev;
@@ -86,8 +92,9 @@
 
 				// Get a text node
 				if (endContainer.nodeType != 3 && endContainer.firstChild) {
-					while (endContainer.nodeType != 3 && endContainer.firstChild)
+					while (endContainer.nodeType != 3 && endContainer.firstChild) {
 						endContainer = endContainer.firstChild;
+					}
 
 					// Move range to text node
 					if (endContainer.nodeType == 3) {
@@ -96,16 +103,16 @@
 					}
 				}
 
-				if (r.endOffset == 1)
+				if (r.endOffset == 1) {
 					end = 2;
-				else
+				} else {
 					end = r.endOffset - 1 - end_offset;
+				}
 			}
 
 			start = end;
 
-			do
-			{
+			do {
 				// Move the selection one character backwards.
 				r.setStart(endContainer, end - 2);
 				r.setEnd(endContainer, end - 1);
@@ -121,8 +128,7 @@
 			} else if (r.startOffset == 0) {
 				r.setStart(endContainer, 0);
 				r.setEnd(endContainer, start);
-			}
-			else {
+			} else {
 				r.setStart(endContainer, end);
 				r.setEnd(endContainer, start);
 			}

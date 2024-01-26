@@ -1,5 +1,5 @@
 .wysiwyg {
-	
+
 	position: relative;
 	width: 550px;
 	background-color: #e8e8e8;
@@ -9,7 +9,7 @@
 	color: black;
 	text-align: left;
 	height: 250px;
-	
+
 }
 
 
@@ -28,7 +28,7 @@
 
 
 .wysiwyg .boldButton {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 3px;
@@ -39,12 +39,12 @@
 	margin: 0px 3px 0px 0px;
 	border: 0px;
 	cursor: pointer;
-	
+
 }
 
 
 .wysiwyg .boldButton_hover {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 3px;
@@ -55,12 +55,12 @@
 	border: 0px;
 	cursor: pointer;
 	background: url('images/button_sprite.png') 0px -22px;
-	
+
 }
 
 
 .wysiwyg .italicButton {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 28px;
@@ -71,7 +71,7 @@
 	margin: 0px 3px 0px 0px;
 	border: 0px;
 	cursor: pointer;
-	
+
 }
 
 
@@ -86,13 +86,13 @@
 	border: 0px;
 	cursor: pointer;
 	background: url('images/button_sprite.png') -22px -22px;
-	
+
 }
 
 
 
 .wysiwyg .underlineButton {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 53px;
@@ -103,7 +103,7 @@
 	margin: 0px 3px 0px 0px;
 	border: 0px;
 	cursor: pointer;
-	
+
 }
 
 
@@ -119,12 +119,12 @@
 	border: 0px;
 	cursor: pointer;
 	background: url('images/button_sprite.png') -44px -22px;
-	
+
 }
 
 
 .wysiwyg .leftalignButton {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 78px;
@@ -135,7 +135,7 @@
 	margin: 0px 3px 0px 0px;
 	border: 0px;
 	cursor: pointer;
-	
+
 }
 
 
@@ -155,7 +155,7 @@
 }
 
 .wysiwyg .centeralignButton {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 103px;
@@ -166,7 +166,7 @@
 	margin: 0px 3px 0px 0px;
 	border: 0px;
 	cursor: pointer;
-	
+
 }
 
 
@@ -187,7 +187,7 @@
 
 
 .wysiwyg .rightalignButton {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 128px;
@@ -198,7 +198,7 @@
 	margin: 0px 3px 0px 0px;
 	border: 0px;
 	cursor: pointer;
-	
+
 }
 
 
@@ -214,12 +214,12 @@
 	border: 0px;
 	cursor: pointer;
 	background: url('images/button_sprite.png') -110px -22px;
-	
+
 }
 
 
 .wysiwyg .unorderedlistButton {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 153px;
@@ -230,12 +230,12 @@
 	margin: 0px 3px 0px 0px;
 	border: 0px;
 	cursor: pointer;
-	
+
 }
 
 
 .wysiwyg .unorderedlistButton_hover {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 153px;
@@ -246,12 +246,12 @@
 	border: 0px;
 	cursor: pointer;
 	background: url('images/button_sprite.png') -132px -22px;
-	
+
 }
 
 
 .wysiwyg .orderedlistButton {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 178px;
@@ -262,12 +262,12 @@
 	margin: 0px 3px 0px 0px;
 	border: 0px;
 	cursor: pointer;
-	
+
 }
 
 
 .wysiwyg .orderedlistButton_hover {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 178px;
@@ -278,12 +278,12 @@
 	border: 0px;
 	cursor: pointer;
 	background: url('images/button_sprite.png') -154px -22px;
-	
+
 }
 
 
 .wysiwyg #linkButton {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 203px;
@@ -294,18 +294,18 @@
 	margin: 0px 3px 0px 0px;
 	border: 0px;
 	cursor: pointer;
-	
+
 }
 
 
 .wysiwyg #linkButton:hover {
-	
+
 	background: url('images/button_sprite.png') -176px -22px;
 
 }
 
 .wysiwyg #imageButton {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 228px;
@@ -316,20 +316,20 @@
 	margin: 0px 3px 0px 0px;
 	border: 0px;
 	cursor: pointer;
-	
+
 }
 
 
 .wysiwyg #imageButton:hover {
 
 	background: url('images/button_sprite.png') -198px -22px;
-	
+
 }
 
 
 
 .wysiwyg .htmlButton {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 253px;
@@ -340,12 +340,12 @@
 	margin: 0px 3px 0px 0px;
 	border: 0px;
 	cursor: pointer;
-	
+
 }
 
 
 .wysiwyg .htmlButton_hover {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 253px;
@@ -356,12 +356,12 @@
 	border: 0px;
 	cursor: pointer;
 	background: url('images/button_sprite.png') -220px -22px;
-	
+
 }
 
 
 .wysiwyg #youtubeButton {
-	
+
 	position: absolute;
 	top: 3px;
 	left: 278px;
@@ -372,19 +372,19 @@
 	margin: 0px 3px 0px 0px;
 	border: 0px;
 	cursor: pointer;
-	
+
 }
 
 
 .wysiwyg #youtubeButton:hover {
-	
+
 	background: url('images/button_sprite.png') -242px -22px;
-	
+
 }
 
 
 .wysiwyg .dropDownBox {
-	
+
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -397,11 +397,11 @@
 	font-family: verdana;
 	cursor: pointer;
 	z-index: 999;
-	
+
 }
 
 .wysiwyg .dropDownBox .downArrow {
-	
+
 	position: absolute;
 	right: 0px;
 	top: 3px;
@@ -413,21 +413,21 @@
 	background-repeat: no-repeat;
 	border: 0px;
 	cursor: pointer;
-	
+
 }
 
 
 .wysiwyg .dropDownBox ul {
-	
+
 	list-style-type: none;
 	padding: 0px;
 	margin: 0px;
 	display: none;
-	
+
 }
 
 .wysiwyg .dropDownBox li {
-	
+
 	padding: 3px;
 	border: solid #c9c9c9 1px;
 	background-color: #ffffff;
@@ -435,14 +435,14 @@
 	font-size: 12px;
 	margin: 1px;
 	font-family: verdana;
-	
+
 }
 
 .wysiwyg .dropDownBox li:hover {
 
 	background-color: #e8e8e8;
 	cursor: pointer;
-	
+
 }
 
 

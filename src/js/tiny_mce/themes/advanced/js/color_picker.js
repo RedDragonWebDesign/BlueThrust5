@@ -74,8 +74,9 @@ function init() {
 
 		col = convertHexToRGB(inputColor);
 
-		if (col)
+		if (col) {
 			updateLight(col.r, col.g, col.b);
+		}
 	}
 
 	for (key in named) {
@@ -134,20 +135,21 @@ function insertAction() {
 	if (hexColor === '') {
 		var text = tinyMCEPopup.editor.getLang('advanced_dlg.invalid_color_value');
 		tinyMCEPopup.alert(text + ': ' + color);
-	}
-	else {
+	} else {
 		tinyMCEPopup.restoreSelection();
 
-		if (f)
+		if (f) {
 			f(hexColor);
+		}
 
 		tinyMCEPopup.close();
 	}
 }
 
 function showColor(color, name) {
-	if (name)
+	if (name) {
 		document.getElementById("colorname").innerHTML = name;
+	}
 
 	document.getElementById("preview").style.backgroundColor = color;
 	document.getElementById("color").value = color.toUpperCase();
@@ -156,8 +158,9 @@ function showColor(color, name) {
 function convertRGBToHex(col) {
 	var re = new RegExp("rgb\\s*\\(\\s*([0-9]+).*,\\s*([0-9]+).*,\\s*([0-9]+).*\\)", "gi");
 
-	if (!col)
+	if (!col) {
 		return col;
+	}
 
 	var rgb = col.replace(re, "$1,$2,$3").split(',');
 	if (rgb.length == 3) {
@@ -192,7 +195,7 @@ function convertHexToRGB(col) {
 function generatePicker() {
 	var el = document.getElementById('light'), h = '', i;
 
-	for (i = 0; i < detail; i++){
+	for (i = 0; i < detail; i++) {
 		h += '<div id="gs'+i+'" style="background-color:#000000; width:15px; height:3px; border-style:none; border-width:0px;"'
 		+ ' onclick="changeFinalColor(this.style.backgroundColor)"'
 		+ ' onmousedown="isMouseDown = true; return false;"'
@@ -209,23 +212,25 @@ function generatePicker() {
 function generateWebColors() {
 	var el = document.getElementById('webcolors'), h = '', i;
 
-	if (el.className == 'generated')
+	if (el.className == 'generated') {
 		return;
+	}
 
 	// TODO: VoiceOver doesn't seem to support legend as a label referenced by labelledby.
 	h += '<div role="listbox" aria-labelledby="webcolors_title" tabindex="0"><table role="presentation" border="0" cellspacing="1" cellpadding="0">'
-		+ '<tr>';
+	+ '<tr>';
 
 	for (i=0; i<colors.length; i++) {
 		h += '<td bgcolor="' + colors[i] + '" width="10" height="10">'
-			+ '<a href="javascript:insertAction();" role="option" tabindex="-1" aria-labelledby="web_colors_' + i + '" onfocus="showColor(\'' + colors[i] + '\');" onmouseover="showColor(\'' + colors[i] + '\');" style="display:block;width:10px;height:10px;overflow:hidden;">';
+		+ '<a href="javascript:insertAction();" role="option" tabindex="-1" aria-labelledby="web_colors_' + i + '" onfocus="showColor(\'' + colors[i] + '\');" onmouseover="showColor(\'' + colors[i] + '\');" style="display:block;width:10px;height:10px;overflow:hidden;">';
 		if (tinyMCEPopup.editor.forcedHighContrastMode) {
 			h += '<canvas class="mceColorSwatch" height="10" width="10" data-color="' + colors[i] + '"></canvas>';
 		}
 		h += '<span class="mceVoiceLabel" style="display:none;" id="web_colors_' + i + '">' + colors[i].toUpperCase() + '</span>';
 		h += '</a></td>';
-		if ((i+1) % 18 == 0)
+		if ((i+1) % 18 == 0) {
 			h += '</tr><tr>';
+		}
 	}
 
 	h += '</table></div>';
@@ -249,8 +254,9 @@ function paintCanvas(el) {
 function generateNamedColors() {
 	var el = document.getElementById('namedcolors'), h = '', n, v, i = 0;
 
-	if (el.className == 'generated')
+	if (el.className == 'generated') {
 		return;
+	}
 
 	for (n in named) {
 		v = named[n];
@@ -327,8 +333,9 @@ function updateLight(r, g, b) {
 }
 
 function changeFinalColor(color) {
-	if (color.indexOf('#') == -1)
+	if (color.indexOf('#') == -1) {
 		color = convertRGBToHex(color);
+	}
 
 	setCol('preview', color);
 	document.getElementById('color').value = color;

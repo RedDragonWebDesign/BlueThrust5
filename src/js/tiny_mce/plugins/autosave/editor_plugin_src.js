@@ -12,11 +12,11 @@
  * and that project can be found here: http://code.google.com/p/tinyautosave/
  *
  * TECHNOLOGY DISCUSSION:
- * 
+ *
  * The plugin attempts to use the most advanced features available in the current browser to save
  * as much content as possible.  There are a total of four different methods used to autosave the
  * content.  In order of preference, they are:
- * 
+ *
  * 1. localStorage - A new feature of HTML 5, localStorage can store megabytes of data per domain
  * on the client computer. Data stored in the localStorage area has no expiration date, so we must
  * manage expiring the data ourselves.  localStorage is fully supported by IE8, and it is supposed
@@ -24,14 +24,14 @@
  * HTML 5 gets wider support, the AutoSave plugin will use it automatically. In Windows Vista/7,
  * localStorage is stored in the following folder:
  * C:\Users\[username]\AppData\Local\Microsoft\Internet Explorer\DOMStore\[tempFolder]
- * 
+ *
  * 2. sessionStorage - A new feature of HTML 5, sessionStorage works similarly to localStorage,
  * except it is designed to expire after a certain amount of time.  Because the specification
  * around expiration date/time is very loosely-described, it is preferrable to use locaStorage and
  * manage the expiration ourselves.  sessionStorage has similar storage characteristics to
  * localStorage, although it seems to have better support by Firefox 3 at the moment.  (That will
  * certainly change as Firefox continues getting better at HTML 5 adoption.)
- * 
+ *
  * 3. UserData - A very under-exploited feature of Microsoft Internet Explorer, UserData is a
  * way to store up to 128K of data per "document", or up to 1MB of data per domain, on the client
  * computer.  The feature is available for IE 5+, which makes it available for every version of IE
@@ -47,7 +47,7 @@
 	// Setup constants to help the compressor to reduce script size
 	var PLUGIN_NAME = 'autosave',
 		RESTORE_DRAFT = 'restoredraft',
-		TRUE = true,
+		true = true,
 		undefined,
 		unloadHandlerAdded,
 		Dispatcher = tinymce.util.Dispatcher;
@@ -87,15 +87,16 @@
 
 			// Default config
 			tinymce.each({
-				ask_before_unload : TRUE,
+				ask_before_unload : true,
 				interval : '30s',
 				retention : '20m',
 				minlength : 50
 			}, function(value, key) {
 				key = PLUGIN_NAME + '_' + key;
 
-				if (settings[key] === undefined)
+				if (settings[key] === undefined) {
 					settings[key] = value;
+				}
 			});
 
 			// Parse times
@@ -111,12 +112,14 @@
 						ed.windowManager.confirm(
 							PLUGIN_NAME + ".warning_message",
 							function(ok) {
-								if (ok)
+								if (ok) {
 									self.restoreDraft();
+								}
 							}
 						);
-					} else
+					} else {
 						self.restoreDraft();
+					}
 				}
 			});
 
@@ -124,8 +127,9 @@
 			ed.onNodeChange.add(function() {
 				var controlManager = ed.controlManager;
 
-				if (controlManager.get(RESTORE_DRAFT))
+				if (controlManager.get(RESTORE_DRAFT)) {
 					controlManager.setDisabled(RESTORE_DRAFT, !self.hasDraft());
+				}
 			});
 
 			ed.onInit.add(function() {
@@ -174,7 +178,7 @@
 			// Add ask before unload dialog only add one unload handler
 			if (!unloadHandlerAdded) {
 				window.onbeforeunload = tinymce.plugins.AutoSave._beforeUnloadHandler;
-				unloadHandlerAdded = TRUE;
+				unloadHandlerAdded = true;
 			}
 		},
 
@@ -252,7 +256,7 @@
 
 						// Fake localStorage on old IE
 						return {
-							autoExpires : TRUE,
+							autoExpires : true,
 
 							setItem : function(key, value) {
 								var userDataElement = ed.getElement();
@@ -290,8 +294,9 @@
 				try {
 					self.storage = setup();
 
-					if (self.storage)
+					if (self.storage) {
 						return false;
+					}
 				} catch (e) {
 					// Ignore
 				}
@@ -310,8 +315,9 @@
 			if (storage) {
 				// If there is no existing key and the contents hasn't been changed since
 				// it's original value then there is no point in saving a draft
-				if (!storage.getItem(self.key) && !editor.isDirty())
+				if (!storage.getItem(self.key) && !editor.isDirty()) {
 					return;
+				}
 
 				// Store contents if the contents if longer than the minlength of characters
 				content = editor.getContent({draft: true});
@@ -319,8 +325,9 @@
 					expires = self.getExpDate();
 
 					// Store expiration date if needed IE userData has auto expire built in
-					if (!self.storage.autoExpires)
+					if (!self.storage.autoExpires) {
 						self.storage.setItem(self.key + "_expires", expires);
+					}
 
 					self.storage.setItem(self.key, content);
 					self.onStoreDraft.dispatch(self, {
@@ -369,13 +376,15 @@
 						expDate = new Date(storage.getItem(self.key + "_expires"));
 
 						// Contents hasn't expired
-						if (new Date().getTime() < expDate.getTime())
-							return TRUE;
+						if (new Date().getTime() < expDate.getTime()) {
+							return true;
+						}
 
 						// Remove it if it has
 						self.removeDraft();
-					} else
-						return TRUE;
+					} else {
+						return true;
+					}
 				}
 			}
 
@@ -412,16 +421,19 @@
 
 				tinymce.each(tinyMCE.editors, function(ed) {
 					// Store a draft for each editor instance
-					if (ed.plugins.autosave)
+					if (ed.plugins.autosave) {
 						ed.plugins.autosave.storeDraft();
+					}
 
 					// Never ask in fullscreen mode
-					if (ed.getParam("fullscreen_is_enabled"))
+					if (ed.getParam("fullscreen_is_enabled")) {
 						return;
+					}
 
 					// Setup a return message if the editor is dirty
-					if (!msg && ed.isDirty() && ed.getParam("autosave_ask_before_unload"))
+					if (!msg && ed.isDirty() && ed.getParam("autosave_ask_before_unload")) {
 						msg = ed.getLang("autosave.unload_msg");
+					}
 				});
 
 				return msg;

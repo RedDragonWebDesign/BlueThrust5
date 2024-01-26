@@ -42,16 +42,19 @@ var Validator = {
 	isEmpty : function(s) {
 		var nl, i;
 
-		if (s.nodeName == 'SELECT' && s.selectedIndex < 1)
+		if (s.nodeName == 'SELECT' && s.selectedIndex < 1) {
 			return true;
+		}
 
-		if (s.type == 'checkbox' && !s.checked)
+		if (s.type == 'checkbox' && !s.checked) {
 			return true;
+		}
 
 		if (s.type == 'radio') {
 			for (i=0, nl = s.form.elements; i<nl.length; i++) {
-				if (nl[i].type == "radio" && nl[i].name == s.name && nl[i].checked)
+				if (nl[i].type == "radio" && nl[i].name == s.name && nl[i].checked) {
 					return false;
+				}
 			}
 
 			return true;
@@ -88,8 +91,9 @@ var AutoValidator = {
 	init : function(s) {
 		var n;
 
-		for (n in s)
+		for (n in s) {
 			this.settings[n] = s[n];
+		}
 	},
 
 	validate : function(f) {
@@ -111,7 +115,7 @@ var AutoValidator = {
 	invalidate : function(n) {
 		this.mark(n.form, n);
 	},
-	
+
 	getErrorMessages : function(f) {
 		var nl, i, s = this.settings, field, msg, values, messages = [], ed = tinyMCEPopup.editor;
 		nl = this.tags(f, "label");
@@ -129,7 +133,7 @@ var AutoValidator = {
 				} else {
 					message = ed.getLang('invalid_data');
 				}
-				
+
 				message = message.replace(/{\#([^}]+)\}/g, function(a, b) {
 					return values[b] || '{#' + b + '}';
 				});
@@ -143,8 +147,9 @@ var AutoValidator = {
 		var t = ['label', 'input', 'select', 'textarea'];
 		var i, j, nl, s = this.settings;
 
-		if (e == null)
+		if (e == null) {
 			return;
+		}
 
 		for (i=0; i<t.length; i++) {
 			nl = this.tags(e.form ? e.form : e, t[i]);
@@ -164,39 +169,48 @@ var AutoValidator = {
 
 			this.removeClass(n, s.invalid_cls);
 
-			if (this.hasClass(n, s.required_cls) && va.isEmpty(n))
+			if (this.hasClass(n, s.required_cls) && va.isEmpty(n)) {
 				st = this.mark(f, n);
+			}
 
-			if (this.hasClass(n, s.number_cls) && !va.isNumber(n))
+			if (this.hasClass(n, s.number_cls) && !va.isNumber(n)) {
 				st = this.mark(f, n);
+			}
 
-			if (this.hasClass(n, s.int_cls) && !va.isNumber(n, true))
+			if (this.hasClass(n, s.int_cls) && !va.isNumber(n, true)) {
 				st = this.mark(f, n);
+			}
 
-			if (this.hasClass(n, s.url_cls) && !va.isAbsUrl(n))
+			if (this.hasClass(n, s.url_cls) && !va.isAbsUrl(n)) {
 				st = this.mark(f, n);
+			}
 
-			if (this.hasClass(n, s.email_cls) && !va.isEmail(n))
+			if (this.hasClass(n, s.email_cls) && !va.isEmail(n)) {
 				st = this.mark(f, n);
+			}
 
-			if (this.hasClass(n, s.size_cls) && !va.isSize(n))
+			if (this.hasClass(n, s.size_cls) && !va.isSize(n)) {
 				st = this.mark(f, n);
+			}
 
-			if (this.hasClass(n, s.id_cls) && !va.isId(n))
+			if (this.hasClass(n, s.id_cls) && !va.isId(n)) {
 				st = this.mark(f, n);
+			}
 
 			if (this.hasClass(n, s.min_cls, true)) {
 				v = this.getNum(n, s.min_cls);
 
-				if (isNaN(v) || parseInt(n.value) < parseInt(v))
+				if (isNaN(v) || parseInt(n.value) < parseInt(v)) {
 					st = this.mark(f, n);
+				}
 			}
 
 			if (this.hasClass(n, s.max_cls, true)) {
 				v = this.getNum(n, s.max_cls);
 
-				if (isNaN(v) || parseInt(n.value) > parseInt(v))
+				if (isNaN(v) || parseInt(n.value) > parseInt(v)) {
 					st = this.mark(f, n);
+				}
 			}
 		}
 
@@ -243,8 +257,9 @@ var AutoValidator = {
 
 		nl = this.tags(f, "label");
 		for (i=0; i<nl.length; i++) {
-			if (nl[i].getAttribute("for") == n.id || nl[i].htmlFor == n.id)
+			if (nl[i].getAttribute("for") == n.id || nl[i].htmlFor == n.id) {
 				this.addClass(nl[i], ic);
+			}
 		}
 
 		return null;

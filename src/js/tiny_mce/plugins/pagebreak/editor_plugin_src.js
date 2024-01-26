@@ -26,8 +26,9 @@
 			ed.onInit.add(function() {
 				if (ed.theme.onResolveName) {
 					ed.theme.onResolveName.add(function(th, o) {
-						if (o.node.nodeName == 'IMG' && ed.dom.hasClass(o.node, cls))
+						if (o.node.nodeName == 'IMG' && ed.dom.hasClass(o.node, cls)) {
 							o.name = 'pagebreak';
+						}
 					});
 				}
 			});
@@ -35,8 +36,9 @@
 			ed.onClick.add(function(ed, e) {
 				e = e.target;
 
-				if (e.nodeName === 'IMG' && ed.dom.hasClass(e, cls))
+				if (e.nodeName === 'IMG' && ed.dom.hasClass(e, cls)) {
 					ed.selection.select(e);
+				}
 			});
 
 			ed.onNodeChange.add(function(ed, cm, n) {
@@ -48,13 +50,15 @@
 			});
 
 			ed.onPostProcess.add(function(ed, o) {
-				if (o.get)
+				if (o.get) {
 					o.content = o.content.replace(/<img[^>]+>/g, function(im) {
-						if (im.indexOf('class="mcePageBreak') !== -1)
+						if (im.indexOf('class="mcePageBreak') !== -1) {
 							im = sep;
+						}
 
 						return im;
 					});
+				}
 			});
 		},
 

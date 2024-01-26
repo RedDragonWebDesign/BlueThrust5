@@ -1,23 +1,21 @@
-<?php 
-	header("Content-type: text/css");
-	require_once("../../_setup.php");
-	require_once(BASE_DIRECTORY."themes/".$THEME."/css.php");
-	
-	if($arrCSSInfo['box-bg-image'] != "none") {
-		
-		$arrCSSInfo['box-bg-image'] = substr($arrCSSInfo['box-bg-image'], strlen("url('"));
-		$arrCSSInfo['box-bg-image'] = substr($arrCSSInfo['box-bg-image'], 0, strlen($arrCSSInfo['box-bg-image'])-2);
-		
-	}
-	
-	$pluginObj = new btPlugin($mysqli);
-	$pluginObj->selectByName("Twitch");
-	
-	$streamWidth = ($pluginObj->getConfigInfo("stream_width") != "") ? $pluginObj->getConfigInfo("stream_width") : 640;
-	$streamHeight = ($pluginObj->getConfigInfo("stream_height") != "") ? $pluginObj->getConfigInfo("stream_height") : 360;
-	
-	$streamChatHeight = ($pluginObj->getConfigInfo("streamchat_width") != "") ? $pluginObj->getConfigInfo("streamchat_height") : 300;
-	
+<?php
+header("Content-type: text/css");
+require_once("../../_setup.php");
+require_once(BASE_DIRECTORY."themes/".$THEME."/css.php");
+
+if ($arrCSSInfo['box-bg-image'] != "none") {
+	$arrCSSInfo['box-bg-image'] = substr($arrCSSInfo['box-bg-image'], strlen("url('"));
+	$arrCSSInfo['box-bg-image'] = substr($arrCSSInfo['box-bg-image'], 0, strlen($arrCSSInfo['box-bg-image'])-2);
+}
+
+$pluginObj = new btPlugin($mysqli);
+$pluginObj->selectByName("Twitch");
+
+$streamWidth = ($pluginObj->getConfigInfo("stream_width") != "") ? $pluginObj->getConfigInfo("stream_width") : 640;
+$streamHeight = ($pluginObj->getConfigInfo("stream_height") != "") ? $pluginObj->getConfigInfo("stream_height") : 360;
+
+$streamChatHeight = ($pluginObj->getConfigInfo("streamchat_width") != "") ? $pluginObj->getConfigInfo("streamchat_height") : 300;
+
 ?>
 .streamPageContainer {
 	position: relative;

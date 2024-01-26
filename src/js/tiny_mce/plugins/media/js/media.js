@@ -1,8 +1,9 @@
 (function() {
 	var url;
 
-	if (url = tinyMCEPopup.getParam("media_external_list_url"))
+	if (url = tinyMCEPopup.getParam("media_external_list_url")) {
 		document.write('<script language="javascript" type="text/javascript" src="' + tinyMCEPopup.editor.documentBaseURI.toAbsolute(url) + '"></script>');
+	}
 
 	function get(id) {
 		return document.getElementById(id);
@@ -11,8 +12,9 @@
 	function clone(obj) {
 		var i, len, copy, attr;
 
-		if (null == obj || "object" != typeof obj)
+		if (null == obj || "object" != typeof obj) {
 			return obj;
+		}
 
 		// Handle Array
 		if ('length' in obj) {
@@ -28,8 +30,9 @@
 		// Handle Object
 		copy = {};
 		for (attr in obj) {
-			if (obj.hasOwnProperty(attr))
+			if (obj.hasOwnProperty(attr)) {
 				copy[attr] = clone(obj[attr]);
+			}
 		}
 
 		return copy;
@@ -38,11 +41,13 @@
 	function getVal(id) {
 		var elm = get(id);
 
-		if (elm.nodeName == "SELECT")
+		if (elm.nodeName == "SELECT") {
 			return elm.options[elm.selectedIndex].value;
+		}
 
-		if (elm.type == "checkbox")
+		if (elm.type == "checkbox") {
 			return elm.checked;
+		}
 
 		return elm.value;
 	}
@@ -51,16 +56,17 @@
 		if (typeof(value) != 'undefined' && value != null) {
 			var elm = get(id);
 
-			if (elm.nodeName == "SELECT")
+			if (elm.nodeName == "SELECT") {
 				selectByValue(document.forms[0], id, value);
-			else if (elm.type == "checkbox") {
+			} else if (elm.type == "checkbox") {
 				if (typeof(value) == 'string') {
 					value = value.toLowerCase();
 					value = (!name && value === 'true') || (name && value === name.toLowerCase());
 				}
 				elm.checked = !!value;
-			} else
+			} else {
 				elm.value = value;
+			}
 		}
 	}
 
@@ -81,28 +87,35 @@
 			get('video_poster_filebrowser').innerHTML = getBrowserHTML('filebrowser_poster','video_poster','image','media');
 
 			html = self.getMediaListHTML('medialist', 'src', 'media', 'media');
-			if (html == "")
+			if (html == "") {
 				get("linklistrow").style.display = 'none';
-			else
+			} else {
 				get("linklistcontainer").innerHTML = html;
+			}
 
-			if (isVisible('filebrowser'))
+			if (isVisible('filebrowser')) {
 				get('src').style.width = '230px';
+			}
 
-			if (isVisible('video_filebrowser_altsource1'))
+			if (isVisible('video_filebrowser_altsource1')) {
 				get('video_altsource1').style.width = '220px';
+			}
 
-			if (isVisible('video_filebrowser_altsource2'))
+			if (isVisible('video_filebrowser_altsource2')) {
 				get('video_altsource2').style.width = '220px';
+			}
 
-			if (isVisible('audio_filebrowser_altsource1'))
+			if (isVisible('audio_filebrowser_altsource1')) {
 				get('audio_altsource1').style.width = '220px';
+			}
 
-			if (isVisible('audio_filebrowser_altsource2'))
+			if (isVisible('audio_filebrowser_altsource2')) {
 				get('audio_altsource2').style.width = '220px';
+			}
 
-			if (isVisible('filebrowser_poster'))
+			if (isVisible('filebrowser_poster')) {
 				get('video_poster').style.width = '220px';
+			}
 
 			editor.dom.setOuterHTML(get('media_type'), self.getMediaTypeHTML(editor));
 
@@ -175,15 +188,17 @@
 						name = names[i];
 						formItemName = type == 'global' ? name : type + '_' + name;
 
-						if (type == 'global')
-						list = data;
-					else if (type == 'video' || type == 'audio') {
+						if (type == 'global') {
+							list = data;
+						} else if (type == 'video' || type == 'audio') {
 							list = data.video.attrs;
 
-							if (!list && !to_form)
-							data.video.attrs = list = {};
-						} else
-						list = data.params;
+							if (!list && !to_form) {
+								data.video.attrs = list = {};
+							}
+						} else {
+							list = data.params;
+						}
 
 						if (list) {
 							if (to_form) {
@@ -192,8 +207,9 @@
 								delete list[name];
 
 								value = getVal(formItemName);
-								if ((type == 'video' || type == 'audio') && value === true)
+								if ((type == 'video' || type == 'audio') && value === true) {
 									value = name;
+								}
 
 								if (defaultStates[formItemName]) {
 									if (value !== defaultStates[formItemName]) {
@@ -219,15 +235,17 @@
 				src = getVal('src');
 				if (field == 'src') {
 					ext = src.replace(/^.*\.([^.]+)$/, '$1');
-					if (typeInfo = mediaPlugin.getType(ext))
+					if (typeInfo = mediaPlugin.getType(ext)) {
 						data.type = typeInfo.name.toLowerCase();
+					}
 
 					setVal('media_type', data.type);
 				}
 
 				if (data.type == "video" || data.type == "audio") {
-					if (!data.video.sources)
+					if (!data.video.sources) {
 						data.video.sources = [];
+					}
 
 					data.video.sources[0] = {src: getVal('src')};
 				}
@@ -243,8 +261,9 @@
 			get('realmedia_options').style.display = 'none';
 			get('embeddedaudio_options').style.display = 'none';
 
-			if (get(data.type + '_options'))
+			if (get(data.type + '_options')) {
 				get(data.type + '_options').style.display = 'block';
+			}
 
 			setVal('media_type', data.type);
 
@@ -260,33 +279,40 @@
 
 			if (to_form) {
 				if (data.type == 'video') {
-					if (data.video.sources[0])
+					if (data.video.sources[0]) {
 						setVal('src', data.video.sources[0].src);
+					}
 
 					src = data.video.sources[1];
-					if (src)
+					if (src) {
 						setVal('video_altsource1', src.src);
+					}
 
 					src = data.video.sources[2];
-					if (src)
+					if (src) {
 						setVal('video_altsource2', src.src);
-                } else if (data.type == 'audio') {
-                    if (data.video.sources[0])
-                        setVal('src', data.video.sources[0].src);
-                    
-                    src = data.video.sources[1];
-                    if (src)
-                        setVal('audio_altsource1', src.src);
-                    
-                    src = data.video.sources[2];
-                    if (src)
-                        setVal('audio_altsource2', src.src);
+					}
+				} else if (data.type == 'audio') {
+					if (data.video.sources[0]) {
+						setVal('src', data.video.sources[0].src);
+					}
+
+					src = data.video.sources[1];
+					if (src) {
+						setVal('audio_altsource1', src.src);
+					}
+
+					src = data.video.sources[2];
+					if (src) {
+						setVal('audio_altsource2', src.src);
+					}
 				} else {
 					// Check flash vars
 					if (data.type == 'flash') {
 						tinymce.each(editor.getParam('flash_video_player_flashvars', {url : '$url', poster : '$poster'}), function(value, name) {
-							if (value == '$url')
+							if (value == '$url') {
 								data.params.src = parseQueryParams(data.params.flashvars)[name] || data.params.src || '';
+							}
 						});
 					}
 
@@ -326,7 +352,7 @@
 					setVal('src', src);
 					setVal('media_type', data.type);
 				}
-				
+
 				// Vimeo
 				if (src.match(/vimeo.com\/([0-9]+)/)) {
 					data.width = 425;
@@ -337,7 +363,7 @@
 					setVal('src', src);
 					setVal('media_type', data.type);
 				}
-            
+
 				// stream.cz
 				if (src.match(/stream.cz\/((?!object).)*\/([0-9]+)/)) {
 					data.width = 425;
@@ -348,7 +374,7 @@
 					setVal('src', src);
 					setVal('media_type', data.type);
 				}
-				
+
 				// Google maps
 				if (src.match(/maps.google.([a-z]{2,3})\/maps\/(.+)msid=(.+)/)) {
 					data.width = 425;
@@ -361,37 +387,44 @@
 				}
 
 				if (data.type == 'video') {
-					if (!data.video.sources)
+					if (!data.video.sources) {
 						data.video.sources = [];
+					}
 
 					data.video.sources[0] = {src : src};
 
 					src = getVal("video_altsource1");
-					if (src)
+					if (src) {
 						data.video.sources[1] = {src : src};
+					}
 
 					src = getVal("video_altsource2");
-					if (src)
+					if (src) {
 						data.video.sources[2] = {src : src};
-                } else if (data.type == 'audio') {
-                    if (!data.video.sources)
-                        data.video.sources = [];
-                    
-                    data.video.sources[0] = {src : src};
-                    
-                    src = getVal("audio_altsource1");
-                    if (src)
-                        data.video.sources[1] = {src : src};
-                    
-                    src = getVal("audio_altsource2");
-                    if (src)
-                        data.video.sources[2] = {src : src};
-				} else
+					}
+				} else if (data.type == 'audio') {
+					if (!data.video.sources) {
+						data.video.sources = [];
+					}
+
+					data.video.sources[0] = {src : src};
+
+					src = getVal("audio_altsource1");
+					if (src) {
+						data.video.sources[1] = {src : src};
+					}
+
+					src = getVal("audio_altsource2");
+					if (src) {
+						data.video.sources[2] = {src : src};
+					}
+				} else {
 					data.params.src = src;
+				}
 
 				// Set default size
-                setVal('width', data.width || (data.type == 'audio' ? 300 : 320));
-                setVal('height', data.height || (data.type == 'audio' ? 32 : 240));
+				setVal('width', data.width || (data.type == 'audio' ? 300 : 320));
+				setVal('height', data.height || (data.type == 'audio' ? 32 : 240));
 			}
 		},
 
@@ -400,8 +433,9 @@
 		},
 
 		formToData : function(field) {
-			if (field == "width" || field == "height")
+			if (field == "width" || field == "height") {
 				this.changeSize(field);
+			}
 
 			if (field == 'source') {
 				this.moveStates(false, field);
@@ -420,16 +454,16 @@
 		},
 
 		beforeResize : function() {
-            this.width = parseInt(getVal('width') || (this.data.type == 'audio' ? "300" : "320"), 10);
-            this.height = parseInt(getVal('height') || (this.data.type == 'audio' ? "32" : "240"), 10);
+			this.width = parseInt(getVal('width') || (this.data.type == 'audio' ? "300" : "320"), 10);
+			this.height = parseInt(getVal('height') || (this.data.type == 'audio' ? "32" : "240"), 10);
 		},
 
 		changeSize : function(type) {
 			var width, height, scale, size;
 
 			if (get('constrain').checked) {
-                width = parseInt(getVal('width') || (this.data.type == 'audio' ? "300" : "320"), 10);
-                height = parseInt(getVal('height') || (this.data.type == 'audio' ? "32" : "240"), 10);
+				width = parseInt(getVal('width') || (this.data.type == 'audio' ? "300" : "320"), 10);
+				height = parseInt(getVal('height') || (this.data.type == 'audio' ? "32" : "240"), 10);
 
 				if (type == 'width') {
 					this.height = Math.round((width / this.width) * height);
@@ -448,8 +482,9 @@
 				html += '<select id="linklist" name="linklist" style="width: 250px" onchange="this.form.src.value=this.options[this.selectedIndex].value;Media.formToData(\'src\');">';
 				html += '<option value="">---</option>';
 
-				for (var i=0; i<tinyMCEMediaList.length; i++)
+				for (var i=0; i<tinyMCEMediaList.length; i++) {
 					html += '<option value="' + tinyMCEMediaList[i][1] + '">' + tinyMCEMediaList[i][0] + '</option>';
+				}
 
 				html += '</select>';
 

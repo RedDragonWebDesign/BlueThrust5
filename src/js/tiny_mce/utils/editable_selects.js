@@ -52,8 +52,9 @@ var TinyMCE_EditableSelects = {
 			if (se.previousSibling.value != '') {
 				addSelectValue(document.forms[0], se.id, se.previousSibling.value, se.previousSibling.value);
 				selectByValue(document.forms[0], se.id, se.previousSibling.value);
-			} else
+			} else {
 				selectByValue(document.forms[0], se.id, '');
+			}
 
 			se.style.display = 'inline';
 			se.parentNode.removeChild(se.previousSibling);
@@ -64,7 +65,8 @@ var TinyMCE_EditableSelects = {
 	onKeyDown : function(e) {
 		e = e || window.event;
 
-		if (e.keyCode == 13)
+		if (e.keyCode == 13) {
 			TinyMCE_EditableSelects.onBlurEditableSelectInput();
+		}
 	}
 };

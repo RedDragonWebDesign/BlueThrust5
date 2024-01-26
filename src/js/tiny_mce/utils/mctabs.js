@@ -23,8 +23,9 @@ MCTabs.prototype.getParam = function(name, default_value) {
 	value = (typeof(this.settings[name]) == "undefined") ? default_value : this.settings[name];
 
 	// Fix bool values
-	if (value == "true" || value == "false")
+	if (value == "true" || value == "false") {
 		return (value == "true");
+	}
 
 	return value;
 };
@@ -46,14 +47,14 @@ MCTabs.prototype.hideTab =function(tab){
 };
 
 MCTabs.prototype.showPanel = function(panel) {
-	panel.className = 'current'; 
+	panel.className = 'current';
 	panel.setAttribute("aria-hidden", false);
 };
 
 MCTabs.prototype.hidePanel = function(panel) {
 	panel.className = 'panel';
 	panel.setAttribute("aria-hidden", true);
-}; 
+};
 
 MCTabs.prototype.getPanelForTab = function(tabElm) {
 	return tinyMCEPopup.dom.getAttrib(tabElm, "aria-controls");
@@ -92,11 +93,12 @@ MCTabs.prototype.displayTab = function(tab_id, panel_id, avoid_focus) {
 
 		// Hide all other panels
 		for (i = 0; i < nodes.length; i++) {
-			if (nodes[i].nodeName == "DIV")
+			if (nodes[i].nodeName == "DIV") {
 				t.hidePanel(nodes[i]);
+			}
 		}
 
-		if (!avoid_focus) { 
+		if (!avoid_focus) {
 			tabElm.focus();
 		}
 
@@ -108,8 +110,9 @@ MCTabs.prototype.displayTab = function(tab_id, panel_id, avoid_focus) {
 MCTabs.prototype.getAnchor = function() {
 	var pos, url = document.location.href;
 
-	if ((pos = url.lastIndexOf('#')) != -1)
+	if ((pos = url.lastIndexOf('#')) != -1) {
 		return url.substring(pos + 1);
+	}
 
 	return "";
 };
@@ -124,7 +127,7 @@ tinyMCEPopup.onInit.add(function() {
 	each(dom.select('div.tabs'), function(tabContainerElm) {
 		var keyNav;
 
-		dom.setAttrib(tabContainerElm, "role", "tablist"); 
+		dom.setAttrib(tabContainerElm, "role", "tablist");
 
 		var items = tinyMCEPopup.dom.select('li', tabContainerElm);
 		var action = function(id) {

@@ -48,17 +48,19 @@
 			p = p || {};
 
 			// Run native windows
-			if (!f.inline)
+			if (!f.inline) {
 				return t.parent(f, p);
+			}
 
 			parentWindow = t._frontWindow();
 			if (parentWindow && DOM.get(parentWindow.id + '_ifr')) {
 				parentWindow.focussedElement = DOM.get(parentWindow.id + '_ifr').contentWindow.document.activeElement;
 			}
-			
+
 			// Only store selection if the type is a normal window
-			if (!f.type)
+			if (!f.type) {
 				t.bookmark = ed.selection.getBookmark(1);
+			}
 
 			id = DOM.uniqueId();
 			vp = DOM.getViewPort();
@@ -89,39 +91,46 @@
 			if (f.type) {
 				opt += ' mceModal';
 
-				if (f.type)
+				if (f.type) {
 					opt += ' mce' + f.type.substring(0, 1).toUpperCase() + f.type.substring(1);
+				}
 
 				f.resizable = false;
 			}
 
-			if (f.statusbar)
+			if (f.statusbar) {
 				opt += ' mceStatusbar';
+			}
 
-			if (f.resizable)
+			if (f.resizable) {
 				opt += ' mceResizable';
+			}
 
-			if (f.minimizable)
+			if (f.minimizable) {
 				opt += ' mceMinimizable';
+			}
 
-			if (f.maximizable)
+			if (f.maximizable) {
 				opt += ' mceMaximizable';
+			}
 
-			if (f.movable)
+			if (f.movable) {
 				opt += ' mceMovable';
+			}
 
 			// Create DOM objects
-			t._addAll(DOM.doc.body, 
-				['div', {id : id, role : 'dialog', 'aria-labelledby': f.type ? id + '_content' : id + '_title', 'class' : (ed.settings.inlinepopups_skin || 'clearlooks2') + (tinymce.isIE && window.getSelection ? ' ie9' : ''), style : 'width:100px;height:100px'}, 
+			t._addAll(
+				DOM.doc.body,
+				['div', {id : id, role : 'dialog', 'aria-labelledby': f.type ? id + '_content' : id + '_title', 'class' : (ed.settings.inlinepopups_skin || 'clearlooks2') + (tinymce.isIE && window.getSelection ? ' ie9' : ''), style : 'width:100px;height:100px'},
 					['div', {id : id + '_wrapper', 'class' : 'mceWrapper' + opt},
-						['div', {id : id + '_top', 'class' : 'mceTop'}, 
+						['div', {id : id + '_top', 'class' : 'mceTop'},
 							['div', {'class' : 'mceLeft'}],
 							['div', {'class' : 'mceCenter'}],
 							['div', {'class' : 'mceRight'}],
 							['span', {id : id + '_title'}, f.title || '']
 						],
 
-						['div', {id : id + '_middle', 'class' : 'mceMiddle'}, 
+						['div', {id : id + '_middle', 'class' : 'mceMiddle'},
 							['div', {id : id + '_left', 'class' : 'mceLeft', tabindex : '0'}],
 							['span', {id : id + '_content'}],
 							['div', {id : id + '_right', 'class' : 'mceRight', tabindex : '0'}]
@@ -154,8 +163,9 @@
 			DOM.setStyles(id, {top : -10000, left : -10000});
 
 			// Fix gecko rendering bug, where the editors iframe messed with window contents
-			if (tinymce.isGecko)
+			if (tinymce.isGecko) {
 				DOM.setStyle(id, 'overflow', 'auto');
+			}
 
 			// Measure borders
 			if (!f.type) {
@@ -170,8 +180,9 @@
 
 			u = f.url || f.file;
 			if (u) {
-				if (tinymce.relaxedDomain)
+				if (tinymce.relaxedDomain) {
 					u += (u.indexOf('?') == -1 ? '?' : '&') + 'mce_rdomain=' + tinymce.relaxedDomain;
+				}
 
 				u = tinymce._addVer(u);
 			}
@@ -183,12 +194,13 @@
 			} else {
 				DOM.add(id + '_wrapper', 'a', {id : id + '_ok', 'class' : 'mceButton mceOk', href : 'javascript:;', onmousedown : 'return false;'}, 'Ok');
 
-				if (f.type == 'confirm')
+				if (f.type == 'confirm') {
 					DOM.add(id + '_wrapper', 'a', {'class' : 'mceButton mceCancel', href : 'javascript:;', onmousedown : 'return false;'}, 'Cancel');
+				}
 
 				DOM.add(id + '_middle', 'div', {'class' : 'mceIcon'});
 				DOM.setHTML(id + '_content', f.content.replace('\n', '<br />'));
-				
+
 				Event.add(id, 'keyup', function(evt) {
 					var VK_ESCAPE = 27;
 					if (evt.keyCode === VK_ESCAPE) {
@@ -243,10 +255,11 @@
 						w.iframeElement.resizeTo(w.oldSize.w - w.deltaWidth, w.oldSize.h - w.deltaHeight);
 
 						DOM.removeClass(id + '_wrapper', 'mceMaximized');
-					} else if (n.className == 'mceMove')
+					} else if (n.className == 'mceMove') {
 						return t._startDrag(id, e, n.className);
-					else if (DOM.hasClass(n, 'mceResize'))
+					} else if (DOM.hasClass(n, 'mceResize')) {
 						return t._startDrag(id, e, n.className.substring(13));
+					}
 				}
 			});
 
@@ -268,7 +281,7 @@
 					}
 				}
 			});
-			
+
 			// Make sure the tab order loops within the dialog.
 			Event.add([id + '_left', id + '_right'], 'focus', function(evt) {
 				var iframe = DOM.get(id + '_ifr');
@@ -284,7 +297,7 @@
 					DOM.get(id + '_ok').focus();
 				}
 			});
-			
+
 			// Add window
 			w = t.windows[id] = {
 				id : id,
@@ -311,19 +324,22 @@
 
 				DOM.show('mceModalBlocker'); // Reduces flicker in IE
 				DOM.setAttrib(DOM.doc.body, 'aria-hidden', 'true');
-			} else
+			} else {
 				DOM.setStyle('mceModalBlocker', 'z-index', t.zIndex - 1);
+			}
 
-			if (tinymce.isIE6 || /Firefox\/2\./.test(navigator.userAgent) || (tinymce.isIE && !DOM.boxModel))
+			if (tinymce.isIE6 || /Firefox\/2\./.test(navigator.userAgent) || (tinymce.isIE && !DOM.boxModel)) {
 				DOM.setStyles('mceModalBlocker', {position : 'absolute', left : vp.x, top : vp.y, width : vp.w - 2, height : vp.h - 2});
+			}
 
 			DOM.setAttrib(id, 'aria-hidden', 'false');
 			t.focus(id);
 			t._fixIELayout(id, 1);
 
 			// Focus ok button
-			if (DOM.get(id + '_ok'))
+			if (DOM.get(id + '_ok')) {
 				DOM.get(id + '_ok').focus();
+			}
 			t.count++;
 
 			return w;
@@ -341,7 +357,7 @@
 				DOM.removeClass(t.lastId, 'mceFocus');
 				DOM.addClass(id, 'mceFocus');
 				t.lastId = id;
-				
+
 				if (w.focussedElement) {
 					w.focussedElement.focus();
 				} else if (DOM.get(id + '_ok')) {
@@ -355,13 +371,14 @@
 		_addAll : function(te, ne) {
 			var i, n, t = this, dom = tinymce.DOM;
 
-			if (is(ne, 'string'))
+			if (is(ne, 'string')) {
 				te.appendChild(dom.doc.createTextNode(ne));
-			else if (ne.length) {
+			} else if (ne.length) {
 				te = te.appendChild(dom.create(ne[0], ne[1]));
 
-				for (i=2; i<ne.length; i++)
+				for (i=2; i<ne.length; i++) {
 					t._addAll(te, ne[i]);
+				}
 			}
 		},
 
@@ -386,8 +403,9 @@
 				Event.remove(d, 'mouseup', mu);
 				Event.remove(d, 'mousemove', mm);
 
-				if (eb)
+				if (eb) {
 					eb.remove();
+				}
 
 				we.moveBy(dx, dy);
 				we.resizeBy(dw, dh);
@@ -398,12 +416,14 @@
 				return Event.cancel(e);
 			});
 
-			if (ac != 'Move')
+			if (ac != 'Move') {
 				startMove();
+			}
 
 			function startMove() {
-				if (eb)
+				if (eb) {
 					return;
+				}
 
 				t._fixIELayout(id, 0);
 
@@ -414,8 +434,9 @@
 					style : {zIndex : t.zIndex + 1}
 				});
 
-				if (tinymce.isIE6 || (tinymce.isIE && !DOM.boxModel))
+				if (tinymce.isIE6 || (tinymce.isIE && !DOM.boxModel)) {
 					DOM.setStyles('mceEventBlocker', {position : 'absolute', left : vp.x, top : vp.y, width : vp.w - 2, height : vp.h - 2});
+				}
 
 				eb = new Element('mceEventBlocker');
 				eb.update();
@@ -454,8 +475,9 @@
 						if (ac == "ResizeNW") {
 							dx = x;
 							dw = 0 - x;
-						} else if (ac == "ResizeNE")
+						} else if (ac == "ResizeNE") {
 							dw = x;
+						}
 
 						dy = y;
 						dh = 0 - y;
@@ -467,8 +489,9 @@
 						if (ac == "ResizeSW") {
 							dx = x;
 							dw = 0 - x;
-						} else if (ac == "ResizeSE")
+						} else if (ac == "ResizeSE") {
 							dw = x;
+						}
 
 						dh = y;
 						break;
@@ -481,15 +504,17 @@
 
 				// Boundary check
 				if (dw < (v = w.features.min_width - sz.w)) {
-					if (dx !== 0)
+					if (dx !== 0) {
 						dx += dw - v;
+					}
 
 					dw = v;
 				}
-	
+
 				if (dh < (v = w.features.min_height - sz.h)) {
-					if (dy !== 0)
+					if (dy !== 0) {
 						dy += dh - v;
+					}
 
 					dh = v;
 				}
@@ -503,18 +528,21 @@
 
 				// Move if needed
 				if (dx + dy !== 0) {
-					if (sx + dx < 0)
+					if (sx + dx < 0) {
 						dx = 0;
-	
-					if (sy + dy < 0)
+					}
+
+					if (sy + dy < 0) {
 						dy = 0;
+					}
 
 					ph.moveTo(sx + dx, sy + dy);
 				}
 
 				// Resize if needed
-				if (dw + dh !== 0)
+				if (dw + dh !== 0) {
 					ph.resizeTo(sz.w + dw, sz.h + dh);
+				}
 
 				return Event.cancel(e);
 			});
@@ -563,16 +591,17 @@
 
 				fw = t._frontWindow();
 
-				if (fw)
+				if (fw) {
 					t.focus(fw.id);
+				}
 			}
 		},
-		
+
 		// Find front most window
 		_frontWindow : function() {
 			var fw, ix = 0;
 			// Find front most window and focus that
-			each (this.windows, function(w) {
+			each(this.windows, function(w) {
 				if (w.zIndex > ix) {
 					fw = w;
 					ix = w.zIndex;
@@ -586,8 +615,9 @@
 
 			w = this._findId(w);
 
-			if (e = DOM.get(w + '_title'))
+			if (e = DOM.get(w + '_title')) {
 				e.innerHTML = DOM.encode(ti);
+			}
 		},
 
 		alert : function(txt, cb, s) {
@@ -597,8 +627,9 @@
 				title : t,
 				type : 'alert',
 				button_func : function(s) {
-					if (cb)
+					if (cb) {
 						cb.call(s || t, s);
+					}
 
 					t.close(null, w.id);
 				},
@@ -616,8 +647,9 @@
 				title : t,
 				type : 'confirm',
 				button_func : function(s) {
-					if (cb)
+					if (cb) {
 						cb.call(s || t, s);
+					}
 
 					t.close(null, w.id);
 				},
@@ -633,8 +665,9 @@
 		_findId : function(w) {
 			var t = this;
 
-			if (typeof(w) == 'string')
+			if (typeof(w) == 'string') {
 				return w;
+			}
 
 			each(t.windows, function(wo) {
 				var ifr = DOM.get(wo.id + '_ifr');
@@ -651,8 +684,9 @@
 		_fixIELayout : function(id, s) {
 			var w, img;
 
-			if (!tinymce.isIE6)
+			if (!tinymce.isIE6) {
 				return;
+			}
 
 			// Fixes the bug where hover flickers and does odd things in IE6
 			each(['n','s','w','e','nw','ne','sw','se'], function(v) {

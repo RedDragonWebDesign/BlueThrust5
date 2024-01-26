@@ -13,9 +13,9 @@ function writeFlash(p) {
 
 function writeShockWave(p) {
 	writeEmbed(
-	'166B1BCA-3F9C-11CF-8075-444553540000',
-	'http://download.macromedia.com/pub/shockwave/cabs/director/sw.cab#version=8,5,1,0',
-	'application/x-director',
+		'166B1BCA-3F9C-11CF-8075-444553540000',
+		'http://download.macromedia.com/pub/shockwave/cabs/director/sw.cab#version=8,5,1,0',
+		'application/x-director',
 		p
 	);
 }
@@ -59,13 +59,15 @@ function writeEmbed(cls, cb, mt, p) {
 	h += typeof(p.align) != "undefined" ? 'align="' + p.align + '"' : '';
 	h += '>';
 
-	for (n in p)
+	for (n in p) {
 		h += '<param name="' + n + '" value="' + p[n] + '">';
+	}
 
 	h += '<embed type="' + mt + '"';
 
-	for (n in p)
+	for (n in p) {
 		h += n + '="' + p[n] + '" ';
+	}
 
 	h += '></embed></object>';
 

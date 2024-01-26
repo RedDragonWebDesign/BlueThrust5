@@ -1,26 +1,26 @@
-<?php 
-	header("Content-type: text/css");
-	require_once("../_setup.php");
-	require_once($THEME."/css.php");
+<?php
+header("Content-type: text/css");
+require_once("../_setup.php");
+require_once($THEME."/css.php");
 
 	// Image and Signuature Size Settings
-	$setMaxImageWidthUnit = ($websiteInfo['forum_imagewidthunit'] == "%") ? "%" : "px";
-	$setMaxForumImageWidth = ($websiteInfo['forum_imagewidth'] > 0) ? "max-width: ".$websiteInfo['forum_imagewidth'].$setMaxImageWidthUnit.";" : "";
-	
-	$setMaxImageHeightUnit = ($websiteInfo['forum_imageheightunit'] == "%") ? "%" : "px";
-	$setMaxForumImageHeight = ($websiteInfo['forum_imageheight'] > 0) ? "max-height: ".$websiteInfo['forum_imageheight'].$setMaxImageHeightUnit.";" : "";
-	
-	$setMaxSigWidthUnit = ($websiteInfo['forum_sigwidthunit'] == "%") ? "%" : "px";
-	$setMaxSigWidth = ($websiteInfo['forum_sigwidth'] > 0) ? "max-width: ".$websiteInfo['forum_sigwidth'].$setMaxSigWidthUnit.";" : "";
-	
-	$setMaxSigHeightUnit = ($websiteInfo['forum_sigheightunit'] == "%") ? "%" : "px";
-	$setMaxSigHeight = ($websiteInfo['forum_sigheight'] > 0) ? "max-height: ".$websiteInfo['forum_sigheight'].$setMaxSigHeightUnit.";" : "";
-	
+$setMaxImageWidthUnit = ($websiteInfo['forum_imagewidthunit'] == "%") ? "%" : "px";
+$setMaxForumImageWidth = ($websiteInfo['forum_imagewidth'] > 0) ? "max-width: ".$websiteInfo['forum_imagewidth'].$setMaxImageWidthUnit.";" : "";
+
+$setMaxImageHeightUnit = ($websiteInfo['forum_imageheightunit'] == "%") ? "%" : "px";
+$setMaxForumImageHeight = ($websiteInfo['forum_imageheight'] > 0) ? "max-height: ".$websiteInfo['forum_imageheight'].$setMaxImageHeightUnit.";" : "";
+
+$setMaxSigWidthUnit = ($websiteInfo['forum_sigwidthunit'] == "%") ? "%" : "px";
+$setMaxSigWidth = ($websiteInfo['forum_sigwidth'] > 0) ? "max-width: ".$websiteInfo['forum_sigwidth'].$setMaxSigWidthUnit.";" : "";
+
+$setMaxSigHeightUnit = ($websiteInfo['forum_sigheightunit'] == "%") ? "%" : "px";
+$setMaxSigHeight = ($websiteInfo['forum_sigheight'] > 0) ? "max-height: ".$websiteInfo['forum_sigheight'].$setMaxSigHeightUnit.";" : "";
+
 	// $arrCSSInfo comes from require_once($THEME."/css.php")
-	if(!isset($arrCSSInfo['forum-code-max-width'])) {
-		$arrCSSInfo['forum-code-max-width'] = "550px";	
-	}
-	
+if (!isset($arrCSSInfo['forum-code-max-width'])) {
+	$arrCSSInfo['forum-code-max-width'] = "550px";
+}
+
 echo "/*
 THE CSS CLASSES BELOW MUST BE IN ALL THEMES!  MODIFY THESE TO SUIT YOUR NEEDS
 */

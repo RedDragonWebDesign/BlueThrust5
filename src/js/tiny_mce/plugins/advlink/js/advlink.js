@@ -9,8 +9,9 @@ var templates = {
 function preinit() {
 	var url;
 
-	if (url = tinyMCEPopup.getParam("external_link_list_url"))
+	if (url = tinyMCEPopup.getParam("external_link_list_url")) {
 		document.write('<script language="javascript" type="text/javascript" src="' + tinyMCEPopup.editor.documentBaseURI.toAbsolute(url) + '"></script>');
+	}
 }
 
 function changeClass() {
@@ -34,24 +35,28 @@ function init() {
 
 	// Link list
 	html = getLinkListHTML('linklisthref','href');
-	if (html == "")
+	if (html == "") {
 		document.getElementById("linklisthrefrow").style.display = 'none';
-	else
+	} else {
 		document.getElementById("linklisthrefcontainer").innerHTML = html;
+	}
 
 	// Anchor list
 	html = getAnchorListHTML('anchorlist','href');
-	if (html == "")
+	if (html == "") {
 		document.getElementById("anchorlistrow").style.display = 'none';
-	else
+	} else {
 		document.getElementById("anchorlistcontainer").innerHTML = html;
+	}
 
 	// Resize some elements
-	if (isVisible('hrefbrowser'))
+	if (isVisible('hrefbrowser')) {
 		document.getElementById('href').style.width = '260px';
+	}
 
-	if (isVisible('popupurlbrowser'))
+	if (isVisible('popupurlbrowser')) {
 		document.getElementById('popupurl').style.width = '180px';
+	}
 
 	elm = inst.dom.getParent(elm, "A");
 	if (elm == null) {
@@ -61,8 +66,9 @@ function init() {
 		}
 	}
 
-	if (elm != null && elm.nodeName == "A")
+	if (elm != null && elm.nodeName == "A") {
 		action = "update";
+	}
 
 	formObj.insert.value = tinyMCEPopup.getLang(action, 'Insert', true);
 
@@ -103,10 +109,11 @@ function init() {
 		setFormValue('classes', inst.dom.getAttrib(elm, 'class'));
 
 		// Parse onclick data
-		if (onclick != null && onclick.indexOf('window.open') != -1)
+		if (onclick != null && onclick.indexOf('window.open') != -1) {
 			parseWindowOpen(onclick);
-		else
+		} else {
 			parseFunction(onclick);
+		}
 
 		// Select by the values
 		selectByValue(formObj, 'dir', inst.dom.getAttrib(elm, 'dir'));
@@ -114,23 +121,27 @@ function init() {
 		selectByValue(formObj, 'rev', inst.dom.getAttrib(elm, 'rev'));
 		selectByValue(formObj, 'linklisthref', href);
 
-		if (href.charAt(0) == '#')
+		if (href.charAt(0) == '#') {
 			selectByValue(formObj, 'anchorlist', href);
+		}
 
 		addClassesToList('classlist', 'advlink_styles');
 
 		selectByValue(formObj, 'classlist', inst.dom.getAttrib(elm, 'class'), true);
 		selectByValue(formObj, 'targetlist', linkTarget, true);
-	} else
+	} else {
 		addClassesToList('classlist', 'advlink_styles');
+	}
 }
 
 function checkPrefix(n) {
-	if (n.value && Validator.isEmail(n) && !/^\s*mailto:/i.test(n.value) && confirm(tinyMCEPopup.getLang('advlink_dlg.is_email')))
+	if (n.value && Validator.isEmail(n) && !/^\s*mailto:/i.test(n.value) && confirm(tinyMCEPopup.getLang('advlink_dlg.is_email'))) {
 		n.value = 'mailto:' + n.value;
+	}
 
-	if (/^\s*www\./i.test(n.value) && confirm(tinyMCEPopup.getLang('advlink_dlg.is_external')))
+	if (/^\s*www\./i.test(n.value) && confirm(tinyMCEPopup.getLang('advlink_dlg.is_external'))) {
 		n.value = 'http://' + n.value;
+	}
 }
 
 function setFormValue(name, value) {
@@ -144,8 +155,9 @@ function parseWindowOpen(onclick) {
 	if (onclick.indexOf('return false;') != -1) {
 		formObj.popupreturn.checked = true;
 		onclick = onclick.replace('return false;', '');
-	} else
+	} else {
 		formObj.popupreturn.checked = false;
+	}
 
 	var onClickData = parseLink(onclick);
 
@@ -164,11 +176,13 @@ function parseWindowOpen(onclick) {
 		formObj.popupleft.value = getOption(onClickWindowOptions, 'left');
 		formObj.popuptop.value = getOption(onClickWindowOptions, 'top');
 
-		if (formObj.popupleft.value.indexOf('screen') != -1)
+		if (formObj.popupleft.value.indexOf('screen') != -1) {
 			formObj.popupleft.value = "c";
+		}
 
-		if (formObj.popuptop.value.indexOf('screen') != -1)
+		if (formObj.popuptop.value.indexOf('screen') != -1) {
 			formObj.popuptop.value = "c";
+		}
 
 		formObj.popuplocation.checked = getOption(onClickWindowOptions, 'location') == "yes";
 		formObj.popupscrollbars.checked = getOption(onClickWindowOptions, 'scrollbars') == "yes";
@@ -228,10 +242,11 @@ function parseLink(link) {
 		var replaceStr = "";
 		for (var i=0; i<variableNames.length; i++) {
 			// Is string value
-			if (variableNames[i].indexOf("'${") != -1)
+			if (variableNames[i].indexOf("'${") != -1) {
 				regExp += "'(.*)'";
-			else // Number value
+			} else { // Number value
 				regExp += "([0-9]*)";
+			}
 
 			replaceStr += "$" + (i+1);
 
@@ -241,8 +256,9 @@ function parseLink(link) {
 			if (i != variableNames.length-1) {
 				regExp += "\\s*,\\s*";
 				replaceStr += "<delim>";
-			} else
+			} else {
 				regExp += ".*";
+			}
 		}
 
 		regExp += "\\);?";
@@ -251,8 +267,9 @@ function parseLink(link) {
 		var variables = [];
 		variables["_function"] = fnName;
 		var variableValues = link.replace(new RegExp(regExp, "gi"), replaceStr).split('<delim>');
-		for (var i=0; i<variableNames.length; i++)
+		for (var i=0; i<variableNames.length; i++) {
 			variables[variableNames[i]] = variableValues[i];
+		}
 
 		return variables;
 	}
@@ -261,8 +278,9 @@ function parseLink(link) {
 }
 
 function parseOptions(opts) {
-	if (opts == null || opts == "")
+	if (opts == null || opts == "") {
 		return [];
+	}
 
 	// Cleanup the options
 	opts = opts.toLowerCase();
@@ -275,8 +293,9 @@ function parseOptions(opts) {
 	for (var i=0; i<optionChunks.length; i++) {
 		var parts = optionChunks[i].split('=');
 
-		if (parts.length == 2)
+		if (parts.length == 2) {
 			options[parts[0]] = parts[1];
+		}
 	}
 
 	return options;
@@ -296,61 +315,75 @@ function buildOnClick() {
 	onclick += url + "','";
 	onclick += formObj.popupname.value + "','";
 
-	if (formObj.popuplocation.checked)
+	if (formObj.popuplocation.checked) {
 		onclick += "location=yes,";
+	}
 
-	if (formObj.popupscrollbars.checked)
+	if (formObj.popupscrollbars.checked) {
 		onclick += "scrollbars=yes,";
+	}
 
-	if (formObj.popupmenubar.checked)
+	if (formObj.popupmenubar.checked) {
 		onclick += "menubar=yes,";
+	}
 
-	if (formObj.popupresizable.checked)
+	if (formObj.popupresizable.checked) {
 		onclick += "resizable=yes,";
+	}
 
-	if (formObj.popuptoolbar.checked)
+	if (formObj.popuptoolbar.checked) {
 		onclick += "toolbar=yes,";
+	}
 
-	if (formObj.popupstatus.checked)
+	if (formObj.popupstatus.checked) {
 		onclick += "status=yes,";
+	}
 
-	if (formObj.popupdependent.checked)
+	if (formObj.popupdependent.checked) {
 		onclick += "dependent=yes,";
+	}
 
-	if (formObj.popupwidth.value != "")
+	if (formObj.popupwidth.value != "") {
 		onclick += "width=" + formObj.popupwidth.value + ",";
+	}
 
-	if (formObj.popupheight.value != "")
+	if (formObj.popupheight.value != "") {
 		onclick += "height=" + formObj.popupheight.value + ",";
+	}
 
 	if (formObj.popupleft.value != "") {
-		if (formObj.popupleft.value != "c")
+		if (formObj.popupleft.value != "c") {
 			onclick += "left=" + formObj.popupleft.value + ",";
-		else
+		} else {
 			onclick += "left='+(screen.availWidth/2-" + (formObj.popupwidth.value/2) + ")+',";
+		}
 	}
 
 	if (formObj.popuptop.value != "") {
-		if (formObj.popuptop.value != "c")
+		if (formObj.popuptop.value != "c") {
 			onclick += "top=" + formObj.popuptop.value + ",";
-		else
+		} else {
 			onclick += "top='+(screen.availHeight/2-" + (formObj.popupheight.value/2) + ")+',";
+		}
 	}
 
-	if (onclick.charAt(onclick.length-1) == ',')
+	if (onclick.charAt(onclick.length-1) == ',') {
 		onclick = onclick.substring(0, onclick.length-1);
+	}
 
 	onclick += "');";
 
-	if (formObj.popupreturn.checked)
+	if (formObj.popupreturn.checked) {
 		onclick += "return false;";
+	}
 
 	// tinyMCE.debug(onclick);
 
 	formObj.onclick.value = onclick;
 
-	if (formObj.href.value == "")
+	if (formObj.href.value == "") {
 		formObj.href.value = url;
+	}
 }
 
 function setAttrib(elm, attrib, value) {
@@ -361,13 +394,15 @@ function setAttrib(elm, attrib, value) {
 	if (typeof(value) == "undefined" || value == null) {
 		value = "";
 
-		if (valueElm)
+		if (valueElm) {
 			value = valueElm.value;
+		}
 	}
 
 	// Clean up the style
-	if (attrib == 'style')
+	if (attrib == 'style') {
 		value = dom.serializeStyle(dom.parseStyle(value), 'a');
+	}
 
 	dom.setAttrib(elm, attrib, value);
 }
@@ -376,22 +411,25 @@ function getAnchorListHTML(id, target) {
 	var ed = tinyMCEPopup.editor, nodes = ed.dom.select('a'), name, i, len, html = "";
 
 	for (i=0, len=nodes.length; i<len; i++) {
-		if ((name = ed.dom.getAttrib(nodes[i], "name")) != "")
+		if ((name = ed.dom.getAttrib(nodes[i], "name")) != "") {
 			html += '<option value="#' + name + '">' + name + '</option>';
+		}
 
-		if ((name = nodes[i].id) != "" && !nodes[i].href)
+		if ((name = nodes[i].id) != "" && !nodes[i].href) {
 			html += '<option value="#' + name + '">' + name + '</option>';
+		}
 	}
 
-	if (html == "")
+	if (html == "") {
 		return "";
+	}
 
 	html = '<select id="' + id + '" name="' + id + '" class="mceAnchorList"'
-		+ ' onchange="this.form.' + target + '.value=this.options[this.selectedIndex].value"'
-		+ '>'
-		+ '<option value="">---</option>'
-		+ html
-		+ '</select>';
+	+ ' onchange="this.form.' + target + '.value=this.options[this.selectedIndex].value"'
+	+ '>'
+	+ '<option value="">---</option>'
+	+ html
+	+ '</select>';
 
 	return html;
 }
@@ -421,10 +459,12 @@ function insertAction() {
 		tinyMCEPopup.execCommand("mceInsertLink", false, "#mce_temp_url#", {skip_undo : 1});
 
 		elementArray = tinymce.grep(inst.dom.select("a"), function(n) {return inst.dom.getAttrib(n, 'href') == '#mce_temp_url#';});
-		for (i=0; i<elementArray.length; i++)
+		for (i=0; i<elementArray.length; i++) {
 			setAllAttribs(elm = elementArray[i]);
-	} else
+		}
+	} else {
 		setAllAttribs(elm);
+	}
 
 	// Don't move caret if selection was image
 	if (elm.childNodes.length != 1 || elm.firstChild.nodeName != 'IMG') {
@@ -472,22 +512,25 @@ function setAllAttribs(elm) {
 	setAttrib(elm, 'onkeyup');
 
 	// Refresh in old MSIE
-	if (tinyMCE.isMSIE5)
+	if (tinyMCE.isMSIE5) {
 		elm.outerHTML = elm.outerHTML;
+	}
 }
 
 function getSelectValue(form_obj, field_name) {
 	var elm = form_obj.elements[field_name];
 
-	if (!elm || elm.options == null || elm.selectedIndex == -1)
+	if (!elm || elm.options == null || elm.selectedIndex == -1) {
 		return "";
+	}
 
 	return elm.options[elm.selectedIndex].value;
 }
 
 function getLinkListHTML(elm_id, target_form_element, onchange_func) {
-	if (typeof(tinyMCELinkList) == "undefined" || tinyMCELinkList.length == 0)
+	if (typeof(tinyMCELinkList) == "undefined" || tinyMCELinkList.length == 0) {
 		return "";
+	}
 
 	var html = "";
 
@@ -495,13 +538,15 @@ function getLinkListHTML(elm_id, target_form_element, onchange_func) {
 	html += ' class="mceLinkList" onchange="this.form.' + target_form_element + '.value=';
 	html += 'this.options[this.selectedIndex].value;';
 
-	if (typeof(onchange_func) != "undefined")
+	if (typeof(onchange_func) != "undefined") {
 		html += onchange_func + '(\'' + target_form_element + '\',this.options[this.selectedIndex].text,this.options[this.selectedIndex].value);';
+	}
 
 	html += '"><option value="">---</option>';
 
-	for (var i=0; i<tinyMCELinkList.length; i++)
+	for (var i=0; i<tinyMCELinkList.length; i++) {
 		html += '<option value="' + tinyMCELinkList[i][1] + '">' + tinyMCELinkList[i][0] + '</option>';
+	}
 
 	html += '</select>';
 
@@ -524,8 +569,9 @@ function getTargetListHTML(elm_id, target_form_element) {
 	for (var i=0; i<targets.length; i++) {
 		var key, value;
 
-		if (targets[i] == "")
+		if (targets[i] == "") {
 			continue;
+		}
 
 		key = targets[i].split('=')[0];
 		value = targets[i].split('=')[1];
