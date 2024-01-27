@@ -14,8 +14,6 @@
 
 
 class Basic {
-
-
 	protected $MySQL;
 	protected $strTableName;
 	protected $strTableKey;
@@ -29,20 +27,14 @@ class Basic {
 		$this->strTableKey = $tableKey;
 	}
 
-
 	/**
-
-	-Selector Method-
-
-	intIDNum: The primary key used to identify the needed table row.  Must be numeric unless $numericIDOnly is set to false.
-
-	This will set $arrObjInfo to the table row array returned by the select statement, with the column titles set as the array keys.
-	Use the get_info method to get the values for the table row with the selected id number.
-
-	Returns true when the table row is found
-	Returns false when no table row is found
-
-	*/
+	 * intIDNum: The primary key used to identify the needed table row.  Must be numeric unless $numericIDOnly is set to false.
+	 *
+	 * This will set $arrObjInfo to the table row array returned by the select statement, with the column titles set as the array keys. Use the get_info method to get the values for the table row with the selected id number.
+	 *
+	 * Returns true when the table row is found
+	 * Returns false when no table row is found
+	 */
 	public function select($intIDNum, $numericIDOnly = true) {
 		global $sqlCache;
 
@@ -75,14 +67,12 @@ class Basic {
 		return $returnVal;
 	}
 
-
 	/**
 	 * Select by multiple arguments.
 	 *
 	 * Format argument array as array[columnName] = value
 	 *
 	 */
-
 	public function selectByMulti($arrWhats) {
 
 		$returnVal = false;
@@ -114,14 +104,11 @@ class Basic {
 		return $returnVal;
 	}
 
-
 	/**
-	 * Get multi rows, returns an array of get_info_filtered,
+	 * Get multi rows, returns an array of get_info_filtered.
 	 *
 	 * Format filterArgs array as array[columnName] = value
-	 *
 	 */
-
 	public function get_entries($filterArgs = [], $orderBy = "", $blnNotFiltered = true, $filterComparators = []) {
 
 		$returnVal = false;
@@ -184,22 +171,20 @@ class Basic {
 		return $returnArr;
 	}
 
-
 	/**
-
-	-Easy way to send an INSERT statement-
-
-	arrColumns: Array of the column names that will be inserted into
-	arrValues: Array of values that will be inserted into the column names in arrColumns
-
-	Both arrays must contain the same amount of values and must line up with each other in order insert the desired values.
-
-	After the query is sent, it will assign the strTableKeyValue with the last insert id and will "select" it, using the select method.
-
-	Returns true if INSERT query is successful
-	Returns false if there is an error
-
-	*/
+	 *
+	 * Easy way to send an INSERT statement
+	 *
+	 * arrColumns: Array of the column names that will be inserted into
+	 * arrValues: Array of values that will be inserted into the column names in arrColumns
+	 *
+	 * Both arrays must contain the same amount of values and must line up with each other in order insert the desired values.
+	 *
+	 * After the query is sent, it will assign the strTableKeyValue with the last insert id and will "select" it, using the select method.
+	 *
+	 * Returns true if INSERT query is successful
+	 * Returns false if there is an error
+	 */
 	public function addNew($arrColumns, $arrValues) {
 		$returnVal = false;
 
@@ -237,21 +222,18 @@ class Basic {
 		return $returnVal;
 	}
 
-
 	/**
-
-	-Easy way to send an UPDATE query-
-
-	arrTableColumns: Array of the table column names that will be updated
-	arrColumnValues: Array of the values to update each given table column
-
-	Both arrays need to contain the same amount of values and must line up with each other in order to update the correct column
-
-	Must first use the select method before updating
-
-	Returns true if successfully updates
-
-	*/
+	 * Easy way to send an UPDATE query-
+	 *
+	 * arrTableColumns: Array of the table column names that will be updated
+	 * arrColumnValues: Array of the values to update each given table column
+	 *
+	 * Both arrays need to contain the same amount of values and must line up with each other in order to update the correct column
+	 *
+	 * Must first use the select method before updating
+	 *
+	 * Returns true if successfully updates
+	 */
 	public function update($arrTableColumns, $arrColumnValues) {
 
 		$returnVal = false;
@@ -293,12 +275,8 @@ class Basic {
 	}
 
 	/**
-
-	-Delete Method-
-
-	Will delete the selected row from the database.  You must first "select" a table row using the select method in order to delete.
-
-	*/
+	 * Will delete the selected row from the database. You must first "select" a table row using the select method in order to delete.
+	 */
 	public function delete() {
 		$returnVal = false;
 		if ($this->intTableKeyValue != "") {
@@ -316,7 +294,6 @@ class Basic {
 
 		return $returnVal;
 	}
-
 
 	// Getter and Setter Methods
 
@@ -360,7 +337,6 @@ class Basic {
 		return $returnVal;
 	}
 
-
 	public function set_tableName($tableName) {
 		$this->strTableName = $tableName;
 	}
@@ -390,7 +366,6 @@ class Basic {
 	}
 
 	public function updateTableTime() {
-
 		$result = $this->MySQL->query("SELECT tablename FROM ".$this->MySQL->get_tablePrefix()."tableupdates WHERE tablename = '".$this->strTableName."'");
 		if ($result->num_rows > 0) {
 			$this->MySQL->query("UPDATE ".$this->MySQL->get_tablePrefix()."tableupdates SET updatetime = '".time()."' WHERE tablename = '".$this->strTableName."'");
@@ -398,5 +373,4 @@ class Basic {
 			$this->MySQL->query("INSERT INTO ".$this->MySQL->get_tablePrefix()."tableupdates (tablename, updatetime) VALUES ('".$this->strTableName."', '".time()."')");
 		}
 	}
-
 }
