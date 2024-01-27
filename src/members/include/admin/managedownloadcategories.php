@@ -33,7 +33,7 @@ $downloadCatObj = new DownloadCategory($mysqli);
 
 
 if ($catID == "") {
-		echo "
+	echo "
 	
 		<div id='loadingSpiral' class='loadingSpiral'>
 			<p align='center'>

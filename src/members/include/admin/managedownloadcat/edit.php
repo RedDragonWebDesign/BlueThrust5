@@ -104,8 +104,8 @@ if (isset($_POST['submit'])) {  // Corrected this line
 
 
 	if ($countErrors == 0) {
-		$updateColumns = array("name", "accesstype");
-		$updateValues = array($_POST['catname'], $_POST['accesstype']);
+		$updateColumns = ["name", "accesstype"];
+		$updateValues = [$_POST['catname'], $_POST['accesstype']];
 
 		if ($intNewOrderSpot != "") {
 			$resortOrder = true;
@@ -119,7 +119,7 @@ if (isset($_POST['submit'])) {  // Corrected this line
 			$result = $mysqli->query("DELETE FROM ".$mysqli->get_tablePrefix()."download_extensions WHERE downloadcategory_id = '".$downloadCatInfo['downloadcategory_id']."'");
 
 			foreach ($arrExtensions as $strExtension) {
-				$downloadExtensionObj->addNew(array("downloadcategory_id", "extension"), array($downloadCatInfo['downloadcategory_id'], trim($strExtension)));
+				$downloadExtensionObj->addNew(["downloadcategory_id", "extension"], [$downloadCatInfo['downloadcategory_id'], trim($strExtension)]);
 			}
 
 			echo "
@@ -175,7 +175,7 @@ if (!isset($_POST['submit'])) {
 
 	$arrDownloadExts = $downloadCatObj->getExtensions();
 
-	$arrDispDLExts = array();
+	$arrDispDLExts = [];
 
 	foreach ($arrDownloadExts as $extID) {
 		$downloadExtensionObj->select($extID);
