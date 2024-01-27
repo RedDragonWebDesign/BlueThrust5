@@ -18,7 +18,6 @@ include_once("../../../../classes/rank.php");
 include_once("../../../../classes/consoleoption.php");
 include_once("../../../../classes/downloadcategory.php");
 
-
 $consoleObj = new ConsoleOption($mysqli);
 $member = new Member($mysqli);
 $member->select($_SESSION['btUsername']);

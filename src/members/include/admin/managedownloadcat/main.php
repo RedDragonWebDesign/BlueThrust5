@@ -22,20 +22,15 @@ if (!isset($member)) {
 	}
 }
 
-
-
 echo "
 <script type='text/javascript'>
-
 $(document).ready(function() {
 $('#breadCrumb').html(\"<a href='".$MAIN_ROOT."'>Home</a> > <a href='".$MAIN_ROOT."members'>My Account</a> > Manage Download Categories\");
 });
-
 </script>
 ";
 
-include_once($prevFolder."classes/downloadcategory.php");
-//include_once($prevFolder."classes/downloadcategory.php");
+include_once($BASE_DIRECTORY."classes/downloadcategory.php");
 
 $cID = $_GET['cID'];
 
@@ -97,8 +92,6 @@ if ($x == 1) {
 }
 
 echo "
-
-
 <table class='formTable' style='border-spacing: 1px; margin-left: auto; margin-right: auto'>
 	<tr>
 		<td class='main' colspan='2' align='right'>
@@ -116,6 +109,4 @@ echo "
 	</tr>
 	".$dispCats."
 </table>
-
-
 ";

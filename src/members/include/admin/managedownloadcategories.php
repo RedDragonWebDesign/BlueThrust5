@@ -25,14 +25,13 @@ if (!isset($member) || substr($_SERVER['PHP_SELF'], -11) != "console.php") {
 
 $cID = $_GET['cID'] ?? '';
 require_once($prevFolder."classes/downloadcategory.php");
-$catID = $_GET['catID'] ?? '';
 
 $downloadCatObj = new DownloadCategory($mysqli);
 
 
 
 
-if ($catID == "") {
+if (($_GET['catID'] ?? '') == '') {
 	echo "
 	
 		<div id='loadingSpiral' class='loadingSpiral'>

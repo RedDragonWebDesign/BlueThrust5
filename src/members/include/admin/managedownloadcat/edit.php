@@ -32,7 +32,6 @@ if (!$downloadCatObj->select($_GET['catID'])) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."members';</script>");
 }
 
-
 $downloadCatInfo = $downloadCatObj->get_info_filtered();
 
 echo "
@@ -65,7 +64,6 @@ if (isset($_POST['submit'])) {  // Corrected this line
 	}
 
 	// Check Cat Order
-
 
 	$intNewOrderSpot = "";
 	if (!$downloadCatObj->select($_POST['catorder']) and $_POST['catorder'] != "first") {
@@ -101,7 +99,6 @@ if (isset($_POST['submit'])) {  // Corrected this line
 			}
 		}
 	}
-
 
 	if ($countErrors == 0) {
 		$updateColumns = ["name", "accesstype"];
