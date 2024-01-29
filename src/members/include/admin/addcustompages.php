@@ -90,7 +90,7 @@ if ( empty($_POST['submit']) ) {
 		<table class='formTable'>
 			<tr>
 				<td class='formLabel'>Page Name:</td>
-				<td class='main'><input type='text' name='pagename' class='textBox' value='".$_POST['pagename']."' style='width: 250px'></td>
+				<td class='main'><input type='text' name='pagename' class='textBox' value='".($_POST['pagename'] ?? '')."' style='width: 250px'></td>
 			</tr>
 			<tr>
 				<td colspan='2' class='main'><br>
@@ -103,7 +103,7 @@ if ( empty($_POST['submit']) ) {
 			</tr>
 			<tr>
 				<td colspan='2' style='padding-left: 10px' align='center'>
-					<textarea id='tinymceTextArea' name='wysiwygHTML' style='width: 80%' rows='15'>".$_POST['wysiwygHTML']."</textarea>
+					<textarea id='tinymceTextArea' name='wysiwygHTML' style='width: 80%' rows='15'>".($_POST['wysiwygHTML'] ?? '')."</textarea>
 				</td>
 			</tr>
 			<tr>
