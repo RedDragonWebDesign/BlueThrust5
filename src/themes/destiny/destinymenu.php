@@ -35,7 +35,7 @@ class DestinyMenu extends btThemeMenu {
 			$menuLinkInfo = $this->menuItemObj->objLink->get_info();
 			$checkURL = parse_url($menuLinkInfo['link']);
 
-			if (!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
+			if (!isset($checkURL['scheme']) || $checkURL['scheme'] == "") {
 				$menuLinkInfo['link'] = MAIN_ROOT.$menuLinkInfo['link'];
 			}
 
@@ -50,7 +50,7 @@ class DestinyMenu extends btThemeMenu {
 		if ($this->intMenuSection == 2) {
 			$menuImageInfo = $this->menuItemObj->objImage->get_info();
 			$checkURL = parse_url($menuItemInfo['imageurl']);
-			if (!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
+			if (!isset($checkURL['scheme']) || $checkURL['scheme'] == "") {
 				$menuImageInfo['imageurl'] = MAIN_ROOT.$menuImageInfo['imageurl'];
 			}
 
@@ -63,7 +63,7 @@ class DestinyMenu extends btThemeMenu {
 
 			if ($menuImageInfo['link'] != "") {
 				$checkURL = parse_url($menuImageInfo['link']);
-				if (!isset($checkURL['scheme']) || $checkURL['scheme'] = "") {
+				if (!isset($checkURL['scheme']) || $checkURL['scheme'] == "") {
 					$menuImageInfo['link'] = MAIN_ROOT.$menuImageInfo['link'];
 				}
 
