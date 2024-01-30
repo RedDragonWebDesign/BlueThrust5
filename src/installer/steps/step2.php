@@ -4,15 +4,13 @@ $countErrors = 0;
 if ($_POST['step1submit']) {
 	$mysqli = new btmysql($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass'], $_POST['dbname']);
 
-if (!$mysqli->isConnected()) {
-    $dispError = "Unable to connect to the database. Please check your credentials.";
-    $countErrors++;
-    // Display the error message
-    echo "<div class='errorDiv'>$dispError</div>";
-    // Optionally, provide a back button
-    echo "<p><a href='index.php?step=1'>Go Back to Step 1</a></p>";
-    return; // Stop further execution
-}
+	if (!$mysqli->isConnected()) {
+		$dispError = "Unable to connect to the database. Please check your credentials.";
+		$countErrors++;
+		echo "<div class='errorDiv'>$dispError</div>";
+		echo "<p><a href='index.php?step=1'>Go Back to Step 1</a></p>";
+		return;
+	}
 
 	if ($countErrors == 0) {
 		echo "
