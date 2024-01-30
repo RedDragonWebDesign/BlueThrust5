@@ -63,9 +63,7 @@ if (count($_GET) > 0) {
 	$_POST['sortresults'] = 0;
 	$_POST['sortresults_ascdesc'] = 0;
 
-	if (count($_GET['filterboards']) == 0) {
-		$_POST['filterboards'][] = 0;
-	}
+	$_POST['filterboards'] = $_GET['filterboards'] ?? [0];
 
 	foreach ($_GET as $key => $value) {
 		$_POST[$key] = $_GET[$key];
