@@ -41,6 +41,7 @@ if ($NUM_PER_PAGE == 0) {
 	$NUM_PER_PAGE = 25;
 }
 
+$arrTopics = [];
 
 $seenTopicsSQL = "SELECT forumtopic_id FROM ".$dbprefix."forum_topicseen WHERE member_id = '".$memberInfo['member_id']."'";
 
