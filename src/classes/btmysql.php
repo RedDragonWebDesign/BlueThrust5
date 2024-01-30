@@ -50,7 +50,6 @@ class btMySQL extends MySQLi {
 
 		parent::__construct($host, $username, $passwd, $dbname, $port, $socket);
 
-
 		if ($this->connect_errno) {
 			$this->isConnected = false;
 		} else {
@@ -134,7 +133,6 @@ class btMySQL extends MySQLi {
 		return $returnVal;
 	}
 
-
 	public function optimizeTables() {
 		$tables = [];
 		$result = $this->query("SHOW TABLE STATUS WHERE Data_free > 0");
@@ -148,6 +146,5 @@ class btMySQL extends MySQLi {
 			$this->query("OPTIMIZE TABLE ".$optimizeTables);
 		}
 	}
-
 
 }
