@@ -88,7 +88,7 @@ if (!$blnShowDownload) {
 		
 		<div class='shadedBox main' style='text-align: center; margin: 20px auto; width: 50%'>
 			<p>
-			Unable download file!
+			Unable to download file!
 			</p>
 		</div>
 	";
