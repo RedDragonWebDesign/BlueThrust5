@@ -19,10 +19,10 @@ class btMySQL extends MySQLi {
 
 	/** In debug mode, this query() override method will enable SQL query profiling. That is, it will keep track of every query made, and it will be printed at the bottom of the page. */
 	function query($query, $resultmode = MYSQLI_STORE_RESULT): mysqli_result|bool {
-       if (!$this->isConnected) {
-            // Handle the case where a query is attempted on a failed connection
-            return false;
-        }
+		if (!$this->isConnected) {
+			// Handle the case where a query is attempted on a failed connection
+			return false;
+		}
 		global $SQL_PROFILER, $debug;
 		if ( $debug ) {
 			$start = microtime(true);
@@ -50,13 +50,13 @@ class btMySQL extends MySQLi {
 
 		parent::__construct($host, $username, $passwd, $dbname, $port, $socket);
 
-		        if ($this->connect_errno) {
-            $this->isConnected = false; // Set to false if connection failed
-        } else {
-            $this->isConnected = true; // Set to true if connection succeeded
-            $this->query("SET SESSION sql_mode = ''");
-        }
-    }
+		if ($this->connect_errno) {
+			$this->isConnected = false;
+		} else {
+			$this->isConnected = true;
+			$this->query("SET SESSION sql_mode = ''");
+		}
+	}
 
 	public function set_tablePrefix($tablePrefix) {
 		$this->bt_TablePrefix = $tablePrefix;
@@ -75,9 +75,9 @@ class btMySQL extends MySQLi {
 			die($pageName." - ".$this->error);
 		}
 	}
-    public function isConnected() {
-        return $this->isConnected;
-    }
+	public function isConnected() {
+		return $this->isConnected;
+	}
 
 	public function getParamTypes($arrValues) {
 		$strParamTypes = "";
