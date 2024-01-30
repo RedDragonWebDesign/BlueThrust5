@@ -46,7 +46,7 @@ if (!empty($_POST['submit'])) {
 			$_SESSION['token'] = $token;
 			$_SESSION['btUsername'] = $memberInfo['username'];
 			$_SESSION['btPassword'] = $memberInfo['password']; // Storing password in session is generally not recommended
-			
+
 			// Update member info
 			$newLastLogin = time();
 			$newTimesLoggedIn = $memberInfo['timesloggedin'] + 1;
@@ -70,7 +70,7 @@ if (!empty($_POST['submit'])) {
 			exit;
 		}
 	}
-	
+
 	$fail = true;
 	$_POST['submit'] = false;
 }
