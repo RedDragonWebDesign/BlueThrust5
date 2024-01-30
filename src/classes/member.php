@@ -211,9 +211,9 @@ class Member extends Basic {
 				while ($row = $result->fetch_array()) {
 					$teamArr[] = $row['team_id'];
 				}
-				
+
 				$teamSQL = "('".implode("','", $teamArr)."')";
-				
+
 				$query = "SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentteams WHERE tournamentteam_id IN ".$teamSQL;
 				$result = $this->MySQL->query($query);
 				//echo $this->MySQL->error;
