@@ -4,7 +4,7 @@
 
 [Stable Release](https://github.com/RedDragonWebDesign/BlueThrust5/releases) - Same as v4 Revision 17 from year 2016. No changes yet.
 
-[Development Release - May Contain Bugs](https://github.com/RedDragonWebDesign/BlueThrust5/archive/master.zip) - See the "Progress So Far" section below for details.
+[Development Release - May Contain Bugs](https://github.com/RedDragonWebDesign/BlueThrust5/archive/master.zip) - See the "Progress So Far" section below for details. As of 2024, requires PHP 8.0 or greater. As of 2024, devs are currently using PHP 8.1 to develop.
 
 ## Bugs, Security Issues, Feature Requests
 
