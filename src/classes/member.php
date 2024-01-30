@@ -196,7 +196,7 @@ class Member extends Basic {
 				$result = $this->MySQL->query($query);
 				while ($row = $result->fetch_array()) {
 					$returnArr[] = $row['tournament_id'];
-				}
+				}					
 
 				$query = "SELECT tournament_id FROM ".$this->MySQL->get_tablePrefix()."tournament_managers WHERE member_id = '".$this->intTableKeyValue."'";
 				$result = $this->MySQL->query($query);
@@ -204,13 +204,18 @@ class Member extends Basic {
 					$returnArr[] = $row['tournament_id'];
 				}
 			} else {
+				$teamArr = [];
+				
 				$query = "SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentplayers WHERE member_id = '".$this->intTableKeyValue."'";
 				$result = $this->MySQL->query($query);
 				while ($row = $result->fetch_array()) {
 					$teamArr[] = $row['team_id'];
 				}
-
-				$teamSQL = "('".implode("','", $teamArr)."')";
+				if (!empty($teamArr)) {
+					$teamSQL = "('".implode("','", $teamArr)."')";
+				} else {
+					$teamSQL = "('')";
+				}
 
 				$query = "SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentteams WHERE tournamentteam_id IN ".$teamSQL;
 				$result = $this->MySQL->query($query);
