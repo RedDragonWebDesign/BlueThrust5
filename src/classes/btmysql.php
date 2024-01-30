@@ -50,6 +50,7 @@ class btMySQL extends MySQLi {
 
 		parent::__construct($host, $username, $passwd, $dbname, $port, $socket);
 
+
 		if ($this->connect_errno) {
 			$this->isConnected = false;
 		} else {
