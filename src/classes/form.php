@@ -13,28 +13,28 @@
  */
 
 class Form {
-
-	public $formName;
-	public $components;
-	public $saveAdditional;
-	public $objSave;
-	public $attributes;
-	public $saveType;	// Add or Update
-	public $wrapper = ["<div class='formDiv'>", "</div>"];
-	public $errors = [];
-	public $saveMessage;
-	public $saveMessageTitle;
+	private $arrDeleteFiles = [];
 	public $afterSave;
-	public $saveLink;
-	public $blnSaveResult;
-	public $beforeAfter = false;
-	public $isContainer = false;
-	public $embedJS;
+	public $arrSkipPrefill = [];
 	public $attachmentForm;
 	public $attachmentObj;
-	private $arrDeleteFiles = [];
-	public $arrSkipPrefill = [];
-
+	public $attributes;
+	public $beforeAfter = false;
+	public $blnSaveResult;
+	public $components;
+	public $description;
+	public $embedJS;
+	public $errors = [];
+	public $formName;
+	public $isContainer = false;
+	public $objSave;
+	public $prefillValues;
+	public $saveAdditional;
+	public $saveLink;
+	public $saveMessage;
+	public $saveMessageTitle;
+	public $saveType;	// Add or Update
+	public $wrapper = ["<div class='formDiv'>", "</div>"];
 
 	private $richtextboxJSFile;
 	private $colorpickerJSFile;
