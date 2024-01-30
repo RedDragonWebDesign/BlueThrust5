@@ -205,7 +205,7 @@ class Member extends Basic {
 				}
 			} else {
 				$teamArr = [];
-				
+
 				$query = "SELECT * FROM ".$this->MySQL->get_tablePrefix()."tournamentplayers WHERE member_id = '".$this->intTableKeyValue."'";
 				$result = $this->MySQL->query($query);
 				while ($row = $result->fetch_array()) {
