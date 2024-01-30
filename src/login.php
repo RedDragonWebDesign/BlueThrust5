@@ -22,7 +22,6 @@ require_once("_setup.php");
 require_once("classes/member.php");
 
 // Start Page
-
 require_once("themes/".$THEME."/_header.php");
 
 $breadcrumbObj->setTitle("Log In");
@@ -30,63 +29,57 @@ $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Log In");
 
 // If form submitted, process form
-if ( ! empty($_POST['submit']) ) {
-	$login_username = $_POST['user'];
-	$login_password = $_POST['pass'];
-	$fail = true;
+if (!empty($_POST['submit'])) {
+    $login_username = $_POST['user'];
+    $login_password = $_POST['pass'];
+    $fail = true;
 
-	$checkMember = new Member($mysqli);
+    $checkMember = new Member($mysqli);
+    $checkMember->select($login_username);
+    $memberInfo = $checkMember->get_info();
 
-	$checkMember->select($login_username);
-	$memberInfo = $checkMember->get_info();
+    if (!empty($memberInfo['username'])) {
+        if ($checkMember->authorizeLogin($login_password, 1)) {
+            // Generate a unique token for this session
+            $token = bin2hex(random_bytes(32));
 
-	$usernameExists = ($memberInfo['username'] ?? '') != "";
+            // Store the token in the session
+            $_SESSION['token'] = $token;
+            $_SESSION['btUsername'] = $memberInfo['username'];
+            $_SESSION['btPassword'] = $memberInfo['password']; // Storing password in session is generally not recommended
 
-	if ( $usernameExists ) {
-		$passwordMatches = $checkMember->authorizeLogin($login_password, 1);
+            // Update member info
+            $newLastLogin = time();
+            $newTimesLoggedIn = $memberInfo['timesloggedin'] + 1;
+            $newIP = $_SERVER['REMOTE_ADDR'];
 
-		if ( $passwordMatches ) {
-			$_SESSION['btUsername'] = $memberInfo['username'];
-			$_SESSION['btPassword'] = $memberInfo['password'];
-			$_SESSION['btRememberMe'] = $_POST['rememberme'] ?? '';
+            $checkMember->update(
+                ["lastlogin", "timesloggedin", "ipaddress", "loggedin"],
+                [$newLastLogin, $newTimesLoggedIn, $newIP, 1]
+            );
 
+            $checkMember->autoPromote();
 
-			$memberInfo = $checkMember->get_info();
+            // Set cookies if 'Remember Me' is checked
+            if (isset($_POST['rememberme']) && $_POST['rememberme'] == '1') {
+                setcookie('btUsername', $memberInfo['username'], time() + 86400 * 30, "/", "", true, true);
+                setcookie('token', $token, time() + 86400 * 30, "/", "", true, true);
+            }
 
-			$newLastLogin = time();
-			$newTimesLoggedIn = $memberInfo['timesloggedin']+1;
-			$newIP = $_SERVER['REMOTE_ADDR'];
+            // Redirect
+            header('Location: members/');
+            exit;
+        }
+    }
 
-			$checkMember->update(
-				["lastlogin", "timesloggedin", "ipaddress", "loggedin"],
-				[$newLastLogin, $newTimesLoggedIn, $newIP, 1]
-			);
-
-			$checkMember->autoPromote();
-
-			$fail = false;
-			echo "
-				<script type='text/javascript'>
-					window.location = 'members/';
-				</script>
-			";
-		}
-	}
-
-	if ( $fail ) {
-		$_POST['submit'] = false;
-	}
+    $fail = true;
+    $_POST['submit'] = false;
 }
 
+if (empty($_POST['submit']) && !constant("LOGGED_IN")) {
+    $errorMessage = $fail ? "You entered an incorrect username/password combination!" : "You must be logged in to view this page!";
+    require_once($prevFolder."include/breadcrumb.php");
 
-if ( empty($_POST['submit']) && ! constant("LOGGED_IN")) {
-	if ( $fail ) {
-		$errorMessage = "You entered an incorrect username/password combination!";
-	} else {
-		$errorMessage = "You must be logged in to view this page!";
-	}
-
-	require_once($prevFolder."include/breadcrumb.php");
 	echo "
 
 
