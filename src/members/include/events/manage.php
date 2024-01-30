@@ -35,6 +35,7 @@ $eventObj = new Event($mysqli);
 
 $intViewInvitesCID = $consoleObj->findConsoleIDByName("View Event Invitations");
 
+$arrEvents = [];
 
 $result = $mysqli->query("SELECT event_id FROM ".$dbprefix."events_members WHERE member_id = '".$memberInfo['member_id']."'");
 while ($row = $result->fetch_assoc()) {
