@@ -51,7 +51,7 @@ class btBBCode {
 				$strText = str_replace($bbCodes['bbOpenTag'], $bbCodes['htmlOpenTag'], $strText);
 				$strText = str_replace($bbCodes['bbCloseTag'], $bbCodes['htmlCloseTag'], $strText);
 			} else {
-				$strText = preg_replace(
+				// $strText = preg_replace(
 			}
 		}
 	}
