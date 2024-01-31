@@ -56,9 +56,8 @@ $EXTERNAL_JAVASCRIPT .= "
 
 // Check if the page is called directly with 'cID' in the query string and the page title is '-separator-'
 if (isset($_GET['cID']) && $consoleInfo['pagetitle'] === '-separator-') {
-    // Redirect to console.php
-    header('Location: console.php');
-    exit;
+	header('Location: console.php');
+	exit;
 }
 
 $arrTinyMCEPages = ["Manage News", "Post News", "Add Custom Page", "Manage Custom Pages", "Add Custom Form Page", "Manage Custom Form Pages", "Post Topic", "Manage Forum Posts", "Add Menu Item", "Add Menu Category", "Manage Menu Categories", "Manage Menu Items", "Edit Profile"];
