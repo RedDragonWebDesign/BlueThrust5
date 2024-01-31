@@ -16,13 +16,11 @@ class btMySQL extends MySQLi {
 
 	protected $bt_TablePrefix;
 	protected $bt_TestingMode;
+	protected $isConnected;
 
 	/** In debug mode, this query() override method will enable SQL query profiling. That is, it will keep track of every query made, and it will be printed at the bottom of the page. */
 	function query($query, $resultmode = MYSQLI_STORE_RESULT): mysqli_result|bool {
-		if (!$this->isConnected) {
-			// Handle the case where a query is attempted on a failed connection
-			return false;
-		}
+
 		global $SQL_PROFILER, $debug;
 		if ( $debug ) {
 			$start = microtime(true);
