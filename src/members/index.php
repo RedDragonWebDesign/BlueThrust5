@@ -65,7 +65,7 @@ if ($checkMember) {
 
 		$strPrivileges = implode(",", $rankPrivileges);
 
-		$result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."consolecategory ORDER BY ordernum ASC");
+		$result = $mysqli->query("SELECT * FROM ".$mysqli->get_tablePrefix()."consolecategory ORDER BY ordernum DESC");
 
 		while ($row = $result->fetch_assoc()) {
 			$arrConsoleCats[] = $row['consolecategory_id'];
