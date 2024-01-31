@@ -54,7 +54,7 @@ $EXTERNAL_JAVASCRIPT .= "
 <link rel='stylesheet' media='screen' type='text/css' href='".$MAIN_ROOT."js/colorpicker/jquery.miniColors.css'>
 ";
 
-// Check if the page is called directly with 'cID' in the query string and the page title is '-separator-'
+// Don't let user load a -separator- page
 if (isset($_GET['cID']) && $consoleInfo['pagetitle'] === '-separator-') {
 	header('Location: console.php');
 	exit;
