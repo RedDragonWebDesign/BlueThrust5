@@ -51,7 +51,7 @@ $consoleCatObj = new ConsoleCategory($mysqli);
 $intHighestOrder = $consoleCatObj->getHighestOrderNum();
 $counter = 0;
 $x = 1;
-$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory ORDER BY ordernum DESC");
+$result = $mysqli->query("SELECT * FROM ".$dbprefix."consolecategory ORDER BY ordernum ASC");
 while ($row = $result->fetch_assoc()) {
 	if ($counter == 1) {
 		$addCSS = " alternateBGColor";
