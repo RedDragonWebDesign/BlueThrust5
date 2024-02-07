@@ -12,6 +12,39 @@
  *
  */
 
+function recurseSubForums($spacing) {
+	global $filterBoardOptions, $boardObj, $memberInfo;
+
+	$arrSubforums = $boardObj->getSubForums();
+	foreach ($arrSubforums as $boardID) {
+		$boardObj->select($boardID);
+		if ($boardObj->memberHasAccess($memberInfo)) {
+			$filterBoardOptions[$boardObj->get_info("forumboard_id")] = $spacing.$boardObj->get_info_filtered("name");
+			if (count($boardObj->getSubForums()) > 0) {
+				recurseSubForums("&nbsp;&nbsp;&nbsp;&nbsp;".$spacing);
+			}
+		}
+	}
+}
+
+/**
+ * Validation function used by the form processor
+ */
+function check_filter_boards() {
+	global $boardObj, $formObj;
+
+	$countErrors = 0;
+	foreach ($_POST['filterboards'] as $value) {
+		if (!$boardObj->select($value) && $value != 0) {
+			$countErrors++;
+		}
+	}
+
+	if ($countErrors > 0) {
+		$formObj->errors[] = "You selected an invalid board filter.";
+	}
+}
+
 // Config File
 $prevFolder = "../";
 
@@ -102,37 +135,6 @@ while ($row = $result->fetch_assoc()) {
 		}
 	}
 }
-
-function recurseSubForums($spacing) {
-	global $filterBoardOptions, $boardObj, $memberInfo;
-
-	$arrSubforums = $boardObj->getSubForums();
-	foreach ($arrSubforums as $boardID) {
-		$boardObj->select($boardID);
-		if ($boardObj->memberHasAccess($memberInfo)) {
-			$filterBoardOptions[$boardObj->get_info("forumboard_id")] = $spacing.$boardObj->get_info_filtered("name");
-			if (count($boardObj->getSubForums()) > 0) {
-				recurseSubForums("&nbsp;&nbsp;&nbsp;&nbsp;".$spacing);
-			}
-		}
-	}
-}
-
-function check_filter_boards() {
-	global $boardObj, $formObj;
-
-	$countErrors = 0;
-	foreach ($_POST['filterboards'] as $value) {
-		if (!$boardObj->select($value) && $value != 0) {
-			$countErrors++;
-		}
-	}
-
-	if ($countErrors > 0) {
-		$formObj->errors[] = "You selected an invalid board filter.";
-	}
-}
-
 
 $filterBoardSize = floor(count($filterBoardOptions)*.85);
 
