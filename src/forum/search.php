@@ -85,6 +85,7 @@ $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Forum", $MAIN_ROOT."forum");
 $breadcrumbObj->addCrumb("Search Forum");
 
+// $_POST is the method for doing advanced searches. But there is also a limited $_GET search for searching all of a user's posts. If using $_GET search, set the $_POST variables here.
 if (count($_GET) > 0) {
 	$_POST['fakesearchuser'] = $_GET['searchuser'];
 	$_POST['checkCSRF'] = $_SESSION['csrfKey'];
@@ -123,6 +124,7 @@ while ($row = $result->fetch_assoc()) {
 
 $memberList = json_encode($arrMemberList);
 
+// Populate the $filterBoardOptions variable, which contains the list of boards to include in the Filter Boards <select> element
 $filterBoardOptions[0] = "Search All Boards";
 $result = $mysqli->query("SELECT ".$dbprefix."forum_board.forumboard_id FROM ".$dbprefix."forum_board, ".$dbprefix."forum_category WHERE ".$dbprefix."forum_board.forumcategory_id = ".$dbprefix."forum_category.forumcategory_id AND ".$dbprefix."forum_board.subforum_id = '0' ORDER BY ".$dbprefix."forum_category.ordernum DESC, ".$dbprefix."forum_board.sortnum");
 while ($row = $result->fetch_assoc()) {
