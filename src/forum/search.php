@@ -225,7 +225,8 @@ $formComponents = [
 		"attributes" => ["multiple" => "multiple", "class" => "formInput textBox", "size" => $filterBoardSize, "style" => "width: 40%; height: 10em;" ],
 		"options" => $filterBoardOptions,
 		"sortorder" => $i++,
-		"validate" => ["check_filter_boards"]
+		"validate" => ["check_filter_boards"],
+		"value" => 0,
 	],
 	"include_subforums" => [
 		"type" => "checkbox",
