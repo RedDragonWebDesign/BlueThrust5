@@ -11,7 +11,24 @@
  * License: http://www.bluethrust.com/license.php
  *
  */
-
+session_start();
+// Token validation
+if (isset($_COOKIE['btUsername']) && isset($_COOKIE['token'])) {
+	if (!isset($_SESSION['token']) || $_SESSION['token'] !== $_COOKIE['token']) {
+		// Token mismatch, possible session hijacking attempt
+		// Log out the user and redirect to the login page
+		session_destroy();
+		setcookie('btUsername', '', time() - 3600, '/'); // Delete the cookie
+		setcookie('token', '', time() - 3600, '/'); // Delete the token cookie
+		header('Location: login.php?error=session_mismatch');
+		exit;
+	}
+	// Proceed with the request
+} else {
+	// User is not logged in, redirect to login page
+	header('Location: login.php');
+	exit;
+}
 
 // Config File
 $prevFolder = "../";
