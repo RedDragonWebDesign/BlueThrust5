@@ -12,16 +12,12 @@
 	* License: http://www.bluethrust.com/license.php
 	*
 	*/
-
-
 // Config File
 $prevFolder = "../";
 
 require_once($prevFolder."_setup.php");
-
 require_once($prevFolder."classes/member.php");
 require_once($prevFolder."classes/poll.php");
-
 
 $consoleObj = new ConsoleOption($mysqli);
 $pollObj = new Poll($mysqli);
@@ -36,6 +32,7 @@ if ($pollObj->select($_POST['pollID'])) {
 	$blnVote = false;
 	$member->select($_SESSION['btUsername']);
 	$memberID = "";
+
 	if ($pollInfo['accesstype'] == "members" && $member->authorizeLogin($_SESSION['btPassword'])) {
 		$memberID = $member->get_info("member_id");
 		$blnVote = true;
@@ -47,17 +44,30 @@ if ($pollObj->select($_POST['pollID'])) {
 		$blnVote = true;
 	}
 
-
-
 	if ($blnVote) {
-		foreach (json_decode($_POST['pollOptionID'], true) as $pollOptionID) {
-			$pollObj->objPollOption->select($pollOptionID);
-			$pollOptionInfo = $pollObj->objPollOption->get_info_filtered();
-			$arrReturn = $pollObj->vote($memberID, $pollOptionInfo);
+		if ($pollInfo['multivote'] == 1 || !$pollObj->hasVoted($memberID, $_POST['pollID'])) {
+			$voteSuccess = false;
+			foreach (json_decode($_POST['pollOptionID'], true) as $pollOptionID) {
+				$pollObj->objPollOption->select($pollOptionID);
+				$pollOptionInfo = $pollObj->objPollOption->get_info_filtered();
+				$voteResult = $pollObj->vote($memberID, $pollOptionInfo);
+				if ($voteResult['result'] == 'success') {
+					$voteSuccess = true;
+				}
+			}
+			if ($voteSuccess) {
+				$arrReturn = ["result" => "success", "message" => "Your vote has been recorded."];
+			} else {
+				$arrReturn['errors'] = "There was an error recording your vote.";
+			}
+		} else {
+			$arrReturn['errors'] = "You have already voted in this poll.";
 		}
 	} else {
 		$arrReturn['errors'] = "You do not have permission to vote on this poll.";
 	}
+} else {
+	$arrReturn['errors'] = "Poll not found.";
 }
 
 echo json_encode($arrReturn);
