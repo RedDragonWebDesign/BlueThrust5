@@ -54,6 +54,11 @@ $EXTERNAL_JAVASCRIPT .= "
 <link rel='stylesheet' media='screen' type='text/css' href='".$MAIN_ROOT."js/colorpicker/jquery.miniColors.css'>
 ";
 
+// Don't let user load a -separator- page
+if (isset($_GET['cID']) && $consoleInfo['pagetitle'] === '-separator-') {
+	header('Location: console.php');
+	exit;
+}
 
 $arrTinyMCEPages = ["Manage News", "Post News", "Add Custom Page", "Manage Custom Pages", "Add Custom Form Page", "Manage Custom Form Pages", "Post Topic", "Manage Forum Posts", "Add Menu Item", "Add Menu Category", "Manage Menu Categories", "Manage Menu Items", "Edit Profile"];
 $arrAceEditorPages = ["Modify Current Theme", "Add Menu Category", "Add Menu Item", "Manage Menu Categories", "Manage Menu Items"];

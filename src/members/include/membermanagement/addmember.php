@@ -148,7 +148,7 @@ $newMemberObj = new Member($mysqli);
 $setupFormArgs = [
 	"name" => "console-".$cID,
 	"components" => $arrComponents,
-	"saveMessage" => "Successfully added new member: <b>".filterText($_POST['newmember'])."</b>!",
+	"saveMessage" => "Successfully added new member: <b>".filterText($_POST['newmember'] ?? '')."</b>!",
 	"attributes" => ["action" => $MAIN_ROOT."members/console.php?cID=".$cID, "method" => "post"],
 	"description" => "Fill out the form below to add a new member.",
 	"embedJS" => $checkPasswordJS,

@@ -2488,8 +2488,8 @@ INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(39, 'forum_
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(40, 'forum_rankheight', '75');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(41, 'forum_rankwidthunit', 'px');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(42, 'forum_rankheightunit', 'px');
-INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(43, 'forum_postsperpage', '0');
-INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(44, 'forum_topicsperpage', '0');
+INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(43, 'forum_postsperpage', '20');
+INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(44, 'forum_topicsperpage', '20');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(45, 'forum_imagewidth', '500');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(46, 'forum_imageheight', '500');
 INSERT INTO `websiteinfo` (`websiteinfo_id`, `name`, `value`) VALUES(47, 'forum_sigwidth', '500');

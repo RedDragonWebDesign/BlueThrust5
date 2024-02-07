@@ -12,6 +12,39 @@
  *
  */
 
+function recurseSubForums($spacing) {
+	global $filterBoardOptions, $boardObj, $memberInfo;
+
+	$arrSubforums = $boardObj->getSubForums();
+	foreach ($arrSubforums as $boardID) {
+		$boardObj->select($boardID);
+		if ($boardObj->memberHasAccess($memberInfo)) {
+			$filterBoardOptions[$boardObj->get_info("forumboard_id")] = $spacing.$boardObj->get_info_filtered("name");
+			if (count($boardObj->getSubForums()) > 0) {
+				recurseSubForums("&nbsp;&nbsp;&nbsp;&nbsp;".$spacing);
+			}
+		}
+	}
+}
+
+/**
+ * Validation function used by the form processor
+ */
+function check_filter_boards() {
+	global $boardObj, $formObj;
+
+	$countErrors = 0;
+	foreach ($_POST['filterboards'] as $value) {
+		if (!$boardObj->select($value) && $value != 0) {
+			$countErrors++;
+		}
+	}
+
+	if ($countErrors > 0) {
+		$formObj->errors[] = "You selected an invalid board filter.";
+	}
+}
+
 // Config File
 $prevFolder = "../";
 
@@ -52,6 +85,7 @@ $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Forum", $MAIN_ROOT."forum");
 $breadcrumbObj->addCrumb("Search Forum");
 
+// $_POST is the method for doing advanced searches. But there is also a limited $_GET search for searching all of a user's posts. If using $_GET search, set the $_POST variables here, basically imitating an advanced search.
 if (count($_GET) > 0) {
 	$_POST['fakesearchuser'] = $_GET['searchuser'];
 	$_POST['checkCSRF'] = $_SESSION['csrfKey'];
@@ -64,7 +98,7 @@ if (count($_GET) > 0) {
 	$_POST['sortresults_ascdesc'] = 0;
 
 	if (count($_GET['filterboards']) == 0) {
-		$_POST['filterboards'][] = 0;
+		$_POST['filterboards'][] = 0; // 0 means search all boards
 	}
 
 	foreach ($_GET as $key => $value) {
@@ -81,15 +115,14 @@ if (count($_POST) > 0) {
 
 require_once($prevFolder."include/breadcrumb.php");
 
-
 $arrMemberList = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '0' AND rank_id != '1' ORDER BY username");
 while ($row = $result->fetch_assoc()) {
 	$arrMemberList[] = ["id" => $row['member_id'], "value" => filterText($row['username'])];
 }
-
 $memberList = json_encode($arrMemberList);
 
+// Populate the $filterBoardOptions variable, which contains the list of boards to include in the Filter Boards <select> element
 $filterBoardOptions[0] = "Search All Boards";
 $result = $mysqli->query("SELECT ".$dbprefix."forum_board.forumboard_id FROM ".$dbprefix."forum_board, ".$dbprefix."forum_category WHERE ".$dbprefix."forum_board.forumcategory_id = ".$dbprefix."forum_category.forumcategory_id AND ".$dbprefix."forum_board.subforum_id = '0' ORDER BY ".$dbprefix."forum_category.ordernum DESC, ".$dbprefix."forum_board.sortnum");
 while ($row = $result->fetch_assoc()) {
@@ -102,37 +135,6 @@ while ($row = $result->fetch_assoc()) {
 		}
 	}
 }
-
-function recurseSubForums($spacing) {
-	global $filterBoardOptions, $boardObj, $memberInfo;
-
-	$arrSubforums = $boardObj->getSubForums();
-	foreach ($arrSubforums as $boardID) {
-		$boardObj->select($boardID);
-		if ($boardObj->memberHasAccess($memberInfo)) {
-			$filterBoardOptions[$boardObj->get_info("forumboard_id")] = $spacing.$boardObj->get_info_filtered("name");
-			if (count($boardObj->getSubForums()) > 0) {
-				recurseSubForums("&nbsp;&nbsp;&nbsp;&nbsp;".$spacing);
-			}
-		}
-	}
-}
-
-function check_filter_boards() {
-	global $boardObj, $formObj;
-
-	$countErrors = 0;
-	foreach ($_POST['filterboards'] as $value) {
-		if (!$boardObj->select($value) && $value != 0) {
-			$countErrors++;
-		}
-	}
-
-	if ($countErrors > 0) {
-		$formObj->errors[] = "You selected an invalid board filter.";
-	}
-}
-
 
 $filterBoardSize = floor(count($filterBoardOptions)*.85);
 
@@ -218,10 +220,11 @@ $formComponents = [
 	"filterboards[]" => [
 		"type" => "select",
 		"display_name" => "Select Boards",
-		"attributes" => ["multiple" => "multiple", "class" => "formInput textBox", "size" => $filterBoardSize, "style" => "width: 40%"],
+		"attributes" => ["multiple" => "multiple", "class" => "formInput textBox", "size" => $filterBoardSize, "style" => "width: 40%; height: 10em;" ],
 		"options" => $filterBoardOptions,
 		"sortorder" => $i++,
-		"validate" => ["check_filter_boards"]
+		"validate" => ["check_filter_boards"],
+		"value" => 0,
 	],
 	"include_subforums" => [
 		"type" => "checkbox",
