@@ -222,7 +222,7 @@ $formComponents = [
 	"filterboards[]" => [
 		"type" => "select",
 		"display_name" => "Select Boards",
-		"attributes" => ["multiple" => "multiple", "class" => "formInput textBox", "size" => $filterBoardSize, "style" => "width: 40%"],
+		"attributes" => ["multiple" => "multiple", "class" => "formInput textBox", "size" => $filterBoardSize, "style" => "width: 40%; height: 10em;" ],
 		"options" => $filterBoardOptions,
 		"sortorder" => $i++,
 		"validate" => ["check_filter_boards"]
