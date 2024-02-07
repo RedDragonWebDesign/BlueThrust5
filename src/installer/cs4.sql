@@ -208,22 +208,22 @@ CREATE TABLE IF NOT EXISTS `consolecategory` (
   PRIMARY KEY (`consolecategory_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
 
-INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(1, 'Administrator Options', 1, 1);
-INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(2, 'Member Management', 5, 0);
-INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(3, 'Account Options', 7, 0);
-INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(9, 'News', 6, 0);
-INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(7, 'Squads', 3, 0);
+INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(20, 'World Clocks', 1, 0);
 INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(8, 'Tournaments', 2, 0);
-INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(10, 'Medals', 4, 0);
-INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(11, 'Diplomacy Options', 8, 0);
-INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(12, 'Events', 9, 0);
+INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(7, 'Squads', 3, 0);
+INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(16, 'Social Media Connect', 4, 0);
+INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(17, 'Private Messages', 5, 0);
+INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(18, 'Polls', 6, 0);
+INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(9, 'News', 7, 0);
+INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(2, 'Member Management', 8, 0);
+INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(10, 'Medals', 9, 0);
 INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(13, 'Forum Management', 10, 0);
-INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(14, 'Downloads', 11, 0);
-INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(16, 'Social Media Connect', 12, 0);
-INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(17, 'Private Messages', 13, 0);
-INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(18, 'Polls', 14, 0);
-INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(19, 'Donations', 15, 0);
-INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(20, 'World Clocks', 16, 0);
+INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(12, 'Events', 11, 0);
+INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(14, 'Downloads', 12, 0);
+INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(11, 'Diplomacy Options', 13, 0);
+INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(19, 'Donations', 14, 0);
+INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(1, 'Administrator Options', 15, 0);
+INSERT INTO `consolecategory` (`consolecategory_id`, `name`, `ordernum`, `adminoption`) VALUES(3, 'Account Options', 16, 0);
 
 CREATE TABLE IF NOT EXISTS `console_members` (
   `privilege_id` int(11) NOT NULL AUTO_INCREMENT,
