@@ -85,7 +85,7 @@ $breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
 $breadcrumbObj->addCrumb("Forum", $MAIN_ROOT."forum");
 $breadcrumbObj->addCrumb("Search Forum");
 
-// $_POST is the method for doing advanced searches. But there is also a limited $_GET search for searching all of a user's posts. If using $_GET search, set the $_POST variables here.
+// $_POST is the method for doing advanced searches. But there is also a limited $_GET search for searching all of a user's posts. If using $_GET search, set the $_POST variables here, basically imitating an advanced search.
 if (count($_GET) > 0) {
 	$_POST['fakesearchuser'] = $_GET['searchuser'];
 	$_POST['checkCSRF'] = $_SESSION['csrfKey'];
@@ -98,7 +98,7 @@ if (count($_GET) > 0) {
 	$_POST['sortresults_ascdesc'] = 0;
 
 	if (count($_GET['filterboards']) == 0) {
-		$_POST['filterboards'][] = 0;
+		$_POST['filterboards'][] = 0; // 0 means search all boards
 	}
 
 	foreach ($_GET as $key => $value) {
@@ -115,13 +115,11 @@ if (count($_POST) > 0) {
 
 require_once($prevFolder."include/breadcrumb.php");
 
-
 $arrMemberList = [];
 $result = $mysqli->query("SELECT * FROM ".$dbprefix."members WHERE disabled = '0' AND rank_id != '1' ORDER BY username");
 while ($row = $result->fetch_assoc()) {
 	$arrMemberList[] = ["id" => $row['member_id'], "value" => filterText($row['username'])];
 }
-
 $memberList = json_encode($arrMemberList);
 
 // Populate the $filterBoardOptions variable, which contains the list of boards to include in the Filter Boards <select> element
