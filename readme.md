@@ -2,9 +2,10 @@
 
 ## Download Link
 
-[Stable Release](https://github.com/RedDragonWebDesign/BlueThrust5/releases) - Same as v4 Revision 17 from year 2016. No changes yet.
+We have two versions of BlueThrust available:
 
-[Development Release - May Contain Bugs](https://github.com/RedDragonWebDesign/BlueThrust5/archive/master.zip) - See the "Progress So Far" section below for details. As of 2024, requires PHP 8.0 or greater. As of 2024, devs are currently using PHP 8.1 to develop.
+* [Version 4](https://github.com/RedDragonWebDesign/BlueThrust5/releases/tag/v4r17) - The original BlueThrust clan scripts from 2016. Great if you are running a really old version of PHP such as PHP 5.6.
+* [Version 5](https://github.com/RedDragonWebDesign/BlueThrust5/archive/refs/heads/master.zip) - The latest and greatest BlueThrust clan scripts that we have done some bug fixes and PHP error fixes on. Great if you are running a modern version of PHP such as PHP 8.1. This is a WORK IN PROGRESS and may still have some errors.
 
 ## Bugs, Security Issues, Feature Requests
 
@@ -21,13 +22,14 @@ If you like this fork or found it useful, please consider leaving us a star. It 
 - [Technical Debt](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aclosed+label%3Atechnical-debt)
     - Fix PHP warnings
 	- Reduce # of SQL queries
-	- Reorganize and improve code
+	- Lint the code
 	- Create developer documentation - see [the wiki](https://github.com/RedDragonWebDesign/BlueThrust5/wiki)
 - [Fix v4 Bugs](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aissue+label%3Abug-v4+is%3Aclosed)
 	- Fix broken page "Add Menu Item"
-	- couple of others
-- [Small Feature](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aclosed+label%3Asmall-feature)
-- [Big Feature](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=label%3Abig-feature+is%3Aclosed) - None yet. Any suggestions?
+	- Fix forum advanced search
+	- (couple of others)
+- [Small Features](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=is%3Aclosed+label%3Asmall-feature)
+- [Big Features](https://github.com/RedDragonWebDesign/BlueThrust5/issues?q=label%3Abig-feature+is%3Aclosed) - None yet. Any suggestions?
 
 ## Setup Guide
 
